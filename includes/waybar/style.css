@@ -1,0 +1,121 @@
+* {
+    border: none;
+    border-radius: 5;
+    font-family: iosevka, Arial, sans-serif;
+    font-size: 18px;
+    min-height: 10px;
+    margin: 0 4px;
+}
+
+/* make waybar transparent */
+window#waybar {
+    background: rgba(43, 48, 59, 0);
+}
+
+#clock, #battery, #cpu, #memory,
+#temperature, #backlight, #network,
+#pulseaudio, #custom-media, #tray,
+#mode, #idle_inhibitor, #custom-vpn,
+#custom-weather, #workspaces button {
+    color: rgba(255, 255, 255, 1);
+    background: rgba(99, 99, 99, 0.6);
+    padding: 0 6px;
+    margin: 0 3px;
+    border-bottom: 1px solid;
+}
+
+#custom-weather {
+    background: rgba(99, 99, 99, 0.9);
+}
+
+
+#workspaces button {
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0;
+    padding-bottom: 0;
+    border-radius: 0;
+}
+
+#workspaces {
+    border-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#workspaces button.hover {
+    border-bottom: 0 transparent;
+    box-shadow: inherit;
+    text-shadow: inherit;
+}
+
+#workspaces button.focused {
+    background: #64727D;
+    border-bottom: 0;
+    border-top: 1px solid;
+}
+
+#mode {
+    background: #64727D;
+}
+
+#battery.charging {
+    color: #66cc99;
+}
+
+
+#network.disconnected {
+	border-bottom: 2px solid crimson;
+}
+
+#temperature.critical {
+	border-bottom: 3px solid red;
+    color: #f53c3c;
+}
+
+#tray {
+	margin-right: 8px;
+}
+
+#idle_inhibitor {
+    margin-right: 20px;
+    margin-left: 8px;
+}
+
+#idle_inhibitor.activated {
+	margin-right: 5px;
+    background-color: #ecf0f1;
+    color: #2d3436;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#custom-media {
+	border-bottom: 2px solid #66cc99;
+}
+
+#custom-weather {
+    border-bottom: 2px solid #66cc99;
+}
+
+#custom-vpn.connected {
+    border-bottom: 2px solid #66cc99;
+}
+
+#custom-vpn.disconnected {
+    border-bottom: 2px solid #f53c3c;
+}
+
+
+#battery.critical:not(.charging) {
+    background: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
