@@ -246,11 +246,6 @@ au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup noundofile
 " ---------------------------------
 "        coc stuff (copied) 
 " ---------------------------------
-"let g:coc_global_extensions = [
-    "\ 'coc-emoji', 'coc-yaml', 'coc-vimtex',
-    "\ 'coc-git', 'coc-json', 'coc-css',
-    "\ 'coc-ultisnips', 'coc-java'
-    "\ ]
 
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gy <Plug>(coc-type-definition)
