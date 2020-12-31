@@ -17,7 +17,7 @@ in
     home = { 
       username = "nixos";
       homeDirectory = "${home_directory}";
-      stateVersion = "20.09";
+      stateVersion = "21.03";
       sessionPath = [
       # extra dirs for path
       "${home_directory}/.local/bin"
@@ -43,7 +43,6 @@ in
 
     #fonts.fontconfig.enable = true;
     #targets.genericLinux.enable = true;
-
     packages = with pkgs; [
       # core
       cacert
@@ -63,7 +62,6 @@ in
       feh
       wev
       wf-recorder
-      #xwayland
       xorg.xauth
       ydotool
       libnotify
