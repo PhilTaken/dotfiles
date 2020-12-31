@@ -1,29 +1,33 @@
-{ config, pkgs, ... }:
-
-{
+{ 
+  pkgs,
+  username ? "nixos",
+  hostname ? "worklaptop",
+  timezone ? "Europe/Berlin",
+  ... 
+}:
+let
+  usermod = import (../../users + "/${username}" ) { inherit pkgs; };
+in {
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-      experimental-features = nix-command flakes
+        experimental-features = nix-command flakes
     '';
     autoOptimiseStore = true;
-    trustedUsers = [ "root" "nixos" "@wheel" ];
+    trustedUsers = [ "root" "${username}" "@wheel" ];
   };
 
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos";
+  networking.hostName = hostname;
   networking.wireless.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Berlin";
+  time.timeZone = "${timezone}";
 
   # dhcp config
   networking.useDHCP = false;
@@ -41,16 +45,9 @@
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
 
-  users.users.nixos = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "video" ];
-    shell = pkgs.zsh;
-  };
+  users.users."${username}" = usermod;
 
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-  ];
+  environment.systemPackages = with pkgs; [ vim git ];
 
   programs.zsh.enable = true;
   programs.sway = {
@@ -65,7 +62,6 @@
       { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
     ];
   };
-
 
   system.stateVersion = "20.09"; # Did you read the comment?
 }
