@@ -1,4 +1,3 @@
-# ~/.config/nixpkgs/home.nix
 # https://rycee.gitlab.io/home-manager/options.html
 # https://github.com/nix-community/nix-direnv
 # https://github.com/profclems/glab
@@ -7,11 +6,13 @@
 { pkgs, ... }:
 let 
   # home_directory = builtins.getEnv "HOME";
-  home_directory = "/home/nixos";
+  username = "nixos";
+
+  home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
 
   # lock background for shell alias + sway idle
-  lock_bg = includes/wallpaper/lock.jpg;
+  lock_bg = ../includes/wallpaper/lock.jpg;
 in
   rec {
     home = { 
@@ -200,7 +201,7 @@ in
       generateCaches = false;
     };
     neovim = let 
-      neovim-config-file = includes/neovim/init.vim;
+      neovim-config-file = ../includes/neovim/init.vim;
     in {
       # TODO upgrade to nvim 0.5-nightly
       enable = true;
@@ -333,7 +334,7 @@ in
     };
 
     tmux = let 
-      airline_conf = includes/shell/tmux_airline.conf;
+      airline_conf = ../includes/shell/tmux_airline.conf;
     in {
       enable = true;
       baseIndex = 1;
@@ -394,8 +395,8 @@ in
       '';
     };
     waybar = let 
-      css_file = includes/waybar/style.css;
-      weather_exec = includes/waybar/openweathe-rs;
+      css_file = ../includes/waybar/style.css;
+      weather_exec = ../includes/waybar/openweathe-rs;
     in
       {
       enable = true;
@@ -480,7 +481,7 @@ in
       systemd.enable = true;
     };
     zsh = let 
-      magic_enter_prompt = includes/shell/magic_enter.zsh;
+      magic_enter_prompt = ../includes/shell/magic_enter.zsh;
     in {
       enable = true;
       enableAutosuggestions = true;

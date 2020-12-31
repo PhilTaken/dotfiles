@@ -17,22 +17,43 @@
 
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
+
+    mkSetup = {name, host, username}:
+    let 
+      hostmod = import (./hosts + "/${host}") { inherit pkgs username; };
+      ret = nixpkgs.lib.nixosSystem {
+        inherit system pkgs;
+        modules = [
+          hostmod
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users."${username}" = import (./users + "/${username}/home.nix") { inherit pkgs; };
+          }
+        ];
+      }; 
+    in ret;
   in {
     devShell."${system}" = pkgs.mkShell {
       # add script for easy deployment
     };
 
     # add more configs
-    nixosConfigurations.nixos-laptop = nixpkgs.lib.nixosSystem {
-      inherit system pkgs;
-      modules = [ 
-        ./configuration.nix
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.nixos = import profiles/nixos { inherit pkgs; };
-        }
-      ];
+    nixosConfigurations.nixos-laptop = mkSetup { 
+      name = "nixos-laptop";
+      host = "work-laptop-thinkpad";
+      username = "nixos";
     };
+    #nixosConfigurations.nixos-laptop = nixpkgs.lib.nixosSystem {
+    #  inherit system pkgs;
+    #  modules = [ 
+    #    ./hosts/work-laptop-thinkpad/
+    #    home-manager.nixosModules.home-manager {
+    #      home-manager.useGlobalPkgs = true;
+    #      home-manager.useUserPackages = true;
+    #      home-manager.users.nixos = import users/nixos { inherit pkgs; };
+    #    }
+    #  ];
+    #};
   };
 }
