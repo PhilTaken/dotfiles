@@ -35,6 +35,11 @@
     in ret;
   in {
     devShell."${system}" = pkgs.mkShell {
+      buildInputs = with pkgs; [
+        git 
+        neovim
+        git-crypt
+      ];
       # add script for easy deployment
     };
 
