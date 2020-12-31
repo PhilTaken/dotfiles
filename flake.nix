@@ -30,7 +30,7 @@
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.nixos = import ./home.nix { inherit pkgs; };
+          home-manager.users.nixos = import profiles/nixos { inherit pkgs; };
         }
       ];
     };

@@ -6,20 +6,18 @@
 #{ pkgs, rofi_package ? pkgs.rofi, vim_package ? pkgs.nvim, ... }:
 { pkgs, ... }:
 let 
-  home_directory = builtins.getEnv "HOME";
+  # home_directory = builtins.getEnv "HOME";
+  home_directory = "/home/nixos";
   lib = pkgs.stdenv.lib;
 
   # lock background for shell alias + sway idle
   lock_bg = includes/wallpaper/lock.jpg;
 in
   rec {
-    fonts.fontconfig.enable = true;
-    targets.genericLinux.enable = true;
-
     home = { 
       username = "nixos";
       homeDirectory = "${home_directory}";
-      stateVersion = "20.09";
+      stateVersion = "21.03";
       sessionPath = [
       # extra dirs for path
       "${home_directory}/.local/bin"
@@ -42,6 +40,9 @@ in
 
       AWT_TOOLKIT = "MToolkit";
     };
+
+    #fonts.fontconfig.enable = true;
+    #targets.genericLinux.enable = true;
     packages = with pkgs; [
       # core
       cacert
@@ -61,7 +62,6 @@ in
       feh
       wev
       wf-recorder
-      #xwayland
       xorg.xauth
       ydotool
       libnotify
@@ -531,6 +531,7 @@ in
         WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
         eval "$(fasd --init auto)"
+        unalias z
 
         source ${magic_enter_prompt}
 
