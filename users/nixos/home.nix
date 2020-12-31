@@ -88,6 +88,7 @@ in
       playerctl
       powertop
       procs
+      ripgrep
       ripgrep-all
       rsync
       sd
