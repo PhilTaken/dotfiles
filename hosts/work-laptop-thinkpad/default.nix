@@ -25,6 +25,9 @@ in {
 
   networking.hostName = hostname;
   networking.wireless.enable = true;
+  networking.wg-quick.interfaces = {
+    mullvad = import ../../secret/wireguard/mullvad.nix;
+  };
 
   # Set your time zone.
   time.timeZone = "${timezone}";
