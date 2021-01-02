@@ -202,7 +202,7 @@ in
       generateCaches = false;
     };
     neovim = let 
-      neovim-config-file = ../includes/neovim/init.vim;
+      neovim-config-file = ../includes/neovim/init05.vim;
     in {
       # TODO upgrade to nvim 0.5-nightly
       enable = true;
@@ -216,7 +216,7 @@ in
         vim-gitgutter
         vim-rooter
         vim-startify
-        colorizer
+        #colorizer
         vim-surround
         vim-speeddating
         vim-snippets
@@ -233,11 +233,22 @@ in
         ayu-vim
         ultisnips
 
-        coc-nvim
-        coc-vimtex
-        coc-git
-        coc-json
-        coc-css
+        nvim-lspconfig
+        lsp_extensions-nvim
+        nvim-treesitter
+        popup-nvim
+        plenary-nvim
+        telescope-nvim
+        nvim-web-devicons
+        completion-nvim
+        completion-buffers
+        completion-treesitter
+
+        #coc-nvim
+        #coc-vimtex
+        #coc-git
+        #coc-json
+        #coc-css
       ];
       extraConfig = builtins.readFile neovim-config-file;
       #extraPython3Packages =  (ps: with ps; [ pynvim ]);
