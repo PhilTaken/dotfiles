@@ -114,10 +114,12 @@ in
       # fonts
       iosevka-bin
       weather-icons
+      (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
 
       # powerline
       powerline-rs
       powerline-fonts
+
 
       # not found
       # rofi-lbonn-wayland
