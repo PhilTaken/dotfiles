@@ -35,8 +35,10 @@
         ];
       }; in ret;
       setup-script = pkgs.writeShellScriptBin "setup" ''
-        if [[ -z "$1" || "$1" == "help" || "--help" || "-h" ]]; then
-          echo -e "Usage: $(basename $0) {config} [ switch | boot | test | build | install | build-vm ]\n\nFor more details on the options see \`man nixos-rebuild\`"
+        if [[ -z "$1" || "$1" == "help" ]]; then
+          echo -e "Usage: $(basename $0) {config} [ update | switch | build | install ]\n\nFor more details on the options see \`man nixos-rebuild\`"
+        elif [[ "$1" == "update" ]]; then 
+          nix flake update --recreate-lock-file --commit-lock-file
         elif [[ "$2" == "install" ]]; then
           sudo nixos-install --flake ".#$1" "${"\${@:3}"}"
         else

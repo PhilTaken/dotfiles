@@ -266,15 +266,13 @@ syntax enable
 lua <<EOF
 
 -- setup treesitter
--- require "nvim-treesitter.parsers".get_parser_configs().markdown = nil
-
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
         "rust", "c", "python", "lua",
         "nix", "json", "html", "cpp",
-        "toml", "bash", "markdown",
-        "rst", "css", "javascript",
-        "regex", "yaml", "php"
+        "toml", "bash", "rst", "css",
+        "javascript", "regex", "yaml",
+        "php"
     },
     highlight = {
         enable = true,              -- false will disable the whole extension
@@ -293,7 +291,7 @@ local lsp = require'lspconfig'
 lsp.rust_analyzer.setup{}
 lsp.texlab.setup{}
 lsp.clangd.setup{}
-lsp.pyls.setup{}
+lsp.pyls.setup{ cmd = { "python-language-server" } }
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()

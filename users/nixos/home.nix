@@ -103,7 +103,7 @@ in
       # other
       discord
       gimp
-      libreoffice-qt
+      #libreoffice-qt
       pamixer
       spotify
       tdesktop
