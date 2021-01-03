@@ -7,9 +7,9 @@
     };
 
     neovim-nightly-src = { url = "github:neovim/neovim"; flake = false; };
-    # rofi-lbonn-src = { url = "github:lbonn/rofi"; flake = false; recursive = true; };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
-  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, ... }@inputs: let 
+  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, ... }@inputs: let 
     #overlays = [
     #  (import ./overlays/nvim-overlay.nix { inherit inputs; })
     #  (import ./overlays/rofi-overlay.nix { inherit inputs; })
@@ -21,7 +21,7 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
 
-    mkSetup = {name, host, username}: let 
+    mkSetup = {name, host, username, extramods ? []}: let 
       hostmod = import (./hosts + "/${host}") { inherit pkgs username; };
       ret = nixpkgs.lib.nixosSystem {
         inherit system pkgs;
@@ -32,7 +32,7 @@
             home-manager.useUserPackages = true;
             home-manager.users."${username}" = import (./users + "/${username}/home.nix") { inherit pkgs; };
           }
-        ];
+        ] ++ extramods;
       }; in ret;
       setup-script = pkgs.writeShellScriptBin "setup" ''
         if [[ -z "$1" || "$1" == "help" ]]; then
@@ -59,6 +59,7 @@
     nixosConfigurations.nixos-laptop = mkSetup { 
       name = "nixos-laptop";
       host = "work-laptop-thinkpad";
+      extramods = [ nixos-hardware.nixosModules.lenovo-thinkpad-t490 ];
       username = "nixos";
     };
   };

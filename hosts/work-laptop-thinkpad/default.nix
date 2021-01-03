@@ -47,6 +47,7 @@ in {
   sound.mediaKeys.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   users.users."${username}" = usermod;
 
