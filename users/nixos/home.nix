@@ -121,7 +121,7 @@ in rec {
       powerline-rs
       powerline-fonts
 
-      # not found
+      # TODO
       # rofi-pass-ydotool-git
     ];
   };
