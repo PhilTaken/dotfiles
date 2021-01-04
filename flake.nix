@@ -59,7 +59,7 @@
     nixosConfigurations.nixos-laptop = mkSetup { 
       name = "nixos-laptop";
       host = "work-laptop-thinkpad";
-      extramods = [ nixos-hardware.nixosModules.lenovo-thinkpad-t490 ];
+      #extramods = [ nixos-hardware.nixosModules.lenovo-thinkpad-t490 ];
       username = "nixos";
     };
   };
