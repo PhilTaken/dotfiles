@@ -110,6 +110,7 @@ in
       vlc
       zotero
       cmst
+      qt5.qtbase
 
       # fonts
       iosevka-bin
