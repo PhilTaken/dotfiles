@@ -56,7 +56,7 @@ in {
     #opensc
   ];
   #services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization cryptsetup ];
+  services.udev.packages = with pkgs; [ yubikey-personalization cryptsetup ];
 
   programs.zsh.enable = true;
   programs.sway = {
