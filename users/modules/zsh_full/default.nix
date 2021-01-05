@@ -140,8 +140,8 @@ in {
         sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
 
         # TODO change to vim/whatever vim I installed
-        v = "f -fte nim";
-        vimup = "nim +PlugUpdate +qall";
+        v = "f -fte vim";
+        vimup = "vim +PlugUpdate +qall";
 
         lock = "swaylock -i ${lock_bg}";
         ga = "git add";
