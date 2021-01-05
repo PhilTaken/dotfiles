@@ -14,6 +14,8 @@ let
   # lock background for shell alias + sway idle
 in rec {
   imports = [
+    ../modules/mail
+
     ../modules/git
     ../modules/neovim
     ../modules/ssh
@@ -127,8 +129,20 @@ in rec {
   };
 
   programs = {
+    lieer.enable = true;
+    notmuch.enable = true;
+    afew.enable = true;
+    neomutt = {
+      enable = true;
+    };
     home-manager.enable = true;
-    gpg.enable = true;
+    gpg = {
+      enable = true;
+      settings = {
+        default-key = "BDCD0C4E9F252898";
+      };
+    };
+
     rofi = {
       enable = true;
       package = pkgs.rofi;
@@ -149,7 +163,13 @@ in rec {
   };
 
   # services
-  services.gpg-agent.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    sshKeys = [
+      "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B"
+    ];
+  };
 
   xdg = {
     enable = true;
