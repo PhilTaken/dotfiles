@@ -51,7 +51,12 @@ in {
 
   users.users."${username}" = usermod;
 
-  environment.systemPackages = with pkgs; [ vim git ];
+  environment.systemPackages = with pkgs; [
+    vim git
+    #opensc
+  ];
+  #services.pcscd.enable = true;
+  services.udev.packages = [ pkgs.yubikey-personalization ];
 
   programs.zsh.enable = true;
   programs.sway = {
@@ -59,6 +64,7 @@ in {
     wrapperFeatures.gtk = true;
   };
   programs.light.enable = true;
+
   #services.actkbd = {
   #  enable = true;
   #  bindings = [
