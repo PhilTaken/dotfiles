@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.neovim = let 
-    neovim-config-file = ../../includes/neovim/init05.vim;
+    neovim-config-file = ./init-nightly.vim;
   in {
     enable = true;
     package = pkgs.neovim-nightly;
