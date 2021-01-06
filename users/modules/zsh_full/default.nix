@@ -1,5 +1,5 @@
 { pkgs, ... }: let
-  lock_bg = ../../includes/wallpaper/lock.jpg;
+  lock_bg = ../../nixos/wallpaper/lock.jpg;
 in {
   programs.password-store = {
     enable = true;
