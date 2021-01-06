@@ -145,7 +145,7 @@ in rec {
 
     rofi = {
       enable = true;
-      package = pkgs.rofi;
+      package = pkgs.rofi-wayland;
     };
     firefox = {
       enable = true;

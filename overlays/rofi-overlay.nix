@@ -1,7 +1,7 @@
 { ... }:
 let
   rofi_overlay = final: prev: {
-    rofi = prev.rofi-unwrapped.overrideAttrs (old: {
+    rofi-wayland = prev.rofi-unwrapped.overrideAttrs (old: {
       pname = "rofi-lbonn";
       src = prev.fetchFromGitHub {
         owner = "lbonn";

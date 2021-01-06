@@ -1,7 +1,8 @@
 { inputs, ... }:
 let 
+  neovim-nightly-src = { url = "github:neovim/neovim"; flake = false; };
   nvim_overlay = final: prev: {
-    neovim = prev.neovim-unwrapped.overrideAttrs (old: {
+    neovim-nightly = prev.neovim-unwrapped.overrideAttrs (old: {
       pname = "neovim-nightly";
       version = "master";
       src = inputs.neovim-nightly-src;
