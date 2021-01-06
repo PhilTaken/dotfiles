@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let 
-  lock_bg = ../../includes/wallpaper/lock.jpg;
+  lock_bg = ../../nixos/wallpaper/lock.jpg;
 in rec {
   wayland.windowManager.sway = let
     std_opacity = "0.96";
