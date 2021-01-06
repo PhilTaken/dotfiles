@@ -5,9 +5,12 @@
       url = "github:rycee/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    neovim-nightly-src = { url = "github:neovim/neovim"; flake = false; };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    ## extra packages
+    neovim-nightly-src = { url = "github:neovim/neovim"; flake = false; };
+    #rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
+    # rofi source not here since rofi requires submodules which flake inputs dont support yet
   };
   outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, ... }@inputs: let 
     #overlays = [
@@ -49,8 +52,8 @@
     devShell."${system}" = pkgs.mkShell {
       buildInputs = with pkgs; [
         git 
-        neovim
-        rofi
+        neovim-nightly
+        rofi-wayland
         git-crypt
         setup-script
       ];
