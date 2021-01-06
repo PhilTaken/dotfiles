@@ -112,7 +112,7 @@ in rec {
       vlc
       zotero
       cmst
-      qt5.qtbase
+      pavucontrol
 
       # fonts
       iosevka-bin
@@ -122,6 +122,9 @@ in rec {
       # powerline
       powerline-rs
       powerline-fonts
+
+      # extra
+      qt5.qtbase
 
       # TODO
       # rofi-pass-ydotool-git
