@@ -54,7 +54,7 @@ in {
   };
 
   programs.zsh = let 
-    magic_enter_prompt = ../../includes/shell/magic_enter.zsh;
+    magic_enter_prompt = ./magic_enter.zsh;
   in {
     enable = true;
     enableAutosuggestions = true;
@@ -160,7 +160,7 @@ in {
     };
 
     programs.tmux = let 
-      airline_conf = ../../includes/shell/tmux_airline.conf;
+      airline_conf = ./tmux_airline.conf;
     in {
       enable = true;
       baseIndex = 1;
