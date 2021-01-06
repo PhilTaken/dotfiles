@@ -21,7 +21,6 @@ in rec {
     ../modules/ssh
 
     ../modules/sway
-    ../modules/waybar
     ../modules/mako
     ../modules/kanshi
 

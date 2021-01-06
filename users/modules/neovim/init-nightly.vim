@@ -76,7 +76,15 @@ endtry
 "}
 "EOF
 
-" ---------------------------
+if !isdirectory($XDG_DATA_HOME."/nvim/undodir")
+    call mkdir($XDG_DATA_HOME."/nvim/undodir", "", 0770)
+endif
+
+set undodir=$XDG_DATA_HOME/nvim/undodir
+set undofile
+
+
+"---------------------------
 "           sets
 " ---------------------------
 
@@ -259,7 +267,7 @@ endif
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
 " gopass
-au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup noundofile
+au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup
 
 " lua lsp stuff (copied)
 syntax enable
