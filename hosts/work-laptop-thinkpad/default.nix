@@ -53,10 +53,11 @@ in {
 
   environment.systemPackages = with pkgs; [
     vim git
+    cryptsetup
     #opensc
   ];
   #services.pcscd.enable = true;
-  services.udev.packages = with pkgs; [ yubikey-personalization cryptsetup ];
+  services.udev.packages = with pkgs; [ yubikey-personalization ];
 
   programs.zsh.enable = true;
   programs.sway = {
