@@ -32,7 +32,7 @@ in rec {
     homeDirectory = "${home_directory}";
     stateVersion = "21.03";
     sessionVariables = {
-      EDITOR = "${pkgs.neovim}/bin/nvim";
+      EDITOR = "${pkgs.neovim-nightly}/bin/nvim";
       PAGER = "${pkgs.page}/bin/page";
       MANPAGER = "${pkgs.page}/bin/page -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'";
       _FASD_DATA = "${xdg.dataHome}/fasd/fasd.data";
