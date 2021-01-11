@@ -5,8 +5,7 @@ in rec {
   wayland.windowManager.sway = let
     std_opacity = "0.96";
     lock = "swaylock -c 000000";
-    # TODO: package as derivation, as well as the other bin/ scripts
-    screen_recorder = "record_screen.sh";
+    screen_recorder = ./record_screen.sh;
   in {
     enable = true;
     #package = pkgs.sway-unwrapped;
