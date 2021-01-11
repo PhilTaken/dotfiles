@@ -21,8 +21,6 @@ in rec {
     ../modules/ssh
 
     ../modules/sway
-    ../modules/mako
-    ../modules/kanshi
 
     ../modules/zsh_full
   ];
