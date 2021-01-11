@@ -61,6 +61,7 @@ in rec {
       feh
       wev
       wf-recorder
+      ffmpeg
       xorg.xauth
       ydotool
       libnotify
