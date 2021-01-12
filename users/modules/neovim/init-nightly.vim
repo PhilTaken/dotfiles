@@ -299,7 +299,7 @@ local lsp = require'lspconfig'
 lsp.rust_analyzer.setup{}
 lsp.texlab.setup{}
 lsp.clangd.setup{}
-lsp.pyls.setup{ cmd = { "python-language-server" } }
+lsp.pyls.setup{}
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()

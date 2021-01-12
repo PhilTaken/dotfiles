@@ -42,6 +42,6 @@
       completion-treesitter
     ];
     extraConfig = builtins.readFile neovim-config-file;
-    extraPython3Packages =  (ps: with ps; [ pynvim python-language-server ]);
+    extraPython3Packages = (ps: with ps; [ pynvim ]);
   };
 }
