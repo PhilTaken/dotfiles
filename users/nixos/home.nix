@@ -78,6 +78,7 @@ in rec {
       du-dust
       exa
       fasd
+      fd
       fortune
       hyperfine
       lolcat
