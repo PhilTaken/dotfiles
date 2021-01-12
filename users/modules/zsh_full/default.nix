@@ -175,6 +175,7 @@ in {
         set -g mouse on
         setw -g monitor-activity on
         set -g visual-activity on
+        set-option -sa terminal-overrides ',alacritty:Tc'
 
         bind Escape copy-mode
         unbind p
