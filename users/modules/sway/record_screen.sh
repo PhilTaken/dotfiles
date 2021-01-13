@@ -15,7 +15,7 @@ default_save_dirs="$HOME"
 recorder="wf-recorder"
 snapper="grim"
 part_select="slurp"
-clipboard_manager="wl-copy"
+clipboard_manager="wl-copy -t image/png"
 notif_cmd="notify-send"
 
 ## text lines
