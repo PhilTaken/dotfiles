@@ -15,7 +15,7 @@ default_save_dirs="$HOME"
 recorder="wf-recorder"
 snapper="grim"
 part_select="slurp"
-clipboard_manager="wl-copy -t image/png"
+clipboard_manager="wl-copy"
 notif_cmd="notify-send"
 
 ## text lines
@@ -64,13 +64,13 @@ stop_recording() {
 
 ## taking screenshots
 take_shot_all() {
-    ${snapper} - | ${clipboard_manager}
+    ${snapper} - | ${clipboard_manager} -t image/png
     notify "Copied to clipboard"
 }
 
 take_shot_part() {
     area=$($part_select)
-    ${snapper} -g "${area}" - | ${clipboard_manager}
+    ${snapper} -g "${area}" - | ${clipboard_manager} -t image/png
     notify "Copied to clipboard"
 }
 
