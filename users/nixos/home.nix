@@ -46,6 +46,7 @@ in rec {
       # core
       cacert
       coreutils
+      mailcap
       curl
 
       niv
@@ -96,6 +97,7 @@ in rec {
       tokei
       topgrade
       universal-ctags
+      unzip
       vpnc
       wmname
       wtf
