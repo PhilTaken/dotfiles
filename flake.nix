@@ -9,8 +9,10 @@
 
     ## extra packages
     neovim-nightly-src = { url = "github:neovim/neovim"; flake = false; };
-    #rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
     # rofi source not here since rofi requires submodules which flake inputs dont support yet
+    # rofi-wayland-src = { url = "github:lbonn/rofi"; flake = false; submodules = true; };
+    # rofi-pass-gopass ... phew
+    # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
   outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, ... }@inputs: let 
     #overlays = [
