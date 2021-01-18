@@ -7,27 +7,12 @@ let ayucolor="mirage"
 try
     colorscheme ayu
 catch /^Vim\%((\a\+)\)\=:E185/
-    colorscheme koehler
+    "colorscheme koehler
 endtry
 
 "---------------------------
 "           sets
 " ---------------------------
-
-set formatoptions+=j
-set history=1000
-set undolevels=1000
-set wildignore=*.swp,*.bak,*.pyc,*.class
-set wildoptions=pum
-set pumblend=20
-set title
-set mouse=a
-set inccommand=split
-" folds
-set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
-set foldlevel=2
 " turn backup off partially
 set nobackup
 set noswapfile
@@ -38,23 +23,10 @@ set nospell
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-set cmdheight=2
-set signcolumn=yes
-
-" for gitgutter
-set updatetime=300
-
-" tab settings
-set tabstop=4
-set shiftwidth=4
-set expandtab
-
 " line numbers
 "set number
 "set relativenumber
 
-set autowrite
-set hidden
 " case insensitive/smart searching
 set ignorecase
 set smartcase
@@ -72,9 +44,6 @@ set laststatus=2
 set timeout
 set timeoutlen=300
 set ttimeoutlen=0
-" automatically read edited files from disk instead of asking
-set autoread
-
 
 " ---------------------------
 "           lets
@@ -100,9 +69,3 @@ nnoremap <Leader><Leader> :noh<CR>
 
 " search in visual
 vnoremap / y/<C-R>"<CR>
-
-" git
-autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
-
-" gopass
-au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup
