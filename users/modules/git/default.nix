@@ -35,6 +35,7 @@
       commit.verbose = true;
       push.default = "tracking";
       status.submoduleSummary = true;
+      init.defaultBranch = "main";
     };
   };
 }
