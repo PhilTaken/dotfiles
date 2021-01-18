@@ -183,5 +183,7 @@ in rec {
     cacheHome = "${home_directory}/.cache";
   };
 
+  xdg.configFile."page/init.vim".source = ../modules/page/init.vim;
+
   programs.zsh.history.path = "${xdg.dataHome}/zsh/histfile";
 }
