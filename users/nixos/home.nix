@@ -81,6 +81,7 @@ in rec {
       fasd
       fd
       fortune
+      haxor-news
       hyperfine
       lolcat
       lshw
