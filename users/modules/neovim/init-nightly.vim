@@ -300,6 +300,7 @@ lsp.rust_analyzer.setup{}
 lsp.texlab.setup{}
 lsp.clangd.setup{}
 lsp.pyls.setup{}
+lsp.fortls.setup{}
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
