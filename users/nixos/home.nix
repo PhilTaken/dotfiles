@@ -3,11 +3,9 @@
 # https://github.com/profclems/glab
 # TODO: when moving to nixOS swap swaylock with ${pkgs.swaylock}/bin/swaylock
 #{ pkgs, rofi_package ? pkgs.rofi, vim_package ? pkgs.nvim, ... }:
-{ pkgs, ... }:
-let 
+{ pkgs, ... }: let 
   # home_directory = builtins.getEnv "HOME";
   username = "nixos";
-
   home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
 
@@ -21,7 +19,6 @@ in rec {
     ../modules/ssh
 
     ../modules/sway
-
     ../modules/zsh_full
   ];
 
