@@ -300,7 +300,9 @@ lsp.rust_analyzer.setup{}
 lsp.texlab.setup{}
 lsp.clangd.setup{}
 lsp.pyls.setup{}
-lsp.fortls.setup{}
+lsp.fortls.setup{ 
+    root_dir = lsp.util.root_pattern('.git');
+}
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
