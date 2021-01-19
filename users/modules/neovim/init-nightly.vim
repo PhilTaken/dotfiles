@@ -328,7 +328,7 @@ nnoremap ;;    :lua require'telescope.builtin'.git_files{}<CR>
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_chain_complete_list = {
     \ 'default': [
-    \    { 'complete_items': [ 'lsp', 'snippet', 'ts', 'buffers', 'tags', 'tmux']},
+    \    { 'complete_items': [ 'lsp', 'snippet', 'path', 'ts', 'buffers', 'tags', 'tmux' ]},
     \ ]}
 
 
