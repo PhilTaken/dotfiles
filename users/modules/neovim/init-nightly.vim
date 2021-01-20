@@ -35,27 +35,6 @@
 "                WXOolO                       WXklclkXW                
 "                  WX0X                         NOOXW                  
 
-" disable legacy vim options
-"set nocompatible
-
-" ideas
-" -----
-" undodir
-" undofile
-" colorcolumn (80)
-"
-" floaterm
-
-" -----------------------
-"          Plugins
-" -----------------------
-" repl support
-"Plug 'hkupty/iron.nvim'
-"Plug 'kristijanhusak/completion-tags'
-"Plug 'albertoCaroM/completion-tmux'
-
-"filetype plugin indent on
-
 " leader
 let mapleader="\<Space>"
 
@@ -67,14 +46,6 @@ try
 catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme koehler
 endtry
-
-" set up colorizer
-"lua  <<EOF
-"require'colorizer'.setup { 
-"    '*';
-"    css = { rgb_fn = true; };
-"}
-"EOF
 
 if !isdirectory($XDG_DATA_HOME."/nvim/undodir")
     call mkdir($XDG_DATA_HOME."/nvim/undodir", "", 0770)
@@ -162,7 +133,7 @@ let g:rooter_resolve_links = 1
 let g:pandoc#spell#enabled = 0
 
 " vimtex
-let g:vimtex_compiler_progname = 'nvr'
+"let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_general_viewer = 'zathura'
 let g:tex_flavor = 'latex'
 
@@ -225,19 +196,6 @@ nnoremap <Leader><Leader> :noh<CR>
 " search in visual
 vnoremap / y/<C-R>"<CR>
 
-" fzf / skim
-"noremap <Leader>f :Rg<CR>
-"nnoremap ;; :Files<CR>
-"noremap ; :Buffers<CR>
-
-" git alias commands
-command! Gl :Git pull
-command! Gs :Gstatus
-command! Ga :Git add %
-command! Gc :Gcommit
-command! Gr :Git reset
-command! Gp :Git push
-
 " ---------------------------
 "         autocommands
 " ---------------------------
@@ -295,7 +253,7 @@ local telescope = require'telescope.builtin'
 -- nvim_lsp object
 local lsp = require'lspconfig'
 
--- Enable rust_analyzer, pyls and texlab
+-- Enable lsp servers
 lsp.rust_analyzer.setup{}
 lsp.texlab.setup{}
 lsp.clangd.setup{}
@@ -306,17 +264,10 @@ lsp.fortls.setup{
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
-
-" Show diagnostic popup on cursor hold
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-
 
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Enable type inlay hints
-" TODO improve this to right aligned
-" autocmd CursorHold,CursorHoldI * lua require'lsp_extensions'.inlay_hints{prefix = '> ', highlight = "Comment", aligned=true}
 
 " telescope mappings
 nnoremap <c-f> :lua require'telescope.builtin'.treesitter{}<CR>
@@ -326,11 +277,12 @@ nnoremap ;     :lua require'telescope.builtin'.buffers{ show_all_buffers = true 
 nnoremap ;;    :lua require'telescope.builtin'.git_files{}<CR>
 
 let g:completion_enable_snippet = 'UltiSnips'
-let g:completion_chain_complete_list = {
-    \ 'default': [
-    \    { 'complete_items': [ 'lsp', 'snippet', 'path', 'ts', 'buffers', 'tags', 'tmux' ]},
-    \ ]}
-
+let g:completion_chain_complete_list = [
+    \{ 'complete_items': [ 'lsp', 'snippet', 'path' ]},
+    \{ 'complete_items': [ 'ts', 'tags' ]},
+    \{ 'complete_items': [ 'buffers', 'tags' ]},
+\]
+let g:completion_auto_change_source = 1
 
 
 " deactivate default mappings
