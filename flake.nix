@@ -15,17 +15,13 @@
     # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
   outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, ... }@inputs: let 
-    #overlays = [
-    #  (import ./overlays/nvim-overlay.nix { inherit inputs; })
-    #  (import ./overlays/rofi-overlay.nix { inherit inputs; })
-    #];
     #overlays = map 
     #(name: import (./overlays + "/${name}") { inherit inputs; })
     #(builtins.attrNames (builtins.readDir ./overlays));
     overlays = [
       (import ./overlays/nvim-overlay.nix {inherit inputs; })
       (import ./overlays/rofi-overlay.nix {inherit inputs; })
-      #(import ./overlays/zettlr.nix {inherit inputs; })
+      (import ./custom_pkgs)
     ];
 
     system = "x86_64-linux";

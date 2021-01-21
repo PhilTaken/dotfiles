@@ -112,11 +112,13 @@ in rec {
       zotero
       cmst
       pavucontrol
+      zettlr
 
       # fonts
       iosevka-bin
       weather-icons
       (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+      hicolor-icon-theme
 
       # powerline
       powerline-rs
