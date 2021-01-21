@@ -19,9 +19,14 @@
     #  (import ./overlays/nvim-overlay.nix { inherit inputs; })
     #  (import ./overlays/rofi-overlay.nix { inherit inputs; })
     #];
-    overlays = map 
-    (name: import (./overlays + "/${name}") { inherit inputs; })
-    (builtins.attrNames (builtins.readDir ./overlays));
+    #overlays = map 
+    #(name: import (./overlays + "/${name}") { inherit inputs; })
+    #(builtins.attrNames (builtins.readDir ./overlays));
+    overlays = [
+      (import ./overlays/nvim-overlay.nix {inherit inputs; })
+      (import ./overlays/rofi-overlay.nix {inherit inputs; })
+      #(import ./overlays/zettlr.nix {inherit inputs; })
+    ];
 
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
