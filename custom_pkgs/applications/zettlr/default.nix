@@ -2,11 +2,11 @@
 
 let
   pname = "zettlr";
-  version = "1.8.6";
+  version = "1.8.7";
   name = "${pname}-${version}";
   src = fetchurl {
     url = "https://github.com/Zettlr/Zettlr/releases/download/v${version}/Zettlr-${version}-x86_64.appimage";
-    sha256 = "8bdfce5ff0b4321030e15cd14c1fd6c4e3e35f803cf533b5347e61834e054f03";
+    sha256 = "sha256-gJleqyK/c4ERTnj7sBtRxDrEHm91Ac38H0ukicukdX0=";
   };
   appimageContents = appimageTools.extractType2 {
     inherit name src;
