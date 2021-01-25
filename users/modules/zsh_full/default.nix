@@ -46,8 +46,16 @@ in {
         format = "";
       };
       git_status = {
+        conflicted = "=";
         ahead = "⇡ ";
         behind = "⇣ ";
+        diverged = "⇕ ";
+        untracked = "?";
+        stashed = "$";
+        modified = "!";
+        staged = "+";
+        renamed = "»";
+        deleted = "✘ ";
       };
       jobs.symbol = "+";
     };
