@@ -39,11 +39,10 @@ in {
       package.disabled = true;
       python.symbol = "Py ";
       rust.symbol = "R ";
-      nix-shell = {
-        ignore_msg = "";
-        pure_msg = "";
-        symbol = "nix-shell";
-        format = "";
+      nix_shell = {
+        symbol = "❄️ ";
+        style = "bold blue";
+        format = "[$symbol]($style) ";
       };
       git_status = {
         conflicted = "=";
