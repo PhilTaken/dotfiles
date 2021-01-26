@@ -295,3 +295,7 @@ let g:iron_map_defaults=0
 "    autocmd Filetype python vmap <buffer> <leader>t <Plug>(iron-send-motion)
 "    autocmd Filetype python nmap <buffer> <leader>p <Plug>(iron-repeat-cmd)
 "augroup END
+
+augroup pandoc_syntax
+    autocmd! FileType vimwiki set syntax=markdown.pandoc
+augroup END
