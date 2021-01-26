@@ -306,6 +306,7 @@ let g:vimwiki_key_mappings = {
             \ 'links': 0,
             \ 'html': 0,
             \ 'mouse': 0,
+            \ 'table_mappings': 0,
             \ }
 
 augroup vimwiki_mappings
