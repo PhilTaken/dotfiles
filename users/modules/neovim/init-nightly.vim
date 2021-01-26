@@ -299,3 +299,19 @@ let g:iron_map_defaults=0
 augroup pandoc_syntax
     autocmd! FileType vimwiki set syntax=markdown.pandoc
 augroup END
+
+" vimwiki mappings - custom
+let g:vimwiki_key_mappings = { 
+            \ 'global': 0,
+            \ 'links': 0,
+            \ 'html': 0,
+            \ 'mouse': 0,
+            \ }
+
+augroup vimwiki_mappings
+    autocmd! vimwiki_mappings
+    autocmd Filetype vimwiki nmap <buffer><silent> <CR> <Plug>VimwikiFollowLink
+    autocmd Filetype vimwiki nmap <buffer><silent> <Backspace> <Plug>VimwikiGoBackLink
+    autocmd Filetype vimwiki nmap <buffer><silent> <Leader>ww <Plug>VimwikiIndex
+augroup END
+

@@ -24,7 +24,7 @@
       vim-tmux-navigator
       vim-airline
       vim-airline-themes
-      #vim-pandoc
+      vim-pandoc
       vim-pandoc-syntax
       vimwiki
       vim-nix
