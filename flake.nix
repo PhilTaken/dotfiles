@@ -29,7 +29,7 @@
     # every setup is a system + a user
     # the system is mainly used for hardware config, the user for software-specific setups
     mkSetup = {name, host, username, extramods ? []}: let 
-      hostmod = import (./hosts + "/${host}") { inherit pkgs username; };
+      hostmod = import (./hosts + "/${host}") { inherit inputs pkgs username; };
       ret = nixpkgs.lib.nixosSystem {
         inherit system pkgs;
         modules = [
