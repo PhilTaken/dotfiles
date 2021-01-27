@@ -3,13 +3,11 @@ let
   lock_bg = ../../nixos/wallpaper/lock.jpg;
 in rec {
   wayland.windowManager.sway = let
-    std_opacity = "0.96";
+    std_opacity = "0.9";
     lock = "swaylock -c 000000";
     screen_recorder = ./record_screen.sh;
   in {
     enable = true;
-    #package = pkgs.sway-unwrapped;
-    #wrapperFeatures.gtk = true;
     config = {
       up = "e";
       down = "n";
@@ -22,7 +20,6 @@ in rec {
       focus.followMouse = "always";
       bindkeysToCode = false;
       bars = [];
-      # TODO: colors
       gaps = {
         inner = 15;
         outer = 0;
@@ -115,7 +112,6 @@ in rec {
         "3" = [{class = "discord";}];
         "4" = [{class = "Spotify";}];
       };
-      floating.criteria = [ { app_id = "avizo-service"; } ];
       startup = [
         { command = "avizo-service"; }
         { command = "${pkgs.mako}/bin/mako"; }
@@ -151,6 +147,14 @@ in rec {
         {
           command = "opacity 1";
           criteria = { app_id = "org.pwmt.zathura"; };
+        }
+        {
+          command = "floating enable, move to scratchpad";
+          criteria = { title = ".+[Ss]haring (Indicator|your screen)"; };
+        }
+        {
+          command = "floating enable";
+          criteria = { app_id = "avizo-service"; };
         }
       ];
       output = { "*" = { bg = "${lock_bg} fill"; }; };

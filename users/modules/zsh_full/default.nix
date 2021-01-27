@@ -163,6 +163,7 @@ in {
         gco="git checkout";
         gcm="git checkout master";
         du="dust";
+        sysrepl="export __NIXOS_SET_ENVIRONMENT_DONE='' && nix repl $(source /etc/profile && echo $NIX_PATH | perl -pe 's|.*(/nix/store/.*-source/repl.nix).*|\1|')"
       };
     };
 
