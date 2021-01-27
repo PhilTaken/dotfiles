@@ -15,6 +15,7 @@ in {
     '';
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
+    nixPath = let path = toString ./.; in [ "repl=${path}/repl.nix" "nixpkgs=${inputs.nixpkgs}" ];
   };
 
   imports = [ ./hardware-configuration.nix ];

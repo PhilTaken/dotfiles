@@ -92,6 +92,7 @@ in rec {
       ripgrep-all
       rsync
       sd
+      sshfs
       tokei
       topgrade
       universal-ctags
