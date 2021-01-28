@@ -119,6 +119,7 @@ set timeoutlen=300
 set ttimeoutlen=0
 " automatically read edited files from disk instead of asking
 set autoread
+set langnoremap
 
 
 " ---------------------------
