@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let 
   lock_bg = ../../nixos/wallpaper/lock.jpg;
+  sway_bg = ../../nixos/wallpaper/river.jpg;
 in rec {
   wayland.windowManager.sway = let
     std_opacity = "0.9";
@@ -157,7 +158,7 @@ in rec {
           criteria = { app_id = "avizo-service"; };
         }
       ];
-      output = { "*" = { bg = "${lock_bg} fill"; }; };
+      output = { "*" = { bg = "${sway_bg} fill"; }; };
     };
   };
 
