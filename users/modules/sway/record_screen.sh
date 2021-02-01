@@ -22,8 +22,10 @@ notif_cmd="notify-send"
 rec_start="Start recording"
 rec_stop="Stop recording"
 screenshot="Take a screenshot"
+screen_cur="Snap the current screen"
 record_part="Part of the screen"
 record_whole="The whole screen"
+record_current="The current screen"
 prompt_save="Save as >"
 prompt_choose="Choose one > "
 
@@ -58,6 +60,12 @@ record_screen_whole() {
     ${recorder} -f "$1" >/dev/null 2>&1 &
 }
 
+record_screen_current() {
+    curr_screen_dims="$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')"
+    notify "Recording to $(realpath ${outfile})"
+    ${recorder} -g "${curr_screen_dims}" -f "$1" >/dev/null 2>&1 & 
+}
+
 stop_recording() {
     pkill -2 ${recorder}
 }
@@ -66,6 +74,11 @@ stop_recording() {
 take_shot_all() {
     ${snapper} - | ${clipboard_manager} -t image/png
     notify "Copied to clipboard"
+}
+
+take_shot_current() {
+    curr_screen_dims="$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')"
+    ${snapper} -g ${curr_screen_dims} - | ${clipboard_manager} -t image/png
 }
 
 take_shot_part() {
@@ -94,7 +107,7 @@ if [[ ${selection} == ${rec_stop} ]]; then
 fi
 
 # otherwise, ask wether to record/snap the whole screen or just a part
-area_choice=$(queue_options "${record_whole}\n${record_part}")
+area_choice=$(queue_options "${record_whole}\n${record_part}\n${screen_cur}")
 
 case ${selection} in
     ${rec_start})
@@ -120,6 +133,8 @@ case ${selection} in
         # finally, record it all
         if [[ "${area_choice}" == "${record_whole}" ]]; then
             record_screen_whole "${outfile}"
+        elif [[ "${area_choice}" == "${record_current}" ]]; then
+            record_screen_current "${outfile}"
         else 
             record_screen_part "${outfile}"
         fi
@@ -127,7 +142,9 @@ case ${selection} in
     $screenshot)
         if [[ "${area_choice}" == "${record_whole}" ]]; then
             take_shot_all
-        else 
+        elif [[ "${area_choice}" == "${screen_cur}" ]]; then
+            take_shot_current
+        else
             take_shot_part
         fi
         ;;

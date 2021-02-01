@@ -4,7 +4,7 @@ let
   sway_bg = ../../nixos/wallpaper/river.jpg;
 in rec {
   wayland.windowManager.sway = let
-    std_opacity = "0.9";
+    std_opacity = "0.96";
     lock = "swaylock -c 000000";
     screen_recorder = ./record_screen.sh;
   in {
@@ -22,7 +22,7 @@ in rec {
       bindkeysToCode = false;
       bars = [];
       gaps = {
-        inner = 15;
+        inner = 12;
         outer = 0;
         smartBorders = "on";
       };

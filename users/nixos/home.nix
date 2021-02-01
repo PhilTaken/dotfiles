@@ -36,6 +36,11 @@ in rec {
       RUSTUP_HOME = "${xdg.dataHome}/rustup";
       TEXMFHOME = "${xdg.dataHome}/texmf";
       _ZO_ECHO = 1;
+      XDG_CURRENT_DESKTOP = "sway";
+
+      MOZ_ENABLE_WAYLAND = 1;
+      MOZ_USE_XINPUT2 = 1;
+      GTK_USE_PORTAL = 1;
 
       AWT_TOOLKIT = "MToolkit";
     };
@@ -128,9 +133,6 @@ in rec {
 
       # extra
       qt5.qtbase
-
-      # TODO
-      # rofi-pass-ydotool-git
     ];
   };
 
@@ -155,7 +157,12 @@ in rec {
     };
     firefox = {
       enable = true;
-      package = pkgs.firefox-wayland;
+      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+        forceWayland = true;
+        extraPolicies = {
+          ExtensionSettings = {};
+        };
+      };
     };
     alacritty = {
       enable = true;
