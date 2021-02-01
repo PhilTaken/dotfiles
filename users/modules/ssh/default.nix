@@ -42,6 +42,10 @@
         hostname = "router.lan";
         user = "root";
       };
+      "raspi" = {
+        hostname = "192.168.8.148";
+        user = "pi";
+      };
     };
   };
 }
