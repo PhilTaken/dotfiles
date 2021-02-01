@@ -46,9 +46,31 @@ in {
   # Enable sound.
   sound.enable = true;
   sound.mediaKeys.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+
+  #hardware.pulseaudio.enable = true;
+  #hardware.pulseaudio.support32Bit = true;
+  #hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  #services.jack.jackd.enable = true;
+
+  #services.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+      gtkUsePortal = true;
+    };
+  };
 
   users.users."${username}" = usermod;
 
