@@ -271,11 +271,11 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " telescope mappings
-nnoremap <c-f> :lua require'telescope.builtin'.treesitter{}<CR>
-nnoremap <c-u> :lua require'telescope.builtin'.live_grep{}<CR>
-nnoremap <c-p> :lua require'telescope.builtin'.find_files{}<CR>
-nnoremap ;     :lua require'telescope.builtin'.buffers{ show_all_buffers = true }<CR>
-nnoremap ;;    :lua require'telescope.builtin'.git_files{}<CR>
+nnoremap <c-f> <cmd>lua require('telescope.builtin').treesitter()<cr>
+nnoremap <c-u> <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <c-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap ;     <cmd>lua require('telescope.builtin').buffers{ show_all_buffers = true }<cr>
+nnoremap ;;    <cmd>lua require('telescope.builtin').git_files()<cr>
 
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_chain_complete_list = [
