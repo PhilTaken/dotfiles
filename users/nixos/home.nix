@@ -77,6 +77,7 @@ in rec {
       exa
       fasd
       fd
+      file
       fortune
       haxor-news
       hyperfine
