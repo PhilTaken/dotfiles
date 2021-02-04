@@ -262,6 +262,8 @@ lsp.pyls.setup{}
 lsp.fortls.setup{ 
     root_dir = lsp.util.root_pattern('.git');
 }
+
+require'statusline'
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
@@ -316,4 +318,3 @@ augroup vimwiki_mappings
     autocmd Filetype vimwiki nmap <buffer><silent> <Backspace> <Plug>VimwikiGoBackLink
     autocmd Filetype vimwiki nmap <buffer><silent> <Leader>ww <Plug>VimwikiIndex
 augroup END
-
