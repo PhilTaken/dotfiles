@@ -161,7 +161,7 @@ in {
         glog="git log";
         gpsup="git push --set-upstream origin master";
         gco="git checkout";
-        gcm="git checkout master";
+        gcm="git checkout main";
         du="dust";
       };
     };
