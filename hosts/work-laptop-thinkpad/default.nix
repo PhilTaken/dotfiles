@@ -18,6 +18,8 @@ in {
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
 
+  virtualisation.docker.enable = true;
+
   imports = [ ./hardware-configuration.nix ];
 
   # Use the systemd-boot EFI boot loader.
@@ -47,12 +49,6 @@ in {
   sound.enable = true;
   sound.mediaKeys.enable = true;
 
-  #hardware.pulseaudio.enable = true;
-  #hardware.pulseaudio.support32Bit = true;
-  #hardware.pulseaudio.package = pkgs.pulseaudioFull;
-  #services.jack.jackd.enable = true;
-
-  #services.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -74,12 +70,7 @@ in {
 
   users.users."${username}" = usermod;
 
-  environment.systemPackages = with pkgs; [
-    vim git
-    cryptsetup
-    #opensc
-  ];
-  #services.pcscd.enable = true;
+  environment.systemPackages = with pkgs; [ vim git cryptsetup ];
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
   programs.zsh.enable = true;
@@ -89,13 +80,5 @@ in {
   };
   programs.light.enable = true;
 
-  #services.actkbd = {
-  #  enable = true;
-  #  bindings = [
-  #    { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
-  #    { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-  #  ];
-  #};
-
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "20.09";
 }
