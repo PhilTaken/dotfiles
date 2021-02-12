@@ -1,15 +1,7 @@
-# https://rycee.gitlab.io/home-manager/options.html
-# https://github.com/nix-community/nix-direnv
-# https://github.com/profclems/glab
-# TODO: when moving to nixOS swap swaylock with ${pkgs.swaylock}/bin/swaylock
-#{ pkgs, rofi_package ? pkgs.rofi, vim_package ? pkgs.nvim, ... }:
 { pkgs, ... }: let 
-  # home_directory = builtins.getEnv "HOME";
   username = "nixos";
   home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
-
-  # lock background for shell alias + sway idle
 in rec {
   imports = [
     ../modules/mail

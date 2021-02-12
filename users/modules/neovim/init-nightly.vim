@@ -228,7 +228,7 @@ autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 " gopass
 au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup
 
-" lua lsp stuff (copied)
+" lua lsp stuff
 syntax enable
 lua <<EOF
 
