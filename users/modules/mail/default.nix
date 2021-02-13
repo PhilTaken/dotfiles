@@ -41,4 +41,13 @@
       notmuch.enable = true;
     };
   };
+
+  programs = {
+    lieer.enable = true;
+    notmuch.enable = true;
+    afew.enable = true;
+    neomutt = {
+      enable = true;
+    };
+  };
 }

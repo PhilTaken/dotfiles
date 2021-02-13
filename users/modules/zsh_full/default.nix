@@ -212,4 +212,29 @@ in {
         bind -r O resize-pane -R 5
       '';
     };
+
+    xdg.configFile."page/init.vim".source = ../modules/page/init.vim;
+    programs.zsh.history.path = "${xdg.dataHome}/zsh/histfile";
+
+    home.packages = with pkgs; [
+      page
+      bandwhich
+      bottom
+      du-dust
+      exa
+      fasd
+      fd
+      file
+      fortune
+      lolcat
+      lshw
+      neofetch
+      procs
+      ripgrep
+      ripgrep-all
+      rsync
+      sd
+      sshfs
+      unzip
+    ];
   }
