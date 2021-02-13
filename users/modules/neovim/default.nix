@@ -23,8 +23,6 @@
       auto-pairs
       vim-tmux-navigator
 
-      #vim-airline
-      #vim-airline-themes
       galaxyline-nvim
 
       vim-pandoc
