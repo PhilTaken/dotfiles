@@ -1,7 +1,11 @@
-{ pkgs, ... }:
+{ 
+  pkgs,
+  username,
+  ...
+}:
 let 
-  lock_bg = ../../nixos/wallpaper/lock.jpg;
-  sway_bg = ../../nixos/wallpaper/river.jpg;
+  lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
+  sway_bg = ../.. + "/${username}/wallpaper/river.jpg";
 in rec {
   wayland.windowManager.sway = let
     std_opacity = "0.96";
@@ -249,16 +253,29 @@ in rec {
     systemd.enable = true;
   };
 
-  programs.mako = {
-    enable = true;
-    maxVisible = 5;
-    defaultTimeout = 5000;
-    font = "iosevka";
-    backgroundColor = "#FFFFFF";
-    textColor = "#000000";
-    borderColor = "#000000";
-    borderSize = 2;
-    borderRadius = 4;
+  programs = {
+    mako = {
+      enable = true;
+      maxVisible = 5;
+      defaultTimeout = 5000;
+      font = "iosevka";
+      backgroundColor = "#FFFFFF";
+      textColor = "#000000";
+      borderColor = "#000000";
+      borderSize = 2;
+      borderRadius = 4;
+    };
+    rofi = {
+      enable = true;
+      package = pkgs.rofi-wayland;
+    };
+    alacritty = {
+      enable = true;
+      settings = {
+        font.normal.family = "iosevka";
+        font.size = 12.0;
+      };
+    };
   };
 
   services.kanshi = {
@@ -346,17 +363,4 @@ in rec {
     glibcLocales
   ];
 
-  programs = {
-    rofi = {
-      enable = true;
-      package = pkgs.rofi-wayland;
-    };
-    alacritty = {
-      enable = true;
-      settings = {
-        font.normal.family = "iosevka";
-        font.size = 12.0;
-      };
-    };
-  };
 }

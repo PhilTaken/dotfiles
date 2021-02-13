@@ -1,6 +1,10 @@
-{ pkgs, ... }: let
-  lock_bg = ../../nixos/wallpaper/lock.jpg;
-in {
+{ 
+  pkgs,
+  username,
+  ... 
+}: let
+  lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
+in rec {
   programs.password-store = {
     enable = true;
     package = pkgs.gopass;
@@ -73,6 +77,7 @@ in {
       ignoreDups = true;
       ignoreSpace = true;
       share = true;
+      path = "$XDG_DATA_HOME/zsh/histfile";
     };
     initExtraBeforeCompInit = ''
         setopt prompt_subst
@@ -213,8 +218,7 @@ in {
       '';
     };
 
-    xdg.configFile."page/init.vim".source = ../modules/page/init.vim;
-    programs.zsh.history.path = "${xdg.dataHome}/zsh/histfile";
+    xdg.configFile."page/init.vim".source = ./page.vim;
 
     home.packages = with pkgs; [
       page
