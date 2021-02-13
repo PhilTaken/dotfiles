@@ -29,89 +29,17 @@ in rec {
       TEXMFHOME = "${xdg.dataHome}/texmf";
       _ZO_ECHO = 1;
       XDG_CURRENT_DESKTOP = "sway";
-
       MOZ_ENABLE_WAYLAND = 1;
       MOZ_USE_XINPUT2 = 1;
       GTK_USE_PORTAL = 1;
-
       AWT_TOOLKIT = "MToolkit";
     };
     packages = with pkgs; [
-      # core
       cacert
       coreutils
       mailcap
       curl
-
-      niv
-
-      # sway/wayland util
-      swaylock
-      swayidle
-      wl-clipboard
-      grim
-      sway-contrib.grimshot
-      slurp
-      imv
-      feh
-      wev
-      wf-recorder
-      ffmpeg
-      xorg.xauth
-      ydotool
-      libnotify
-      libappindicator
-      glibcLocales
-
-      # git
-      git-crypt
-
-      # terminal util
-      bandwhich
-      bottom
-      cmake
-      du-dust
-      exa
-      fasd
-      fd
-      file
-      fortune
-      haxor-news
-      hyperfine
-      lolcat
-      lshw
-      neofetch
-      page
-      pandoc
-      playerctl
-      powertop
-      procs
-      ripgrep
-      ripgrep-all
-      rsync
-      sd
-      sshfs
-      tokei
-      topgrade
-      universal-ctags
-      unzip
-      vpnc
-      wmname
-      wtf
-      youtube-dl
-
-      # other
-      discord
-      gimp
-      #libreoffice-qt
-      pamixer
-      spotify
-      tdesktop
-      vlc
-      zotero
-      cmst
-      pavucontrol
-      zettlr
+      qt5.qtbase
 
       # fonts
       iosevka-bin
@@ -119,22 +47,34 @@ in rec {
       (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
       hicolor-icon-theme
 
-      # powerline
-      powerline-rs
-      powerline-fonts
+      # terminal util
+      cmake
+      haxor-news
+      playerctl
+      tokei
+      hyperfine
+      powertop
+      vpnc
+      youtube-dl
+      ffmpeg
 
-      # extra
-      qt5.qtbase
+      # other
+      discord
+      gimp
+      pamixer
+      spotify
+      tdesktop
+      vlc
+      zotero
+      pavucontrol
+
+      # powerline
+      #powerline-rs
+      #powerline-fonts
     ];
   };
 
   programs = {
-    lieer.enable = true;
-    notmuch.enable = true;
-    afew.enable = true;
-    neomutt = {
-      enable = true;
-    };
     home-manager.enable = true;
     gpg = {
       enable = true;
@@ -143,10 +83,6 @@ in rec {
       };
     };
 
-    rofi = {
-      enable = true;
-      package = pkgs.rofi-wayland;
-    };
     firefox = {
       enable = true;
       package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
@@ -154,13 +90,6 @@ in rec {
         extraPolicies = {
           ExtensionSettings = {};
         };
-      };
-    };
-    alacritty = {
-      enable = true;
-      settings = {
-        font.normal.family = "iosevka";
-        font.size = 12.0;
       };
     };
     texlive.enable = true;
@@ -182,8 +111,4 @@ in rec {
     dataHome = "${home_directory}/.local/share";
     cacheHome = "${home_directory}/.cache";
   };
-
-  xdg.configFile."page/init.vim".source = ../modules/page/init.vim;
-
-  programs.zsh.history.path = "${xdg.dataHome}/zsh/histfile";
 }

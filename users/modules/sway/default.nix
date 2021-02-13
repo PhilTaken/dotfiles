@@ -327,4 +327,36 @@ in rec {
       };
     };
   };
+
+  home.packages = with pkgs; [
+    swaylock
+    swayidle
+    wl-clipboard
+    grim
+    sway-contrib.grimshot
+    slurp
+    imv
+    feh
+    wev
+    wf-recorder
+    xorg.xauth
+    ydotool
+    libnotify
+    libappindicator
+    glibcLocales
+  ];
+
+  programs = {
+    rofi = {
+      enable = true;
+      package = pkgs.rofi-wayland;
+    };
+    alacritty = {
+      enable = true;
+      settings = {
+        font.normal.family = "iosevka";
+        font.size = 12.0;
+      };
+    };
+  };
 }

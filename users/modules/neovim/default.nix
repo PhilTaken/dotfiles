@@ -48,12 +48,7 @@
     extraConfig = builtins.readFile neovim-config-file;
     extraPython3Packages = (ps: with ps; [ pynvim ]);
   };
+
   xdg.configFile."nvim/lua/statusline.lua".source = ./lua/statusline.lua;
   xdg.configFile."nvim/lua/utils.lua".source = ./lua/utils.lua;
-
-  # currently this does attempt to source the lua code in nix ffs
-  #xdg.configFile = (builtins.listToAttrs (map (file: {
-  #  name = "nvim/lua/${file}.source";
-  #  value = ./lua + "/${file}";
-  #}) (builtins.attrNames (builtins.readDir ./lua))));
 }
