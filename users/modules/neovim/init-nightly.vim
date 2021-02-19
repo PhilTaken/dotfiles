@@ -215,6 +215,7 @@ augroup buf_write
     autocmd BufWrite *.c :call DeleteTrailingWS()
     autocmd BufWrite *.h :call DeleteTrailingWS()
     autocmd BufWrite *.rs :call DeleteTrailingWS()
+    autocmd BufWrite *.lua :call DeleteTrailingWS()
 augroup END
 
 " nvr as git tool in terminal
@@ -231,18 +232,14 @@ au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup
 " lua lsp stuff
 syntax enable
 lua <<EOF
-
 -- setup treesitter
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
-        "rust", "c", "python", "lua",
-        "nix", "json", "html", "cpp",
-        "toml", "bash", "rst", "css",
-        "javascript", "regex", "yaml",
-        "php"
+        "json", "html", "toml",
+        "bash", "css", "yaml"
     },
     highlight = {
-        enable = true,              -- false will disable the whole extension
+        enable = true,
     },
 }
 
@@ -259,8 +256,28 @@ lsp.rust_analyzer.setup{}
 lsp.texlab.setup{}
 lsp.clangd.setup{}
 lsp.pyls.setup{}
-lsp.fortls.setup{ 
+lsp.fortls.setup { 
     root_dir = lsp.util.root_pattern('.git');
+}
+lsp.sumneko_lua.setup {
+    cmd = { "lua-language-server" };
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+                path = vim.split(package.path, ';'),
+            },
+            diagnostics = {
+                globals = {'vim'},
+            },
+            workspace = {
+                library = {
+                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                },
+            },
+        },
+    };
 }
 
 require'statusline'
@@ -268,6 +285,7 @@ EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+au TextYankPost * silent! lua vim.highlight.on_yank { higroup="IncSearch", timeout=1000, on_visual=false }
 
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
