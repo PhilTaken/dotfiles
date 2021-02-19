@@ -134,54 +134,48 @@ in rec {
     '';
     shellAliases = {
       sudo = "sudo ";
-        #cp = "rsync";
-        gre = "rg";
-        df = "df -h";
-        free = "free -h";
-        exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
-        exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
-        ll = "exal";
-        cat = "bat";
-        ntop = "sudo ntop -u nobody";
-        open = "xdg-open";
-        pass = "gopass";
-        #sway = "XDG_SESSION_TYPE=wayland nixGLIntel exec sway";
-        yta = "youtube-dl -x --audio-format flac";
-        vo = "f -fe zathura";
+      gre = "rg";
+      df = "df -h";
+      free = "free -h";
+      exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
+      exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
+      ll = "exal";
+      cat = "bat";
+      ntop = "sudo ntop -u nobody";
+      open = "xdg-open";
+      pass = "gopass";
+      yta = "youtube-dl -x --audio-format flac";
+      vo = "f -fe zathura";
+      sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
 
-        sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
+      lock = "swaylock -i ${lock_bg}";
+      du="dust";
 
-        # TODO change to vim/whatever vim I installed
-        v = "f -fte vim";
-        vimup = "vim +PlugUpdate +qall";
-
-        lock = "swaylock -i ${lock_bg}";
-        ga = "git add";
-        gc="git commit";
-        gd="git diff";
-        gr="git remote";
-        gs="git status";
-        gl="git pull";
-        gp="git push";
-        glog="git log";
-        gpsup="git push --set-upstream origin master";
-        gco="git checkout";
-        gcm="git checkout main";
-        du="dust";
-      };
+      # git
+      ga="git add";
+      gc="git commit";
+      gd="git diff";
+      gr="git reset";
+      grv="git remote -v";
+      gl="git pull";
+      gp="git push";
+      glog="git log";
+      gco="git checkout";
+      gcm="git checkout main";
     };
+  };
 
-    programs.tmux = let 
-      airline_conf = ./tmux_airline.conf;
-    in {
-      enable = true;
-      baseIndex = 1;
-      escapeTime = 1;
-      keyMode = "vi";
-      secureSocket = true;
-      shortcut = "a";
-      terminal = "screen-256color";
-      extraConfig = ''
+  programs.tmux = let 
+    airline_conf = ./tmux_airline.conf;
+  in {
+    enable = true;
+    baseIndex = 1;
+    escapeTime = 1;
+    keyMode = "vi";
+    secureSocket = true;
+    shortcut = "a";
+    terminal = "screen-256color";
+    extraConfig = ''
         source ${airline_conf}
 
         set -g mouse on
@@ -215,30 +209,30 @@ in rec {
         bind -r N resize-pane -D 5
         bind -r E resize-pane -U 5
         bind -r O resize-pane -R 5
-      '';
-    };
+    '';
+  };
 
-    xdg.configFile."page/init.vim".source = ./page.vim;
+  xdg.configFile."page/init.vim".source = ./page.vim;
 
-    home.packages = with pkgs; [
-      page
-      bandwhich
-      bottom
-      du-dust
-      exa
-      fasd
-      fd
-      file
-      fortune
-      lolcat
-      lshw
-      neofetch
-      procs
-      ripgrep
-      ripgrep-all
-      rsync
-      sd
-      sshfs
-      unzip
-    ];
-  }
+  home.packages = with pkgs; [
+    page
+    bandwhich
+    bottom
+    du-dust
+    exa
+    fasd
+    fd
+    file
+    fortune
+    lolcat
+    lshw
+    neofetch
+    procs
+    ripgrep
+    ripgrep-all
+    rsync
+    sd
+    sshfs
+    unzip
+  ];
+}
