@@ -28,6 +28,7 @@ in {
 
   networking.hostName = hostname;
   networking.wireless.enable = true;
+  networking.wireless.userControlled.enable = true;
   networking.wg-quick.interfaces = {
     mullvad = import ../vpn/mullvad.nix;
   };
@@ -39,6 +40,12 @@ in {
   networking.useDHCP = false;
   networking.interfaces.enp0s31f6.useDHCP = true;
   networking.interfaces.wlp0s20f3.useDHCP = true;
+
+  services.connman = {
+    enable = true;
+    enableVPN = false;
+    wifi.backend = "wpa_supplicant";
+  };
 
   # Configure keymap in X11 and console
   services.xserver.layout = "us";
@@ -70,7 +77,11 @@ in {
 
   users.users."${username}" = usermod;
 
-  environment.systemPackages = with pkgs; [ vim git cryptsetup ];
+  environment.systemPackages = with pkgs; [
+    vim git          # defaults
+    cryptsetup       # encrypted disks
+    cmst             # connman system tray
+  ];
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
   programs.zsh.enable = true;
