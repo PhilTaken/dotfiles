@@ -25,6 +25,7 @@
       vlc
       zotero
       pavucontrol
+      element-desktop
     ];
 
     sessionVars = {
