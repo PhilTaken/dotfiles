@@ -1,0 +1,12 @@
+show-read-articles yes
+show-read-feeds no
+prepopulate-query-feeds no
+show-keymap-hint yes
+swap-title-and-hints no
+text-width 72
+save-path "~/Documents/archived-articles/rss"
+browser firefox %u
+confirm-exit yes
+display-article-progress yes
+auto-reload yes
+history-limit 200

@@ -25,7 +25,9 @@
       vlc
       zotero
       pavucontrol
+
       element-desktop
+      newsboat
     ];
 
     sessionVars = {
