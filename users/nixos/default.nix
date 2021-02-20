@@ -28,6 +28,7 @@
 
       element-desktop
       newsboat
+      mpv
     ];
 
     sessionVars = {
