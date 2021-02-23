@@ -29,10 +29,11 @@
       element-desktop
       newsboat
       mpv
+      tree
     ];
 
     sessionVars = {
-      EDITOR = "${pkgs.neovim-nightly}/bin/nvim";
+      EDITOR = "nvim";
       PAGER = "${pkgs.page}/bin/page";
       MANPAGER = "${pkgs.page}/bin/page -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'";
       _FASD_DATA = "$XDG_DATA_HOME/fasd/fasd.data";
