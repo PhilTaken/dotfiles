@@ -5,6 +5,7 @@
       url = "github:rycee/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    deploy-rs.url = "github:serokell/deploy-rs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     ## extra packages
@@ -13,50 +14,53 @@
     # rofi-wayland-src = { url = "github:lbonn/rofi"; flake = false; submodules = true; };
     # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
-  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, ... }@inputs: let 
-    #overlays = map 
-    #(name: import (./overlays + "/${name}") { inherit inputs; })
-    #(builtins.attrNames (builtins.readDir ./overlays));
+  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, ... }@inputs: let #overlays = map 
+    system = "x86_64-linux";
     overlays = [
       (import ./overlays/nvim-overlay.nix {inherit inputs; })
       (import ./overlays/rofi-overlay.nix {inherit inputs; })
       (import ./custom_pkgs)
     ];
 
-    system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
 
     # every setup is a system + a user
     # the system is mainly used for hardware config, the user for software-specific setups
-    mkSetup = {name, host, username, extramods ? []}: let 
+    mkLocalSetup = {host, username, extramods ? []}: let 
       hostmod = import (./hosts + "/${host}") { inherit inputs pkgs username; };
-      ret = nixpkgs.lib.nixosSystem {
-        inherit system pkgs;
-        modules = [
-          hostmod
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users."${username}" = import (./users + "/${username}/home.nix") { inherit pkgs username; };
-          }
-        ] ++ extramods;
-      }; in ret;
-      setup-script = pkgs.writeShellScriptBin "setup" ''
+    in nixpkgs.lib.nixosSystem {
+      inherit system pkgs;
+      modules = [
+        hostmod
+        home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users."${username}" = import (./users + "/${username}/home.nix") { inherit pkgs username; };
+        }
+      ] ++ extramods;
+    };
+    mkRemoteSetup = {host, username, extramods ? []}: let
+      hostmod = import (./hosts + "/${host}") { inherit inputs pkgs username; };
+    in nixpkgs.lib.nixosSystem {
+      inherit system pkgs;
+      modules = [ hostmod ] ++ extramods;
+    };
+    setup-script = pkgs.writeShellScriptBin "setup" ''
         if [[ -z "$1" || "$1" == "help" ]]; then
-          echo -e "Usage: $(basename $0) {config} [ update | switch | build | install ]\n\nFor more details on the options see \`man nixos-rebuild\`"
-          echo -e ""
-          echo -e "Available configs:"
-          echo -e "   - \"nixos-laptop\":  laptop setup for work"
+        echo -e "Usage: $(basename $0) {config} [ update | switch | build | install ]\n\nFor more details on the options see \`man nixos-rebuild\`"
+        echo -e ""
+        echo -e "Available configs:"
+        echo -e "   - \"nixos-laptop\":  laptop setup for work"
         elif [[ "$1" == "update" ]]; then 
-          nix flake update --recreate-lock-file --commit-lock-file
+        nix flake update --recreate-lock-file --commit-lock-file
         elif [[ "$2" == "install" ]]; then
-          sudo nixos-install --flake ".#$1" "${"\${@:3}"}"
+        sudo nixos-install --flake ".#$1" "${"\${@:3}"}"
         elif [[ "$2" == "upgrade" ]]; then
-          nix flake update --recreate-lock-file --commit-lock-file && sudo nixos-rebuild --flake ".#$1" switch
+        nix flake update --recreate-lock-file --commit-lock-file && sudo nixos-rebuild --flake ".#$1" switch
         else
-          sudo nixos-rebuild --flake ".#$1" "${"\${@:2}"}"
+        sudo nixos-rebuild --flake ".#$1" "${"\${@:2}"}"
         fi
-      '';
+    '';
   in {
     devShell."${system}" = pkgs.mkShell {
       buildInputs = with pkgs; [
@@ -68,10 +72,13 @@
       ];
     };
 
-    nixosConfigurations.nixos-laptop = mkSetup { 
-      name = "nixos-laptop";
+    nixosConfigurations.nixos-laptop = mkLocalSetup { 
       host = "work-laptop-thinkpad";
-      #extramods = [ nixos-hardware.nixosModules.lenovo-thinkpad-t490 ];
+      username = "nixos";
+    };
+
+    nixosConfigurations.theta = mkRemoteSetup {
+      host = "justus_vps";
       username = "nixos";
     };
   };
