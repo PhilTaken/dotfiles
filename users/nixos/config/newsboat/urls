@@ -1,7 +1,12 @@
-https://hnrss.org/show "Hacker News"                                            HN
-https://hnrss.org/best "Hacker News"                                            HN
+https://hnrss.org/show                                                          "~Show Hacker News" HN
+https://hnrss.org/best                                                          "~Hacker News Best" HN
 https://www.youtube.com/feeds/videos.xml?channel_id=UCweCc7bSMX5J4jEH7HFImng    "~GMHikaru" YouTube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCdC0An4ZPNr_YiFiYoVbwaw    "~Daily Dose" YouTube
+https://www.youtube.com/feeds/videos.xml?channel_id=UCBa659QWEk1AI4Tg--mrJ2A    "~Tom Scott" YouTube
+http://rss.cnn.com/rss/edition.rss                                              "~CNN Top Stories" News
+https://news.un.org/feed/subscribe/en/news/all/rss.xml                          "~UN Top Stories" News
+https://rss.nytimes.com/services/xml/rss/nyt/World.xml                          "~New York Times" News
+https://www.wired.com/feed/rss                                                  "~Wired Top Stories" News Tech
 https://christine.website/blog.rss                                              Nix Rust 
 https://atthis.link/rss.xml                                                     Nix
 https://blog.ysndr.de/rss.xml                                                   Nix
