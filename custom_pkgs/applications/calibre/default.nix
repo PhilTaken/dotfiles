@@ -1,5 +1,5 @@
 { lib
-, mkDerivation
+, stdenv
 , fetchurl
 , poppler_utils
 , pkgconfig
@@ -8,29 +8,30 @@
 , libjpeg
 , fontconfig
 , podofo
-, qtbase
-, qmake
+, qt5
 , icu
 , sqlite
 , hunspell
 , hyphen
 , unrarSupport ? false
 , chmlib
-, pythonPackages
+, python3Packages
 , libusb1
 , libmtp
 , xdg_utils
 , makeDesktopItem
 , removeReferencesTo
+, xdg-utils
+, makeWrapper
 }:
 
-mkDerivation rec {
+stdenv.mkDerivation rec {
   pname = "calibre";
-  version = "4.23.0";
+  version = "5.11.0";
 
   src = fetchurl {
     url = "https://download.calibre-ebook.com/${version}/${pname}-${version}.tar.xz";
-    sha256 = "sha256-Ft5RRzzw4zb5RqVyUaHk9Pu6H4V/F9j8FKoTLn61lRg=";
+    sha256 = "sha256-PI+KIMnslhoagv9U6Mcmo9Onfu8clVqASNlDir8JzUw=";
   };
 
   patches = [
@@ -42,22 +43,29 @@ mkDerivation rec {
     # the unrar patch is not from debian
   ] ++ lib.optional (!unrarSupport) ./dont_build_unrar_plugin.patch;
 
-  prePatch = ''
-    sed -i "/pyqt_sip_dir/ s:=.*:= '${pythonPackages.pyqt5}/share/sip/PyQt5':"  \
-      setup/build_environment.py
+  escaped_pyqt5_dir = builtins.replaceStrings ["/"] ["\\/"] (toString python3Packages.pyqt5);
+  platform_tag =
+    if stdenv.hostPlatform.isDarwin then
+      "WS_MACX"
+    else if stdenv.hostPlatform.isWindows then
+      "WS_WIN"
+    else
+      "WS_X11";
 
+  prePatch = ''
+    sed -i "s/\[tool.sip.project\]/[tool.sip.project]\nsip-include-dirs = [\"${escaped_pyqt5_dir}\/share\/sip\/PyQt5\"]/g" \
+      setup/build.py
+    sed -i "s/\[tool.sip.bindings.pictureflow\]/[tool.sip.bindings.pictureflow]\ntags = [\"${platform_tag}\"]/g" \
+      setup/build.py
     # Remove unneeded files and libs
-    rm -rf resources/calibre-portable.* \
-           src/odf
+    rm -rf src/odf resources/calibre-portable.*
   '';
 
   dontUseQmakeConfigure = true;
 
   enableParallelBuilding = true;
 
-  nativeBuildInputs = [ pkgconfig qmake removeReferencesTo ];
-
-  CALIBRE_PY3_PORT = builtins.toString pythonPackages.isPy3k;
+  nativeBuildInputs = [ pkgconfig qt5.qmake removeReferencesTo ];
 
   buildInputs = [
     chmlib
@@ -72,11 +80,12 @@ mkDerivation rec {
     libusb1
     podofo
     poppler_utils
-    qtbase
+    qt5.qtbase
     sqlite
-    xdg_utils
+    xdg-utils
+    makeWrapper
   ] ++ (
-    with pythonPackages; [
+    with python3Packages; [
       apsw
       beautifulsoup4
       css-parser
@@ -88,24 +97,25 @@ mkDerivation rec {
       html5-parser
       lxml
       markdown
-      mechanize
       msgpack
+      mechanize
       netifaces
       pillow
+      pycryptodome
+      pyqt-builder
       pyqt5
       pyqtwebengine
       python
       regex
-      sip
-      pycryptodome
+      sip_5
+      zeroconf
       # the following are distributed with calibre, but we use upstream instead
       odfpy
-    ]
+    ] ++ lib.optional (unrarSupport) unrardll
   );
 
   installPhase = ''
     runHook preInstall
-
     export HOME=$TMPDIR/fakehome
     export POPPLER_INC_DIR=${poppler_utils.dev}/include/poppler
     export POPPLER_LIB_DIR=${poppler_utils.out}/lib
@@ -115,27 +125,22 @@ mkDerivation rec {
     export FC_LIB_DIR=${fontconfig.lib}/lib
     export PODOFO_INC_DIR=${podofo.dev}/include/podofo
     export PODOFO_LIB_DIR=${podofo.lib}/lib
-    export SIP_BIN=${pythonPackages.sip}/bin/sip
+    export SIP_BIN=${python3Packages.sip}/bin/sip
     export XDG_DATA_HOME=$out/share
     export XDG_UTILS_INSTALL_MODE="user"
-
-    ${pythonPackages.python.interpreter} setup.py install --root=$out \
+    ${python3Packages.python.interpreter} setup.py install --root=$out \
       --prefix=$out \
       --libdir=$out/lib \
       --staging-root=$out \
       --staging-libdir=$out/lib \
       --staging-sharedir=$out/share
-
     PYFILES="$out/bin/* $out/lib/calibre/calibre/web/feeds/*.py
       $out/lib/calibre/calibre/ebooks/metadata/*.py
       $out/lib/calibre/calibre/ebooks/rtf2xml/*.py"
-
     sed -i "s/env python[0-9.]*/python/" $PYFILES
     sed -i "2i import sys; sys.argv[0] = 'calibre'" $out/bin/calibre
-
     mkdir -p $out/share
     cp -a man-pages $out/share/man
-
     runHook postInstall
   '';
 
@@ -148,8 +153,7 @@ mkDerivation rec {
   #   /nix/store/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-podofo-0.9.6-dev/include/podofo/base/PdfVariant.h
   preFixup = ''
     remove-references-to -t ${podofo.dev} \
-      $out/lib/calibre/calibre/plugins${lib.optionalString pythonPackages.isPy3k "/3"}/podofo.so
-
+      $out/lib/calibre/calibre/plugins/podofo.so
     for program in $out/bin/*; do
       wrapProgram $program \
         ''${qtWrapperArgs[@]} \
