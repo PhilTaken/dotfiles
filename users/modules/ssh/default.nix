@@ -51,6 +51,11 @@
         user = "nixos";
         forwardAgent = true;
       };
+      "justus-vm-root" = {
+        hostname = "148.251.102.93";
+        user = "root";
+        forwardAgent = true;
+      };
     };
   };
 }
