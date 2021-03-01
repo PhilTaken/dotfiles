@@ -152,10 +152,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsEditSplit="horizontal"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/ultisnips']
 
-" airline
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#whitespace#enabled = 0
-
 " auto redraw
 autocmd VimResized * redraw!
 
@@ -217,11 +213,6 @@ augroup buf_write
     autocmd BufWrite *.rs :call DeleteTrailingWS()
     autocmd BufWrite *.lua :call DeleteTrailingWS()
 augroup END
-
-" nvr as git tool in terminal
-if has('nvim')
-  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
-endif
 
 " git
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete

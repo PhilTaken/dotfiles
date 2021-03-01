@@ -46,6 +46,11 @@
         hostname = "192.168.8.148";
         user = "pi";
       };
+      "justus-vm" = {
+        hostname = "148.251.102.93";
+        user = "nixos";
+        forwardAgent = true;
+      };
     };
   };
 }
