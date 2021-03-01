@@ -23,11 +23,12 @@ in {
   imports = [ ./hardware-configuration.nix ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  #boot.loader.systemd-boot.enable = true;
+  #boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
   networking.usePredictableInterfaceNames = false;
+  networking.useDHCP = false;
   networking.dhcpcd.enable = false;
   systemd.network = {
     enable = true;
@@ -38,15 +39,10 @@ in {
       Address = 148.251.102.93
       Gateway = 148.251.69.141
     '';
-  }
+  };
 
   # Set your time zone.
   time.timeZone = "${timezone}";
-
-  # dhcp config
-  networking.useDHCP = false;
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp0s20f3.useDHCP = true;
 
   services.connman = {
     enable = true;
