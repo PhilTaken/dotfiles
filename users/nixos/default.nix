@@ -30,6 +30,7 @@
       newsboat
       mpv
       tree
+      calibre
     ];
 
     sessionVars = {
