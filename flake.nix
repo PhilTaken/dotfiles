@@ -28,7 +28,7 @@
     # every setup is a system + a user
     # the system is mainly used for hardware config, the user for software-specific setups
 
-    mkRemoteSetup = {host, username, extramods ? []}: let
+    mkRemoteSetup = {host, username ? "nixos", extramods ? []}: let
       hostmod = import (./hosts + "/${host}") { inherit inputs pkgs username; };
     in nixpkgs.lib.nixosSystem {
       inherit system pkgs;
@@ -84,7 +84,6 @@
     # vm on a hetzner server, debian host
     nixosConfigurations.alpha = mkRemoteSetup {
       host = "alpha";
-      username = "nixos";
     };
 
     # deploy config
@@ -92,7 +91,7 @@
       alpha = {
         hostname = "148.251.102.93";
         sshUser = "root";
-        profiles.system = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
       };
     };
 
