@@ -46,12 +46,12 @@
         hostname = "192.168.8.148";
         user = "pi";
       };
-      "justus-vm" = {
+      "alpha" = {
         hostname = "148.251.102.93";
         user = "nixos";
         forwardAgent = true;
       };
-      "justus-vm-root" = {
+      "alpha-root" = {
         hostname = "148.251.102.93";
         user = "root";
         forwardAgent = true;
