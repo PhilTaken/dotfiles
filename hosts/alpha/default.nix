@@ -2,13 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
+{ pkgs, ... }:
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-     ];
+  imports = [ ./hardware-configuration.nix ];
   nix.trustedUsers = [ "@wheel" "nixos" ];
 
   # Use the GRUB 2 boot loader.
@@ -31,8 +27,10 @@
     nameservers = [ "1.1.1.1" ];
     localCommands = 
     ''
+
       ip route add "148.251.69.141" dev "eth0"
       ip route add default via "148.251.69.141" dev "eth0"
+
     '';
   };
 
@@ -85,8 +83,6 @@
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   #networking.firewall.allowedUDPPorts = [  ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
