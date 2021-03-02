@@ -68,6 +68,7 @@
   in {
     devShell."${system}" = pkgs.mkShell {
       buildInputs = with pkgs; [
+        git
         git-crypt
         setup-script
         deploy-rs.packages."${system}".deploy-rs
