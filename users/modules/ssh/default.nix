@@ -2,13 +2,6 @@
 {
   programs.ssh = {
     enable = true;
-    # TODO completely replace these with gpg ssh agent
-    #extraConfig = ''
-    #    IdentityFile ~/.ssh/id_files/id_rsa_work
-    #    IdentityFile ~/.ssh/id_files/id_rsa_private
-    #    IdentityFile ~/.ssh/id_files/id_rsa_other
-    #    IdentityFile ~/.ssh/id_rsa
-    #'';
     matchBlocks = {
       "jureca" = {
         hostname = "jureca.fz-juelich.de";
