@@ -137,8 +137,8 @@ in rec {
       gre = "rg";
       df = "df -h";
       free = "free -h";
-      exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
-      exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
+      exal = "command exa -liaahmF --git --group-directories-first";
+      exa = "command exa -Fx --group-directories-first";
       ll = "exal";
       cat = "bat";
       ntop = "sudo ntop -u nobody";
@@ -147,9 +147,15 @@ in rec {
       yta = "youtube-dl -x --audio-format flac";
       vo = "f -fe zathura";
       sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
-
+      top = "btm";
       lock = "swaylock -i ${lock_bg}";
       du="dust";
+
+      # c/c++ dev
+      bear = "nix-shell -p bear --run bear";
+
+      # wget
+      wget = "nix-shell -p wget --run wget";
 
       # git
       ga="git add";
