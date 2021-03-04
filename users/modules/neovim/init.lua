@@ -47,14 +47,14 @@ require("custom.utils")
 -- default settings
 require('custom.settings')
 
+-- global plugin options
+require('custom.plugin_settings')
+
 -- lsp
 require('custom.lsp')
 
 -- mappings
 require("custom.maps")
-
--- statusline
-require("custom.statusline")
 
 -- plugins
 require('custom.plugins')

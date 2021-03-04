@@ -199,7 +199,7 @@ vnoremap / y/<C-R>"<CR>
 " Delete trailing whitespace on save, useful for Python, Rust and cpp ;)
 func! DeleteTrailingWS()
   exe "normal mz"
-  %s/\s\+$//ge
+  %s/\s\+$//e
   exe "normal `z"
 endfunc
 

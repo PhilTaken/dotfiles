@@ -243,16 +243,6 @@ autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 " gopass
 au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup noundofile
 
-" ---------------------------------
-"        coc stuff (copied) 
-" ---------------------------------
-
-nmap <silent>gd <Plug>(coc-definition)
-nmap <silent>gy <Plug>(coc-type-definition)
-nmap <silent>gi <Plug>(coc-implementation)
-nmap <silent>gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-
 inoremap <silent><expr> <TAB>
     \ pumvisible() ? "\<C-n>" :
     \ <SID>check_back_space() ? "\<TAB>" :

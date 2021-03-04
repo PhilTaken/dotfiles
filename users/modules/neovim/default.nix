@@ -9,34 +9,35 @@
     withNodeJs = true;
     plugins = with pkgs.vimPlugins; [
       vim-fugitive
+      galaxyline-nvim
+      popup-nvim
+      plenary-nvim
+      telescope-nvim
+      nvim-web-devicons
+
       vim-gitgutter
       vim-rooter
       vim-startify
       vim-surround
       vim-speeddating
-      vim-snippets
       targets-vim
       echodoc-vim
       nerdcommenter
       auto-pairs
       vim-tmux-navigator
 
-      galaxyline-nvim
+      vim-snippets
+      ultisnips
 
       vim-pandoc
       vim-pandoc-syntax
       vimwiki
       vim-nix
       ayu-vim
-      ultisnips
 
       nvim-lspconfig
       lsp_extensions-nvim
       nvim-treesitter
-      popup-nvim
-      plenary-nvim
-      telescope-nvim
-      nvim-web-devicons
       completion-nvim
       completion-buffers
       completion-treesitter
