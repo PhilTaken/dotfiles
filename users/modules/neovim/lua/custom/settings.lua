@@ -1,76 +1,71 @@
-local g = vim.g
 local o = vim.o
 local wo = vim.wo
 local bo = vim.bo
 
--- leader
-g.mapleader = ' '
+-- leader, for mappings
+vim.g.mapleader = ' '
 
--- global options
+-- ignore these in searches
 o.wildignore = "*.swp,*.bak,*.pyc,*.class"
+
+-- popup menu opacity
 o.pumblend = 20
+
+-- enable mouse
 o.mouse = "a"
-o.inccommand = "split"
+
+-- show changes incrementally
+o.inccommand = "nosplit"
+
+-- no backup/swapfiles
 o.backup = false
 o.swapfile = false
 o.writebackup = false
+
+-- write to undofile in undodir
+vim.cmd[[set undodir=$XDG_DATA_HOME/nvim/undodir]]
+vim.cmd[[set undofile]]
+
+-- disable spellchecking
 o.spell = false
+
+-- improved completers
 o.completeopt = "menuone,noinsert,noselect"
 o.shortmess = "filnxtToOFc"
-o.cmdheight = 1
+
+-- timeout for cursorhold  autocommand event
 o.updatetime = 300
-o.autowrite = true
+
+-- do not save when switching buffers
 o.hidden = true
 
+-- improved search
 o.ignorecase = true
 o.smartcase = true
 
+-- highlight on search
+o.hlsearch = false
 o.incsearch = true
-o.hlsearch = true
 
+-- backspace on start of line
 o.backspace = "indent,eol,start"
 
 o.shiftround = true
 o.timeoutlen = 300
 o.ttimeoutlen = 0
 
-
-o.number = true
-o.relativenumber = true
 o.laststatus = 2
-
 bo.formatoptions = "tcqj"
+
+-- tab width, expand to spaces
 bo.tabstop = 4
 bo.shiftwidth = 4
 bo.expandtab = true
+
+-- same indent on new lines
 bo.copyindent = true
 
+-- line numbers
+wo.number = true
+wo.relativenumber = true
 wo.signcolumn = "yes"
-
-
---- global options
-g.rooter_targets = '/,*'
-g.rooter_patterns = { '.git/' }
-g.rooter_resolve_links = 1
-
-g.NERDDefaultAlign = "left"
-g.NERDToggleCheckAllLines = 1
-g.UltiSnipsExpandTrigger = "JJ"
-g.UltiSnipsJumpForwardTrigger = "<c-j>"
-g.UltiSnipsJumpBackwardTrigger = "<c-k>"
-g.UltiSnipsEditSplit = "horizontal"
-g.pear_tree_smart_closers = 1
-g.pear_tree_smart_openers = 1
-g.pear_tree_smart_backspace = 1
-
-g.tmux_navigator_no_mappings = 1
-g.tmux_navigator_save_on_switch = 1
-
-
-g.completion_enable_snippet = "UltiSnips"
-g.completion_chain_complete_list = {
-    { complete_items = { 'lsp', 'snippet', 'path' } },
-    { complete_items = { 'ts', 'buffers' } },
-}
-g.completion_auto_change_source = 1
-

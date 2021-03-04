@@ -1,5 +1,9 @@
 local gl = require('galaxyline')
-local utils = require('utils')
+local utils = require('custom.statusline_utils')
+
+-- setup dev icons
+require'nvim-web-devicons'.setup()
+
 
 local gls = gl.section
 gl.short_line_list = {'defx', 'packager', 'vista', 'NvimTree'}
