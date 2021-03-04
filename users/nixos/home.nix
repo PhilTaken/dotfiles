@@ -66,5 +66,4 @@ in rec {
 
   # TODO write function that adds all the files in config to xdg automatically
   xdg.configFile."newsboat/config".source = ./config/newsboat/config;
-  xdg.configFile."newsboat/urls".source = ./config/newsboat/urls;
 }
