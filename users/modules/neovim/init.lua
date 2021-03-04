@@ -1,6 +1,7 @@
 -- TODO:
 -- - trailing WS
 -- - langmap
+--
 
 -- My init.lua ~
 --
@@ -41,8 +42,12 @@
 
 
 
+
 -- utils
 require("custom.utils")
+
+-- plugins
+require('custom.plugins')
 
 -- default settings
 require('custom.settings')
@@ -55,6 +60,3 @@ require('custom.lsp')
 
 -- mappings
 require("custom.maps")
-
--- plugins
-require('custom.plugins')

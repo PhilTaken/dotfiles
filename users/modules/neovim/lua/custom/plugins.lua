@@ -21,19 +21,35 @@ require('packer').startup(function()
     -- pack packer
     use {'wbthomason/packer.nvim', opt = true}
 
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-dispatch'
-    use 'tpope/vim-repeat'
-    use 'tpope/vim-sleuth'
-    use 'AndrewRadev/splitjoin.vim'
-    use 'norcalli/snippets.nvim'
-    use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
+    -- git signs in signcolumn
+    use 'airblade/vim-gitgutter'
 
-    -- nvim integration for firefox
-    use {
-        'glacambre/firenvim',
-        run = ":call firenvim#install(0)"
-    }
+    -- change pwd to git root
+    use 'zah/vim-rooter'
+
+    -- start menu
+    use 'mhinz/vim-startify'
+
+    -- manage surrounds e.g. quotation marks, html tags, ...
+    use 'tpope/vim-surround'
+
+    -- increment/decrement dates
+    use 'tpope/vim-speeddating'
+
+    -- extra targets
+    use 'wellle/targets.vim'
+
+    -- show function arguments
+    use 'Shougo/echodoc.vim'
+
+    -- commenting
+    use 'preservim/nerdcommenter'
+
+    -- auto end quotation mark/bracket
+    use 'jiangmiao/auto-pairs'
+
+    -- tmux movements, in splits
+    use 'christoomey/vim-tmux-navigator'
 
     -- telescope
     use {
@@ -49,11 +65,39 @@ require('packer').startup(function()
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
 
-    -- tmux movements, in splits
-    use 'christoomey/vim-tmux-navigator'
+    -- ayu color scheme
+    use 'ayu-theme/ayu-vim'
 
+    -- vim wiki
+    use 'vimwiki/vimwiki'
+
+    -- pandoc
+    use 'vim-pandoc/vim-pandoc'
+    use 'vim-pandoc/vim-pandoc-syntax'
+
+    -- config for the builtin language server
     use 'neovim/nvim-lspconfig'
+
+    -- new
+    use 'tpope/vim-dispatch'
+    use 'tpope/vim-repeat'
+    use 'tpope/vim-sleuth'
+    use 'AndrewRadev/splitjoin.vim'
+    use 'norcalli/snippets.nvim'
+    use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
+    -- nvim integration for firefox
+    use {
+        'glacambre/firenvim',
+        run = ":call firenvim#install(0)"
+    }
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ":TSUpdate",
+    }
+
     use 'hrsh7th/nvim-compe'
+    -- use 'nvim-lua/completion-nvim'
 end)
 
 
