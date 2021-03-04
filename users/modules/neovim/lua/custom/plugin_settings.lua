@@ -18,6 +18,14 @@ g.pear_tree_smart_backspace = 1
 g.tmux_navigator_no_mappings = 1
 g.tmux_navigator_save_on_switch = 1
 
+-- echodoc
+vim.cmd[[let g:echodoc#enable_at_startup = 1]]
+vim.cmd[[let g:echodoc#type = 'floating']]
+vim.cmd[[highlight link EchoDocPopup Pmenu]]
+
+-- snippets
+require'snippets'.use_suggested_mappings()
+
 
 g.completion_enable_snippet = "UltiSnips"
 g.completion_chain_complete_list = {
@@ -58,14 +66,13 @@ require'compe'.setup {
 
   source = {
     path = true;
-    buffer = false;
+    buffer = true;
     calc = true;
-    vsnip = false;
     nvim_lsp = true;
     nvim_lua = true;
-    spell = false;
-    tags = false;
+    tags = true;
     snippets_nvim = true;
     treesitter = true;
   };
 }
+

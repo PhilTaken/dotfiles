@@ -7,44 +7,7 @@
     vimAlias = true;
     withPython3 = true;
     withNodeJs = true;
-    plugins = with pkgs.vimPlugins; [
-      vim-fugitive
-      galaxyline-nvim
-      popup-nvim
-      plenary-nvim
-      telescope-nvim
-      nvim-web-devicons
-
-      vim-gitgutter
-      vim-rooter
-      vim-startify
-      vim-surround
-      vim-speeddating
-      targets-vim
-      echodoc-vim
-      nerdcommenter
-      auto-pairs
-      vim-tmux-navigator
-
-      vim-snippets
-      ultisnips
-
-      vim-pandoc
-      vim-pandoc-syntax
-      vimwiki
-      vim-nix
-      ayu-vim
-
-      nvim-lspconfig
-      lsp_extensions-nvim
-      nvim-treesitter
-      completion-nvim
-      completion-buffers
-      completion-treesitter
-    ];
-    extraPython3Packages = (ps: with ps; [
-      pynvim
-    ]);
+    extraPython3Packages = (ps: with ps; [ pynvim ]);
     extraPackages = with pkgs; [
       sumneko-lua-language-server   # lua
       ccls                          # c/c++
@@ -55,11 +18,14 @@
       fortls                        # fortran
       git                           # version control
     ];
-    extraConfig = builtins.readFile ./init-nightly.vim;
+    extraConfig = ''
+      set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM
+      luafile ~/.config/nvim/init_.lua
+    '';
   };
 
   #xdg.configFile."nvim/init.vim".source = ./init-nightly.vim;
-  #xdg.configFile."nvim/init.lua".source = ./init.lua;
+  xdg.configFile."nvim/init_.lua".source = ./init.lua;
 
   xdg.configFile."nvim/lua/" = {
     source = ./lua;

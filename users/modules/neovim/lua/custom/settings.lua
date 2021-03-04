@@ -8,6 +8,12 @@ vim.g.mapleader = ' '
 -- ignore these in searches
 o.wildignore = "*.swp,*.bak,*.pyc,*.class"
 
+o.cmdheight = 2
+
+o.termguicolors = true
+vim.g.ayucolor = "mirage"
+vim.cmd[[colorscheme ayu]]
+
 -- popup menu opacity
 o.pumblend = 20
 

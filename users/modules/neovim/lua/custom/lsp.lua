@@ -1,7 +1,9 @@
 local cmd = vim.cmd
 
-cmd("autocmd BufEnter * lua require'completion'.on_attach()")
 cmd("autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()")
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true;
 
 -- set escape in insert mode to leave
 local actions = require('telescope.actions')
@@ -19,7 +21,9 @@ require('telescope').setup{
 local lsp = require'lspconfig'
 
 -- Enable lsp servers
-lsp.rust_analyzer.setup{}
+lsp.rust_analyzer.setup{
+    capabilities = capabilities,
+}
 lsp.texlab.setup{}
 lsp.ccls.setup{}
 lsp.pyright.setup{}
