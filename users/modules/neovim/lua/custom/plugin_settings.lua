@@ -29,25 +29,25 @@ require'snippets'.use_suggested_mappings()
 
 g.completion_enable_snippet = "UltiSnips"
 g.completion_chain_complete_list = {
-    { complete_items = { 'lsp', 'snippet', 'path' } },
-    { complete_items = { 'ts', 'buffers' } },
+  { complete_items = { 'lsp', 'snippet', 'path' } },
+  { complete_items = { 'ts', 'buffers' } },
 }
 g.completion_auto_change_source = 1
 
 g.vimwiki_key_mappings = {
-    global = 0,
-    links = 0,
-    html = 0,
-    mouse = 0,
-    table_mappings = 0,
+  global = 0,
+  links = 0,
+  html = 0,
+  mouse = 0,
+  table_mappings = 0,
 }
 
 g.firenvim_config = {
-    localSettings = {
-        ['.*'] = {
-            takeover = 'never'
-        }
+  localSettings = {
+    ['.*'] = {
+      takeover = 'never'
     }
+  }
 }
 
 require'compe'.setup {
@@ -76,3 +76,21 @@ require'compe'.setup {
   };
 }
 
+
+local snippets = require 'snippets'
+local U = require'snippets.utils'
+
+snippets.snippets = {
+  _global =  {
+    copyright = U.force_comment [[Copyright (C) Philipp Herzog ${=os.date("%Y")}]];
+  };
+  lua = {
+    req = [[local ${2:${1|S.v:match"([^.()]+)[()]*$"}} = require '$1']];
+    func = [[function${1|vim.trim(S.v):gsub("^%S"," %0")}(${2|vim.trim(S.v)})$0 end]];
+    ["local"] = [[local ${2:${1|S.v:match"([^.()]+)[()]*$"}} = ${1}]];
+    ["for"] = U.match_indentation [[
+for ${1:i}, ${2:v} in ipairs(${3:t}) do
+  $0
+end]];
+  };
+}

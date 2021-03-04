@@ -22,7 +22,8 @@ require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt = true}
 
     -- git signs in signcolumn
-    use 'airblade/vim-gitgutter'
+    --use 'airblade/vim-gitgutter'
+    use 'lewis6991/gitsigns.nvim'
 
     -- change pwd to git root
     use 'zah/vim-rooter'
@@ -88,7 +89,7 @@ require('packer').startup(function()
     -- nvim integration for firefox
     use {
         'glacambre/firenvim',
-        run = ":call firenvim#install(0)"
+        run = function() vim.fn['firenvim#install'](0) end,
     }
 
     use {

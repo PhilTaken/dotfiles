@@ -1,7 +1,6 @@
 -- TODO:
--- - trailing WS
--- - langmap
---
+-- - trailing WS (automated on write)
+
 
 -- My init.lua ~
 --
