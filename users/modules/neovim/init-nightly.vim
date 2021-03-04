@@ -38,6 +38,25 @@
 " leader
 let mapleader="\<Space>"
 
+" add my lua plugins to runtimepath
+" TODO make this a plugin
+lua << EOF
+local uv = vim.loop
+local plugindir = "/home/nixos/Documents/personal/nvim_plugins/"
+
+local dir = uv.fs_opendir(plugindir, nil, 200)
+local entries = uv.fs_readdir(dir, nil)
+uv.fs_closedir(dir)
+
+local dirs = vim.tbl_filter(function(entry)
+    return entry.type == "directory"
+end, entries)
+
+vim.tbl_map(function(entry)
+    vim.api.nvim_exec("set runtimepath+=" .. plugindir .. entry.name, false)
+end, dirs)
+EOF
+
 " colorscheme
 set termguicolors
 let ayucolor="mirage"
@@ -59,19 +78,13 @@ set undofile
 "           sets
 " ---------------------------
 
-set formatoptions+=j
-set history=1000
-set undolevels=1000
 set wildignore=*.swp,*.bak,*.pyc,*.class
-set wildoptions=pum
 set pumblend=20
-set title
 set mouse=a
 set inccommand=split
 " folds
 set foldmethod=indent
 set foldnestmax=10
-set nofoldenable
 set foldlevel=2
 " turn backup off partially
 set nobackup
@@ -106,20 +119,14 @@ set smartcase
 set incsearch
 set hlsearch
 " autoindent inside of bracket
-set autoindent
 set copyindent
-set nowrap
 set backspace=indent,eol,start
 set shiftround
-set smarttab
 set pastetoggle=<F3>
-set laststatus=2
-set timeout
 set timeoutlen=300
 set ttimeoutlen=0
 " automatically read edited files from disk instead of asking
-set autoread
-set langnoremap
+"set nolangremap
 
 
 " ---------------------------
@@ -138,8 +145,8 @@ let g:pandoc#spell#enabled = 0
 let g:vimtex_view_general_viewer = 'zathura'
 let g:tex_flavor = 'latex'
 
-let g:echodoc#type = 'signature'
-let g:echodoc#enable_at_startup = 1
+"let g:echodoc#type = 'signature'
+"let g:echodoc#enable_at_startup = 1
 
 " nerd commenter
 let g:NERDDefaultAlign = 'left'
@@ -164,13 +171,6 @@ let g:pear_tree_smart_backspace = 1
 let g:tmux_navigator_no_mappings = 1
 " Update changed buffer when switching to Tmux
 let g:tmux_navigator_save_on_switch = 1
-let g:tmuxline_preset = 'vim_powerline_1'
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'win'  : ['#I', '#W'],
-      \'cwin' : ['#I', '#W'],
-      \'x'    : '#(whoami)@#H',
-      \'z'    : '%a %R'}
 
 " workman layout setting
 "let g:workman_normal_qwerty = 1
@@ -255,8 +255,9 @@ local lsp = require'lspconfig'
 -- Enable lsp servers
 lsp.rust_analyzer.setup{}
 lsp.texlab.setup{}
-lsp.clangd.setup{}
-lsp.pyls.setup{}
+lsp.ccls.setup{}
+lsp.pyright.setup{}
+lsp.rnix.setup{}
 lsp.fortls.setup { 
     root_dir = lsp.util.root_pattern('.git');
 }
@@ -281,7 +282,7 @@ lsp.sumneko_lua.setup {
     };
 }
 
-require'statusline'
+require'custom.statusline'
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
@@ -301,14 +302,10 @@ nnoremap ;;    <cmd>lua require('telescope.builtin').git_files()<cr>
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_chain_complete_list = [
     \{ 'complete_items': [ 'lsp', 'snippet', 'path' ]},
-    \{ 'complete_items': [ 'ts', 'tags' ]},
-    \{ 'complete_items': [ 'buffers', 'tags' ]},
+    \{ 'complete_items': [ 'ts', 'buffers' ]}
 \]
 let g:completion_auto_change_source = 1
 
-
-" deactivate default mappings
-let g:iron_map_defaults=0
 " define custom mappings for the python filetype
 "
 "augroup ironmapping

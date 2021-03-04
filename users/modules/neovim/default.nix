@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
-  programs.neovim = let 
-    neovim-config-file = ./init-nightly.vim;
-  in {
+  programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly;
     viAlias = true;
@@ -43,10 +41,27 @@
       completion-buffers
       completion-treesitter
     ];
-    extraConfig = builtins.readFile neovim-config-file;
-    extraPython3Packages = (ps: with ps; [ pynvim ]);
+    extraPython3Packages = (ps: with ps; [
+      pynvim
+    ]);
+    extraPackages = with pkgs; [
+      sumneko-lua-language-server   # lua
+      ccls                          # c/c++
+      rnix-lsp                      # nix
+      nodePackages.pyright          # python
+      rust-analyzer                 # rust
+      texlab                        # latex
+      fortls                        # fortran
+      git                           # version control
+    ];
+    extraConfig = builtins.readFile ./init-nightly.vim;
   };
 
-  xdg.configFile."nvim/lua/statusline.lua".source = ./lua/statusline.lua;
-  xdg.configFile."nvim/lua/utils.lua".source = ./lua/utils.lua;
+  #xdg.configFile."nvim/init.vim".source = ./init-nightly.vim;
+  #xdg.configFile."nvim/init.lua".source = ./init.lua;
+
+  xdg.configFile."nvim/lua/" = {
+    source = ./lua;
+    recursive = true;
+  };
 }
