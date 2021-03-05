@@ -5,12 +5,6 @@ g.rooter_targets = '/,*'
 g.rooter_patterns = { '.git/' }
 g.rooter_resolve_links = 1
 
-g.NERDDefaultAlign = "left"
-g.NERDToggleCheckAllLines = 1
-g.UltiSnipsExpandTrigger = "JJ"
-g.UltiSnipsJumpForwardTrigger = "<c-j>"
-g.UltiSnipsJumpBackwardTrigger = "<c-k>"
-g.UltiSnipsEditSplit = "horizontal"
 g.pear_tree_smart_closers = 1
 g.pear_tree_smart_openers = 1
 g.pear_tree_smart_backspace = 1
@@ -23,17 +17,18 @@ vim.cmd[[let g:echodoc#enable_at_startup = 1]]
 vim.cmd[[let g:echodoc#type = 'floating']]
 vim.cmd[[highlight link EchoDocPopup Pmenu]]
 
--- snippets
-require'snippets'.use_suggested_mappings()
-
-
-g.completion_enable_snippet = "UltiSnips"
-g.completion_chain_complete_list = {
-  { complete_items = { 'lsp', 'snippet', 'path' } },
-  { complete_items = { 'ts', 'buffers' } },
+-- gitsigns
+require('gitsigns').setup {
+  signs = {
+    add          = {hl = 'GitGutterAdd'   , text = '+'},
+    change       = {hl = 'GitGutterChange', text = '~'},
+    delete       = {hl = 'GitGutterDelete', text = '_'},
+    topdelete    = {hl = 'GitGutterDelete', text = '‾'},
+    changedelete = {hl = 'GitGutterChange', text = '~'},
+  }
 }
-g.completion_auto_change_source = 1
 
+-- vimwiki
 g.vimwiki_key_mappings = {
   global = 0,
   links = 0,
@@ -42,6 +37,7 @@ g.vimwiki_key_mappings = {
   table_mappings = 0,
 }
 
+-- fireenv
 g.firenvim_config = {
   localSettings = {
     ['.*'] = {
@@ -77,6 +73,8 @@ require'compe'.setup {
 }
 
 
+-- snippets
+require'snippets'.use_suggested_mappings()
 local snippets = require 'snippets'
 local U = require'snippets.utils'
 
@@ -94,3 +92,11 @@ for ${1:i}, ${2:v} in ipairs(${3:t}) do
 end]];
   };
 }
+
+
+-- blankline
+g.indent_blankline_char = "┊"
+g.indent_blankline_use_treesitter = true
+g.indent_blankline_filetype_exclude = { 'help', 'startify' }
+g.indent_blankline_buftype_exclude = { 'terminal', 'nofile', 'packer' }
+g.indent_blankline_char_highlight = 'LineNr'
