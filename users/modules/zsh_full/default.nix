@@ -1,7 +1,7 @@
-{ 
+{
   pkgs,
   username,
-  ... 
+  ...
 }: let
   lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
 in rec {
@@ -64,7 +64,7 @@ in rec {
     };
   };
 
-  programs.zsh = let 
+  programs.zsh = let
     magic_enter_prompt = ./magic_enter.zsh;
   in {
     enable = true;
@@ -171,7 +171,7 @@ in rec {
     };
   };
 
-  programs.tmux = let 
+  programs.tmux = let
     airline_conf = ./tmux_airline.conf;
   in {
     enable = true;
@@ -207,23 +207,6 @@ in rec {
         bind n select-pane -D
         bind e select-pane -U
         bind o select-pane -R
-
-        is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-          | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-        bind-key -n 'C-y' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
-        bind-key -n 'C-n' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
-        bind-key -n 'C-e' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
-        bind-key -n 'C-o' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
-        tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
-        if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
-            "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
-        if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
-            "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
-        bind-key -T copy-mode-vi 'C-n' select-pane -L
-        bind-key -T copy-mode-vi 'C-e' select-pane -D
-        bind-key -T copy-mode-vi 'C-o' select-pane -U
-        bind-key -T copy-mode-vi 'C-i' select-pane -R
-        bind-key -T copy-mode-vi 'C-\' select-pane -l
 
         bind -r C-y select-window -t :-
         bind -r C-o select-window -t :+
