@@ -40,19 +40,20 @@ require('packer').startup(function()
     use 'tpope/vim-surround'
 
     -- increment/decrement dates
-    use 'tpope/vim-speeddating'
+    --use 'tpope/vim-speeddating'
 
     -- extra targets
     use 'wellle/targets.vim'
 
     -- show function arguments
-    use 'Shougo/echodoc.vim'
+    --use 'Shougo/echodoc.vim'
 
     -- commenting
     use 'preservim/nerdcommenter'
 
     -- auto end quotation mark/bracket
-    use 'jiangmiao/auto-pairs'
+    --use 'jiangmiao/auto-pairs'
+    use 'cohama/lexima.vim'
 
     -- tmux movements, in splits
     use 'christoomey/vim-tmux-navigator'
@@ -84,17 +85,10 @@ require('packer').startup(function()
     -- config for the builtin language server
     use 'neovim/nvim-lspconfig'
 
-    -- new --
-
-    -- weird tabsettings
-    --use 'tpope/vim-sleuth'
-
-    -- asynchronous make
-    use 'tpope/vim-dispatch'
-
     -- repeat more motions
     use 'tpope/vim-repeat'
 
+    --switch between single and multiline
     use 'AndrewRadev/splitjoin.vim'
 
     -- ultisnips alternative in lua
@@ -102,6 +96,7 @@ require('packer').startup(function()
 
     -- blankline indent help
     use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
+    --use 'Yggdroot/indentLine'
 
     -- nvim integration for firefox
     use {
@@ -117,6 +112,12 @@ require('packer').startup(function()
 
     -- completion manager
     use 'hrsh7th/nvim-compe'
+
+    -- completion with docked floating windows
+    use 'ncm2/float-preview.nvim'
+
+    -- nix
+    use 'LnL7/vim-nix'
 end)
 
 
