@@ -118,6 +118,9 @@ require('packer').startup(function()
 
     -- nix
     use 'LnL7/vim-nix'
+
+    -- floaterm
+    use 'voldikss/vim-floaterm'
 end)
 
 

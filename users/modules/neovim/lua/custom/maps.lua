@@ -14,6 +14,9 @@ cmd[[au FileType vimwiki nmap <buffer><silent> <Backspace> <Plug>VimwikiGoBackLi
 cmd[[au FileType vimwiki nmap <buffer><silent> <leader>ww <Plug>VimwikiIndex']]
 cmd[[au FileType vimwiki set syntax=markdown.pandoc]]
 
+-- floaterm execution
+--cmd[[au FileType rust nmap <buffer><silent> <leader>a :FloatermNew ]]
+
 -- strip trailing whitespaces
 cmd[[au FileType c,cpp,python,rust,nix,lua,ruby autocmd BufWritePre <buffer> :%s/\s\+$//e]]
 
