@@ -1,11 +1,11 @@
-{ 
+{
   pkgs,
   username,
   ...
 }:
-let 
+let
   lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
-  sway_bg = ../.. + "/${username}/wallpaper/river.jpg";
+  sway_bg = ../.. + "/${username}/wallpaper/mountain.jpg";
 in rec {
   wayland.windowManager.sway = let
     std_opacity = "0.96";
@@ -137,7 +137,7 @@ in rec {
         #}
       ];
       window.commands = [
-        { 
+        {
           command = "inhibit_idle fullscreen";
           criteria = { app_id = "firefox"; };
         }
@@ -166,7 +166,7 @@ in rec {
     };
   };
 
-  programs.waybar = let 
+  programs.waybar = let
     css_file = ./style.css;
     weather_exec = ./openweathe-rs;
   in
