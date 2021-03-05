@@ -10,6 +10,9 @@ o.wildignore = "*.swp,*.bak,*.pyc,*.class"
 
 o.cmdheight = 2
 
+-- dont show the mode in the last line, have a status line for that
+o.showmode = false
+
 o.termguicolors = true
 vim.g.ayucolor = "mirage"
 vim.cmd[[colorscheme ayu]]
@@ -64,9 +67,9 @@ o.laststatus = 2
 bo.formatoptions = "tcqj"
 
 -- tab width, expand to spaces
-bo.tabstop = 4
-bo.shiftwidth = 4
-bo.expandtab = true
+o.tabstop = 4
+o.shiftwidth = 4
+o.expandtab = true
 
 -- same indent on new lines
 bo.copyindent = true
