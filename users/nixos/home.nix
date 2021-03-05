@@ -1,19 +1,20 @@
-{ 
+{
   pkgs,
   username,
   ...
-}: let 
+}: let
   usermod = (import ./default.nix { inherit pkgs; }).userDetails;
   home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
 in rec {
   _module.args.username = username;
+  _module.args.background_image = usermod.background_image;
   imports = usermod.imports;
-  home = { 
+  home = {
     username = "${username}";
     homeDirectory = "${home_directory}";
     stateVersion = "21.03";
-    sessionVariables = usermod.sessionVars; 
+    sessionVariables = usermod.sessionVars;
     packages = with pkgs; [
       cacert
       coreutils

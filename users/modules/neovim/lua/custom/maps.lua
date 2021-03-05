@@ -34,16 +34,28 @@ map('n', '<A-x>', 'C-x', options)
 -- disable highlight
 map('n', '<leader><leader>', ':noh<CR>', options)
 
+-- search using visual mode
 map('v', '/', 'y/<C-R>"<CR>', options)
 
-map('n', "<c-f>", ":lua require('telescope.builtin').treesitter()<cr>", options)
-map('n', "<c-u>", ":lua require('telescope.builtin').live_grep()<cr>", options)
-map('n', "<c-p>", ":lua require('telescope.builtin').find_files()<cr>", options)
+-- escape in/out of terminal mode
+map('t', 'jj', '<C-\\><C-n>', { noremap = true; })
+
+-- telescope mappings
+map('n', "<leader>t", ":lua require('telescope.builtin').treesitter()<cr>", options)
+map('n', "<leader>g", ":lua require('telescope.builtin').live_grep()<cr>", options)
+map('n', "<leader>f", ":lua require('telescope.builtin').find_files()<cr>", options)
 map('n', ";", ":lua require('telescope.builtin').buffers{ show_all_buffers = true }<cr>", options)
 map('n', ";;", ":lua require('telescope.builtin').git_files()<cr>", options)
 
--- remove whitespaces
-map('n', '<F6>', [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]], options)
+-- snippets
+cmd[[inoremap <c-e> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>]]
+cmd[[inoremap <c-n> <cmd>lua return require'snippets'.expand_or_advance(-1)<CR>]]
+
+-- lsp commands
+map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true; silent = true; })
+map('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true; silent = true; })
+map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true; silent = true; })
+map('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true; silent = true; })
 
 ----------------------------------------------
 
@@ -59,7 +71,3 @@ map('i', '<CR>',      [[compe#confirm(lexima#expand('<LT>CR>', 'i'))]], {noremap
 map('i', '<C-e>',     [[compe#close('<C-e>')]],                         {noremap = true; expr = true; silent = true;})
 map('i', '<C-f>',     [[compe#scroll({ 'delta': +4 })]],                {noremap = true; expr = true; silent = true;})
 map('i', '<C-d>',     [[compe#scroll({ 'delta': -4 })]],                {noremap = true; expr = true; silent = true;})
-
--- snippets
-cmd[[inoremap <c-e> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>]]
-cmd[[inoremap <c-n> <cmd>lua return require'snippets'.expand_or_advance(-1)<CR>]]

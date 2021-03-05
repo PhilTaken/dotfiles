@@ -6,12 +6,12 @@ g.rooter_targets = '/,*'
 g.rooter_patterns = { '.git/' }
 g.rooter_resolve_links = 1
 
-g.pear_tree_smart_closers = 1
-g.pear_tree_smart_openers = 1
-g.pear_tree_smart_backspace = 1
-
+-- tmux navigator
 g.tmux_navigator_no_mappings = 1
 g.tmux_navigator_save_on_switch = 1
+
+-- pandoc
+cmd[[let g:pandoc#spell#enabled = 0]]
 
 -- echodoc
 cmd[[let g:echodoc#enable_at_startup = 1]]
@@ -20,6 +20,8 @@ cmd[[let g:echodoc#type = 'floating']]
 -- float-preview.nvim
 -- dock the preview window
 cmd[[let g:float_preview#docked = 1]]
+
+require'lspkind'.init{}
 
 -- gitsigns
 require('gitsigns').setup {
@@ -34,6 +36,7 @@ require('gitsigns').setup {
 
 -- lexima
 g.lexima_no_default_rules = true
+g.lexima_map_escape = ''
 vim.fn['lexima#set_default_rules']()
 
 -- vimwiki
@@ -71,14 +74,39 @@ require'compe'.setup {
     documentation = true;
 
     source = {
-        path = true;
-        buffer = true;
-        calc = true;
-        nvim_lsp = true;
-        nvim_lua = true;
-        tags = true;
-        snippets_nvim = true;
-        treesitter = true;
+        snippets_nvim = {
+            priority = 10;
+            sort = true;
+        };
+        nvim_lsp = {
+            priority = 9;
+            sort = true;
+        };
+        nvim_lua = {
+            priority = 8;
+            sort = true;
+        };
+        nvim_treesitter = {
+            priority = 7;
+            sort = true;
+        };
+        path = {
+            priority = 6;
+            sort = true;
+        };
+        tags = {
+            priority = 5;
+            sort = true;
+        };
+
+        buffer = {
+            priority = 4;
+            sort = true;
+        };
+        calc = {
+            priority = 3;
+            sort = true;
+        };
     };
 }
 
@@ -106,6 +134,21 @@ snippets.snippets = {
 -- blankline
 g.indentLine_char = "┊"
 g.indentLine_use_treesitter = true
-g.indentLine_fileTypeExclude = { 'help', 'startify', 'packer' }
+g.indentLine_fileTypeExclude = { 'help', 'packer', 'startify' }
 g.indentLine_bufTypeExclude = { 'terminal', 'nofile' }
---g.indentLine_char_highlight = 'LineNr'
+g.indentLine_char_highlight = 'LineNr'
+
+-- set escape in insert mode to leave
+local actions = require('telescope.actions')
+require('telescope').setup{
+    defaults = {
+        mappings = {
+            i = {
+                ["<esc>"] = actions.close,
+            },
+        },
+    }
+}
+
+-- docked completion window
+cmd[[let g:float_preview#docked = 1]]

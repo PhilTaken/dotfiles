@@ -22,12 +22,9 @@ require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt = true}
 
     -- git signs in signcolumn
-    --use 'airblade/vim-gitgutter'
     use {
         'lewis6991/gitsigns.nvim',
-        requires = {
-            'nvim-lua/plenary.nvim'
-        }
+        requires = { 'nvim-lua/plenary.nvim' }
     }
 
     -- change pwd to git root
@@ -36,27 +33,14 @@ require('packer').startup(function()
     -- start menu
     use 'mhinz/vim-startify'
 
-    -- manage surrounds e.g. quotation marks, html tags, ...
-    use 'tpope/vim-surround'
-
-    -- increment/decrement dates
-    --use 'tpope/vim-speeddating'
-
-    -- extra targets
-    use 'wellle/targets.vim'
-
-    -- show function arguments
-    --use 'Shougo/echodoc.vim'
-
     -- commenting
     use 'preservim/nerdcommenter'
 
     -- auto end quotation mark/bracket
-    --use 'jiangmiao/auto-pairs'
     use 'cohama/lexima.vim'
 
-    -- tmux movements, in splits
-    use 'christoomey/vim-tmux-navigator'
+    -- show function arguments
+    use 'Shougo/echodoc.vim'
 
     -- telescope
     use {
@@ -75,34 +59,19 @@ require('packer').startup(function()
     -- ayu color scheme
     use 'ayu-theme/ayu-vim'
 
-    -- vim wiki
+    -- vim wiki / pandoc
     use 'vimwiki/vimwiki'
-
-    -- pandoc
     use 'vim-pandoc/vim-pandoc'
     use 'vim-pandoc/vim-pandoc-syntax'
-
-    -- config for the builtin language server
-    use 'neovim/nvim-lspconfig'
-
-    -- repeat more motions
-    use 'tpope/vim-repeat'
-
-    --switch between single and multiline
-    use 'AndrewRadev/splitjoin.vim'
 
     -- ultisnips alternative in lua
     use 'norcalli/snippets.nvim'
 
     -- blankline indent help
     use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
-    --use 'Yggdroot/indentLine'
 
-    -- nvim integration for firefox
-    use {
-        'glacambre/firenvim',
-        run = function() vim.fn['firenvim#install'](0) end,
-    }
+    -- config for the builtin language server
+    use 'neovim/nvim-lspconfig'
 
     -- treesitter
     use {
@@ -119,8 +88,36 @@ require('packer').startup(function()
     -- nix
     use 'LnL7/vim-nix'
 
-    -- floaterm
-    use 'voldikss/vim-floaterm'
+    -- extra targets
+    use 'wellle/targets.vim'
+
+    -- extra icons for completion
+    use 'onsails/lspkind-nvim'
+
+    -- tmux movements, in splits
+    --use 'christoomey/vim-tmux-navigator'
+
+     --floaterm
+    --use 'voldikss/vim-floaterm'
+
+    -- manage surrounds e.g. quotation marks, html tags, ...
+    --use 'tpope/vim-surround'
+
+    -- increment/decrement dates
+    --use 'tpope/vim-speeddating'
+
+    -- nvim integration for firefox
+    --use {
+        --'glacambre/firenvim',
+        --run = function() vim.fn['firenvim#install'](0) end,
+    --}
+
+    -- repeat more motions
+    --use 'tpope/vim-repeat'
+
+    --switch between single and multiline
+    --use 'AndrewRadev/splitjoin.vim'
+
 end)
 
 

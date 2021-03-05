@@ -1,11 +1,12 @@
 {
   pkgs,
   username,
+  background_image,
   ...
 }:
 let
   lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
-  sway_bg = ../.. + "/${username}/wallpaper/mountain.jpg";
+  sway_bg = ../.. + "/${username}/wallpaper/${background_image}";
 in rec {
   wayland.windowManager.sway = let
     std_opacity = "0.96";

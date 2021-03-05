@@ -39,7 +39,7 @@ vim.cmd[[set undofile]]
 o.spell = false
 
 -- improved completers
-o.completeopt = "menuone,noinsert,noselect"
+o.completeopt = "menuone,noselect"
 o.shortmess = "filnxtToOFc"
 
 -- timeout for cursorhold  autocommand event
@@ -61,6 +61,7 @@ o.backspace = "indent,eol,start"
 
 o.shiftround = true
 o.timeoutlen = 300
+o.ttimeout = true
 o.ttimeoutlen = 0
 
 o.laststatus = 2
