@@ -23,7 +23,12 @@ require('packer').startup(function()
 
     -- git signs in signcolumn
     --use 'airblade/vim-gitgutter'
-    use 'lewis6991/gitsigns.nvim'
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        }
+    }
 
     -- change pwd to git root
     use 'zah/vim-rooter'
@@ -79,26 +84,39 @@ require('packer').startup(function()
     -- config for the builtin language server
     use 'neovim/nvim-lspconfig'
 
-    -- new
+    -- new --
+
+    -- weird tabsettings
+    --use 'tpope/vim-sleuth'
+
+    -- asynchronous make
     use 'tpope/vim-dispatch'
+
+    -- repeat more motions
     use 'tpope/vim-repeat'
-    use 'tpope/vim-sleuth'
+
     use 'AndrewRadev/splitjoin.vim'
+
+    -- ultisnips alternative in lua
     use 'norcalli/snippets.nvim'
+
+    -- blankline indent help
     use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
+
     -- nvim integration for firefox
     use {
         'glacambre/firenvim',
         run = function() vim.fn['firenvim#install'](0) end,
     }
 
+    -- treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ":TSUpdate",
     }
 
+    -- completion manager
     use 'hrsh7th/nvim-compe'
-    -- use 'nvim-lua/completion-nvim'
 end)
 
 
