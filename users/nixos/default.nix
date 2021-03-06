@@ -6,6 +6,8 @@
     font = "SourceCodePro";
     background_image = "mountain.jpg";
     extraPackages = with pkgs; [
+      gopass-rofi
+
       # terminal util
       cmake
       haxor-news
@@ -16,6 +18,7 @@
       vpnc
       youtube-dl
       ffmpeg
+      neovim-remote
 
       # other
       discord

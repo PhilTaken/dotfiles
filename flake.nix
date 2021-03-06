@@ -15,11 +15,12 @@
     # rofi-wayland-src = { url = "github:lbonn/rofi"; flake = false; submodules = true; };
     # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
-  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, ... }@inputs: let #overlays = map 
+  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, ... }@inputs: let #overlays = map
     system = "x86_64-linux";
     overlays = [
       (import ./overlays/nvim-overlay.nix {inherit inputs; })
       (import ./overlays/rofi-overlay.nix {inherit inputs; })
+      (import ./overlays/gopass-rofi.nix { inherit inputs; })
       (import ./custom_pkgs)
     ];
 
@@ -35,7 +36,7 @@
       modules = [ hostmod ] ++ extramods;
     };
 
-    mkLocalSetup = {host, username, extramods ? []}: let 
+    mkLocalSetup = {host, username, extramods ? []}: let
       hostmod = import (./hosts + "/${host}") { inherit inputs pkgs username; };
       usermods = [
         home-manager.nixosModules.home-manager {
@@ -44,7 +45,7 @@
           home-manager.users."${username}" = import (./users + "/${username}/home.nix") { inherit pkgs username; };
         }
       ] ++ extramods;
-    in mkRemoteSetup { 
+    in mkRemoteSetup {
       inherit host username;
       extramods = usermods;
     };
@@ -55,7 +56,7 @@
           echo -e ""
           echo -e "Available configs:"
           echo -e "   - \"nixos-laptop\":  laptop setup for work"
-        elif [[ "$1" == "update" ]]; then 
+        elif [[ "$1" == "update" ]]; then
           nix flake update --recreate-lock-file --commit-lock-file
         elif [[ "$2" == "install" ]]; then
           sudo nixos-install --flake ".#$1" "${"\${@:3}"}"
@@ -76,7 +77,7 @@
     };
 
     # workplace-issued thinkpad
-    nixosConfigurations.nixos-laptop = mkLocalSetup { 
+    nixosConfigurations.nixos-laptop = mkLocalSetup {
       host = "work-laptop-thinkpad";
       username = "nixos";
     };
