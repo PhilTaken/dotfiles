@@ -35,6 +35,7 @@
       mpv
       tree
       calibre
+      thunderbird
     ];
 
     sessionVars = {

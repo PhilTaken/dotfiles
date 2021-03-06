@@ -65,7 +65,7 @@ in rec {
         "${mod}+d" = "kill";
         "${mod}+Space" = "exec ${menu}";
         "${mod}+l" = "exec ${pkgs.swaylock}/bin/swaylock -i ${lock_bg} &";
-        "${mod}+p" = "exec rofi-pass";
+        "${mod}+p" = "exec gopass-rofi";
         "${mod}+u" = "exec rofi -terminal ${term} -show ssh";
         "${mod}+s" = "layout tabbed";
         "${mod}+j" = "layout toggle split";
