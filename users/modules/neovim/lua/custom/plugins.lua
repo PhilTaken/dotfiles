@@ -37,7 +37,8 @@ require('packer').startup(function()
     use 'preservim/nerdcommenter'
 
     -- auto end quotation mark/bracket
-    use 'cohama/lexima.vim'
+    --use 'cohama/lexima.vim'
+    use 'tmsvg/pear-tree'
 
     -- show function arguments
     use 'Shougo/echodoc.vim'
@@ -101,7 +102,7 @@ require('packer').startup(function()
     --use 'voldikss/vim-floaterm'
 
     -- manage surrounds e.g. quotation marks, html tags, ...
-    --use 'tpope/vim-surround'
+    use 'tpope/vim-surround'
 
     -- increment/decrement dates
     --use 'tpope/vim-speeddating'

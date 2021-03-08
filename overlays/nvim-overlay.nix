@@ -1,5 +1,5 @@
 { inputs, ... }:
-let 
+let
   nvim_overlay = final: prev: {
     neovim-nightly = prev.neovim-unwrapped.overrideAttrs (old: {
       pname = "neovim-nightly";
