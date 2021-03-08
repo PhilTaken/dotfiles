@@ -21,7 +21,19 @@ cmd[[let g:echodoc#type = 'floating']]
 -- dock the preview window
 cmd[[let g:float_preview#docked = 1]]
 
+-- extra icon for the completer (compe)
 require'lspkind'.init{}
+
+-- setup treesitter
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = {
+        "json", "html", "toml",
+        "bash", "css", "yaml"
+    },
+    highlight = {
+        enable = true,
+    },
+}
 
 -- gitsigns
 require('gitsigns').setup {
@@ -44,7 +56,6 @@ g.pear_tree_smart_closers = 1
 g.pear_tree_smart_backspace = 1
 g.pear_tree_map_special_keys = 1
 g.pear_tree_ft_disabled = { 'TelescopePrompt', 'nofile', 'terminal' }
-
 
 -- vimwiki
 g.vimwiki_key_mappings = {
