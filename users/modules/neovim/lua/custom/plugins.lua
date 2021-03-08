@@ -39,6 +39,8 @@ require('packer').startup(function()
     -- auto end quotation mark/bracket
     --use 'cohama/lexima.vim'
     use 'tmsvg/pear-tree'
+    -- use 'jiangmao/auto-pairs'
+    -- specifically https://github.com/jiangmiao/auto-pairs/blob/master/plugin/auto-pairs.vim
 
     -- show function arguments
     use 'Shougo/echodoc.vim'
@@ -121,14 +123,3 @@ require('packer').startup(function()
 
 end)
 
-
--- setup treesitter
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = {
-        "json", "html", "toml",
-        "bash", "css", "yaml"
-    },
-    highlight = {
-        enable = true,
-    },
-}
