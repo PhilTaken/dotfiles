@@ -35,7 +35,11 @@
       mpv
       tree
       calibre
+
       thunderbird
+      hydroxide
+
+      pulseeffects-pw
     ];
 
     sessionVars = {

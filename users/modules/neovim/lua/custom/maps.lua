@@ -67,7 +67,7 @@ map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
 -- compe
 map('i', '<C-Space>', [[compe#complete()]],                             {noremap = true; expr = true; silent = true;})
-map('i', '<CR>',      [[compe#confirm(lexima#expand('<LT>CR>', 'i'))]], {noremap = true; expr = true; silent = true;})
+map('i', '<CR>',      [[compe#confirm('<CR>')]],                              {noremap = true; expr = true; silent = true;})
 map('i', '<C-e>',     [[compe#close('<C-e>')]],                         {noremap = true; expr = true; silent = true;})
 map('i', '<C-f>',     [[compe#scroll({ 'delta': +4 })]],                {noremap = true; expr = true; silent = true;})
 map('i', '<C-d>',     [[compe#scroll({ 'delta': -4 })]],                {noremap = true; expr = true; silent = true;})

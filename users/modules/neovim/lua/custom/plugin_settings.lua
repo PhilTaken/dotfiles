@@ -35,9 +35,16 @@ require('gitsigns').setup {
 }
 
 -- lexima
-g.lexima_no_default_rules = true
-g.lexima_map_escape = ''
-vim.fn['lexima#set_default_rules']()
+--g.lexima_no_default_rules = true
+--g.lexima_map_escape = ''
+--vim.fn['lexima#set_default_rules']()
+-- pear tree
+g.pear_tree_smart_openers = 1
+g.pear_tree_smart_closers = 1
+g.pear_tree_smart_backspace = 1
+g.pear_tree_map_special_keys = 1
+g.pear_tree_ft_disabled = { 'TelescopePrompt', 'nofile', 'terminal' }
+
 
 -- vimwiki
 g.vimwiki_key_mappings = {
@@ -134,21 +141,21 @@ snippets.snippets = {
 -- blankline
 g.indentLine_char = "┊"
 g.indentLine_use_treesitter = true
-g.indentLine_fileTypeExclude = { 'help', 'packer', 'startify' }
+g.indentLine_fileTypeExclude = { 'help', 'packer', 'startify', 'man' }
 g.indentLine_bufTypeExclude = { 'terminal', 'nofile' }
 g.indentLine_char_highlight = 'LineNr'
 
 -- set escape in insert mode to leave
-local actions = require('telescope.actions')
-require('telescope').setup{
-    defaults = {
-        mappings = {
-            i = {
-                ["<esc>"] = actions.close,
-            },
-        },
-    }
-}
+--local actions = require('telescope.actions')
+--require('telescope').setup{
+    --defaults = {
+        --mappings = {
+            --i = {
+                --["<esc>"] = actions.close,
+            --},
+        --},
+    --}
+--}
 
 -- docked completion window
 cmd[[let g:float_preview#docked = 1]]
