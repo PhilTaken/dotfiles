@@ -70,9 +70,6 @@ require('packer').startup(function()
     -- ultisnips alternative in lua
     use 'norcalli/snippets.nvim'
 
-    -- blankline indent help
-    use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
-
     -- config for the builtin language server
     use 'neovim/nvim-lspconfig'
 
