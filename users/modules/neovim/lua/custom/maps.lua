@@ -6,13 +6,14 @@ local options = { noremap = true; silent = true; }
 --cmd('au BufNewFile,BufRead * if &ft == "" | set ft=text | endif')
 cmd[[au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup]]
 cmd[[au TextYankPost * silent! lua vim.highlight.on_yank { higroup="IncSearch", timeout=1000, on_visual=false }]]
---cmd[[au BufRead,BufNewFile *.nix set filetype=nix]]
+cmd[[au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
 
 -- vimwiki mappings
 cmd[[au FileType vimwiki nmap <buffer><silent> <CR> <Plug>VimwikiFollowLink']]
 cmd[[au FileType vimwiki nmap <buffer><silent> <Backspace> <Plug>VimwikiGoBackLink']]
 cmd[[au FileType vimwiki nmap <buffer><silent> <leader>ww <Plug>VimwikiIndex']]
 cmd[[au FileType vimwiki set syntax=markdown.pandoc]]
+
 
 -- floaterm execution
 --cmd[[au FileType rust nmap <buffer><silent> <leader>a :FloatermNew ]]

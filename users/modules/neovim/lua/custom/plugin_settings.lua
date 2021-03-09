@@ -149,13 +149,6 @@ snippets.snippets = {
     };
 }
 
--- blankline
-g.indentLine_char = "┊"
-g.indentLine_use_treesitter = true
-g.indentLine_fileTypeExclude = { 'help', 'packer', 'startify', 'man' }
-g.indentLine_bufTypeExclude = { 'terminal', 'nofile' }
-g.indentLine_char_highlight = 'LineNr'
-
 -- set escape in insert mode to leave
 --local actions = require('telescope.actions')
 --require('telescope').setup{
@@ -167,6 +160,3 @@ g.indentLine_char_highlight = 'LineNr'
         --},
     --}
 --}
-
--- docked completion window
-cmd[[let g:float_preview#docked = 1]]
