@@ -68,9 +68,9 @@ o.laststatus = 2
 bo.formatoptions = "tcqj"
 
 -- tab width, expand to spaces
-o.tabstop = 4
-o.shiftwidth = 4
-o.expandtab = true
+bo.tabstop = 4
+bo.shiftwidth = 4
+bo.expandtab = true
 
 -- same indent on new lines
 bo.copyindent = true
