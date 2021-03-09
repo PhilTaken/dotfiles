@@ -24,8 +24,8 @@ cmd[[au VimResized * redraw!]]
 cmd[[au TextYankPost * silent! lua vim.highlight.on_yank()]]
 
 -- for easy buffer navigation
-map('n', '<Tab>', ':bn<CR>', options)
-map('n', '<S-Tab', ':bp<CR>', options)
+map('n', '<Tab>', ':bn<CR>', {})
+map('n', '<S-Tab>', ':bp<CR>', {})
 
 -- remap number in/decrement
 map('n', '<A-a>', 'C-a', options)
