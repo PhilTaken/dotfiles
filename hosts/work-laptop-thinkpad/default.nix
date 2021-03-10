@@ -1,10 +1,10 @@
-{ 
+{
   pkgs,
   inputs,
   username ? "nixos",
   hostname ? "worklaptop",
   timezone ? "Europe/Berlin",
-  ... 
+  ...
 }:
 let
   usermod = (import (../../users + "/${username}" ) { inherit pkgs; }).hostDetails;
