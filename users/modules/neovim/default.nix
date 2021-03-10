@@ -17,6 +17,9 @@
       texlab                        # latex
       fortls                        # fortran
       git                           # version control
+
+      ripgrep                       # telescope file finding
+      fd                            # faster find
     ];
     extraConfig = ''
       set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM
@@ -24,7 +27,6 @@
     '';
   };
 
-  #xdg.configFile."nvim/init.vim".source = ./init-nightly.vim;
   xdg.configFile."nvim/init_.lua".source = ./init.lua;
 
   xdg.configFile."nvim/lua/" = {

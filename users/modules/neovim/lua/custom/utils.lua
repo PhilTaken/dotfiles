@@ -62,3 +62,17 @@ function _G.create_augroup(autocmds, name)
     end
     cmd('augroup END')
 end
+
+
+-- from tjdevries
+P = function(v)
+  print(vim.inspect(v))
+  return v
+end
+
+RELOAD = require('plenary.reload').reload_module
+
+R = function(name)
+    RELOAD(name)
+    return require(name)
+end

@@ -4,6 +4,7 @@ local bo = vim.bo
 
 -- leader, for mappings
 vim.g.mapleader = ' '
+vim.g.tex_flavor = 'latex'
 
 -- ignore these in searches
 o.wildignore = "*.swp,*.bak,*.pyc,*.class"
@@ -78,4 +79,4 @@ bo.copyindent = true
 -- line numbers
 wo.number = true
 wo.relativenumber = true
-wo.signcolumn = "yes"
+wo.signcolumn = "auto"
