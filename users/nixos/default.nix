@@ -28,7 +28,6 @@
             spotify
             tdesktop
             vlc
-            zotero
             pavucontrol
 
             element-desktop
@@ -41,6 +40,8 @@
             hydroxide
 
             pulseeffects-pw
+            anki
+            texlive.combined.scheme-medium
         ];
 
         sessionVars = {
@@ -51,7 +52,7 @@
             _Z_DATA = "$XDG_DATA_HOME/fasd/z.data";
             CARGO_HOME = "$XDG_DATA_HOME/cargo";
             RUSTUP_HOME = "$XDG_DATA_HOME/rustup";
-            TEXMFHOME = "$XDG_DATA_HOME/texmf";
+            #TEXMFHOME = "$XDG_DATA_HOME/texmf";
             _ZO_ECHO = 1;
             XDG_CURRENT_DESKTOP = "sway";
             MOZ_ENABLE_WAYLAND = 1;
