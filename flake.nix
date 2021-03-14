@@ -61,7 +61,7 @@
         elif [[ "$2" == "install" ]]; then
           sudo nixos-install --flake ".#$1" "${"\${@:3}"}"
         elif [[ "$2" == "upgrade" ]]; then
-          nix flake update --recreate-lock-file --commit-lock-file && sudo nixos-rebuild --flake ".#$1" switch
+          nix flake update --commit-lock-file && sudo nixos-rebuild --flake ".#$1" switch
         else
           sudo nixos-rebuild --flake ".#$1" "${"\${@:2}"}"
         fi
