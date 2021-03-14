@@ -13,13 +13,13 @@ reloader()
 
 local M = {}
 
-function M.live_grep()
- require('telescope').extensions.fzf_writer.staged_grep {
-   shorten_path = true,
-   previewer = false,
-   fzf_separator = "|>",
- }
-end
+--function M.live_grep()
+ --require('telescope').extensions.fzf_writer.staged_grep {
+   --shorten_path = true,
+   --previewer = false,
+   --fzf_separator = "|>",
+ --}
+--end
 
 function M.project_search()
   require('telescope.builtin').find_files {
