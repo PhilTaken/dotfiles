@@ -6,7 +6,7 @@ local options = { noremap = true; silent = true; }
 cmd[[au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup]]
 cmd[[au TextYankPost * silent! lua vim.highlight.on_yank { higroup="IncSearch", timeout=1000, on_visual=false }]]
 cmd[[au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
-cmd[[au TermOpen * setlocal norelativenumber nonumber startinsert]]
+cmd[[au TermOpen * setlocal norelativenumber nonumber]]
 
 -- vimwiki mappings
 cmd[[au FileType vimwiki nmap <buffer><silent> <CR> <Plug>VimwikiFollowLink']]
