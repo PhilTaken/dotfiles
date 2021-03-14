@@ -57,7 +57,7 @@
           echo -e "Available configs:"
           echo -e "   - \"nixos-laptop\":  laptop setup for work"
         elif [[ "$1" == "update" ]]; then
-          nix flake update --recreate-lock-file --commit-lock-file
+          nix flake update --commit-lock-file
         elif [[ "$2" == "install" ]]; then
           sudo nixos-install --flake ".#$1" "${"\${@:3}"}"
         elif [[ "$2" == "upgrade" ]]; then
