@@ -48,7 +48,7 @@ in rec {
       };
     };
 
-    texlive.enable = true;
+    #texlive.enable = true;
     zathura.enable = true;
   };
 

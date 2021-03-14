@@ -26,7 +26,7 @@
     }];
     defaultGateway = "";
     nameservers = [ "1.1.1.1" ];
-    localCommands = 
+    localCommands =
     ''
 
       ip route add "148.251.69.141" dev "eth0"
@@ -66,7 +66,7 @@
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
-    permitRootLogin = "yes"; 
+    permitRootLogin = "yes";
     authorizedKeysFiles = [ "/etc/nixos/authorized-keys" ];
   };
 
