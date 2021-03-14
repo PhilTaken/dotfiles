@@ -7,7 +7,7 @@
         hostname = "jureca.fz-juelich.de";
         user = "herzog1";
         forwardAgent = true;
-        forwardX11 = true;
+        #forwardX11 = true;
       };
       "judac" = {
         hostname = "judac.fz-juelich.de";
