@@ -94,14 +94,17 @@ require('packer').startup(function()
     -- extra icons for completion
     use 'onsails/lspkind-nvim'
 
+    -- manage surrounds e.g. quotation marks, html tags, ...
+    use 'tpope/vim-surround'
+
+    -- julia lang
+    use 'JuliaEditorSupport/julia-vim'
+
     -- tmux movements, in splits
     --use 'christoomey/vim-tmux-navigator'
 
      --floaterm
     --use 'voldikss/vim-floaterm'
-
-    -- manage surrounds e.g. quotation marks, html tags, ...
-    use 'tpope/vim-surround'
 
     -- increment/decrement dates
     --use 'tpope/vim-speeddating'

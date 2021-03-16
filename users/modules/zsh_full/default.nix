@@ -132,6 +132,9 @@ in rec {
           fi
         fi
     '';
+    shellGlobalAliases = {
+      "%notif" = "&& notify-send 'done' || notify-send 'error'";
+    };
     shellAliases = {
       sudo = "sudo ";
       gre = "rg";
