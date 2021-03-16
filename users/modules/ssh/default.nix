@@ -13,7 +13,7 @@
         hostname = "judac.fz-juelich.de";
         user = "herzog1";
         forwardAgent = true;
-        forwardX11 = true;
+        #forwardX11 = true;
       };
       "work-pc" = {
         hostname = "iek8680.iek.kfa-juelich.de";

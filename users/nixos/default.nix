@@ -20,6 +20,7 @@
             ffmpeg
             neovim-remote
             jq
+            tree
 
             # other
             discord
@@ -33,14 +34,12 @@
             element-desktop
             newsboat
             mpv
-            tree
             calibre
-
             thunderbird
             hydroxide
+            anki
 
             pulseeffects-pw
-            anki
             texlive.combined.scheme-medium
         ];
 
