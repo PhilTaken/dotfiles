@@ -1,46 +1,40 @@
 {
   pkgs,
-  username,
+  user_name,
   ...
 }: let
   usermod = (import ./default.nix { inherit pkgs; }).userDetails;
-  home_directory = "/home/${username}";
+  home_directory = "/home/${user_name}";
   lib = pkgs.stdenv.lib;
-
-  # for xdg
-  dataHome = "${home_directory}/.local/share";
 in rec {
-  _module.args.username = username;
+  _module.args.username = user_name;
   _module.args.background_image = usermod.background_image;
   imports = usermod.imports;
   home = rec {
-    username = "${username}";
+    username = "${user_name}";
     homeDirectory = "${home_directory}";
     stateVersion = "21.03";
     sessionVariables = {
       EDITOR = "nvim";
       PAGER = "${pkgs.page}/bin/page";
       MANPAGER = "${pkgs.page}/bin/page -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'";
-      _FASD_DATA = "${dataHome}/fasd/fasd.data";
-      _Z_DATA = "${dataHome}/fasd/z.data";
-      CARGO_HOME = "${dataHome}/cargo";
-      RUSTUP_HOME = "${dataHome}/rustup";
-            #TEXMFHOME = "$XDG_DATA_HOME/texmf";
-            _ZO_ECHO = 1;
-            XDG_CURRENT_DESKTOP = "sway";
-            MOZ_ENABLE_WAYLAND = 1;
-            MOZ_USE_XINPUT2 = 1;
-            GTK_USE_PORTAL = 1;
-            AWT_TOOLKIT = "MToolkit";
-          };
-          packages = with pkgs; [
-            cacert
-            coreutils
-            mailcap
-            curl
-            qt5.qtbase
-
-      # fonts
+      _FASD_DATA = "${xdg.dataHome}/fasd/fasd.data";
+      _Z_DATA = "${xdg.dataHome}/fasd/z.data";
+      CARGO_HOME = "${xdg.dataHome}/cargo";
+      RUSTUP_HOME = "${xdg.dataHome}/rustup";
+      _ZO_ECHO = 1;
+      XDG_CURRENT_DESKTOP = "sway";
+      MOZ_ENABLE_WAYLAND = 1;
+      MOZ_USE_XINPUT2 = 1;
+      GTK_USE_PORTAL = 1;
+      AWT_TOOLKIT = "MToolkit";
+    };
+    packages = with pkgs; [
+      cacert
+      coreutils
+      mailcap
+      curl
+      qt5.qtbase
       iosevka-bin
       weather-icons
       (nerdfonts.override { fonts = [ usermod.font ]; })
@@ -79,7 +73,7 @@ in rec {
   xdg = {
     enable = true;
     configHome = "${home_directory}/.config";
-    dataHome = dataHome;
+    dataHome = "${home_directory}/.local/share";
     cacheHome = "${home_directory}/.cache";
   };
 
