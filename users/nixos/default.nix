@@ -41,6 +41,8 @@
 
             pulseeffects-pw
             texlive.combined.scheme-medium
+
+            cachix
         ];
 
         imports = [

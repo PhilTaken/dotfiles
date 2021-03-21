@@ -28,6 +28,7 @@ in rec {
       MOZ_USE_XINPUT2 = 1;
       GTK_USE_PORTAL = 1;
       AWT_TOOLKIT = "MToolkit";
+      #LIBVA_DRIVER_NAME = "iHD";
     };
     packages = with pkgs; [
       cacert
