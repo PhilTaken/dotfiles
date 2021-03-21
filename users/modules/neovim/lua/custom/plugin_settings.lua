@@ -37,7 +37,9 @@ require'lspkind'.init{}
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
         "json", "html", "toml",
-        "bash", "css", "yaml"
+        "bash", "css", "yaml",
+	"rust", "cpp", "julia",
+	"python"
     },
     highlight = {
         enable = true,

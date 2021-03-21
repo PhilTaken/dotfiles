@@ -9,6 +9,8 @@
     withNodeJs = true;
     extraPython3Packages = (ps: with ps; [ pynvim ]);
     extraPackages = with pkgs; [
+      tree-sitter
+
       sumneko-lua-language-server   # lua
       ccls                          # c/c++
       rnix-lsp                      # nix
@@ -16,10 +18,12 @@
       rust-analyzer                 # rust
       texlab                        # latex
       fortls                        # fortran
-      git                           # version control
+      julia                         # julia
 
+      git                           # version control
       ripgrep                       # telescope file finding
       fd                            # faster find
+      gcc                           # for treesitter
     ];
     extraConfig = ''
       set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM
