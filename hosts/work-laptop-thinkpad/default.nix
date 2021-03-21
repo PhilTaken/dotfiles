@@ -18,6 +18,19 @@ in {
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
 
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    extraPackages = with pkgs; [
+      intel-compute-runtime
+      intel-media-driver
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+  hardware.enableRedistributableFirmware = true;
+  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+
   virtualisation.docker.enable = true;
 
   imports = [ ./hardware-configuration.nix ];
@@ -56,9 +69,6 @@ in {
   sound.enable = true;
   sound.mediaKeys.enable = true;
 
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
-
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -84,6 +94,9 @@ in {
     vim git          # defaults
     cryptsetup       # encrypted disks
     cmst             # connman system tray
+    hwinfo
+    glxinfo
+    libva-utils
   ];
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
