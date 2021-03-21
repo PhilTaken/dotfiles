@@ -56,6 +56,9 @@ in {
   sound.enable = true;
   sound.mediaKeys.enable = true;
 
+  hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
