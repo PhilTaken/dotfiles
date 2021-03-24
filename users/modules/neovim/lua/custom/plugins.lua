@@ -100,6 +100,8 @@ require('packer').startup(function()
     -- julia lang
     use 'JuliaEditorSupport/julia-vim'
 
+    use 'tikhomirov/vim-glsl'
+
     -- tmux movements, in splits
     --use 'christoomey/vim-tmux-navigator'
 
