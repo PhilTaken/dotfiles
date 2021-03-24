@@ -81,7 +81,7 @@
       host = "work-laptop-thinkpad";
       user_name = "nixos";
       extramods = [
-        nixos-hardware.nixosModules.lenovo-thinkpad-t490
+        #nixos-hardware.nixosModules.lenovo-thinkpad-t490
       ];
     };
 
