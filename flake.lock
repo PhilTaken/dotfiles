@@ -81,11 +81,11 @@
     "neovim-nightly-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1616854211,
-        "narHash": "sha256-0wXqD0COGqQBhN8Re0IKrR27yceiJKNC2m1g/Zoj804=",
+        "lastModified": 1616888586,
+        "narHash": "sha256-Sgw2HTLe/k7rkdf2A3tXu9AyyUBAFoxMM8lLLN+E5gY=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "75a9db5b7d60c016a950dac7f0a0932e7d7c6df8",
+        "rev": "2b663c061b8a1fa173ff23901734356bc96758bd",
         "type": "github"
       },
       "original": {
