@@ -97,6 +97,8 @@ in {
     hwinfo
     glxinfo
     libva-utils
+    vpnc
+    powertop
   ];
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 

@@ -14,8 +14,6 @@
             playerctl
             tokei
             hyperfine
-            powertop
-            vpnc
             youtube-dl
             ffmpeg
             neovim-remote
@@ -26,7 +24,7 @@
             discord
             gimp
             pamixer
-            spotify
+            spotify-unwrapped
             tdesktop
             vlc
             pavucontrol
@@ -37,9 +35,10 @@
             calibre
             thunderbird
             hydroxide
-            anki
 
             pulseeffects-pw
+
+            anki
             texlive.combined.scheme-medium
 
             cachix

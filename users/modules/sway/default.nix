@@ -122,8 +122,9 @@ in rec {
         { command = "avizo-service"; }
         { command = "${pkgs.mako}/bin/mako"; }
         { command = "${pkgs.ydotool}/bin/ydotoold"; }
-        { command = "systemctl --user restart kanshi"; always = true; }
-        { command = "systemctl --user restart waybar"; always = true; }
+        { command = "\"${pkgs.procps}/bin/pkill --signal 9 waybar; ${pkgs.waybar}/bin/waybar\""; always = true; }
+        #{ command = "systemctl --user restart kanshi"; always = true; }
+        #{ command = "systemctl --user restart waybar"; always = true; }
         #{ command = "systemctl --user restart waybar"; always = true; }
         # TODO check this
         #{
@@ -170,8 +171,7 @@ in rec {
   programs.waybar = let
     css_file = ./style.css;
     weather_exec = ./openweathe-rs;
-  in
-  {
+  in {
     enable = true;
     settings = [
       {
@@ -251,7 +251,7 @@ in rec {
       }
     ];
     style = builtins.readFile css_file;
-    systemd.enable = true;
+    #systemd.enable = true;
   };
 
   programs = {
@@ -363,5 +363,4 @@ in rec {
     libappindicator
     glibcLocales
   ];
-
 }
