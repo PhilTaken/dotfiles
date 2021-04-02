@@ -42,9 +42,9 @@ in {
   networking.hostName = hostname;
   #networking.wireless.enable = true;
   #networking.wireless.userControlled.enable = true;
-  #networking.wg-quick.interfaces = {
-  #  mullvad = import ../vpn/mullvad.nix;
-  #};
+  networking.wg-quick.interfaces = {
+    mullvad = import ../vpn/mullvad.nix;
+  };
 
   # Set your time zone.
   time.timeZone = "${timezone}";
@@ -57,7 +57,6 @@ in {
   services.connman = {
     enable = true;
     enableVPN = false;
-    wifi.backend = "wpa_supplicant";
   };
 
   # Configure keymap in X11 and console
