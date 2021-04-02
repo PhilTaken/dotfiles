@@ -85,6 +85,12 @@
       ];
     };
 
+    nixosConfigurations.desktop = mkLocalSetup {
+      host = "desktop";
+      user_name = "nixos";
+    };
+
+
     # vm on a hetzner server, debian host
     nixosConfigurations.alpha = mkRemoteSetup {
       host = "alpha";
