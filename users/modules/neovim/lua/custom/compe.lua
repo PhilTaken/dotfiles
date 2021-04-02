@@ -2,7 +2,7 @@ require'compe'.setup {
     enabled = true;
     autocomplete = true;
     debug = false;
-    min_length = 1;
+    min_length = 0;
     preselect = 'enable';
     throttle_time = 80;
     source_timeout = 200;
@@ -13,23 +13,23 @@ require'compe'.setup {
     documentation = true;
 
     source = {
-        snippets_nvim = {
+        nvim_lsp = {
             priority = 10;
             sort = true;
         };
-        nvim_lsp = {
+        nvim_lua = {
             priority = 9;
             sort = true;
         };
-        nvim_lua = {
+        snippets_nvim = {
             priority = 8;
             sort = true;
         };
-        nvim_treesitter = {
+        path = {
             priority = 7;
             sort = true;
         };
-        path = {
+        nvim_treesitter = {
             priority = 6;
             sort = true;
         };
@@ -37,7 +37,6 @@ require'compe'.setup {
             priority = 5;
             sort = true;
         };
-
         buffer = {
             priority = 4;
             sort = true;
