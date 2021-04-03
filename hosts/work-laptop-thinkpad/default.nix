@@ -1,14 +1,13 @@
 {
   pkgs,
   inputs,
-  usr,
   username ? "nixos",
   hostname ? "worklaptop",
   timezone ? "Europe/Berlin",
   ...
 }:
 let
-  usermod = (import (../../users + "/${usr}" ) { inherit pkgs; }).hostDetails;
+  usermod = (import (../../users + "/${username}" ) { inherit pkgs; }).hostDetails;
 in {
   nix = {
     package = pkgs.nixFlakes;
