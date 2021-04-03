@@ -40,11 +40,11 @@
 --                  WX0X                         NOOXW
 
 
--- utils
-require("custom.utils")
-
 -- plugins
 require('custom.plugins')
+
+-- utils
+require("custom.utils")
 
 -- default settings
 require('custom.settings')
