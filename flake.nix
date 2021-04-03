@@ -39,13 +39,13 @@
       modules = [ hostmod ] ++ extramods;
     };
 
-    mkLocalSetup = {host, user, user_name ? "nixos", extramods ? []}: let
-      hostmod = import (./hosts + "/${host}") { inherit inputs pkgs user_name; };
+    mkLocalSetup = {host, usr, user_name ? "nixos", extramods ? []}: let
+      hostmod = import (./hosts + "/${host}") { inherit inputs pkgs usr user_name; };
       usermods = [
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users."${user_name}" = import (./users + "/${user}/home.nix") { inherit pkgs user_name; };
+          home-manager.users."${user_name}" = import (./users + "/${usr}/home.nix") { inherit pkgs usr user_name; };
         }
       ] ++ extramods;
     in mkRemoteSetup {
@@ -82,7 +82,7 @@
     # workplace-issued thinkpad
     nixosConfigurations.nixos-laptop = mkLocalSetup {
       host = "work-laptop-thinkpad";
-      user = "nixos";
+      usr = "nixos";
       extramods = [
         #nixos-hardware.nixosModules.lenovo-thinkpad-t490
       ];
@@ -91,7 +91,7 @@
     # desktop @ home
     nixosConfigurations.desktop = mkLocalSetup {
       host = "desktop";
-      user = "nixos-desktop";
+      usr = "nixos-desktop";
     };
 
 

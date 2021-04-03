@@ -1,13 +1,14 @@
 {
   pkgs,
   inputs,
+  usr,
   username ? "nixos",
   hostname ? "worklaptop",
   timezone ? "Europe/Berlin",
   ...
 }:
 let
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs; }).hostDetails;
+  usermod = (import (../../users + "/${usr}" ) { inherit pkgs; }).hostDetails;
 in {
   nix = {
     package = pkgs.nixFlakes;
@@ -17,6 +18,7 @@ in {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
+  users.users."${username}" = usermod;
 
   hardware.opengl = {
     enable = true;
@@ -88,7 +90,6 @@ in {
     };
   };
 
-  users.users."${username}" = usermod;
 
   environment.systemPackages = with pkgs; [
     vim git          # defaults
