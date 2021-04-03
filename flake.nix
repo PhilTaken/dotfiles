@@ -32,7 +32,7 @@
     # every setup is a system + a user
     # the system is mainly used for hardware config, the user for software-specific setups
 
-    mkRemoteSetup = {host, user_name ? "nixos", extramods ? []}: let
+    mkRemoteSetup = {host, usr ? "", user_name ? "nixos", extramods ? []}: let
       hostmod = import (./hosts + "/${host}") { inherit inputs pkgs user_name; };
     in nixpkgs.lib.nixosSystem {
       inherit system pkgs;
@@ -45,11 +45,11 @@
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users."${user_name}" = import (./users + "/${usr}/home.nix") { inherit pkgs usr user_name; };
+          home-manager.users."${user_name}" = import (./users + "/${usr}/home.nix") { inherit pkgs user_name; };
         }
       ] ++ extramods;
     in mkRemoteSetup {
-      inherit host user_name;
+      inherit host user_name usr;
       extramods = usermods;
     };
 
