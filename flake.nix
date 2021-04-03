@@ -90,7 +90,7 @@
 
     nixosConfigurations.desktop = mkLocalSetup {
       host = "desktop";
-      user_name = "nixos";
+      user = "nixos-desktop";
     };
 
 

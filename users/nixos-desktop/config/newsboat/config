@@ -1,0 +1,19 @@
+show-read-articles yes
+show-read-feeds no
+prepopulate-query-feeds no
+show-keymap-hint yes
+swap-title-and-hints no
+text-width 72
+save-path "~/Documents/archived-articles/rss"
+confirm-exit yes
+display-article-progress yes
+auto-reload yes
+history-limit 200
+browser "firefox %u"
+macro y set browser "mpv %u" ; open-in-browser ; set browser "firefox %u"
+
+urls-source "ttrss"
+ttrss-url "148.251.102.93"
+ttrss-login "phil"
+ttrss-passwordeval "gopass show --password --noparsing hobby/justus_vps/ttrss/phil"
+ttrss-mode "multi"
