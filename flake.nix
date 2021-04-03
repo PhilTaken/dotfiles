@@ -88,6 +88,7 @@
       ];
     };
 
+    # desktop @ home
     nixosConfigurations.desktop = mkLocalSetup {
       host = "desktop";
       user = "nixos-desktop";

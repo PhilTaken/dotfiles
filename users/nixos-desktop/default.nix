@@ -51,7 +51,9 @@
             ../modules/neovim
             ../modules/ssh
 
-            ../modules/sway
+            #../modules/sway
+            ../modules/i3
+
             ../modules/zsh_full
         ];
     };
