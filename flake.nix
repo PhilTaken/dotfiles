@@ -32,24 +32,23 @@
     # every setup is a system + a user
     # the system is mainly used for hardware config, the user for software-specific setups
 
-    mkRemoteSetup = {host, usr ? "", user_name ? "nixos", extramods ? []}: let
+    mkRemoteSetup = {host, user_name ? "nixos", extramods ? []}: let
       hostmod = import (./hosts + "/${host}") { inherit inputs pkgs user_name; };
     in nixpkgs.lib.nixosSystem {
       inherit system pkgs;
       modules = [ hostmod ] ++ extramods;
     };
 
-    mkLocalSetup = {host, usr, user_name ? "nixos", extramods ? []}: let
-      hostmod = import (./hosts + "/${host}") { inherit inputs pkgs usr user_name; };
+    mkLocalSetup = {host, user_name ? "nixos", extramods ? []}: let
       usermods = [
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users."${user_name}" = import (./users + "/${usr}/home.nix") { inherit pkgs user_name; };
+          home-manager.users."${user_name}" = import (./users + "/${user_name}/home.nix") { inherit pkgs user_name; };
         }
       ] ++ extramods;
     in mkRemoteSetup {
-      inherit host user_name usr;
+      inherit host user_name;
       extramods = usermods;
     };
 
@@ -82,7 +81,7 @@
     # workplace-issued thinkpad
     nixosConfigurations.nixos-laptop = mkLocalSetup {
       host = "work-laptop-thinkpad";
-      usr = "nixos";
+      user_name = "nixos2";
       extramods = [
         #nixos-hardware.nixosModules.lenovo-thinkpad-t490
       ];
@@ -91,9 +90,8 @@
     # desktop @ home
     nixosConfigurations.desktop = mkLocalSetup {
       host = "desktop";
-      usr = "nixos-desktop";
+      user_name = "nixos2";
     };
-
 
     # vm on a hetzner server, debian host
     nixosConfigurations.alpha = mkRemoteSetup {

@@ -27,9 +27,9 @@ in rec {
         smartBorders = "on";
       };
       keybindings = let
-        modifier = config.xsession.windowManager.i3.config.modifier;
+        modifier = xsession.windowManager.i3.config.modifier;
         terminal = "${programs.alacritty.package}/bin/alacritty";
-      in lib.mkOptionDefault {
+      in {
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+d" = "kill";
         "${modifier}+Space" = "${programs.rofi.package}/bin/rofi -show run";
@@ -37,16 +37,18 @@ in rec {
       terminal = "alacritty";
       modifier = "Mod4";
       window.border = 0;
-      window.titlebars = false;
+      window.titlebar = false;
     };
   };
 
   programs = {
     rofi = {
       enable = true;
+      package = pkgs.rofi;
     };
     alacritty = {
       enable = true;
+      package = pkgs.alacritty;
       settings = {
         font.normal.family = "iosevka";
         font.size = 12.0;
@@ -69,8 +71,6 @@ in rec {
     enable = true;
     package = pkgs.polybar.override {
       i3GapsSupport = true;
-      alsaSupport = true;
-      iwSupport = true;
       githubSupport = true;
     };
     config = {
@@ -93,7 +93,10 @@ in rec {
     script = "polybar bar &";
   };
 
-  services.pulseeffects.enable = true;
+  services.pulseeffects = {
+    enable = true;
+    package = pkgs.pulseeffects-legacy;
+  };
 
   home.packages = with pkgs; [
     feh
