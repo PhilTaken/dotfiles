@@ -1,4 +1,7 @@
 {
+  # todo:
+  # - password clone
+  # - firefox config + plugins ew
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
@@ -36,13 +39,13 @@
       modules = [ hostmod ] ++ extramods;
     };
 
-    mkLocalSetup = {host, user_name, extramods ? []}: let
+    mkLocalSetup = {host, user, user_name ? "nixos", extramods ? []}: let
       hostmod = import (./hosts + "/${host}") { inherit inputs pkgs user_name; };
       usermods = [
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users."${user_name}" = import (./users + "/${user_name}/home.nix") { inherit pkgs user_name; };
+          home-manager.users."${user_name}" = import (./users + "/${user}/home.nix") { inherit pkgs user_name; };
         }
       ] ++ extramods;
     in mkRemoteSetup {
@@ -79,7 +82,7 @@
     # workplace-issued thinkpad
     nixosConfigurations.nixos-laptop = mkLocalSetup {
       host = "work-laptop-thinkpad";
-      user_name = "nixos";
+      user = "nixos";
       extramods = [
         #nixos-hardware.nixosModules.lenovo-thinkpad-t490
       ];
