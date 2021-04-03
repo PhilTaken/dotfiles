@@ -2,9 +2,11 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local install_packages = false
 
 if fn.empty(fn.glob(install_path)) > 0 then
     execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+    install_packages = true
 end
 
 -- Only required if you have packer in your `opt` pack
@@ -125,3 +127,7 @@ require('packer').startup(function()
 
 end)
 
+-- install updates if packer has just been downloaded
+if install_packages then
+	execute("PackerInstall")
+end
