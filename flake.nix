@@ -1,4 +1,7 @@
 {
+  # todo:
+  # - password clone
+  # - firefox config + plugins ew
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
@@ -36,8 +39,7 @@
       modules = [ hostmod ] ++ extramods;
     };
 
-    mkLocalSetup = {host, user_name, extramods ? []}: let
-      hostmod = import (./hosts + "/${host}") { inherit inputs pkgs user_name; };
+    mkLocalSetup = {host, user_name ? "nixos", extramods ? []}: let
       usermods = [
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
@@ -85,11 +87,11 @@
       ];
     };
 
+    # desktop @ home
     nixosConfigurations.desktop = mkLocalSetup {
       host = "desktop";
-      user_name = "nixos";
+      user_name = "maelstroem";
     };
-
 
     # vm on a hetzner server, debian host
     nixosConfigurations.alpha = mkRemoteSetup {
