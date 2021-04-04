@@ -2,7 +2,7 @@
   pkgs,
   inputs,
   username ? "nixos",
-  hostname ? "worklaptop",
+  hostname ? "nix-desktop",
   timezone ? "Europe/Berlin",
   ...
 }:
@@ -18,17 +18,18 @@ in {
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
 
+  hardware.enableRedistributableFirmware = true;
   hardware.opengl = {
     enable = true;
     driSupport = true;
+    driSupport32Bit = true;
     extraPackages = with pkgs; [
-     # intel-compute-runtime
-     # intel-media-driver
-     # vaapiVdpau
-     # libvdpau-va-gl
+      libva
+      vaapiVdpau
+      libvdpau-va-gl
+      mesa_drivers
     ];
   };
-  hardware.enableRedistributableFirmware = true;
   #environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
   virtualisation.docker.enable = true;
@@ -40,11 +41,9 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
-  #networking.wireless.enable = true;
-  #networking.wireless.userControlled.enable = true;
-  networking.wg-quick.interfaces = {
-    mullvad = import ../vpn/mullvad.nix;
-  };
+  #networking.wg-quick.interfaces = {
+    #mullvad = import ../vpn/mullvad.nix;
+  #};
 
   # Set your time zone.
   time.timeZone = "${timezone}";
@@ -54,20 +53,24 @@ in {
   #networking.interfaces.enp0s25.useDHCP = true;
   #networking.interfaces.enp4s0.useDHCP = true;
 
-  services.connman = {
-    enable = true;
-    enableVPN = false;
-  };
-
   # Configure keymap in X11 and console
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "workman";
+  #services.xserver.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome3.enable = true;
+
+  #nixpkgs.config.allowUnfree = true;
+  #services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nouveau" ];
+
   console.useXkbConfig = true;
 
   # Enable sound.
   sound.enable = true;
   sound.mediaKeys.enable = true;
 
+  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -94,19 +97,18 @@ in {
     cryptsetup       # encrypted disks
     cmst             # connman system tray
     hwinfo
-    #glxinfo
-    #libva-utils
-    #vpnc
+    glxinfo
+    libva-utils
     powertop
   ];
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
   programs.zsh.enable = true;
+
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
   };
-  programs.light.enable = true;
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.05";
 }
