@@ -61,8 +61,33 @@ in {
   };
 
   # Configure keymap in X11 and console
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "workman";
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "workman-intl";
+
+    desktopManager = {
+      xterm.enable = false;
+    };
+
+    displayManager = {
+      defaultSession = "none+i3";
+    };
+
+    videoDrivers = [ "nvidia" ];
+
+    libinput.enable = true;
+    #libinput.touchpad.accelProfile = "flat";
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        i3status
+        i3lock-fancy
+        i3blocks
+      ];
+    };
+  };
   console.useXkbConfig = true;
 
   # Enable sound.

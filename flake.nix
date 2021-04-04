@@ -81,7 +81,7 @@
     # workplace-issued thinkpad
     nixosConfigurations.nixos-laptop = mkLocalSetup {
       host = "work-laptop-thinkpad";
-      user_name = "nixos2";
+      user_name = "nixos";
       extramods = [
         #nixos-hardware.nixosModules.lenovo-thinkpad-t490
       ];
@@ -90,7 +90,7 @@
     # desktop @ home
     nixosConfigurations.desktop = mkLocalSetup {
       host = "desktop";
-      user_name = "nixos2";
+      user_name = "maelstroem";
     };
 
     # vm on a hetzner server, debian host
