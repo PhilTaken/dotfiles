@@ -1,6 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, user_name, ... }: {
     userDetails = rec {
-        name = "nixos";
+        name = "${user_name}";
         sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
         gpgKey = "BDCD0C4E9F252898";
         font = "SourceCodePro";
@@ -36,7 +36,7 @@
             thunderbird
             hydroxide
 
-            pulseeffects-pw
+            #pulseeffects-pw
 
             anki
             texlive.combined.scheme-medium

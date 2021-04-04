@@ -3,7 +3,7 @@
   user_name,
   ...
 }: let
-  usermod = (import ./default.nix { inherit pkgs; }).userDetails;
+  usermod = (import ./default.nix { inherit pkgs user_name; }).userDetails;
   home_directory = "/home/${user_name}";
   lib = pkgs.stdenv.lib;
 in rec {
