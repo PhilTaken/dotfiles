@@ -17,6 +17,7 @@ in {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
+  users.users."${username}" = usermod;
 
   hardware.enableRedistributableFirmware = true;
   hardware.opengl = {
@@ -31,6 +32,7 @@ in {
     ];
   };
   #environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+  hardware.enableRedistributableFirmware = true;
 
   virtualisation.docker.enable = true;
 
@@ -54,16 +56,33 @@ in {
   #networking.interfaces.enp4s0.useDHCP = true;
 
   # Configure keymap in X11 and console
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "workman";
-  #services.xserver.enable = true;
-  #services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome3.enable = true;
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "workman-intl";
 
-  #nixpkgs.config.allowUnfree = true;
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.videoDrivers = [ "nouveau" ];
+    desktopManager = {
+      xterm.enable = false;
+    };
 
+    displayManager = {
+      defaultSession = "none+i3";
+    };
+
+    videoDrivers = [ "nvidia" ];
+
+    libinput.enable = true;
+    #libinput.touchpad.accelProfile = "flat";
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        i3status
+        i3lock-fancy
+        i3blocks
+      ];
+    };
+  };
   console.useXkbConfig = true;
 
   # Enable sound.
@@ -90,7 +109,6 @@ in {
     };
   };
 
-  users.users."${username}" = usermod;
 
   environment.systemPackages = with pkgs; [
     vim git          # defaults
