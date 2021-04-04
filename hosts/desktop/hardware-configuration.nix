@@ -23,33 +23,6 @@
       fsType = "vfat";
     };
 
-  #fileSystems."/serverdata" =
-  #  { device = "serverdata";
-  #    fsType = "zfs";
-  #  };
-
-  #fileSystems."/var/lib/containers/storage/overlay" =
-    #{ device = "/var/lib/containers/storage/overlay";
-    #  fsType = "none";
-    #  options = [ "bind" ];
-    #};
-
-  #fileSystems."/var/lib/containers/storage/overlay-containers/2fefbc14147d17f31576e65d9ce6415e438bdb8b41eb7decde2ab400d5538c86/userdata/shm" =
-  #  { device = "shm";
-  #    fsType = "tmpfs";
-  #  };
-
-  #fileSystems."/var/lib/containers/storage/overlay/3342b450bf54acd7727d9bc58e91185179579fc2e1b34c3aa50f44b2ada8cc85/merged" =
-  #  { device = "overlay";
-  #    fsType = "overlay";
-  #  };
-
-  #fileSystems."/serverdata/media/platte" =
-  #  { device = "/dev/disk/by-uuid/45233f6d-b15c-43c3-897f-1426b156d2fc";
-  #    fsType = "ext4";
-  #    options = [ "uid=1000" "gid=100" "dmask=007" "fmask=117" ];
-  #  };
-
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
