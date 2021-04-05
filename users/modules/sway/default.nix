@@ -119,7 +119,7 @@ in rec {
         "4" = [{class = "Spotify";}];
       };
       startup = [
-        { command = "avizo-service"; }
+        #{ command = "avizo-service"; }
         { command = "${pkgs.mako}/bin/mako"; }
         { command = "${pkgs.ydotool}/bin/ydotoold"; }
         { command = "\"${pkgs.procps}/bin/pkill --signal 9 waybar; ${pkgs.waybar}/bin/waybar\""; always = true; }
