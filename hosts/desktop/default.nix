@@ -4,11 +4,12 @@
   username ? "nixos",
   hostname ? "nix-desktop",
   timezone ? "Europe/Berlin",
+  enable_xorg ? true,
   ...
 }:
 let
   usermod = (import (../../users + "/${username}" ) { inherit pkgs; }).hostDetails;
-in {
+in rec {
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -58,8 +59,10 @@ in {
   # Configure keymap in X11 and console
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   services.xserver = {
+    enable = enable_xorg;
     layout = "us";
-    xkbVariant = "workman-intl";
+    xkbVariant = "workman-intl,intl";
+    xkbOptions = "caps:escape,grp:shifts_toggle";
 
     desktopManager = {
       xterm.enable = false;
@@ -69,12 +72,12 @@ in {
       defaultSession = "none+i3";
     };
 
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = if enable_xorg then [ "nvidia" ] else [ "noveau" ];
 
-    libinput.enable = true;
+    libinput.enable = enable_xorg;
     #libinput.touchpad.accelProfile = "flat";
     windowManager.i3 = {
-      enable = true;
+      enable = enable_xorg;
       package = pkgs.i3-gaps;
       extraPackages = with pkgs; [
         i3status
@@ -124,7 +127,7 @@ in {
   programs.zsh.enable = true;
 
   programs.sway = {
-    enable = true;
+    enable = !enable_xorg;
     wrapperFeatures.gtk = true;
   };
 

@@ -1,6 +1,6 @@
-{ pkgs, user_name, ... }: {
+{ pkgs, username, ... }: {
     userDetails = rec {
-        name = "${user_name}";
+        name = "${username}";
         sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
         gpgKey = "BDCD0C4E9F252898";
         font = "SourceCodePro";
@@ -50,9 +50,6 @@
             ../modules/git
             ../modules/neovim
             ../modules/ssh
-
-            #../modules/sway
-            ../modules/i3
 
             ../modules/zsh_full
         ];
