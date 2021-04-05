@@ -94,7 +94,7 @@ in rec {
   };
 
   services.polybar = {
-    enable = true;
+    enable = false;
     package = pkgs.polybar.override {
       i3GapsSupport = true;
       githubSupport = true;

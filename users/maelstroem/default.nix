@@ -36,8 +36,6 @@
             thunderbird
             hydroxide
 
-            #pulseeffects-pw
-
             anki
             texlive.combined.scheme-medium
 
