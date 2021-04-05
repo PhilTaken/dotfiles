@@ -1,15 +1,19 @@
 {
   pkgs,
-  user_name,
+  username,
+  enable_xorg ? false,
   ...
 }: let
   usermod = (import ./default.nix { inherit pkgs; }).userDetails;
-  home_directory = "/home/${user_name}";
+  home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
+
+  # to avoid infinite recursion in home.username
+  user_name = username;
 in rec {
-  _module.args.username = user_name;
+  _module.args.username = username;
   _module.args.background_image = usermod.background_image;
-  imports = usermod.imports;
+  imports = usermod.imports ++ (if enable_xorg then [ ../modules/i3 ] else [ ../modules/sway ]);
   home = rec {
     username = "${user_name}";
     homeDirectory = "${home_directory}";
