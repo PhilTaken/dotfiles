@@ -83,11 +83,6 @@ in rec {
     windowManager.i3 = {
       enable = enable_xorg;
       package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        i3status
-        i3lock-fancy
-        i3blocks
-      ];
     };
   };
   console.useXkbConfig = true;
