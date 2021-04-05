@@ -279,6 +279,12 @@ in rec {
     };
   };
 
+  services.pulseeffects = {
+    enable = true;
+    package = pkgs.pulseeffects-pw;
+  };
+
+  # for the work laptop
   services.kanshi = {
     enable = true;
     profiles = {
