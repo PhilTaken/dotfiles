@@ -4,7 +4,7 @@
   enable_xorg ? false,
   ...
 }: let
-  usermod = (import ./default.nix { inherit pkgs; }).userDetails;
+  usermod = (import ./default.nix { inherit pkgs username; }).userDetails;
   home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
 

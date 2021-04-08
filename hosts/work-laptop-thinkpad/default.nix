@@ -8,7 +8,7 @@
   ...
 }:
 let
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs; }).hostDetails;
+  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
 in rec {
   nix = {
     package = pkgs.nixFlakes;

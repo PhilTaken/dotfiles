@@ -8,7 +8,7 @@
   ...
 }:
 let
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs; }).hostDetails;
+  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
 in rec {
   nix = {
     package = pkgs.nixFlakes;
@@ -59,8 +59,8 @@ in rec {
   services.xserver = {
     enable = enable_xorg;
     layout = "us";
-    xkbVariant = "workman-intl,intl";
-    xkbOptions = "caps:escape,grp:shifts_toggle";
+    xkbVariant = "workman-intl";
+    xkbOptions = "caps:escape";
 
     desktopManager = {
       xterm.enable = false;
