@@ -33,8 +33,6 @@ in rec {
     ];
   };
   #environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
-  hardware.enableRedistributableFirmware = true;
-
   virtualisation.docker.enable = true;
 
   imports = [ ./hardware-configuration.nix ];
