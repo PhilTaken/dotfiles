@@ -1,15 +1,19 @@
 {
   pkgs,
-  user_name,
+  username,
+  enable_xorg ? false,
   ...
 }: let
-  usermod = (import ./default.nix { inherit pkgs user_name; }).userDetails;
-  home_directory = "/home/${user_name}";
+  usermod = (import ./default.nix { inherit pkgs username; }).userDetails;
+  home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
+
+  # to avoid infinite recursion in home.username
+  user_name = username;
 in rec {
-  _module.args.username = user_name;
+  _module.args.username = username;
   _module.args.background_image = usermod.background_image;
-  imports = usermod.imports;
+  imports = usermod.imports ++ (if enable_xorg then [ ../modules/i3 ] else [ ../modules/sway ]);
   home = rec {
     username = "${user_name}";
     homeDirectory = "${home_directory}";
@@ -50,11 +54,10 @@ in rec {
       settings.default-key = usermod.gpgKey;
     };
 
-    # TODO conditional if using wayland or not (most likely)
     firefox = {
       enable = true;
       package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-        forceWayland = true;
+        forceWayland = !enable_xorg;
         extraPolicies = {
           ExtensionSettings = {};
         };
@@ -92,6 +95,5 @@ in rec {
     Install = { WantedBy = [ "multi-user.target"]; };
   };
 
-  # TODO write function that adds all the files in config to xdg automatically
   xdg.configFile."newsboat/config".source = ./config/newsboat/config;
 }
