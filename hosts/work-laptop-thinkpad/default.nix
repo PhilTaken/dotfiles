@@ -4,11 +4,12 @@
   username ? "nixos",
   hostname ? "worklaptop",
   timezone ? "Europe/Berlin",
+  enable_xorg ? false,
   ...
 }:
 let
   usermod = (import (../../users + "/${username}" ) { inherit pkgs; }).hostDetails;
-in {
+in rec {
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -61,14 +62,13 @@ in {
     wifi.backend = "wpa_supplicant";
   };
 
-  services.xserver.enable = true;
-  #services.xserver.videoDrivers = ["nvidia"];
-
   # Configure keymap in X11 and console
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   services.xserver = {
+    enable = enable_xorg;
     layout = "us";
-    xkbVariant = "workman-intl";
+    xkbVariant = "workman-intl,intl";
+    xkbOptions = "caps:escape,grp:shifts_toggle";
 
     desktopManager = {
       xterm.enable = false;
@@ -78,16 +78,11 @@ in {
       defaultSession = "none+i3";
     };
 
-    libinput.enable = true;
+    libinput.enable = enable_xorg;
     libinput.touchpad.accelProfile = "flat";
     windowManager.i3 = {
-      enable = true;
+      enable = enable_xorg;
       package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        i3status
-        i3lock-fancy
-        i3blocks
-      ];
     };
   };
   console.useXkbConfig = true;
@@ -129,11 +124,11 @@ in {
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
   programs.zsh.enable = true;
-  #programs.sway = {
-    #enable = true;
-    #wrapperFeatures.gtk = true;
-  #};
   programs.light.enable = true;
+  programs.sway = {
+    enable = !enable_xorg;
+    wrapperFeatures.gtk = true;
+  };
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.05";
 }

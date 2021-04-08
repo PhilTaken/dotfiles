@@ -33,7 +33,7 @@ in rec {
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+d" = "kill";
         "${modifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show run";
-        "${modifier}+l" = "exec ${pkgs.i3lock-fancy}/bin/i3lock-fancy -gp";
+        "${modifier}+l" = "exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
         "${modifier}+1" = "workspace number 1";
         "${modifier}+2" = "workspace number 2";
         "${modifier}+3" = "workspace number 3";
@@ -94,14 +94,13 @@ in rec {
   };
 
   services.polybar = {
-    enable = true;
+    enable = false;
     package = pkgs.polybar.override {
       i3GapsSupport = true;
       githubSupport = true;
     };
     config = {
       "bar/top" = {
-        monitor = "\${env:MONITOR:eDP1}";
         width = "100%";
         height = "3%";
         radius = 0;
@@ -131,6 +130,9 @@ in rec {
     libnotify
     libappindicator
     glibcLocales
-    xorg.xf86inputsynaptics
+
+    i3status
+    i3lock-pixeled
+    i3blocks
   ];
 }
