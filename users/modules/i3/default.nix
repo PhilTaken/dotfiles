@@ -34,6 +34,9 @@ in rec {
         "${modifier}+d" = "kill";
         "${modifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show run";
         "${modifier}+l" = "exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
+        "${modifier}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+        "${modifier}+p" = "exec ${pkgs.rofi-pass}/bin/rofi-pass";
+
         "${modifier}+1" = "workspace number 1";
         "${modifier}+2" = "workspace number 2";
         "${modifier}+3" = "workspace number 3";
@@ -73,14 +76,14 @@ in rec {
       package = pkgs.alacritty;
       settings = {
         font.normal.family = "iosevka";
-        font.size = 7.5;
+        font.size = 12;
       };
     };
   };
 
   services.picom = {
     enable = true;
-    activeOpacity = "0.9";
+    activeOpacity = "0.95";
     blur = true;
     blurExclude = [
       "class_g = 'slop'"
@@ -89,7 +92,7 @@ in rec {
     ];
     fade = true;
     inactiveDim = "0.15";
-    inactiveOpacity = "0.7";
+    inactiveOpacity = "0.8";
     shadow = true;
   };
 
@@ -134,5 +137,10 @@ in rec {
     i3status
     i3lock-pixeled
     i3blocks
+    flameshot
+
+    xclip
+
+    rofi-pass
   ];
 }

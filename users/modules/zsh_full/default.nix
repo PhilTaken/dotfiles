@@ -222,6 +222,7 @@ in rec {
   };
 
   xdg.configFile."page/init.vim".source = ./page.vim;
+  #xdg.configFile."direnv/direnvrc".source = ./direnvrc;
 
   home.packages = with pkgs; [
     page
@@ -244,4 +245,6 @@ in rec {
     sshfs
     unzip
   ];
+
+
 }
