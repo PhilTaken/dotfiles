@@ -42,6 +42,8 @@
             texlive.combined.scheme-medium
 
             cachix
+
+            magic-wormhole
         ];
 
         imports = [
