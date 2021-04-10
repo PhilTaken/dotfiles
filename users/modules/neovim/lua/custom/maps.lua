@@ -69,3 +69,18 @@ map('i', '<CR>',      [[compe#confirm('<CR>')]],         {noremap = true; expr =
 --map('i', '<C-e>',     [[compe#close('<C-e>')]],          {noremap = true; expr = true; silent = true;})
 map('i', '<C-f>',     [[compe#scroll({ 'delta': +4 })]], {noremap = true; expr = true; silent = true;})
 map('i', '<C-d>',     [[compe#scroll({ 'delta': -4 })]], {noremap = true; expr = true; silent = true;})
+
+-- jupyter ascending (not working currently because of nix being a readonly store -> TODO)
+--map('n', '<LocalLeader>x', '<Plug>JupyterExecute', options)
+--map('n', '<LocalLeader>X', '<Plug>JupyterExecuteAll', options)
+
+map('n', '<LocalLeader>s', '<Plug>RStart', { silent = true; })
+map('n', '<LocalLeader>m', '<Plug>RDSendLine', {silent = true; })
+map('v', '<LocalLeader>ss', '<Plug>RSendSelection', { silent = true; })
+map('n', '<LocalLeader>o', '<Plug>RPlot', { silent = true; })
+map('n', '<LocalLeader>v', '<Plug>RViewDF', { silent = true; })
+map('n', '<LocalLeader>l', '<Plug>RUpdateObjBrowser', { silent = true; })
+map('n', '<LocalLeader>h', '<Plug>RHelp', { silent = true; })
+
+-- ?
+map('n', '<LocalLeader>sa', '<Plug>RSendFile', { silent = true; })

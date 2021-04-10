@@ -4,6 +4,7 @@ local bo = vim.bo
 
 -- leader, for mappings
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ","
 vim.g.tex_flavor = 'latex'
 
 -- ignore these in searches
