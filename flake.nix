@@ -12,6 +12,7 @@
     };
     deploy-rs.url = "github:serokell/deploy-rs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nur.url = "github:nix-community/NUR";
 
     # neovim nightly, tap on master branch
     neovim-nightly-src = {
@@ -23,13 +24,14 @@
     # rofi-wayland-src = { url = "github:lbonn/rofi"; flake = false; submodules = true; };
     # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
-  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, ... }@inputs: let
+  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, nur, ... }@inputs: let
     system = "x86_64-linux";
     overlays = [
       (import ./overlays/nvim-overlay.nix { inherit inputs; })
       (import ./overlays/rofi-overlay.nix { inherit inputs; })
       (import ./overlays/gopass-rofi.nix  { inherit inputs; })
       (import ./custom_pkgs)
+      nur.overlay
     ];
 
     pkgs = import nixpkgs {

@@ -62,6 +62,28 @@ in rec {
           ExtensionSettings = {};
         };
       };
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        betterttv
+        bitwarden
+        canvasblocker
+        clearurls
+        cookie-autodelete
+        darkreader
+        floccus
+        h264ify
+        https-everywhere
+        i-dont-care-about-cookies
+        matte-black-red
+        netflix-1080p
+        no-pdf-download
+        privacy-badger
+        reddit-enhancement-suite
+        stylus
+        terms-of-service-didnt-read
+        ublock-origin
+        unpaywall
+        zoom-redirector
+      ];
     };
 
     #texlive.enable = true;
