@@ -44,11 +44,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1617894699,
-        "narHash": "sha256-zlG3xNXgqo5pbMmfq8YaqGoVjElHnTDnEz13A+pUbZY=",
+        "lastModified": 1618041827,
+        "narHash": "sha256-17Fzc8rmT6HOarCp+8k9RhmgMorNtzTk/rzew+FqHrA=",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "56f5f41ed42f7d476a7c79fa8ec71f5605487abf",
+        "rev": "f567ea8228e0ce718871d7346e444dd15ad702e5",
         "type": "github"
       },
       "original": {
@@ -81,11 +81,11 @@
     "neovim-nightly-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1617938048,
-        "narHash": "sha256-iQWMv7H6Ev+dayqcQmWC1K1ZZyGjMUeUbwm9j8LiCdk=",
+        "lastModified": 1618072614,
+        "narHash": "sha256-g1EhEAaaBuGlZLB2Z8rmK7ZNuOdBBOXZhidrkQJyxUw=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "82ac44d01f0e92546f43c804595c14a139af77bd",
+        "rev": "062c64e24c3f51c94b4808387af1197ce34b45b8",
         "type": "github"
       },
       "original": {
@@ -128,11 +128,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1617907639,
-        "narHash": "sha256-cppv7iriTWljCrB5MBYyvybJZjTz+IuolocQgrAUKXg=",
+        "lastModified": 1617929752,
+        "narHash": "sha256-ji0nqJUZp2bfHvO0sKxD24cW6Nk7LyjbPPMxjbJHji0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c2f5468cec517043ff9147855d45e849c742ed41",
+        "rev": "6fc2b7ecc2a167ce6a6902d5417daf1fa5cac777",
         "type": "github"
       },
       "original": {
@@ -142,13 +142,29 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1618089008,
+        "narHash": "sha256-DRmUj37PvZDkEg9RISjK9bZwgbRYgwcR+XfWYIyG584=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "40da8ce2a362d70663c7f5a3ac23b3ee8189ea5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "deploy-rs": "deploy-rs",
         "home-manager": "home-manager",
         "neovim-nightly-src": "neovim-nightly-src",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "nur": "nur"
       }
     },
     "utils": {
