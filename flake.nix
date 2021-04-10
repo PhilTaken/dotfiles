@@ -1,7 +1,9 @@
 {
   # todo:
-  # - password clone
-  # - firefox config + plugins ew
+  # - password clone (gopass) / or reminder
+  # - firefox config + plugins
+  # - add flake utils for NixOS setup on raspi / handle pkgs differently
+  # - add NAS
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
@@ -11,14 +13,17 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    ## extra packages
-    neovim-nightly-src = { url = "github:neovim/neovim"; flake = false; };
+    # neovim nightly, tap on master branch
+    neovim-nightly-src = {
+      url = "github:neovim/neovim";
+      flake = false;
+    };
 
-    # rofi source not here since rofi requires submodules which flake inputs dont support yet
+    # rofi source not here since rofi requires submodules which flake inputs dont support yet, see overlays/rofi-overlay.nix
     # rofi-wayland-src = { url = "github:lbonn/rofi"; flake = false; submodules = true; };
     # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
-  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, ... }@inputs: let #overlays = map
+  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, ... }@inputs: let
     system = "x86_64-linux";
     overlays = [
       (import ./overlays/nvim-overlay.nix { inherit inputs; })
@@ -27,10 +32,11 @@
       (import ./custom_pkgs)
     ];
 
-    pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
-
-    # every setup is a system + a user
-    # the system is mainly used for hardware config, the user for software-specific setups
+    pkgs = import nixpkgs {
+      inherit system overlays;
+      # for Discord
+      config.allowUnfree = true;
+    };
 
     mkRemoteSetup = {host, username ? "nixos", enable_xorg ? false, extramods ? []}: let
       hostmod = import (./hosts + "/${host}") {
@@ -59,9 +65,6 @@
     setup-script = pkgs.writeShellScriptBin "setup" ''
         if [[ -z "$1" || "$1" == "help" ]]; then
           echo -e "Usage: $(basename $0) {config} [ update | switch | build | install ]\n\nFor more details on the options see \`man nixos-rebuild\`"
-          echo -e ""
-          echo -e "Available configs:"
-          echo -e "   - \"nixos-laptop\":  laptop setup for work"
         elif [[ "$1" == "update" ]]; then
           nix flake update --commit-lock-file
         elif [[ "$2" == "install" ]]; then
@@ -87,6 +90,7 @@
       host = "work-laptop-thinkpad";
       username = "nixos";
       extramods = [
+        # leads to audio issues, TODO investigate
         #nixos-hardware.nixosModules.lenovo-thinkpad-t490
       ];
     };

@@ -170,6 +170,7 @@ in rec {
 
   programs.waybar = let
     css_file = ./style.css;
+    # TODO fix? doesnt run currently
     weather_exec = ./openweathe-rs;
   in {
     enable = true;
