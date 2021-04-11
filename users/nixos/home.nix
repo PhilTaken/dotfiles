@@ -12,8 +12,14 @@
   user_name = username;
 in rec {
   _module.args.username = username;
+  _module.args.enable_xorg = enable_xorg;
   _module.args.background_image = usermod.background_image;
-  imports = usermod.imports ++ (if enable_xorg then [ ../modules/i3 ] else [ ../modules/sway ]);
+
+  imports = usermod.imports ++ (if enable_xorg then [
+    ../modules/i3
+  ] else [
+    ../modules/sway
+  ]);
   home = rec {
     username = "${user_name}";
     homeDirectory = "${home_directory}";
@@ -27,13 +33,14 @@ in rec {
       CARGO_HOME = "${xdg.dataHome}/cargo";
       RUSTUP_HOME = "${xdg.dataHome}/rustup";
       _ZO_ECHO = 1;
-      XDG_CURRENT_DESKTOP = "sway";
-      MOZ_ENABLE_WAYLAND = 1;
       MOZ_USE_XINPUT2 = 1;
       GTK_USE_PORTAL = 1;
       AWT_TOOLKIT = "MToolkit";
-      #LIBVA_DRIVER_NAME = "iHD";
-    };
+    } // (if ! enable_xorg then {
+      XDG_CURRENT_DESKTOP = "sway";
+      MOZ_ENABLE_WAYLAND = 1;
+    } else {});
+
     packages = with pkgs; [
       cacert
       coreutils
@@ -52,38 +59,6 @@ in rec {
     gpg = {
       enable = true;
       settings.default-key = usermod.gpgKey;
-    };
-
-    firefox = {
-      enable = true;
-      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-        forceWayland = !enable_xorg;
-        extraPolicies = {
-          ExtensionSettings = {};
-        };
-      };
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        betterttv
-        bitwarden
-        canvasblocker
-        clearurls
-        cookie-autodelete
-        darkreader
-        floccus
-        h264ify
-        https-everywhere
-        i-dont-care-about-cookies
-        matte-black-red
-        netflix-1080p
-        no-pdf-download
-        privacy-badger
-        reddit-enhancement-suite
-        stylus
-        terms-of-service-didnt-read
-        ublock-origin
-        unpaywall
-        zoom-redirector
-      ];
     };
 
     #texlive.enable = true;

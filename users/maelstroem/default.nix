@@ -48,6 +48,7 @@
             ../modules/git
             ../modules/neovim
             ../modules/ssh
+            ../modules/firefox
 
             ../modules/zsh_full
         ];
