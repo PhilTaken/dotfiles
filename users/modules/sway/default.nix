@@ -126,7 +126,7 @@ in rec {
         #{ command = "systemctl --user restart kanshi"; always = true; }
         #{ command = "systemctl --user restart waybar"; always = true; }
         #{ command = "systemctl --user restart waybar"; always = true; }
-        # TODO check this
+        # TODO investigate swayidle
         #{
         #  command = ''
         #    ${pkgs.swayidle}/bin/swayidle -w \
@@ -148,12 +148,20 @@ in rec {
           criteria = { app_id = ".*"; };
         }
         {
+          command = "floating enable";
+          criteria = { title = "R Graphics.*"; };
+        }
+        {
           command = "opacity 1";
           criteria = { app_id = "firefox"; };
         }
         {
           command = "opacity 1";
           criteria = { app_id = "org.pwmt.zathura"; };
+        }
+        {
+          command = "floating enable";
+          criteria = { title = "vis"; };
         }
         {
           command = "floating enable, move to scratchpad";
@@ -170,7 +178,7 @@ in rec {
 
   programs.waybar = let
     css_file = ./style.css;
-    # TODO fix? doesnt run currently
+    # TODO fix openweather-rs doesnt run currently
     weather_exec = ./openweathe-rs;
   in {
     enable = true;

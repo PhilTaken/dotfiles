@@ -1,5 +1,5 @@
 {
-  # todo:
+  # TODO:
   # - password clone (gopass) / or reminder
   # - firefox config + plugins
   # - add flake utils for NixOS setup on raspi / handle pkgs differently
