@@ -44,6 +44,7 @@
             cachix
 
             magic-wormhole
+            gping
         ];
 
         imports = [
