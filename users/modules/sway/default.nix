@@ -32,20 +32,20 @@ in rec {
         smartBorders = "on";
       };
       input = {
-        "*" = {
-          xkb_layout = "us(intl)";
-          xkb_options = "caps:escape";
-        };
+        # integrated keyboard
         "1:1:AT_Translated_Set_2_keyboard" = {
           xkb_layout = "us(workman-intl),us(intl)";
           xkb_options = "caps:escape,grp:shifts_toggle";
         };
+        # office keyboard
         "1241:36:HOLDCHIP_USB_Gaming_Keyboard" = {
           xkb_layout = "us(workman-intl)";
           xkb_options = "caps:escape,altwin:swap_alt_win";
         };
-        "4152:5929:SteelSeries_SteelSeries_Rival_110_Gaming_Mouse" = {
-          accel_profile = "flat";
+        # all other keyboard
+        "*" = {
+          xkb_layout = "us(workman-intl)";
+          xkb_options = "caps:escape";
         };
       };
       keybindings = let
@@ -337,23 +337,8 @@ in rec {
             position = "0,0";
           }
           {
-            criteria = "Unknown 2460G4 0x0000C93A";
-            mode = "1920x1080@119.98Hz";
-            position = "1920,0";
-          }
-        ];
-      };
-      "at-home-2" = {
-        exec = "notfiy-send 'Welcome home!'";
-        outputs = [
-          {
-            criteria = "eDP-1";
-            mode = "1920x1080";
-            position = "0,0";
-          }
-          {
-            criteria = "Unknown TERRA 2455W 0x00000101";
-            mode = "1920x1080";
+            criteria = "Philips Consumer Electronics Company PHL 245E1 0x000072DC";
+            mode = "2560x1440@74.968Hz";
             position = "1920,0";
           }
         ];

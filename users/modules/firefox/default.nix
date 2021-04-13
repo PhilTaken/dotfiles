@@ -19,9 +19,7 @@
       canvasblocker
       clearurls
       cookie-autodelete
-      darkreader
       floccus
-      h264ify
       https-everywhere
       i-dont-care-about-cookies
       matte-black-red
@@ -34,6 +32,7 @@
       ublock-origin
       unpaywall
       zoom-redirector
+      privacy-redirect
     ];
 
     profiles = {
