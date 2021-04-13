@@ -3,4 +3,5 @@ final:  prev: {
   calibre = prev.callPackage ./applications/calibre {  };
   fortls = prev.callPackage ./applications/fortls {  };
   snow-agent = prev.callPackage ./applications/snow-agent { };
+  neovide = prev.callPackage ./applications/neovide { };
 }
