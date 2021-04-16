@@ -1,11 +1,11 @@
 {
   # TODO:
   # - password clone (gopass) / or reminder
-  # - firefox config + plugins
   # - add flake utils for NixOS setup on raspi / handle pkgs differently
   # - add NAS
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-wayland = "github:colemickens/nixpkgs-wayland";
     home-manager = {
       url = "github:rycee/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,13 +24,14 @@
     # rofi-wayland-src = { url = "github:lbonn/rofi"; flake = false; submodules = true; };
     # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
-  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, nur, ... }@inputs: let
+  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, nur, nixpkgs-wayland, ... }@inputs: let
     system = "x86_64-linux";
     overlays = [
       (import ./overlays/nvim-overlay.nix { inherit inputs; })
       (import ./overlays/rofi-overlay.nix { inherit inputs; })
       (import ./overlays/gopass-rofi.nix  { inherit inputs; })
       (import ./custom_pkgs)
+      nixpkgs-wayland.overlay
       nur.overlay
     ];
 
