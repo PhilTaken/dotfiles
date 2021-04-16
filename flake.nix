@@ -5,7 +5,7 @@
   # - add NAS
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-wayland = "github:colemickens/nixpkgs-wayland";
+    nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
     home-manager = {
       url = "github:rycee/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
