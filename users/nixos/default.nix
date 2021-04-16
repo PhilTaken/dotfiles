@@ -45,6 +45,8 @@
 
             magic-wormhole
             gping
+
+            goneovim
         ];
 
         imports = [

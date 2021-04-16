@@ -36,6 +36,7 @@
   ];
 
   xdg.configFile."nvim/init_.lua".source = ./init.lua;
+  xdg.configFile."goneovim/settings.toml".source = ./goneovim_settings.toml;
 
   home.file.".visidatarc".source = ./visidatarc;
 
