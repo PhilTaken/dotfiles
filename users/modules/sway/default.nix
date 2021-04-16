@@ -6,7 +6,6 @@
 }:
 let
   lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
-  sway_bg = ../.. + "/${username}/wallpaper/${background_image}";
 in rec {
   wayland.windowManager.sway = let
     std_opacity = "0.96";
@@ -172,7 +171,7 @@ in rec {
           criteria = { app_id = "avizo-service"; };
         }
       ];
-      output = { "*" = { bg = "${sway_bg} fill"; }; };
+      output = { "*" = { bg = "${background_image} fill"; }; };
     };
   };
 

@@ -6,7 +6,7 @@
 }:
 let
   lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
-  sway_bg = ../.. + "/${username}/wallpaper/${background_image}";
+  sway_bg = background_image;
 in rec {
   xsession.windowManager.i3 = {
     enable = true;

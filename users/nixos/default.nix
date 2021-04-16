@@ -4,7 +4,7 @@
         sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
         gpgKey = "BDCD0C4E9F252898";
         font = "SourceCodePro";
-        background_image = "mountain.jpg";
+        background_image = ./wallpaper/city-night.png;
         extraPackages = with pkgs; [
             gopass-rofi
 
