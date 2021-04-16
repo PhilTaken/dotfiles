@@ -1,120 +1,46 @@
-{ rustPlatform
-, fetchurl
+{ lib
+, rustPlatform
 , fetchFromGitHub
-, defaultCrateOverrides
-, callPackage
-, lib
-
-, cmake
-, cacert
-, pkgconfig
-, fontconfig
-, cargo
-, rustc
-, python
-, llvmPackages_latest
-, vulkan-tools
-, xlibs
-, xorg
-, xorg_sys_opengl
-, libglvnd
-, freeglut
-, patchelf
-
-, expat
+, pkg-config
 , openssl
+, cmake
 , freetype
-, harfbuzz
-, icu
-, libjpeg_turbo
-, libpng
-, zlib
+, file
+, expat
+, curl
 , SDL2
-, vulkan-loader
 }:
-let
-  skia = callPackage ./skia.nix {};
-  # https://github.com/Kethku/neovide/issues/465
-  rpathLibs = [
-    libglvnd
-    freeglut
-    freeglut.dev
-    freetype
 
-    vulkan-loader
-    xlibs.libXcursor
-    xlibs.libXext
-    xlibs.libXrandr
-    xorg.libXi
-    fontconfig
-  ];
-  # patchelf --set-rpath "${lib.makeLibraryPath rpathLibs}" $out/bin/alacritty
-in rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage rec {
   pname = "neovide";
-  version = "0.7.1";
+  version = "0.5.0";
+
   src = fetchFromGitHub {
     owner = "Kethku";
     repo = "neovide";
-    rev = "e1d8d404167f5c6d5471ce1404493eb1805e94d2";
-    sha256 = "sha256-j0NfzfaqRiFXE47gcPiv9AIBuzICrY/1YWjQ8TUm0RA=";
-    # lib.fakeSha256;
-
+    rev = "${version}";
+    sha256 = "sha256-NajO3mPPmdgQbYwS8wXKpLJVXsZ8gG71SQdWB4CGVPY=";
   };
-  # src = builtins.filterSource
-  #   (path: type:
-  #     type == "directory"
-  #     || lib.strings.hasSuffix ".rs" path
-  #     || lib.strings.hasSuffix ".h" path
-  #     || lib.strings.hasSuffix ".cpp" path
-  #     || lib.strings.hasSuffix ".toml" path
-  #     || lib.strings.hasSuffix ".lock" path
-  #     || lib.strings.hasSuffix ".otf" path
-  #     || lib.strings.hasSuffix ".desktop" path
-  #     || lib.strings.hasSuffix ".ico" path
-  #   )
-  #   ./.;
-  # cargoSha256 = "0qkililxcwjhsvk354ly0bz1gxfqa65ka66f3zri85n3gr9fr397";
-  cargoSha256 = "sha256-R8JOwXp74X2tqSTm+/wT/D5gBiIRcLRV2R8+f9o5sOc=";
 
-  SSL_CERT_FILE = "${cacert.out}/etc/ssl/certs/ca-bundle.crt";
-  CURL_CA_BUNDLE = "${cacert.out}/etc/ssl/certs/ca-bundle.crt";
+  cargoSha256 = "sha256-NQrslwqacXIx4jZRs6kAX2gkUyhrMZo+jFLr6z3Aj/Y=";
+
   nativeBuildInputs = [
-    cacert
+    pkg-config
     cmake
-    pkgconfig
-    cargo
-    rustc
-    python
-    vulkan-tools
-    patchelf
-    xlibs.libXext.dev # for xext.h
-    # xlibs.libXcursor
-  ] ++ (with llvmPackages_latest; [
-    clang
-    llvm
-  ]);
-  buildInputs = [
-    xlibs.libXext.dev # for xext.h
-    skia
-    expat
-    openssl
-    SDL2
-    vulkan-loader
-    xlibs.libXcursor
-    xlibs.libXrandr
-    xorg.libXi
-    freetype
-    # fontconfig
-    # xorg_sys_opengl
-    # libglvnd
-    # freeglut
-    # freeglut.dev
+    curl
   ];
 
+  buildInputs = [
+    openssl
+    freetype
+    file
+    expat
+    SDL2
+  ];
 
-  # :${xlibs.libXcursor}/lib"
-  #     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${vulkan-loader}/lib"
-  shellHook = ''
-    echo 'patchelf --set-rpath "${lib.makeLibraryPath rpathLibs}" target/debug/neovide'
-  '';
+  configureFlags = [
+    "FREETYPE_INCLUDES=${freetype.dev}/include"
+    "FREETYPE_LIBS=${freetype.out}/lib"
+    "FONTCONFIG_FILE=${fontconfig.out}/etc/fonts/fonts.conf"
+  ];
 }
