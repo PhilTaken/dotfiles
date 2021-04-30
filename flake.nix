@@ -2,6 +2,8 @@
   # todo:
   # - password clone
   # - firefox config + plugins ew
+  # ideas:
+  # - freetube
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
@@ -27,7 +29,13 @@
       (import ./custom_pkgs)
     ];
 
-    pkgs = import nixpkgs { inherit system overlays; config.allowUnfree = true; };
+    pkgs = import nixpkgs {
+      inherit system overlays;
+      config.allowUnfree = true;
+      config.permittedInsecurePackages = [
+        "libgit2-0.27.10"
+      ];
+    };
 
     # every setup is a system + a user
     # the system is mainly used for hardware config, the user for software-specific setups

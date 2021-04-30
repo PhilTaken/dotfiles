@@ -122,7 +122,7 @@ in rec {
   };
 
   services.pulseeffects = {
-    enable = true;
+    enable = false;
     package = pkgs.pulseeffects-legacy;
   };
 

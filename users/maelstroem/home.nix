@@ -13,7 +13,7 @@
 in rec {
   _module.args.username = username;
   _module.args.background_image = usermod.background_image;
-  imports = usermod.imports ++ (if enable_xorg then [ ../modules/i3 ] else [ ../modules/sway ]);
+  imports = usermod.imports ++ (if enable_xorg then [ ../modules/kde ] else [ ../modules/sway ]);
   home = rec {
     username = "${user_name}";
     homeDirectory = "${home_directory}";

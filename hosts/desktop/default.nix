@@ -9,6 +9,7 @@
 }:
 let
   usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  kde_ports = builtins.genList(x: x+1714) (1764-1714+1);
 in rec {
   nix = {
     package = pkgs.nixFlakes;
@@ -18,6 +19,7 @@ in rec {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
+
   users.users."${username}" = usermod;
 
   hardware.enableRedistributableFirmware = true;
@@ -42,6 +44,10 @@ in rec {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
+
+  networking.firewall.allowedTCPPorts = kde_ports;
+  networking.firewall.allowedUDPPorts = kde_ports;
+
   #networking.wg-quick.interfaces = {
     #mullvad = import ../vpn/mullvad.nix;
   #};
@@ -67,16 +73,21 @@ in rec {
     };
 
     displayManager = {
-      defaultSession = "none+i3";
+      #defaultSession = "none+i3";
+      defaultSession = "plasma5";
     };
 
     videoDrivers = if enable_xorg then [ "nvidia" ] else [ "noveau" ];
 
     libinput.enable = enable_xorg;
     #libinput.touchpad.accelProfile = "flat";
-    windowManager.i3 = {
+    #windowManager.i3 = {
+      #enable = enable_xorg;
+      #package = pkgs.i3-gaps;
+    #};
+
+    desktopManager.plasma5 = {
       enable = enable_xorg;
-      package = pkgs.i3-gaps;
     };
   };
   console.useXkbConfig = true;
@@ -93,6 +104,7 @@ in rec {
     pulse.enable = true;
     jack.enable = true;
   };
+
 
   xdg = {
     portal = {
@@ -123,6 +135,8 @@ in rec {
     enable = !enable_xorg;
     wrapperFeatures.gtk = true;
   };
+
+  programs.steam.enable = true;
 
   system.stateVersion = "21.05";
 }
