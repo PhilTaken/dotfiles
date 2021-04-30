@@ -1,0 +1,19 @@
+unbindkey('h')
+unbindkey('j')
+unbindkey('k')
+unbindkey('l')
+TableSheet.unbindkey('y')
+TableSheet.unbindkey('n')
+OptionsSheet.unbindkey('e')
+TableSheet.unbindkey('e')
+
+# rebind the old functionality
+# bindkey('k', 'edit-option') # previously on e
+# bindkey('h', 'copy-row') # previously on y
+TableSheet.bindkey('k', 'search-next') # previously on n
+
+# then bind yneo to hjkl -> workman layout
+bindkey('y', 'go-left')
+bindkey('n', 'go-down')
+bindkey('e', 'go-up')
+bindkey('o', 'go-right')

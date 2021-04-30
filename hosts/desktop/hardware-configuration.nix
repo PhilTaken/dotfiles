@@ -28,7 +28,6 @@
       fsType = "ntfs-3g";
       options = [ "defaults" "user" "rw" "utf8" "noauto" "umask=000" "uid=1000" "gid=100" "exec" ];
     };
-
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

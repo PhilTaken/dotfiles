@@ -100,31 +100,22 @@ require('packer').startup(function()
     use 'tpope/vim-surround'
 
     -- julia lang
-    use 'JuliaEditorSupport/julia-vim'
+    --use 'JuliaEditorSupport/julia-vim'
 
+    -- highlighting for the glsl (gl shader language)
     use 'tikhomirov/vim-glsl'
 
-    -- tmux movements, in splits
-    --use 'christoomey/vim-tmux-navigator'
-
-     --floaterm
-    --use 'voldikss/vim-floaterm'
-
-    -- increment/decrement dates
-    --use 'tpope/vim-speeddating'
-
-    -- nvim integration for firefox
-    --use {
-        --'glacambre/firenvim',
-        --run = function() vim.fn['firenvim#install'](0) end,
-    --}
-
-    -- repeat more motions
-    --use 'tpope/vim-repeat'
+    -- interop with jupyter notebooks
+    use 'untitled-ai/jupyter_ascending.vim'
 
     --switch between single and multiline
     --use 'AndrewRadev/splitjoin.vim'
 
+    use 'jalvesaq/Nvim-R'
+
+    --- ideas:
+    -- nvim-r
+    -- rust-tools.nvim
 end)
 
 -- install updates if packer has just been downloaded

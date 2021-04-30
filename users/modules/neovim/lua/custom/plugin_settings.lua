@@ -72,3 +72,10 @@ g.vimwiki_key_mappings = {
     mouse = 0,
     table_mappings = 0,
 }
+
+g.jupyter_ascending_match_pattern = ".py"
+
+cmd[[let R_non_r_compl = 0]]
+cmd[[let R_user_maps_only = 1]]
+cmd[[let R_csv_app = 'tmux new-window vd']]
+cmd[[let R_auto_start = 1]]

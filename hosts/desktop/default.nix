@@ -19,7 +19,6 @@ in rec {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
-
   users.users."${username}" = usermod;
 
   hardware.enableRedistributableFirmware = true;
@@ -105,7 +104,6 @@ in rec {
     jack.enable = true;
   };
 
-
   xdg = {
     portal = {
       enable = true;
@@ -126,6 +124,7 @@ in rec {
     glxinfo
     libva-utils
     powertop
+    nix-index
   ];
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
@@ -137,6 +136,10 @@ in rec {
   };
 
   programs.steam.enable = true;
+  programs.command-not-found.enable = false;
+  programs.zsh.interactiveShellInit = ''
+    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+  '';
 
   system.stateVersion = "21.05";
 }
