@@ -39,9 +39,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1620138697,
@@ -128,6 +126,20 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1620230649,
+        "narHash": "sha256-i9gHWQV959OJrycAtg04trb12UxGY1vKo1KugnIPLHs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e349b77943ff6ae572aa65ba132079820b40a161",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1620221663,
         "narHash": "sha256-PSj7Jbk1XRMznmXU+4vfODQ5mpJ9jv9ZvEz/IY/WpvY=",
         "owner": "nixos",
@@ -163,7 +175,7 @@
         "home-manager": "home-manager",
         "neovim-nightly-src": "neovim-nightly-src",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nur": "nur"
       }
     },
