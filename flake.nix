@@ -5,28 +5,45 @@
   # ideas:
   # - freetube
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
+
     home-manager = {
       url = "github:rycee/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     deploy-rs.url = "github:serokell/deploy-rs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    #nur.url = "github:nix-community/NUR";
+
     ## extra packages
-    neovim-nightly-src = { url = "github:neovim/neovim"; flake = false; };
+    neovim-nightly-src = {
+      url = "github:neovim/neovim";
+      flake = false;
+    };
 
     # rofi source not here since rofi requires submodules which flake inputs dont support yet
     # rofi-wayland-src = { url = "github:lbonn/rofi"; flake = false; submodules = true; };
     # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
-  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, ... }@inputs: let #overlays = map
+  outputs = {
+    self,
+    nixpkgs,
+    neovim-nightly-src,
+    home-manager,
+    nixos-hardware,
+    deploy-rs,
+    nur,
+    ...
+  }@inputs: let
     system = "x86_64-linux";
     overlays = [
-      (import ./overlays/nvim-overlay.nix {inherit inputs; })
-      (import ./overlays/rofi-overlay.nix {inherit inputs; })
-      (import ./overlays/gopass-rofi.nix { inherit inputs; })
+      (import ./overlays/nvim-overlay.nix { inherit inputs; })
+      (import ./overlays/rofi-overlay.nix { inherit inputs; })
+      (import ./overlays/gopass-rofi.nix  { inherit inputs; })
       (import ./custom_pkgs)
+      nur.overlay
     ];
 
     pkgs = import nixpkgs {

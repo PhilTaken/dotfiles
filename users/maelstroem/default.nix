@@ -27,6 +27,8 @@
             spotify-unwrapped
             tdesktop
             vlc
+            obs-studio
+
             pavucontrol
 
             element-desktop
@@ -40,6 +42,11 @@
             texlive.combined.scheme-medium
 
             cachix
+            gping
+            vscodium
+
+            vpnc
+            libreoffice
         ];
 
         imports = [

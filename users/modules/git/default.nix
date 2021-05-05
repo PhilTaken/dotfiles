@@ -2,7 +2,7 @@
 {
   programs.git = {
     enable = true;
-    delta.enable = true;
+    #delta.enable = true;
     lfs.enable = true;
     userEmail = "philipp.herzog@protonmail.com";
     userName = "Philipp Herzog";

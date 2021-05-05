@@ -61,6 +61,7 @@ in rec {
 
   # Configure keymap in X11 and console
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  services.sshd.enable = true;
   services.xserver = {
     enable = enable_xorg;
     layout = "us";
