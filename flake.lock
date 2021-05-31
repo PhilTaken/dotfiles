@@ -44,11 +44,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1622145920,
-        "narHash": "sha256-/tt6IApLuVcGP5auy4zjLzfm5+MBHYLS3Nauvv2U2EQ=",
+        "lastModified": 1622407737,
+        "narHash": "sha256-nmPEv1khCD7x1DIJPmTG6HBsqAgga6P/kpOx2yPQfxM=",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "0e6c61a44092e98ba1d75b41f4f947843dc7814d",
+        "rev": "0e329cee4c17fa0b7df32233513b9cb2236d382b",
         "type": "github"
       },
       "original": {
@@ -81,32 +81,16 @@
     "neovim-nightly-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1622215488,
-        "narHash": "sha256-Zd1ddYAFH5FG2zyu4oGDSFiZVLz4qR8JS5Lh1tCLYJs=",
+        "lastModified": 1622347770,
+        "narHash": "sha256-reuhbVHdVGwvxyGq8fo/i1fVwqsoswQDb/YasgSPJ8k=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "43956dea55a49a847a0f2e5d9e0f48384cb34635",
+        "rev": "3cd688ff775a50808eb7d260e540038cc32b4a40",
         "type": "github"
       },
       "original": {
         "owner": "neovim",
         "repo": "neovim",
-        "type": "github"
-      }
-    },
-    "nixos-hardware": {
-      "locked": {
-        "lastModified": 1622276848,
-        "narHash": "sha256-xOMWEeAdsV13r2d7LjJdSHVzgbxA+PJklIjpdHg37zM=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "1facb18f43ec61a6ba4bff04395685d570e74c91",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "master",
-        "repo": "nixos-hardware",
         "type": "github"
       }
     },
@@ -144,11 +128,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1622286179,
-        "narHash": "sha256-Wgnrlr/Ikkr/Fkn0189w3w0ey2MTrePvwj2ekZcz/28=",
+        "lastModified": 1622450429,
+        "narHash": "sha256-Wx6pFxvs8gy1YKbPqqkw+w2ZIRXxzad46h79NexgjKg=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "29a98a750cdf40b0813519283d499a42d3d9e66d",
+        "rev": "9e7029300dffd586f5536cd8ac4e63f978f3d71b",
         "type": "github"
       },
       "original": {
@@ -161,7 +145,6 @@
         "deploy-rs": "deploy-rs",
         "home-manager": "home-manager",
         "neovim-nightly-src": "neovim-nightly-src",
-        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nur": "nur"
       }
