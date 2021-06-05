@@ -18,6 +18,7 @@ in rec {
     '';
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
+    #sandboxPaths = [ "/bin/sh=${pkgs.bash}/bin/sh" ];
   };
   users.users."${username}" = usermod;
 
@@ -44,8 +45,8 @@ in rec {
 
   networking.hostName = hostname;
 
-  networking.firewall.allowedTCPPorts = kde_ports;
-  networking.firewall.allowedUDPPorts = kde_ports;
+  networking.firewall.allowedTCPPorts = kde_ports ++ [ 8888 ];
+  networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
 
   #networking.wg-quick.interfaces = {
     #mullvad = import ../vpn/mullvad.nix;
