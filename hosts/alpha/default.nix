@@ -70,6 +70,11 @@
     authorizedKeysFiles = [ "/etc/nixos/authorized-keys" ];
   };
 
+  # ! TODO !
+  # traefik
+  # ttrss via traefik
+  # hedgedoc via traefik
+
   # rss client
   services.tt-rss = {
     enable = true;
@@ -80,6 +85,14 @@
     registration.enable = false;
     selfUrlPath = "https://rss.pherzog.xyz/";
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
+  };
+
+  services.hedgedoc = {
+    enable = false;
+  };
+
+  services.traefik = {
+    enable = true;
   };
 
   # firewall
