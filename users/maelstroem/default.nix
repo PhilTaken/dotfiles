@@ -31,10 +31,12 @@
 
             pavucontrol
 
+            signal-desktop
+            zoom-us
             element-desktop
             newsboat
             mpv
-            calibre
+            #calibre
             thunderbird
             hydroxide
 
@@ -47,6 +49,15 @@
 
             vpnc
             libreoffice
+            chromium
+            multimc
+
+            innernet
+            magic-wormhole
+
+            audacity
+
+            digikam
         ];
 
         imports = [
