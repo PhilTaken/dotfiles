@@ -18,7 +18,7 @@
       rust-analyzer                 # rust
       texlab                        # latex
       fortls                        # fortran
-      julia                         # julia
+      #julia                         # julia
 
       git                           # version control
       ripgrep                       # telescope file finding
