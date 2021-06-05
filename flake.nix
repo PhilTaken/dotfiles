@@ -5,7 +5,8 @@
   # ideas:
   # - freetube
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    #nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
       url = "github:rycee/home-manager";
@@ -13,7 +14,7 @@
     };
 
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    #nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     #nur.url = "github:nix-community/NUR";
 
@@ -32,7 +33,7 @@
     nixpkgs,
     neovim-nightly-src,
     home-manager,
-    nixos-hardware,
+    #nixos-hardware,
     deploy-rs,
     nur,
     ...
@@ -128,10 +129,21 @@
       host = "alpha";
     };
 
+    nixosConfigurations.beta = mkRemoteSetup {
+      host = "beta";
+    };
+
+
     # deploy config
     deploy.nodes = {
       alpha = {
         hostname = "148.251.102.93";
+        sshUser = "root";
+        profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+      };
+
+      beta = {
+        hostname = "test";
         sshUser = "root";
         profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
       };
