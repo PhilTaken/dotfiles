@@ -32,7 +32,7 @@
             element-desktop
             newsboat
             mpv
-            calibre
+            #calibre
             thunderbird
             hydroxide
 
