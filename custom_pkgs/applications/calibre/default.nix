@@ -107,7 +107,7 @@ stdenv.mkDerivation rec {
       pyqtwebengine
       python
       regex
-      sip_5
+      sip
       zeroconf
       # the following are distributed with calibre, but we use upstream instead
       odfpy
