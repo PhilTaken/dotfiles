@@ -5,4 +5,5 @@ final:  prev: {
   snow-agent = prev.callPackage ./applications/snow-agent { };
   #neovide = prev.callPackage ./applications/neovide { };
   goneovim = prev.callPackage ./applications/goneovim { };
+  fortran-fpm = prev.callPackage ./applications/fortran-fpm { };
 }

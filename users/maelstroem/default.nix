@@ -58,6 +58,8 @@
             audacity
 
             digikam
+
+            #fortran-fpm
         ];
 
         imports = [

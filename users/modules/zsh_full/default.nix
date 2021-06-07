@@ -171,6 +171,7 @@ in rec {
       glog="git log";
       gco="git checkout";
       gcm="git checkout main";
+      flkup="nix flake update --commit-lock-file";
     };
   };
 
