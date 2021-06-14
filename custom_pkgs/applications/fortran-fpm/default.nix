@@ -1,7 +1,7 @@
 { stdenv
 , autoPatchelfHook
 , fetchurl
-, gfortran10
+, gfortran
 }:
 
 stdenv.mkDerivation rec {
@@ -16,16 +16,15 @@ stdenv.mkDerivation rec {
   dontUnpack = true;
 
   nativeBuildInputs = [
-    autoPatchelfHook
-    gfortran10
+    gfortran
   ];
 
   buildInputs = [
-    gfortran10
+    gfortran
   ];
 
   buildPhase = ''
-    gfortran ${src} -o fpm
+    ${gfortran}/bin/gfortran ${src} -o fpm
   '';
 
   installPhase = ''
