@@ -78,19 +78,19 @@ in rec {
     cacheHome = "${home_directory}/.cache";
   };
 
-  systemd.user.services.snow-agent = {
-    Unit = {
-      Description = "Service for the snow agent software";
-      After = "network.target";
-    };
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.snow-agent}/opt/snow/snowagent -log-dir /tmp -w /tmp test";
-      KillMode = "process";
-    };
+  #systemd.user.services.snow-agent = {
+    #Unit = {
+      #Description = "Service for the snow agent software";
+      #After = "network.target";
+    #};
+    #Service = {
+      #Type = "simple";
+      #ExecStart = "${pkgs.snow-agent}/opt/snow/snowagent -log-dir /tmp -w /tmp test";
+      #KillMode = "process";
+    #};
 
-    Install = { WantedBy = [ "multi-user.target"]; };
-  };
+    #Install = { WantedBy = [ "multi-user.target"]; };
+  #};
 
   xdg.configFile."newsboat/config".source = ./config/newsboat/config;
 }

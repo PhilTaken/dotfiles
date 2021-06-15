@@ -306,7 +306,7 @@ in rec {
           {
             criteria = "Dell Inc. DELL U2415 XKV0P05J16ZS";
             mode = "1920x1200";
-            position = "0,1200";
+            position = "0,720";
           }
           {
             criteria = "Dell Inc. DELL U2415 XKV0P05J16YS";
