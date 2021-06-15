@@ -38,7 +38,7 @@ in rec {
         vicmd_symbol = "λ ·";
         success_symbol = "λ ❱";
         error_symbol = "Ψ ❱";
-        use_symbol_for_status = true;
+        #use_symbol_for_status = true;
       };
       package.disabled = true;
       python.symbol = "Py ";
@@ -171,6 +171,7 @@ in rec {
       glog="git log";
       gco="git checkout";
       gcm="git checkout main";
+      flkup="nix flake update --commit-lock-file";
     };
   };
 

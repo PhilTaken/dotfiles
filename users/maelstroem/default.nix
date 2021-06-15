@@ -27,12 +27,16 @@
             spotify-unwrapped
             tdesktop
             vlc
+            obs-studio
+
             pavucontrol
 
+            signal-desktop
+            zoom-us
             element-desktop
             newsboat
             mpv
-            calibre
+            #calibre
             thunderbird
             hydroxide
 
@@ -40,6 +44,22 @@
             texlive.combined.scheme-medium
 
             cachix
+            gping
+            vscodium
+
+            vpnc
+            libreoffice
+            chromium
+            multimc
+
+            innernet
+            magic-wormhole
+
+            audacity
+
+            digikam
+
+            #fortran-fpm
         ];
 
         imports = [
@@ -58,5 +78,6 @@
         isNormalUser = true;
         extraGroups = [ "wheel" "video" "audio" "docker" ];
         shell = pkgs.zsh;
+        uid = 1000;
     };
 }

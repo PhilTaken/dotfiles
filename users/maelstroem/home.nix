@@ -17,7 +17,7 @@ in rec {
   _module.args.background_image = usermod.background_image;
 
   imports = usermod.imports ++ (if enable_xorg then [
-    ../modules/i3
+    ../modules/kde
   ] else [
     ../modules/sway
   ]);

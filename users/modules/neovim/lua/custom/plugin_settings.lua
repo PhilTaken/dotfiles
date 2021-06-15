@@ -38,7 +38,7 @@ require'nvim-treesitter.configs'.setup {
     ensure_installed = {
         "json", "html", "toml",
         "bash", "css", "yaml",
-	"rust", "cpp", "julia",
+	"rust", "cpp", -- "julia",
 	"python"
     },
     highlight = {

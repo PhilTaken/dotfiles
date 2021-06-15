@@ -9,6 +9,7 @@
 }:
 let
   usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  kde_ports = builtins.genList(x: x+1714) (1764-1714+1);
 in rec {
   nix = {
     package = pkgs.nixFlakes;
@@ -17,6 +18,7 @@ in rec {
     '';
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
+    #sandboxPaths = [ "/bin/sh=${pkgs.bash}/bin/sh" ];
   };
   users.users."${username}" = usermod;
 
@@ -42,6 +44,10 @@ in rec {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
+
+  networking.firewall.allowedTCPPorts = kde_ports ++ [ 8888 ];
+  networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
+
   #networking.wg-quick.interfaces = {
     #mullvad = import ../vpn/mullvad.nix;
   #};
@@ -56,6 +62,7 @@ in rec {
 
   # Configure keymap in X11 and console
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  services.sshd.enable = true;
   services.xserver = {
     enable = enable_xorg;
     layout = "us";
@@ -67,16 +74,21 @@ in rec {
     };
 
     displayManager = {
-      defaultSession = "none+i3";
+      #defaultSession = "none+i3";
+      defaultSession = "plasma5";
     };
 
     videoDrivers = if enable_xorg then [ "nvidia" ] else [ "noveau" ];
 
     libinput.enable = enable_xorg;
     #libinput.touchpad.accelProfile = "flat";
-    windowManager.i3 = {
+    #windowManager.i3 = {
+      #enable = enable_xorg;
+      #package = pkgs.i3-gaps;
+    #};
+
+    desktopManager.plasma5 = {
       enable = enable_xorg;
-      package = pkgs.i3-gaps;
     };
   };
   console.useXkbConfig = true;
@@ -125,6 +137,7 @@ in rec {
     wrapperFeatures.gtk = true;
   };
 
+  programs.steam.enable = true;
   programs.command-not-found.enable = false;
   programs.zsh.interactiveShellInit = ''
     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh

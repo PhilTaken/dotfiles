@@ -188,8 +188,8 @@
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "rev": "f63332768e57b6d04625e1c930a51185b69ee067",
         "type": "github"
       }
     },
@@ -203,9 +203,8 @@
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
-        "type": "github"
+        "id": "nur",
+        "type": "indirect"
       }
     },
     "root": {
@@ -213,9 +212,7 @@
         "deploy-rs": "deploy-rs",
         "home-manager": "home-manager",
         "neovim-nightly-src": "neovim-nightly-src",
-        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-wayland": "nixpkgs-wayland",
         "nur": "nur"
       }
     },

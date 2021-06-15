@@ -1,45 +1,62 @@
 {
-  # TODO:
-  # - password clone (gopass) / or reminder
-  # - add flake utils for NixOS setup on raspi / handle pkgs differently
-  # - add NAS
+  # todo:
+  # - password clone
+  # - firefox config + plugins ew
+  # ideas:
+  # - freetube
   inputs = {
+    #nixpkgs.url = "github:nixos/nixpkgs/master";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
+
     home-manager = {
       url = "github:rycee/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    deploy-rs.url = "github:serokell/deploy-rs";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nur.url = "github:nix-community/NUR";
 
-    # neovim nightly, tap on master branch
+    deploy-rs.url = "github:serokell/deploy-rs";
+    #nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    #nur.url = "github:nix-community/NUR";
+
+    ## extra packages
     neovim-nightly-src = {
       url = "github:neovim/neovim";
       flake = false;
     };
 
-    # rofi source not here since rofi requires submodules which flake inputs dont support yet, see overlays/rofi-overlay.nix
+    # rofi source not here since rofi requires submodules which flake inputs dont support yet
     # rofi-wayland-src = { url = "github:lbonn/rofi"; flake = false; submodules = true; };
     # rofi-pass-gopass-src = { url = "github:carnager/rofi-pass/gopass"; flake = false; };
   };
-  outputs = { self, nixpkgs, neovim-nightly-src, home-manager, nixos-hardware, deploy-rs, nur, nixpkgs-wayland, ... }@inputs: let
+  outputs = {
+    self,
+    nixpkgs,
+    neovim-nightly-src,
+    home-manager,
+    #nixos-hardware,
+    deploy-rs,
+    nur,
+    ...
+  }@inputs: let
     system = "x86_64-linux";
     overlays = [
       (import ./overlays/nvim-overlay.nix { inherit inputs; })
       (import ./overlays/rofi-overlay.nix { inherit inputs; })
       (import ./overlays/gopass-rofi.nix  { inherit inputs; })
       (import ./custom_pkgs)
-      nixpkgs-wayland.overlay
       nur.overlay
     ];
 
     pkgs = import nixpkgs {
       inherit system overlays;
-      # for Discord
       config.allowUnfree = true;
+      config.permittedInsecurePackages = [
+        "libgit2-0.27.10"
+      ];
     };
+
+    # every setup is a system + a user
+    # the system is mainly used for hardware config, the user for software-specific setups
 
     mkRemoteSetup = {host, username ? "nixos", enable_xorg ? false, extramods ? []}: let
       hostmod = import (./hosts + "/${host}") {
@@ -68,6 +85,9 @@
     setup-script = pkgs.writeShellScriptBin "setup" ''
         if [[ -z "$1" || "$1" == "help" ]]; then
           echo -e "Usage: $(basename $0) {config} [ update | switch | build | install ]\n\nFor more details on the options see \`man nixos-rebuild\`"
+          echo -e ""
+          echo -e "Available configs:"
+          echo -e "   - \"nixos-laptop\":  laptop setup for work"
         elif [[ "$1" == "update" ]]; then
           nix flake update --commit-lock-file
         elif [[ "$2" == "install" ]]; then
@@ -93,7 +113,6 @@
       host = "work-laptop-thinkpad";
       username = "nixos";
       extramods = [
-        # leads to audio issues, TODO investigate
         #nixos-hardware.nixosModules.lenovo-thinkpad-t490
       ];
     };
@@ -110,10 +129,21 @@
       host = "alpha";
     };
 
+    nixosConfigurations.beta = mkRemoteSetup {
+      host = "beta";
+    };
+
+
     # deploy config
     deploy.nodes = {
       alpha = {
         hostname = "148.251.102.93";
+        sshUser = "root";
+        profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+      };
+
+      beta = {
+        hostname = "test";
         sshUser = "root";
         profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
       };
