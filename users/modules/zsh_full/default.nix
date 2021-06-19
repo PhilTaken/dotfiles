@@ -17,8 +17,11 @@ in rec {
   programs.bat.enable = true;
   programs.direnv = {
     enable = true;
-    enableNixDirenvIntegration = true;
     enableZshIntegration = true;
+    nix-direnv = {
+      enable = true;
+      enableFlakes = true;
+    };
   };
   programs.man = {
     enable = true;

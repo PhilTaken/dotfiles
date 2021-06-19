@@ -7,14 +7,10 @@
   inputs = {
     #nixpkgs.url = "github:nixos/nixpkgs/master";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    home-manager = {
-      url = "github:rycee/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #nixpkgs.url = "github:nixos/nixpkgs/f63332768e57b6d04625e1c930a51185b69ee067";
+    home-manager.url = "github:nix-community/home-manager";
 
     deploy-rs.url = "github:serokell/deploy-rs";
-    #nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     #nur.url = "github:nix-community/NUR";
 
