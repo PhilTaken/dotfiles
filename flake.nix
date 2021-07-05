@@ -36,7 +36,7 @@
   }@inputs: let
     system = "x86_64-linux";
     overlays = [
-      (import ./overlays/nvim-overlay.nix { inherit inputs; })
+      #(import ./overlays/nvim-overlay.nix { inherit inputs; })
       (import ./overlays/rofi-overlay.nix { inherit inputs; })
       (import ./overlays/gopass-rofi.nix  { inherit inputs; })
       (import ./custom_pkgs)

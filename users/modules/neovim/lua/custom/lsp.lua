@@ -8,13 +8,25 @@ local lsp = require'lspconfig'
 lsp.rust_analyzer.setup{
     capabilities = capabilities,
 }
+
 lsp.texlab.setup{}
+
 lsp.ccls.setup{}
+
 lsp.pyright.setup{}
+
 lsp.rnix.setup{}
+
+--lsp.flow.setup{
+	--cmd = { "flow", "lsp" },
+--}
+
+lsp.tsserver.setup{}
+
 lsp.fortls.setup {
     root_dir = lsp.util.root_pattern('.git');
 }
+
 lsp.sumneko_lua.setup {
     cmd = { "lua-language-server" };
     settings = {

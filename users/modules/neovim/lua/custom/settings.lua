@@ -1,6 +1,7 @@
 local o = vim.o
-local wo = vim.wo
-local bo = vim.bo
+--local wo = vim.wo
+--local bo = vim.bo
+local opt = vim.opt
 
 -- leader, for mappings
 vim.g.mapleader = ' '
@@ -8,76 +9,81 @@ vim.g.maplocalleader = ","
 vim.g.tex_flavor = 'latex'
 
 -- ignore these in searches
-o.wildignore = "*.swp,*.bak,*.pyc,*.class"
+opt.wildignore = { "*.swp", "*.bak", "*.pyc", "*.class" }
+opt.wildmode = { 'list', 'longest' }
 
 o.cmdheight = 2
 
 -- dont show the mode in the last line, have a status line for that
 o.showmode = false
 
-o.termguicolors = true
+opt.termguicolors = true
 vim.g.ayucolor = "mirage"
 vim.cmd[[colorscheme ayu]]
 
 -- popup menu opacity
-o.pumblend = 20
+opt.pumblend = 20
 
 -- enable mouse
-o.mouse = "a"
+opt.mouse = "a"
 
 -- show changes incrementally
-o.inccommand = "nosplit"
+opt.inccommand = "nosplit"
 
 -- no backup/swapfiles
-o.backup = false
-o.swapfile = false
-o.writebackup = false
+opt.backup = false
+opt.swapfile = false
+opt.writebackup = false
 
 -- write to undofile in undodir
 vim.cmd[[set undodir=$XDG_DATA_HOME/nvim/undodir]]
 vim.cmd[[set undofile]]
 
 -- disable spellchecking
-o.spell = false
+opt.spell = false
 
 -- improved completers
-o.completeopt = "menuone,noselect"
-o.shortmess = "filnxtToOFc"
+opt.completeopt = { "menuone", "noinsert", "noselect" }
+opt.shortmess = "filnxtToOFc"
 
 -- timeout for cursorhold  autocommand event
-o.updatetime = 300
+--o.updatetime = 300
 
 -- do not save when switching buffers
-o.hidden = true
+opt.hidden = true
 
 -- improved search
-o.ignorecase = true
-o.smartcase = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.smartindent = true
 
 -- highlight on search
-o.hlsearch = false
-o.incsearch = true
+opt.hlsearch = false
+opt.incsearch = true
+opt.list = true
 
 -- backspace on start of line
-o.backspace = "indent,eol,start"
+opt.backspace = { "indent", "eol", "start" }
 
-o.shiftround = true
-o.timeoutlen = 300
-o.ttimeout = true
-o.ttimeoutlen = 0
+opt.shiftround = true
+--o.timeoutlen = 300
+--o.ttimeout = true
+--o.ttimeoutlen = 0
 
-o.laststatus = 2
-bo.formatoptions = "tcqj"
+--o.laststatus = 2
+--opt.formatoptions = "tcqj"
 
 -- tab width, expand to spaces
-bo.tabstop = 4
-bo.shiftwidth = 4
-bo.expandtab = true
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.expandtab = true
 
 -- same indent on new lines
-bo.copyindent = true
+opt.copyindent = true
 
 -- line numbers
-wo.number = true
-wo.relativenumber = true
-wo.signcolumn = "auto"
+opt.number = true
+opt.relativenumber = true
+opt.signcolumn = "auto"
+
+opt.wrap = false

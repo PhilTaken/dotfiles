@@ -19,6 +19,7 @@
             neovim-remote
             jq
             tree
+            wget
 
             # other
             discord

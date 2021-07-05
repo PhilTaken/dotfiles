@@ -10,7 +10,7 @@
 
             # terminal util
             cmake
-            haxor-news
+            #haxor-news
             playerctl
             tokei
             hyperfine
@@ -19,6 +19,7 @@
             neovim-remote
             jq
             tree
+            wget
 
             # other
             discord

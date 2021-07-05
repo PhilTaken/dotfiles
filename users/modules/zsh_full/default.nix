@@ -161,7 +161,7 @@ in rec {
       bear = "nix-shell -p bear --run bear";
 
       # wget
-      wget = "nix-shell -p wget --run wget";
+      #wget = "nix-shell -p wget --run wget";
 
       # git
       ga="git add";

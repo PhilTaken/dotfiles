@@ -2,7 +2,6 @@
 {
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
     viAlias = true;
     vimAlias = true;
     withPython3 = true;
@@ -14,17 +13,19 @@
       sumneko-lua-language-server   # lua
       ccls                          # c/c++
       rnix-lsp                      # nix
-      nodePackages.pyright          # python
       rust-analyzer                 # rust
       texlab                        # latex
       fortls                        # fortran
-      #julia                         # julia
+      #julia                        # julia
 
       git                           # version control
       ripgrep                       # telescope file finding
       fd                            # faster find
       gcc                           # for treesitter
-    ];
+    ] ++ (with pkgs.nodePackages; [
+      pyright                       # python
+      typescript-language-server    # js / ts
+    ]);
     extraConfig = ''
       set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM
       luafile ~/.config/nvim/init_.lua
