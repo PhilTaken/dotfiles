@@ -70,7 +70,7 @@ require('packer').startup(function()
     use 'vim-pandoc/vim-pandoc-syntax'
 
     -- ultisnips alternative in lua
-    use 'norcalli/snippets.nvim'
+    --use 'norcalli/snippets.nvim'
 
     -- config for the builtin language server
     use 'neovim/nvim-lspconfig'

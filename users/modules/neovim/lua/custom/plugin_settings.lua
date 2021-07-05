@@ -9,7 +9,7 @@ require('custom.tele_init')
 require('custom.compe')
 
 -- snippets
-require('custom.snippets')
+--require('custom.snippets')
 
 --- global options
 g.rooter_targets = '/,*'

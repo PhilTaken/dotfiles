@@ -46,8 +46,8 @@ map('n', ";;", ":lua R('custom.tele').git_files()<cr>", options)
 map('n', '<leader>df', ":lua R('custom.tele').find_dotfiles{}<cr>", options)
 
 -- snippets
-cmd[[inoremap <C-e> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>]]
-cmd[[inoremap <C-n> <cmd>lua return require'snippets'.expand_or_advance(-1)<CR>]]
+--cmd[[inoremap <C-e> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>]]
+--cmd[[inoremap <C-n> <cmd>lua return require'snippets'.expand_or_advance(-1)<CR>]]
 
 -- lsp commands
 map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true; silent = true; })
