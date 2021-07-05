@@ -1,5 +1,6 @@
 local g = vim.g
 local cmd = vim.cmd
+local saga = require 'lspsaga'
 
 -- telescope
 require('custom.tele_init')
@@ -79,3 +80,6 @@ cmd[[let R_non_r_compl = 0]]
 cmd[[let R_user_maps_only = 1]]
 cmd[[let R_csv_app = 'tmux new-window vd']]
 cmd[[let R_auto_start = 1]]
+
+
+saga.init_lsp_saga()

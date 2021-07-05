@@ -83,3 +83,8 @@ map('n', '<LocalLeader>h', '<Plug>RHelp', { silent = true; })
 
 -- ?
 map('n', '<LocalLeader>sa', '<Plug>RSendFile', { silent = true; })
+
+-- lspsaga
+map('n', '<leader>gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', { noremap = true; silent = true; })
+map('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', { noremap = true; silent = true; })
+map('n', 'K', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", {noremap = true; silent = true; })

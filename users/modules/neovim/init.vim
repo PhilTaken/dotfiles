@@ -243,6 +243,12 @@ autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 " gopass
 au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup noundofile
 
+" lsp signature
+"autocmd BufReadPost,FileReadPost lua require "lsp_signature".on_attach()
+
+
+" -----------------------------------------------------------------------------------
+
 inoremap <silent><expr> <TAB>
     \ pumvisible() ? "\<C-n>" :
     \ <SID>check_back_space() ? "\<TAB>" :

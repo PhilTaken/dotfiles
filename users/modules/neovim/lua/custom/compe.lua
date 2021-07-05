@@ -21,10 +21,6 @@ require'compe'.setup {
             priority = 9;
             sort = true;
         };
-        snippets_nvim = {
-            priority = 8;
-            sort = true;
-        };
         path = {
             priority = 7;
             sort = true;

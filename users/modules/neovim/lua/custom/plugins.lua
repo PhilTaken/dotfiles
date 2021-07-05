@@ -75,6 +75,14 @@ require('packer').startup(function()
     -- config for the builtin language server
     use 'neovim/nvim-lspconfig'
 
+    -- lspsaga
+    use 'glepnir/lspsaga.nvim'
+
+    -- signature help
+    use {
+        "ray-x/lsp_signature.nvim",
+    }
+
     -- treesitter
     use {
         'nvim-treesitter/nvim-treesitter',

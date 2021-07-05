@@ -259,6 +259,7 @@ lsp.ccls.setup{}
 lsp.pyright.setup{}
 lsp.rnix.setup{}
 lsp.fortls.setup { 
+    cmd = { "fortls", "--lowercase_intrinsics", "--hover_signature", "--enable_code_actions", "--debug_log" }
     root_dir = lsp.util.root_pattern('.git');
 }
 lsp.sumneko_lua.setup {

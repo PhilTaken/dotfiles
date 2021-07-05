@@ -1,4 +1,5 @@
 require'snippets'.use_suggested_mappings()
+
 local snippets = require 'snippets'
 local U = require'snippets.utils'
 
