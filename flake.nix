@@ -125,9 +125,9 @@
       host = "alpha";
     };
 
-    nixosConfigurations.beta = mkRemoteSetup {
-      host = "beta";
-    };
+    #nixosConfigurations.beta = mkRemoteSetup {
+      #host = "beta";
+    #};
 
 
     # deploy config
