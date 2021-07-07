@@ -6,11 +6,11 @@
         font = "SourceCodePro";
         background_image = ./wallpaper/city-night.png;
         extraPackages = with pkgs; [
-            gopass-rofi
+            #gopass-rofi
 
             # terminal util
             cmake
-            haxor-news
+            #haxor-news
             playerctl
             tokei
             hyperfine

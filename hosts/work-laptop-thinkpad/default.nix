@@ -42,8 +42,13 @@ in rec {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
-  networking.wireless.enable = true;
-  networking.wireless.userControlled.enable = true;
+  networking.wireless = {
+    enable = true;
+    userControlled.enable = true;
+    # TODO
+    #interfaces = ;
+  };
+
   networking.wg-quick.interfaces = {
     mullvad = import ../vpn/mullvad.nix;
   };

@@ -276,7 +276,7 @@ in rec {
     };
     rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
+      #package = pkgs.rofi-wayland;
     };
     alacritty = {
       enable = true;

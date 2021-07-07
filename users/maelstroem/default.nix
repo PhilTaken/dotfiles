@@ -6,7 +6,7 @@
         font = "SourceCodePro";
         background_image = ./wallpaper/river.jpg;
         extraPackages = with pkgs; [
-            gopass-rofi
+            #gopass-rofi
 
             # terminal util
             cmake
