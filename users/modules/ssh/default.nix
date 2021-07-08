@@ -49,6 +49,10 @@
         user = "root";
         forwardAgent = true;
       };
+      "zpi" = {
+        hostname = "iek8495";
+        user = "pi";
+      };
     };
   };
 }
