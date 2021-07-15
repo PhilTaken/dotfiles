@@ -68,8 +68,6 @@
 
             sage
 
-            zk
-
             #fortran-fpm
         ];
 

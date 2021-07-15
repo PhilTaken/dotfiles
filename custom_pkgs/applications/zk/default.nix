@@ -1,6 +1,7 @@
 { stdenv
 , autoPatchelfHook
-, fetchzip}:
+, fetchzip
+, icu63}:
 
 stdenv.mkDerivation rec {
   pname = "zk";
@@ -9,10 +10,10 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     name = "zk-src";
     url = "https://github.com/mickael-menu/zk/releases/download/v${version}/zk-v${version}-linux-amd64.tar.gz";
-    sha256 = "185yy9haqgg036rrhsxvybja44n5sk0c8jmsfvhmnllxibmgrq3c";
+    sha256 = "sha256-RnLCNVB2rOu1b6n/TzmiKW4Blzp6dkY0Pb1a8d5dYrI=";
   };
 
-  #buildInputs = with qt5; [ full ];
+  buildInputs = [ icu63 ];
   nativeBuildInputs = [ autoPatchelfHook ];
   dontBuild = true;
 
