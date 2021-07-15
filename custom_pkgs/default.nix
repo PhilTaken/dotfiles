@@ -6,4 +6,5 @@ final:  prev: {
   #neovide = prev.callPackage ./applications/neovide { };
   goneovim = prev.callPackage ./applications/goneovim { };
   fortran-fpm = prev.callPackage ./applications/fortran-fpm { };
+  zk = prev.callPackage ./applications/zk { };
 }

@@ -60,6 +60,16 @@
 
             digikam
 
+            ncat
+
+            syncthing
+
+            citra
+
+            sage
+
+            zk
+
             #fortran-fpm
         ];
 

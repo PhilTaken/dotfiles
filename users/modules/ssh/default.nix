@@ -50,7 +50,11 @@
         forwardAgent = true;
       };
       "zpi" = {
-        hostname = "iek8495";
+        hostname = "134.94.149.163";
+        user = "pi";
+      };
+      "zpi2" = {
+        hostname = "134.94.149.164";
         user = "pi";
       };
     };

@@ -138,11 +138,11 @@
         profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
       };
 
-      beta = {
-        hostname = "test";
-        sshUser = "root";
-        profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-      };
+      #beta = {
+        #hostname = "test";
+        #sshUser = "root";
+        #profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.beta;
+      #};
     };
 
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;

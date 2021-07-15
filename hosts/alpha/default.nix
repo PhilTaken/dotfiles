@@ -92,7 +92,7 @@
   };
 
   services.traefik = {
-    enable = true;
+    enable = false;
   };
 
   # firewall

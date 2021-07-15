@@ -81,5 +81,15 @@ cmd[[let R_user_maps_only = 1]]
 cmd[[let R_csv_app = 'tmux new-window vd']]
 cmd[[let R_auto_start = 1]]
 
-
+-- lspsaga
 saga.init_lsp_saga()
+
+-- zettelkasten
+require('zk').setup({
+    debug = false,
+    log = true,
+    default_keymaps = true,
+    fuzzy_finder = "telescope",
+    link_format = "markdown"
+})
+require('telescope').load_extension('zk')

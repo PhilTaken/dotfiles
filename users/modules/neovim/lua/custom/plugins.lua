@@ -121,6 +121,9 @@ require('packer').startup(function()
 
     use 'jalvesaq/Nvim-R'
 
+    -- zettelkasten
+    use { "megalithic/zk.nvim" }
+
     --- ideas:
     -- nvim-r
     -- rust-tools.nvim
