@@ -29,11 +29,10 @@ dead-link = "error"
 [group.daily]
 paths = ["journal/daily"]
 
-[groud.daily.note]
+[group.daily.note]
 filename = "{{date now '%Y-%m-%d'}}"
 extension = "md"
 template = "daily.md"
 
-
 [alias]
-dailiy = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal/daily"'
+daily = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal/daily"'
