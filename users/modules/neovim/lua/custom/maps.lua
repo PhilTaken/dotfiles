@@ -88,3 +88,16 @@ map('n', '<LocalLeader>sa', '<Plug>RSendFile', { silent = true; })
 map('n', '<leader>gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', { noremap = true; silent = true; })
 map('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', { noremap = true; silent = true; })
 map('n', 'K', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", {noremap = true; silent = true; })
+
+-- zk (zettelkasten)
+--map('n', '<leader>z', '<cmd>lua require("telescope").extensions.zk.zk_notes()<CR>', { noremap = true; silent = true; })
+
+cmd[[nnoremap <silent> gzn <cmd>lua require'neuron/cmd'.new_edit(require'neuron'.config.neuron_dir)<CR>]]
+cmd[[nnoremap <silent> gzz <cmd>lua require'neuron/telescope'.find_zettels()<CR>]]
+cmd[[nnoremap <silent> gzZ <cmd>lua require'neuron/telescope'.find_zettels {insert = true}<CR>]]
+cmd[[nnoremap <silent> gzb <cmd>lua require'neuron/telescope'.find_backlinks()<CR>]]
+cmd[[nnoremap <silent> gzB <cmd>lua require'neuron/telescope'.find_backlinks {insert = true}<CR>]]
+cmd[[nnoremap <silent> gzt <cmd>lua require'neuron/telescope'.find_tags()<CR>]]
+cmd[[nnoremap <silent> gzs <cmd>lua require'neuron'.rib {address = "127.0.0.1:8200", verbose = true}<CR>]]
+cmd[[nnoremap <silent> gz] <cmd>lua require'neuron'.goto_next_extmark()<CR>]]
+map('n', 'gz[', '<cmd>lua require"neuron".goto_prev_extmark()<CR>]]', {noremap = true; silent = true; })
