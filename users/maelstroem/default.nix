@@ -68,6 +68,8 @@
 
             sage
 
+            neuron-notes
+
             #fortran-fpm
         ];
 
