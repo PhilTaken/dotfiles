@@ -70,6 +70,7 @@
 
             neuron-notes
 
+            obsidian
             #fortran-fpm
         ];
 
