@@ -227,8 +227,8 @@ in rec {
 
   xdg.configFile."page/init.vim".source = ./page/init.vim;
   #xdg.configFile."direnv/direnvrc".source = ./direnvrc;
-  xdg.configFile."zk/config.toml".source = ./zk/config.toml;
-  xdg.configFile."zk/templates/daily.md".source = ./zk/templates/daily.md;
+  #xdg.configFile."zk/config.toml".source = ./zk/config.toml;
+  #xdg.configFile."zk/templates/daily.md".source = ./zk/templates/daily.md;
 
   home.packages = with pkgs; [
     page
@@ -250,8 +250,6 @@ in rec {
     sd
     sshfs
     unzip
-
-    zk
   ];
 
 

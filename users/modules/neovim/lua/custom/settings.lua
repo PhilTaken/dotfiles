@@ -12,6 +12,8 @@ vim.g.tex_flavor = 'latex'
 opt.wildignore = { "*.swp", "*.bak", "*.pyc", "*.class" }
 opt.wildmode = { 'list', 'longest' }
 
+opt.langremap = true
+
 o.cmdheight = 2
 
 -- dont show the mode in the last line, have a status line for that
@@ -26,6 +28,9 @@ opt.pumblend = 20
 
 -- enable mouse
 opt.mouse = "a"
+
+-- no folds pls
+opt.foldenable = false
 
 -- show changes incrementally
 opt.inccommand = "nosplit"

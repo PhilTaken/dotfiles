@@ -85,11 +85,19 @@ cmd[[let R_auto_start = 1]]
 saga.init_lsp_saga()
 
 -- zettelkasten
-require('zk').setup({
-    debug = false,
-    log = true,
-    default_keymaps = true,
-    fuzzy_finder = "telescope",
-    link_format = "markdown"
-})
-require('telescope').load_extension('zk')
+--require('zk').setup({
+    --debug = false,
+    --log = true,
+    --default_keymaps = true,
+    --fuzzy_finder = "telescope",
+    --link_format = "markdown"
+--})
+--require('telescope').load_extension('zk')
+
+require'neuron'.setup {
+    virtual_titles = true,
+    mappings = false,
+    run = nil,
+    neuron_dir = "/platte/Documents/zettelkasten",
+    leader = "gz",
+}

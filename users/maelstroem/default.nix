@@ -68,6 +68,9 @@
 
             sage
 
+            neuron-notes
+
+            obsidian
             #fortran-fpm
         ];
 
