@@ -42,6 +42,7 @@ in rec {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
+  networking.tempAddresses = "enabled";
   networking.wireless = {
     enable = true;
     userControlled.enable = true;
