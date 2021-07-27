@@ -52,10 +52,12 @@
       "zpi" = {
         hostname = "134.94.149.163";
         user = "pi";
+        forwardAgent = true;
       };
       "zpi2" = {
         hostname = "134.94.149.164";
         user = "pi";
+        forwardAgent = true;
       };
     };
   };

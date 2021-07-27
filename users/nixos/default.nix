@@ -48,6 +48,8 @@
             gping
 
             goneovim
+
+            tightvnc
         ];
 
         imports = [
