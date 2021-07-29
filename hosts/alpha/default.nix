@@ -74,6 +74,9 @@
   # traefik
   # ttrss via traefik
   # hedgedoc via traefik
+  # innernet / tailscale
+
+  # TODO containerize these
 
   # rss client
   services.tt-rss = {
@@ -95,9 +98,48 @@
     enable = false;
   };
 
+  # TODO wait for innnernet to get a service / write it yourself :)
+  # https://github.com/NixOS/nixpkgs/issues/118005
+  services.tailscale = {
+    enable = true;
+  };
+
+  # timescale db -> postgres
+  # for grafana
+  services.postgresql = {
+    extraPlugins = [ pkgs.timescaledb ];
+    settings = {
+      shared_preload_libraries = "timescaledb";
+    };
+  };
+
+  # grafana
+  services.grafana = {
+    enable = false;
+  };
+
+  # dns ad blocking
+  services.adguardhome = {
+    enable = true;
+    port = 31111;
+    openFirewall = true;
+  };
+
+  # TODO configure properly
+  services.vaultwarden = {
+    enable = false;
+  };
+
   # firewall
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-  #networking.firewall.allowedUDPPorts = [  ];
+  networking.firewall.allowedTCPPorts = [
+    53    # dns
+    80    # tt-rss webinterface TODO hide behind innernet
+    443   # tt-rss ssl
+  ];
+
+  networking.firewall.allowedUDPPorts = [
+    53    # dns
+  ];
 
   system.stateVersion = "20.09";
 }

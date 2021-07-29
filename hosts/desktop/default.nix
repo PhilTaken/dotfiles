@@ -117,7 +117,6 @@ in rec {
     };
   };
 
-
   environment.systemPackages = with pkgs; [
     vim git          # defaults
     cryptsetup       # encrypted disks
@@ -129,6 +128,10 @@ in rec {
     nix-index
   ];
   services.udev.packages = with pkgs; [ yubikey-personalization ];
+
+  services.tailscale = {
+    enable = true;
+  };
 
   programs.zsh.enable = true;
 
