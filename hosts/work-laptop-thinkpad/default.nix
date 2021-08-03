@@ -128,7 +128,13 @@ in rec {
     powertop
     nix-index
   ];
-  services.udev.packages = with pkgs; [ yubikey-personalization ];
+  services.udev = {
+    packages = with pkgs; [
+      yubikey-personalization
+    ];
+    extraRules = builtins.readFile ./50-qmk.rules;
+  };
+
 
   programs.zsh.enable = true;
   programs.light.enable = true;
