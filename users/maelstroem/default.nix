@@ -62,8 +62,6 @@
 
             ncat
 
-            syncthing
-
             citra
 
             sage

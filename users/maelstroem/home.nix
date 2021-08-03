@@ -72,6 +72,11 @@ in rec {
     sshKeys = [ usermod.sshKey ];
   };
 
+  # syncthing service
+  services.syncthing = {
+    enable = true;
+  };
+
   xdg = {
     enable = true;
     configHome = "${home_directory}/.config";

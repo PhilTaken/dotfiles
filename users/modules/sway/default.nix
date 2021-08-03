@@ -41,6 +41,10 @@ in rec {
           xkb_layout = "us(workman-intl)";
           xkb_options = "caps:escape,altwin:swap_alt_win";
         };
+        # office planck
+        "936:42233:OLKB_Planck" = {
+          xkb_layout = "us(intl)";
+        };
         # all other keyboard
         "*" = {
           xkb_layout = "us(workman-intl)";
