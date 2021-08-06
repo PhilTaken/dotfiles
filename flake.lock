@@ -57,7 +57,7 @@
     },
     "localDev": {
       "locked": {
-        "narHash": "sha256-yXEtTzscbO6fUWu0+7L61Lx2D81zoAE9D6qBOd/24c0=",
+        "narHash": "sha256-go2oNrr8bYtlCdjPMCcYwupysKc9VJYmECWDmIvbLmQ=",
         "path": "/platte/Documents/gits/nixpkgs",
         "type": "path"
       },
@@ -121,11 +121,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1628239754,
-        "narHash": "sha256-dmkuoY6I9ZBXT7CgW5ROCW0TgUDP3xkUMjLsKUOGJhY=",
+        "lastModified": 1628240378,
+        "narHash": "sha256-9O8xMjWP8Upo9Je6WImXfxxLbfwGtoxmdsEPLXvA4KE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "100b45b2fdc06f519d7fba75f5e60a2ee8b2690b",
+        "rev": "9994d6d607a711f45fd62e192fac240c92b41d3e",
         "type": "github"
       },
       "original": {
