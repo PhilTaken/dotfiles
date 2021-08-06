@@ -57,7 +57,7 @@
     },
     "localDev": {
       "locked": {
-        "narHash": "sha256-kuY67YxQu7QqKrdisbskFHY73SK/ZiA+jsDdOolUxKE=",
+        "narHash": "sha256-yXEtTzscbO6fUWu0+7L61Lx2D81zoAE9D6qBOd/24c0=",
         "path": "/platte/Documents/gits/nixpkgs",
         "type": "path"
       },
