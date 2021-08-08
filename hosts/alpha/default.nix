@@ -48,7 +48,11 @@
   };
 
   environment.systemPackages = with pkgs; [
-    wget vim git tree
+    wget
+    vim
+    git
+    tree
+    fail2ban
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -106,12 +110,12 @@
 
   # timescale db -> postgres
   # for grafana
-  services.postgresql = {
-    extraPlugins = [ pkgs.timescaledb ];
-    settings = {
-      shared_preload_libraries = "timescaledb";
-    };
-  };
+  #services.postgresql = {
+    #extraPlugins = [ pkgs.timescaledb ];
+    #settings = {
+      #shared_preload_libraries = "timescaledb";
+    #};
+  #};
 
   # grafana
   services.grafana = {
@@ -140,6 +144,10 @@
   networking.firewall.allowedUDPPorts = [
     53    # dns
   ];
+
+  services.fail2ban = {
+    enable = true;
+  };
 
   system.stateVersion = "20.09";
 }

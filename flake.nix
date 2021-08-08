@@ -5,11 +5,12 @@
   # ideas:
   # - freetube
   inputs = {
-    #nixpkgs.url = "github:nixos/nixpkgs/master";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    #nixpkgs.url = "github:nixos/nixpkgs/f63332768e57b6d04625e1c930a51185b69ee067";
-    home-manager.url = "github:nix-community/home-manager";
 
+    # for development
+    localDev.url = "/platte/Documents/gits/nixpkgs";
+
+    home-manager.url = "github:nix-community/home-manager";
     deploy-rs.url = "github:serokell/deploy-rs";
 
     #nur.url = "github:nix-community/NUR";
@@ -29,9 +30,9 @@
     nixpkgs,
     neovim-nightly-src,
     home-manager,
-    #nixos-hardware,
     deploy-rs,
     nur,
+    localDev,
     ...
   }@inputs: let
     system = "x86_64-linux";
@@ -118,6 +119,9 @@
       host = "desktop";
       username = "maelstroem";
       enable_xorg = true;
+      extramods = [
+        (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+      ];
     };
 
     # vm on a hetzner server, debian host

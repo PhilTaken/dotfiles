@@ -50,10 +50,9 @@
 
             vpnc
             libreoffice
-            chromium
+            #chromium
             multimc
 
-            innernet
             magic-wormhole
 
             audacity
