@@ -57,13 +57,18 @@
     },
     "localDev": {
       "locked": {
-        "narHash": "sha256-go2oNrr8bYtlCdjPMCcYwupysKc9VJYmECWDmIvbLmQ=",
-        "path": "/platte/Documents/gits/nixpkgs",
-        "type": "path"
+        "lastModified": 1628431514,
+        "narHash": "sha256-w2ITu0Z4z+C1UJ45AQ6czgD+ywAMCz3v+BZ0LfSmbwA=",
+        "owner": "PhilTaken",
+        "repo": "nixpkgs",
+        "rev": "b6392e280470e722c7a934c3746d44caef398c52",
+        "type": "github"
       },
       "original": {
-        "path": "/platte/Documents/gits/nixpkgs",
-        "type": "path"
+        "owner": "PhilTaken",
+        "ref": "innernet-module",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "naersk": {
@@ -121,11 +126,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1628421711,
-        "narHash": "sha256-qdiQKncuiYb6oHfpr8XTiIcZefuV2R6C4xjsptOGAk0=",
+        "lastModified": 1628431101,
+        "narHash": "sha256-LC4z6o6DnwFSGKTvaZ0lGMGTzMwhRz5pzxMOc10LBVY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e195c3cf6ffa0f4e74633cf269367702fdaf3f96",
+        "rev": "dc650b1baeba683b741e913348cda507241eab2f",
         "type": "github"
       },
       "original": {
@@ -151,11 +156,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1628420790,
-        "narHash": "sha256-H8mDcvs7BH72Tx/8pDCOmV1HJnIiDebdNUVt52k7jrE=",
+        "lastModified": 1628431318,
+        "narHash": "sha256-DIqG6BVpMK13l+2FsvW8kV4p23X7s29NGkcZR+JYnu0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f6d6f99847cc369591439a2e8a496dd064e0757b",
+        "rev": "3e1141367bb121771188d7b0fac9f225d87432d8",
         "type": "github"
       },
       "original": {
