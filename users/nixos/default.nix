@@ -50,6 +50,7 @@
             goneovim
 
             tightvnc
+            obsidian
         ];
 
         imports = [

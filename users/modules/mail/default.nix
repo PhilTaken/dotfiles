@@ -43,11 +43,11 @@
   };
 
   programs = {
-    lieer.enable = true;
-    notmuch.enable = true;
-    afew.enable = true;
-    neomutt = {
-      enable = true;
-    };
+    #lieer.enable = true;
+    #notmuch.enable = true;
+    #afew.enable = true;
+    #neomutt = {
+      #enable = true;
+    #};
   };
 }
