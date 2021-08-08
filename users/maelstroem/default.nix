@@ -50,7 +50,7 @@
 
             vpnc
             libreoffice
-            #chromium
+            chromium
             multimc
 
             magic-wormhole
