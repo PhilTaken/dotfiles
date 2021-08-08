@@ -47,7 +47,7 @@ in rec {
     enable = true;
     userControlled.enable = true;
     # TODO
-    #interfaces = ;
+    interfaces = [ "wlp0s20f3" ];
   };
 
   networking.wg-quick.interfaces = {
