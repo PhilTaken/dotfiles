@@ -46,7 +46,6 @@ in rec {
   networking.wireless = {
     enable = true;
     userControlled.enable = true;
-    # TODO
     interfaces = [ "wlp0s20f3" ];
   };
 
