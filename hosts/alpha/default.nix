@@ -53,18 +53,15 @@
     git
     tree
     fail2ban
+    htop
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
+  programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
   programs.zsh.enable = true;
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -73,14 +70,6 @@
     permitRootLogin = "yes";
     authorizedKeysFiles = [ "/etc/nixos/authorized-keys" ];
   };
-
-  # ! TODO !
-  # traefik
-  # ttrss via traefik
-  # hedgedoc via traefik
-  # innernet / tailscale
-
-  # TODO containerize these
 
   # rss client
   services.tt-rss = {
@@ -94,32 +83,15 @@
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
   };
 
-  services.hedgedoc = {
-    enable = false;
-  };
-
-  services.traefik = {
-    enable = false;
-  };
-
-  # TODO wait for innnernet to get a service / write it yourself :)
-  # https://github.com/NixOS/nixpkgs/issues/118005
   services.tailscale = {
     enable = true;
   };
 
-  # timescale db -> postgres
-  # for grafana
-  #services.postgresql = {
-    #extraPlugins = [ pkgs.timescaledb ];
-    #settings = {
-      #shared_preload_libraries = "timescaledb";
-    #};
-  #};
-
-  # grafana
-  services.grafana = {
-    enable = false;
+  services.innernet = {
+    enable = true;
+    config = builtins.readFile ../vpn/valhalla.conf;
+    interfaceName = "valhalla";
+    openFirewall = true;
   };
 
   # dns ad blocking
@@ -129,7 +101,38 @@
     openFirewall = true;
   };
 
-  # TODO configure properly
+  services.fail2ban.enable = true;
+
+  # timescale db -> postgres
+  # TODO get this to work again
+  #services.postgresql = {
+    #extraPlugins = [ pkgs.timescaledb ];
+    #settings = {
+      #shared_preload_libraries = "timescaledb";
+    #};
+  #};
+
+  # TODO online markdown editor
+  services.hedgedoc = {
+    enable = false;
+  };
+
+  # TODO reverse proxy for all services
+  services.traefik = {
+    enable = false;
+  };
+
+  # TODO for small file hosting + floccus bookmark + browsersync
+  services.nextcloud = {
+    enable = false;
+  };
+
+  # TODO grafana graphing service
+  services.grafana = {
+    enable = false;
+  };
+
+  # TODO bitwarden selfhosted instance
   services.vaultwarden = {
     enable = false;
   };
@@ -137,17 +140,13 @@
   # firewall
   networking.firewall.allowedTCPPorts = [
     53    # dns
-    80    # tt-rss webinterface TODO hide behind innernet
+    80    # tt-rss webinterface
     443   # tt-rss ssl
   ];
 
   networking.firewall.allowedUDPPorts = [
     53    # dns
   ];
-
-  services.fail2ban = {
-    enable = true;
-  };
 
   system.stateVersion = "20.09";
 }

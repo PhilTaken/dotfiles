@@ -8,7 +8,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # for development
-    localDev.url = "/platte/Documents/gits/nixpkgs";
+    localDev.url = "/platte/Documents/gits/nixpkgs/";
+    #localDev.url = "github:PhilTaken/nixpkgs/innernet-module";
 
     home-manager.url = "github:nix-community/home-manager";
     deploy-rs.url = "github:serokell/deploy-rs";
@@ -127,6 +128,9 @@
     # vm on a hetzner server, debian host
     nixosConfigurations.alpha = mkRemoteSetup {
       host = "alpha";
+      extramods = [
+        (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+      ];
     };
 
     #nixosConfigurations.beta = mkRemoteSetup {
