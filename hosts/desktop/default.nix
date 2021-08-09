@@ -141,6 +141,7 @@ in rec {
   #};
 
   programs.zsh.enable = true;
+  programs.mtr.enable = true;
 
   programs.sway = {
     enable = !enable_xorg;

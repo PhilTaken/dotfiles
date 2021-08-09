@@ -135,6 +135,9 @@
   # TODO bitwarden selfhosted instance
   services.vaultwarden = {
     enable = false;
+    config = {
+
+    };
   };
 
   # firewall
@@ -142,10 +145,12 @@
     53    # dns
     80    # tt-rss webinterface
     443   # tt-rss ssl
+    51820
   ];
 
   networking.firewall.allowedUDPPorts = [
     53    # dns
+    51820
   ];
 
   system.stateVersion = "20.09";

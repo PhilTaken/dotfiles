@@ -141,6 +141,7 @@ in rec {
     enable = !enable_xorg;
     wrapperFeatures.gtk = true;
   };
+  programs.mtr.enable = true;
 
   # add tailscale
   services.tailscale = {
