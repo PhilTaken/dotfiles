@@ -129,9 +129,10 @@ in rec {
     nix-index
   ];
 
-  environment.etc = {
-    "yubipam/${username}-14321676".source = usermod.pamfile;
-  };
+  # TODO set this up in the office
+  #environment.etc = {
+    #"yubipam/${username}-14321676".source = usermod.pamfile;
+  #};
 
   services.udev = {
     packages = with pkgs; [
