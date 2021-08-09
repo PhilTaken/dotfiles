@@ -134,18 +134,19 @@ in rec {
     enable = true;
   };
 
-  # TODO move this to alpha, provide config file
-  #services.innernet = {
-    #enable = true;
-    #configFile = ./innernet0.conf;
-  #};
-
   programs.zsh.enable = true;
   programs.mtr.enable = true;
 
   programs.sway = {
     enable = !enable_xorg;
     wrapperFeatures.gtk = true;
+  };
+
+  security.pam.yubico = {
+    enable = true;
+    #debug = true;
+    mode = "challenge-response";
+    challengeResponsePath = "/home/maelstroem/.yubico";
   };
 
   programs.steam.enable = true;

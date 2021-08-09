@@ -8,8 +8,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # for development
-    localDev.url = "/platte/Documents/gits/nixpkgs/";
-    #localDev.url = "github:PhilTaken/nixpkgs/innernet-module";
+    #localDev.url = "/platte/Documents/gits/nixpkgs/";
+    localDev.url = "github:PhilTaken/nixpkgs/innernet-module";
 
     home-manager.url = "github:nix-community/home-manager";
     deploy-rs.url = "github:serokell/deploy-rs";
@@ -86,6 +86,9 @@
           echo -e ""
           echo -e "Available configs:"
           echo -e "   - \"nixos-laptop\":  laptop setup for work"
+          echo -e "   - \"gamma\":         home desktop"
+          echo -e "   - \"gamma_old\":     older version of the home desktop (128gb ssd)"
+          echo -e "   - \"alpha\":         vps server"
         elif [[ "$1" == "update" ]]; then
           nix flake update --commit-lock-file
         elif [[ "$2" == "install" ]]; then
@@ -108,7 +111,7 @@
 
     # workplace-issued thinkpad
     nixosConfigurations.nixos-laptop = mkLocalSetup {
-      host = "work-laptop-thinkpad";
+      host = "nixos-laptop";
       username = "nixos";
       extramods = [
         #nixos-hardware.nixosModules.lenovo-thinkpad-t490
@@ -116,14 +119,25 @@
     };
 
     # desktop @ home
-    nixosConfigurations.desktop = mkLocalSetup {
-      host = "desktop";
+    nixosConfigurations.gamma = mkLocalSetup {
+      host = "gamma";
       username = "maelstroem";
       enable_xorg = true;
       extramods = [
         (import "${localDev}/nixos/modules/services/networking/innernet.nix")
       ];
     };
+
+    # desktop @ home (older)
+    nixosConfigurations.gamma_old = mkLocalSetup {
+      host = "gamma_old";
+      username = "maelstroem";
+      enable_xorg = true;
+      extramods = [
+        (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+      ];
+    };
+
 
     # vm on a hetzner server, debian host
     nixosConfigurations.alpha = mkRemoteSetup {

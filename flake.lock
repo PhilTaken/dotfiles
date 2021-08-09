@@ -57,13 +57,18 @@
     },
     "localDev": {
       "locked": {
-        "narHash": "sha256-vh+zwORIJJf38rI+gVRS1s/TWjsuegn0dDjS9LCnmzI=",
-        "path": "/platte/Documents/gits/nixpkgs",
-        "type": "path"
+        "lastModified": 1628449618,
+        "narHash": "sha256-P8kyOd18QCaJx1s+fMGLOEFxZ1FXR7sW9u/9mKQlTv8=",
+        "owner": "PhilTaken",
+        "repo": "nixpkgs",
+        "rev": "3fe47e533c9fcd9e8c3183590ec0f9daa7f98626",
+        "type": "github"
       },
       "original": {
-        "path": "/platte/Documents/gits/nixpkgs",
-        "type": "path"
+        "owner": "PhilTaken",
+        "ref": "innernet-module",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "naersk": {
