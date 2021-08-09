@@ -8,7 +8,9 @@
   ...
 }:
 let
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  hostmod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).userDetails;
+
   kde_ports = builtins.genList(x: x+1714) (1764-1714+1);
 in rec {
   nix = {
@@ -20,7 +22,7 @@ in rec {
     trustedUsers = [ "root" "${username}" "@wheel" ];
     #sandboxPaths = [ "/bin/sh=${pkgs.bash}/bin/sh" ];
   };
-  users.users."${username}" = usermod;
+  users.users."${username}" = hostmod;
 
   hardware.enableRedistributableFirmware = true;
   hardware.opengl = {
@@ -128,6 +130,11 @@ in rec {
     nix-index
     innernet
   ];
+
+  environment.etc = {
+    "yubipam/${username}-14321676".source = usermod.pamfile;
+  };
+
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
   services.tailscale = {
@@ -146,7 +153,7 @@ in rec {
     enable = true;
     #debug = true;
     mode = "challenge-response";
-    challengeResponsePath = "/home/maelstroem/.yubico";
+    challengeResponsePath = "/etc/yubipam/";
   };
 
   programs.steam.enable = true;

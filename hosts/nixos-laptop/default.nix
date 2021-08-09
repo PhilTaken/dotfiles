@@ -8,7 +8,8 @@
   ...
 }:
 let
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  hostmod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).userDetails;
 in rec {
   nix = {
     package = pkgs.nixFlakes;
@@ -18,7 +19,7 @@ in rec {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
-  users.users."${username}" = usermod;
+  users.users."${username}" = hostmod;
 
   hardware.opengl = {
     enable = true;
@@ -127,6 +128,11 @@ in rec {
     powertop
     nix-index
   ];
+
+  environment.etc = {
+    "yubipam/${username}-14321676".source = usermod.pamfile;
+  };
+
   services.udev = {
     packages = with pkgs; [
       yubikey-personalization
