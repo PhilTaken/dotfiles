@@ -130,9 +130,9 @@ in rec {
   ];
 
   # TODO set this up in the office
-  #environment.etc = {
-    #"yubipam/${username}-14321676".source = usermod.pamfile;
-  #};
+  environment.etc = {
+    "yubipam/${username}-14321676".source = usermod.pamfile;
+  };
 
   services.udev = {
     packages = with pkgs; [
@@ -153,6 +153,13 @@ in rec {
   # add tailscale
   services.tailscale = {
     enable = true;
+  };
+
+  security.pam.yubico = {
+    enable = true;
+    debug = true;
+    mode = "challenge-response";
+    #challengeResponsePath = "/etc/yubipam/";
   };
 
   programs.command-not-found.enable = false;
