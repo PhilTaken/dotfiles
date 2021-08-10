@@ -141,6 +141,11 @@ in rec {
     enable = true;
   };
 
+  #services.influxdb = {
+    #enable = true;
+    #package = pkgs.influxdb;
+  #};
+
   programs.zsh.enable = true;
   programs.mtr.enable = true;
 
