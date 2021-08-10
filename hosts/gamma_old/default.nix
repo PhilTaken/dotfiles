@@ -126,6 +126,7 @@ in rec {
     libva-utils
     powertop
     nix-index
+    innernet
   ];
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
@@ -133,7 +134,14 @@ in rec {
     enable = true;
   };
 
+  # TODO move this to alpha, provide config file
+  #services.innernet = {
+    #enable = true;
+    #configFile = ./innernet0.conf;
+  #};
+
   programs.zsh.enable = true;
+  programs.mtr.enable = true;
 
   programs.sway = {
     enable = !enable_xorg;

@@ -26,7 +26,7 @@
   fileSystems."/platte" =
     { device = "/dev/disk/by-uuid/1AEA5B14EA5AEC0F";
       fsType = "ntfs-3g";
-      options = [ "defaults" "user" "rw" "utf8" "noauto" "umask=000" "uid=1000" "gid=100" "exec" ];
+      options = [ "defaults" "user" "rw" "utf8" "umask=000" "uid=1000" "gid=100" "exec" ];
     };
 
   swapDevices = [ ];

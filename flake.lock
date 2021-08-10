@@ -55,6 +55,22 @@
         "type": "github"
       }
     },
+    "localDev": {
+      "locked": {
+        "lastModified": 1628449618,
+        "narHash": "sha256-P8kyOd18QCaJx1s+fMGLOEFxZ1FXR7sW9u/9mKQlTv8=",
+        "owner": "PhilTaken",
+        "repo": "nixpkgs",
+        "rev": "3fe47e533c9fcd9e8c3183590ec0f9daa7f98626",
+        "type": "github"
+      },
+      "original": {
+        "owner": "PhilTaken",
+        "ref": "innernet-module",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "naersk": {
       "inputs": {
         "nixpkgs": [
@@ -156,6 +172,7 @@
       "inputs": {
         "deploy-rs": "deploy-rs",
         "home-manager": "home-manager",
+        "localDev": "localDev",
         "neovim-nightly-src": "neovim-nightly-src",
         "nixpkgs": "nixpkgs_3",
         "nur": "nur"

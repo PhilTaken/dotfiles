@@ -8,7 +8,8 @@
   ...
 }:
 let
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  hostmod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).userDetails;
 in rec {
   nix = {
     package = pkgs.nixFlakes;
@@ -18,7 +19,7 @@ in rec {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
   };
-  users.users."${username}" = usermod;
+  users.users."${username}" = hostmod;
 
   hardware.opengl = {
     enable = true;
@@ -46,8 +47,7 @@ in rec {
   networking.wireless = {
     enable = true;
     userControlled.enable = true;
-    # TODO
-    #interfaces = ;
+    interfaces = [ "wlp0s20f3" ];
   };
 
   networking.wg-quick.interfaces = {
@@ -128,6 +128,12 @@ in rec {
     powertop
     nix-index
   ];
+
+  # TODO set this up in the office
+  #environment.etc = {
+    #"yubipam/${username}-14321676".source = usermod.pamfile;
+  #};
+
   services.udev = {
     packages = with pkgs; [
       yubikey-personalization
@@ -142,6 +148,7 @@ in rec {
     enable = !enable_xorg;
     wrapperFeatures.gtk = true;
   };
+  programs.mtr.enable = true;
 
   # add tailscale
   services.tailscale = {
