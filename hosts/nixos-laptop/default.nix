@@ -157,7 +157,7 @@ in rec {
 
   security.pam.yubico = {
     enable = true;
-    debug = true;
+    #debug = true;
     mode = "challenge-response";
     #challengeResponsePath = "/etc/yubipam/";
   };
