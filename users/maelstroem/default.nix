@@ -86,7 +86,7 @@
 
     hostDetails = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "video" "audio" "docker" ];
+        extraGroups = [ "wheel" "video" "audio" "docker" "influxdb" ];
         shell = pkgs.zsh;
         uid = 1000;
     };

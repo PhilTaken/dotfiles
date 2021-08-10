@@ -141,6 +141,11 @@ in rec {
     enable = true;
   };
 
+  #services.influxdb = {
+    #enable = true;
+    #package = pkgs.influxdb;
+  #};
+
   programs.zsh.enable = true;
   programs.mtr.enable = true;
 
@@ -153,7 +158,7 @@ in rec {
     enable = true;
     #debug = true;
     mode = "challenge-response";
-    challengeResponsePath = "/etc/yubipam/";
+    #challengeResponsePath = "/etc/yubipam/";
   };
 
   programs.steam.enable = true;
