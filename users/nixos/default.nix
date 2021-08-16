@@ -38,6 +38,8 @@
             thunderbird
             hydroxide
 
+            chromium
+
             #pulseeffects-pw
 
             anki

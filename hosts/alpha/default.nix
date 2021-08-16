@@ -135,9 +135,7 @@
   # TODO bitwarden selfhosted instance
   services.vaultwarden = {
     enable = false;
-    config = {
-
-    };
+    config = (import ../../hosts/secret/vaultwarden.nix);
   };
 
   # firewall
