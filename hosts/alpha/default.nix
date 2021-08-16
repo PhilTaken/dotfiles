@@ -117,6 +117,8 @@ in rec {
         num-threads = 1;
         so-rcvbuf = "1m";
       };
+      # https://www.bentasker.co.uk/documentation/linux/279-unbound-adding-custom-dns-records
+      # https://wiki.archlinux.org/title/Unbound#Using_openresolv
       local-data = [
         "rss.pherzog.xyz A 127.0.0.1"
         "adguard.pherzog.xyz A 127.0.0.1"
