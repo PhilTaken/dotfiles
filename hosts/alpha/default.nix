@@ -2,8 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
-{
+{ pkgs, ... }: let
+  lib = pkgs.lib;
+  ip4_eth0 = "148.251.102.93";
+in rec {
   imports = [ ./hardware-configuration.nix ];
   nix.trustedUsers = [ "@wheel" "nixos" ];
 
@@ -21,7 +23,7 @@
     dhcpcd.enable = false;
     usePredictableInterfaceNames = false;
     interfaces.eth0.ipv4.addresses = [{
-      address = "148.251.102.93";
+      address = ip4_eth0;
       prefixLength = 32;
     }];
     defaultGateway = "";
@@ -63,6 +65,8 @@
   };
   programs.zsh.enable = true;
 
+  # ---------------------------------------------------- #
+
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
@@ -70,6 +74,64 @@
     permitRootLogin = "yes";
     authorizedKeysFiles = [ "/etc/nixos/authorized-keys" ];
   };
+
+  #services.avahi = {
+    #enable = true;
+    #interfaces = [
+      #"valhalla"
+    #];
+
+    #nssmdns = true;
+    #domainName = "pherzog.xyz";
+
+    #allowPointToPoint = true;
+
+    #publish = {
+      #enable = true;
+      #domain = true;
+      #addresses = true;
+      #userServices = true;
+    #};
+
+    #extraServiceFiles = {
+      #ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
+    #};
+  #};
+
+  # local dns + secure dns
+  services.unbound = {
+    enable = true;
+    settings = {
+      server = {
+        interface = "127.0.0.1";
+        port = 5335;
+        do-ip4 = "yes";
+        do-udp = "yes";
+        do-tcp = "yes";
+        prefer-ip6 = "no";
+        harden-glue = "yes";
+        harden-dnssec-stripped = "yes";
+        use-caps-for-id = "no";
+        edns-buffer-size = 1472;
+        prefetch = "yes";
+        num-threads = 1;
+        so-rcvbuf = "1m";
+      };
+      local-data = [
+        "rss.pherzog.xyz A 127.0.0.1"
+        "adguard.pherzog.xyz A 127.0.0.1"
+
+      ];
+    };
+  };
+
+  # acme security (lets encrypt)
+  security.acme = {
+    email = "philipp.herzog@protonmail.com";
+    acceptTerms = true;
+  };
+
+  # ---------------------------------------------------- #
 
   # rss client
   services.tt-rss = {
@@ -79,7 +141,9 @@
       autoLogin = true;
     };
     registration.enable = false;
-    selfUrlPath = "https://rss.pherzog.xyz/";
+    selfUrlPath = "https://rss.pherzog.xyz";
+    virtualHost = "rss.pherzog.xyz";
+
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
   };
 
@@ -97,13 +161,15 @@
   # dns ad blocking
   services.adguardhome = {
     enable = true;
+    host = "http://127.0.0.1";
     port = 31111;
-    openFirewall = true;
+    openFirewall = false;
   };
 
   services.fail2ban.enable = true;
 
   # timescale db -> postgres
+  # TODO replace with influxdb2
   # TODO get this to work again
   #services.postgresql = {
     #extraPlugins = [ pkgs.timescaledb ];
@@ -118,8 +184,26 @@
   };
 
   # TODO reverse proxy for all services
-  services.traefik = {
-    enable = false;
+  services.nginx = let
+    adguard = services.adguardhome;
+    tt-rss = services.tt-rss;
+  in {
+    enable = true;
+    #recommendedProxySettings = true;
+    #recommendedTlsSettings = true;
+    # other Nginx options
+    virtualHosts."rss.pherzog.xyz" = {
+      # supplied by tt-rss config
+      # just a stub
+      #enableACME = true;
+      #forceSSL = true;
+    };
+
+    virtualHosts."adguard.pherzog.xyz" =  lib.mkIf adguard.enable {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:31111/";
+      };
+    };
   };
 
   # TODO for small file hosting + floccus bookmark + browsersync
@@ -130,27 +214,61 @@
   # TODO grafana graphing service
   services.grafana = {
     enable = false;
+    port = 31112;
   };
 
   # TODO bitwarden selfhosted instance
   services.vaultwarden = {
     enable = false;
-    config = (import ../../hosts/secret/vaultwarden.nix);
+    config = {
+      domain = "vault.pherzog.xyz";
+      rocketPort = 31113;
+
+      #rocketTls = "{certs=\"/path/to/certs.pem\",key=\"/path/to/key.pem\"}";
+      signupsAllowed = true;
+      rocketLog = "critical";
+    } // (import ../../hosts/secret/vaultwarden.nix);
   };
 
   # firewall
-  networking.firewall.allowedTCPPorts = [
-    53    # dns
-    80    # tt-rss webinterface
-    443   # tt-rss ssl
-    51820
-  ];
+  networking.firewall.interfaces = {
+    "eth0" = {
+      allowedTCPPorts = [
+        #80    # to get certs (let's encrypt)
+        #443   # ---- " ----
+      ];
+    };
 
-  networking.firewall.allowedUDPPorts = [
-    53    # dns
-    51820
-  ];
+    "tailscale0" = {
+      allowedTCPPorts = [
+        53    # dns (adguard home)
+        80    # tt-rss webinterface
+        443   # tt-rss ssl
+        51820
+        31111 # adguard home webinterface
+      ];
+
+      allowedUDPPorts = [
+        53    # dns (adguard home)
+        51820
+      ];
+    };
+
+    #"valhalla" = {
+      #allowedUDPPorts = [
+        #5353
+        #51820
+      #];
+
+      #allowedTCPPorts = [
+        #53    # dns (adguard home)
+        #80    # tt-rss webinterface
+        #443   # tt-rss ssl
+        #51820
+        #31111 # adguard home webinterface
+      #];
+    #};
+  };
 
   system.stateVersion = "20.09";
 }
-

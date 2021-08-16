@@ -21,6 +21,11 @@ in rec {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
     #sandboxPaths = [ "/bin/sh=${pkgs.bash}/bin/sh" ];
+
+    # TODO add my own registry
+    registry = {
+
+    };
   };
   users.users."${username}" = hostmod;
 
@@ -46,7 +51,6 @@ in rec {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
-
   networking.firewall.allowedTCPPorts = kde_ports ++ [ 8888 ];
   networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
 
@@ -83,11 +87,6 @@ in rec {
     videoDrivers = if enable_xorg then [ "nvidia" ] else [ "noveau" ];
 
     libinput.enable = enable_xorg;
-    #libinput.touchpad.accelProfile = "flat";
-    #windowManager.i3 = {
-      #enable = enable_xorg;
-      #package = pkgs.i3-gaps;
-    #};
 
     desktopManager.plasma5 = {
       enable = enable_xorg;
@@ -137,6 +136,32 @@ in rec {
 
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
+  #services.avahi = {
+    #enable = true;
+    #interfaces = [
+      #"valhalla"
+    #];
+
+    #nssmdns = true;
+    #domainName = "pherzog.xyz";
+
+    #allowPointToPoint = true;
+
+    #publish = {
+      #enable = true;
+      #domain = true;
+      #addresses = true;
+    #};
+  #};
+
+  networking.firewall.interfaces = {
+    "valhalla" = {
+      allowedUDPPorts = [
+        5353
+      ];
+    };
+  };
+
   services.tailscale = {
     enable = true;
   };
@@ -158,7 +183,7 @@ in rec {
     enable = true;
     #debug = true;
     mode = "challenge-response";
-    #challengeResponsePath = "/etc/yubipam/";
+    challengeResponsePath = "/etc/yubipam/";
   };
 
   programs.steam.enable = true;
