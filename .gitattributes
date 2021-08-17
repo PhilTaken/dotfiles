@@ -1,1 +1,2 @@
 hosts/vpn/** filter=git-crypt diff=git-crypt
+users/secret/** filter=git-crypt diff=git-crypt

@@ -48,19 +48,20 @@
   };
 
   environment.systemPackages = with pkgs; [
-    wget vim git tree
+    wget
+    vim
+    git
+    tree
+    fail2ban
+    htop
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
+  programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
   programs.zsh.enable = true;
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -69,11 +70,6 @@
     permitRootLogin = "yes";
     authorizedKeysFiles = [ "/etc/nixos/authorized-keys" ];
   };
-
-  # ! TODO !
-  # traefik
-  # ttrss via traefik
-  # hedgedoc via traefik
 
   # rss client
   services.tt-rss = {
@@ -87,17 +83,75 @@
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
   };
 
+  services.tailscale = {
+    enable = true;
+  };
+
+  services.innernet = {
+    enable = true;
+    config = builtins.readFile ../vpn/valhalla.conf;
+    interfaceName = "valhalla";
+    openFirewall = true;
+  };
+
+  # dns ad blocking
+  services.adguardhome = {
+    enable = true;
+    port = 31111;
+    openFirewall = true;
+  };
+
+  services.fail2ban.enable = true;
+
+  # timescale db -> postgres
+  # TODO get this to work again
+  #services.postgresql = {
+    #extraPlugins = [ pkgs.timescaledb ];
+    #settings = {
+      #shared_preload_libraries = "timescaledb";
+    #};
+  #};
+
+  # TODO online markdown editor
   services.hedgedoc = {
     enable = false;
   };
 
+  # TODO reverse proxy for all services
   services.traefik = {
-    enable = true;
+    enable = false;
+  };
+
+  # TODO for small file hosting + floccus bookmark + browsersync
+  services.nextcloud = {
+    enable = false;
+  };
+
+  # TODO grafana graphing service
+  services.grafana = {
+    enable = false;
+  };
+
+  # TODO bitwarden selfhosted instance
+  services.vaultwarden = {
+    enable = false;
+    config = {
+
+    };
   };
 
   # firewall
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-  #networking.firewall.allowedUDPPorts = [  ];
+  networking.firewall.allowedTCPPorts = [
+    53    # dns
+    80    # tt-rss webinterface
+    443   # tt-rss ssl
+    51820
+  ];
+
+  networking.firewall.allowedUDPPorts = [
+    53    # dns
+    51820
+  ];
 
   system.stateVersion = "20.09";
 }
