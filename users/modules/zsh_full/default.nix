@@ -134,6 +134,16 @@ in rec {
             fi
           fi
         fi
+
+        flakify() {
+          if [ ! -e flake.nix ]; then
+            nix flake new -t github:nix-community/nix-direnv .
+          elif [ ! -e .envrc ]; then
+            echo "use flake" > .envrc
+            direnv allow
+          fi
+          ${EDITOR:-vim} flake.nix
+        }
     '';
     shellGlobalAliases = {
       "%notif" = "&& notify-send 'done' || notify-send 'error'";
@@ -225,8 +235,10 @@ in rec {
     '';
   };
 
-  xdg.configFile."page/init.vim".source = ./page.vim;
+  xdg.configFile."page/init.vim".source = ./page/init.vim;
   #xdg.configFile."direnv/direnvrc".source = ./direnvrc;
+  #xdg.configFile."zk/config.toml".source = ./zk/config.toml;
+  #xdg.configFile."zk/templates/daily.md".source = ./zk/templates/daily.md;
 
   home.packages = with pkgs; [
     page

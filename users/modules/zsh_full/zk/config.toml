@@ -1,0 +1,38 @@
+[note]
+language = "en"
+default-title = "Untitled"
+filename = "{{id}}"
+extension = "md"
+
+id-charset = "hex"
+id-length = 8
+id-case = "lower"
+
+
+[extra]
+author = "Philipp Herzog"
+
+[format.markdown]
+hashtags = true
+
+[tool]
+editor = "nvim"
+pager = "page"
+fzf-preview = "bat -p --color always {-1}"
+
+[lsp]
+
+[lsp.diagnostics]
+wiki-title = "hint"
+dead-link = "error"
+
+[group.daily]
+paths = ["journal/daily"]
+
+[group.daily.note]
+filename = "{{date now '%Y-%m-%d'}}"
+extension = "md"
+template = "daily.md"
+
+[alias]
+daily = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal/daily"'

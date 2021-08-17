@@ -65,7 +65,7 @@ require('packer').startup(function()
     use 'ayu-theme/ayu-vim'
 
     -- vim wiki / pandoc
-    use 'vimwiki/vimwiki'
+    --use 'vimwiki/vimwiki'
     use 'vim-pandoc/vim-pandoc'
     use 'vim-pandoc/vim-pandoc-syntax'
 
@@ -120,6 +120,17 @@ require('packer').startup(function()
     --use 'AndrewRadev/splitjoin.vim'
 
     use 'jalvesaq/Nvim-R'
+
+    -- zettelkasten
+    --use { "megalithic/zk.nvim" }
+    use {
+        "oberblastmeister/neuron.nvim",
+        requires = {
+            'nvim-lua/popup.nvim',
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope.nvim'
+        },
+    }
 
     --- ideas:
     -- nvim-r

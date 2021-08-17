@@ -3,10 +3,11 @@
         name = "${username}";
         sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
         gpgKey = "BDCD0C4E9F252898";
+        pamfile = ../secret/ykchal/maelstroem-14321676;
         font = "SourceCodePro";
         background_image = ./wallpaper/river.jpg;
         extraPackages = with pkgs; [
-            gopass-rofi
+            #gopass-rofi
 
             # terminal util
             cmake
@@ -53,13 +54,21 @@
             chromium
             multimc
 
-            innernet
             magic-wormhole
 
             audacity
 
             digikam
 
+            ncat
+
+            citra
+
+            sage
+
+            neuron-notes
+
+            obsidian
             #fortran-fpm
         ];
 
@@ -77,7 +86,7 @@
 
     hostDetails = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "video" "audio" "docker" ];
+        extraGroups = [ "wheel" "video" "audio" "docker" "influxdb" ];
         shell = pkgs.zsh;
         uid = 1000;
     };

@@ -2,13 +2,16 @@
   pkgs,
   inputs,
   username ? "nixos",
-  hostname ? "worklaptop",
+  hostname ? "nix-desktop",
   timezone ? "Europe/Berlin",
-  enable_xorg ? false,
+  enable_xorg ? true,
   ...
 }:
 let
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  hostmod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
+  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).userDetails;
+
+  kde_ports = builtins.genList(x: x+1714) (1764-1714+1);
 in rec {
   nix = {
     package = pkgs.nixFlakes;
@@ -17,22 +20,23 @@ in rec {
     '';
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
+    #sandboxPaths = [ "/bin/sh=${pkgs.bash}/bin/sh" ];
   };
-  users.users."${username}" = usermod;
+  users.users."${username}" = hostmod;
 
+  hardware.enableRedistributableFirmware = true;
   hardware.opengl = {
     enable = true;
     driSupport = true;
+    driSupport32Bit = true;
     extraPackages = with pkgs; [
-      intel-compute-runtime
-      intel-media-driver
+      libva
       vaapiVdpau
       libvdpau-va-gl
+      mesa_drivers
     ];
   };
-  hardware.enableRedistributableFirmware = true;
-  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
-
+  #environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   virtualisation.docker.enable = true;
 
   imports = [ ./hardware-configuration.nix ];
@@ -42,47 +46,51 @@ in rec {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
-  networking.wireless.enable = true;
-  networking.wireless.userControlled.enable = true;
-  networking.wg-quick.interfaces = {
-    mullvad = import ../vpn/mullvad.nix;
-  };
+
+  networking.firewall.allowedTCPPorts = kde_ports ++ [ 8888 ];
+  networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
+
+  #networking.wg-quick.interfaces = {
+    #mullvad = import ../vpn/mullvad.nix;
+  #};
 
   # Set your time zone.
   time.timeZone = "${timezone}";
 
   # dhcp config
-  networking.useDHCP = false;
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp0s20f3.useDHCP = true;
-
-  services.connman = {
-    enable = true;
-    enableVPN = false;
-    wifi.backend = "wpa_supplicant";
-  };
+  #networking.useDHCP = false;
+  #networking.interfaces.enp0s25.useDHCP = true;
+  #networking.interfaces.enp4s0.useDHCP = true;
 
   # Configure keymap in X11 and console
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  services.sshd.enable = true;
   services.xserver = {
     enable = enable_xorg;
     layout = "us";
-    xkbVariant = "workman-intl,intl";
-    xkbOptions = "caps:escape,grp:shifts_toggle";
+    xkbVariant = "workman-intl";
+    xkbOptions = "caps:escape";
 
     desktopManager = {
       xterm.enable = false;
     };
 
     displayManager = {
-      defaultSession = "none+i3";
+      #defaultSession = "none+i3";
+      defaultSession = "plasma5";
     };
 
+    videoDrivers = if enable_xorg then [ "nvidia" ] else [ "noveau" ];
+
     libinput.enable = enable_xorg;
-    libinput.touchpad.accelProfile = "flat";
-    windowManager.i3 = {
+    #libinput.touchpad.accelProfile = "flat";
+    #windowManager.i3 = {
+      #enable = enable_xorg;
+      #package = pkgs.i3-gaps;
+    #};
+
+    desktopManager.plasma5 = {
       enable = enable_xorg;
-      package = pkgs.i3-gaps;
     };
   };
   console.useXkbConfig = true;
@@ -91,6 +99,7 @@ in rec {
   sound.enable = true;
   sound.mediaKeys.enable = true;
 
+  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -110,7 +119,6 @@ in rec {
     };
   };
 
-
   environment.systemPackages = with pkgs; [
     vim git          # defaults
     cryptsetup       # encrypted disks
@@ -118,19 +126,42 @@ in rec {
     hwinfo
     glxinfo
     libva-utils
-    vpnc
     powertop
     nix-index
+    innernet
   ];
+
+  environment.etc = {
+    "yubipam/${username}-14321676".source = usermod.pamfile;
+  };
+
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
+  services.tailscale = {
+    enable = true;
+  };
+
+  #services.influxdb = {
+    #enable = true;
+    #package = pkgs.influxdb;
+  #};
+
   programs.zsh.enable = true;
-  programs.light.enable = true;
+  programs.mtr.enable = true;
+
   programs.sway = {
     enable = !enable_xorg;
     wrapperFeatures.gtk = true;
   };
 
+  security.pam.yubico = {
+    enable = true;
+    #debug = true;
+    mode = "challenge-response";
+    #challengeResponsePath = "/etc/yubipam/";
+  };
+
+  programs.steam.enable = true;
   programs.command-not-found.enable = false;
   programs.zsh.interactiveShellInit = ''
     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh

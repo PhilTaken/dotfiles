@@ -3,14 +3,15 @@
         name = "nixos";
         sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
         gpgKey = "BDCD0C4E9F252898";
+        pamfile = ../secret/ykchal/nixos-14321676;
         font = "SourceCodePro";
         background_image = ./wallpaper/city-night.png;
         extraPackages = with pkgs; [
-            gopass-rofi
+            #gopass-rofi
 
             # terminal util
             cmake
-            haxor-news
+            #haxor-news
             playerctl
             tokei
             hyperfine
@@ -48,6 +49,9 @@
             gping
 
             goneovim
+
+            tightvnc
+            obsidian
         ];
 
         imports = [
