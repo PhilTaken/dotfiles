@@ -32,13 +32,16 @@ end
 function M.buffers()
   require('telescope.builtin').buffers {
     show_all_buffers = true,
-    shorten_path = true,
+    path_display = {
+        "shorten",
+        "absolute",
+    },
   }
 end
 
 function M.find_dotfiles()
   require('telescope.builtin').git_files{
-    shorten_path = true,
+    path_display = { "shorten" },
     cwd = '~/Documents/gits/nixos-dotfiles/',
   }
 end
