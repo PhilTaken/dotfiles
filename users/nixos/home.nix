@@ -98,4 +98,5 @@ in rec {
   #};
 
   xdg.configFile."newsboat/config".source = ./config/newsboat/config;
+  xdg.configFile."foot/foot.ini".source = ./config/foot/foot.ini;
 }
