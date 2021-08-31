@@ -64,12 +64,14 @@
 
             citra
 
-            sage
+            #sage
 
             neuron-notes
 
             obsidian
             #fortran-fpm
+
+            hexyl
         ];
 
         imports = [
