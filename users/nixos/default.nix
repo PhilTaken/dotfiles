@@ -53,8 +53,6 @@
             tightvnc
             obsidian
 
-            foot
-            flameshot
         ];
 
         imports = [

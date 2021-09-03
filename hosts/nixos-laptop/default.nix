@@ -159,7 +159,7 @@ in rec {
     enable = true;
     #debug = true;
     mode = "challenge-response";
-    #challengeResponsePath = "/etc/yubipam/";
+    challengeResponsePath = "/etc/yubipam/";
   };
 
   programs.command-not-found.enable = false;

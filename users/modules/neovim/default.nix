@@ -16,6 +16,7 @@
       rust-analyzer                 # rust
       texlab                        # latex
       fortls                        # fortran
+      erlang-ls                     # erlang
       #julia                        # julia
 
       git                           # version control
