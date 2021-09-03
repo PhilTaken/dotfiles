@@ -1,11 +1,11 @@
 local should_reload = true
 
 local reloader = function()
-  if should_reload then
-    RELOAD('plenary')
-    RELOAD('popup')
-    RELOAD('telescope')
-  end
+    if should_reload then
+        RELOAD('plenary')
+        RELOAD('popup')
+        RELOAD('telescope')
+    end
 end
 
 reloader()
@@ -13,47 +13,46 @@ reloader()
 
 local M = {}
 
---function M.live_grep()
- --require('telescope').extensions.fzf_writer.staged_grep {
-   --shorten_path = true,
-   --previewer = false,
-   --fzf_separator = "|>",
- --}
---end
+function M.live_grep()
+    local theme = {
+        path_display = { 'shorten', 'absolute' },
+        fzf_separator = "|>",
+    }
+    require('telescope.builtin').live_grep(theme)
+end
 
 function M.project_search()
-  require('telescope.builtin').find_files {
-    previewer = false,
-    layout_strategy = "vertical",
-    cwd = require('nvim_lsp.util').root_pattern(".git")(vim.fn.expand("%:p")),
-  }
+    local theme = require('telescope.themes').get_dropdown()
+    theme['path_display'] = { 'shorten', 'absolute' }
+    require('telescope.builtin').git_files(theme)
 end
 
 function M.buffers()
-  require('telescope.builtin').buffers {
-    show_all_buffers = true,
-    path_display = {
-        "shorten",
-        "absolute",
-    },
-  }
+    local theme = {
+        show_all_buffers = true,
+        path_display = {
+            "shorten",
+            "absolute",
+        },
+    }
+    require('telescope.builtin').buffers(theme)
 end
 
 function M.find_dotfiles()
-  require('telescope.builtin').git_files{
-    path_display = { "shorten" },
-    cwd = '~/Documents/gits/nixos-dotfiles/',
-  }
+    require('telescope.builtin').git_files{
+        path_display = { "shorten" },
+        cwd = '~/Documents/gits/nixos-dotfiles/',
+    }
 end
 
 return setmetatable({}, {
-  __index = function(_, k)
-    reloader()
+    __index = function(_, k)
+        reloader()
 
-    if M[k] then
-      return M[k]
-    else
-      return require('telescope.builtin')[k]
+        if M[k] then
+            return M[k]
+        else
+            return require('telescope.builtin')[k]
+        end
     end
-  end
 })

@@ -42,7 +42,7 @@ map('n', "<leader>t", ":lua R('custom.tele').treesitter()<cr>", options)
 map('n', "<leader>g", ":lua R('custom.tele').live_grep()<cr>", options)
 map('n', "<leader>f", ":lua R('custom.tele').find_files()<cr>", options)
 map('n', ";", ":lua R('custom.tele').buffers{}<cr>", options)
-map('n', ";;", ":lua R('custom.tele').git_files()<cr>", options)
+map('n', ";;", ":lua R('custom.tele').project_search()<cr>", options)
 map('n', '<leader>df', ":lua R('custom.tele').find_dotfiles{}<cr>", options)
 
 -- snippets
