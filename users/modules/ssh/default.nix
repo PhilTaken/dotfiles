@@ -36,7 +36,7 @@
         user = "root";
       };
       "raspi" = {
-        hostname = "192.168.8.14";
+        hostname = "192.168.8.149";
         user = "pi";
       };
       "alpha" = {
