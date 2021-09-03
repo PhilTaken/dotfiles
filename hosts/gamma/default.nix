@@ -119,9 +119,9 @@ in rec {
   };
 
   environment.systemPackages = with pkgs; [
-    vim git          # defaults
-    cryptsetup       # encrypted disks
-    cmst             # connman system tray
+    vim git git-crypt  # defaults
+    cryptsetup         # encrypted disks
+    cmst               # connman system tray
     hwinfo
     glxinfo
     libva-utils
