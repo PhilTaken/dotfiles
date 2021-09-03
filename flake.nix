@@ -1,7 +1,6 @@
 {
   # todo:
   # - password clone
-  # - firefox config + plugins ew
   # ideas:
   # - freetube
   inputs = {

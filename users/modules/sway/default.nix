@@ -19,7 +19,7 @@ in rec {
       left = "y";
       right = "o";
       modifier = "Mod4";
-      terminal = "${pkgs.alacritty}/bin/alacritty";
+      terminal = "${pkgs.foot}/bin/foot";
       menu = "rofi -show run";
       floating.border = 0;
       focus.followMouse = "always";
@@ -64,7 +64,7 @@ in rec {
         "${mod}+Shift+c" = "reload";
         "${mod}+Shift+u" = "exit";
         "${mod}+Return" = "exec ${term}";
-        "${mod}+q" = "exec ${screen_recorder}";
+        "${mod}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
         "${mod}+d" = "kill";
         "${mod}+Space" = "exec ${menu}";
         "${mod}+l" = "exec ${pkgs.swaylock}/bin/swaylock -i ${lock_bg} &";
@@ -126,8 +126,8 @@ in rec {
         { command = "${pkgs.mako}/bin/mako"; }
         { command = "${pkgs.ydotool}/bin/ydotoold"; }
         { command = "\"${pkgs.procps}/bin/pkill --signal 9 waybar; ${pkgs.waybar}/bin/waybar\""; always = true; }
+        { command = "${pkgs.flameshot}/bin/flameshot"; }
         #{ command = "systemctl --user restart kanshi"; always = true; }
-        #{ command = "systemctl --user restart waybar"; always = true; }
         #{ command = "systemctl --user restart waybar"; always = true; }
         # TODO investigate swayidle
         #{
@@ -282,13 +282,13 @@ in rec {
       enable = true;
       #package = pkgs.rofi-wayland;
     };
-    alacritty = {
-      enable = true;
-      settings = {
-        font.normal.family = "iosevka";
-        font.size = 12.0;
-      };
-    };
+   #alacritty = {
+      #enable = true;
+      #settings = {
+        #font.normal.family = "iosevka";
+        #font.size = 12.0;
+      #};
+    #};
   };
 
   services.pulseeffects = {
@@ -350,12 +350,16 @@ in rec {
   };
 
   home.packages = with pkgs; [
+    foot
     swaylock
+
+    flameshot
+    #grim
+    #slurp
+    #sway-contrib.grimshot
+
     swayidle
     wl-clipboard
-    grim
-    sway-contrib.grimshot
-    slurp
     imv
     feh
     wev

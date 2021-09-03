@@ -38,8 +38,6 @@
             thunderbird
             hydroxide
 
-            chromium
-
             #pulseeffects-pw
 
             anki
@@ -55,7 +53,6 @@
             tightvnc
             obsidian
 
-            hexyl
         ];
 
         imports = [
