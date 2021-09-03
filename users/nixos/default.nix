@@ -64,6 +64,8 @@
             ../modules/firefox
 
             ../modules/zsh_full
+
+            ../modules/music
         ];
     };
 

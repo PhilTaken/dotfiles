@@ -56,7 +56,7 @@
       };
       "zpi2" = {
         hostname = "134.94.149.164";
-        user = "pi";
+        user = "ubuntu";
         forwardAgent = true;
       };
     };
