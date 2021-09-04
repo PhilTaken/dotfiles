@@ -24,6 +24,11 @@ lsp.rust_analyzer.setup{
     on_attach = signature_setup.on_attach,
 }
 
+lsp.elixirls.setup{
+    cmd = { "elixir-ls" },
+    on_attach = signature_setup.on_attach,
+}
+
 lsp.texlab.setup(signature_setup)
 
 lsp.ccls.setup(signature_setup)

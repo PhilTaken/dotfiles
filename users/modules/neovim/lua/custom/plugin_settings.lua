@@ -36,12 +36,7 @@ require'lspkind'.init{}
 
 -- setup treesitter
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = {
-        "json", "html", "toml",
-        "bash", "css", "yaml",
-	"rust", "cpp", -- "julia",
-	"python"
-    },
+    ensure_installed = "maintained",
     highlight = {
         enable = true,
     },

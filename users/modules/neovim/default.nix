@@ -17,6 +17,7 @@
       texlab                        # latex
       fortls                        # fortran
       erlang-ls                     # erlang
+      elixir_ls                     # elixir
       #julia                        # julia
 
       git                           # version control
