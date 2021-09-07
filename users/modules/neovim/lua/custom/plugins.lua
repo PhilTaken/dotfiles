@@ -171,6 +171,15 @@ require('packer').startup(function()
         config = function() require('trouble').setup{} end,
     }
 
+    use {
+        'numToStr/Navigator.nvim',
+        config = function()
+            require("Navigator").setup({
+                auto_save = 'all',
+                disable_on_zoom = true,
+            })
+        end
+    }
     --use {
         --'aserowy/tmux.nvim',
         --config = function()

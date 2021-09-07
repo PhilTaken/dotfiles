@@ -71,6 +71,11 @@ wk.register({
         h = { "<Plug>RHelp", "Help"},
         f = { "<Plug>RSendFile", "Send the whole file" },
     },
+
+    ["<A-y>"] = { function() require('Navigator').left() end, "Go left" },
+    ["<A-n>"] = { function() require('Navigator').down() end, "Go down" },
+    ["<A-e>"] = { function() require('Navigator').up() end, "Go up" },
+    ["<A-o>"] = { function() require('Navigator').right() end, "Go right" },
 })
 
 map('v', '<LocalLeader>ss', '<Plug>RSendSelection', { silent = true; })

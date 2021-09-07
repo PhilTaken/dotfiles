@@ -223,10 +223,12 @@ in rec {
         unbind '%'
         unbind C-a
 
-        bind y select-pane -L
-        bind n select-pane -D
-        bind e select-pane -U
-        bind o select-pane -R
+        is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+
+        bind y if-shell "$is_vim" 'send-keys A-y' 'select-pane -L'
+        bind n if-shell "$is_vim" 'send-keys A-n' 'select-pane -D'
+        bind e if-shell "$is_vim" 'send-keys A-e' 'select-pane -U'
+        bind o if-shell "$is_vim" 'send-keys A-o' 'select-pane -R'
 
         bind -r C-y select-window -t :-
         bind -r C-o select-window -t :+
