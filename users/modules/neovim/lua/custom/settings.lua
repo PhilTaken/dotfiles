@@ -20,8 +20,6 @@ o.cmdheight = 2
 o.showmode = false
 
 opt.termguicolors = true
-vim.g.ayucolor = "mirage"
-vim.cmd[[colorscheme ayu]]
 
 -- popup menu opacity
 opt.pumblend = 20

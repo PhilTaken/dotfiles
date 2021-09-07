@@ -201,6 +201,9 @@ in rec {
     extraConfig = ''
         source ${airline_conf}
 
+        set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+        set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
+
         set -g mouse on
         setw -g monitor-activity on
         set -g visual-activity on

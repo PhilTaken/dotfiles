@@ -36,10 +36,19 @@ wk.register({
 
     ["<leader>"] = {
         ["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting"},
-        t = { function() R('custom.tele').treesitter() end, "Treesitter Symbols" },
+        s = { function() R('custom.tele').treesitter() end, "Treesitter Symbols" },
         g = { function() R('custom.tele').live_grep() end, "Live Grep in current dir" },
         f = { function() R('custom.tele').find_files() end, "Find Files in current dir" },
-        df = { function() R('custom.tele').find_dotfiles{} end, "Search in dotfiles" },
+        d = { function() R('custom.tele').find_dotfiles{} end, "Search in dotfiles" },
+        t = {
+            name = "+trouble",
+            t = { "<cmd>TroubleToggle<cr>", "Toggle trouble"},
+            w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
+            d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document Diagnostics"},
+            q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix List"},
+            l = { "<cmd>TroubleToggle loclist<cr>", "Loclist"},
+            r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences"},
+        },
     },
     l = {
         name = "+lsp",
