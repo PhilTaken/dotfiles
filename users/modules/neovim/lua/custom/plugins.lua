@@ -26,7 +26,8 @@ require('packer').startup(function()
     -- git signs in signcolumn
     use {
         'lewis6991/gitsigns.nvim',
-        requires = { 'nvim-lua/plenary.nvim' }
+        requires = { 'nvim-lua/plenary.nvim' },
+        tag = 'v0.2',
     }
 
     -- change pwd to git root
@@ -114,7 +115,7 @@ require('packer').startup(function()
     use 'tikhomirov/vim-glsl'
 
     -- interop with jupyter notebooks
-    use 'untitled-ai/jupyter_ascending.vim'
+    --use 'untitled-ai/jupyter_ascending.vim'
 
     --switch between single and multiline
     --use 'AndrewRadev/splitjoin.vim'
@@ -130,6 +131,11 @@ require('packer').startup(function()
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope.nvim'
         },
+    }
+
+    use {
+        "folke/which-key.nvim",
+        config = function() require'which-key'.setup{} end,
     }
 
     --- ideas:

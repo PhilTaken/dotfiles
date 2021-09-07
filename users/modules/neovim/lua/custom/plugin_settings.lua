@@ -69,7 +69,7 @@ g.vimwiki_key_mappings = {
     table_mappings = 0,
 }
 
-g.jupyter_ascending_match_pattern = ".py"
+--g.jupyter_ascending_match_pattern = ".py"
 
 cmd[[let R_non_r_compl = 0]]
 cmd[[let R_user_maps_only = 1]]

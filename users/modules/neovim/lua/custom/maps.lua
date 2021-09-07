@@ -28,32 +28,49 @@ map('n', '<S-Tab>', ':bp<CR>', {})
 map('n', '<A-a>', 'C-a', options)
 map('n', '<A-x>', 'C-x', options)
 
--- disable highlight
-map('n', '<leader><leader>', ':noh<CR>', options)
+local wk = require("which-key")
+wk.register({
+    [";"] = { function() R('custom.tele').buffers() end, "Buffers" },
+    [";;"] = { function() R('custom.tele').project_search() end, "Project Search" },
+    K = { function() require('lspsaga.hover').render_hover_doc() end, "Hover Info" },
+    --K = { function() vim.lsp.buf.hover() end, "Hover Info" },
+    ["<leader>"] = {
+        ["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting"},
+        t = { function() R('custom.tele').treesitter() end, "Treesitter" },
+        g = { function() R('custom.tele').live_grep() end, "Live Grep" },
+        f = { function() R('custom.tele').find_files() end, "Find Files" },
+        df = { function() R('custom.tele').find_dotfiles{} end, "Dotfiles" },
+    },
+    l = {
+        name = "+lsp",
+        s = { function() require('lspsaga.signaturehelp').signature_help() end, "Signature Help" },
+        n = { function() require('lspsaga.rename').rename() end, "Rename Variable" },
+        f = { function() require('lspsaga.provider').lsp_finder() end, "Lsp Finder" },
+        c = { function() require('lspsaga.codeaction').code_action() end, "Code Action" },
+        d = { function() require('lspsaga.provider').preview_definition() end, "Preview Definition"},
+        ["["] = { function() require('lspsaga.diagnostic').lsp_jump_diagnostic_prev() end, "Previous Diagnostic"},
+        ["]"] = { function() require('lspsaga.diagnostic').lsp_jump_diagnostic_next() end, "Next Diagnostic"},
+        ["="] = { function() vim.lsp.buf.formatting() end, "Formatting" },
+    },
+    r = {
+        name = "R",
+        s = { "<Plug>RStart", "Start the R integration"},
+        l = { "<Plug>RDSendLine", "Send current line"},
+        p = { "<Plug>RPlot", "Plot data frame"},
+        v = { "<Plug>RViewDF", "View data frame"},
+        o = { "<Plug>RUpdateObjBrowser", "Update the Object Browser"},
+        h = { "<Plug>RHelp", "Help"},
+        f = { "<Plug>RSendFile", "Send the whole file" },
+    },
+})
+
+map('v', '<LocalLeader>ss', '<Plug>RSendSelection', { silent = true; })
 
 -- search using visual mode
 map('v', '/', 'y/<C-R>"<CR>', options)
 
 -- escape in/out of terminal mode
 map('t', 'jj', '<C-\\><C-n>', { noremap = true; })
-
--- telescope mappings
-map('n', "<leader>t", ":lua R('custom.tele').treesitter()<cr>", options)
-map('n', "<leader>g", ":lua R('custom.tele').live_grep()<cr>", options)
-map('n', "<leader>f", ":lua R('custom.tele').find_files()<cr>", options)
-map('n', ";", ":lua R('custom.tele').buffers{}<cr>", options)
-map('n', ";;", ":lua R('custom.tele').project_search()<cr>", options)
-map('n', '<leader>df', ":lua R('custom.tele').find_dotfiles{}<cr>", options)
-
--- snippets
---cmd[[inoremap <C-e> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>]]
---cmd[[inoremap <C-n> <cmd>lua return require'snippets'.expand_or_advance(-1)<CR>]]
-
--- lsp commands
-map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true; silent = true; })
-map('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true; silent = true; })
-map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true; silent = true; })
-map('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true; silent = true; })
 
 ----------------------------------------------
 
@@ -66,38 +83,5 @@ map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 -- compe
 map('i', '<C-Space>', [[compe#complete()]],              {noremap = true; expr = true; silent = true;})
 map('i', '<CR>',      [[compe#confirm('<CR>')]],         {noremap = true; expr = true; silent = true;})
---map('i', '<C-e>',     [[compe#close('<C-e>')]],          {noremap = true; expr = true; silent = true;})
 map('i', '<C-f>',     [[compe#scroll({ 'delta': +4 })]], {noremap = true; expr = true; silent = true;})
 map('i', '<C-d>',     [[compe#scroll({ 'delta': -4 })]], {noremap = true; expr = true; silent = true;})
--- jupyter ascending (not working currently because of nix being a readonly store -> TODO)
---map('n', '<LocalLeader>x', '<Plug>JupyterExecute', options)
---map('n', '<LocalLeader>X', '<Plug>JupyterExecuteAll', options)
-
-map('n', '<LocalLeader>s', '<Plug>RStart', { silent = true; })
-map('n', '<LocalLeader>m', '<Plug>RDSendLine', {silent = true; })
-map('v', '<LocalLeader>ss', '<Plug>RSendSelection', { silent = true; })
-map('n', '<LocalLeader>o', '<Plug>RPlot', { silent = true; })
-map('n', '<LocalLeader>v', '<Plug>RViewDF', { silent = true; })
-map('n', '<LocalLeader>l', '<Plug>RUpdateObjBrowser', { silent = true; })
-map('n', '<LocalLeader>h', '<Plug>RHelp', { silent = true; })
-
--- ?
-map('n', '<LocalLeader>sa', '<Plug>RSendFile', { silent = true; })
-
--- lspsaga
-map('n', '<leader>gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', { noremap = true; silent = true; })
-map('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', { noremap = true; silent = true; })
-map('n', 'K', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", {noremap = true; silent = true; })
-
--- zk (zettelkasten)
---map('n', '<leader>z', '<cmd>lua require("telescope").extensions.zk.zk_notes()<CR>', { noremap = true; silent = true; })
-
-cmd[[nnoremap <silent> gzn <cmd>lua require'neuron/cmd'.new_edit(require'neuron'.config.neuron_dir)<CR>]]
-cmd[[nnoremap <silent> gzz <cmd>lua require'neuron/telescope'.find_zettels()<CR>]]
-cmd[[nnoremap <silent> gzZ <cmd>lua require'neuron/telescope'.find_zettels {insert = true}<CR>]]
-cmd[[nnoremap <silent> gzb <cmd>lua require'neuron/telescope'.find_backlinks()<CR>]]
-cmd[[nnoremap <silent> gzB <cmd>lua require'neuron/telescope'.find_backlinks {insert = true}<CR>]]
-cmd[[nnoremap <silent> gzt <cmd>lua require'neuron/telescope'.find_tags()<CR>]]
-cmd[[nnoremap <silent> gzs <cmd>lua require'neuron'.rib {address = "127.0.0.1:8200", verbose = true}<CR>]]
-cmd[[nnoremap <silent> gz] <cmd>lua require'neuron'.goto_next_extmark()<CR>]]
-map('n', 'gz[', '<cmd>lua require"neuron".goto_prev_extmark()<CR>]]', {noremap = true; silent = true; })
