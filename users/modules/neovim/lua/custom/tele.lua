@@ -41,7 +41,7 @@ end
 function M.find_dotfiles()
     require('telescope.builtin').git_files{
         path_display = { "shorten" },
-        cwd = '~/Documents/gits/nixos-dotfiles/',
+        cwd = '~/Documents/gits/dotfiles-nix/',
     }
 end
 

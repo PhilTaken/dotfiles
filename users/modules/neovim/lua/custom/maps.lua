@@ -33,13 +33,13 @@ wk.register({
     [";"] = { function() R('custom.tele').buffers() end, "Buffers" },
     [";;"] = { function() R('custom.tele').project_search() end, "Project Search" },
     K = { function() require('lspsaga.hover').render_hover_doc() end, "Hover Info" },
-    --K = { function() vim.lsp.buf.hover() end, "Hover Info" },
+
     ["<leader>"] = {
         ["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting"},
-        t = { function() R('custom.tele').treesitter() end, "Treesitter" },
-        g = { function() R('custom.tele').live_grep() end, "Live Grep" },
-        f = { function() R('custom.tele').find_files() end, "Find Files" },
-        df = { function() R('custom.tele').find_dotfiles{} end, "Dotfiles" },
+        t = { function() R('custom.tele').treesitter() end, "Treesitter Symbols" },
+        g = { function() R('custom.tele').live_grep() end, "Live Grep in current dir" },
+        f = { function() R('custom.tele').find_files() end, "Find Files in current dir" },
+        df = { function() R('custom.tele').find_dotfiles{} end, "Search in dotfiles" },
     },
     l = {
         name = "+lsp",

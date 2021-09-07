@@ -145,5 +145,5 @@ end)
 
 -- install updates if packer has just been downloaded
 if install_packages then
-	execute("PackerInstall")
+    execute("PackerInstall")
 end
