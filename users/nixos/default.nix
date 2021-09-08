@@ -71,7 +71,7 @@
 
     hostDetails = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "video" "audio" "docker" ];
+        extraGroups = [ "wheel" "video" "audio" "docker" "dialout" ];
         shell = pkgs.zsh;
         uid = 1001;
     };
