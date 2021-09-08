@@ -26,7 +26,8 @@ require('packer').startup(function()
     -- git signs in signcolumn
     use {
         'lewis6991/gitsigns.nvim',
-        requires = { 'nvim-lua/plenary.nvim' }
+        requires = { 'nvim-lua/plenary.nvim' },
+        tag = 'v0.2',
     }
 
     -- change pwd to git root
@@ -62,7 +63,33 @@ require('packer').startup(function()
     }
 
     -- ayu color scheme
-    use 'ayu-theme/ayu-vim'
+    use {
+        'ayu-theme/ayu-vim',
+        config = function()
+            vim.g.ayucolor = "mirage"
+            vim.cmd[[colorscheme ayu]]
+        end
+    }
+
+    -- extra colors for older colorschemes
+    use 'folke/lsp-colors.nvim'
+
+    --use {
+        --'Pocco81/Catppuccino.nvim',
+        --config = function()
+            --local catppuccino = require('catppuccino')
+            --catppuccino.setup{
+                --colorscheme = "soft_manilo",
+                --integrations = {
+                    --lsp_saga = true,
+                    --gitsigns = true,
+                    --telescope = true,
+                    --which_key = true,
+                --},
+            --}
+            --catppuccino.load()
+        --end
+    --}
 
     -- vim wiki / pandoc
     --use 'vimwiki/vimwiki'
@@ -107,14 +134,8 @@ require('packer').startup(function()
     -- manage surrounds e.g. quotation marks, html tags, ...
     use 'tpope/vim-surround'
 
-    -- julia lang
-    --use 'JuliaEditorSupport/julia-vim'
-
     -- highlighting for the glsl (gl shader language)
     use 'tikhomirov/vim-glsl'
-
-    -- interop with jupyter notebooks
-    use 'untitled-ai/jupyter_ascending.vim'
 
     --switch between single and multiline
     --use 'AndrewRadev/splitjoin.vim'
@@ -132,6 +153,41 @@ require('packer').startup(function()
         },
     }
 
+    -- show keybinds + comment for them
+    use {
+        "folke/which-key.nvim",
+        config = function() require'which-key'.setup{} end,
+    }
+
+    -- quick peek to certain line numbers
+    use {
+        'nacro90/numb.nvim',
+        config = function() require('numb').setup() end,
+    }
+
+    use {
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function() require('trouble').setup{} end,
+    }
+
+    use {
+        'numToStr/Navigator.nvim',
+        config = function()
+            require("Navigator").setup({
+                auto_save = 'all',
+                disable_on_zoom = true,
+            })
+        end
+    }
+    --use {
+        --'aserowy/tmux.nvim',
+        --config = function()
+            --require("tmux").setup({
+
+            --})
+        --end
+    --}
     --- ideas:
     -- nvim-r
     -- rust-tools.nvim
@@ -139,5 +195,5 @@ end)
 
 -- install updates if packer has just been downloaded
 if install_packages then
-	execute("PackerInstall")
+    execute("PackerInstall")
 end

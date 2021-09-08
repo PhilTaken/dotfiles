@@ -29,7 +29,11 @@
     ] ++ (with pkgs.nodePackages; [
       pyright                       # python
       typescript-language-server    # js / ts
-    ]);
+    ]); # ++ (with pkgs.python39Packages; [
+      #python-lsp-server
+      #python-lsp-black
+      #pyls-flake8
+    #]);
     extraConfig = ''
       " set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM
       luafile ~/.config/nvim/init_.lua

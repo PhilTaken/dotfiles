@@ -48,7 +48,7 @@ local mode_color = function()
         [83] = colors.red1
     }
 
-    mode_color = mode_colors[vim.fn.mode():byte()]
+    local mode_color = mode_colors[vim.fn.mode():byte()]
     if mode_color ~= nil then
         return mode_color
     else
@@ -89,7 +89,7 @@ gls.left[1] = {
                 [83] =  ' S-Line '
             }
             vim.api.nvim_command('hi GalaxyViMode guibg=' .. mode_color())
-            alias = aliases[vim.fn.mode():byte()]
+            local alias = aliases[vim.fn.mode():byte()]
             if alias ~= nil then
                 return '  ' .. alias .. ' '
             else

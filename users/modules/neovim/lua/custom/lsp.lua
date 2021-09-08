@@ -34,6 +34,7 @@ lsp.texlab.setup(signature_setup)
 lsp.ccls.setup(signature_setup)
 
 lsp.pyright.setup(signature_setup)
+--lsp.pylsp.setup(signature_setup)
 
 lsp.rnix.setup(signature_setup)
 

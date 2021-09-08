@@ -7,4 +7,6 @@ final:  prev: {
   goneovim = prev.callPackage ./applications/goneovim { };
   fortran-fpm = prev.callPackage ./applications/fortran-fpm { };
   zk = prev.callPackage ./applications/zk { };
+
+  tauon = prev.callPackage ./applications/tauon { };
 }
