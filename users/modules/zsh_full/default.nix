@@ -225,10 +225,10 @@ in rec {
 
         is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
-        bind y if-shell "$is_vim" 'send-keys A-y' 'select-pane -L'
-        bind n if-shell "$is_vim" 'send-keys A-n' 'select-pane -D'
-        bind e if-shell "$is_vim" 'send-keys A-e' 'select-pane -U'
-        bind o if-shell "$is_vim" 'send-keys A-o' 'select-pane -R'
+        bind y if-shell "$is_vim" 'send-keys M-y' 'select-pane -L'
+        bind n if-shell "$is_vim" 'send-keys M-n' 'select-pane -D'
+        bind e if-shell "$is_vim" 'send-keys M-e' 'select-pane -U'
+        bind o if-shell "$is_vim" 'send-keys M-o' 'select-pane -R'
 
         bind -r C-y select-window -t :-
         bind -r C-o select-window -t :+
