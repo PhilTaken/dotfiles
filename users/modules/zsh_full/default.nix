@@ -144,6 +144,12 @@ in rec {
           fi
           ${EDITOR:-vim} flake.nix
         }
+
+        if [ -n "$TMUX" ]; then
+          eval "$(tmux show-environment -s NVIM_LISTEN_ADDRESS)"
+        else
+          export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+        fi
     '';
     shellGlobalAliases = {
       "%notif" = "&& notify-send 'done' || notify-send 'error'";
@@ -238,6 +244,20 @@ in rec {
         bind -r E resize-pane -U 5
         bind -r O resize-pane -R 5
     '';
+    plugins = with pkgs.tmuxPlugins; [
+      sessionist
+
+      (mkTmuxPlugin rec {
+        pluginName = "nvr";
+        version = "unstable-2021-07-07";
+        src = pkgs.fetchFromGitHub {
+          owner = "carlocab";
+          repo = "tmux-nvr";
+          rev = "96a6dae2733cf651ac954306b03263b60d05f26e";
+          sha256 = "sha256-lkZZ9xV7m/iTpQpv/YewltyZ+97P2UeSysNdGcCgpAw=";
+        };
+      })
+    ];
   };
 
   xdg.configFile."page/init.vim".source = ./page/init.vim;
@@ -265,6 +285,8 @@ in rec {
     sd
     sshfs
     unzip
+
+    neovim-remote
   ];
 
 

@@ -17,7 +17,6 @@
             hyperfine
             youtube-dl
             ffmpeg
-            neovim-remote
             jq
             tree
             wget
