@@ -105,6 +105,8 @@
         git-crypt
         setup-script
         deploy-rs.packages."${system}".deploy-rs
+
+        #fortran-package-manager
       ];
     };
 

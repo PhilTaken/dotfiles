@@ -55,23 +55,16 @@
             multimc
 
             magic-wormhole
-
             audacity
-
             digikam
-
             ncat
-
             citra
-
             #sage
 
             neuron-notes
-
             obsidian
-            #fortran-fpm
-
             hexyl
+
         ];
 
         imports = [
