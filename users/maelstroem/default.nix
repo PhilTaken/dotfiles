@@ -7,64 +7,39 @@
         font = "SourceCodePro";
         background_image = ./wallpaper/river.jpg;
         extraPackages = with pkgs; [
-            #gopass-rofi
 
             # terminal util
-            cmake
-            #haxor-news
-            playerctl
-            tokei
-            hyperfine
-            youtube-dl
-            ffmpeg
-            neovim-remote
-            jq
-            tree
-            wget
-
-            # other
-            discord
-            gimp
-            pamixer
-            spotify-unwrapped
-            tdesktop
-            vlc
-            obs-studio
-
-            pavucontrol
-
-            signal-desktop
-            zoom-us
-            element-desktop
-            newsboat
-            mpv
-            #calibre
-            thunderbird
-            hydroxide
-
-            anki
-            texlive.combined.scheme-medium
-
-            cachix
-            gping
-            vscodium
-
-            vpnc
-            libreoffice
-            chromium
-            multimc
-
-            magic-wormhole
-            audacity
-            digikam
-            ncat
-            citra
-            #sage
 
             neuron-notes
-            obsidian
-            hexyl
+            newsboat
+            youtube-dl
 
+            # other
+            #calibre
+            anki
+            audacity
+            chromium
+            citra
+            digikam
+            discord
+            element-desktop
+            gimp
+            libreoffice
+            obs-studio
+            obsidian
+            signal-desktop
+            tdesktop
+            thunderbird
+            vscodium
+            zoom-us
+
+            cachix
+            hydroxide
+            texlive.combined.scheme-medium
+            vpnc
+
+            multimc
+            openttd
         ];
 
         imports = [
@@ -76,6 +51,8 @@
             ../modules/firefox
 
             ../modules/zsh_full
+
+            ../modules/music
         ];
     };
 

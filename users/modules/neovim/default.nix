@@ -42,6 +42,7 @@
 
   home.packages = with pkgs; [
     visidata
+    neovim-remote
   ];
 
   xdg.configFile."nvim/init_.lua".source = ./init.lua;

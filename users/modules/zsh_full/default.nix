@@ -165,13 +165,10 @@ in rec {
       sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
       top = "btm";
       lock = "swaylock -i ${lock_bg}";
-      du="dust";
+      du = "dust";
 
       # c/c++ dev
       bear = "nix-shell -p bear --run bear";
-
-      # wget
-      #wget = "nix-shell -p wget --run wget";
 
       # git
       ga="git add";
@@ -246,26 +243,36 @@ in rec {
   #xdg.configFile."zk/templates/daily.md".source = ./zk/templates/daily.md;
 
   home.packages = with pkgs; [
-    page
     bandwhich
     bottom
+    cmake
+    dig
     du-dust
     exa
     fasd
     fd
     file
     fortune
+    gping
+    hexyl
+    hyperfine
+    jq
     lolcat
     lshw
+    magic-wormhole
+    ncat
     neofetch
+    page
     procs
     ripgrep
     ripgrep-all
     rsync
     sd
     sshfs
+    tokei
+    tree
     unzip
+    usbutils
+    wget
   ];
-
-
 }

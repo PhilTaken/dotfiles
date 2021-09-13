@@ -12,12 +12,10 @@
             # terminal util
             cmake
             #haxor-news
-            playerctl
             tokei
             hyperfine
             youtube-dl
-            ffmpeg
-            neovim-remote
+
             jq
             tree
             wget
@@ -25,15 +23,10 @@
             # other
             discord
             gimp
-            pamixer
-            spotify-unwrapped
             tdesktop
-            vlc
-            pavucontrol
 
             element-desktop
             newsboat
-            mpv
             #calibre
             thunderbird
             hydroxide
@@ -52,7 +45,6 @@
 
             tightvnc
             obsidian
-
         ];
 
         imports = [
