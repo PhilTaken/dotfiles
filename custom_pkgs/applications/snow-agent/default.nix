@@ -1,11 +1,12 @@
-{
-  stdenv,
-  dpkg,
-  glibc,
-  gcc-unwrapped,
-  autoPatchelfHook,
-  requireFile,
-}: let
+{ stdenv
+, dpkg
+, glibc
+, gcc-unwrapped
+, autoPatchelfHook
+, requireFile
+,
+}:
+let
   version = "6.2.3-1";
   src = requireFile {
     name = "fzj_prod_linux_debian_${version}_amd64.deb";
@@ -14,7 +15,8 @@
   };
   snowconfig = ./snowagent.config;
   snowcronconfig = ./snowcron.config;
-in stdenv.mkDerivation {
+in
+stdenv.mkDerivation {
   name = "snow-agent-${version}";
   system = "x86_64-linux";
   inherit src;

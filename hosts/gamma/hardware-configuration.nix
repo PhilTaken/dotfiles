@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "cryptd" ];
@@ -24,26 +25,28 @@
   };
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/0fe85749-ef71-4106-acba-d996cac7032a";
+    {
+      device = "/dev/disk/by-uuid/0fe85749-ef71-4106-acba-d996cac7032a";
       fsType = "ext4";
       options = [ "noatime" "nodiratime" "discard" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/FCA6-23E6";
+    {
+      device = "/dev/disk/by-uuid/FCA6-23E6";
       fsType = "vfat";
     };
 
   fileSystems."/platte" =
-    { device = "/dev/disk/by-uuid/1AEA5B14EA5AEC0F";
+    {
+      device = "/dev/disk/by-uuid/1AEA5B14EA5AEC0F";
       fsType = "ntfs-3g";
       options = [ "defaults" "user" "rw" "utf8" "umask=000" "uid=1000" "gid=100" "exec" ];
     };
 
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/3e5936d8-03a3-48be-b03d-a9b5495fccdf"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/3e5936d8-03a3-48be-b03d-a9b5495fccdf"; }];
 
   # high-resolution display
   #hardware.video.hidpi.enable = lib.mkDefault true;

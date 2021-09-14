@@ -1,8 +1,7 @@
-{
-  pkgs,
-  username,
-  background_image,
-  ...
+{ pkgs
+, username
+, background_image
+, ...
 }:
 {
   services.kdeconnect.enable = true;
@@ -30,7 +29,7 @@
     };
 
     Install = {
-      WantedBy = [ "graphical-session.target"];
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 

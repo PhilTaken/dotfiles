@@ -1,6 +1,21 @@
-{ stdenv, lib, fetchFromGitHub, fetchgit, python2, gn, ninja
-, fontconfig, expat, icu58, libglvnd, libjpeg, libpng, libwebp, zlib
-, mesa, libX11, harfbuzz
+{ stdenv
+, lib
+, fetchFromGitHub
+, fetchgit
+, python2
+, gn
+, ninja
+, fontconfig
+, expat
+, icu58
+, libglvnd
+, libjpeg
+, libpng
+, libwebp
+, zlib
+, mesa
+, libX11
+, harfbuzz
 }:
 
 stdenv.mkDerivation {
@@ -13,11 +28,20 @@ stdenv.mkDerivation {
     sha256 = "1i4in5azgqm9ck2mqzbp64hin68a1bv5hwxlbf63s8mz302p9w8d";
   };
 
-  nativeBuildInputs = [ python2 gn ninja];
+  nativeBuildInputs = [ python2 gn ninja ];
 
   buildInputs = [
-    fontconfig expat icu58 libglvnd libjpeg libpng libwebp zlib
-    mesa libX11 harfbuzz
+    fontconfig
+    expat
+    icu58
+    libglvnd
+    libjpeg
+    libpng
+    libwebp
+    zlib
+    mesa
+    libX11
+    harfbuzz
   ];
 
   configurePhase = ''

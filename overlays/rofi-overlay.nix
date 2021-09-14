@@ -28,4 +28,5 @@ let
       '';
     });
   };
-in rofi_overlay
+in
+rofi_overlay

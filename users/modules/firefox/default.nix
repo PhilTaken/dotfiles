@@ -1,15 +1,14 @@
-{
-  pkgs,
-  username,
-  enable_xorg,
-  ...
+{ pkgs
+, username
+, enable_xorg
+, ...
 }: {
   programs.firefox = {
     enable = true;
     package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
       forceWayland = !enable_xorg;
       extraPolicies = {
-        ExtensionSettings = {};
+        ExtensionSettings = { };
       };
     };
 

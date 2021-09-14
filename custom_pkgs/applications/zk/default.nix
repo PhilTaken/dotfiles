@@ -1,7 +1,8 @@
 { stdenv
 , autoPatchelfHook
 , fetchzip
-, icu63}:
+, icu63
+}:
 
 stdenv.mkDerivation rec {
   pname = "zk";
@@ -18,7 +19,7 @@ stdenv.mkDerivation rec {
   dontBuild = true;
 
   installPhase = ''
-      mkdir -p $out/bin
-      mv zk $out/bin
+    mkdir -p $out/bin
+    mv zk $out/bin
   '';
 }

@@ -1,20 +1,20 @@
-{
-  pkgs,
-  inputs,
-  username ? "nixos",
-  hostname ? "nix-desktop",
-  timezone ? "Europe/Berlin",
-  enable_xorg ? true,
-  ...
+{ pkgs
+, inputs
+, username ? "nixos"
+, hostname ? "nix-desktop"
+, timezone ? "Europe/Berlin"
+, enable_xorg ? true
+, ...
 }:
 let
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
-  kde_ports = builtins.genList(x: x+1714) (1764-1714+1);
-in rec {
+  usermod = (import (../../users + "/${username}") { inherit pkgs username; }).hostDetails;
+  kde_ports = builtins.genList (x: x + 1714) (1764 - 1714 + 1);
+in
+rec {
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-        experimental-features = nix-command flakes
+      experimental-features = nix-command flakes
     '';
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
@@ -49,7 +49,7 @@ in rec {
   networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
 
   #networking.wg-quick.interfaces = {
-    #mullvad = import ../vpn/mullvad.nix;
+  #mullvad = import ../vpn/mullvad.nix;
   #};
 
   # Set your time zone.
@@ -83,8 +83,8 @@ in rec {
     libinput.enable = enable_xorg;
     #libinput.touchpad.accelProfile = "flat";
     #windowManager.i3 = {
-      #enable = enable_xorg;
-      #package = pkgs.i3-gaps;
+    #enable = enable_xorg;
+    #package = pkgs.i3-gaps;
     #};
 
     desktopManager.plasma5 = {
@@ -118,9 +118,10 @@ in rec {
   };
 
   environment.systemPackages = with pkgs; [
-    vim git          # defaults
-    cryptsetup       # encrypted disks
-    cmst             # connman system tray
+    vim
+    git # defaults
+    cryptsetup # encrypted disks
+    cmst # connman system tray
     hwinfo
     glxinfo
     libva-utils
@@ -136,8 +137,8 @@ in rec {
 
   # TODO move this to alpha, provide config file
   #services.innernet = {
-    #enable = true;
-    #configFile = ./innernet0.conf;
+  #enable = true;
+  #configFile = ./innernet0.conf;
   #};
 
   programs.zsh.enable = true;
