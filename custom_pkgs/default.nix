@@ -9,5 +9,4 @@ final: prev: {
 
   tauon = prev.callPackage ./applications/tauon { };
   fortran-package-manager = prev.callPackage ./applications/fortran-package-manager { };
-  #neovide = prev.callPackage ./applications/neovide { };
 }
