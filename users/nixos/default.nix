@@ -52,6 +52,7 @@
             tightvnc
             obsidian
 
+            fortran-package-manager
         ];
 
         imports = [
