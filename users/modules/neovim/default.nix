@@ -10,29 +10,29 @@
     extraPackages = with pkgs; [
       tree-sitter
 
-      sumneko-lua-language-server   # lua
-      ccls                          # c/c++
-      rnix-lsp                      # nix
-      rust-analyzer                 # rust
-      texlab                        # latex
-      fortls                        # fortran
-      erlang-ls                     # erlang
-      elixir_ls                     # elixir
+      sumneko-lua-language-server # lua
+      ccls # c/c++
+      rnix-lsp # nix
+      rust-analyzer # rust
+      texlab # latex
+      fortls # fortran
+      erlang-ls # erlang
+      elixir_ls # elixir
       #julia                        # julia
 
-      git                           # version control
-      ripgrep                       # telescope file finding
-      fd                            # faster find
-      gcc                           # for treesitter
+      git # version control
+      ripgrep # telescope file finding
+      fd # faster find
+      gcc # for treesitter
 
-      neuron-notes                  # for zettelkasten note-taking
+      neuron-notes # for zettelkasten note-taking
     ] ++ (with pkgs.nodePackages; [
-      pyright                       # python
-      typescript-language-server    # js / ts
+      pyright # python
+      typescript-language-server # js / ts
     ]); # ++ (with pkgs.python39Packages; [
-      #python-lsp-server
-      #python-lsp-black
-      #pyls-flake8
+    #python-lsp-server
+    #python-lsp-black
+    #pyls-flake8
     #]);
     extraConfig = ''
       " set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM

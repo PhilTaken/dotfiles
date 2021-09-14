@@ -1,31 +1,29 @@
-{
-  pkgs,
-  inputs,
-  username ? "nixos",
-  hostname ? "nix-desktop",
-  timezone ? "Europe/Berlin",
-  enable_xorg ? true,
-  ...
+{ pkgs
+, inputs
+, username ? "nixos"
+, hostname ? "nix-desktop"
+, timezone ? "Europe/Berlin"
+, enable_xorg ? true
+, ...
 }:
 let
-  hostmod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).userDetails;
+  hostmod = (import (../../users + "/${username}") { inherit pkgs username; }).hostDetails;
+  usermod = (import (../../users + "/${username}") { inherit pkgs username; }).userDetails;
 
-  kde_ports = builtins.genList(x: x+1714) (1764-1714+1);
-in rec {
+  kde_ports = builtins.genList (x: x + 1714) (1764 - 1714 + 1);
+in
+rec {
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-        experimental-features = nix-command flakes
+      experimental-features = nix-command flakes
     '';
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
     #sandboxPaths = [ "/bin/sh=${pkgs.bash}/bin/sh" ];
 
     # TODO add my own registry
-    registry = {
-
-    };
+    registry = { };
   };
   users.users."${username}" = hostmod;
 
@@ -55,7 +53,7 @@ in rec {
   networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
 
   #networking.wg-quick.interfaces = {
-    #mullvad = import ../vpn/mullvad.nix;
+  #mullvad = import ../vpn/mullvad.nix;
   #};
 
   # Set your time zone.
@@ -119,9 +117,11 @@ in rec {
   };
 
   environment.systemPackages = with pkgs; [
-    vim git git-crypt  # defaults
-    cryptsetup         # encrypted disks
-    cmst               # connman system tray
+    vim
+    git
+    git-crypt # defaults
+    cryptsetup # encrypted disks
+    cmst # connman system tray
     hwinfo
     glxinfo
     libva-utils
@@ -137,21 +137,21 @@ in rec {
   services.udev.packages = with pkgs; [ yubikey-personalization ];
 
   #services.avahi = {
-    #enable = true;
-    #interfaces = [
-      #"valhalla"
-    #];
+  #enable = true;
+  #interfaces = [
+  #"valhalla"
+  #];
 
-    #nssmdns = true;
-    #domainName = "pherzog.xyz";
+  #nssmdns = true;
+  #domainName = "pherzog.xyz";
 
-    #allowPointToPoint = true;
+  #allowPointToPoint = true;
 
-    #publish = {
-      #enable = true;
-      #domain = true;
-      #addresses = true;
-    #};
+  #publish = {
+  #enable = true;
+  #domain = true;
+  #addresses = true;
+  #};
   #};
 
   networking.firewall.interfaces = {
@@ -167,8 +167,8 @@ in rec {
   };
 
   #services.influxdb = {
-    #enable = true;
-    #package = pkgs.influxdb;
+  #enable = true;
+  #package = pkgs.influxdb;
   #};
 
   programs.zsh.enable = true;

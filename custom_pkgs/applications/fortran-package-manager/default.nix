@@ -37,9 +37,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $PREFIX
-
-    cp ${fpm-default-toml} ./fpm.toml
-    $BOOTSTRAP_DIR/fpm install --compiler "$FC" --flag "$FFLAGS" --prefix "$PREFIX"
+    cp $BOOTSTRAP_DIR/fpm $PREFIX
     rm -r $BOOTSTRAP_DIR
   '';
 }

@@ -1,6 +1,6 @@
-{ 
-  lib,
-  python3Packages,
+{ lib
+, python3Packages
+,
 }:
 python3Packages.buildPythonApplication rec {
   version = "1.12.0";

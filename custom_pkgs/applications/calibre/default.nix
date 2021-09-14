@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     # the unrar patch is not from debian
   ] ++ lib.optional (!unrarSupport) ./dont_build_unrar_plugin.patch;
 
-  escaped_pyqt5_dir = builtins.replaceStrings ["/"] ["\\/"] (toString python3Packages.pyqt5);
+  escaped_pyqt5_dir = builtins.replaceStrings [ "/" ] [ "\\/" ] (toString python3Packages.pyqt5);
   platform_tag =
     if stdenv.hostPlatform.isDarwin then
       "WS_MACX"

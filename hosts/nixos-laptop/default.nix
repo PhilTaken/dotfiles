@@ -1,20 +1,20 @@
-{
-  pkgs,
-  inputs,
-  username ? "nixos",
-  hostname ? "worklaptop",
-  timezone ? "Europe/Berlin",
-  enable_xorg ? false,
-  ...
+{ pkgs
+, inputs
+, username ? "nixos"
+, hostname ? "worklaptop"
+, timezone ? "Europe/Berlin"
+, enable_xorg ? false
+, ...
 }:
 let
-  hostmod = (import (../../users + "/${username}" ) { inherit pkgs username; }).hostDetails;
-  usermod = (import (../../users + "/${username}" ) { inherit pkgs username; }).userDetails;
-in rec {
+  hostmod = (import (../../users + "/${username}") { inherit pkgs username; }).hostDetails;
+  usermod = (import (../../users + "/${username}") { inherit pkgs username; }).userDetails;
+in
+rec {
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-        experimental-features = nix-command flakes
+      experimental-features = nix-command flakes
     '';
     autoOptimiseStore = true;
     trustedUsers = [ "root" "${username}" "@wheel" ];
@@ -118,9 +118,11 @@ in rec {
 
 
   environment.systemPackages = with pkgs; [
-    vim git git-crypt  # defaults
-    cryptsetup         # encrypted disks
-    cmst               # connman system tray
+    vim
+    git
+    git-crypt # defaults
+    cryptsetup # encrypted disks
+    cmst # connman system tray
     hwinfo
     glxinfo
     libva-utils

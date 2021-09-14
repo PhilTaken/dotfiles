@@ -1,11 +1,21 @@
 # TODO gramps -> tauon
-{ lib, fetchFromGitHub, gtk3, pythonPackages, intltool, gexiv2,
-  pango, gobject-introspection, wrapGAppsHook, gettext,
- }:
+{ lib
+, fetchFromGitHub
+, gtk3
+, pythonPackages
+, intltool
+, gexiv2
+, pango
+, gobject-introspection
+, wrapGAppsHook
+, gettext
+,
+}:
 
 let
   inherit (pythonPackages) python buildPythonApplication;
-in buildPythonApplication rec {
+in
+buildPythonApplication rec {
   version = "6.7.1";
   pname = "TauonMusicBox";
 

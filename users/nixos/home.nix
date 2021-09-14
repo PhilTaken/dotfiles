@@ -1,16 +1,17 @@
-{
-  pkgs,
-  username,
-  enable_xorg ? false,
-  ...
-}: let
+{ pkgs
+, username
+, enable_xorg ? false
+, ...
+}:
+let
   usermod = (import ./default.nix { inherit pkgs username; }).userDetails;
   home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
 
   # to avoid infinite recursion in home.username
   user_name = username;
-in rec {
+in
+rec {
   _module.args.username = username;
   _module.args.enable_xorg = enable_xorg;
   _module.args.background_image = usermod.background_image;
@@ -26,8 +27,9 @@ in rec {
     stateVersion = "21.03";
     sessionVariables = {
       EDITOR = "nvim";
-      PAGER = "${pkgs.page}/bin/page";
-      MANPAGER = "${pkgs.page}/bin/page -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'";
+
+      PAGER = "${pkgs.nvimpager}/bin/nvimpager";
+
       _FASD_DATA = "${xdg.dataHome}/fasd/fasd.data";
       _Z_DATA = "${xdg.dataHome}/fasd/z.data";
       CARGO_HOME = "${xdg.dataHome}/cargo";
@@ -39,7 +41,7 @@ in rec {
     } // (if ! enable_xorg then {
       XDG_CURRENT_DESKTOP = "sway";
       MOZ_ENABLE_WAYLAND = 1;
-    } else {});
+    } else { });
 
     packages = with pkgs; [
       cacert
@@ -84,17 +86,17 @@ in rec {
   };
 
   #systemd.user.services.snow-agent = {
-    #Unit = {
-      #Description = "Service for the snow agent software";
-      #After = "network.target";
-    #};
-    #Service = {
-      #Type = "simple";
-      #ExecStart = "${pkgs.snow-agent}/opt/snow/snowagent -log-dir /tmp -w /tmp test";
-      #KillMode = "process";
-    #};
+  #Unit = {
+  #Description = "Service for the snow agent software";
+  #After = "network.target";
+  #};
+  #Service = {
+  #Type = "simple";
+  #ExecStart = "${pkgs.snow-agent}/opt/snow/snowagent -log-dir /tmp -w /tmp test";
+  #KillMode = "process";
+  #};
 
-    #Install = { WantedBy = [ "multi-user.target"]; };
+  #Install = { WantedBy = [ "multi-user.target"]; };
   #};
 
   xdg.configFile."newsboat/config".source = ./config/newsboat/config;

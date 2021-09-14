@@ -1,7 +1,8 @@
 { stdenv
 , qt5
 , autoPatchelfHook
-, fetchzip}:
+, fetchzip
+}:
 
 stdenv.mkDerivation rec {
   pname = "goneovim";
@@ -18,7 +19,7 @@ stdenv.mkDerivation rec {
   dontBuild = true;
 
   installPhase = ''
-      mkdir -p $out/bin
-      mv goneovim $out/bin
+    mkdir -p $out/bin
+    mv goneovim $out/bin
   '';
 }

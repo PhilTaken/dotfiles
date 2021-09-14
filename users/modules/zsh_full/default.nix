@@ -1,10 +1,11 @@
-{
-  pkgs,
-  username,
-  ...
-}: let
+{ pkgs
+, username
+, ...
+}:
+let
   lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
-in rec {
+in
+rec {
   programs.password-store = {
     enable = true;
     package = pkgs.gopass;
@@ -67,22 +68,24 @@ in rec {
     };
   };
 
-  programs.zsh = let
-    magic_enter_prompt = ./magic_enter.zsh;
-  in {
-    enable = true;
-    enableAutosuggestions = true;
-    enableCompletion = true;
-    autocd = true;
-    defaultKeymap = "viins";
-    dotDir = ".config/zsh";
-    history = {
-      ignoreDups = true;
-      ignoreSpace = true;
-      share = true;
-      path = "$XDG_DATA_HOME/zsh/histfile";
-    };
-    initExtraBeforeCompInit = ''
+  programs.zsh =
+    let
+      magic_enter_prompt = ./magic_enter.zsh;
+    in
+    {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      autocd = true;
+      defaultKeymap = "viins";
+      dotDir = ".config/zsh";
+      history = {
+        ignoreDups = true;
+        ignoreSpace = true;
+        share = true;
+        path = "$XDG_DATA_HOME/zsh/histfile";
+      };
+      initExtraBeforeCompInit = ''
         setopt prompt_subst
         setopt prompt_sp
         setopt always_to_end
@@ -102,8 +105,8 @@ in rec {
         setopt pipefail
 
         unsetopt beep notify clobber
-    '';
-    initExtra = ''
+      '';
+      initExtra = ''
         autoload -Uz zmv
         autoload -Uz zed
 
@@ -138,64 +141,73 @@ in rec {
         flakify() {
           if [ ! -e flake.nix ]; then
             nix flake new -t github:nix-community/nix-direnv .
-          elif [ ! -e .envrc ]; then
+          fi
+          if [ ! -e .envrc ]; then
             echo "use flake" > .envrc
             direnv allow
           fi
-          ${EDITOR:-vim} flake.nix
+          ''${EDITOR:-vim} flake.nix
         }
-    '';
-    shellGlobalAliases = {
-      "%notif" = "&& notify-send 'done' || notify-send 'error'";
+
+        if [ -n "$TMUX" ]; then
+          eval "$(tmux show-environment -s NVIM_LISTEN_ADDRESS)"
+        else
+          export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+        fi
+      '';
+      shellGlobalAliases = {
+        "%notif" = "&& notify-send 'done' || notify-send 'error'";
+      };
+      shellAliases = {
+        sudo = "sudo ";
+        gre = "rg";
+        df = "df -h";
+        free = "free -h";
+        exal = "command exa -liaahmF --git --group-directories-first";
+        exa = "command exa -Fx --group-directories-first";
+        ll = "exal";
+        cat = "bat";
+        ntop = "sudo ntop -u nobody";
+        open = "xdg-open";
+        pass = "gopass";
+        yta = "youtube-dl -x --audio-format flac";
+        vo = "f -fe zathura";
+        sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
+        top = "btm";
+        lock = "swaylock -i ${lock_bg}";
+        du = "dust";
+
+        # c/c++ dev
+        bear = "nix-shell -p bear --run bear";
+
+        # git
+        ga = "git add";
+        gc = "git commit";
+        gd = "git diff";
+        gr = "git reset";
+        grv = "git remote -v";
+        gl = "git pull";
+        gp = "git push";
+        glog = "git log";
+        gco = "git checkout";
+        gcm = "git checkout main";
+        flkup = "nix flake update --commit-lock-file";
+      };
     };
-    shellAliases = {
-      sudo = "sudo ";
-      gre = "rg";
-      df = "df -h";
-      free = "free -h";
-      exal = "command exa -liaahmF --git --group-directories-first";
-      exa = "command exa -Fx --group-directories-first";
-      ll = "exal";
-      cat = "bat";
-      ntop = "sudo ntop -u nobody";
-      open = "xdg-open";
-      pass = "gopass";
-      yta = "youtube-dl -x --audio-format flac";
-      vo = "f -fe zathura";
-      sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
-      top = "btm";
-      lock = "swaylock -i ${lock_bg}";
-      du = "dust";
 
-      # c/c++ dev
-      bear = "nix-shell -p bear --run bear";
-
-      # git
-      ga = "git add";
-      gc = "git commit";
-      gd = "git diff";
-      gr = "git reset";
-      grv = "git remote -v";
-      gl = "git pull";
-      gp = "git push";
-      glog = "git log";
-      gco = "git checkout";
-      gcm = "git checkout main";
-      flkup = "nix flake update --commit-lock-file";
-    };
-  };
-
-  programs.tmux = let
-    airline_conf = ./tmux_airline.conf;
-  in {
-    enable = true;
-    baseIndex = 1;
-    escapeTime = 1;
-    keyMode = "vi";
-    secureSocket = true;
-    shortcut = "a";
-    terminal = "screen-256color";
-    extraConfig = ''
+  programs.tmux =
+    let
+      airline_conf = ./tmux_airline.conf;
+    in
+    {
+      enable = true;
+      baseIndex = 1;
+      escapeTime = 1;
+      keyMode = "vi";
+      secureSocket = true;
+      shortcut = "a";
+      terminal = "screen-256color";
+      extraConfig = ''
         source ${airline_conf}
 
         set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
@@ -234,8 +246,22 @@ in rec {
         bind -r N resize-pane -D 5
         bind -r E resize-pane -U 5
         bind -r O resize-pane -R 5
-    '';
-  };
+      '';
+      plugins = with pkgs.tmuxPlugins; [
+        sessionist
+
+        (mkTmuxPlugin rec {
+          pluginName = "nvr";
+          version = "unstable-2021-07-07";
+          src = pkgs.fetchFromGitHub {
+            owner = "carlocab";
+            repo = "tmux-nvr";
+            rev = "96a6dae2733cf651ac954306b03263b60d05f26e";
+            sha256 = "sha256-lkZZ9xV7m/iTpQpv/YewltyZ+97P2UeSysNdGcCgpAw=";
+          };
+        })
+      ];
+    };
 
   xdg.configFile."page/init.vim".source = ./page/init.vim;
   #xdg.configFile."direnv/direnvrc".source = ./direnvrc;

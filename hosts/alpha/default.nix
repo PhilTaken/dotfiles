@@ -2,10 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }: let
+{ pkgs, ... }:
+let
   lib = pkgs.lib;
   ip4_eth0 = "148.251.102.93";
-in rec {
+in
+rec {
   imports = [ ./hardware-configuration.nix ];
   nix.trustedUsers = [ "@wheel" "nixos" ];
 
@@ -29,7 +31,7 @@ in rec {
     defaultGateway = "";
     nameservers = [ "1.1.1.1" ];
     localCommands =
-    ''
+      ''
 
       ip route add "148.251.69.141" dev "eth0"
       ip route add default via "148.251.69.141" dev "eth0"
@@ -76,26 +78,26 @@ in rec {
   };
 
   #services.avahi = {
-    #enable = true;
-    #interfaces = [
-      #"valhalla"
-    #];
+  #enable = true;
+  #interfaces = [
+  #"valhalla"
+  #];
 
-    #nssmdns = true;
-    #domainName = "pherzog.xyz";
+  #nssmdns = true;
+  #domainName = "pherzog.xyz";
 
-    #allowPointToPoint = true;
+  #allowPointToPoint = true;
 
-    #publish = {
-      #enable = true;
-      #domain = true;
-      #addresses = true;
-      #userServices = true;
-    #};
+  #publish = {
+  #enable = true;
+  #domain = true;
+  #addresses = true;
+  #userServices = true;
+  #};
 
-    #extraServiceFiles = {
-      #ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
-    #};
+  #extraServiceFiles = {
+  #ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
+  #};
   #};
 
   # local dns + secure dns
@@ -174,10 +176,10 @@ in rec {
   # TODO replace with influxdb2
   # TODO get this to work again
   #services.postgresql = {
-    #extraPlugins = [ pkgs.timescaledb ];
-    #settings = {
-      #shared_preload_libraries = "timescaledb";
-    #};
+  #extraPlugins = [ pkgs.timescaledb ];
+  #settings = {
+  #shared_preload_libraries = "timescaledb";
+  #};
   #};
 
   # TODO online markdown editor
@@ -186,27 +188,29 @@ in rec {
   };
 
   # TODO reverse proxy for all services
-  services.nginx = let
-    adguard = services.adguardhome;
-    tt-rss = services.tt-rss;
-  in {
-    enable = true;
-    #recommendedProxySettings = true;
-    #recommendedTlsSettings = true;
-    # other Nginx options
-    virtualHosts."rss.pherzog.xyz" = {
-      # supplied by tt-rss config
-      # just a stub
-      #enableACME = true;
-      #forceSSL = true;
-    };
+  services.nginx =
+    let
+      adguard = services.adguardhome;
+      tt-rss = services.tt-rss;
+    in
+    {
+      enable = true;
+      #recommendedProxySettings = true;
+      #recommendedTlsSettings = true;
+      # other Nginx options
+      virtualHosts."rss.pherzog.xyz" = {
+        # supplied by tt-rss config
+        # just a stub
+        #enableACME = true;
+        #forceSSL = true;
+      };
 
-    virtualHosts."adguard.pherzog.xyz" =  lib.mkIf adguard.enable {
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:31111/";
+      virtualHosts."adguard.pherzog.xyz" = lib.mkIf adguard.enable {
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:31111/";
+        };
       };
     };
-  };
 
   # TODO for small file hosting + floccus bookmark + browsersync
   services.nextcloud = {
@@ -243,32 +247,32 @@ in rec {
 
     "tailscale0" = {
       allowedTCPPorts = [
-        53    # dns (adguard home)
-        80    # tt-rss webinterface
-        443   # tt-rss ssl
+        53 # dns (adguard home)
+        80 # tt-rss webinterface
+        443 # tt-rss ssl
         51820
         31111 # adguard home webinterface
       ];
 
       allowedUDPPorts = [
-        53    # dns (adguard home)
+        53 # dns (adguard home)
         51820
       ];
     };
 
     #"valhalla" = {
-      #allowedUDPPorts = [
-        #5353
-        #51820
-      #];
+    #allowedUDPPorts = [
+    #5353
+    #51820
+    #];
 
-      #allowedTCPPorts = [
-        #53    # dns (adguard home)
-        #80    # tt-rss webinterface
-        #443   # tt-rss ssl
-        #51820
-        #31111 # adguard home webinterface
-      #];
+    #allowedTCPPorts = [
+    #53    # dns (adguard home)
+    #80    # tt-rss webinterface
+    #443   # tt-rss ssl
+    #51820
+    #31111 # adguard home webinterface
+    #];
     #};
   };
 

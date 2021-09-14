@@ -47,7 +47,7 @@
     #notmuch.enable = true;
     #afew.enable = true;
     #neomutt = {
-      #enable = true;
+    #enable = true;
     #};
   };
 }

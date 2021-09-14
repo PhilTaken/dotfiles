@@ -10,4 +10,5 @@ let
       ];
     });
   };
-in nvim_overlay
+in
+nvim_overlay

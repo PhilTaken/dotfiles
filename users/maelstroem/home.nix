@@ -1,16 +1,17 @@
-{
-  pkgs,
-  username,
-  enable_xorg ? false,
-  ...
-}: let
+{ pkgs
+, username
+, enable_xorg ? false
+, ...
+}:
+let
   usermod = (import ./default.nix { inherit pkgs username; }).userDetails;
   home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
 
   # to avoid infinite recursion in home.username
   user_name = username;
-in rec {
+in
+rec {
   # extra arguments for imports
   _module.args.username = username;
   _module.args.enable_xorg = enable_xorg;
@@ -40,7 +41,7 @@ in rec {
     } // (if ! enable_xorg then {
       XDG_CURRENT_DESKTOP = "sway";
       MOZ_ENABLE_WAYLAND = 1;
-    } else {});
+    } else { });
 
     packages = with pkgs; [
       cacert
@@ -97,7 +98,7 @@ in rec {
     };
 
     Install = {
-      WantedBy = [ "graphical-session.target"];
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 
