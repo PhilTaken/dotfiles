@@ -107,22 +107,6 @@
         "type": "github"
       }
     },
-    "neovim-nightly-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1631619101,
-        "narHash": "sha256-vgXjllDuSdY77CQJ49FZcJVLsvvpkkS5OXsHVNvdHeg=",
-        "owner": "neovim",
-        "repo": "neovim",
-        "rev": "516775e9d84c5eda9c1d014ff052132737361d90",
-        "type": "github"
-      },
-      "original": {
-        "owner": "neovim",
-        "repo": "neovim",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1622972307,
@@ -189,7 +173,6 @@
         "devshell": "devshell",
         "home-manager": "home-manager",
         "localDev": "localDev",
-        "neovim-nightly-src": "neovim-nightly-src",
         "nixpkgs": "nixpkgs_3",
         "nur": "nur"
       }
