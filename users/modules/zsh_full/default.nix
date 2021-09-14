@@ -138,11 +138,12 @@ in rec {
         flakify() {
           if [ ! -e flake.nix ]; then
             nix flake new -t github:nix-community/nix-direnv .
-          elif [ ! -e .envrc ]; then
+          fi
+          if [ ! -e .envrc ]; then
             echo "use flake" > .envrc
             direnv allow
           fi
-          ${EDITOR:-vim} flake.nix
+          ''${EDITOR:-vim} flake.nix
         }
 
         if [ -n "$TMUX" ]; then
@@ -171,7 +172,7 @@ in rec {
       sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
       top = "btm";
       lock = "swaylock -i ${lock_bg}";
-      du="dust";
+      du = "dust";
 
       # c/c++ dev
       bear = "nix-shell -p bear --run bear";
@@ -288,6 +289,4 @@ in rec {
 
     neovim-remote
   ];
-
-
 }
