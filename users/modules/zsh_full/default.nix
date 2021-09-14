@@ -171,17 +171,17 @@ in rec {
       bear = "nix-shell -p bear --run bear";
 
       # git
-      ga="git add";
-      gc="git commit";
-      gd="git diff";
-      gr="git reset";
-      grv="git remote -v";
-      gl="git pull";
-      gp="git push";
-      glog="git log";
-      gco="git checkout";
-      gcm="git checkout main";
-      flkup="nix flake update --commit-lock-file";
+      ga = "git add";
+      gc = "git commit";
+      gd = "git diff";
+      gr = "git reset";
+      grv = "git remote -v";
+      gl = "git pull";
+      gp = "git push";
+      glog = "git log";
+      gco = "git checkout";
+      gcm = "git checkout main";
+      flkup = "nix flake update --commit-lock-file";
     };
   };
 
