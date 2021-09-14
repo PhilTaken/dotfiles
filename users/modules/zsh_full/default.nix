@@ -177,9 +177,6 @@ in rec {
       # c/c++ dev
       bear = "nix-shell -p bear --run bear";
 
-      # wget
-      #wget = "nix-shell -p wget --run wget";
-
       # git
       ga="git add";
       gc="git commit";
@@ -267,26 +264,36 @@ in rec {
   #xdg.configFile."zk/templates/daily.md".source = ./zk/templates/daily.md;
 
   home.packages = with pkgs; [
-    page
     bandwhich
     bottom
+    cmake
+    dig
     du-dust
     exa
     fasd
     fd
     file
     fortune
+    gping
+    hexyl
+    hyperfine
+    jq
     lolcat
     lshw
+    magic-wormhole
+    ncat
     neofetch
+    page
     procs
     ripgrep
     ripgrep-all
     rsync
     sd
     sshfs
+    tokei
+    tree
     unzip
-
-    neovim-remote
+    usbutils
+    wget
   ];
 }
