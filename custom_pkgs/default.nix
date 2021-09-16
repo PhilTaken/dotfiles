@@ -7,6 +7,5 @@ final: prev: {
   fortran-fpm = prev.callPackage ./applications/fortran-fpm { };
   zk = prev.callPackage ./applications/zk { };
 
-  tauon = prev.callPackage ./applications/tauon { };
   fortran-package-manager = prev.callPackage ./applications/fortran-package-manager { };
 }
