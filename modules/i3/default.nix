@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  lock_bg = ../.. + "/${username}/wallpaper/lock.jpg";
+  lock_bg = ../../users + "/${username}/wallpaper/lock.jpg";
   sway_bg = background_image;
 in
 rec {

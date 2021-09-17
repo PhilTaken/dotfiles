@@ -34,7 +34,6 @@
       zoom-us
 
       cachix
-      hydroxide
       texlive.combined.scheme-medium
       vpnc
 

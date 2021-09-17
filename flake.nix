@@ -6,7 +6,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # NUR
-    nur.url = "github:nix-community/NUR";
+    nur-src = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # local user package managment
     home-manager = {
@@ -18,7 +21,10 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     # devshell for some nice menu + easy command adding capabilities
-    devshell.url = "github:numtide/devshell";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # my fork of nixpkgs
     #localDev.url = "/platte/Documents/gits/nixpkgs/";
@@ -29,7 +35,7 @@
     , nixpkgs
     , home-manager
     , deploy-rs
-    , nur
+    , nur-src
     , localDev
     , devshell
     , ...
@@ -40,10 +46,10 @@
       system = "x86_64-linux";
 
       overlays = [
-        nur.overlay
-        #(import ./custom_pkgs)
-        #(import ./overlays/gopass-rofi.nix { inherit inputs; })
-        #(import ./overlays/rofi-overlay.nix { inherit inputs; })
+        nur-src.overlay
+        (import ./custom_pkgs)
+        (import ./overlays/gopass-rofi.nix { inherit inputs; })
+        (import ./overlays/rofi-overlay.nix { inherit inputs; })
         devshell.overlay
       ];
 

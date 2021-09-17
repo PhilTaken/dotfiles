@@ -28,7 +28,6 @@
       newsboat
       #calibre
       thunderbird
-      hydroxide
 
       #pulseeffects-pw
 

@@ -4,7 +4,10 @@
 , ...
 }:
 let
-  usermod = (import ./default.nix { inherit pkgs username; }).userDetails;
+  usermod = (import ./default.nix {
+    inherit pkgs username;
+  }).userDetails;
+
   home_directory = "/home/${username}";
   lib = pkgs.stdenv.lib;
 
@@ -12,6 +15,7 @@ let
   user_name = username;
 in
 rec {
+  _module.args.pkgs = pkgs;
   _module.args.username = username;
   _module.args.enable_xorg = enable_xorg;
   _module.args.background_image = usermod.background_image;
