@@ -43,16 +43,16 @@
     ];
 
     imports = [
-      ../modules/mail
+      ../../modules/mail
 
-      ../modules/git
-      ../modules/neovim
-      ../modules/ssh
-      ../modules/firefox
+      ../../modules/git
+      ../../modules/neovim
+      ../../modules/ssh
+      ../../modules/firefox
 
-      ../modules/zsh_full
+      ../../modules/zsh_full
 
-      ../modules/music
+      ../../modules/music
     ];
   };
 

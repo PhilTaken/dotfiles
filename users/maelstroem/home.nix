@@ -18,9 +18,9 @@ rec {
   _module.args.background_image = usermod.background_image;
 
   imports = usermod.imports ++ (if enable_xorg then [
-    ../modules/kde
+    ../../modules/kde
   ] else [
-    ../modules/sway
+    ../../modules/sway
   ]);
   home = rec {
     username = "${user_name}";
