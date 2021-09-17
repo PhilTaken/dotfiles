@@ -16,5 +16,6 @@
     vlc
     pavucontrol
     mpv
+    #tauon
   ];
 }
