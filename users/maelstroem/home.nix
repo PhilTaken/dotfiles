@@ -13,14 +13,15 @@ let
 in
 rec {
   # extra arguments for imports
+  _module.args.pkgs = pkgs;
   _module.args.username = username;
   _module.args.enable_xorg = enable_xorg;
   _module.args.background_image = usermod.background_image;
 
   imports = usermod.imports ++ (if enable_xorg then [
-    ../modules/kde
+    ../../modules/kde
   ] else [
-    ../modules/sway
+    ../../modules/sway
   ]);
   home = rec {
     username = "${user_name}";
@@ -83,23 +84,6 @@ rec {
     configHome = "${home_directory}/.config";
     dataHome = "${home_directory}/.local/share";
     cacheHome = "${home_directory}/.cache";
-  };
-
-  systemd.user.services.hydroxide = {
-    Unit = {
-      Description = "Unit for the hydroxide protonmail bridge";
-      After = "graphical-session-pre.target";
-      PartOf = "graphical-session.target";
-    };
-
-    Service = {
-      ExecStart = "${pkgs.hydroxide}/bin/hydroxide serve";
-      Restart = "on-abort";
-    };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
   };
 
   xdg.configFile."newsboat/config".source = ./config/newsboat/config;

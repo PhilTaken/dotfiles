@@ -5,83 +5,65 @@
     # unstable > stable
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    # my fork of nixpkgs
-    #localDev.url = "/platte/Documents/gits/nixpkgs/";
-    localDev.url = "github:PhilTaken/nixpkgs/innernet-module";
+    # NUR
+    nur-src = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # local user package managment
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # deploy remote setups
     deploy-rs.url = "github:serokell/deploy-rs";
 
     # devshell for some nice menu + easy command adding capabilities
-    devshell.url = "github:numtide/devshell";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # my fork of nixpkgs
+    #localDev.url = "/platte/Documents/gits/nixpkgs/";
+    localDev.url = "github:PhilTaken/nixpkgs/innernet-module";
   };
   outputs =
     { self
     , nixpkgs
     , home-manager
     , deploy-rs
-    , nur
+    , nur-src
     , localDev
     , devshell
     , ...
     }@inputs:
     let
+      inherit (nixpkgs) lib;
+
       system = "x86_64-linux";
+
       overlays = [
-        (import ./overlays/rofi-overlay.nix { inherit inputs; })
-        (import ./overlays/gopass-rofi.nix { inherit inputs; })
+        nur-src.overlay
         (import ./custom_pkgs)
-        nur.overlay
+        (import ./overlays/gopass-rofi.nix { inherit inputs; })
+        (import ./overlays/rofi-overlay.nix { inherit inputs; })
         devshell.overlay
       ];
 
       pkgs = import nixpkgs {
         inherit system overlays;
         config.allowUnfree = true;
-        config.permittedInsecurePackages = [
-          "libgit2-0.27.10"
-        ];
       };
 
-      # every setup is a system + a user
-      # the system is mainly used for hardware config, the user for software-specific setups
-      # mkRemoteSetup is just a wrapper around nixosSystem that auto-imports host-specific
-      # configuration based on the hosts name
-      mkRemoteSetup = { host, username ? "nixos", enable_xorg ? false, extramods ? [ ] }:
-        let
-          # import host-specific config
-          hostmod = import (./hosts + "/${host}") {
-            inherit inputs pkgs username enable_xorg;
-          };
-        in
-        # and pass it all to the og nixosSystem builder
-        nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
-          modules = [ hostmod ] ++ extramods;
-        };
+      util = import ./lib {
+        inherit system pkgs home-manager lib overlays;
+      };
 
-      # mkLocalSetup is just another wrapper around mkRemoteSetup. This method provides
-      # any host / user combination with home-manager and a user-specific setup
-      mkLocalSetup = { host, username ? "nixos", enable_xorg ? false, extramods ? [ ] }:
-        let
-          usermods = [
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users."${username}" = import (./users + "/${username}/home.nix") {
-                inherit pkgs username enable_xorg;
-              };
-            }
-          ] ++ extramods;
-        in
-        mkRemoteSetup {
-          inherit host username enable_xorg;
-          extramods = usermods;
-        };
+      inherit (util) user;
+      inherit (util) host;
     in
     {
       devShell."${system}" = pkgs.devshell.mkShell {
@@ -136,48 +118,54 @@
         ];
       };
 
-      # workplace-issued thinkpad
-      nixosConfigurations.nixos-laptop = mkLocalSetup {
-        host = "nixos-laptop";
-        username = "nixos";
-        extramods = [
-          #nixos-hardware.nixosModules.lenovo-thinkpad-t490
-        ];
+      homeManagerConfigurations = {
+        maelstroem = user.mkUser { };
+        nixos = user.mkUser { };
       };
 
-      # desktop @ home
-      nixosConfigurations.gamma = mkLocalSetup {
-        host = "gamma";
-        username = "maelstroem";
-        enable_xorg = true;
-        extramods = [
-          (import "${localDev}/nixos/modules/services/networking/innernet.nix")
-        ];
+      nixosConfigurations = {
+        # workplace-issued thinkpad
+        nixos-laptop = host.mkHostWithUser {
+          host = "nixos-laptop";
+          username = "nixos";
+          extramods = [
+            #nixos-hardware.nixosModules.lenovo-thinkpad-t490
+          ];
+        };
+
+        # desktop @ home
+        gamma = host.mkHostWithUser {
+          host = "gamma";
+          username = "maelstroem";
+          enable_xorg = true;
+          extramods = [
+            (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+          ];
+        };
+
+        # desktop @ home (older)
+        gamma_old = host.mkHostWithUser {
+          host = "gamma_old";
+          username = "maelstroem";
+          enable_xorg = true;
+          extramods = [
+            (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+          ];
+        };
+
+        # vm on a hetzner server, debian host
+        alpha = host.mkHostWithUser {
+          host = "alpha";
+          extramods = [
+            (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+          ];
+        };
+
+        # for the (planned) raspberry pi
+        #beta = host.mkHost {
+        #  host = "beta";
+        #};
       };
-
-      # desktop @ home (older)
-      nixosConfigurations.gamma_old = mkLocalSetup {
-        host = "gamma_old";
-        username = "maelstroem";
-        enable_xorg = true;
-        extramods = [
-          (import "${localDev}/nixos/modules/services/networking/innernet.nix")
-        ];
-      };
-
-
-      # vm on a hetzner server, debian host
-      nixosConfigurations.alpha = mkRemoteSetup {
-        host = "alpha";
-        extramods = [
-          (import "${localDev}/nixos/modules/services/networking/innernet.nix")
-        ];
-      };
-
-      # for the (planned) raspberry pi
-      #nixosConfigurations.beta = mkRemoteSetup {
-      #  host = "beta";
-      #};
 
       # deploy config
       deploy.nodes = {

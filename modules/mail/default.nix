@@ -50,4 +50,21 @@
     #enable = true;
     #};
   };
+
+  systemd.user.services.hydroxide = {
+    Unit = {
+      Description = "Unit for the hydroxide protonmail bridge";
+      After = "graphical-session-pre.target";
+      PartOf = "graphical-session.target";
+    };
+
+    Service = {
+      ExecStart = "${pkgs.hydroxide}/bin/hydroxide serve";
+      Restart = "on-abort";
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
 }
