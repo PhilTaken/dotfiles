@@ -30,7 +30,7 @@
       signal-desktop
       tdesktop
       thunderbird
-      vscodium
+      #vscodium
       zoom-us
 
       cachix
@@ -40,6 +40,8 @@
 
       multimc
       openttd
+
+      keepassxc
     ];
 
     imports = [
