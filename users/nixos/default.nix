@@ -45,6 +45,10 @@
       obsidian
 
       fortran-package-manager
+
+      keepassxc
+
+      zoom-us
     ];
 
     imports = [

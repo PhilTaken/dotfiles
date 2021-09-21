@@ -1,6 +1,4 @@
 { pkgs
-, username
-, background_image
 , ...
 }:
 {
@@ -35,12 +33,13 @@
 
 
   home.packages = with pkgs; [
-    plasma-browser-integration
     flameshot
-    rofi-pass
-    rofi
-    xclip
-    libnotify
     latte-dock
+    libnotify
+    oxygen_gtk
+    plasma-browser-integration
+    rofi
+    rofi-pass
+    xclip
   ];
 }

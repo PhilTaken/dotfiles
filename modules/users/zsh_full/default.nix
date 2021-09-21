@@ -160,37 +160,38 @@ rec {
       };
       shellAliases = {
         sudo = "sudo ";
-        gre = "rg";
+        gre = "${pkgs.ripgrep}/bin/rg";
         df = "df -h";
-        free = "free -h";
-        exal = "command exa -liaahmF --git --group-directories-first";
-        exa = "command exa -Fx --group-directories-first";
+        free = "${pkgs.procps}/bin/free -h";
+        exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
+        exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
         ll = "exal";
-        cat = "bat";
+        cat = "${pkgs.bat}/bin/bat";
         ntop = "sudo ntop -u nobody";
-        open = "xdg-open";
-        pass = "gopass";
-        yta = "youtube-dl -x --audio-format flac";
-        vo = "f -fe zathura";
+        # TBD
+        #open = "xdg-open";
+        #pass = "gopass";
+
         sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
-        top = "btm";
-        lock = "swaylock -i ${lock_bg}";
-        du = "dust";
+        top = "${pkgs.bottom}/bin/btm";
+        lock = "${pkgs.swaylock}/bin/swaylock -i ${lock_bg}";
+        du = "${pkgs.du-dust}/bin/dust";
+        dmesg = "dmesg -H";
 
         # c/c++ dev
-        bear = "nix-shell -p bear --run bear";
+        bear = "${pkgs.bear}/bin/bear";
 
         # git
-        ga = "git add";
-        gc = "git commit";
-        gd = "git diff";
-        gr = "git reset";
-        grv = "git remote -v";
-        gl = "git pull";
-        gp = "git push";
-        glog = "git log";
-        gco = "git checkout";
-        gcm = "git checkout main";
+        ga = "${pkgs.git}/bin/git add";
+        gc = "${pkgs.git}/bin/git commit";
+        gd = "${pkgs.git}/bin/git diff";
+        gr = "${pkgs.git}/bin/git reset";
+        grv = "${pkgs.git}/bin/git remote -v";
+        gl = "${pkgs.git}/bin/git pull";
+        gp = "${pkgs.git}/bin/git push";
+        glog = "${pkgs.git}/bin/git log";
+        gco = "${pkgs.git}/bin/git checkout";
+        gcm = "${pkgs.git}/bin/git checkout main";
         flkup = "nix flake update --commit-lock-file";
       };
     };
@@ -263,18 +264,15 @@ rec {
       ];
     };
 
-  xdg.configFile."page/init.vim".source = ./page/init.vim;
+  #xdg.configFile."page/init.vim".source = ./page/init.vim;
   #xdg.configFile."direnv/direnvrc".source = ./direnvrc;
   #xdg.configFile."zk/config.toml".source = ./zk/config.toml;
   #xdg.configFile."zk/templates/daily.md".source = ./zk/templates/daily.md;
 
   home.packages = with pkgs; [
     bandwhich
-    bottom
     cmake
     dig
-    du-dust
-    exa
     fasd
     fd
     file
@@ -288,10 +286,7 @@ rec {
     magic-wormhole
     ncat
     neofetch
-    page
     procs
-    ripgrep
-    ripgrep-all
     rsync
     sd
     sshfs
@@ -300,5 +295,6 @@ rec {
     unzip
     usbutils
     wget
+    yt-dlp
   ];
 }
