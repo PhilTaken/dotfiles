@@ -27,7 +27,7 @@ rec {
       #sys_users = (map (u: user.mkSystemUser u) users);
     in
     lib.nixosSystem {
-      inherit system;
+      inherit system pkgs;
 
       modules = [
         hostmod
