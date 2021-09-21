@@ -29,8 +29,9 @@ rec {
     stateVersion = "21.03";
     sessionVariables = {
       EDITOR = "nvim";
-      PAGER = "${pkgs.page}/bin/page";
-      MANPAGER = "${pkgs.page}/bin/page -C -e 'au User PageDisconnect sleep 100m|%y p|enew! |bd! #|pu p|set ft=man'";
+
+      PAGER = "${pkgs.nvimpager}/bin/nvimpager";
+
       _FASD_DATA = "${xdg.dataHome}/fasd/fasd.data";
       _Z_DATA = "${xdg.dataHome}/fasd/z.data";
       CARGO_HOME = "${xdg.dataHome}/cargo";
