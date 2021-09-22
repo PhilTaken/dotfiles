@@ -6,26 +6,24 @@
       "jureca" = {
         hostname = "jureca.fz-juelich.de";
         user = "herzog1";
-        forwardAgent = true;
+        #forwardAgent = true;
         #forwardX11 = true;
       };
       "judac" = {
         hostname = "judac.fz-juelich.de";
         user = "herzog1";
-        forwardAgent = true;
+        #forwardAgent = true;
         #forwardX11 = true;
       };
       "work-pc" = {
         hostname = "iek8680.iek.kfa-juelich.de";
         user = "p.herzog";
         forwardAgent = true;
-        forwardX11 = true;
       };
       "vulkan" = {
         hostname = "iek8691.iek.kfa-juelich.de";
         user = "p.herzog";
         forwardX11 = true;
-        forwardAgent = true;
       };
       "mcserver" = {
         hostname = "192.168.192.42";
@@ -47,17 +45,14 @@
       "alpha-root" = {
         hostname = "148.251.102.93";
         user = "root";
-        forwardAgent = true;
       };
       "zpi" = {
-        hostname = "134.94.149.163";
+        hostname = "100.70.108.122";
         user = "ubuntu";
-        forwardAgent = true;
       };
       "zpi2" = {
         hostname = "134.94.149.164";
         user = "ubuntu";
-        forwardAgent = true;
       };
     };
   };
