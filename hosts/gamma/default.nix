@@ -52,9 +52,9 @@ rec {
   networking.firewall.allowedTCPPorts = kde_ports ++ [ 8888 ];
   networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
 
-  networking.wg-quick.interfaces = {
-    mullvad = import ../vpn/mullvad.nix;
-  };
+  # networking.wg-quick.interfaces = {
+  #   mullvad = import ../vpn/mullvad.nix;
+  # };
 
   # Set your time zone.
   time.timeZone = "${timezone}";
