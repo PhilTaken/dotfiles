@@ -1,8 +1,13 @@
-{ pkgs, config, lib, ... }:
+{ pkgs
+, config
+, lib
+, ...
+}:
 with lib;
 
 let cfg = config.phil.git;
-in {
+in
+{
   options.phil.git = {
     enable = mkOption {
       description = "Enable git";
@@ -12,7 +17,7 @@ in {
 
     userName = mkOption {
       description = "Git username";
-      type= types.str;
+      type = types.str;
       default = "Philipp Herzog";
     };
 
@@ -42,28 +47,30 @@ in {
         signByDefault = true;
       };
 
-      aliases = let
-        git = "${pkgs.git}/bin/git";
-        sort = "${pkgs.coreutils}/bin/sort";
-        uniq = "${pkgs.coreutils}/bin/uniq";
-      in {
-        tree = "log --graph --pretty=format:'%Cred%h%Creset"
-          + " —%Cblue%d%Creset %s %Cgreen(%cr)%Creset'"
-          + " --abbrev-commit --date=relative --show-notes=*";
-        co = "checkout";
-        authors = "!${git} log --pretty=format:%aN | ${sort} | ${uniq} -c | ${sort} -rn";
-        b = "branch --color -v";
-        ca = "commit --amend";
-        changes = "diff --name-status -r";
-        clone = "clone --recursive";
-        ctags = "!.git/hooks/ctags";
-        root = "!pwd";
-        spull = "!${git} stash && ${git} pull && ${git} stash pop";
-        su = "submodule update --init --recursive";
-        undo = "reset --soft HEAD^";
-        w = "status -sb";
-        wdiff = "diff --color-words";
-      };
+      aliases =
+        let
+          git = "${pkgs.git}/bin/git";
+          sort = "${pkgs.coreutils}/bin/sort";
+          uniq = "${pkgs.coreutils}/bin/uniq";
+        in
+        {
+          tree = "log --graph --pretty=format:'%Cred%h%Creset"
+            + " —%Cblue%d%Creset %s %Cgreen(%cr)%Creset'"
+            + " --abbrev-commit --date=relative --show-notes=*";
+          co = "checkout";
+          authors = "!${git} log --pretty=format:%aN | ${sort} | ${uniq} -c | ${sort} -rn";
+          b = "branch --color -v";
+          ca = "commit --amend";
+          changes = "diff --name-status -r";
+          clone = "clone --recursive";
+          ctags = "!.git/hooks/ctags";
+          root = "!pwd";
+          spull = "!${git} stash && ${git} pull && ${git} stash pop";
+          su = "submodule update --init --recursive";
+          undo = "reset --soft HEAD^";
+          w = "status -sb";
+          wdiff = "diff --color-words";
+        };
       extraConfig = {
         pull.rebase = true;
         commit.gpgsign = (cfg.signKey != null);

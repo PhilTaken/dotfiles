@@ -1,63 +1,83 @@
 { pkgs
-, username
-, enable_xorg
+, config
+, lib
 , ...
-}: {
-  programs.firefox = {
-    enable = true;
-    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-      forceWayland = !enable_xorg;
-      extraPolicies = {
-        ExtensionSettings = { };
-      };
+}:
+with lib;
+
+let cfg = config.phil.firefox;
+in
+{
+  options.phil.firefox = {
+    enable = mkOption {
+      description = "Enable firefox";
+      type = types.bool;
+      default = false;
     };
 
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      betterttv
-      bitwarden
-      canvasblocker
-      clearurls
-      cookie-autodelete
-      floccus
-      https-everywhere
-      i-dont-care-about-cookies
-      matte-black-red
-      netflix-1080p
-      no-pdf-download
-      privacy-badger
-      reddit-enhancement-suite
-      stylus
-      terms-of-service-didnt-read
-      ublock-origin
-      unpaywall
-      zoom-redirector
-      privacy-redirect
-    ];
+    wayland = mkOption {
+      description = "Force wayland";
+      type = types.bool;
+      default = true;
+    };
+  };
 
-    profiles = {
-      home = {
-        id = 0;
-        settings = {
-          "accessibility.typeaheadfind.flashBar" = 0;
+  config = (mkIf cfg.enable) {
+    programs.firefox = {
+      enable = true;
+      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+        forceWayland = cfg.wayland;
+        extraPolicies = {
+          ExtensionSettings = { };
+        };
+      };
 
-          "app.update.auto" = false;
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        betterttv
+        bitwarden
+        canvasblocker
+        clearurls
+        cookie-autodelete
+        floccus
+        i-dont-care-about-cookies
+        matte-black-red
+        netflix-1080p
+        no-pdf-download
+        privacy-badger
+        reddit-enhancement-suite
+        stylus
+        terms-of-service-didnt-read
+        ublock-origin
+        unpaywall
+        zoom-redirector
+        privacy-redirect
+      ];
 
-          "browser.contentblocking.category" = "strict";
-          "browser.discovery.enabled" = false;
-          "browser.shell.checkDefaultBrowser" = false;
-          "browser.startup.homepage" = "https://now.hackertab.dev/"; # TODO add as extension
-          "browser.url.placeHolderName" = "DuckDuckGo";
+      profiles = {
+        home = {
+          id = 0;
+          settings = {
+            "accessibility.typeaheadfind.flashBar" = 0;
 
-          "network.cookieBehaviour" = 5;
-          "network.cookie.lifetimePolicy" = 2;
-          "network.dns.disablePrefetch" = true;
-          "network.predictor.enabled" = false;
-          "network.prefetch-next" = false;
+            "app.update.auto" = false;
 
-          "privacy.trackingprotection.enabled" = true;
-          "privacy.trackingprotection.socialtracking.enabled" = true;
+            "browser.contentblocking.category" = "strict";
+            "browser.discovery.enabled" = false;
+            "browser.shell.checkDefaultBrowser" = false;
+            "browser.startup.homepage" = "https://now.hackertab.dev/"; # TODO add as extension
+            "browser.url.placeHolderName" = "DuckDuckGo";
 
-          "signon.rememberSignons" = false;
+            "network.cookieBehaviour" = 5;
+            "network.cookie.lifetimePolicy" = 2;
+            "network.dns.disablePrefetch" = true;
+            "network.predictor.enabled" = false;
+            "network.prefetch-next" = false;
+
+            "privacy.trackingprotection.enabled" = true;
+            "privacy.trackingprotection.socialtracking.enabled" = true;
+
+            "signon.rememberSignons" = false;
+          };
         };
       };
     };
