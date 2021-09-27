@@ -77,7 +77,7 @@
           {
             name = "fmt";
             help = "Autoformat Nix files";
-            command = "nixpkgs-fmt \${@} $DEVSHELL_ROOT";
+            command = "nixpkgs-fmt \${@} $PRJ_ROOT";
             category = "dev";
           }
 
