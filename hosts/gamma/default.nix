@@ -48,6 +48,8 @@ rec {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   networking.hostName = hostname;
   networking.firewall.allowedTCPPorts = kde_ports ++ [ 8888 ];
   networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
