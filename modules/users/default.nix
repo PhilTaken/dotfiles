@@ -5,7 +5,7 @@
     ./git
     ./firefox
     ./i3
-    # ./kde
+    ./kde
     # ./mail
     # ./music
     # ./neovim
