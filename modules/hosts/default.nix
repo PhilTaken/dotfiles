@@ -2,12 +2,12 @@
 
 {
   imports = [
-    ./core
-    ./desktop
-    ./laptop
-    ./innernet-client
-    ./innernet-server
-    ./webapps
-    ./laptop
+    #./core
+    #./desktop
+    #./laptop
+    #./innernet-client
+    #./innernet-server
+    #./webapps
+    #./laptop
   ];
 }
