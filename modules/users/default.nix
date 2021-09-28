@@ -6,7 +6,7 @@
     ./firefox
     ./i3
     ./kde
-    # ./mail
+    ./mail
     # ./music
     # ./neovim
     # ./ssh
