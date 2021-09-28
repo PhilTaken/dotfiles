@@ -11,6 +11,6 @@
     ./neovim
     ./ssh
     ./sway
-    # ./zsh_full
+    ./zsh_full
   ];
 }

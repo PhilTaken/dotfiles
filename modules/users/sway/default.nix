@@ -279,8 +279,8 @@ rec {
                 escape = true;
               };
               #"custom/weather" = {
-                #interval = 900;
-                #exec = "${weather_exec}";
+              #interval = 900;
+              #exec = "${weather_exec}";
               #};
             };
           }

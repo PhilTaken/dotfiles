@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.mail;
-in {
+in
+{
 
   options.phil.mail = {
     enable = mkOption {
