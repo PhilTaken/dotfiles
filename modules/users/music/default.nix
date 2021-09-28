@@ -1,21 +1,47 @@
-{ pkgs, username, ... }:
+{ pkgs
+, config
+, lib
+,...
+}:
+with lib;
+
+let
+  cfg = config.phil.music;
+in
 {
-  services.spotifyd = {
-    enable = true;
-    settings = (import ../../users/secret/spotify.nix {
-      device_name = username;
-    });
+  options.phil.music = {
+    enable = mkOption {
+      description = "Enable i3";
+      type = types.bool;
+      default = false;
+    };
+
+    device_name = mkOption {
+      description = "Device name for spotifyd";
+      type = types.str;
+      default = "phil";
+    };
   };
 
-  home.packages = with pkgs; [
-    spotify-unwrapped
+  config = (mkIf cfg.enable) {
+    services.spotifyd = {
+      enable = true;
+      settings = (import ../../users/secret/spotify.nix {
+        device_name = username;
+      });
+    };
 
-    ffmpeg
-    playerctl
-    pamixer
-    vlc
-    pavucontrol
-    mpv
-    #tauon
-  ];
+    home.packages = with pkgs; [
+      spotify-unwrapped
+
+      ffmpeg
+      playerctl
+      pamixer
+      vlc
+      pavucontrol
+      mpv
+
+      #tauon
+    ];
+  };
 }

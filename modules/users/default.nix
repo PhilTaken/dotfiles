@@ -7,7 +7,7 @@
     ./i3
     ./kde
     ./mail
-    # ./music
+    ./music
     # ./neovim
     # ./ssh
     # ./sway
