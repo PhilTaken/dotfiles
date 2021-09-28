@@ -4,7 +4,7 @@
   imports = [
     ./git
     ./firefox
-    # ./i3
+    ./i3
     # ./kde
     # ./mail
     # ./music
