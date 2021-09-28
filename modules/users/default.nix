@@ -8,7 +8,7 @@
     ./kde
     ./mail
     ./music
-    # ./neovim
+    ./neovim
     # ./ssh
     # ./sway
     # ./zsh_full
