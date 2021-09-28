@@ -10,7 +10,7 @@
     ./music
     ./neovim
     ./ssh
-    # ./sway
+    ./sway
     # ./zsh_full
   ];
 }
