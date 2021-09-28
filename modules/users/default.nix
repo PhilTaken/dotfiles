@@ -9,7 +9,7 @@
     ./mail
     ./music
     ./neovim
-    # ./ssh
+    ./ssh
     # ./sway
     # ./zsh_full
   ];
