@@ -13,6 +13,7 @@ let
   kde_ports = builtins.genList (x: x + 1714) (1764 - 1714 + 1);
 in
 rec {
+  imports = [ ./hardware-configuration.nix ];
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -25,39 +26,19 @@ rec {
     # TODO add my own registry
     registry = { };
   };
-  users.users."${username}" = hostmod;
-
   hardware.enableRedistributableFirmware = true;
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    extraPackages = with pkgs; [
-      libva
-      vaapiVdpau
-      libvdpau-va-gl
-      mesa_drivers
-    ];
-  };
-  #environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
-  virtualisation.docker.enable = true;
-
-  imports = [ ./hardware-configuration.nix ];
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = hostname;
-  networking.firewall.allowedTCPPorts = kde_ports ++ [ 8888 ];
-  networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
+  time.timeZone = "${timezone}";
 
   #networking.wg-quick.interfaces = {
   #mullvad = import ../vpn/mullvad.nix;
   #};
-
-  # Set your time zone.
-  time.timeZone = "${timezone}";
 
   # dhcp config
   #networking.useDHCP = false;
@@ -65,13 +46,9 @@ rec {
   #networking.interfaces.enp4s0.useDHCP = true;
 
   # Configure keymap in X11 and console
-  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
-  services.sshd.enable = true;
   services.xserver = {
     enable = enable_xorg;
     layout = "us";
-    xkbVariant = "workman-intl";
-    xkbOptions = "caps:escape";
 
     desktopManager = {
       xterm.enable = false;
@@ -116,68 +93,18 @@ rec {
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    git-crypt # defaults
-    cryptsetup # encrypted disks
-    cmst # connman system tray
-    hwinfo
-    glxinfo
-    libva-utils
-    powertop
-    nix-index
-    innernet
-  ];
-
-  environment.etc = {
-    "yubipam/${username}-14321676".source = usermod.pamfile;
-  };
-
   services.udev.packages = with pkgs; [ yubikey-personalization ];
-
-  #services.avahi = {
-  #enable = true;
-  #interfaces = [
-  #"valhalla"
-  #];
-
-  #nssmdns = true;
-  #domainName = "pherzog.xyz";
-
-  #allowPointToPoint = true;
-
-  #publish = {
-  #enable = true;
-  #domain = true;
-  #addresses = true;
-  #};
-  #};
-
-  networking.firewall.interfaces = {
-    "valhalla" = {
-      allowedUDPPorts = [
-        5353
-      ];
-    };
-  };
-
-  services.tailscale = {
-    enable = true;
-  };
-
-  #services.influxdb = {
-  #enable = true;
-  #package = pkgs.influxdb;
-  #};
+  services.tailscale.enable = true;
+  services.sshd.enable = true;
 
   programs.zsh.enable = true;
   programs.mtr.enable = true;
+  programs.command-not-found.enable = false;
+  programs.zsh.interactiveShellInit = ''
+    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+  '';
 
-  programs.sway = {
-    enable = !enable_xorg;
-    wrapperFeatures.gtk = true;
-  };
+  virtualisation.docker.enable = true;
 
   security.pam.yubico = {
     enable = true;
@@ -186,11 +113,45 @@ rec {
     challengeResponsePath = "/etc/yubipam/";
   };
 
+  programs.sway = {
+    enable = !enable_xorg;
+    wrapperFeatures.gtk = true;
+  };
+
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      libva
+      vaapiVdpau
+      libvdpau-va-gl
+      mesa_drivers
+    ];
+  };
+
+  environment.etc = {
+    "yubipam/${username}-14321676".source = usermod.pamfile;
+  };
+
+  #environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+  networking.firewall.allowedTCPPorts = kde_ports ++ [ 8888 ];
+  networking.firewall.allowedUDPPorts = kde_ports ++ [ 8888 ];
+
+  # TODO add to extraconfig
+  networking.firewall.interfaces = {
+    "valhalla" = {
+      allowedUDPPorts = [
+        5353
+      ];
+    };
+  };
   programs.steam.enable = true;
-  programs.command-not-found.enable = false;
-  programs.zsh.interactiveShellInit = ''
-    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-  '';
 
   system.stateVersion = "21.05";
+
+  # --------------------------------------------------
+
+  users.users."${username}" = hostmod;
+
 }
