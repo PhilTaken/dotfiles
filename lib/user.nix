@@ -1,7 +1,7 @@
 { pkgs, home-manager, lib, system, overlays, ... }:
 with builtins;
 {
-  mkHMUser = { userConfig, username }:
+  mkHMUser = { userConfig, username, extraPackages ? [] }:
     let
       homeDirectory = "/home/${username}";
       stateVersion = "21.05";
@@ -33,7 +33,28 @@ with builtins;
 
             iosevka-bin
             (nerdfonts.override { fonts = [ "Iosevka" ]; })
-          ];
+
+            anki
+            cachix
+            discord
+            element-desktop
+            gimp
+            keepassxc
+            magic-wormhole
+            hyperfine
+            obsidian
+            tdesktop
+            texlive.combined.scheme-medium
+            youtube-dl
+            zoom-us
+            tokei
+            tree
+            wget
+            gping
+            signal-desktop
+            libreoffice
+            vpnc
+          ] ++ extraPackages;
         };
 
         programs.home-manager.enable = true;

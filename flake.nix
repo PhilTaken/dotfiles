@@ -196,6 +196,17 @@
             zsh_full.enable = true;
           };
 
+          extraPackages = with pkgs; [
+            audacity
+            chromium
+            citra
+            digikam
+            multimc
+            obs-studio
+            citra
+            openttd
+          ];
+
           username = "maelstroem";
         };
       };
