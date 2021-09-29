@@ -1,7 +1,7 @@
 { pkgs, home-manager, lib, system, overlays, ... }:
 with builtins;
 {
-  mkHMUser = { userConfig, username, extraPackages ? [] }:
+  mkHMUser = { userConfig, username, extraPackages ? [ ] }:
     let
       homeDirectory = "/home/${username}";
       stateVersion = "21.05";
@@ -59,12 +59,6 @@ with builtins;
 
         programs.home-manager.enable = true;
         programs.zathura.enable = true;
-
-        # TODO move to own module? (gpg?)
-        # programs.gpg = {
-        #   enable = true;
-        #   #settings.default-key = usermod.gpgKey;
-        # };
 
         services.syncthing.enable = true;
 

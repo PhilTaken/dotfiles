@@ -149,67 +149,79 @@
         ];
       };
 
-      homeManagerConfigurations = {
-        nixos = user.mkHMUser {
-          userConfig = {
-            # sway.enable = true;
-            # music = {
-            #   enable = false;
-            #   spotifyd_device_name = "nixos";
-            # };
+      homeManagerConfigurations =
+        let
+          gpgKey = "BDCD0C4E9F252898";
+          sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
+        in
+        {
+          nixos = user.mkHMUser {
+            userConfig = {
+              # sway.enable = true;
+              # music = {
+              #   enable = false;
+              #   spotifyd_device_name = "nixos";
+              # };
 
-            git = {
-              enable = true;
-              userName = "Philipp Herzog";
-              userEmail = "p.herzog@fz-juelich.de";
-              signKey = "BDCD0C4E9F252898";
+              git = {
+                enable = true;
+                userName = "Philipp Herzog";
+                userEmail = "p.herzog@fz-juelich.de";
+                signKey = gpgKey;
+              };
+              mail.enable = true;
+              neovim.enable = true;
+              ssh.enable = true;
+              zsh_full.enable = true;
+              gpg = {
+                inherit gpgKey;
+                enable = true;
+                sshKeys = [ sshKey ];
+              };
             };
-            mail.enable = true;
-            neovim.enable = true;
-            ssh = {
-              enable = true;
-              gpg_sshKeys = [ "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B" ];
-            };
-            zsh_full.enable = true;
+
+            username = "nixos";
           };
 
-          username = "nixos";
-        };
+          maelstroem = user.mkHMUser {
+            userConfig = {
+              # music = {
+              #   enable = true;
+              #   spotifyd_device_name = "maelstroem";
+              # };
 
-        maelstroem = user.mkHMUser {
-          userConfig = {
-            # music = {
-            #   enable = true;
-            #   spotifyd_device_name = "maelstroem";
-            # };
-
-            kde.enable = true;
-            git = {
-              enable = true;
-              userName = "Philipp Herzog";
-              userEmail = "philipp.herzog@protonmail.com";
-              signKey = "BDCD0C4E9F252898";
+              kde.enable = true;
+              git = {
+                enable = true;
+                userName = "Philipp Herzog";
+                userEmail = "philipp.herzog@protonmail.com";
+                signKey = gpgKey;
+              };
+              mail.enable = true;
+              neovim.enable = true;
+              ssh.enable = true;
+              zsh_full.enable = true;
+              gpg = {
+                inherit gpgKey;
+                enable = true;
+                sshKeys = [ sshKey ];
+              };
             };
-            mail.enable = true;
-            neovim.enable = true;
-            ssh.enable = true;
-            zsh_full.enable = true;
+
+            extraPackages = with pkgs; [
+              audacity
+              chromium
+              citra
+              digikam
+              multimc
+              obs-studio
+              citra
+              openttd
+            ];
+
+            username = "maelstroem";
           };
-
-          extraPackages = with pkgs; [
-            audacity
-            chromium
-            citra
-            digikam
-            multimc
-            obs-studio
-            citra
-            openttd
-          ];
-
-          username = "maelstroem";
         };
-      };
 
       nixosConfigurations = {
         # workplace-issued thinkpad

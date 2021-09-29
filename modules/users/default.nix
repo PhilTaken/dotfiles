@@ -2,8 +2,9 @@
 
 {
   imports = [
-    ./git
     ./firefox
+    ./git
+    ./gpg
     ./i3
     ./kde
     ./mail
