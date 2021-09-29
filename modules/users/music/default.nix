@@ -16,7 +16,7 @@ in
       default = false;
     };
 
-    device_name = mkOption {
+    spotifyd_device_name = mkOption {
       description = "Device name for spotifyd";
       type = types.str;
       default = "phil";
@@ -27,7 +27,7 @@ in
     services.spotifyd = {
       enable = true;
       settings = (import ../../users/secret/spotify.nix {
-        device_name = username;
+        device_name = cfg.spotifyd_device_name;
       });
     };
 

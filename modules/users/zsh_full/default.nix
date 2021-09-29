@@ -6,10 +6,10 @@
 with lib;
 
 let
-  cfg = config.phil.zsh;
+  cfg = config.phil.zsh_full;
 in
 rec {
-  options.phil.zsh = {
+  options.phil.zsh_full = {
     enable = mkOption {
       description = "enable the zsh module";
       type = types.bool;

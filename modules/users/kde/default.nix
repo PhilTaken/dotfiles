@@ -51,7 +51,6 @@ in
       flameshot
       latte-dock
       libnotify
-      oxygen_gtk
       plasma-browser-integration
       rofi
       rofi-pass

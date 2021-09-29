@@ -7,7 +7,6 @@ with lib;
 
 let
   cfg = config.phil.sway;
-  #lock_bg = ../../users + "/${username}/wallpaper/lock.jpg";
 in
 rec {
   options.phil.sway = {
@@ -24,7 +23,7 @@ rec {
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf (cfg.enable) rec {
     wayland.windowManager.sway =
       let
         std_opacity = "0.96";
@@ -82,7 +81,7 @@ rec {
               mod = swayconf.modifier;
               menu = swayconf.menu;
             in
-            {
+            lib.mkForce {
               "${mod}+Shift+c" = "reload";
               "${mod}+Shift+u" = "exit";
               "${mod}+Return" = "exec ${term}";

@@ -72,6 +72,10 @@ in
       #};
     };
 
+    home.packages = with pkgs; [
+      thunderbird
+    ];
+
     systemd.user.services.hydroxide = {
       Unit = {
         Description = "Unit for the hydroxide protonmail bridge";
