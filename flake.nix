@@ -64,6 +64,22 @@
 
       inherit (util) user;
       inherit (util) host;
+
+      users = {
+        nixos = user.mkSystemUser {
+          name = "nixos";
+          groups = [ "wheel" "video" "audio" "docker" "dialout" ];
+          shell = pkgs.zsh;
+          uid = 1001;
+        };
+
+        maelstroem = user.mkSystemUser {
+          name = "maelstroem";
+          groups = [ "wheel" "video" "audio" "docker" "dialout" ];
+          shell = pkgs.zsh;
+          uid = 1000;
+        };
+      };
     in
     {
       devShell."${system}" = pkgs.devshell.mkShell {
@@ -119,8 +135,51 @@
       };
 
       homeManagerConfigurations = {
-        maelstroem = user.mkUser { };
-        nixos = user.mkUser { };
+        nixos = user.mkHMUser {
+          userConfig = {
+            # sway.enable = true;
+            # music = {
+            #   enable = false;
+            #   spotifyd_device_name = "nixos";
+            # };
+
+            git = {
+              enable = true;
+              userName = "Philipp Herzog";
+              userEmail = "p.herzog@fz-juelich.de";
+              signKey = "BDCD0C4E9F252898";
+            };
+            mail.enable = true;
+            neovim.enable = true;
+            ssh.enable = true;
+            zsh_full.enable = true;
+          };
+
+          username = "nixos";
+        };
+
+        maelstroem = user.mkHMUser {
+          userConfig = {
+            # music = {
+            #   enable = true;
+            #   spotifyd_device_name = "maelstroem";
+            # };
+
+            kde.enable = true;
+            git = {
+              enable = true;
+              userName = "Philipp Herzog";
+              userEmail = "philipp.herzog@protonmail.com";
+              signKey = "BDCD0C4E9F252898";
+            };
+            mail.enable = true;
+            neovim.enable = true;
+            ssh.enable = true;
+            zsh_full.enable = true;
+          };
+
+          username = "maelstroem";
+        };
       };
 
       nixosConfigurations = {
