@@ -166,7 +166,10 @@
             };
             mail.enable = true;
             neovim.enable = true;
-            ssh.enable = true;
+            ssh = {
+              enable = true;
+              gpg_sshKeys = [ "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B" ];
+            };
             zsh_full.enable = true;
           };
 

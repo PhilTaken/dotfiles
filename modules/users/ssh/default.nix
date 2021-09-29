@@ -16,9 +16,21 @@ in
       type = types.bool;
       default = false;
     };
+
+    gpg_sshKeys = mkOption {
+      description = "User's ssh keys for gpg-agent";
+      type = types.listOf types.str;
+      default = [];
+    };
   };
 
   config = mkIf (cfg.enable) {
+    services.gpg-agent = mkIf (cfg.gpg_sshKeys != []) {
+      enable = true;
+      enableSshSupport = true;
+      sshKeys = cfg.gpg_sshKeys;
+    };
+
     programs.ssh = {
       enable = true;
       matchBlocks = {
