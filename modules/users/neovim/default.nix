@@ -18,6 +18,11 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      PAGER = "${pkgs.nvimpager}/bin/nvimpager";
+    };
+
     programs.neovim = {
       enable = true;
       viAlias = true;

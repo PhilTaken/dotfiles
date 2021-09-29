@@ -233,7 +233,7 @@ rec {
       #rocketTls = "{certs=\"/path/to/certs.pem\",key=\"/path/to/key.pem\"}";
       signupsAllowed = true;
       rocketLog = "critical";
-    } // (import ../../hosts/secret/vaultwarden.nix);
+    } // (import ../../secret/vaultwarden.nix);
   };
 
   # minecraft server for testing

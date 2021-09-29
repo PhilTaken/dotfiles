@@ -24,6 +24,11 @@ rec {
   };
 
   config = mkIf (cfg.enable) rec {
+    home.sessionVariables = {
+      XDG_CURRENT_DESKTOP = "sway";
+      MOZ_ENABLE_WAYLAND = 1;
+    };
+
     wayland.windowManager.sway =
       let
         std_opacity = "0.96";
@@ -203,7 +208,7 @@ rec {
 
     programs.waybar =
       let
-        css_file = ./style.css;
+        css_file = ./waybar/style.css;
       in
       {
         enable = true;
@@ -370,6 +375,8 @@ rec {
         };
       };
     };
+
+    xdg.configFile."foot/foot.ini".source = ./foot/foot.ini;
 
     home.packages = with pkgs; [
       swaylock

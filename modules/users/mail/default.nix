@@ -72,6 +72,8 @@ in
       #};
     };
 
+    #xdg.configFile."newsboat/config".source = ./config/newsboat/config;
+
     home.packages = with pkgs; [
       thunderbird
     ];

@@ -26,7 +26,7 @@ in
   config = (mkIf cfg.enable) {
     services.spotifyd = {
       enable = true;
-      settings = (import ../../users/secret/spotify.nix {
+      settings = (import ../../../secret/spotify.nix {
         device_name = cfg.spotifyd_device_name;
       });
     };

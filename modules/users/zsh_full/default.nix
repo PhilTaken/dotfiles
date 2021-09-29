@@ -18,6 +18,12 @@ rec {
   };
 
   config = mkIf (cfg.enable) {
+    home.sessionVariables = {
+      _FASD_DATA = "$XDG_DATA_HOME/fasd/fasd.data";
+      _Z_DATA = "$XDG_DATA_HOME/fasd/z.data";
+      _ZO_ECHO = 1;
+    };
+
     programs.password-store = {
       enable = true;
       package = pkgs.gopass;
@@ -133,7 +139,7 @@ rec {
 
           WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
-          eval "$(fasd --init auto)"
+          eval "$(${pkgs.fasd}/bin/fasd --init auto)"
           unalias z
 
           source ${magic_enter_prompt}
