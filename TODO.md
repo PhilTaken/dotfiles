@@ -1,7 +1,12 @@
 # TODO
 
-- split config into modules
+- fix sway module
+- fix music module
+
+# WIP
+
 - default host + user modules
+- split config into modules
 
 
 # Ideas
