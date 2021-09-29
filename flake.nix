@@ -131,6 +131,21 @@
             '';
             category = "system";
           }
+
+          {
+            name = "uswitch";
+            help = "Build + switch to a user configuration with home-manager";
+            command = ''
+              if [[ -z "$@" || "$1" == "help" ]]; then
+                echo -e "Available configs:"
+                echo -e "\tnixos"
+                echo -e "\tmaelstroem"
+              else
+                nix build ".#homeManagerConfigurations.$1.activationPackage" && result/activate
+              fi
+            '';
+            category = "system";
+          }
         ];
       };
 
