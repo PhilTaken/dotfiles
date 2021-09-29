@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.template;
-in {
+in
+{
   options.phil.template = {
     enable = mkOption {
       description = "enable template module";

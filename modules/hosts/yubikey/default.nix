@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.yubikey;
-in {
+in
+{
   options.phil.yubikey = {
     enable = mkOption {
       description = "enable yubikey module";

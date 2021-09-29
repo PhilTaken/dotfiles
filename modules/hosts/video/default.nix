@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.template;
-in {
+in
+{
   options.phil.template = {
     enable = mkOption {
       description = "enable template module";
@@ -50,13 +51,14 @@ in {
       };
 
       #displayManager = {
-        ##defaultSession = "none+i3";
-        #defaultSession = "plasma5";
+      ##defaultSession = "none+i3";
+      #defaultSession = "plasma5";
       #};
 
-      videoDrivers = if (cfg.driver != null) then [
-        cfg.video_driver
-      ] else [ ];
+      videoDrivers =
+        if (cfg.driver != null) then [
+          cfg.video_driver
+        ] else [ ];
 
       libinput.enable = cfg.enable_xorg;
 

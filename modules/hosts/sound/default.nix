@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.sound;
-in {
+in
+{
   options.phil.sound = {
     enable = mkOption {
       description = "enable the sound module";
