@@ -4,22 +4,22 @@ with builtins;
   mkHMUser = { userConfig, username }:
     let
       homeDirectory = "/home/${username}";
+      stateVersion = "21.05";
     in
     home-manager.lib.homeManagerConfiguration {
-      inherit system username pkgs homeDirectory;
+      inherit system username pkgs homeDirectory stateVersion;
 
-      stateVersion = "21.05";
       configuration = {
-        cfg = userConfig;
+        phil = userConfig;
         nixpkgs.overlays = overlays;
         nixpkgs.config.allowUnfree = true;
         systemd.user.startServices = true;
-        home.stateVersion = "21.05";
         home = {
-          inherit username homeDirectory;
+          inherit username homeDirectory stateVersion;
         };
 
         imports = [
+          ../modules/users
         ];
       };
     };
