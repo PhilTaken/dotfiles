@@ -46,6 +46,8 @@ rec {
     } else { });
 
     packages = with pkgs; [
+      fortran-package-manager
+
       cacert
       coreutils
       mailcap

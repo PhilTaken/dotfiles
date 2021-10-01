@@ -48,6 +48,7 @@ rec {
     } else { });
 
     packages = with pkgs; [
+
       cacert
       coreutils
       mailcap
