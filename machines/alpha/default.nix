@@ -102,31 +102,31 @@ rec {
 
   # local dns + secure dns
   #services.unbound = {
-    #enable = true;
-    #settings = {
-      #server = {
-        #interface = "127.0.0.1";
-        #port = 5335;
-        #do-ip4 = "yes";
-        #do-udp = "yes";
-        #do-tcp = "yes";
-        #prefer-ip6 = "no";
-        #harden-glue = "yes";
-        #harden-dnssec-stripped = "yes";
-        #use-caps-for-id = "no";
-        #edns-buffer-size = 1472;
-        #prefetch = "yes";
-        #num-threads = 1;
-        #so-rcvbuf = "1m";
-      #};
-      ## https://www.bentasker.co.uk/documentation/linux/279-unbound-adding-custom-dns-records
-      ## https://wiki.archlinux.org/title/Unbound#Using_openresolv
-      #local-data = [
-        #"rss.pherzog.xyz A 127.0.0.1"
-        #"adguard.pherzog.xyz A 127.0.0.1"
+  #enable = true;
+  #settings = {
+  #server = {
+  #interface = "127.0.0.1";
+  #port = 5335;
+  #do-ip4 = "yes";
+  #do-udp = "yes";
+  #do-tcp = "yes";
+  #prefer-ip6 = "no";
+  #harden-glue = "yes";
+  #harden-dnssec-stripped = "yes";
+  #use-caps-for-id = "no";
+  #edns-buffer-size = 1472;
+  #prefetch = "yes";
+  #num-threads = 1;
+  #so-rcvbuf = "1m";
+  #};
+  ## https://www.bentasker.co.uk/documentation/linux/279-unbound-adding-custom-dns-records
+  ## https://wiki.archlinux.org/title/Unbound#Using_openresolv
+  #local-data = [
+  #"rss.pherzog.xyz A 127.0.0.1"
+  #"adguard.pherzog.xyz A 127.0.0.1"
 
-      #];
-    #};
+  #];
+  #};
   #};
 
   # acme security (lets encrypt)
@@ -284,15 +284,15 @@ rec {
 
     "valhalla" = {
       allowedUDPPorts = [
-        5353  # dns
+        5353 # dns
         51820 # innernet
         25565 # minecraft
       ];
 
       allowedTCPPorts = [
-        53    # dns (adguard home)
-        80    # tt-rss webinterface
-        443   # tt-rss ssl
+        53 # dns (adguard home)
+        80 # tt-rss webinterface
+        443 # tt-rss ssl
         51820 # innernet
         31111 # adguard home webinterface
         25565 # minecraft

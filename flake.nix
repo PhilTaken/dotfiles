@@ -65,7 +65,7 @@
       inherit (util) user;
       inherit (util) host;
 
-      users = {
+      mkSystemUsers = {
         nixos = user.mkSystemUser {
           name = "nixos";
           groups = [ "wheel" "video" "audio" "docker" "dialout" ];
@@ -223,43 +223,51 @@
           };
         };
 
+
       nixosConfigurations = {
         # workplace-issued thinkpad
-        nixos-laptop = host.mkHostWithUser {
-          host = "nixos-laptop";
-          username = "nixos";
-          extramods = [
-            #nixos-hardware.nixosModules.lenovo-thinkpad-t490
-          ];
-        };
+        nixos-laptop =
+          let
+            name = "nixos-laptop";
+            hardware-config = import "../machines/${name}" { inherit inputs pkgs; };
+            users = with mkSystemUsers; [ nixos ];
+          in
+          host.mkHost {
+            inherit name hardware-config users;
+            systemConfig = { };
+
+            extramods = [
+              #nixos-hardware.nixosModules.lenovo-thinkpad-t490
+            ];
+          };
 
         # desktop @ home
-        gamma = host.mkHostWithUser {
-          host = "gamma";
-          username = "maelstroem";
-          enable_xorg = true;
-          extramods = [
-            (import "${localDev}/nixos/modules/services/networking/innernet.nix")
-          ];
-        };
+        # gamma = host.mkHost {
+        #   host = "gamma";
+        #   username = "maelstroem";
+        #   enable_xorg = true;
+        #   extramods = [
+        #     (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+        #   ];
+        # };
 
-        # desktop @ home (older)
-        gamma_old = host.mkHostWithUser {
-          host = "gamma_old";
-          username = "maelstroem";
-          enable_xorg = true;
-          extramods = [
-            (import "${localDev}/nixos/modules/services/networking/innernet.nix")
-          ];
-        };
+        # # desktop @ home (older)
+        # gamma_old = host.mkHost {
+        #   host = "gamma_old";
+        #   username = "maelstroem";
+        #   enable_xorg = true;
+        #   extramods = [
+        #     (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+        #   ];
+        # };
 
-        # vm on a hetzner server, debian host
-        alpha = host.mkHostWithUser {
-          host = "alpha";
-          extramods = [
-            (import "${localDev}/nixos/modules/services/networking/innernet.nix")
-          ];
-        };
+        # # vm on a hetzner server, debian host
+        # alpha = host.mkHost {
+        #   host = "alpha";
+        #   extramods = [
+        #     (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+        #   ];
+        # };
 
         # for the (planned) raspberry pi
         #beta = host.mkHost {
@@ -268,20 +276,20 @@
       };
 
       # deploy config
-      deploy.nodes = {
-        alpha = {
-          hostname = "148.251.102.93";
-          sshUser = "root";
-          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        };
+      # deploy.nodes = {
+      #   alpha = {
+      #     hostname = "148.251.102.93";
+      #     sshUser = "root";
+      #     profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+      #   };
 
-        #beta = {
-        #   hostname = "test";
-        #   sshUser = "root";
-        #   profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.beta;
-        #};
-      };
+      #   #beta = {
+      #   #   hostname = "test";
+      #   #   sshUser = "root";
+      #   #   profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.beta;
+      #   #};
+      # };
 
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
