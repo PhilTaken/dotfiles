@@ -18,14 +18,14 @@ in
 
     driver = mkOption {
       description = "video driver";
-      type = types.nullOr types.str;
+      type = types.nullOr (types.enum [ "noveau" "nvidia" "amd" ]);
       default = null;
     };
 
-    enable_xorg = mkOption {
-      description = "wether to enable the x graphical server";
-      type = types.bool;
-      default = false;
+    manager = mkOption {
+      description = "which window/desktop manager to enable";
+      type = (types.enum [ "kde" "sway" "i3" ]);
+      default = "sway";
     };
   };
 
@@ -42,42 +42,75 @@ in
       ];
     };
 
-    services.xserver = {
-      enable = cfg.enable_xorg;
-      layout = "us";
+    services.xserver =
+      let
+        enable = (cfg.manager == "kde" || cfg.manager == "i3");
+      in
+      {
+        inherit enable;
+        layout = "us";
+        xkbVariant = "workman-intl,intl";
+        xkbOptions = "caps:escape,grp:shifts_toggle";
 
-      desktopManager = {
-        xterm.enable = false;
+        displayManager = {
+          defaultSession = "none+i3";
+          #defaultSession = "plasma5";
+        };
+
+        videoDrivers =
+          if (cfg.driver != null) then [
+            cfg.video_driver
+          ] else [ ];
+
+        libinput = {
+          inherit enable;
+        };
+
+        # TODO better config for plasma/i3 switching
+        desktopManager = {
+          plasma5.enable = (cfg.manager == "kde");
+          xterm.enable = false;
+        };
+
+        windowManager.i3 = {
+          enable = (cfg.manager == "i3");
+          package = pkgs.i3-gaps;
+        };
       };
+    console.useXkbConfig = true;
 
-      #displayManager = {
-      ##defaultSession = "none+i3";
-      #defaultSession = "plasma5";
-      #};
-
-      videoDrivers =
-        if (cfg.driver != null) then [
-          cfg.video_driver
-        ] else [ ];
-
-      libinput.enable = cfg.enable_xorg;
-
-      # TODO better config for plasma/i3 switching
-      desktopManager.plasma5 = {
-        enable = cfg.enable_xorg;
-      };
-    };
+    # ----------------------
+    # kde
 
     # enable kdeconnect + open the required ports
-    programs.kdeconnect.enable = cfg.enable_xorg;
+    programs.kdeconnect.enable = (cfg.manager == "kde");
+    networking.firewall =
+      let
+        kde_ports = builtins.genList (x: x + 1714) (1764 - 1714 + 1);
+      in
+      mkIf (cfg.manager == "kde") {
+        allowedTCPPorts = kde_ports ++ [ 8888 ];
+        allowedUDPPorts = kde_ports ++ [ 8888 ];
+      };
+
+    # ----------------------
+    # sway
 
     # TODO better config for sway enable
     programs.sway = {
-      enable = !cfg.enable_xorg;
+      enable = (cfg.manager == "sway");
       wrapperFeatures.gtk = true;
     };
 
-    console.useXkbConfig = true;
+    services.greetd = (mkIf cfg.manager == "sway") {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${lib.makeBinPath [pkgs.greetd.tuigreet] }/tuigreet --time --cmd sway";
+          user = "greeter";
+        };
+      };
+    };
   };
 }
 
