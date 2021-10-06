@@ -51,6 +51,19 @@ in
       type = types.attrsOf types.anything;
       default = { };
     };
+
+    bootLoader = mkOption {
+      description = "which bootloader to install";
+      type = (types.enum [ "grub" "efi" ]);
+      default = "efi";
+    };
+
+    grubDevice = mkOption {
+      description = "which device to install grub on (if enabled via bootLoader)";
+      type = types.nullOr types.str;
+      default = null;
+      example = "/dev/sda";
+    };
   };
 
   config = mkIf (cfg.enable)
@@ -69,13 +82,19 @@ in
         registry = { };
       };
       hardware.enableRedistributableFirmware = true;
-      environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
+      # links /libexec from derivations to /run/current-system/sw
+      environment.pathsToLink = [ "/libexec" ];
 
-      # TODO make this configurable (efi/grub for legacy)
-      # Use the systemd-boot EFI boot loader.
-      boot.loader.systemd-boot.enable = true;
-      boot.loader.efi.canTouchEfiVariables = true;
+      boot.loader =
+        if (cfg.bootLoader == "efi") then {
+          systemd-boot.enable = true;
+          efi.canTouchEfiVariables = true;
+        } else {
+          grub.enable = true;
+          grub.version = 2;
+          grub.device = if (cfg.grubDevice != null) then grubDevice else throw "you need to set a grub device";
+        };
 
       networking.hostname = cfg.hostname;
       time.timeZone = cfg.timezone;

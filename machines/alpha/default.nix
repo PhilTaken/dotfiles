@@ -1,23 +1,13 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { pkgs, ... }:
 let
   lib = pkgs.lib;
   ip4_eth0 = "148.251.102.93";
 in
 rec {
+
   imports = [ ./hardware-configuration.nix ];
-  nix.trustedUsers = [ "@wheel" "nixos" ];
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda";
-
-  # Set your time zone.
-  time.timeZone = "Europe/Berlin";
+  #boot.loader.grub.device = "/dev/sda";
 
   # networking
   networking = {
@@ -39,66 +29,8 @@ rec {
     '';
   };
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
-
-  users.users.nixos = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-  };
-
-  environment.systemPackages = with pkgs; [
-    wget
-    vim
-    git
-    tree
-    fail2ban
-    htop
-  ];
-
-  programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-  programs.zsh.enable = true;
-
-  # ---------------------------------------------------- #
-
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    passwordAuthentication = false;
-    permitRootLogin = "yes";
-    authorizedKeysFiles = [ "/etc/nixos/authorized-keys" ];
-  };
-
-  #services.avahi = {
-  #enable = true;
-  #interfaces = [
-  #"valhalla"
-  #];
-
-  #nssmdns = true;
-  #domainName = "pherzog.xyz";
-
-  #allowPointToPoint = true;
-
-  #publish = {
-  #enable = true;
-  #domain = true;
-  #addresses = true;
-  #userServices = true;
-  #};
-
-  #extraServiceFiles = {
-  #ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
-  #};
-  #};
+  # ---------------------------------------------------------------------:
+  # TODO move all these to proper modules
 
   # local dns + secure dns
   #services.unbound = {
@@ -151,13 +83,9 @@ rec {
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
   };
 
-  services.tailscale = {
-    enable = true;
-  };
-
   services.innernet = {
     enable = true;
-    config = builtins.readFile ../vpn/valhalla.conf;
+    config = builtins.readFile ../../../secret/vpn/valhalla.conf;
     interfaceName = "valhalla";
     openFirewall = true;
   };
@@ -252,8 +180,6 @@ rec {
       level-seed = "10292992";
     };
   };
-
-  # enable closed source packages such as the minecraft server
   nixpkgs.config.allowUnfree = true;
 
   # firewall
