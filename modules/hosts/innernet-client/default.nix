@@ -6,12 +6,12 @@
 with lib;
 
 let
-  cfg = config.phil.template;
+  cfg = config.phil.innernet-client;
 in
 {
-  options.phil.template = {
+  options.phil.innernet-client = {
     enable = mkOption {
-      description = "enable template module";
+      description = "enable innernet-client module";
       type = types.bool;
       default = false;
     };

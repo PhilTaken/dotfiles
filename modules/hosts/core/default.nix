@@ -107,6 +107,7 @@ in
         cryptsetup
         hwinfo
         nix-index
+        htop
       ];
 
       # ----------------

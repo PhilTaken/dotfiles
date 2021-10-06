@@ -6,12 +6,12 @@
 with lib;
 
 let
-  cfg = config.phil.template;
+  cfg = config.phil.laptop;
 in
 {
-  options.phil.template = {
+  options.phil.laptop = {
     enable = mkOption {
-      description = "enable template module";
+      description = "enable laptop module";
       type = types.bool;
       default = false;
     };

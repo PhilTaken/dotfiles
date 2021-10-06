@@ -6,12 +6,12 @@
 with lib;
 
 let
-  cfg = config.phil.template;
+  cfg = config.phil.video;
 in
 {
-  options.phil.template = {
+  options.phil.video = {
     enable = mkOption {
-      description = "enable template module";
+      description = "enable video module";
       type = types.bool;
       default = false;
     };
