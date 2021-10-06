@@ -1,4 +1,30 @@
 { pkgs
+, config
+, lib
 , ...
 }:
-{ }
+with lib;
+
+let
+  cfg = config.phil.template;
+in
+{
+  options.phil.template = {
+    enable = mkOption {
+      description = "enable template module";
+      type = types.bool;
+      default = false;
+    };
+  };
+
+  config = mkIf (cfg.enable) {
+    networking.firewall.interfaces = {
+      "valhalla" = {
+        allowedUDPPorts = [
+          5353
+        ];
+      };
+    };
+  };
+}
+

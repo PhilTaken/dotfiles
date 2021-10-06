@@ -80,7 +80,9 @@ in
       networking.hostname = cfg.hostname;
       time.timeZone = cfg.timezone;
 
+      # TODO move these somewhere else
       virtualisation.docker.enable = cfg.docker;
+      programs.steam.enable = true;
 
       services = {
         sshd.enable = cfg.enable_ssh;

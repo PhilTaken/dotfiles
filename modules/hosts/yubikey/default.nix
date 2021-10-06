@@ -16,6 +16,7 @@ in
       default = false;
     };
 
+    # TODO listOf path
     yubifile = mkOption {
       description = "chalresp file for yubikey authentication";
       type = types.nullOr types.path;
@@ -40,8 +41,8 @@ in
     services.udev.packages = with pkgs; [ yubikey-personalization ];
 
     security.pam.yubico = {
-      enable = cfg.debug;
-      #debug = true;
+      enable = true;
+      debug = cfg.debug;
       mode = "challenge-response";
       challengeResponsePath = "/etc/yubipam/";
     };
