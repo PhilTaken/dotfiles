@@ -1,6 +1,8 @@
-{ lib
+{ config
+, lib
 , modulesPath
 , pkgs
+, ...
 }:
 rec {
   imports =

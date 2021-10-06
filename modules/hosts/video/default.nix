@@ -30,6 +30,13 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    nixpkgs.config = mkIf (cfg.driver == "nvidia") {
+      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+        "nvidia-x11"
+        "nvidia-settings"
+      ];
+    };
+
     hardware.opengl = {
       enable = true;
       driSupport = true;
@@ -53,14 +60,14 @@ in
         xkbOptions = "caps:escape,grp:shifts_toggle";
 
         displayManager = {
-          defaultSession = "none+i3";
-          #defaultSession = "plasma5";
+          defaultSession = if cfg.manager == "i3" then "none+i3" else "plasma5";
         };
 
         videoDrivers =
           if (cfg.driver != null) then [
-            cfg.video_driver
+            cfg.driver
           ] else [ ];
+
 
         libinput = {
           inherit enable;
@@ -100,7 +107,7 @@ in
       wrapperFeatures.gtk = true;
     };
 
-    services.greetd = (mkIf cfg.manager == "sway") {
+    services.greetd = mkIf (cfg.manager == "sway") {
       enable = true;
       settings = {
         default_session = {

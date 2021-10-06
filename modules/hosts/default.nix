@@ -2,12 +2,16 @@
 
 {
   imports = [
-    #./core
+    ./core
+    ./laptop
+    ./sound
+    ./video
+    ./yubikey
+    ./server
+    ./webapps
+
     #./desktop
-    #./laptop
     #./innernet-client
     #./innernet-server
-    #./webapps
-    #./laptop
   ];
 }

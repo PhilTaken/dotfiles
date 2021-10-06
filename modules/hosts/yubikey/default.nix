@@ -46,9 +46,9 @@ in
       mode = "challenge-response";
       challengeResponsePath = "/etc/yubipam/";
     };
-  };
 
-  environment.etc = mkIf (cfg.yubifile != null) {
-    "yubipam/${cfg.username}-14321676".source = cfg.yubifile;
+    environment.etc = mkIf (cfg.yubifile != null) {
+      "yubipam/${cfg.username}-14321676".source = cfg.yubifile;
+    };
   };
 }
