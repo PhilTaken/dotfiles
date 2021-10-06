@@ -66,7 +66,6 @@ in
           inherit enable;
         };
 
-        # TODO better config for plasma/i3 switching
         desktopManager = {
           plasma5.enable = (cfg.manager == "kde");
           xterm.enable = false;
@@ -96,7 +95,6 @@ in
     # ----------------------
     # sway
 
-    # TODO better config for sway enable
     programs.sway = {
       enable = (cfg.manager == "sway");
       wrapperFeatures.gtk = true;
