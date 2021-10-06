@@ -4,8 +4,9 @@ let
   user = "nixos";
   password = "guest";
   hostname = "nixos-pi";
-in {
-  imports = ["${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/936e4649098d6a5e0762058cb7687be1b2d90550.tar.gz" }/raspberry-pi/4"];
+in
+{
+  imports = [ "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/936e4649098d6a5e0762058cb7687be1b2d90550.tar.gz" }/raspberry-pi/4" ];
 
   fileSystems = {
     "/" = {
@@ -18,7 +19,7 @@ in {
   networking.hostName = hostname;
   environment.systemPackages = with pkgs; [ vim ];
   services.openssh.enable = true;
-  
+
   users = {
     mutableUsers = false;
     users."${user}" = {
