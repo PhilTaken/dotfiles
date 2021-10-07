@@ -29,6 +29,8 @@
     ] ++ (with pkgs.nodePackages; [
       pyright # python
       typescript-language-server # js / ts
+    ]) ++ (with pkgs.rPackages; [
+      languageserver
     ]); # ++ (with pkgs.python39Packages; [
     #python-lsp-server
     #python-lsp-black

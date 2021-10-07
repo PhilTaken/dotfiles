@@ -42,6 +42,8 @@ lsp.tsserver.setup(signature_setup)
 
 lsp.erlangls.setup(signature_setup)
 
+lsp.r_language_server.setup(signature_setup)
+
 lsp.fortls.setup {
     cmd = { "fortls", "--hover_signature", "--enable_code_actions" },
     root_dir = lsp.util.root_pattern('.git'),

@@ -42,6 +42,8 @@ opt.writebackup = false
 vim.cmd[[set undodir=$XDG_DATA_HOME/nvim/undodir]]
 vim.cmd[[set undofile]]
 
+--vim.cmd[[let R_external_term = 1]]
+
 -- disable spellchecking
 opt.spell = false
 
