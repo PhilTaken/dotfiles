@@ -8,8 +8,9 @@
     };
   };
 
-  boot.extraModprobeConfig = /* modconf */ ''
-    options usbcore quirks=152d:0578:u
-    options usb-storage quirks=152d:0578:u
-  '';
+  # to fix the usb ssd adapter misbehaving due to poor uasp support >.>
+  boot.kernelParams = [
+    "usb-storage.quirks=152d:0578:u"
+    "usbcore.quirks=152d:0578:u"
+  ];
 }
