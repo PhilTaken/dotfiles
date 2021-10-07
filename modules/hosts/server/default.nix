@@ -25,7 +25,12 @@ in
 
   config = mkIf (cfg.enable) {
     # fail2ban
-    environment.systemPackages = with pkgs; [ fail2ban ];
+    environment.systemPackages = with pkgs; [
+      fail2ban
+      hdparm
+      htop
+      usbutils
+    ];
     services.fail2ban.enable = true;
 
     # general open ssh config
