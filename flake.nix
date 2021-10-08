@@ -234,7 +234,6 @@
               audacity
               chromium
               citra
-              digikam
               multimc
               obs-studio
               citra

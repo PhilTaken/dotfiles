@@ -290,6 +290,7 @@ rec {
       bandwhich
       cmake
       dig
+      exa
       fasd
       fd
       file
@@ -304,6 +305,7 @@ rec {
       ncat
       neofetch
       procs
+      ripgrep
       rsync
       sd
       sshfs
