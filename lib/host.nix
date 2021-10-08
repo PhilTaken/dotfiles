@@ -1,4 +1,4 @@
-{ system, pkgs, lib, user, ... }:
+{ system, pkgs, lib, user, sops-nix, ... }:
 with builtins;
 
 rec {
@@ -20,6 +20,7 @@ rec {
       inherit system pkgs;
 
       modules = [
+        sops-nix
         {
           imports = ([
             hardware-config

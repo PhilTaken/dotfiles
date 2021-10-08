@@ -1,0 +1,7 @@
+keys:
+  - &admin 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
+creation_rules:
+  - path_regex: secrets/[^/]+\.yml$
+    key_groups:
+    - pgp:
+      - *admin

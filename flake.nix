@@ -31,6 +31,9 @@
     localDev.url = "github:PhilTaken/nixpkgs/innernet-module";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # for secret managment
+    sops-nix-src.url = "github:Mic92/sops-nix";
   };
   outputs =
     { self
@@ -41,12 +44,13 @@
     , localDev
     , devshell
     , nixos-hardware
+    , sops-nix-src
     , ...
     }@inputs:
     let
       inherit (nixpkgs) lib;
-
       system = "x86_64-linux";
+      sops-nix = sops-nix-src.nixosModules.sops;
 
       overlays = [
         nur-src.overlay
@@ -69,11 +73,11 @@
       };
 
       util = import ./lib {
-        inherit system pkgs home-manager lib overlays;
+        inherit system pkgs home-manager lib overlays sops-nix;
       };
 
       raspiUtil = import ./lib {
-        inherit home-manager overlays lib;
+        inherit home-manager overlays lib sops-nix;
         system = "aarch64-linux";
         pkgs = aarch64_pkgs;
       };
