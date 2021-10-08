@@ -20,7 +20,7 @@
       audacity
       chromium
       citra
-      digikam
+      #digikam
       discord
       element-desktop
       gimp
