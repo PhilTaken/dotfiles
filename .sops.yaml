@@ -1,7 +1,9 @@
 keys:
   - &admin 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
+  - &raspi ed28dc6454afa5a052ba65fcc7f00ff618cae4ea
 creation_rules:
-  - path_regex: secrets/[^/]+\.yml$
+  - path_regex: secret/[^/]+\.yaml$
     key_groups:
     - pgp:
       - *admin
+      - *raspi

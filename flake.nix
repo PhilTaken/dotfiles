@@ -58,34 +58,22 @@
         (import ./overlays/gopass-rofi.nix { inherit inputs; })
         (import ./overlays/rofi-overlay.nix { inherit inputs; })
         devshell.overlay
+        sops-nix-src.overlay
       ];
 
-      pkgs = import nixpkgs {
-        inherit system overlays;
-        config.allowUnfree = true;
-      };
+      nixpkgsFor = system:
+        import nixpkgs {
+          inherit system overlays;
+          config.allowUnfree = true;
+        };
 
-      # mostly for the raspi
-      aarch64_pkgs = import nixpkgs {
-        inherit overlays;
-        config.allowUnfree = true;
-        system = "aarch64-linux";
-      };
+      utilFor = system:
+        import ./lib rec {
+          inherit home-manager lib overlays sops-nix system;
+          pkgs = nixpkgsFor system;
+        };
 
-      util = import ./lib {
-        inherit system pkgs home-manager lib overlays sops-nix;
-      };
-
-      raspiUtil = import ./lib {
-        inherit home-manager overlays lib sops-nix;
-        system = "aarch64-linux";
-        pkgs = aarch64_pkgs;
-      };
-
-      inherit (util) user;
-      inherit (util) host;
-
-      systemUsers = {
+      systemUsersFor = pkgs: {
         nixos = {
           name = "nixos";
           groups = [ "wheel" "video" "audio" "docker" "dialout" ];
@@ -99,14 +87,15 @@
           shell = pkgs.zsh;
           uid = 1000;
         };
-
-        nixos-aarch64 = {
-          name = "nixos";
-          groups = [ "wheel" "docker" ];
-          shell = aarch64_pkgs.zsh;
-          uid = 1000;
-        };
       };
+
+      aarch64_pkgs = nixpkgsFor "aarch64-linux";
+      raspiUtil = utilFor "aarch64-linux";
+      raspiUsers = systemUsersFor aarch64_pkgs;
+
+      pkgs = nixpkgsFor "x86_64-linux";
+      util = utilFor "x86_64-linux";
+      systemUsers = systemUsersFor pkgs;
     in
     {
       devShell."${system}" = pkgs.devshell.mkShell {
@@ -114,6 +103,8 @@
         packages = with pkgs; [
           fd
           nixpkgs-fmt
+          sops
+          sops-import-keys-hook
         ];
 
         commands = [
@@ -128,6 +119,13 @@
             name = "evalnix";
             help = "Check Nix parsing";
             command = "fd --extension nix --exec nix-instantiate --parse --quiet {} >/dev/null";
+            category = "dev";
+          }
+
+          {
+            name = "sops";
+            help = "Create/edit a secret file";
+            package = pkgs.sops;
             category = "dev";
           }
 
@@ -182,7 +180,7 @@
           sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
         in
         {
-          nixos = user.mkHMUser {
+          nixos = util.user.mkHMUser {
             userConfig = {
               # sway.enable = true;
               # music = {
@@ -209,12 +207,12 @@
             username = "nixos";
           };
 
-          maelstroem = user.mkHMUser {
+          maelstroem = util.user.mkHMUser {
             userConfig = {
-              # music = {
-              #   enable = true;
-              #   spotifyd_device_name = "maelstroem";
-              # };
+              music = {
+                enable = true;
+                spotifyd_device_name = "maelstroem";
+              };
 
               kde.enable = true;
               git = {
@@ -255,7 +253,7 @@
             hardware-config = import (./machines/nixos-laptop);
             users = with systemUsers; [ nixos ];
           in
-          host.mkHost {
+          util.host.mkHost {
             inherit hardware-config users;
             systemConfig = {
               core.hostName = "nixos-laptop";
@@ -286,7 +284,7 @@
             hardware-config = import (./machines/gamma);
             users = with systemUsers; [ maelstroem ];
           in
-          host.mkHost {
+          util.host.mkHost {
             inherit hardware-config users;
 
             systemConfig = {
@@ -318,7 +316,7 @@
             hardware-config = import (./machines/alpha);
             users = with systemUsers; [ nixos ];
           in
-          host.mkHost {
+          util.host.mkHost {
             inherit hardware-config users;
 
             systemConfig = {
@@ -341,7 +339,7 @@
         beta =
           let
             hardware-config = import (./machines/beta);
-            users = with systemUsers; [ nixos-aarch64 ];
+            users = with raspiUsers; [ nixos ];
           in
           raspiUtil.host.mkHost {
             inherit hardware-config users;

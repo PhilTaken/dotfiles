@@ -28,6 +28,9 @@ rec {
           ] ++ sys_users) ++ extramods;
 
           phil = systemConfig;
+
+          sops.defaultSopsFile = ../secret/sops.yaml;
+          sops.secrets."mullvad/privateKey" = {};
         }
       ];
     };
