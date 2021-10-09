@@ -29,7 +29,7 @@ rec {
 
           phil = systemConfig;
 
-          sops.defaultSopsFile = ../secret/sops.yaml;
+          sops.defaultSopsFile = ../secrets/sops.yaml;
           sops.age.keyFile = "/var/lib/sops-nix/key.txt";
           sops.age.generateKey = true;
 
