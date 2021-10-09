@@ -9,8 +9,8 @@
     ./yubikey
     ./server
     ./webapps
+    ./desktop
 
-    #./desktop
     #./innernet-client
     #./innernet-server
   ];
