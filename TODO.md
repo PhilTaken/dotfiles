@@ -1,6 +1,7 @@
 # TODO
 
 - fix sway module
+- spotifyd service (user => system) / module: user/music
 
 # WIP
 
