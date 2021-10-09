@@ -30,7 +30,16 @@ rec {
           phil = systemConfig;
 
           sops.defaultSopsFile = ../secret/sops.yaml;
-          sops.secrets."mullvad/privateKey" = {};
+          sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+          sops.age.generateKey = true;
+
+          # secrets
+          sops.secrets.mullvad-privateKey = { };
+          sops.secrets.spotify-username = { };
+          sops.secrets.spotify-password = { };
+          sops.secrets.vaultwarden-adminToken = { };
+          sops.secrets.vaultwarden-yubicoClientId = { };
+          sops.secrets.vaultwarden-yubicoSecretKey = { };
         }
       ];
     };

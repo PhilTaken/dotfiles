@@ -72,9 +72,15 @@ in
       themePackages = with pkgs; [ tt-rss-theme-feedly ];
     };
 
+    # TODO enable for all systems
+    # TODO convert to sops config scheme
     #services.innernet = {
-    #enable = true;
+    #enable = false;
     #config = builtins.readFile ../../../secret/vpn/valhalla.conf;
+    # config:
+    #  - listen-port: 51820
+    #  - address: "10.42.0.1"
+    #  - network-cidr-prefix: 16
     #interfaceName = "valhalla";
     #openFirewall = true;
     #};
@@ -140,7 +146,11 @@ in
         #rocketTls = "{certs=\"/path/to/certs.pem\",key=\"/path/to/key.pem\"}";
         signupsAllowed = true;
         rocketLog = "critical";
-      } // (import ../../secret/vaultwarden.nix);
+
+        yubicoClientId = config.sops.secrets.vaultwarden-yubicoClientId.path;
+        yubicoSecretKey = config.sops.secrets.vaultwarden-yubicoSecretKey.path;
+        adminToken = config.sops.secrets.vaultwarden-adminToken.path;
+      };
     };
 
     # minecraft server for testing

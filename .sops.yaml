@@ -1,9 +1,9 @@
 keys:
-  - &admin 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
-  - &raspi ed28dc6454afa5a052ba65fcc7f00ff618cae4ea
+  - &gamma age16wkq74zjg520vfp4rlq50yffp9p4tht6jtdyz5smzlkpdvg609pqnjshkg
+  - &beta age1wjp9wplp3hcsa8v4pseu7nu5ugwztxwj0hmcsv3a9hfdwzm2mcksyh2duf
 creation_rules:
-  - path_regex: secret/[^/]+\.yaml$
+  - path_regex: secrets/[^/]+\.yaml$
     key_groups:
-    - pgp:
-      - *admin
-      - *raspi
+    - age:
+      - *gamma
+      - *beta

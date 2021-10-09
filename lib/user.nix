@@ -38,22 +38,23 @@ with builtins;
             cachix
             discord
             element-desktop
+            firefox
             gimp
-            keepassxc
-            magic-wormhole
+            gping
             hyperfine
+            keepassxc
+            libreoffice
+            magic-wormhole
             obsidian
+            signal-desktop
             tdesktop
             texlive.combined.scheme-medium
-            youtube-dl
-            zoom-us
             tokei
             tree
-            wget
-            gping
-            signal-desktop
-            libreoffice
             vpnc
+            wget
+            youtube-dl
+            zoom-us
           ] ++ extraPackages;
         };
 

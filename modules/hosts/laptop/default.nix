@@ -48,29 +48,31 @@ in
       wifi.backend = "wpa_supplicant";
     };
 
-    networking = let
-      mullvad = {
-        address = [ "10.69.90.26/32" "fc00:bbbb:bbbb:bb01::6:5a19/128" ];
-        dns = [ "193.138.218.74" ];
-        privateKey = config.sops.secrets."mullvad/privateKey".path;
-        peers = [
-          {
-            publicKey = "vtqDtifokiHna0eBshGdJLedj/lzGW+iDvWKx+YjDFs=";
-            allowedIPs = [ "0.0.0.0/0" "::0/0" ];
-            endpoint = "193.27.14.98:51820";
-          }
-        ];
+    networking =
+      let
+        mullvad = {
+          address = [ "10.69.90.26/32" "fc00:bbbb:bbbb:bb01::6:5a19/128" ];
+          dns = [ "193.138.218.74" ];
+          privateKey = config.sops.secrets.mullvad-privateKey.path;
+          peers = [
+            {
+              publicKey = "vtqDtifokiHna0eBshGdJLedj/lzGW+iDvWKx+YjDFs=";
+              allowedIPs = [ "0.0.0.0/0" "::0/0" ];
+              endpoint = "193.27.14.98:51820";
+            }
+          ];
+        };
+      in
+      {
+        wg-quick.interfaces = mkIf (cfg.enableVPN) {
+          inherit mullvad;
+        };
+        wireless = {
+          enable = true;
+          userControlled.enable = true;
+          interfaces = cfg.wirelessInterfaces;
+        };
       };
-    in {
-      wg-quick.interfaces = mkIf (cfg.enableVPN) {
-        inherit mullvad;
-      };
-      wireless = {
-        enable = true;
-        userControlled.enable = true;
-        interfaces = cfg.wirelessInterfaces;
-      };
-    };
   };
 }
 
