@@ -1,13 +1,10 @@
 # TODO
 
 - fix sway module
-- fix music module
 
 # WIP
 
-- default host + user modules
-- split config into modules
-
+- transition to sops (from git-crypt)
 
 # Ideas
 
