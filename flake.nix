@@ -288,7 +288,7 @@
               };
               yubikey = {
                 enable = true;
-                yubifile = ./secret/ykchal/nixos-14321676;
+                yubifile = ./ykchal/nixos-14321676;
                 username = "nixos";
               };
             };
@@ -320,7 +320,7 @@
               };
               yubikey = {
                 enable = true;
-                yubifile = ./secret/ykchal/maelstroem-14321676;
+                yubifile = ./ykchal/maelstroem-14321676;
                 username = "maelstroem";
               };
             };
