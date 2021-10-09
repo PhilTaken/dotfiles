@@ -1,4 +1,4 @@
-{ system, pkgs, lib, user, sops-nix, ... }:
+{ system, pkgs, lib, user, extramodules ? [ ], ... }:
 with builtins;
 
 rec {
@@ -9,9 +9,7 @@ rec {
     , systemConfig
     , username ? "nixos"
     , wireless_interfaces ? [ ]
-    , extramods ? [ ]
-      #name, initrdMods, kernelMods, kernelParams, kernelPackage,
-      #systemConfig
+    , extraimports ? [ ]
     }:
     let
       sys_users = (map (u: user.mkSystemUser u) users);
@@ -20,12 +18,11 @@ rec {
       inherit system pkgs;
 
       modules = [
-        sops-nix
         {
           imports = ([
             hardware-config
             ../modules/hosts
-          ] ++ sys_users) ++ extramods;
+          ] ++ sys_users) ++ extraimports;
 
           phil = systemConfig;
 
@@ -41,6 +38,6 @@ rec {
           sops.secrets.vaultwarden-yubicoClientId = { };
           sops.secrets.vaultwarden-yubicoSecretKey = { };
         }
-      ];
+      ] ++ extramodules;
     };
 }

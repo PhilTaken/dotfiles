@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 let
   shellPackages = with pkgs; [
     fd
@@ -10,16 +10,16 @@ let
     ssh-to-age
   ];
 in
-  {
-    legacyShell = pkgs.mkShell {
-      buildInputs = shellPackages;
-    };
+{
+  legacyShell = pkgs.mkShell {
+    buildInputs = shellPackages;
+  };
 
-    devShell = pkgs.devshell.mkShell {
-      name = "dotfiles";
-      packages = shellPackages;
+  devShell = pkgs.devshell.mkShell {
+    name = "dotfiles";
+    packages = shellPackages;
 
-      commands =
+    commands =
       [
         {
           name = "fmt";
@@ -60,12 +60,12 @@ in
           name = "switch";
           help = "Switch to a NixOS Configuration (local)";
           command = ''
-          if [[ -z "$@" || "$1" == "help" ]]; then
-          echo -e "Available configs:"
-          nix flake show 2>/dev/null | grep nixosConfigurations -A 200 | tail +2 | sed 's/:.*//'
-          else
-          sudo nixos-rebuild --flake ".#$1" switch
-          fi
+            if [[ -z "$@" || "$1" == "help" ]]; then
+            echo -e "Available configs:"
+            nix flake show 2>/dev/null | grep nixosConfigurations -A 200 | tail +2 | sed 's/:.*//'
+            else
+            sudo nixos-rebuild --flake ".#$1" switch
+            fi
           '';
           category = "system";
         }
@@ -74,16 +74,16 @@ in
           name = "uswitch";
           help = "Build + switch to a user configuration with home-manager";
           command = ''
-          if [[ -z "$@" || "$1" == "help" ]]; then
-          echo -e "Available configs:"
-          echo -e "\tnixos"
-          echo -e "\tmaelstroem"
-          else
-          nix build ".#homeManagerConfigurations.$1.activationPackage" && result/activate
-          fi
+            if [[ -z "$@" || "$1" == "help" ]]; then
+            echo -e "Available configs:"
+            echo -e "\tnixos"
+            echo -e "\tmaelstroem"
+            else
+            nix build ".#homeManagerConfigurations.$1.activationPackage" && result/activate
+            fi
           '';
           category = "system";
         }
       ];
-    };
-  }
+  };
+}

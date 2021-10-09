@@ -18,7 +18,10 @@
     };
 
     # deploy remote setups
-    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # devshell for some nice menu + easy command adding capabilities
     devshell = {
@@ -33,7 +36,10 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # for secret managment
-    sops-nix-src.url = "github:Mic92/sops-nix";
+    sops-nix-src = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { self
@@ -50,7 +56,6 @@
     let
       inherit (nixpkgs) lib;
       system = "x86_64-linux";
-      sops-nix = sops-nix-src.nixosModules.sops;
 
       overlays = [
         nur-src.overlay
@@ -68,10 +73,13 @@
           config.allowUnfree = true;
         };
 
-      utilFor = system:
+      libFor = system:
         import ./lib rec {
-          inherit home-manager lib overlays sops-nix system;
+          inherit home-manager lib overlays system;
           pkgs = nixpkgsFor system;
+          extramodules = [
+            sops-nix-src.nixosModules.sops
+          ];
         };
 
       systemUsersFor = pkgs: {
@@ -90,19 +98,18 @@
         };
       };
 
+      util = libFor "x86_64-linux";
+      raspiUtil = libFor "aarch64-linux";
+
       aarch64_pkgs = nixpkgsFor "aarch64-linux";
-      raspiUtil = utilFor "aarch64-linux";
-      raspiUsers = systemUsersFor aarch64_pkgs;
-
       pkgs = nixpkgsFor "x86_64-linux";
-      util = utilFor "x86_64-linux";
-      systemUsers = systemUsersFor pkgs;
 
-      shells = import ./lib/shells.nix { inherit pkgs; };
+      raspiUsers = systemUsersFor aarch64_pkgs;
+      systemUsers = systemUsersFor pkgs;
     in
     {
-      #devShell."${system}" = shells.legacyShell;
-      devShell."${system}" = shells.devShell;
+      #devShell."${system}" = util.shells.legacyShell;
+      devShell."${system}" = util.shells.devShell;
 
       homeManagerConfigurations =
         let
@@ -111,13 +118,14 @@
         in
         {
           nixos = util.user.mkHMUser {
+            username = "nixos";
+
             userConfig = {
               sway.enable = true;
               music = {
                 enable = true;
                 spotifyd_device_name = "nixos";
               };
-
               git = {
                 enable = true;
                 userName = "Philipp Herzog";
@@ -134,16 +142,16 @@
                 sshKeys = [ sshKey ];
               };
             };
-            username = "nixos";
           };
 
           maelstroem = util.user.mkHMUser {
+            username = "maelstroem";
+
             userConfig = {
               music = {
                 enable = true;
                 spotifyd_device_name = "maelstroem";
               };
-
               kde.enable = true;
               git = {
                 enable = true;
@@ -161,18 +169,6 @@
                 sshKeys = [ sshKey ];
               };
             };
-
-            extraPackages = with pkgs; [
-              audacity
-              chromium
-              citra
-              multimc
-              obs-studio
-              citra
-              openttd
-            ];
-
-            username = "maelstroem";
           };
         };
 
@@ -185,6 +181,7 @@
           in
           util.host.mkHost {
             inherit hardware-config users;
+
             systemConfig = {
               core.hostName = "nixos-laptop";
               laptop = {
@@ -203,7 +200,7 @@
               };
             };
 
-            extramods = [
+            extraimports = [
               #nixos-hardware.nixosModules.lenovo-thinkpad-t490
             ];
           };
@@ -222,6 +219,7 @@
                 docker = true;
                 hostName = "nix-desktop";
               };
+              desktop.enable = true;
               sound.enable = true;
               video = {
                 enable = true;
@@ -235,7 +233,7 @@
               };
             };
 
-            extramods = [
+            extraimports = [
               (import "${localDev}/nixos/modules/services/networking/innernet.nix")
             ];
           };
@@ -260,7 +258,7 @@
               webapps.enable = true;
             };
 
-            extramods = [
+            extraimports = [
               (import "${localDev}/nixos/modules/services/networking/innernet.nix")
             ];
           };
@@ -289,7 +287,7 @@
 
             };
 
-            extramods = [
+            extraimports = [
               nixos-hardware.nixosModules.raspberry-pi-4
             ];
           };
