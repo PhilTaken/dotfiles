@@ -96,3 +96,20 @@ require'neuron'.setup {
     neuron_dir = "/platte/Documents/zettelkasten",
     leader = "gz",
 }
+
+
+local iron = require('iron')
+
+iron.core.add_repl_definitions {
+    python = {
+        ipython = {
+            command = { "ipython" }
+        }
+    }
+}
+
+iron.core.set_config {
+    preferred = {
+        python = "ipython",
+    }
+}

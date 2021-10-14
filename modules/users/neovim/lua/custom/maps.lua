@@ -28,8 +28,7 @@ map('n', '<S-Tab>', ':bp<CR>', {})
 map('n', '<A-a>', 'C-a', options)
 map('n', '<A-x>', 'C-x', options)
 
-local wk = require("which-key")
-wk.register({
+local leadern = {
     [";"] = { function() R('custom.tele').buffers() end, "Buffers" },
     [";;"] = { function() R('custom.tele').project_search() end, "Project Search" },
     K = { function() require('lspsaga.hover').render_hover_doc() end, "Hover Info" },
@@ -48,6 +47,10 @@ wk.register({
             q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix List"},
             l = { "<cmd>TroubleToggle loclist<cr>", "Loclist"},
             r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences"},
+        },
+        i = {
+            name = "+iron",
+            l = { "<Plug>(iron-send-line)", "Send single line" },
         },
     },
     l = {
@@ -76,7 +79,22 @@ wk.register({
     ["<A-n>"] = { function() require('Navigator').down() end, "Go down" },
     ["<A-e>"] = { function() require('Navigator').up() end, "Go up" },
     ["<A-o>"] = { function() require('Navigator').right() end, "Go right" },
-})
+}
+
+local leaderv = {
+    ["<leader>"] = {
+        i = {
+            name = "+iron",
+            s = { "<Plug>(iron-send-visual)", "Send visual selection" },
+        },
+    }
+}
+
+local wk = require("which-key")
+wk.register(leadern, { mode = "n" })
+wk.register(leaderv, { mode = "v" })
+
+wk.register
 
 map('v', '<LocalLeader>ss', '<Plug>RSendSelection', { silent = true; })
 

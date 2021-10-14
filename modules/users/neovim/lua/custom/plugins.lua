@@ -180,6 +180,10 @@ require('packer').startup(function()
             })
         end
     }
+
+    -- for repls in vim
+    use 'hkupty/iron.nvim'
+
     --use {
         --'aserowy/tmux.nvim',
         --config = function()
@@ -189,7 +193,6 @@ require('packer').startup(function()
         --end
     --}
     --- ideas:
-    -- nvim-r
     -- rust-tools.nvim
 end)
 
