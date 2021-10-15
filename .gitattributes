@@ -1,2 +1,0 @@
-secret/** filter=git-crypt diff=git-crypt
-ykchal/** filter=git-crypt diff=git-crypt

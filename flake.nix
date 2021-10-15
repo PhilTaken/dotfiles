@@ -193,11 +193,7 @@
                 enable = true;
                 manager = "sway";
               };
-              yubikey = {
-                enable = true;
-                yubifile = ./ykchal/nixos-14321676;
-                username = "nixos";
-              };
+              yubikey.enable = true;
             };
 
             extraimports = [
@@ -226,11 +222,7 @@
                 driver = "nvidia";
                 manager = "kde";
               };
-              yubikey = {
-                enable = true;
-                yubifile = ./ykchal/maelstroem-14321676;
-                username = "maelstroem";
-              };
+              yubikey.enable = true;
             };
 
             extraimports = [

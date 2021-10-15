@@ -16,24 +16,16 @@ in
       default = false;
     };
 
-    # TODO listOf path
-    yubifile = mkOption {
-      description = "chalresp file for yubikey authentication";
-      type = types.nullOr types.path;
-      default = null;
-    };
-
-    # TODO get username from core module?
-    username = mkOption {
-      description = "main users username";
-      type = types.str;
-      default = "nixos";
-    };
-
     debug = mkOption {
       description = "enable debugging for the pam module";
       type = types.bool;
       default = false;
+    };
+
+    chalRespPath = mkOption {
+      description = "path to the response files";
+      type = types.str;
+      default = "/etc/yubipam";
     };
   };
 
@@ -44,11 +36,12 @@ in
       enable = true;
       debug = cfg.debug;
       mode = "challenge-response";
-      challengeResponsePath = "/etc/yubipam/";
+      challengeResponsePath = cfg.chalRespPath;
     };
 
-    environment.etc = mkIf (cfg.yubifile != null) {
-      "yubipam/${cfg.username}-14321676".source = cfg.yubifile;
-    };
+    #environment.etc = {
+      #"yubipam/nixos-14321676".target = config.sops.secrets.nixos-ykchal.path;
+      #"yubipam/maelstroem-14321676".target = config.sops.secrets.maelstroem-ykchal.path;
+    #};
   };
 }

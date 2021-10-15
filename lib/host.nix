@@ -10,6 +10,7 @@ rec {
     , username ? "nixos"
     , wireless_interfaces ? [ ]
     , extraimports ? [ ]
+    , ykchalBasePath ? "/etc/yubipam"
     }:
     let
       sys_users = (map (u: user.mkSystemUser u) users);
@@ -37,6 +38,9 @@ rec {
           sops.secrets.vaultwarden-adminToken = { };
           sops.secrets.vaultwarden-yubicoClientId = { };
           sops.secrets.vaultwarden-yubicoSecretKey = { };
+
+          sops.secrets.nixos-ykchal.path = "${ykchalBasePath}/nixos-14321676";
+          sops.secrets.maelstroem-ykchal.path = "${ykchalBasePath}/maelstroem-14321676";
         }
       ] ++ extramodules;
     };
