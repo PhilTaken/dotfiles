@@ -12,6 +12,16 @@
   boot.extraModulePackages = [ ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  nixpkgs.overlays = [
+    (self: super: {
+      vlc = super.vlc.override {
+        libbluray = super.libbluray.override {
+          withAACS = true;
+          withBDplus = true;
+        };
+      };
+    })
+  ];
 
   boot.initrd.luks = {
     devices = {

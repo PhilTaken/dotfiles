@@ -47,7 +47,6 @@ in
       ffmpeg
       playerctl
       pamixer
-      vlc
       pavucontrol
       mpv
     ];

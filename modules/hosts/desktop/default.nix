@@ -21,15 +21,29 @@ in
 
   config = mkIf (cfg.enable) {
     programs.steam.enable = true;
-    environment.systemPackages = with pkgs; [
-      audacity
-      chromium
-      citra
-      multimc
-      obs-studio
-      citra
-      openttd
-    ];
+
+    environment.systemPackages =
+      let
+        libbluray = pkgs.libbluray.override {
+          withAACS = true;
+          withBDplus = true;
+        };
+        vlc = pkgs.vlc.override { inherit libbluray; };
+      in
+      with pkgs; [
+        vlc
+        audacity
+        chromium
+        citra
+        multimc
+        obs-studio
+        citra
+        openttd
+        makemkv
+      ];
+
+    services.jellyfin.enable = true;
+    services.jellyfin.openFirewall = true;
 
   };
 }

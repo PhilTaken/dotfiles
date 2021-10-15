@@ -92,7 +92,7 @@
 
         maelstroem = {
           name = "maelstroem";
-          groups = [ "wheel" "video" "audio" "docker" "dialout" ];
+          groups = [ "wheel" "video" "audio" "docker" "dialout" "cdrom" ];
           shell = pkgs.zsh;
           uid = 1000;
         };
@@ -316,5 +316,6 @@
       };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
     };
 }
