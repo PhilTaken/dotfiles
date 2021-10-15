@@ -5,7 +5,7 @@
 - spotifyd service (user => system) / module: user/music
     - or sops-nix integration in home-manager ?
 - declarative wireguard config over tailscale
-    -
+    - check out https://gitlab.com/vikanezrimaya/nix-flake/-/blob/main/nixos-modules/wireguard.nix
 - try out [coq.nvim](https://github.com/ms-jpq/coq_nvim)
 
 # WIP
