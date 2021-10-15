@@ -210,6 +210,7 @@ rec {
           gco = "${pkgs.git}/bin/git checkout";
           gcm = "${pkgs.git}/bin/git checkout main";
           flkup = "nix flake update --commit-lock-file";
+          lg = "${pkgs.lazygit}/bin/lazygit";
         };
       };
 

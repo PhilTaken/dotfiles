@@ -1,25 +1,30 @@
 --------------------------------------------------------------------------------
 -- add all nvim plugins to runtimepath
+local sourced = false
 local uv = vim.loop
 local plugindir = "/home/nixos/Documents/personal/nvim_plugins/"
+local M = {}
 
-local dir = uv.fs_opendir(plugindir, nil, 200)
-if dir ~= nil then 
-	local entries = uv.fs_readdir(dir, nil)
-	uv.fs_closedir(dir)
+if not sourced then
+    local dir = uv.fs_opendir(plugindir, nil, 200)
+    if dir ~= nil then
+        local entries = uv.fs_readdir(dir, nil)
+        uv.fs_closedir(dir)
 
-	local dirs = vim.tbl_filter(function(entry)
-	    return entry.type == "directory"
-	end, entries)
+        local dirs = vim.tbl_filter(function(entry)
+            return entry.type == "directory"
+        end, entries)
 
-	vim.tbl_map(function(entry)
-	    vim.api.nvim_exec("set runtimepath+=" .. plugindir .. entry.name, false)
-	end, dirs)
+        vim.tbl_map(function(entry)
+            vim.api.nvim_exec("set runtimepath+=" .. plugindir .. entry.name, false)
+        end, dirs)
+    end
 end
+sourced = true
 
 --------------------------------------------------------------------------------
 -- for tab and shift-tab in completion
-local check_back_space = function()
+M.check_back_space = function()
     local col = vim.fn.col('.') - 1
     if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
         return true
@@ -28,49 +33,37 @@ local check_back_space = function()
     end
 end
 
-local t = function(str)
+M.t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+-- from tjdevries
+M.P = function(v)
+  print(vim.inspect(v))
+  return v
 end
 
 -- Use (s-)tab to:
 --- move to prev/next item in completion menuone
 --- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
+M.tab_complete = function()
   if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif check_back_space() then
-    return t "<Tab>"
+    return M.t "<C-n>"
+  elseif M.check_back_space() then
+    return M.t "<Tab>"
   else
     return vim.fn['compe#complete']()
   end
 end
 
-_G.s_tab_complete = function()
+M.s_tab_complete = function()
   if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
+    return M.t "<C-p>"
   else
-    return t "<S-Tab>"
+    return M.t "<S-Tab>"
   end
 end
 --------------------------------------------------------------------------------
--- generate autogroups
-
-local cmd = vim.cmd
-function _G.create_augroup(autocmds, name)
-    cmd('augroup ' .. name)
-    cmd('autocmd!')
-    for _, autocmd in ipairs(autocmds) do
-        cmd('autocmd ' .. table.concat(autocmd, ' '))
-    end
-    cmd('augroup END')
-end
-
-
--- from tjdevries
-P = function(v)
-  print(vim.inspect(v))
-  return v
-end
 
 RELOAD = require('plenary.reload').reload_module
 
@@ -78,3 +71,5 @@ R = function(name)
     RELOAD(name)
     return require(name)
 end
+
+return M

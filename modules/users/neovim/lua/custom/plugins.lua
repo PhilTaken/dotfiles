@@ -184,6 +184,12 @@ require('packer').startup(function()
     -- for repls in vim
     use 'hkupty/iron.nvim'
 
+    -- lazygit
+    use {
+        'kdheepak/lazygit.nvim',
+        requires = 'nvim-lua/plenary.nvim'
+    }
+
     --use {
         --'aserowy/tmux.nvim',
         --config = function()
