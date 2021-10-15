@@ -40,6 +40,11 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim-nightly = {
+      url = "github:neovim/neovim?dir=contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { self
@@ -51,6 +56,7 @@
     , devshell
     , nixos-hardware
     , sops-nix-src
+    , neovim-nightly
     , ...
     }@inputs:
     let
@@ -65,6 +71,7 @@
         devshell.overlay
         sops-nix-src.overlay
         deploy-rs.overlay
+        neovim-nightly.overlay
       ];
 
       nixpkgsFor = system:
@@ -169,6 +176,13 @@
                 sshKeys = [ sshKey ];
               };
             };
+
+            extraPackages = with pkgs; [
+              chromium
+              citra
+              multimc
+              openttd
+            ];
           };
         };
 
