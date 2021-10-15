@@ -33,13 +33,9 @@ in
       with pkgs; [
         vlc
         audacity
-        chromium
-        citra
-        multimc
-        obs-studio
-        citra
-        openttd
+        handbrake
         makemkv
+        obs-studio
       ];
 
     services.jellyfin.enable = true;
