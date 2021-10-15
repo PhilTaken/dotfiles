@@ -10,6 +10,7 @@
     ./server
     ./webapps
     ./desktop
+    ./backup
 
     #./innernet-client
     #./innernet-server
