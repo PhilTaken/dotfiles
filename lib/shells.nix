@@ -61,10 +61,14 @@ in
           help = "Switch to a NixOS Configuration (local)";
           command = ''
             if [[ -z "$@" || "$1" == "help" ]]; then
-            echo -e "Available configs:"
-            nix flake show 2>/dev/null | grep nixosConfigurations -A 200 | tail +2 | sed 's/:.*//'
+              eval configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.nixosConfigurations)) ++ [")"]))')
+
+              echo -e "Available configs:"
+              for i in ''${configurations[@]}; do
+                echo -e "  - $i"
+              done
             else
-            sudo nixos-rebuild --flake ".#$1" switch
+              sudo nixos-rebuild --flake ".#$1" switch
             fi
           '';
           category = "system";
@@ -75,11 +79,13 @@ in
           help = "Build + switch to a user configuration with home-manager";
           command = ''
             if [[ -z "$@" || "$1" == "help" ]]; then
-            echo -e "Available configs:"
-            echo -e "\tnixos"
-            echo -e "\tmaelstroem"
+              eval configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.homeManagerConfigurations)) ++ [")"]))')
+              echo -e "Available configs:"
+              for i in ''${configurations[@]}; do
+                echo -e "  - $i"
+              done
             else
-            nix build ".#homeManagerConfigurations.$1.activationPackage" && result/activate
+              nix build ".#homeManagerConfigurations.$1.activationPackage" && result/activate
             fi
           '';
           category = "system";
