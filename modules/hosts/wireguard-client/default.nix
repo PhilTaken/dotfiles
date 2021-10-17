@@ -6,12 +6,12 @@
 with lib;
 
 let
-  cfg = config.phil.innernet-client;
+  cfg = config.phil.wirgeguard-client;
 in
 {
-  options.phil.innernet-client = {
+  options.phil.wirgeguard-client = {
     enable = mkOption {
-      description = "enable innernet-client module";
+      description = "enable wirgeguard-client module";
       type = types.bool;
       default = false;
     };
