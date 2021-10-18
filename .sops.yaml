@@ -2,7 +2,7 @@ keys:
   - &gamma age16wkq74zjg520vfp4rlq50yffp9p4tht6jtdyz5smzlkpdvg609pqnjshkg
   - &beta age1wjp9wplp3hcsa8v4pseu7nu5ugwztxwj0hmcsv3a9hfdwzm2mcksyh2duf
 creation_rules:
-  - path_regex: secrets/[^/]+\.yaml$
+  - path_regex: sops/[^/]+\.yaml$
     key_groups:
     - age:
       - *gamma
