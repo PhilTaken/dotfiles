@@ -50,7 +50,7 @@ in
     };
 
     services.spotifyd = {
-      enable = true;
+      enable = false;
       settings = {
         global = {
           username = "${cfg.spotifyd_username}";
@@ -59,7 +59,6 @@ in
           bitrate = 320;
           volume_normalization = false;
           device_type = "speaker";
-          device_name = "${cfg.spotifyd_devicename}";
           no_audio_cache = true;
           cache_path = "/tmp/spotifyd";
         };
