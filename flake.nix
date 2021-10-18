@@ -227,7 +227,7 @@
             systemConfig = {
               core = {
                 docker = true;
-                hostName = "nix-desktop";
+                hostName = "gamma";
               };
               nvidia.enable = true;
               desktop.enable = true;
@@ -282,7 +282,7 @@
             systemConfig = {
               core = {
                 bootLoader = null;
-                hostName = "nixos-pi";
+                hostName = "beta";
               };
               server = {
                 enable = true;

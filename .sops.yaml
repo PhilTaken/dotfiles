@@ -3,7 +3,7 @@ keys:
   - &beta age1wjp9wplp3hcsa8v4pseu7nu5ugwztxwj0hmcsv3a9hfdwzm2mcksyh2duf
   - &nixos-laptop age1kph642jksjds04ce5qtkqge5qqpdclz3k6elstgx0448vyh96s2q3hfd3s
 creation_rules:
-  - path_regex: secrets/[^/]+\.yaml$
+  - path_regex: sops/[^/]+\.yaml$
     key_groups:
     - age:
       - *gamma
