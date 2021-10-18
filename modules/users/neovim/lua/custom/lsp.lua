@@ -37,7 +37,7 @@ lsp.fortls.setup {coq.lsp_ensure_capabilities{
     on_attach = signature_setup.on_attach,
 }}
 
-lsp.sumneko_lua.setup {coq.lsp_ensure_capabilities{
+lsp.sumneko_lua.setup{coq.lsp_ensure_capabilities{
     cmd = { "lua-language-server" },
     settings = {
         Lua = {

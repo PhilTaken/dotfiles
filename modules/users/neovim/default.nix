@@ -50,7 +50,7 @@ in
         gcc # for treesitter
 
         neuron-notes # for zettelkasten note-taking
-        lazygit      # lazy git managment
+        lazygit # lazy git managment
       ] ++ (with pkgs.nodePackages; [
         pyright # python
         typescript-language-server # js / ts

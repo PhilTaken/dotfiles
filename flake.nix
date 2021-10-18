@@ -133,7 +133,6 @@
               sway.enable = true;
               music = {
                 enable = true;
-                spotifyd_device_name = "nixos";
               };
               git = {
                 enable = true;
@@ -159,7 +158,6 @@
             userConfig = {
               music = {
                 enable = true;
-                spotifyd_device_name = "maelstroem";
               };
               kde.enable = true;
               git = {

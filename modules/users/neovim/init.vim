@@ -270,5 +270,5 @@ else
     call CocAction('doHover')
 endif
 endfunction
-autocmd CursorHold * silent call CocActionAsync('highlight')
+"autocmd CursorHold * silent call CocActionAsync('highlight')
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif

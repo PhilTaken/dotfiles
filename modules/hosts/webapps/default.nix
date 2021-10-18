@@ -18,7 +18,12 @@ in
   };
 
   config = mkIf (cfg.enable) rec {
+    sops.secrets.vaultwarden-adminToken = { };
+    sops.secrets.vaultwarden-yubicoClientId = { };
+    sops.secrets.vaultwarden-yubicoSecretKey = { };
+
     # TODO set up influxdb2
+    # TODO move into separate modules
 
     # TODO finish unbound definitions
     # local dns + secure dns

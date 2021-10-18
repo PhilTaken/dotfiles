@@ -30,6 +30,9 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    sops.secrets.nixos-ykchal.path = "${cfg.chalRespPath}/nixos-14321676";
+    sops.secrets.maelstroem-ykchal.path = "${cfg.chalRespPath}/maelstroem-14321676";
+
     services.udev.packages = with pkgs; [ yubikey-personalization ];
 
     security.pam.yubico = {
@@ -38,10 +41,5 @@ in
       mode = "challenge-response";
       challengeResponsePath = cfg.chalRespPath;
     };
-
-    #environment.etc = {
-      #"yubipam/nixos-14321676".target = config.sops.secrets.nixos-ykchal.path;
-      #"yubipam/maelstroem-14321676".target = config.sops.secrets.maelstroem-ykchal.path;
-    #};
   };
 }

@@ -31,6 +31,8 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    sops.secrets.mullvad-privateKey = { };
+
     environment = {
       systemPackages = with pkgs; [
         powertop

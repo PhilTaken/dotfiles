@@ -4,7 +4,6 @@ final: prev: {
   fortls = prev.callPackage ./applications/fortls { };
   snow-agent = prev.callPackage ./applications/snow-agent { };
   goneovim = prev.callPackage ./applications/goneovim { };
-  fortran-fpm = prev.callPackage ./applications/fortran-fpm { };
   zk = prev.callPackage ./applications/zk { };
 
   fortran-package-manager = prev.callPackage ./applications/fortran-package-manager { };

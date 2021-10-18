@@ -9,7 +9,7 @@ cmd[[au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup]]
 cmd[[au TextYankPost * silent! lua vim.highlight.on_yank { higroup="IncSearch", timeout=1000, on_visual=false }]]
 
 -- show some nice diagnostics
-cmd[[au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
+-- cmd[[au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
 
 -- disable line numbers in terminal
 cmd[[au TermOpen * setlocal norelativenumber nonumber]]

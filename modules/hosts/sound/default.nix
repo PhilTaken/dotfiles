@@ -15,20 +15,55 @@ in
       type = types.bool;
       default = false;
     };
+
+    spotifyd_devicename = mkOption {
+      description = "spotifyd device name";
+      type = types.str;
+      default = "maelstroem";
+    };
+
+    spotifyd_username = mkOption {
+      description = "spotifyd username";
+      type = types.str;
+      default = "wtfusername?";
+    };
   };
 
   config = mkIf (cfg.enable) {
+    sops.secrets.spotify-username = { };
+    sops.secrets.spotify-password = {
+      group = "audio";
+      mode = "0440";
+    };
+
     # Enable sound.
     sound.enable = true;
     sound.mediaKeys.enable = true;
-
     hardware.pulseaudio.enable = false;
+
     services.pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
       jack.enable = true;
+    };
+
+    services.spotifyd = {
+      enable = true;
+      settings = {
+        global = {
+          username = "${cfg.spotifyd_username}";
+          password_cmd = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.spotify-password.path}";
+          backend = "pulseaudio";
+          bitrate = 320;
+          volume_normalization = false;
+          device_type = "speaker";
+          device_name = "${cfg.spotifyd_devicename}";
+          no_audio_cache = true;
+          cache_path = "/tmp/spotifyd";
+        };
+      };
     };
 
     xdg = {
