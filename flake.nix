@@ -118,6 +118,10 @@
       #devShell."${system}" = util.shells.legacyShell;
       devShell."${system}" = util.shells.devShell;
 
+      overlay = [
+        (import ./custom_pkgs)
+      ];
+
       homeManagerConfigurations =
         let
           gpgKey = "BDCD0C4E9F252898";
