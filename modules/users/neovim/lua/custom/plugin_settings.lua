@@ -6,7 +6,7 @@ local saga = require 'lspsaga'
 require('custom.tele_init')
 
 -- compe
-require('custom.compe')
+--require('custom.compe')
 
 -- snippets
 --require('custom.snippets')
@@ -59,6 +59,13 @@ g.pear_tree_smart_closers = 1
 g.pear_tree_smart_backspace = 1
 g.pear_tree_map_special_keys = 0
 g.pear_tree_ft_disabled = { 'TelescopePrompt', 'nofile', 'terminal' }
+
+
+-- coq
+g.coq_settings = {
+    ["auto_start"] = true,
+    ["xdg"] = true,
+}
 
 -- vimwiki
 g.vimwiki_key_mappings = {

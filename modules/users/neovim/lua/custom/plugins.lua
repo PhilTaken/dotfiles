@@ -117,7 +117,20 @@ require('packer').startup(function()
     }
 
     -- completion manager
-    use 'hrsh7th/nvim-compe'
+    --use 'hrsh7th/nvim-compe'
+    use 'ms-jpq/coq_nvim'
+    use 'ms-jpq/coq.artifacts'
+    use 'ms-jpq/coq.thirdparty'
+
+    -- direnv sourcing in nvim
+    use "direnv/direnv.vim"
+
+    -- shareable git links
+    use {
+        'ruifm/gitlinker.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function() require("gitlinker").setup{} end,
+    }
 
     -- completion with docked floating windows
     use 'ncm2/float-preview.nvim'

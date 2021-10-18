@@ -118,26 +118,9 @@ local leadert = {
     ["jj"] = { util.t("<C-\\><C-n>"), "Escape from terminal mode" }
 }
 
--- insert mode mappings
-local leaderi = {
-    ["<tab>"] = { util.tab_complete, "Tab complete", expr=true },
-    ["<s-tab>"] = { util.s_tab_complete, "Go to previous entry (tab complete)", expr=true },
-
-    ['<cr>'] = { "compe#confirm('<CR>')", "Confirm completion", expr=true },
-    ['<C-Space>'] = { "compe#complete()", "Trigger completion", expr=true },
-}
-
--- selection mode mappings
-local leaders = {
-    ["<tab>"] = { util.tab_complete, "Tab complete" },
-    ["<s-tab>"] = { util.s_tab_complete, "Go to previous entry", expr=true },
-}
-
 
 -- register all settings
 local wk = require("which-key")
 wk.register(leadern, { mode = "n" })
 wk.register(leaderv, { mode = "v" })
 wk.register(leadert, { mode = "t" })
-wk.register(leaderi, { mode = "i" })
-wk.register(leaders, { mode = "s" })
