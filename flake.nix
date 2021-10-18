@@ -118,9 +118,7 @@
       #devShell."${system}" = util.shells.legacyShell;
       devShell."${system}" = util.shells.devShell;
 
-      overlay = [
-        (import ./custom_pkgs)
-      ];
+      overlay = (import ./custom_pkgs);
 
       homeManagerConfigurations =
         let
