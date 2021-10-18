@@ -11,6 +11,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
 
   nixpkgs.overlays = [
     (self: super: {
@@ -22,6 +23,8 @@
       };
     })
   ];
+
+
 
   boot.initrd.luks = {
     devices = {

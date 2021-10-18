@@ -11,6 +11,7 @@
     ./webapps
     ./desktop
     ./backup
+    ./nvidia
 
     #./innernet-client
     #./innernet-server

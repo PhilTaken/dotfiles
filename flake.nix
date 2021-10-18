@@ -229,6 +229,7 @@
                 docker = true;
                 hostName = "nix-desktop";
               };
+              nvidia.enable = true;
               desktop.enable = true;
               sound.enable = true;
               video = {
