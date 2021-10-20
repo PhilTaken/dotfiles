@@ -1,7 +1,6 @@
 keys:
   - &alpha age1skfvmh8ff3fghxucv5smeceavpsh354k0z3y42sau64v6h6x6d7sj8e3c9
   - &beta age1wjp9wplp3hcsa8v4pseu7nu5ugwztxwj0hmcsv3a9hfdwzm2mcksyh2duf
-  - &nixos-laptop age1kph642jksjds04ce5qtkqge5qqpdclz3k6elstgx0448vyh96s2q3hfd3s
   - &gamma age16wkq74zjg520vfp4rlq50yffp9p4tht6jtdyz5smzlkpdvg609pqnjshkg
   - &nixos-laptop age1kph642jksjds04ce5qtkqge5qqpdclz3k6elstgx0448vyh96s2q3hfd3s
 creation_rules:
