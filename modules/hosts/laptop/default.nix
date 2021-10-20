@@ -48,12 +48,12 @@ in
       wifi.backend = "wpa_supplicant";
     };
 
-    networking =
-      let
+    networking = {
+      wg-quick.interfaces = mkIf (cfg.enableVPN) {
         mullvad = {
           address = [ "10.69.90.26/32" "fc00:bbbb:bbbb:bb01::6:5a19/128" ];
           dns = [ "193.138.218.74" ];
-          privateKey = config.sops.secrets.mullvad-privateKey.path;
+          privateKeyFile = config.sops.secrets.mullvad-privateKey.path;
           peers = [
             {
               publicKey = "vtqDtifokiHna0eBshGdJLedj/lzGW+iDvWKx+YjDFs=";
@@ -62,17 +62,13 @@ in
             }
           ];
         };
-      in
-      {
-        wg-quick.interfaces = mkIf (cfg.enableVPN) {
-          inherit mullvad;
-        };
-        wireless = {
-          enable = true;
-          userControlled.enable = true;
-          interfaces = cfg.wirelessInterfaces;
-        };
       };
+      wireless = {
+        enable = true;
+        userControlled.enable = true;
+        interfaces = cfg.wirelessInterfaces;
+      };
+    };
   };
 }
 
