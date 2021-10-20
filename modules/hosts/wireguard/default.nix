@@ -6,7 +6,7 @@
 with lib;
 
 let
-  cfg = config.phil.wirgeguard-server;
+  cfg = config.phil.wireguard;
   hostname = config.networking.hostName;
 
   peers = import ./wireguard-peers.nix;
@@ -16,19 +16,16 @@ let
       "${endpoint}:${builtins.toString port}"
       else null;
   };
+
+  peerlist = builtins.mapAttrs (name: mkPeer) ((lib.filterAttrs (name: value: name != hostname) peers));
+  listenPort = peers.${hostname}.port or 51820;
 in
 {
-  options.phil.wirgeguard-server = {
+  options.phil.wireguard = {
     enable = mkOption {
-      description = "enable wirgeguard-server module";
+      description = "enable wireguard module";
       type = types.bool;
-      default = false;
-    };
-
-    isServer = mkOption {
-      description = "wether the peer should act like a server";
-      type = types.bool;
-      default = false;
+      default = true;
     };
   };
 
@@ -39,47 +36,46 @@ in
       };
     };
 
-    networking = mkIf (cfg.isServer) {
-      nat = {
+    # IPv6 configuration
+    # Prefix: fd2e:6bab:862b::/48
+    # Subnets:
+    # 1) Server machines
+    #    1. primrose
+    # 2) Humans
+    #    1. longiflorum
+    #    2. poco-m3 (my phone)
+    #
+    # Inside of the machine subnets there's a /72 prefix to allow
+    # for a machine to claim multiple IP addresses - this is useful
+    # for hosting containers, VMs and everything that requires a
+    # whole IP address to itself without messing with port forwarding
+    networking = {
+      hosts = (builtins.listToAttrs
+        (builtins.concatLists
+          (builtins.map
+            (item: builtins.map (ip: {
+              name = builtins.elemAt (builtins.split "/" ip) 0;
+              value = item.name + ".yggdrasil.vpn";
+            }) item.ips)
+            (lib.mapAttrsToList (name: value: {
+              name = name;
+              ips = value.ownIPs;
+            }) peers)
+          )
+        )
+      );
+      firewall.allowedUDPPorts = [ listenPort ];
+      wireguard = {
         enable = true;
-        externalInterface = "eth0";
-        internalInterfaces = [ "wg0" ];
+        interfaces = {
+          yggdrasil = {
+            peers = peerlist;
+            ips = peers.${hostname}.ownIPs;
+            inherit listenPort;
+            privateKeyFile = config.sops.secrets.wireguard-key.path;
+          };
+        };
       };
-
-      firewall = {
-        allowedTCPPorts = [ 53 ];
-        allowedUDPPorts = [ 53 listenPort ];
-      };
-    };
-
-    networking.wg-quick.interfaces.wg0 = (if (cfg.isServer) then let
-      ipv4 = builtins.head peers.server.ownIPs;
-      ipv6 = builtins.head (builtins.tail peers.server.ownIPs);
-      clientPeers = builtins.mapAttrs (name: mkPeer) peers.clients;
-    in {
-      inherit listenPort;
-
-      postUp = ''
-        ${pkgs.iptables}/bin/iptables -A FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${ipv4} -o eth0 -j MASQUERADE
-        ${pkgs.iptables}/bin/ip6tables -A FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/ip6tables -t nat -A POSTROUTING -s ${ipv6} -o eth0 -j MASQUERADE
-      '';
-
-      preDown = ''
-        ${pkgs.iptables}/bin/iptables -D FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${ipv4} -o eth0 -j MASQUERADE
-        ${pkgs.iptables}/bin/ip6tables -D FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/ip6tables -t nat -D POSTROUTING -s ${ipv6} -o eth0 -j MASQUERADE
-      '';
-
-      peers = clientPeers;
-    } else {
-      dns = peers.server.ownIPs;
-      peers = mkPeer peers.server;
-    }) // {
-      address = peers.${hostname}.address;
-      privateKeyFile = config.sops.secrets.wireguard-key.path;
     };
   };
 }
