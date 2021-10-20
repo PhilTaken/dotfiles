@@ -10,7 +10,7 @@ let
   hostname = config.networking.hostName;
 
   peers = import ./wireguard-peers.nix;
-  mkPeer = { publicKey, ownIPs, allowedIPs ? ownIPs, endpoint ? null, port ? 51821, persistentKeepalive ? null, presharedKey ? null }: {
+  mkPeer = { publicKey, ownIPs, allowedIPs ? ownIPs, endpoint ? null, port ? 51821, persistentKeepalive ? 25, presharedKey ? null }: {
     inherit publicKey allowedIPs persistentKeepalive presharedKey;
     endpoint = if endpoint != null then
       "${endpoint}:${builtins.toString port}"
