@@ -146,6 +146,7 @@ rec {
                 "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
                 "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
                 "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+                "${mod}+l" = "exec ${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --effect-blur 7x5 --effect-vignette 0.5:0.5 --effect-pixelate 2 --grace 5 --fade-in 0.5";
           };
           assigns = {
             "2" = [{ app_id = "firefox"; }];
