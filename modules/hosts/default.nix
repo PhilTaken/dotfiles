@@ -12,6 +12,7 @@
     ./desktop
     ./backup
     ./nvidia
+    ./wireguard
 
     #./innernet-client
     #./innernet-server

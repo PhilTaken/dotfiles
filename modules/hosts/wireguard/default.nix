@@ -10,15 +10,22 @@ let
   hostname = config.networking.hostName;
 
   peers = import ./wireguard-peers.nix;
-  mkPeer = { publicKey, address, allowedIPs ? address, endpoint ? null, port ? 51820, persistentKeepalive ? null, presharedKey ? null }: {
+  mkPeer = { publicKey, ownIPs, allowedIPs ? ownIPs, endpoint ? null, port ? 51821, persistentKeepalive ? null, presharedKey ? null }: {
     inherit publicKey allowedIPs persistentKeepalive presharedKey;
     endpoint = if endpoint != null then
       "${endpoint}:${builtins.toString port}"
       else null;
   };
 
-  peerlist = builtins.mapAttrs (name: mkPeer) ((lib.filterAttrs (name: value: name != hostname) peers));
-  listenPort = peers.${hostname}.port or 51820;
+  foreignPeers = lib.filterAttrs (name: value: name != hostname) peers;
+  foreignServerPeers = lib.filterAttrs (name: value: value.endpoint != null) foreignPeers;
+
+  peerlist = if (peers.${hostname}.endpoint != null) then
+    builtins.mapAttrs (name: mkPeer) foreignPeers
+  else
+    builtins.mapAttrs (name: mkPeer) foreignServerPeers;
+
+  listenPort = peers.${hostname}.port or 51821;
 in
 {
   options.phil.wireguard = {
@@ -27,35 +34,30 @@ in
       type = types.bool;
       default = true;
     };
+
+    nat = mkOption {
+      description = "enable nat for wireguard";
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf (cfg.enable) {
     sops.secrets = {
       wireguard-key = {
-        sopsFile = builtins.toPath "../sops/${hostname}-wireguard.yaml";
+        sopsFile = ../../../sops/${hostname}-wireguard.yaml;
+        #sopsFile = "../../../sops/${hostname}-wireguard.yaml";
       };
     };
 
-    # IPv6 configuration
-    # Prefix: fd2e:6bab:862b::/48
-    # Subnets:
-    # 1) Server machines
-    #    1. primrose
-    # 2) Humans
-    #    1. longiflorum
-    #    2. poco-m3 (my phone)
-    #
-    # Inside of the machine subnets there's a /72 prefix to allow
-    # for a machine to claim multiple IP addresses - this is useful
-    # for hosting containers, VMs and everything that requires a
-    # whole IP address to itself without messing with port forwarding
     networking = {
+      nat.enable = cfg.nat;
       hosts = (builtins.listToAttrs
         (builtins.concatLists
           (builtins.map
             (item: builtins.map (ip: {
               name = builtins.elemAt (builtins.split "/" ip) 0;
-              value = item.name + ".yggdrasil.vpn";
+              value = [ "${item.name}.yggdrasil.vpn" ];
             }) item.ips)
             (lib.mapAttrsToList (name: value: {
               name = name;
@@ -69,7 +71,7 @@ in
         enable = true;
         interfaces = {
           yggdrasil = {
-            peers = peerlist;
+            peers = (lib.mapAttrsToList (name: value: value) peerlist);
             ips = peers.${hostname}.ownIPs;
             inherit listenPort;
             privateKeyFile = config.sops.secrets.wireguard-key.path;
