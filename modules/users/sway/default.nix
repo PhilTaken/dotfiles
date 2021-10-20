@@ -21,6 +21,12 @@ rec {
       type = types.nullOr types.path;
       default = null;
     };
+
+    background_image = mkOption {
+      description = "Background image";
+      type = types.path;
+      default = ./wallpaper/nix-wallpaper-dracula.png;
+    };
   };
 
   config = mkIf (cfg.enable) rec {
@@ -78,15 +84,14 @@ rec {
           keybindings =
             let
               swayconf = wayland.windowManager.sway.config;
-              left = swayconf.left;
-              right = swayconf.right;
-              up = swayconf.up;
-              down = swayconf.down;
               term = swayconf.terminal;
               mod = swayconf.modifier;
               menu = swayconf.menu;
+              up = swayconf.up;
+              down = swayconf.down;
+              left = swayconf.left;
+              right = swayconf.right;
             in
-            lib.mkForce
               {
                 "${mod}+Shift+c" = "reload";
                 "${mod}+Shift+u" = "exit";
@@ -141,9 +146,7 @@ rec {
                 "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
                 "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
                 "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-              } // (mkIf (cfg.lock_bg != null) {
-              "${mod}+l" = "exec ${pkgs.swaylock}/bin/swaylock -i ${lock_bg} &";
-            });
+          };
           assigns = {
             "2" = [{ app_id = "firefox"; }];
             "3" = [{ class = "discord"; }];
@@ -203,7 +206,7 @@ rec {
               criteria = { app_id = "avizo-service"; };
             }
           ];
-          output = { "*" = { bg = "${background_image} fill"; }; };
+          output = { "*" = { bg = "${cfg.background_image} fill"; }; };
         };
       };
 
@@ -319,10 +322,10 @@ rec {
       #};
     };
 
-    services.pulseeffects = {
-      enable = true;
-      package = pkgs.pulseeffects-pw;
-    };
+    #services.pulseeffects = {
+      #enable = true;
+      #package = pkgs.pulseeffects-pw;
+    #};
 
     # for the work laptop
     services.kanshi = {
