@@ -1,13 +1,3 @@
-# alpha:
-#   - can ping: alpha, gamma
-#   - cant ping: beta
-# beta:
-#   - can ping: alpha, beta, gamma
-#   - cant ping:
-# gamma:
-#   - can ping: alpha, gamma
-#   - cant ping: beta
-
 rec {
   alpha = {
     publicKey = "LDOII0S7OWakg4oDrC1wUCoM/YXq3wXTEjYoqBbI2Sk=";
@@ -20,7 +10,7 @@ rec {
   beta = {
     publicKey = "/DWBidRPbNdqBhXZJFGpD20K+Bs6ViEbq4DJOlw5f0U=";
     ownIPs = [ "10.100.0.2/24" ];
-    allowedIPs = [ "10.100.0.0/32" ];
+    allowedIPs = [ "10.100.0.2/32" ];
     endpoint = null;
   };
 
