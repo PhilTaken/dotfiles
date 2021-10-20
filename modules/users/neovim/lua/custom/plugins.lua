@@ -63,19 +63,11 @@ require('packer').startup(function()
     }
 
     -- ayu color scheme
-    --use {
-        --'ayu-theme/ayu-vim',
-        --config = function()
-            --vim.g.ayucolor = "mirage"
-            --vim.cmd[[colorscheme ayu]]
-        --end
-    --}
-
     use {
-        'marko-cerovac/material.nvim',
+        'ayu-theme/ayu-vim',
         config = function()
-            vim.g.material_style = "palenight"
-            vim.cmd[[colorscheme material]]
+            vim.g.ayucolor = "mirage"
+            vim.cmd[[colorscheme ayu]]
         end
     }
 
