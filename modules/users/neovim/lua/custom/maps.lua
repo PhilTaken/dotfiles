@@ -119,9 +119,23 @@ local leadert = {
     ["jj"] = { util.t("<C-\\><C-n>"), "Escape from terminal mode" }
 }
 
+-- TODO
+local leaderi = {
+
+}
 
 -- register all settings
 local wk = require("which-key")
 wk.register(leadern, { mode = "n" })
 wk.register(leaderv, { mode = "v" })
 wk.register(leadert, { mode = "t" })
+wk.register(leaderi, { mode = "i" })
+
+
+--vim.cmd [[
+  --imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-k>'
+  --inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
+  --imap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
+  --snoremap <silent> <c-k> <cmd>lua require('luasnip').jump(1)<CR>
+  --snoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
+--]]

@@ -2,6 +2,7 @@ local g = vim.g
 local cmd = vim.cmd
 local saga = require 'lspsaga'
 
+
 -- telescope
 require('custom.tele_init')
 
@@ -32,7 +33,7 @@ cmd[[let g:echodoc#type = 'floating']]
 cmd[[let g:float_preview#docked = 1]]
 
 -- extra icon for the completer (compe)
-require'lspkind'.init{}
+require'lspkind'.init()
 
 -- setup treesitter
 require'nvim-treesitter.configs'.setup {
@@ -60,12 +61,6 @@ g.pear_tree_smart_backspace = 1
 g.pear_tree_map_special_keys = 0
 g.pear_tree_ft_disabled = { 'TelescopePrompt', 'nofile', 'terminal' }
 
-
--- coq
-g.coq_settings = {
-    ["auto_start"] = true,
-    ["xdg"] = true,
-}
 
 -- vimwiki
 g.vimwiki_key_mappings = {
@@ -128,3 +123,58 @@ cmd[[let g:lazygit_floating_window_scaling_factor = 0.9]]                  -- sc
 cmd[[let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] ]]  -- customize lazygit popup window corner characters
 cmd[[let g:lazygit_floating_window_use_plenary = 1]]                       -- use plenary.nvim to manage floating window if available
 cmd[[let g:lazygit_use_neovim_remote = 1]]                                 -- fallback to 0 if neovim-remote is not installed
+
+-- nvim-cmp
+local cmp = require 'cmp'
+local lspkind = require 'lspkind'
+
+cmp.setup {
+  mapping = {
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<c-y>"] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    },
+    ["<c-space>"] = cmp.mapping.complete(),
+  },
+
+  sources = {
+    { name = "nvim_lua" },
+    { name = "nvim_lsp" },
+    { name = "path" },
+    { name = "buffer", keyword_length = 5 },
+    { name = "tmux" },
+    { name = "latex_symbols" },
+    { name = "luasnip" },
+    --{ name = "zsh" },    -> tamago324/cmp-zsh
+  },
+
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
+
+  formatting = {
+    format = lspkind.cmp_format {
+      with_text = true,
+      menu = {
+        nvim_lua = "[api]",
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        path = "[path]",
+        tmux = "[tmux]",
+        latex_symbols = "[latex]",
+
+        --luasnip = "[snip]",
+      },
+    },
+  },
+
+  experimental = {
+    native_menu = false,
+    ghost_text = true,
+  },
+}

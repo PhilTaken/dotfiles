@@ -1,5 +1,8 @@
 # TODO
 
+- important:
+    - find good luasnips settings (./modules/users/neovim/lua/custom/maps.lua)
+
 - wayland
     - sway on nvidia (?) 
         - newest beta driver
@@ -24,8 +27,13 @@
     - set up monitoring / logging of system stats to grafana (on alpha)
 
 - nvim
+    - floaterm
+    - nvim_coq -> nvim-cmp
     - disable tab/shift-tab completion, enter for selection. use the original vim ways of <c-n>, <c-p> and <c-y>
     - learn more `:h ins-complete` bindings
+    - figure out how to get `pylsp` working with envs and stuff
+    - snippets?
+    - lazygit integration with neovim
 
 # WIP
 

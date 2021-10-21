@@ -116,11 +116,21 @@ require('packer').startup(function()
         run = ":TSUpdate",
     }
 
-    -- completion manager
-    --use 'hrsh7th/nvim-compe'
-    use 'ms-jpq/coq_nvim'
-    use 'ms-jpq/coq.artifacts'
-    use 'ms-jpq/coq.thirdparty'
+    -- completion management
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-nvim-lua",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-latex-symbols",
+            { 'andersevenrud/compe-tmux', branch = 'cmp' },
+
+            "L3MON4D3/LuaSnip",
+            'saadparwaiz1/cmp_luasnip'
+        }
+    }
 
     -- direnv sourcing in nvim
     use "direnv/direnv.vim"

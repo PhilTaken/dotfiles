@@ -1,12 +1,10 @@
 -- nvim_lsp object
 local lsp = require'lspconfig'
-local coq = require'coq'
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
---capabilities.textDocument.completion.completionItem.snippetSupport = true;
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- signature help
 local signature_setup = {
+    capabilities = capabilities,
     on_attach = function(_, _)
         require'lsp_signature'.on_attach({
             bind = true,
@@ -18,26 +16,22 @@ local signature_setup = {
     end,
 }
 
-local coq_caps = coq.lsp_ensure_capabilities(signature_setup)
 
 -- Enable lsp servers
-lsp.rust_analyzer.setup{coq.lsp_ensure_capabilities{
-    capabilities = capabilities,
-    on_attach = signature_setup.on_attach,
-}}
-
-lsp.elixirls.setup{coq.lsp_ensure_capabilities{
+lsp.elixirls.setup{
     cmd = { "elixir-ls" },
     on_attach = signature_setup.on_attach,
-}}
+    capabilities = signature_setup.capabilities,
+}
 
-lsp.fortls.setup {coq.lsp_ensure_capabilities{
+lsp.fortls.setup {
     cmd = { "fortls", "--hover_signature", "--enable_code_actions" },
     root_dir = lsp.util.root_pattern('.git'),
     on_attach = signature_setup.on_attach,
-}}
+    capabilities = signature_setup.capabilities,
+}
 
-lsp.sumneko_lua.setup{coq.lsp_ensure_capabilities{
+lsp.sumneko_lua.setup{
     cmd = { "lua-language-server" },
     settings = {
         Lua = {
@@ -57,15 +51,16 @@ lsp.sumneko_lua.setup{coq.lsp_ensure_capabilities{
         },
     },
     on_attach = signature_setup.on_attach,
-}}
+    capabilities = signature_setup.capabilities,
+}
 
-lsp.texlab.setup(coq_caps)
-lsp.ccls.setup(coq_caps)
-lsp.rnix.setup(coq_caps)
-lsp.tsserver.setup(coq_caps)
-lsp.erlangls.setup(coq_caps)
-lsp.r_language_server.setup(coq_caps)
+lsp.ccls.setup(signature_setup)
+lsp.rnix.setup(signature_setup)
+lsp.texlab.setup(signature_setup)
+lsp.pyright.setup(signature_setup)
+lsp.tsserver.setup(signature_setup)
+lsp.erlangls.setup(signature_setup)
+lsp.rust_analyzer.setup(signature_setup)
+lsp.r_language_server.setup(signature_setup)
 
-lsp.pyright.setup(coq_caps)
 --lsp.pylsp.setup(signature_setup)
-
