@@ -23,6 +23,10 @@
 - all hosts
     - set up monitoring / logging of system stats to grafana (on alpha)
 
+- nvim
+    - disable tab/shift-tab completion, enter for selection. use the original vim ways of <c-n>, <c-p> and <c-y>
+    - learn more `:h ins-complete` bindings
+
 # WIP
 
 # Ideas
