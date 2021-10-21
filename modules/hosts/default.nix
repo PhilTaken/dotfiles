@@ -8,7 +8,6 @@
     ./video
     ./yubikey
     ./server
-    ./webapps
     ./desktop
     ./backup
     ./nvidia

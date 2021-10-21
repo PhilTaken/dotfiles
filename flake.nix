@@ -203,8 +203,19 @@
                 bootLoader = "grub";
                 grubDevice = "/dev/sda";
               };
-              server.enable = true;
-              webapps.enable = true;
+              server = {
+                enable = true;
+                openssh = true;
+                fail2ban = true;
+
+                adguardhome = {
+                  enable = true;
+                };
+
+                ttrss = {
+                  enable = true;
+                };
+              };
             };
 
             extraimports = [
