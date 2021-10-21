@@ -284,8 +284,12 @@
                 enable = true;
                 mount = {
                   enable = true;
-                  ip = "beta.yggdrasil.vpn";
-                  dirs = [ "/media" ];
+                  binds = [
+                    {
+                      ip = "192.168.8.236";
+                      dirs = [ "/media" ];
+                    }
+                  ];
                 };
               };
             };
