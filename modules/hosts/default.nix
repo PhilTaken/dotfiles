@@ -13,6 +13,7 @@
     ./backup
     ./nvidia
     ./wireguard
+    ./fileshare
 
     #./innernet-client
     #./innernet-server
