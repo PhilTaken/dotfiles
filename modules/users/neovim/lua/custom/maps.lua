@@ -68,6 +68,7 @@ local leadern = {
         },
         i = {
             name = "+iron",
+            s = { "<cmd>IronRepl<cr>", "Start iron repl" },
             l = { "<Plug>(iron-send-line)", "Send single line" },
         },
         l = {
