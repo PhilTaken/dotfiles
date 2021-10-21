@@ -6,16 +6,20 @@
     - plasma wayland
         - keep an eye on https://github.com/NixOS/nixpkgs/issues/134334
 
-- neovim 
-    - nightly overlay
-
 - alpha
     - set up influxdb2
     - set up grafana monitoring
-    - set up vaultwarden
+    - set up revere proxy for all kinds of webservices on beta / gamma / etc.
+    - set up backing up database to beta
+
+- beta
+    - set up sensor + logging to grafana
     - set up nextcloud for small file hosting + floccus bookmark + browsersync, in container?
     - set up hedgedoc
+    - set up vaultwarden
 
+- all hosts
+    - set up monitoring / logging of system stats to grafana (on alpha)
 
 # WIP
 
