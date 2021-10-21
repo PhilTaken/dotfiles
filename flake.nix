@@ -187,64 +187,6 @@
         };
 
       nixosConfigurations = {
-        # workplace-issued thinkpad
-        nixos-laptop =
-          let
-            hardware-config = import (./machines/nixos-laptop);
-            users = with systemUsers; [ nixos ];
-          in
-          util.host.mkHost {
-            inherit hardware-config users;
-
-            systemConfig = {
-              core.hostName = "nixos-laptop";
-              laptop = {
-                enable = true;
-                wirelessInterfaces = [ "wlp0s20f3" ];
-              };
-              sound.enable = true;
-              video = {
-                enable = true;
-                manager = "sway";
-              };
-              yubikey.enable = true;
-            };
-
-            extraimports = [
-              #nixos-hardware.nixosModules.lenovo-thinkpad-t490
-            ];
-          };
-
-        # desktop @ home
-        gamma =
-          let
-            hardware-config = import (./machines/gamma);
-            users = with systemUsers; [ maelstroem ];
-          in
-          util.host.mkHost {
-            inherit hardware-config users;
-
-            systemConfig = {
-              core = {
-                docker = true;
-                hostName = "gamma";
-              };
-              nvidia.enable = true;
-              desktop.enable = true;
-              sound.enable = true;
-              video = {
-                enable = true;
-                driver = "nvidia";
-                manager = "kde";
-              };
-              yubikey.enable = true;
-            };
-
-            extraimports = [
-              (import "${localDev}/nixos/modules/services/networking/innernet.nix")
-            ];
-          };
-
         # vm on a hetzner server, debian host
         alpha =
           let
@@ -297,13 +239,90 @@
                   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCoABVjBx1az00D8EBjw9/NS9luqO2lN4Y87/2xsQqPTx9P7aXzfX53TwmU9Wpmp7qOIKykd8GSkBdCizMEzgaGmJl6+Di2GYvEfN0NrsLdBrjmIh7AQyR6UbY7qoTFjZ28864rk9QV9to2R1APL7o1wzdmCrFtTsemV+lw9MglqcPLT+ae2mba9fD84FFDmcSJMg5x1QHrO5GuWg/Ng7SE1eRhDbDmz66+HhdgvRRDJ9VwPGcH5ruXsDKvi/nrLVSxw7afvuM5KcNYoy+9CrA/N10cO5zdn4/q2DLYujkOvAucCDJ4bUEe8q6xEZw1LfCjKWIoFxzt+hetfkjS/Y3wWWTcHfcOx/BV6cOxyAFUGbu9RX/iUpyt8LAfjQv6L1zcD7vxYpfKz88jI/4zL7mHwILg+XQklBeiBsEQ4PyO1+4oIfuju241hVk+bFZYUD+AzzCNv7GKNNHe4aa4MWN6RLLhNxe9QlOTnsw0l2XNypr62Q1V8nxZkSY7mW8Hn0hLxTT82mTLuAff2yHPu+w+i0ELkk0BO28apxU1dPPbScHvojRlXTwIBvH3HN6TWdj2YnNFMdGvZgxxFNbi4l/7Gar1FKgi79KOwcm89ATmjONfbQMub+TaeBACefMZ9Q7uzbWeNO3mZpVA8nvM5eleqLemxYoeAQBuYjBjJlAHzQ== (none)"
                 ];
               };
-
+              fileshare = {
+                enable = true;
+                shares = {
+                  enable = true;
+                  dirs = [ "/media" ];
+                };
+                samba = {
+                  enable = true;
+                  dirs = [ "/media" ];
+                };
+              };
             };
 
             extraimports = [
               nixos-hardware.nixosModules.raspberry-pi-4
             ];
           };
+
+        # desktop @ home
+        gamma =
+          let
+            hardware-config = import (./machines/gamma);
+            users = with systemUsers; [ maelstroem ];
+          in
+          util.host.mkHost {
+            inherit hardware-config users;
+
+            systemConfig = {
+              core = {
+                docker = true;
+                hostName = "gamma";
+              };
+              nvidia.enable = true;
+              desktop.enable = true;
+              sound.enable = true;
+              video = {
+                enable = true;
+                driver = "nvidia";
+                manager = "kde";
+              };
+              yubikey.enable = true;
+              fileshare = {
+                enable = true;
+                mount = {
+                  enable = true;
+                  ip = "beta.yggdrasil.vpn";
+                  dirs = [ "/media" ];
+                };
+              };
+            };
+
+            extraimports = [
+              (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+            ];
+          };
+
+        # workplace-issued thinkpad
+        nixos-laptop =
+          let
+            hardware-config = import (./machines/nixos-laptop);
+            users = with systemUsers; [ nixos ];
+          in
+          util.host.mkHost {
+            inherit hardware-config users;
+
+            systemConfig = {
+              core.hostName = "nixos-laptop";
+              laptop = {
+                enable = true;
+                wirelessInterfaces = [ "wlp0s20f3" ];
+              };
+              sound.enable = true;
+              video = {
+                enable = true;
+                manager = "sway";
+              };
+              yubikey.enable = true;
+            };
+
+            extraimports = [
+              #nixos-hardware.nixosModules.lenovo-thinkpad-t490
+            ];
+          };
+
       };
 
       systems = {
