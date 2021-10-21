@@ -22,46 +22,8 @@ in
     sops.secrets.vaultwarden-yubicoClientId = { };
     sops.secrets.vaultwarden-yubicoSecretKey = { };
 
-    # TODO set up influxdb2
-    # TODO move into separate modules
-
-    # TODO finish unbound definitions
-    # local dns + secure dns
-    #services.unbound = {
-    #enable = true;
-    #settings = {
-    #server = {
-    #interface = "127.0.0.1";
-    #port = 5335;
-    #do-ip4 = "yes";
-    #do-udp = "yes";
-    #do-tcp = "yes";
-    #prefer-ip6 = "no";
-    #harden-glue = "yes";
-    #harden-dnssec-stripped = "yes";
-    #use-caps-for-id = "no";
-    #edns-buffer-size = 1472;
-    #prefetch = "yes";
-    #num-threads = 1;
-    #so-rcvbuf = "1m";
-    #};
-    ## https://www.bentasker.co.uk/documentation/linux/279-unbound-adding-custom-dns-records
-    ## https://wiki.archlinux.org/title/Unbound#Using_openresolv
-    #local-data = [
-    #"rss.pherzog.xyz A 127.0.0.1"
-    #"adguard.pherzog.xyz A 127.0.0.1"
-
-    #];
-    #};
-    #};
-
-    # acme security (lets encrypt)
-    security.acme = {
-      email = "philipp.herzog@protonmail.com";
-      acceptTerms = true;
-    };
-
     # ---------------------------------------------------- #
+    # TODO move into separate modules
 
     # rss client
     services.tt-rss = {
@@ -77,19 +39,6 @@ in
       themePackages = with pkgs; [ tt-rss-theme-feedly ];
     };
 
-    # TODO enable for all systems
-    # TODO convert to sops config scheme
-    #services.innernet = {
-    #enable = false;
-    #config = builtins.readFile ../../../secret/vpn/valhalla.conf;
-    # config:
-    #  - listen-port: 51820
-    #  - address: "10.42.0.1"
-    #  - network-cidr-prefix: 16
-    #interfaceName = "valhalla";
-    #openFirewall = true;
-    #};
-
     # dns ad blocking
     services.adguardhome = {
       enable = true;
@@ -98,50 +47,6 @@ in
       openFirewall = false;
     };
 
-    # TODO configure hedgedoc
-    services.hedgedoc = {
-      enable = false;
-    };
-
-    # TODO/WIP configure reverse proxy for all services
-    # maybe switch to traefik / other
-    services.nginx =
-      let
-        adguard = services.adguardhome;
-        tt-rss = services.tt-rss;
-      in
-      {
-        enable = true;
-        #recommendedProxySettings = true;
-        #recommendedTlsSettings = true;
-        # other Nginx options
-        virtualHosts."rss.pherzog.xyz" = {
-          # supplied by tt-rss config
-          # just a stub
-          #enableACME = true;
-          #forceSSL = true;
-        };
-
-        virtualHosts."adguard.pherzog.xyz" = lib.mkIf adguard.enable {
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:31111/";
-          };
-        };
-      };
-
-    # TODO configure nextcloud for small file hosting + floccus bookmark + browsersync
-    # in container?
-    services.nextcloud = {
-      enable = false;
-    };
-
-    # TODO configure grafana
-    services.grafana = {
-      enable = false;
-      port = 31112;
-    };
-
-    # TODO configure vaultwarden
     services.vaultwarden = {
       enable = false;
       config = {
@@ -157,24 +62,6 @@ in
         adminToken = config.sops.secrets.vaultwarden-adminToken.path;
       };
     };
-
-    # minecraft server for testing
-    services.minecraft-server = {
-      enable = true;
-      eula = true;
-      declarative = true;
-
-      serverProperties = {
-        server-port = 25565;
-        gamemode = "survival";
-        motd = "NixOS Minecraft server on Tailscale!";
-        max-players = 5;
-        enable-rcon = true;
-        "rcon.password" = "hunter2";
-        level-seed = "10292992";
-      };
-    };
-    nixpkgs.config.allowUnfree = true;
 
     # firewall
     networking.firewall.interfaces = {
@@ -221,4 +108,3 @@ in
     };
   };
 }
-
