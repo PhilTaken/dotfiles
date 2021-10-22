@@ -1,5 +1,10 @@
 local cmd = vim.cmd
 local util = require 'custom.utils'
+local luasnip = require 'luasnip'
+
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
 -- autocommands
 -- dont save passwords in swapfile...
@@ -95,6 +100,9 @@ local leadern = {
         g = {
             name = "+git",
             g = { "<cmd>LazyGit<cr>", "Open LazyGit" },
+            y = { function() require('gitlinker').get_buf_range_url('n') end, 'copy link to file in remote to clipboard' },
+            o = { function() require('gitlinker').get_buf_range_url('n', {action_callback = require("gitlinker.actions").open_in_browser }) end, 'open current buffer\'s remote in browser' },
+            Y = { function() require('gitlinker').get_repo_url() end, "copy homepage url to clipboard" },
         },
     },
 }
@@ -119,9 +127,14 @@ local leadert = {
     ["jj"] = { util.t("<C-\\><C-n>"), "Escape from terminal mode" }
 }
 
--- TODO
 local leaderi = {
+    ["<c-o>"] = { function() require('luasnip').jump(1) end, "jump to next snippet placeholder" },
+    ["<c-z>"] = { function() require('luasnip').jump(-1) end, "jump to previous snippet placeholder" },
+}
 
+local leaders = {
+    ["<c-o>"] = { function() require('luasnip').jump(1) end, "jump to next snippet placeholder" },
+    ["<c-z>"] = { function() require('luasnip').jump(-1) end, "jump to previous snippet placeholder" },
 }
 
 -- register all settings
@@ -130,12 +143,4 @@ wk.register(leadern, { mode = "n" })
 wk.register(leaderv, { mode = "v" })
 wk.register(leadert, { mode = "t" })
 wk.register(leaderi, { mode = "i" })
-
-
---vim.cmd [[
-  --imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-k>'
-  --inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
-  --imap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
-  --snoremap <silent> <c-k> <cmd>lua require('luasnip').jump(1)<CR>
-  --snoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
---]]
+wk.register(leaders, { mode = "s" })

@@ -139,7 +139,7 @@ require('packer').startup(function()
     use {
         'ruifm/gitlinker.nvim',
         requires = 'nvim-lua/plenary.nvim',
-        config = function() require("gitlinker").setup{} end,
+        config = function() require("gitlinker").setup{ mappings = nil } end,
     }
 
     -- completion with docked floating windows
