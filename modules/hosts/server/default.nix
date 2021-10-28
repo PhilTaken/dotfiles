@@ -26,6 +26,10 @@ in
       openssh.enable = mkEnableOption "the ssh daemon";
       jellyfin.enable = mkEnableOption "jellyfin media host";
 
+      grafana = {
+        enable = mkEnableOption "grafana dashboard";
+      };
+
       ttrss = {
         enable = mkEnableOption "tiny tiny rss";
         url = mkOption {
@@ -53,9 +57,19 @@ in
       influxdb2 = {
         enable = mkEnableOption "influxdb2 - time series database";
         url = mkOption {
-          description = "vaultwarden url (webinterface)";
+          description = "influxdb url (webinterface)";
           type = types.str;
         };
+
+        port = mkOption {
+          description = "influxdb port (webinterface)";
+          type = types.port;
+          default = 8086;
+        };
+      };
+
+      telegraf = {
+        enable = mkEnableOption "telegraf metric reporting";
       };
     };
   };
@@ -142,11 +156,69 @@ in
 
     # -----------------------------------------------
 
+    sops.secrets.telegraf-shared = mkIf (cfg.services.telegraf.enable) {
+      owner = config.systemd.services.telegraf.serviceConfig.User;
+      sopsFile = ../../../sops/telegraf.yaml;
+    };
+
+    services.telegraf = {
+      enable = cfg.services.telegraf.enable;
+      environmentFiles = [ config.sops.secrets.telegraf-shared.path ];
+      extraConfig = {
+        agent = {
+          interval = "10s";
+          round_interval = true;
+          metric_batch_size = 1000;
+          metric_buffer_limit = 10000;
+          collection_jitter = "0s";
+          flush_interval = "10s";
+          flush_jitter = "0s";
+          precision = "";
+          debug = false;
+          quiet = false;
+          logfile = "";
+          hostname = "";
+          omit_hostname = false;
+        };
+
+        outputs = {
+          influxdb_v2 = {
+            urls = ["http://alpha.yggdrasil.vpn:8086"];
+            token = "$INFLUX_TOKEN";
+            organization = "home";
+            bucket = "data";
+          };
+        };
+
+        inputs = {
+          cpu = {
+            percpu = true;
+            totalcpu = true;
+            collect_cpu_time = false;
+            report_active = false;
+          };
+
+          disk = {
+            ignore_fs = ["tmpfs" "devtmpfs" "devfs" "overlay" "aufs" "squashfs"];
+          };
+
+          diskio = {};
+          mem = {};
+          net = {};
+          processes = {};
+          swap = {};
+          system = {};
+        };
+      };
+    };
+
+    # -----------------------------------------------
+
     services.influxdb2 = {
       enable = cfg.services.influxdb2.enable;
       settings = {
         reporting-disable = true;
-        #http-bind-address = "10.100.0.1:8086";
+        http-bind-address = "${cfg.services.influxdb2.url}:${builtins.toString cfg.services.influxdb2.port}";
         #vault-addr = "10.100.0.1:8200";
       };
     };
@@ -177,11 +249,12 @@ in
         ];
       };
 
-      "valhalla" = {
+      "yggdrasil" = {
         allowedUDPPorts = [
           5353 # dns
           51820 # innernet
           25565 # minecraft
+          cfg.services.influxdb2.port
         ];
 
         allowedTCPPorts = [
@@ -191,6 +264,7 @@ in
           51820 # innernet
           31111 # adguard home webinterface
           25565 # minecraft
+          cfg.services.influxdb2.port
         ];
       };
     };

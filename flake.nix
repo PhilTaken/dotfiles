@@ -209,6 +209,13 @@
                   openssh.enable = true;
                   fail2ban.enable = true;
 
+                  telegraf.enable = true;
+
+                  influxdb2 = {
+                    enable = true;
+                    url = "alpha.yggdrasil.vpn";
+                  };
+
                   adguardhome = {
                     enable = true;
                   };
@@ -244,6 +251,7 @@
                 services = {
                   openssh.enable = true;
                   jellyfin.enable = true;
+                  telegraf.enable = true;
                 };
               };
               fileshare = {
@@ -277,6 +285,10 @@
               core = {
                 docker = true;
                 hostName = "gamma";
+              };
+              server = {
+                enable = true;
+                services.telegraf.enable = true;
               };
               nvidia.enable = true;
               desktop.enable = true;
@@ -317,6 +329,10 @@
 
             systemConfig = {
               core.hostName = "nixos-laptop";
+              server = {
+                enable = true;
+                services.telegraf.enable = true;
+              };
               laptop = {
                 enable = true;
                 wirelessInterfaces = [ "wlp0s20f3" ];

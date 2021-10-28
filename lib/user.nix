@@ -32,7 +32,7 @@ with builtins;
             hicolor-icon-theme
 
             iosevka-bin
-            (nerdfonts.override { fonts = [ "Iosevka" ]; })
+            (nerdfonts.override { fonts = [ "Iosevka"  ]; })
 
             anki
             cachix
