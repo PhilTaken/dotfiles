@@ -208,9 +208,16 @@ require('packer').startup(function()
     use 'hkupty/iron.nvim'
 
     -- lazygit
+    --use {
+        --'kdheepak/lazygit.nvim',
+        --requires = 'nvim-lua/plenary.nvim'
+    --}
+
     use {
-        'kdheepak/lazygit.nvim',
-        requires = 'nvim-lua/plenary.nvim'
+        "akinsho/toggleterm.nvim",
+        config = function()
+            require('toggleterm').setup{}
+        end
     }
 
     --use {

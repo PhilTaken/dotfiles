@@ -2,9 +2,30 @@ local cmd = vim.cmd
 local util = require 'custom.utils'
 local luasnip = require 'luasnip'
 
-local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+local Terminal  = require('toggleterm.terminal').Terminal
+
+local lazygit = Terminal:new({
+    cmd = "lazygit",
+    direction = "float",
+    float_opts = {
+        border = "double",
+    },
+})
+
+local bottom = Terminal:new({
+    cmd = "btm",
+    direction = "float",
+    float_opts = {
+        border = "double",
+    },
+})
+
+local bgshell = Terminal:new({
+    direction = "float",
+    float_opts = {
+        border = "double",
+    }
+})
 
 -- autocommands
 -- dont save passwords in swapfile...
@@ -99,10 +120,16 @@ local leadern = {
         },
         g = {
             name = "+git",
-            g = { "<cmd>LazyGit<cr>", "Open LazyGit" },
+            g = { function() lazygit:toggle() end, "Open LazyGit" },
             y = { function() require('gitlinker').get_buf_range_url('n') end, 'copy link to file in remote to clipboard' },
             o = { function() require('gitlinker').get_buf_range_url('n', {action_callback = require("gitlinker.actions").open_in_browser }) end, 'open current buffer\'s remote in browser' },
             Y = { function() require('gitlinker').get_repo_url() end, "copy homepage url to clipboard" },
+        },
+        s = {
+            g = { function() lazygit:toggle() end, "Toggle lazygit interface" },
+            h = { function() bottom:toggle() end, "Toggle bottom resource monitor"},
+            s = { function() bgshell:toggle() end, "Toggle random shell" },
+            c = { "<cmd>ToggleTermCloseAll<cr>", "Close all dangling terminals" },
         },
     },
 }

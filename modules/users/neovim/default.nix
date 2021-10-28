@@ -49,8 +49,10 @@ in
         fd # faster find
         gcc # for treesitter
 
-        neuron-notes # for zettelkasten note-taking
+        bottom # custom floaterm
         lazygit # lazy git managment
+
+        neuron-notes # for zettelkasten note-taking
       ] ++ (with pkgs.nodePackages; [
         pyright # python
         typescript-language-server # js / ts
