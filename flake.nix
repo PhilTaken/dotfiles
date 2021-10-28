@@ -137,7 +137,7 @@
               git = {
                 enable = true;
                 userName = "Philipp Herzog";
-                userEmail = "p.herzog@fz-juelich.de";
+                userEmail = "philipp.herzog@protonmail.com";
                 signKey = gpgKey;
               };
               mail.enable = true;
