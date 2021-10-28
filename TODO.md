@@ -1,5 +1,8 @@
 # TODO
 
+important:
+    - why does git not sign anymore?
+
 - beta
     - set up nextcloud for small file hosting + floccus bookmark + browsersync, in container?
     - set up hedgedoc
