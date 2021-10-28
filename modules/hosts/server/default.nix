@@ -22,10 +22,11 @@ in
     };
 
     services = {
-      fail2ban = mkEnableOption "fail2ban ssh login blocker";
-      openssh = mkEnableOption "the ssh daemon";
+      fail2ban.enable = mkEnableOption "fail2ban ssh login blocker";
+      openssh.enable = mkEnableOption "the ssh daemon";
+      jellyfin.enable = mkEnableOption "jellyfin media host";
 
-      ttrs = {
+      ttrss = {
         enable = mkEnableOption "tiny tiny rss";
         url = mkOption {
           description = "ttrss url (webinterface)";
@@ -52,7 +53,7 @@ in
       influxdb2 = {
         enable = mkEnableOption "influxdb2 - time series database";
         url = mkOption {
-          description = "influxdb url (webinterface)";
+          description = "vaultwarden url (webinterface)";
           type = types.str;
         };
       };
@@ -67,23 +68,30 @@ in
       hdparm
       htop
       usbutils
-    ] ++ (if cfg.services.fail2ban then [ fail2ban ] else []);
+    ] ++ (if cfg.services.fail2ban.enable then [ fail2ban ] else []);
 
 
-    services.fail2ban.enable = cfg.services.fail2ban;
+    services.fail2ban.enable = cfg.services.fail2ban.enable;
 
     # -----------------------------------------------
 
     # general open ssh config
     services.openssh = {
-      enable = cfg.services.openssh;
+      enable = cfg.services.openssh.enable;
       passwordAuthentication = false;
       permitRootLogin = "yes";
       authorizedKeysFiles = [ "/etc/nixos/authorized-keys" ];
     };
 
     # and set some ssh keys for root
-    users.extraUsers.root.openssh.authorizedKeys.keys = mkIf (cfg.services.openssh) cfg.sshKeys;
+    users.extraUsers.root.openssh.authorizedKeys.keys = mkIf (cfg.services.openssh.enable) cfg.sshKeys;
+
+    # -----------------------------------------------
+
+    services.jellyfin = {
+      enable = cfg.services.jellyfin.enable;
+      openFirewall = true;
+    };
 
     # -----------------------------------------------
 

@@ -205,15 +205,17 @@
               };
               server = {
                 enable = true;
-                openssh = true;
-                fail2ban = true;
+                services = {
+                  openssh.enable = true;
+                  fail2ban.enable = true;
 
-                adguardhome = {
-                  enable = true;
-                };
+                  adguardhome = {
+                    enable = true;
+                  };
 
-                ttrss = {
-                  enable = true;
+                  ttrss = {
+                    enable = true;
+                  };
                 };
               };
             };
@@ -237,7 +239,13 @@
                 bootLoader = null;
                 hostName = "beta";
               };
-              server.enable = true;
+              server = {
+                enable = true;
+                services = {
+                  openssh.enable = true;
+                  jellyfin.enable = true;
+                };
+              };
               fileshare = {
                 enable = true;
                 shares = {

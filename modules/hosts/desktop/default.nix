@@ -24,6 +24,17 @@ in
 
     environment.systemPackages =
       let
+        extensions = with pkgs.vscode-extensions; [
+          bbenoist.nix
+          #ms-python.python
+          ms-toolsai.jupyter
+        ];
+
+        vscodium-with-extensions = pkgs.vscode-with-extensions.override {
+          vscode = pkgs.vscodium;
+          vscodeExtensions = extensions;
+        };
+
         libbluray = pkgs.libbluray.override {
           withAACS = true;
           withBDplus = true;
@@ -31,16 +42,14 @@ in
         vlc = pkgs.vlc.override { inherit libbluray; };
       in
       with pkgs; [
+        #vscodium-with-extensions
+        vscodium
         vlc
         audacity
         handbrake
         makemkv
         obs-studio
       ];
-
-    services.jellyfin.enable = true;
-    services.jellyfin.openFirewall = true;
-
   };
 }
 
