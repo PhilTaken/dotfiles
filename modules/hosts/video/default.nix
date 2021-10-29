@@ -60,7 +60,7 @@ in
         xkbOptions = "caps:escape,grp:shifts_toggle";
 
         displayManager = {
-          defaultSession = if cfg.manager == "i3" then "none+i3" else "plasma5";
+          defaultSession = if cfg.manager == "i3" then "none+i3" else "plasma";
         };
 
         videoDrivers =
