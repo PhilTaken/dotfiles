@@ -228,6 +228,9 @@ require('packer').startup(function()
         } end
     }
 
+    -- auto resize for splits, save a lot of hassle
+    use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
+
     --use {
         --'aserowy/tmux.nvim',
         --config = function()
