@@ -85,6 +85,14 @@ in
       };
     console.useXkbConfig = true;
 
+
+    fonts.fonts = with pkgs; [
+        #iosevka-bin
+        (nerdfonts.override { fonts = [
+          "Iosevka" "FiraCode" "FiraMono" "Hack"
+        ];})
+    ];
+
     # ----------------------
     # kde
 

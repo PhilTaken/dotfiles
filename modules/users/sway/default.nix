@@ -50,6 +50,7 @@ rec {
           right = "o";
           modifier = "Mod4";
           terminal = "${pkgs.foot}/bin/foot";
+          #terminal = "${pkgs.alacritty}/bin/alacritty";
           menu = "rofi -show run";
           floating.border = 0;
           focus.followMouse = "always";
@@ -314,13 +315,13 @@ rec {
         enable = true;
         #package = pkgs.rofi-wayland;
       };
-      #alacritty = {
-      #enable = true;
-      #settings = {
-      #font.normal.family = "iosevka";
-      #font.size = 12.0;
-      #};
-      #};
+      alacritty = {
+        enable = true;
+        settings = {
+          font.normal.family = "Iosevka Nerd Font";
+          font.size = 12.0;
+        };
+      };
     };
 
     # for the work laptop

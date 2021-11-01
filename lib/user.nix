@@ -31,9 +31,6 @@ with builtins;
             weather-icons
             hicolor-icon-theme
 
-            iosevka-bin
-            (nerdfonts.override { fonts = [ "Iosevka"  ]; })
-
             anki
             cachix
             discord
