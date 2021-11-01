@@ -63,8 +63,8 @@ rec {
           #use_symbol_for_status = true;
         };
         package.disabled = true;
-        python.symbol = "Py ";
-        rust.symbol = "R ";
+        python.symbol = "Py";
+        rust.symbol = "R";
         nix_shell = {
           symbol = "❄️ ";
           style = "bold blue";
@@ -72,15 +72,15 @@ rec {
         };
         git_status = {
           conflicted = "=";
-          ahead = "⇡ ";
-          behind = "⇣ ";
-          diverged = "⇕ ";
+          ahead = "⇡";
+          behind = "⇣";
+          diverged = "⇕";
           untracked = "?";
           stashed = "$";
           modified = "!";
           staged = "+";
           renamed = "»";
-          deleted = "✘ ";
+          deleted = "✘";
         };
         jobs.symbol = "+";
       };
