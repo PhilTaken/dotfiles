@@ -109,7 +109,7 @@ in
         enable = true;
         package = pkgs.alacritty;
         settings = {
-          font.normal.family = "iosevka";
+          font.normal.family = "Iosevka Nerd Font";
           font.size = 12;
         };
       };
