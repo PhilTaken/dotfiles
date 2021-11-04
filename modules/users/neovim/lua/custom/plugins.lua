@@ -31,7 +31,15 @@ require('packer').startup(function()
     }
 
     -- change pwd to git root
-    use 'zah/vim-rooter'
+    use {
+        'zah/vim-rooter',
+        function()
+            local g = vim.g
+            g.rooter_targets = '/,*'
+            g.rooter_patterns = { '.git/' }
+            g.rooter_resolve_links = 1
+        end
+    }
 
     -- start menu
     use 'mhinz/vim-startify'
@@ -41,17 +49,38 @@ require('packer').startup(function()
 
     -- auto end quotation mark/bracket
     --use 'cohama/lexima.vim'
-    use 'tmsvg/pear-tree'
+    use {
+        'tmsvg/pear-tree',
+        config = function( )
+            local g = vim.g
+            g.pear_tree_smart_openers = 1
+            g.pear_tree_smart_closers = 1
+            g.pear_tree_smart_backspace = 1
+            g.pear_tree_map_special_keys = 0
+            g.pear_tree_ft_disabled = { 'TelescopePrompt', 'nofile', 'terminal' }
+        end
+    }
+
     -- use 'jiangmao/auto-pairs'
     -- specifically https://github.com/jiangmiao/auto-pairs/blob/master/plugin/auto-pairs.vim
 
     -- show function arguments
-    use 'Shougo/echodoc.vim'
+    use {
+        'Shougo/echodoc.vim',
+        config = function()
+            local cmd = vim.cmd
+            cmd[[let g:echodoc#enable_at_startup = 1]]
+            cmd[[let g:echodoc#type = 'floating']]
+        end
+    }
 
     -- telescope
     use {
         'nvim-telescope/telescope.nvim',
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+        requires = {
+            {'nvim-lua/popup.nvim'},
+            {'nvim-lua/plenary.nvim'}
+        }
     }
 
     -- statusline
@@ -62,38 +91,41 @@ require('packer').startup(function()
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
 
-    -- ayu color scheme
+    use 'folke/lsp-colors.nvim'
+
     use {
-        'ayu-theme/ayu-vim',
+        'Pocco81/Catppuccino.nvim',
         config = function()
-            vim.g.ayucolor = "mirage"
-            vim.cmd[[colorscheme ayu]]
+            local catppuccino = require('catppuccino')
+            catppuccino.setup{
+                colorscheme = "dark_catppuccino",
+                integrations = {
+                    lsp_saga = true,
+                    gitsigns = true,
+                    telescope = true,
+                    which_key = true,
+                },
+            }
+            -- catppuccino.load()
+            vim.cmd[[colorscheme catppuccino]]
         end
     }
 
-    -- extra colors for older colorschemes
-    use 'folke/lsp-colors.nvim'
-
     --use {
-        --'Pocco81/Catppuccino.nvim',
-        --config = function()
-            --local catppuccino = require('catppuccino')
-            --catppuccino.setup{
-                --colorscheme = "soft_manilo",
-                --integrations = {
-                    --lsp_saga = true,
-                    --gitsigns = true,
-                    --telescope = true,
-                    --which_key = true,
-                --},
-            --}
-            --catppuccino.load()
-        --end
+    --    'ayu-theme/ayu-vim',
+    --    config = function()
+    --        vim.g.ayucolor = "mirage"
+    --        vim.cmd[[colorscheme ayu]]
+    --    end
     --}
 
-    -- vim wiki / pandoc
-    --use 'vimwiki/vimwiki'
-    use 'vim-pandoc/vim-pandoc'
+
+    use {
+        'vim-pandoc/vim-pandoc',
+        config = function()
+            vim.cmd[[let g:pandoc#spell#enabled = 0]]
+        end
+    }
     use 'vim-pandoc/vim-pandoc-syntax'
 
     -- ultisnips alternative in lua
@@ -103,7 +135,13 @@ require('packer').startup(function()
     use 'neovim/nvim-lspconfig'
 
     -- lspsaga
-    use 'glepnir/lspsaga.nvim'
+    use {
+        'glepnir/lspsaga.nvim',
+        config = function()
+            local saga = require 'lspsaga'
+            saga.init_lsp_saga()
+        end
+    }
 
     -- signature help
     use {
@@ -143,38 +181,60 @@ require('packer').startup(function()
     }
 
     -- completion with docked floating windows
-    use 'ncm2/float-preview.nvim'
+    use {
+        'ncm2/float-preview.nvim',
+        config = function()
+            vim.cmd[[let g:float_preview#docked = 1]]
+        end
+    }
 
     -- nix
     use 'LnL7/vim-nix'
 
     -- extra targets
     use 'wellle/targets.vim'
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = { 'nvim-lua/plenary.nvim' },
+        tag = 'v0.2',
+        config = function()
+            require('gitsigns').setup {
+                signs = {
+                    add          = {hl = 'GitGutterAdd'   , text = '+'},
+                    change       = {hl = 'GitGutterChange', text = '~'},
+                    delete       = {hl = 'GitGutterDelete', text = '_'},
+                    topdelete    = {hl = 'GitGutterDelete', text = '‾'},
+                    changedelete = {hl = 'GitGutterChange', text = '~'},
+                }
+            }
+        end
+    }
 
     -- extra icons for completion
-    use 'onsails/lspkind-nvim'
+    use {
+        'onsails/lspkind-nvim',
+        config = function()
+            require'lspkind'.init()
+        end
+    }
 
     -- manage surrounds e.g. quotation marks, html tags, ...
     use 'tpope/vim-surround'
 
     -- highlighting for the glsl (gl shader language)
-    use 'tikhomirov/vim-glsl'
+    --use 'tikhomirov/vim-glsl'
 
-    --switch between single and multiline
-    --use 'AndrewRadev/splitjoin.vim'
-
-    use 'jalvesaq/Nvim-R'
-
-    -- zettelkasten
-    --use { "megalithic/zk.nvim" }
     use {
-        "oberblastmeister/neuron.nvim",
-        requires = {
-            'nvim-lua/popup.nvim',
-            'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope.nvim'
-        },
+        'jalvesaq/Nvim-R',
+        config = function()
+            local cmd = vim.cmd
+            cmd[[let R_non_r_compl = 0]]
+            cmd[[let R_user_maps_only = 1]]
+            cmd[[let R_csv_app = 'tmux new-window vd']]
+            cmd[[let R_auto_start = 1]]
+        end
     }
+
 
     -- show keybinds + comment for them
     use {
@@ -208,10 +268,10 @@ require('packer').startup(function()
     use 'hkupty/iron.nvim'
 
     -- lazygit
-    --use {
-        --'kdheepak/lazygit.nvim',
-        --requires = 'nvim-lua/plenary.nvim'
-    --}
+    use {
+        'kdheepak/lazygit.nvim',
+        requires = 'nvim-lua/plenary.nvim'
+    }
 
     use {
         "akinsho/toggleterm.nvim",
@@ -234,23 +294,68 @@ require('packer').startup(function()
         config = function()
             require("focus").setup{
                 hybridnumber = true,
-                winhighlight = true,
+                winhighlight = false,
                 cursorline = true,
                 treewidth = 20,
             }
         end
     }
-
+    -- zettelkasten
     --use {
-        --'aserowy/tmux.nvim',
+        --"megalithic/zk.nvim",
+        --requires = {
+            --'nvim-telescope/telescope.nvim'
+        --},
         --config = function()
-            --require("tmux").setup({
-
+            --require('zk').setup({
+                --debug = false,
+                --log = true,
+                --default_keymaps = true,
+                --fuzzy_finder = "telescope",
+                --link_format = "markdown"
             --})
+            --require('telescope').load_extension('zk')
         --end
     --}
-    --- ideas:
+
+    --use {
+        --"oberblastmeister/neuron.nvim",
+        --requires = {
+        --    'nvim-lua/popup.nvim',
+        --    'nvim-lua/plenary.nvim',
+        --    'nvim-telescope/telescope.nvim'
+        --},
+        --config = function()
+        --    require'neuron'.setup {
+        --        virtual_titles = true,
+        --        mappings = false,
+        --        run = nil,
+        --        neuron_dir = "/platte/Documents/zettelkasten",
+        --        leader = "gz",
+        --    }
+        --end
+    --}
+
+    -- ideas:
     -- rust-tools.nvim
+    -- extra colors for older colorschemes
+
+    -- vim wiki / pandoc
+    -- use {
+    --     'vimwiki/vimwiki',
+    --     config = function()
+    --         -- vimwiki
+    --         vim.g.vimwiki_key_mappings = {
+    --             global = 0,
+    --             links = 0,
+    --             html = 0,
+    --             mouse = 0,
+    --             table_mappings = 0,
+    --         }
+    --     end
+    -- }
+
+
 end)
 
 -- install updates if packer has just been downloaded

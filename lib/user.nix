@@ -1,4 +1,11 @@
-{ pkgs, home-manager, lib, system, overlays, ... }:
+{ pkgs
+, home-manager
+, lib
+, system
+, overlays
+, extraHMImports
+, ...
+}:
 with builtins;
 {
   mkHMUser = { userConfig, username, extraPackages ? [ ] }:
@@ -69,7 +76,7 @@ with builtins;
 
         imports = [
           ../modules/users
-        ];
+        ] ++ extraHMImports;
       };
     };
 

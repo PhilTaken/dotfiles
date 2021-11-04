@@ -82,7 +82,7 @@ in
       hdparm
       htop
       usbutils
-    ] ++ (if cfg.services.fail2ban.enable then [ fail2ban ] else []);
+    ] ++ (if cfg.services.fail2ban.enable then [ fail2ban ] else [ ]);
 
 
     services.fail2ban.enable = cfg.services.fail2ban.enable;
@@ -183,7 +183,7 @@ in
 
         outputs = {
           influxdb_v2 = {
-            urls = ["http://alpha.yggdrasil.vpn:8086"];
+            urls = [ "http://alpha.yggdrasil.vpn:8086" ];
             token = "$INFLUX_TOKEN";
             organization = "home";
             bucket = "data";
@@ -199,15 +199,15 @@ in
           };
 
           disk = {
-            ignore_fs = ["tmpfs" "devtmpfs" "devfs" "overlay" "aufs" "squashfs"];
+            ignore_fs = [ "tmpfs" "devtmpfs" "devfs" "overlay" "aufs" "squashfs" ];
           };
 
-          diskio = {};
-          mem = {};
-          net = {};
-          processes = {};
-          swap = {};
-          system = {};
+          diskio = { };
+          mem = { };
+          net = { };
+          processes = { };
+          swap = { };
+          system = { };
         };
       };
     };

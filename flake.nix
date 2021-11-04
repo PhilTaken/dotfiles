@@ -45,6 +45,11 @@
       url = "github:neovim/neovim?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    spicetify = {
+      #url = "github:PhilTaken/spicetify-nix";
+      url = "/home/nixos/Documents/gits/spicetify-nix";
+    };
   };
   outputs =
     { self
@@ -57,6 +62,7 @@
     , nixos-hardware
     , sops-nix-src
     , neovim-nightly
+    , spicetify
     , ...
     }@inputs:
     let
@@ -86,6 +92,9 @@
           pkgs = nixpkgsFor system;
           extramodules = [
             sops-nix-src.nixosModules.sops
+          ];
+          extraHMImports = [
+            spicetify.homeManagerModule
           ];
         };
 

@@ -11,7 +11,7 @@ in
 {
   options.phil.music = {
     enable = mkOption {
-      description = "Enable i3";
+      description = "Enable the music module";
       type = types.bool;
       default = false;
     };
@@ -19,8 +19,16 @@ in
 
   config = (mkIf cfg.enable) {
 
+    programs.spicetify = {
+      enable = true;
+      theme = "Onepunch";
+      #colorScheme = "Nord-Dark";
+      #enabledCustomApps = ["reddit"];
+      #enabledExtensions = ["newRelease.js"];
+    };
+
     home.packages = with pkgs; [
-      spotify-unwrapped
+      #spotify-unwrapped
 
       ffmpeg
       playerctl
