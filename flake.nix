@@ -47,8 +47,8 @@
     };
 
     spicetify = {
-      #url = "github:PhilTaken/spicetify-nix";
-      url = "/home/nixos/Documents/gits/spicetify-nix";
+      url = "github:PhilTaken/spicetify-nix";
+      #url = "/home/nixos/Documents/gits/spicetify-nix";
     };
   };
   outputs =

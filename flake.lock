@@ -230,14 +230,17 @@
         "spicetify-themes": "spicetify-themes"
       },
       "locked": {
-        "lastModified": 1635814952,
+        "lastModified": 1636034101,
         "narHash": "sha256-M+CH1lBG5pRWB3SQ5DwWiXwBtR28uaBf4qxv/c0fHB0=",
-        "type": "git",
-        "url": "file:///home/nixos/Documents/gits/spicetify-nix"
+        "owner": "PhilTaken",
+        "repo": "spicetify-nix",
+        "rev": "746dfe7e1f4690481364652a168ebc294eb8005a",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/nixos/Documents/gits/spicetify-nix"
+        "owner": "PhilTaken",
+        "repo": "spicetify-nix",
+        "type": "github"
       }
     },
     "spicetify-themes": {
