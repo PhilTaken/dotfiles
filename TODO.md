@@ -1,8 +1,5 @@
 # TODO
 
-important:
-    - why does git not sign anymore?
-
 - beta
     - set up nextcloud for small file hosting + floccus bookmark + browsersync, in container?
     - set up hedgedoc
@@ -23,6 +20,13 @@ important:
 - nvim
     - figure out how to get `pylsp` working with envs and stuff
     - snippets?
+    - quickfix list
+        - https://github.com/kevinhwang91/nvim-bqf
+    - marks 
+        - https://github.com/chentau/marks.nvim
+    - barbar
+        - https://github.com/romgrk/barbar.nvim
+
 
 # WIP
 
