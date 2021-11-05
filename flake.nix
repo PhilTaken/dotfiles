@@ -77,7 +77,7 @@
         devshell.overlay
         sops-nix-src.overlay
         deploy-rs.overlay
-        neovim-nightly.overlay
+        #neovim-nightly.overlay
       ];
 
       nixpkgsFor = system:

@@ -6,7 +6,6 @@ require('telescope').setup {
         prompt_prefix = '❯ ',
         selection_caret = '❯ ',
 
-
         winblend = 0,
 
         layout_strategy = 'horizontal',
