@@ -217,6 +217,7 @@ rec {
     programs.tmux =
       let
         airline_conf = ./tmux_airline.conf;
+        colorscheme_conf = ./catppuccino_dark.conf;
       in
       {
         enable = true;
@@ -225,17 +226,39 @@ rec {
         keyMode = "vi";
         secureSocket = true;
         shortcut = "a";
-        terminal = "screen-256color";
+        #terminal = "screen-256color";
         extraConfig = ''
-          source ${airline_conf}
+          set -g default-terminal "tmux-256color"
+          set -ag terminal-overrides ",xterm-256color:RGB"
 
-          set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
-          set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
+          #set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+          #set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
 
+          # --------------------------
+
+          set -g xterm-keys on
+          set -s focus-events on
+
+          # setw -g monitor-activity on
+          # set -g visual-activity on
+
+          set-window-option -g automatic-rename on
+          set-option -g set-titles on
+          set -g history-limit 50000
           set -g mouse on
-          setw -g monitor-activity on
-          set -g visual-activity on
-          set-option -sa terminal-overrides ',alacritty:Tc'
+          setw -q -g utf8 on
+
+          # ----------------------
+
+          set -g base-index 1
+          setw -g pane-base-index 1
+          set -g renumber-windows on
+          set -g set-titles on
+          set -g status-interval 0
+
+
+          # ------------------------------------------------------------------------------
+          # BINDS
 
           bind Escape copy-mode
           unbind p
@@ -265,6 +288,12 @@ rec {
           bind -r N resize-pane -D 5
           bind -r E resize-pane -U 5
           bind -r O resize-pane -R 5
+
+          # --------------------------
+
+          source ${airline_conf}
+          source ${colorscheme_conf}
+
         '';
         plugins = with pkgs.tmuxPlugins; [
           sessionist

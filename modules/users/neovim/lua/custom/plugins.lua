@@ -1,4 +1,5 @@
 -- Install packer
+
 local execute = vim.api.nvim_command
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
@@ -11,29 +12,16 @@ end
 
 -- Only required if you have packer in your `opt` pack
 vim.cmd [[packadd packer.nvim]]
-vim.api.nvim_exec([[
-augroup Packer
-autocmd!
-autocmd BufWritePost plugins.lua PackerCompile
-augroup end
-]], false)
 
 local use = require('packer').use
 require('packer').startup(function()
     -- pack packer
     use {'wbthomason/packer.nvim', opt = true}
 
-    -- git signs in signcolumn
-    use {
-        'lewis6991/gitsigns.nvim',
-        requires = { 'nvim-lua/plenary.nvim' },
-        tag = 'v0.2',
-    }
-
     -- change pwd to git root
     use {
         'zah/vim-rooter',
-        function()
+        config = function()
             local g = vim.g
             g.rooter_targets = '/,*'
             g.rooter_patterns = { '.git/' }
@@ -44,6 +32,28 @@ require('packer').startup(function()
     -- start menu
     use 'mhinz/vim-startify'
 
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function()
+            require('colorizer').setup()
+        end
+    }
+
+    use {
+        "lukas-reineke/indent-blankline.nvim",
+        requires = {
+            'nvim-treesitter/nvim-treesitter',
+        },
+        config = function()
+            require("indent_blankline").setup {
+                --char = "|",
+                buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
+                filetype_exclude = { "startify", "dashboard", "man" },
+                show_current_context = true,
+            }
+        end
+    }
+
     -- commenting
     use 'preservim/nerdcommenter'
 
@@ -51,7 +61,7 @@ require('packer').startup(function()
     --use 'cohama/lexima.vim'
     use {
         'tmsvg/pear-tree',
-        config = function( )
+        config = function()
             local g = vim.g
             g.pear_tree_smart_openers = 1
             g.pear_tree_smart_closers = 1
@@ -87,7 +97,9 @@ require('packer').startup(function()
     use {
         'glepnir/galaxyline.nvim',
         branch = 'main',
-        config = function() require'custom.statusline' end,
+        config = function()
+            require'custom.statusline'
+        end,
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
 
@@ -177,7 +189,11 @@ require('packer').startup(function()
     use {
         'ruifm/gitlinker.nvim',
         requires = 'nvim-lua/plenary.nvim',
-        config = function() require("gitlinker").setup{ mappings = nil } end,
+        config = function()
+            require("gitlinker").setup{
+                mappings = nil
+            }
+        end,
     }
 
     -- completion with docked floating windows
@@ -193,6 +209,7 @@ require('packer').startup(function()
 
     -- extra targets
     use 'wellle/targets.vim'
+
     use {
         'lewis6991/gitsigns.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
@@ -239,19 +256,25 @@ require('packer').startup(function()
     -- show keybinds + comment for them
     use {
         "folke/which-key.nvim",
-        config = function() require'which-key'.setup{} end,
+        config = function()
+            require'which-key'.setup{}
+        end,
     }
 
     -- quick peek to certain line numbers
     use {
         'nacro90/numb.nvim',
-        config = function() require('numb').setup() end,
+        config = function()
+            require('numb').setup()
+        end,
     }
 
     use {
         'folke/trouble.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
-        config = function() require('trouble').setup{} end,
+        config = function()
+            require('trouble').setup{}
+        end,
     }
 
     use {
@@ -283,9 +306,11 @@ require('packer').startup(function()
     use {
         'kyazdani42/nvim-tree.lua',
         requires = 'kyazdani42/nvim-web-devicons',
-        config = function() require'nvim-tree'.setup {
-            auto_close = true,
-        } end
+        config = function()
+            require'nvim-tree'.setup {
+                auto_close = true,
+            }
+        end
     }
 
     -- auto resize for splits, save a lot of hassle
@@ -354,8 +379,6 @@ require('packer').startup(function()
     --         }
     --     end
     -- }
-
-
 end)
 
 -- install updates if packer has just been downloaded
