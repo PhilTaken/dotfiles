@@ -318,10 +318,10 @@ require('packer').startup(function()
         "beauwilliams/focus.nvim",
         config = function()
             require("focus").setup{
-                hybridnumber = true,
+                hybridnumber = false,
                 winhighlight = false,
-                cursorline = true,
-                treewidth = 20,
+                cursorline = false,
+                treewidth = 30,
             }
         end
     }
