@@ -101,7 +101,7 @@
       systemUsersFor = pkgs: {
         nixos = {
           name = "nixos";
-          groups = [ "wheel" "video" "audio" "docker" "dialout" ];
+          groups = [ "wheel" "video" "audio" "docker" "dialout" "adbusers" ];
           shell = pkgs.zsh;
           uid = 1001;
         };
