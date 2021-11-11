@@ -87,6 +87,7 @@ local leadern = {
         t = {
             name = "+trouble",
             t = { "<cmd>TroubleToggle<cr>", "Toggle trouble"},
+            a = { "<cmd>TodoTrouble<cr>", "Open TODOs in trouble"},
             w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
             d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document Diagnostics"},
             q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix List"},

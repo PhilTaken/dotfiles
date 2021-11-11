@@ -37,10 +37,7 @@ rec {
     programs.direnv = {
       enable = true;
       enableZshIntegration = true;
-      nix-direnv = {
-        enable = true;
-        enableFlakes = true;
-      };
+      nix-direnv.enable = true;
     };
     programs.man = {
       enable = true;
@@ -50,7 +47,6 @@ rec {
       enable = true;
       enableZshIntegration = true;
     };
-
     programs.starship = {
       enable = true;
       enableZshIntegration = true;
@@ -347,5 +343,4 @@ rec {
       yt-dlp
     ];
   };
-
 }
