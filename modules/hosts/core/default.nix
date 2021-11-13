@@ -91,7 +91,6 @@ in
 
 
       programs = {
-        adb.enable = true;
         mtr.enable = true;
         command-not-found.enable = false;
         zsh = {

@@ -320,6 +320,10 @@
                   ];
                 };
               };
+              development = {
+                enable = true;
+                adb.enable = true;
+              };
             };
 
             extraimports = [

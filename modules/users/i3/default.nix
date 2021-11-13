@@ -175,7 +175,7 @@ in
 
       xclip
 
-      rofi-pass
+      #rofi-pass
     ];
   };
 }

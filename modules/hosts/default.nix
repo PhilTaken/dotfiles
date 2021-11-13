@@ -13,6 +13,7 @@
     ./nvidia
     ./wireguard
     ./fileshare
+    ./development
 
     #./innernet-client
     #./innernet-server

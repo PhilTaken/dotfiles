@@ -54,7 +54,6 @@ with builtins;
             tdesktop
             texlive.combined.scheme-medium
             tokei
-            tree
             vpnc
             wget
             youtube-dl

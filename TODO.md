@@ -24,9 +24,6 @@
         - https://github.com/kevinhwang91/nvim-bqf
     - marks 
         - https://github.com/chentau/marks.nvim
-    - barbar
-        - https://github.com/romgrk/barbar.nvim
-
 
 # WIP
 

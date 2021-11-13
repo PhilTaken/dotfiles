@@ -53,7 +53,7 @@ in
       libnotify
       plasma-browser-integration
       rofi
-      rofi-pass
+      #rofi-pass
       xclip
     ];
   };

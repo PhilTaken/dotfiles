@@ -50,6 +50,7 @@ in
       wifi.backend = "wpa_supplicant";
     };
 
+    # mullvad vpn definition for de-frankfurt
     networking = {
       wg-quick.interfaces = mkIf (cfg.enableVPN) {
         mullvad = {

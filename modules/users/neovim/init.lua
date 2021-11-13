@@ -1,6 +1,3 @@
--- TODO:
--- - trailing WS (automated on write)
-
 -- My init.lua ~
 --
 --                   WNNW                         WWW
