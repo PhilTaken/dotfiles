@@ -1,6 +1,6 @@
 local cmd = vim.cmd
 local util = require 'custom.utils'
-local luasnip = require 'luasnip'
+-- local luasnip = require 'luasnip'
 
 local Terminal  = require('toggleterm.terminal').Terminal
 
@@ -98,6 +98,10 @@ local leadern = {
             name = "+iron",
             s = { "<cmd>IronRepl<cr>", "Start iron repl" },
             l = { "<Plug>(iron-send-line)", "Send single line" },
+        },
+        c = {
+            name = "code generation",
+            n = { function() require('neogen').generate() end, "Generate Comment from function"},
         },
         l = {
             name = "+lsp",

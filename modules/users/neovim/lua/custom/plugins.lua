@@ -20,6 +20,14 @@ require('packer').startup{
         -- pack packer
         use {'wbthomason/packer.nvim', opt = true}
 
+        use 'dstein64/vim-startuptime'
+
+
+        use {
+            'romgrk/barbar.nvim',
+            requires = {'kyazdani42/nvim-web-devicons'}
+        }
+
         -- change pwd to git root
         use {
             'zah/vim-rooter',
@@ -108,20 +116,28 @@ require('packer').startup{
         use 'folke/lsp-colors.nvim'
 
         use {
-            'Pocco81/Catppuccino.nvim',
+            'catppuccin/nvim',
             config = function()
-                local catppuccino = require('catppuccino')
-                catppuccino.setup{
-                    colorscheme = "dark_catppuccino",
+                local catppuccin = require('catppuccin')
+                catppuccin.setup{
+                    --colorscheme = "dark_catppuccino",
                     integrations = {
                         lsp_saga = true,
                         gitsigns = true,
                         telescope = true,
                         which_key = true,
+                        nvimtree = {
+                            enabled = true,
+                        },
+                        indent_blankline = {
+                            enabled = true,
+                            colored_indent_levels = true,
+                        },
+                        barbar = true,
                     },
                 }
                 -- catppuccino.load()
-                vim.cmd[[colorscheme catppuccino]]
+                vim.cmd[[colorscheme catppuccin]]
             end
         }
 
@@ -172,8 +188,8 @@ require('packer').startup{
         use {
             "danymat/neogen",
             config = function()
-                require('neogen').setup {
-                    enabled = true
+                require('neogen').setup{
+                    enabled = true,
                 }
             end,
             requires = "nvim-treesitter/nvim-treesitter"
