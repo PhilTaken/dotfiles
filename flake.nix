@@ -254,6 +254,7 @@
               core = {
                 bootLoader = null;
                 hostName = "beta";
+                #docker = true;
               };
               server = {
                 enable = true;
@@ -261,6 +262,7 @@
                   openssh.enable = true;
                   jellyfin.enable = true;
                   telegraf.enable = true;
+                  #photoprism.enable = true;
                 };
               };
               fileshare = {
@@ -270,7 +272,7 @@
                   dirs = [ "/media" ];
                 };
                 samba = {
-                  enable = true;
+                  #enable = true;
                   dirs = [ "/media" ];
                 };
               };
@@ -374,11 +376,11 @@
 
       # deploy config
       deploy.nodes = {
-        alpha = {
-          hostname = "148.251.102.93";
-          sshUser = "root";
-          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        };
+        #alpha = {
+          #hostname = "148.251.102.93";
+          #sshUser = "root";
+          #profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        #};
 
         beta = {
           hostname = "192.168.8.236";

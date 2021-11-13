@@ -1,5 +1,10 @@
 # TODO
 
+# IMPORTANT
+
+- write an issue on serokell/deploy-rs about the dbus problem when trying to deploy
+
+
 - beta
     - set up nextcloud for small file hosting + floccus bookmark + browsersync, in container?
     - set up hedgedoc
@@ -35,3 +40,4 @@
 
 - roundcube mail client
 - ihatemoney finance monitoring
+
