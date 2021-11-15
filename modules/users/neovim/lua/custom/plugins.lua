@@ -100,7 +100,10 @@ require('packer').startup{
             requires = {
                 {'nvim-lua/popup.nvim'},
                 {'nvim-lua/plenary.nvim'}
-            }
+            },
+            config = function()
+                require('custom.tele_init')
+            end
         }
 
         -- statusline
@@ -221,6 +224,22 @@ require('packer').startup{
         use {
             'nvim-treesitter/nvim-treesitter',
             run = ":TSUpdate",
+            config = function()
+                -- setup treesitter
+                require'nvim-treesitter.configs'.setup {
+                    ensure_installed = "maintained",
+                    highlight = {
+                        enable = true,
+                    },
+                }
+            end
+        }
+
+        use {
+            "L3MON4D3/LuaSnip",
+            config = function()
+                require('custom.snippets')
+            end
         }
 
         -- completion management
@@ -234,9 +253,13 @@ require('packer').startup{
                 "hrsh7th/cmp-latex-symbols",
                 "lukas-reineke/cmp-under-comparator",
                 { 'andersevenrud/compe-tmux', branch = 'cmp' },
-                "L3MON4D3/LuaSnip",
-                'saadparwaiz1/cmp_luasnip'
-            }
+                'saadparwaiz1/cmp_luasnip',
+                'onsails/lspkind-nvim',
+            },
+            config = function()
+                require'lspkind'.init()
+                require'custom.cmp_init'
+            end
         }
 
         -- direnv sourcing in nvim
@@ -285,13 +308,6 @@ require('packer').startup{
         }
 
         -- extra icons for completion
-        use {
-            'onsails/lspkind-nvim',
-            config = function()
-                require'lspkind'.init()
-            end
-        }
-
         -- manage surrounds e.g. quotation marks, html tags, ...
         use 'tpope/vim-surround'
 
@@ -345,7 +361,26 @@ require('packer').startup{
         }
 
         -- for repls in vim
-        use 'hkupty/iron.nvim'
+        use {
+            'hkupty/iron.nvim',
+            config = function()
+                local iron = require('iron')
+
+                iron.core.add_repl_definitions {
+                    python = {
+                        ipython = {
+                            command = { "ipython", "--no-autoindent" }
+                        }
+                    }
+                }
+
+                iron.core.set_config {
+                    preferred = {
+                        python = "ipython",
+                    }
+                }
+            end
+        }
 
         -- lazygit
         use {

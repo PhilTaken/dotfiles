@@ -22,17 +22,6 @@ if not sourced then
 end
 sourced = true
 
---------------------------------------------------------------------------------
--- for tab and shift-tab in completion
-M.check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-        return true
-    else
-        return false
-    end
-end
-
 M.t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
@@ -43,26 +32,6 @@ M.P = function(v)
   return v
 end
 
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-M.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return M.t "<C-n>"
-  elseif M.check_back_space() then
-    return M.t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
-  end
-end
-
-M.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return M.t "<C-p>"
-  else
-    return M.t "<S-Tab>"
-  end
-end
 --------------------------------------------------------------------------------
 
 RELOAD = require('plenary.reload').reload_module
