@@ -22,7 +22,6 @@ require('packer').startup{
 
         use 'dstein64/vim-startuptime'
 
-
         use {
             'romgrk/barbar.nvim',
             requires = {'kyazdani42/nvim-web-devicons'}
@@ -176,14 +175,12 @@ require('packer').startup{
 
         use {
             'vim-pandoc/vim-pandoc',
+            requires = 'vim-pandoc/vim-pandoc-syntax',
             config = function()
                 vim.cmd[[let g:pandoc#spell#enabled = 0]]
-            end
+            end,
+            ft = { "markdown", "pandoc" },
         }
-        use 'vim-pandoc/vim-pandoc-syntax'
-
-        -- ultisnips alternative in lua
-        --use 'norcalli/snippets.nvim'
 
         -- config for the builtin language server
         use 'neovim/nvim-lspconfig'
@@ -195,7 +192,8 @@ require('packer').startup{
                     enabled = true,
                 }
             end,
-            requires = "nvim-treesitter/nvim-treesitter"
+            requires = "nvim-treesitter/nvim-treesitter",
+            module = "neogen",
         }
 
         -- lspsaga
@@ -216,9 +214,7 @@ require('packer').startup{
         }
 
         -- signature help
-        use {
-            "ray-x/lsp_signature.nvim",
-        }
+        use "ray-x/lsp_signature.nvim"
 
         -- treesitter
         use {
@@ -274,6 +270,7 @@ require('packer').startup{
                     mappings = nil
                 }
             end,
+            module = "gitlinker",
         }
 
         -- completion with docked floating windows
@@ -285,7 +282,10 @@ require('packer').startup{
         }
 
         -- nix
-        use 'LnL7/vim-nix'
+        use {
+            'LnL7/vim-nix',
+            ft = "nix"
+        }
 
         -- extra targets
         use 'wellle/targets.vim'
@@ -322,7 +322,8 @@ require('packer').startup{
                 cmd[[let R_user_maps_only = 1]]
                 cmd[[let R_csv_app = 'tmux new-window vd']]
                 cmd[[let R_auto_start = 1]]
-            end
+            end,
+            ft = { "r", "rmd" },
         }
 
 
@@ -379,7 +380,8 @@ require('packer').startup{
                         python = "ipython",
                     }
                 }
-            end
+            end,
+            ft = { "python" }
         }
 
         -- lazygit
@@ -402,7 +404,8 @@ require('packer').startup{
                 require'nvim-tree'.setup {
                     auto_close = true,
                 }
-            end
+            end,
+            cmd = "NvimTreeToggle",
         }
 
         use {

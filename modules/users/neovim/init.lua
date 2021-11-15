@@ -45,9 +45,6 @@ require("custom.utils")
 -- default settings
 require('custom.settings')
 
--- global plugin options
-require('custom.plugin_settings')
-
 -- lsp
 require('custom.lsp')
 
