@@ -1,9 +1,10 @@
-# TODO
+# TODO:
 
-# IMPORTANT
+## IMPORTANT
 
-- write an issue on serokell/deploy-rs about the dbus problem when trying to deploy
+- write an issue on serokell/deploy-rs about the dbus problem when trying to deploy / write an email
 
+## main
 
 - beta
     - set up nextcloud for small file hosting + floccus bookmark + browsersync, in container?
@@ -23,14 +24,18 @@
     - move ttrss to beta + passthrough with nginx
 
 - nvim
-    - figure out how to get `pylsp` working with envs and stuff
-    - snippets?
-    - quickfix list
-        - https://github.com/kevinhwang91/nvim-bqf
-    - marks 
-        - https://github.com/chentau/marks.nvim
+    - snippets
+        - fortran 
+            - module
+    - plugins
+        - quickfix list
+            - https://github.com/kevinhwang91/nvim-bqf
+        - marks 
+            - https://github.com/chentau/marks.nvim
+        - lightspeed
+            - https://github.com/ggandor/lightspeed.nvim
 
-# WIP
+    - figure out how to get `pylsp` working with envs and stuff
 
 # Ideas
 
@@ -38,6 +43,6 @@
     - useful in server module for webservices
     - useful for dns 
 
-- roundcube mail client
-- ihatemoney finance monitoring
-
+- webapps
+    - roundcube mail client
+    - ihatemoney finance monitoring
