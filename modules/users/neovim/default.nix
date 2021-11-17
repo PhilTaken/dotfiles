@@ -52,6 +52,8 @@ in
         lazygit # lazy git managment
 
         neuron-notes # for zettelkasten note-taking
+
+        sqlite  # for sqlite.lua
       ] ++ (with pkgs.nodePackages; [
         pyright # python
         typescript-language-server # js / ts
@@ -59,6 +61,7 @@ in
 
       extraConfig = ''
         " set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM
+        let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'"
         luafile ~/.config/nvim/init_.lua
       '';
     };

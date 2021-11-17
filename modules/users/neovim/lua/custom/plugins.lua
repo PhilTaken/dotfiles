@@ -413,6 +413,18 @@ require('packer').startup{
             config = function() require("stabilize").setup() end
         }
 
+        use {
+            "AckslD/nvim-neoclip.lua",
+            requires = {'tami5/sqlite.lua', module = 'sqlite'},
+            config = function()
+                require('neoclip').setup{
+                    enable_persistant_history = true,
+                }
+            end,
+        }
+
+
+        use 'ggandor/lightspeed.nvim'
 
         -- auto resize for splits
         -- use {

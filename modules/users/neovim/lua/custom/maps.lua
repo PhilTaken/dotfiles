@@ -83,6 +83,7 @@ local leadern = {
             g = { function() R('custom.tele').live_grep() end, "Live Grep in current dir" },
             f = { function() R('custom.tele').find_files() end, "Find Files in current dir" },
             d = { function() R('custom.tele').find_dotfiles{} end, "Search in dotfiles" },
+            y = { function() require('telescope').extensions.neoclip.default() end, "Manage yank register"},
         },
         t = {
             name = "+trouble",
