@@ -18,16 +18,69 @@ require('packer').startup{
     compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua',
     function()
         -- pack packer
-        use {'wbthomason/packer.nvim', opt = true}
-
-        use 'dstein64/vim-startuptime'
-
         use {
-            'romgrk/barbar.nvim',
-            requires = {'kyazdani42/nvim-web-devicons'}
+            'wbthomason/packer.nvim',
+            opt = true
         }
 
-        -- change pwd to git root
+        -- add some startuptime hacks / improvements
+        use {
+            {
+                'dstein64/vim-startuptime',
+            },
+            {
+                'lewis6991/impatient.nvim',
+                config = function()
+                    require('impatient').enable_profile()
+                end
+            },
+            {
+                "nathom/filetype.nvim",
+                config = function()
+                    vim.g.did_load_filetypes = 1
+                end
+            },
+        }
+
+        -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        -- colorscheme ^-^
+        use {
+            {
+                'catppuccin/nvim',
+                config = function()
+                    local catppuccin = require('catppuccin')
+                    catppuccin.setup{
+                        --colorscheme = "dark_catppuccino",
+                        integrations = {
+                            lsp_saga = true,
+                            gitsigns = true,
+                            telescope = true,
+                            which_key = true,
+                            nvimtree = {
+                                enabled = true,
+                            },
+                            indent_blankline = {
+                                enabled = true,
+                                colored_indent_levels = true,
+                            },
+                            barbar = true,
+                        },
+                    }
+                    -- catppuccino.load()
+                    vim.cmd[[colorscheme catppuccin]]
+                end
+            },
+            {
+                'folke/lsp-colors.nvim',
+            }
+        }
+
+        -- start menu
+        use 'mhinz/vim-startify'
+        -- dashboard.vim
+
+        -- root vim in git dir
         use {
             'zah/vim-rooter',
             config = function()
@@ -38,16 +91,23 @@ require('packer').startup{
             end
         }
 
-        -- start menu
-        use 'mhinz/vim-startify'
+        -- buffers visible above in a bar
+        use {
+            'romgrk/barbar.nvim',
+            requires = {'kyazdani42/nvim-web-devicons'},
+            event = "BufRead"
+        }
 
+        -- colorize color codes (e.g. #f2f34f)
         use {
             'norcalli/nvim-colorizer.lua',
             config = function()
                 require('colorizer').setup()
-            end
+            end,
+            event = "BufEnter"
         }
 
+        -- add visible indent aid
         use {
             "lukas-reineke/indent-blankline.nvim",
             requires = {
@@ -55,7 +115,6 @@ require('packer').startup{
             },
             config = function()
                 require("indent_blankline").setup {
-                    --char = "|",
                     buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
                     filetype_exclude = { "startify", "dashboard", "man" },
                     show_current_context = true,
@@ -63,11 +122,23 @@ require('packer').startup{
             end
         }
 
-        -- commenting
-        use 'preservim/nerdcommenter'
+        -- smooth scrolling
+        use({
+            'karb94/neoscroll.nvim',
+            event = 'WinScrolled',
+            config = function()
+                require('neoscroll').setup({ hide_cursor = false })
+            end,
+        })
+
+        -- toggle comments in code
+        use {
+            -- numToStr/Comment.nvim
+            'preservim/nerdcommenter',
+            event = "BufRead"
+        }
 
         -- auto end quotation mark/bracket
-        --use 'cohama/lexima.vim'
         use {
             'tmsvg/pear-tree',
             config = function()
@@ -80,29 +151,45 @@ require('packer').startup{
             end
         }
 
-        -- use 'jiangmao/auto-pairs'
-        -- specifically https://github.com/jiangmiao/auto-pairs/blob/master/plugin/auto-pairs.vim
-
-        -- show function arguments
+        -- show function arguments - floating!
         use {
-            'Shougo/echodoc.vim',
-            config = function()
-                local cmd = vim.cmd
-                cmd[[let g:echodoc#enable_at_startup = 1]]
-                cmd[[let g:echodoc#type = 'floating']]
-            end
+            {
+                "ray-x/lsp_signature.nvim"
+            },
+            {
+                'Shougo/echodoc.vim',
+                config = function()
+                    local cmd = vim.cmd
+                    cmd[[let g:echodoc#enable_at_startup = 1]]
+                    cmd[[let g:echodoc#type = 'floating']]
+                end
+            },
+            {
+                'ncm2/float-preview.nvim',
+                config = function()
+                    vim.cmd[[let g:float_preview#docked = 1]]
+                end,
+                event = "InsertEnter"
+            }
         }
 
         -- telescope
         use {
-            'nvim-telescope/telescope.nvim',
-            requires = {
-                {'nvim-lua/popup.nvim'},
-                {'nvim-lua/plenary.nvim'}
+            {
+                'nvim-telescope/telescope.nvim',
+                requires = {
+                    {'nvim-lua/popup.nvim'},
+                    {'nvim-lua/plenary.nvim'}
+                },
+                config = function()
+                    require('custom.tele_init')
+                end,
+                event = "CursorHold"
             },
-            config = function()
-                require('custom.tele_init')
-            end
+            {
+                'nvim-telescope/telescope-symbols.nvim',
+                after = 'telescope.nvim',
+            },
         }
 
         -- statusline
@@ -112,45 +199,11 @@ require('packer').startup{
             config = function()
                 require'custom.statusline'
             end,
-            requires = {'kyazdani42/nvim-web-devicons', opt = true}
+            requires = {'kyazdani42/nvim-web-devicons', opt = true},
+            event = "BufEnter",
         }
 
-        use 'folke/lsp-colors.nvim'
-
-        use {
-            'catppuccin/nvim',
-            config = function()
-                local catppuccin = require('catppuccin')
-                catppuccin.setup{
-                    --colorscheme = "dark_catppuccino",
-                    integrations = {
-                        lsp_saga = true,
-                        gitsigns = true,
-                        telescope = true,
-                        which_key = true,
-                        nvimtree = {
-                            enabled = true,
-                        },
-                        indent_blankline = {
-                            enabled = true,
-                            colored_indent_levels = true,
-                        },
-                        barbar = true,
-                    },
-                }
-                -- catppuccino.load()
-                vim.cmd[[colorscheme catppuccin]]
-            end
-        }
-
-        --use {
-        --    'ayu-theme/ayu-vim',
-        --    config = function()
-        --        vim.g.ayucolor = "mirage"
-        --        vim.cmd[[colorscheme ayu]]
-        --    end
-        --}
-
+        -- mark specific comments for
         use {
             "folke/todo-comments.nvim",
             requires = "nvim-lua/plenary.nvim",
@@ -159,20 +212,7 @@ require('packer').startup{
             end
         }
 
-        use {
-            'lewis6991/impatient.nvim',
-            config = function()
-                require('impatient').enable_profile()
-            end
-        }
-
-        use {
-            "nathom/filetype.nvim",
-            config = function()
-                vim.g.did_load_filetypes = 1
-            end
-        }
-
+        -- fancy syntax hl for md files
         use {
             'vim-pandoc/vim-pandoc',
             requires = 'vim-pandoc/vim-pandoc-syntax',
@@ -183,8 +223,24 @@ require('packer').startup{
         }
 
         -- config for the builtin language server
-        use 'neovim/nvim-lspconfig'
+        use {
+            'neovim/nvim-lspconfig',
+            event = 'BufRead',
+            config = function()
+                require('custom.lsp')
+            end,
+            requires = {
+                { "hrsh7th/cmp-nvim-lsp" },
+                {
+                    'onsails/lspkind-nvim',
+                    config =  function()
+                        require'lspkind'.init()
+                    end
+                },
+            }
+        }
 
+        -- generate comments / docs from code
         use {
             "danymat/neogen",
             config = function()
@@ -196,7 +252,7 @@ require('packer').startup{
             module = "neogen",
         }
 
-        -- lspsaga
+        -- extra fancy lsp extras
         use {
             'glepnir/lspsaga.nvim',
             config = function()
@@ -213,15 +269,11 @@ require('packer').startup{
             end
         }
 
-        -- signature help
-        use "ray-x/lsp_signature.nvim"
-
-        -- treesitter
+        -- ast-like code parsing utility for hl / indent / lsp
         use {
             'nvim-treesitter/nvim-treesitter',
             run = ":TSUpdate",
             config = function()
-                -- setup treesitter
                 require'nvim-treesitter.configs'.setup {
                     ensure_installed = "maintained",
                     highlight = {
@@ -231,35 +283,36 @@ require('packer').startup{
             end
         }
 
-        use {
-            "L3MON4D3/LuaSnip",
-            config = function()
-                require('custom.snippets')
-            end
-        }
-
         -- completion management
         use {
             'hrsh7th/nvim-cmp',
+            Event = "InsertEnter",
             requires = {
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path",
-                "hrsh7th/cmp-nvim-lua",
-                "hrsh7th/cmp-nvim-lsp",
-                "hrsh7th/cmp-latex-symbols",
-                "lukas-reineke/cmp-under-comparator",
-                { 'andersevenrud/compe-tmux', branch = 'cmp' },
-                'saadparwaiz1/cmp_luasnip',
-                'onsails/lspkind-nvim',
+                {
+                    "L3MON4D3/LuaSnip",
+                    event = "CursorHold",
+                    config = function()
+                        require('custom.snippets')
+                    end,
+                    requires = { 'rafamadriz/friendly-snippets' },
+                },
+                { "hrsh7th/cmp-buffer", after = "nvim-cmp"},
+                { "hrsh7th/cmp-path", after = "nvim-cmp" },
+                { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
+                { "lukas-reineke/cmp-under-comparator" },
+                { 'andersevenrud/compe-tmux', branch = 'cmp', after = "nvim-cmp" },
+                { 'saadparwaiz1/cmp_luasnip', after = "nvim-cmp" },
             },
             config = function()
-                require'lspkind'.init()
                 require'custom.cmp_init'
             end
         }
 
         -- direnv sourcing in nvim
-        use "direnv/direnv.vim"
+        use {
+            "direnv/direnv.vim",
+            event = "BufEnter"
+        }
 
         -- shareable git links
         use {
@@ -273,14 +326,6 @@ require('packer').startup{
             module = "gitlinker",
         }
 
-        -- completion with docked floating windows
-        use {
-            'ncm2/float-preview.nvim',
-            config = function()
-                vim.cmd[[let g:float_preview#docked = 1]]
-            end
-        }
-
         -- nix
         use {
             'LnL7/vim-nix',
@@ -288,7 +333,10 @@ require('packer').startup{
         }
 
         -- extra targets
-        use 'wellle/targets.vim'
+        use {
+            'wellle/targets.vim',
+            event = "BufEnter"
+        }
 
         use {
             'lewis6991/gitsigns.nvim',
@@ -304,15 +352,22 @@ require('packer').startup{
                         changedelete = {hl = 'GitGutterChange', text = '~'},
                     }
                 }
-            end
+            end,
+            event = "BufEnter"
         }
 
         -- extra icons for completion
         -- manage surrounds e.g. quotation marks, html tags, ...
-        use 'tpope/vim-surround'
-
-        -- highlighting for the glsl (gl shader language)
-        --use 'tikhomirov/vim-glsl'
+        use {
+            'tpope/vim-surround',
+            event = "BufRead",
+            requires = {
+                {
+                    'tpope/vim-repeat',
+                    event = 'BufRead',
+                },
+            },
+        }
 
         use {
             'jalvesaq/Nvim-R',
@@ -326,7 +381,6 @@ require('packer').startup{
             ft = { "r", "rmd" },
         }
 
-
         -- show keybinds + comment for them
         use {
             "folke/which-key.nvim",
@@ -335,22 +389,17 @@ require('packer').startup{
             end,
         }
 
-        -- quick peek to certain line numbers
-        use {
-            'nacro90/numb.nvim',
-            config = function()
-                require('numb').setup()
-            end,
-        }
-
+        -- diagnostic pretty window
         use {
             'folke/trouble.nvim',
             requires = 'kyazdani42/nvim-web-devicons',
             config = function()
                 require('trouble').setup{}
             end,
+            event = "CursorHold"
         }
 
+        -- navigate to tmux and back
         use {
             'numToStr/Navigator.nvim',
             config = function()
@@ -358,7 +407,8 @@ require('packer').startup{
                     auto_save = 'all',
                     disable_on_zoom = true,
                 })
-            end
+            end,
+            event = "BufEnter"
         }
 
         -- for repls in vim
@@ -384,19 +434,15 @@ require('packer').startup{
             ft = { "python" }
         }
 
-        -- lazygit
-        use {
-            'kdheepak/lazygit.nvim',
-            requires = 'nvim-lua/plenary.nvim'
-        }
-
+        -- floating terminals
         use {
             "akinsho/toggleterm.nvim",
             config = function()
                 require('toggleterm').setup{}
-            end
+            end,
         }
 
+        -- file tree
         use {
             'kyazdani42/nvim-tree.lua',
             requires = 'kyazdani42/nvim-web-devicons',
@@ -408,11 +454,16 @@ require('packer').startup{
             cmd = "NvimTreeToggle",
         }
 
+        -- stabilize the main window when opening others
         use {
             "luukvbaal/stabilize.nvim",
-            config = function() require("stabilize").setup() end
+            config = function()
+                require("stabilize").setup()
+            end,
+            event = "BufEnter"
         }
 
+        -- clipboard manager
         use {
             "AckslD/nvim-neoclip.lua",
             requires = {'tami5/sqlite.lua', module = 'sqlite'},
@@ -420,80 +471,27 @@ require('packer').startup{
                 require('neoclip').setup{
                     enable_persistant_history = true,
                 }
+                require'lspkind'.init()
             end,
+            module = "telescope",
         }
 
-
-        use 'ggandor/lightspeed.nvim'
-
-        -- auto resize for splits
-        -- use {
-        --     "beauwilliams/focus.nvim",
-        --     config = function()
-        --         require("focus").setup{
-        --             hybridnumber = false,
-        --             winhighlight = false,
-        --             cursorline = false,
-        --             treewidth = 30,
-        --         }
-        --     end
-        -- }
-
-        -- zettelkasten
-        --use {
-            --"megalithic/zk.nvim",
-            --requires = {
-                --'nvim-telescope/telescope.nvim'
-            --},
-            --config = function()
-                --require('zk').setup({
-                    --debug = false,
-                    --log = true,
-                    --default_keymaps = true,
-                    --fuzzy_finder = "telescope",
-                    --link_format = "markdown"
-                --})
-                --require('telescope').load_extension('zk')
-            --end
-        --}
-
-        --use {
-            --"oberblastmeister/neuron.nvim",
-            --requires = {
-            --    'nvim-lua/popup.nvim',
-            --    'nvim-lua/plenary.nvim',
-            --    'nvim-telescope/telescope.nvim'
-            --},
-            --config = function()
-            --    require'neuron'.setup {
-            --        virtual_titles = true,
-            --        mappings = false,
-            --        run = nil,
-            --        neuron_dir = "/platte/Documents/zettelkasten",
-            --        leader = "gz",
-            --    }
-            --end
-        --}
+        -- crazy fast movement
+        use {
+            'ggandor/lightspeed.nvim',
+            event = "BufRead"
+        }
 
         -- ideas:
         -- rust-tools.nvim
-        -- extra colors for older colorschemes
-
-        -- vim wiki / pandoc
-        -- use {
-        --     'vimwiki/vimwiki',
-        --     config = function()
-        --         -- vimwiki
-        --         vim.g.vimwiki_key_mappings = {
-        --             global = 0,
-        --             links = 0,
-        --             html = 0,
-        --             mouse = 0,
-        --             table_mappings = 0,
-        --         }
-        --     end
-        -- }
-    end
+    end,
+    config = {
+        display = {
+            open_fn = function ()
+                return require('packer.util').float({border = 'single'})
+            end
+        }
+    }
 }
 
 -- install updates if packer has just been downloaded

@@ -45,8 +45,5 @@ require("custom.utils")
 -- default settings
 require('custom.settings')
 
--- lsp
-require('custom.lsp')
-
 -- mappings
 require("custom.maps")
