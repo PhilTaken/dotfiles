@@ -32,8 +32,6 @@
             - https://github.com/kevinhwang91/nvim-bqf
         - marks 
             - https://github.com/chentau/marks.nvim
-        - lightspeed
-            - https://github.com/ggandor/lightspeed.nvim
 
     - figure out how to get `pylsp` working with envs and stuff
 

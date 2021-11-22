@@ -23,16 +23,17 @@ require('packer').startup{
             opt = true
         }
 
+        use {
+            'lewis6991/impatient.nvim',
+            config = function()
+                require('impatient').enable_profile()
+            end
+        }
+
         -- add some startuptime hacks / improvements
         use {
             {
                 'dstein64/vim-startuptime',
-            },
-            {
-                'lewis6991/impatient.nvim',
-                config = function()
-                    require('impatient').enable_profile()
-                end
             },
             {
                 "nathom/filetype.nvim",
@@ -77,8 +78,13 @@ require('packer').startup{
         }
 
         -- start menu
-        use 'mhinz/vim-startify'
-        -- dashboard.vim
+        --use 'mhinz/vim-startify'
+        use {
+            'goolord/alpha-nvim',
+            config = function ()
+                require'alpha'.setup(require'alpha.themes.dashboard'.opts)
+            end
+        }
 
         -- root vim in git dir
         use {
@@ -94,8 +100,8 @@ require('packer').startup{
         -- buffers visible above in a bar
         use {
             'romgrk/barbar.nvim',
-            requires = {'kyazdani42/nvim-web-devicons'},
-            event = "BufRead"
+            requires = { 'kyazdani42/nvim-web-devicons' },
+            event = "BufRead",
         }
 
         -- colorize color codes (e.g. #f2f34f)
@@ -184,7 +190,6 @@ require('packer').startup{
                 config = function()
                     require('custom.tele_init')
                 end,
-                event = "CursorHold"
             },
             {
                 'nvim-telescope/telescope-symbols.nvim',
@@ -332,6 +337,19 @@ require('packer').startup{
             ft = "nix"
         }
 
+        use {
+            'bakpakin/fennel.vim',
+            ft = "fennel"
+        }
+
+        use {
+            'Olical/conjure',
+            ft = { "fennel" },
+            config = function()
+                vim.cmd[[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]]
+            end
+        }
+
         -- extra targets
         use {
             'wellle/targets.vim',
@@ -424,7 +442,6 @@ require('packer').startup{
                         }
                     }
                 }
-
                 iron.core.set_config {
                     preferred = {
                         python = "ipython",

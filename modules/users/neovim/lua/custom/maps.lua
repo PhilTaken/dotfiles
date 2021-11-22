@@ -1,6 +1,5 @@
 local cmd = vim.cmd
 local util = require 'custom.utils'
--- local luasnip = require 'luasnip'
 
 local Terminal  = require('toggleterm.terminal').Terminal
 
@@ -34,29 +33,17 @@ cmd[[au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup]]
 -- highlight yanks
 cmd[[au TextYankPost * silent! lua vim.highlight.on_yank { higroup="IncSearch", timeout=1000, on_visual=false }]]
 
--- show some nice diagnostics
--- cmd[[au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
-
 -- disable line numbers in terminal
 cmd[[au TermOpen * setlocal norelativenumber nonumber]]
 
--- vimwiki mappings
-cmd[[au FileType vimwiki nmap <buffer><silent> <CR> <Plug>VimwikiFollowLink']]
-cmd[[au FileType vimwiki nmap <buffer><silent> <Backspace> <Plug>VimwikiGoBackLink']]
-cmd[[au FileType vimwiki nmap <buffer><silent> <leader>ww <Plug>VimwikiIndex']]
-cmd[[au FileType vimwiki set syntax=markdown.pandoc]]
-
 -- strip trailing whitespaces
-cmd[[au FileType c,cpp,python,rust,nix,lua,ruby autocmd BufWritePre <buffer> :%s/\s\+$//e]]
-
--- redraw the vim window when necessary
-cmd[[au VimResized * redraw!]]
+cmd[[au FileType c,cpp,python,rust,nix,lua,ruby,r autocmd BufWritePre <buffer> :%s/\s\+$//e]]
 
 --------------
 -- MAPPINGS --
 --------------
 
--- normal mode mappings
+-- normal mode mappings (global)
 local leadern = {
     ["<F2>"] = { "<cmd>NvimTreeToggle<cr>", "Toggle nvimtree" },
     ["<A-y>"] = { function() require('Navigator').left() end, "Go left" },
@@ -115,16 +102,6 @@ local leadern = {
             ["]"] = { function() require('lspsaga.diagnostic').lsp_jump_diagnostic_next() end, "Next Diagnostic"},
             ["="] = { function() vim.lsp.buf.formatting() end, "Formatting" },
         },
-        r = {
-            name = "+R",
-            s = { "<Plug>RStart", "Start the R integration"},
-            l = { "<Plug>RDSendLine", "Send current line"},
-            p = { "<Plug>RPlot", "Plot data frame"},
-            v = { "<Plug>RViewDF", "View data frame"},
-            o = { "<Plug>RUpdateObjBrowser", "Update the Object Browser"},
-            h = { "<Plug>RHelp", "Help"},
-            f = { "<Plug>RSendFile", "Send the whole file" },
-        },
         g = {
             name = "+git",
             g = { function() lazygit:toggle() end, "Open LazyGit" },
@@ -178,3 +155,63 @@ wk.register(leaderv, { mode = "v" })
 wk.register(leadert, { mode = "t" })
 wk.register(leaderi, { mode = "i" })
 wk.register(leaders, { mode = "s" })
+
+-- filetype-specific mappings
+_G.which_key_fennel = function()
+    local fenneln = {
+        ['<localleader>'] = {
+            l = {
+                name = "+log",
+                s = "open in horizontal split",
+                v = "open in vertical split",
+                t = "open in new tab",
+                q = "close all logs",
+                r = "soft reset",
+                R = "hard reset",
+            },
+            e = {
+                name = "+evaluate",
+                e = "form",
+                ce = "form, comment",
+                r = "root",
+                cr = "root, comment",
+                w = "word",
+                cw = "word, comment",
+                ['!'] = "form, replace",
+                f = "file from disk",
+                b = "buffer",
+            }
+        },
+    }
+
+    local fennelv = {
+        ['<localleader>'] = {
+            E = "evaluate current selection",
+        },
+    }
+
+    wk.register(fenneln, {mode = "n", buffer = 0})
+    wk.register(fennelv, {mode = "v", buffer = 0})
+end
+
+_G.which_key_r = function()
+    local rn = {
+        ['<leader>'] = {
+            r = {
+                name = "+R",
+                s = { "<Plug>RStart", "Start the R integration"},
+                l = { "<Plug>RDSendLine", "Send current line"},
+                p = { "<Plug>RPlot", "Plot data frame"},
+                v = { "<Plug>RViewDF", "View data frame"},
+                o = { "<Plug>RUpdateObjBrowser", "Update the Object Browser"},
+                h = { "<Plug>RHelp", "Help"},
+                f = { "<Plug>RSendFile", "Send the whole file" },
+            },
+        }
+    }
+
+    wk.register(rn, {mode = "n", buffer = 0})
+end
+
+vim.api.nvim_exec([[autocmd BufEnter *.fnl :lua which_key_fennel()]], false)
+vim.api.nvim_exec([[autocmd BufEnter *.r,*.Rmd :lua which_key_r()]], false)
