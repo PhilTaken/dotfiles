@@ -51,8 +51,10 @@ return setmetatable({}, {
 
         if M[k] then
             return M[k]
-        else
+        elseif require('telescope.builtin')[k] then
             return require('telescope.builtin')[k]
+        else
+            return require('telescope')[k]
         end
     end
 })

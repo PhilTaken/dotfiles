@@ -295,7 +295,6 @@ require('packer').startup{
             requires = {
                 {
                     "L3MON4D3/LuaSnip",
-                    event = "CursorHold",
                     config = function()
                         require('custom.snippets')
                     end,
@@ -457,6 +456,7 @@ require('packer').startup{
             config = function()
                 require('toggleterm').setup{}
             end,
+            module = 'toggleterm.terminal',
         }
 
         -- file tree

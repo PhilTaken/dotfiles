@@ -1,43 +1,15 @@
-local cmd = vim.cmd
-local util = require 'custom.utils'
-
-local Terminal  = require('toggleterm.terminal').Terminal
-
-local lazygit = Terminal:new({
-    cmd = "lazygit",
-    direction = "float",
-    float_opts = {
-        border = "double",
-    },
-})
-
-local bottom = Terminal:new({
-    cmd = "btm",
-    direction = "float",
-    float_opts = {
-        border = "double",
-    },
-})
-
-local bgshell = Terminal:new({
-    direction = "float",
-    float_opts = {
-        border = "double",
-    }
-})
-
 -- autocommands
 -- dont save passwords in swapfile...
-cmd[[au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup]]
+vim.cmd[[au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup]]
 
 -- highlight yanks
-cmd[[au TextYankPost * silent! lua vim.highlight.on_yank { higroup="IncSearch", timeout=1000, on_visual=false }]]
+vim.cmd[[au TextYankPost * silent! lua vim.highlight.on_yank { higroup="IncSearch", timeout=1000, on_visual=false }]]
 
 -- disable line numbers in terminal
-cmd[[au TermOpen * setlocal norelativenumber nonumber]]
+vim.cmd[[au TermOpen * setlocal norelativenumber nonumber]]
 
 -- strip trailing whitespaces
-cmd[[au FileType c,cpp,python,rust,nix,lua,ruby,r autocmd BufWritePre <buffer> :%s/\s\+$//e]]
+vim.cmd[[au FileType c,cpp,python,rust,nix,lua,ruby,r autocmd BufWritePre <buffer> :%s/\s\+$//e]]
 
 --------------
 -- MAPPINGS --
@@ -70,6 +42,7 @@ local leadern = {
             g = { function() R('custom.tele').live_grep() end, "Live Grep in current dir" },
             f = { function() R('custom.tele').find_files() end, "Find Files in current dir" },
             d = { function() R('custom.tele').find_dotfiles{} end, "Search in dotfiles" },
+            t = { function() R('custom.tele').tags{} end, "Browse workspace tags" },
             y = { function() require('telescope').extensions.neoclip.default() end, "Manage yank register"},
         },
         t = {
@@ -82,6 +55,7 @@ local leadern = {
             l = { "<cmd>TroubleToggle loclist<cr>", "Loclist"},
             r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences"},
         },
+        -- TODO: maybe move to autocommands down below (like fennel, python)
         i = {
             name = "+iron",
             s = { "<cmd>IronRepl<cr>", "Start iron repl" },
@@ -104,15 +78,17 @@ local leadern = {
         },
         g = {
             name = "+git",
-            g = { function() lazygit:toggle() end, "Open LazyGit" },
+            g = { function() require('custom.terminals')['lazygit']:toggle() end, "Open LazyGit" },
             y = { function() require('gitlinker').get_buf_range_url('n') end, 'copy link to file in remote to clipboard' },
-            o = { function() require('gitlinker').get_buf_range_url('n', {action_callback = require("gitlinker.actions").open_in_browser }) end, 'open current buffer\'s remote in browser' },
+            o = { function() require('gitlinker').get_buf_range_url('n', {
+                action_callback = require("gitlinker.actions").open_in_browser
+            }) end, 'open current buffer\'s remote in browser' },
             Y = { function() require('gitlinker').get_repo_url() end, "copy homepage url to clipboard" },
         },
         s = {
-            g = { function() lazygit:toggle() end, "Toggle lazygit interface" },
-            h = { function() bottom:toggle() end, "Toggle bottom resource monitor"},
-            s = { function() bgshell:toggle() end, "Toggle random shell" },
+            g = { function() require('custom.terminals')['lazygit']:toggle() end, "Toggle lazygit interface" },
+            h = { function() require('custom.terminals')['bottom']:toggle() end, "Toggle bottom resource monitor"},
+            s = { function() require('custom.terminals')['bgshell']:toggle() end, "Toggle random shell" },
             c = { "<cmd>ToggleTermCloseAll<cr>", "Close all dangling terminals" },
         },
     },
@@ -135,7 +111,7 @@ local leaderv = {
 
 -- terminal mode mappings
 local leadert = {
-    ["jj"] = { util.t("<C-\\><C-n>"), "Escape from terminal mode" }
+    ["jj"] = { require('custom.utils').t("<C-\\><C-n>"), "Escape from terminal mode" }
 }
 
 local leaderi = {
