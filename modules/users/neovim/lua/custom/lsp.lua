@@ -2,6 +2,10 @@
 local lsp = require'lspconfig'
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- set pythonpath (set to nil if no python in current env)
+pcall(function() Pythonpath = io.popen('which python 2>/dev/null'):read() end)
+
+
 -- signature help
 local signature_setup = {
     capabilities = capabilities,
@@ -54,13 +58,37 @@ lsp.sumneko_lua.setup{
     capabilities = signature_setup.capabilities,
 }
 
+--lsp.pyright.setup(signature_setup)
+
 lsp.ccls.setup(signature_setup)
 lsp.rnix.setup(signature_setup)
 lsp.texlab.setup(signature_setup)
-lsp.pyright.setup(signature_setup)
 lsp.tsserver.setup(signature_setup)
 lsp.erlangls.setup(signature_setup)
 lsp.rust_analyzer.setup(signature_setup)
 lsp.r_language_server.setup(signature_setup)
 
---lsp.pylsp.setup(signature_setup)
+lsp.pylsp.setup{
+    on_attach = signature_setup.on_attach,
+    capabilities = signature_setup.capabilities,
+    settings = {
+        pylsp = {
+            plugins = {
+                jedi = {
+                    environment = Pythonpath,
+                },
+                jedi_completion = {
+                    include_params = true,
+                    fuzzy = true,
+                },
+                pycodestyle = {
+                    maxLineLength = 100,
+                },
+                flake8 = {
+                    enable = true,
+                    maxLineLength = 100,
+                },
+            },
+        },
+    },
+}

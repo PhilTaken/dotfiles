@@ -230,12 +230,14 @@ require('packer').startup{
         -- config for the builtin language server
         use {
             'neovim/nvim-lspconfig',
-            event = 'BufRead',
+            --event = 'BufRead',
             config = function()
                 require('custom.lsp')
             end,
             requires = {
-                { "hrsh7th/cmp-nvim-lsp" },
+                {
+                    "hrsh7th/cmp-nvim-lsp"
+                },
                 {
                     'onsails/lspkind-nvim',
                     config =  function()

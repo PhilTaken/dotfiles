@@ -57,8 +57,12 @@ in
 
         universal-ctags # ctags for anything
       ] ++ (with pkgs.nodePackages; [
-        pyright # python
+        #pyright # python
         typescript-language-server # js / ts
+      ]) ++ (with pkgs.python39Packages; [
+        python-lsp-server
+        python-lsp-black
+        pyls-isort
       ]);
 
       extraConfig = ''
