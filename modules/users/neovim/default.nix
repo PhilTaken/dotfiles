@@ -63,6 +63,7 @@ in
         python-lsp-server
         python-lsp-black
         pyls-isort
+        hy
       ]);
 
       extraConfig = ''

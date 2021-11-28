@@ -133,7 +133,7 @@ wk.register(leaderi, { mode = "i" })
 wk.register(leaders, { mode = "s" })
 
 -- filetype-specific mappings
-_G.which_key_fennel = function()
+_G.which_key_conjure = function()
     local fenneln = {
         ['<localleader>'] = {
             l = {
@@ -189,5 +189,5 @@ _G.which_key_r = function()
     wk.register(rn, {mode = "n", buffer = 0})
 end
 
-vim.api.nvim_exec([[autocmd BufEnter *.fnl :lua which_key_fennel()]], false)
+vim.api.nvim_exec([[autocmd BufEnter *.fnl,*.rkt,*.hy,*.scm :lua which_key_conjure()]], false)
 vim.api.nvim_exec([[autocmd BufEnter *.r,*.Rmd :lua which_key_r()]], false)

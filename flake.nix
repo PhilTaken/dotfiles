@@ -159,6 +159,9 @@
                 sshKeys = [ sshKey ];
               };
             };
+            extraPackages = with pkgs; [
+              multimc
+            ];
           };
 
           maelstroem = util.user.mkHMUser {

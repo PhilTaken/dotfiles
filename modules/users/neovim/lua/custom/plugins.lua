@@ -81,19 +81,26 @@ require('packer').startup{
         --use 'mhinz/vim-startify'
         use {
             'goolord/alpha-nvim',
-            config = function ()
+            config = function()
                 require'alpha'.setup(require'alpha.themes.dashboard'.opts)
             end
+        }
+
+        use {
+            'ludovicchabant/vim-gutentags',
+            config = function()
+                vim.g.gutentags_file_list_command = 'rg --files'
+            end,
+            event = "BufRead",
         }
 
         -- root vim in git dir
         use {
             'zah/vim-rooter',
             config = function()
-                local g = vim.g
-                g.rooter_targets = '/,*'
-                g.rooter_patterns = { '.git/' }
-                g.rooter_resolve_links = 1
+                vim.g.rooter_targets = '/,*'
+                vim.g.rooter_patterns = { '.git/' }
+                vim.g.rooter_resolve_links = 1
             end
         }
 
@@ -240,12 +247,47 @@ require('packer').startup{
                 },
                 {
                     'onsails/lspkind-nvim',
-                    config =  function()
+                    config = function()
                         require'lspkind'.init()
                     end
                 },
+                --{
+                    --"jose-elias-alvarez/null-ls.nvim",
+                    --requires = {
+                        --"neovim/nvim-lspconfig",
+                        --"nvim-lua/plenary.nvim",
+                        --"jose-elias-alvarez/null-ls.nvim"
+                    --},
+                    --config = function()
+                        --local nls = require("null-ls")
+                        --local nfmt = nls.builtins.formatting
+                        --local nca = nls.builtins.code_actions
+                        --local nd = nls.builtins.diagnostics
+                        --nls.config({
+                            --sources = {
+                                --nfmt.stylua,
+                                --nfmt.black,
+                                --nfmt.fixjson,
+                                --nfmt.fnlfmt,
+                                --nfmt.fprettify,
+                                --nfmt.format_r,
+                                --nfmt.nixfmt,
+                                --nfmt.prettier,
+                                --nfmt.rustfmt,
+
+                                --nca.gitsigns,
+
+                                --nd.chktex,
+                                --nd.flake8,
+                                --nd.luacheck,
+                                --nd.pylint
+                            --}
+                        --})
+                    --end,
+                --}
             }
         }
+
 
         -- generate comments / docs from code
         use {
@@ -334,21 +376,42 @@ require('packer').startup{
 
         -- nix
         use {
-            'LnL7/vim-nix',
-            ft = "nix"
-        }
-
-        use {
-            'bakpakin/fennel.vim',
-            ft = "fennel"
-        }
-
-        use {
-            'Olical/conjure',
-            ft = { "fennel" },
-            config = function()
-                vim.cmd[[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]]
-            end
+            -- rust-tools.nvim
+            {
+                'LnL7/vim-nix',
+                ft = "nix"
+            },
+            {
+                'bakpakin/fennel.vim',
+                ft = "fennel"
+            },
+            {
+                'hylang/vim-hy',
+                config = function()
+                    vim.g.hy_enable_conceal = 1
+                end,
+                event = "BufRead",
+            },
+            {
+                'Olical/conjure',
+                config = function()
+                    vim.cmd[[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]]
+                end,
+                -- lazy-loading on filetypes does not work for some reason
+                event = "BufRead",
+            },
+            {
+                'jalvesaq/Nvim-R',
+                config = function()
+                    local cmd = vim.cmd
+                    cmd[[let R_non_r_compl = 0]]
+                    cmd[[let R_user_maps_only = 1]]
+                    cmd[[let R_csv_app = 'tmux new-window vd']]
+                    cmd[[let R_auto_start = 1]]
+                end,
+                ft = { "r", "rmd" },
+            },
+            --
         }
 
         -- extra targets
@@ -386,18 +449,6 @@ require('packer').startup{
                     event = 'BufRead',
                 },
             },
-        }
-
-        use {
-            'jalvesaq/Nvim-R',
-            config = function()
-                local cmd = vim.cmd
-                cmd[[let R_non_r_compl = 0]]
-                cmd[[let R_user_maps_only = 1]]
-                cmd[[let R_csv_app = 'tmux new-window vd']]
-                cmd[[let R_auto_start = 1]]
-            end,
-            ft = { "r", "rmd" },
         }
 
         -- show keybinds + comment for them
@@ -500,9 +551,6 @@ require('packer').startup{
             'ggandor/lightspeed.nvim',
             event = "BufRead"
         }
-
-        -- ideas:
-        -- rust-tools.nvim
     end,
     config = {
         display = {
