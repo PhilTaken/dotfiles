@@ -386,6 +386,10 @@ require('packer').startup{
                 ft = "fennel"
             },
             {
+                'bakpakin/janet.vim',
+                ft = "janet"
+            },
+            {
                 'hylang/vim-hy',
                 config = function()
                     vim.g.hy_enable_conceal = 1

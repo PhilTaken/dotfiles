@@ -32,6 +32,8 @@
             - https://github.com/kevinhwang91/nvim-bqf
         - marks 
             - https://github.com/chentau/marks.nvim
+        - autopairs (no matching ' in lisp files...)
+        - commentary
 
     - figure out how to get `pylsp` working with envs and stuff
 
