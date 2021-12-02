@@ -171,7 +171,10 @@
               music = {
                 enable = true;
               };
-              kde.enable = true;
+              i3 = {
+                enable = true;
+                bg = ./images/rick_morty.png;
+              };
               git = {
                 enable = true;
                 userName = "Philipp Herzog";
@@ -310,7 +313,7 @@
               video = {
                 enable = true;
                 driver = "nvidia";
-                manager = "kde";
+                manager = "xfce";
               };
               yubikey.enable = true;
               fileshare = {

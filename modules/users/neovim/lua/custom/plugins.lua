@@ -348,7 +348,7 @@ require('packer').startup{
                 { "hrsh7th/cmp-path", after = "nvim-cmp" },
                 { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
                 { "lukas-reineke/cmp-under-comparator" },
-                { 'andersevenrud/compe-tmux', branch = 'cmp', after = "nvim-cmp" },
+                { 'andersevenrud/cmp-tmux', after = "nvim-cmp" },
                 { 'saadparwaiz1/cmp_luasnip', after = "nvim-cmp" },
             },
             config = function()

@@ -67,7 +67,7 @@ lsp.tsserver.setup(signature_setup)
 lsp.erlangls.setup(signature_setup)
 lsp.rust_analyzer.setup(signature_setup)
 lsp.r_language_server.setup(signature_setup)
-lsp['null-ls'].setup(signature_setup)
+--lsp['null-ls'].setup(signature_setup)
 
 lsp.pylsp.setup{
     on_attach = signature_setup.on_attach,

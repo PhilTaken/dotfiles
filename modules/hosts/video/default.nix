@@ -23,8 +23,8 @@ in
     };
 
     manager = mkOption {
-      description = "which window/desktop manager to enable";
-      type = (types.enum [ "kde" "sway" "i3" ]);
+      description = "which window/desktop manager to enable\nxfce is xfce+i3";
+      type = (types.enum [ "kde" "sway" "i3" "xfce" ]);
       default = "sway";
     };
   };
@@ -51,7 +51,7 @@ in
 
     services.xserver =
       let
-        enable = (cfg.manager == "kde" || cfg.manager == "i3");
+        enable = (cfg.manager == "kde" || cfg.manager == "i3" || cfg.manager == "xfce");
       in
       {
         inherit enable;
@@ -60,7 +60,10 @@ in
         xkbOptions = "caps:escape,grp:shifts_toggle";
 
         displayManager = {
-          defaultSession = if cfg.manager == "i3" then "none+i3" else "plasma";
+          defaultSession =
+            if (cfg.manager == "i3") then "none+i3" else
+            if (cfg.manager == "xfce") then "xfce+i3" else
+            "plasma";
         };
 
         videoDrivers =
@@ -74,15 +77,21 @@ in
         };
 
         desktopManager = {
+          xfce = {
+            enable = (cfg.manager == "xfce");
+            noDesktop = true;
+            enableXfwm = false;
+          };
           plasma5.enable = (cfg.manager == "kde");
           xterm.enable = false;
         };
 
         windowManager.i3 = {
-          enable = (cfg.manager == "i3");
+          enable = (cfg.manager == "i3" || cfg.manager == "xfce");
           package = pkgs.i3-gaps;
         };
       };
+
     console.useXkbConfig = true;
 
 
