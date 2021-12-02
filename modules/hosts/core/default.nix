@@ -48,69 +48,79 @@ in
     };
   };
 
-  config = mkIf (cfg.enable)
-    {
-      nix = {
-        package = pkgs.nixFlakes;
-        extraOptions = ''
-          experimental-features = nix-command flakes
-        '';
-        autoOptimiseStore = true;
-        trustedUsers = [ "root" "@wheel" ];
+  config = mkIf (cfg.enable) {
+    nix = {
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+      autoOptimiseStore = true;
+      trustedUsers = [ "root" "@wheel" ];
 
-        # TODO add my own registry
-        registry = { };
-      };
-      hardware.enableRedistributableFirmware = true;
+      # TODO add my own registry
+      registry = { };
 
-      # links /libexec from derivations to /run/current-system/sw
-      environment.pathsToLink = [ "/libexec" ];
-
-      boot = mkIf (cfg.bootLoader != null) {
-        loader =
-          if (cfg.bootLoader == "efi") then {
-            systemd-boot.enable = true;
-            efi.canTouchEfiVariables = true;
-          } else {
-            grub.enable = true;
-            grub.version = 2;
-            grub.device = if (cfg.grubDevice != null) then cfg.grubDevice else throw "you need to set a grub device";
-          };
-      };
-
-      networking.hostName = cfg.hostName;
-      time.timeZone = cfg.timeZone;
-
-      # TODO move these somewhere else
-      virtualisation.docker.enable = cfg.docker;
-      #programs.steam.enable = true;
-
-      services = {
-        tailscale.enable = true;
-      };
-
-
-      programs = {
-        mtr.enable = true;
-        command-not-found.enable = false;
-        zsh = {
-          enable = true;
-          interactiveShellInit = ''
-            source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-          '';
-        };
-      };
-
-      environment.systemPackages = with pkgs; [
-        vim
-        git
-        git-crypt
-        cryptsetup
-        hwinfo
-        nix-index
-        htop
+      binaryCaches = [
+        "https://philtaken.cachix.org"
       ];
 
-      system.stateVersion = "21.05";
+      binaryCachePublicKeys = [
+        "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
+      ];
     };
+    hardware.enableRedistributableFirmware = true;
+
+    # link to cachix token env file
+    sops.secrets.cachix-token = { };
+
+    # links /libexec from derivations to /run/current-system/sw
+    environment.pathsToLink = [ "/libexec" ];
+
+    boot = mkIf (cfg.bootLoader != null) {
+      loader =
+        if (cfg.bootLoader == "efi") then {
+          systemd-boot.enable = true;
+          efi.canTouchEfiVariables = true;
+        } else {
+          grub.enable = true;
+          grub.version = 2;
+          grub.device = if (cfg.grubDevice != null) then cfg.grubDevice else throw "you need to set a grub device";
+        };
+    };
+
+    networking.hostName = cfg.hostName;
+    time.timeZone = cfg.timeZone;
+
+    # TODO move these somewhere else
+    virtualisation.docker.enable = cfg.docker;
+    #programs.steam.enable = true;
+
+    services = {
+      tailscale.enable = true;
+    };
+
+
+    programs = {
+      mtr.enable = true;
+      command-not-found.enable = false;
+      zsh = {
+        enable = true;
+        interactiveShellInit = ''
+          source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+        '';
+      };
+    };
+
+    environment.systemPackages = with pkgs; [
+      vim
+      git
+      git-crypt
+      cryptsetup
+      hwinfo
+      nix-index
+      htop
+    ];
+
+    system.stateVersion = "21.05";
+  };
 }

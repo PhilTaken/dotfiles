@@ -53,7 +53,7 @@ in
 
         neuron-notes # for zettelkasten note-taking
 
-        sqlite  # for sqlite.lua
+        sqlite # for sqlite.lua
 
         universal-ctags # ctags for anything
       ] ++ (with pkgs.nodePackages; [

@@ -6,6 +6,7 @@ vaultwarden-yubicoSecretKey: ENC[AES256_GCM,data:0dLyAC963ioSmwKQ3eJiLuf50iCo+OI
 vaultwarden-adminToken: ENC[AES256_GCM,data:h/8V7gpi4slp2wMVBmDtna3ga2PsUtRNmblQxicn2/2XCpc3EA+9SwFTemNhloBce9LezDozL+hc/8+UrYzQug==,iv:lmDuWnj/LchX6KLvalDolCGWWvrvUCDZLQZ7zYCQER8=,tag:joQUKMXyUNuFWALC5E0xLg==,type:str]
 nixos-ykchal: ENC[AES256_GCM,data:uyRYr6cK0Ztkga1u0B8gjQ9JvsSEpFE+MOIRVcCB9qeimTnpaMF8Macnq4PrayBHYIswzMrkYYF0SNJRW5MP3KoiUzkURkF0mWETz+sjZLItyqnHKKyBz5c3zPndc6nuGcHDqrY/nAckt04MHTXmBixRLM+Kvr/K2yqipYHMzOrAgYRiEH5A5IX/NmQSDzzqMEaXK9WZohwsqS4rCofUc3mnXcUmCqrRpvXTHynfKzyYve1MthB25KgaROJedCUgE4K3xmX72UiGaigKEHTByhN/4W1M6ECwycFw1W97l4r3KK+Zu1S/eiLWjMZJy7JBZDS1,iv:F/8T8myWwECP8+OvJBEq+iuvJ7xyyISfSPd3nVFn8YI=,tag:OJbAPuNsJv3sqbcF18M8Bw==,type:str]
 maelstroem-ykchal: ENC[AES256_GCM,data:FAO//moE8L2mEfI5+q5i+Jl47FTcgCE7RD6O2KAWmKYTZUtWq7eD50f6BE6rD6QofJE7tb1awAWv8MnUApTT6FaCJ32WQ0KQBS6FK1f8Oioqc04GL58FHUgPnMtOTR2Kha70cy2tM4Qd8Q8W3coQqCYDyV8PzcAdEmc1UUERfl+vGpEPfk35M9dp6ONXGauW41pstiuq5SR/ATQYZSKcZBwI3EV4ku/2mU8irz4YFxpdRbkF2x5Dk7oyLUa2I4zrJsVOqU20+ESe5fCizhFzv+oeqqOPQlxxLrAWLkU7qOqh1SN9zYtE6qf7yu4XGiqzqLcV,iv:IJkBZTWOXfNQrv9zUk3A/zIJzn1l4EgAChL5Do4jEn4=,tag:NONBuOd5JiBOv9sIc+H73w==,type:str]
+cachix-token: ENC[AES256_GCM,data:LxOfavico/ExzXBb0vs/IqOcTh3WX7JzZeyC6QRrR2A8At6UlgrgIIdv0CosxmOHZx2n1CZmRofb5b6V4R8a+7scDApfWJ2n95EDh87jodyXDi/BsUzUI8QNWDuZRdZ8e2Nwz3jvUAHNSSjGzV5LZX6Amp6bmceYFUZL1yRVnVKz5kXJeLsYWHzIw5smL3yGsHxLFzxzntXfBgxaO8Ks2sDPN6E3,iv:uLf2Cwf6H/LqOtee20J32D+0+UuYbMLVv275c09OiLk=,tag:5pEoA4A12Dt1sToBffA+6A==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -48,8 +49,8 @@ sops:
             YWxkVTRjR1plZElWZ24rL0pCSXpsNHMKmk3mhJbqW6FWAle7DYj6auwbXxX+zxpB
             G+ess+Z1wDHcgJYcd9FvNhdde/IrGfZNT6hS3Px6+Ora+w0A2iFoyw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2021-10-17T09:35:37Z"
-    mac: ENC[AES256_GCM,data:Y8uwx894QJHiWsOZPw0e30awwaXxmboKiXWHAtbjhlZqO+XZHDiYoOo7pseRR+wTGGkvNaOatmtDEkYLk9E9s5Gkl9GzvaCCLwh3onCq+6dzl5tEhTjPAyKilhYeXj1c3njvKI7CqyjAuUFvfqrd5/orbOx3tv3bH+8Pfb493LI=,iv:lx0cJG1sqd+9cHZ79fZoENpViDkogtuZP2BEotbf874=,tag:yJ5RA3y+SBYcnPtA4k+T+g==,type:str]
+    lastmodified: "2021-12-02T09:59:40Z"
+    mac: ENC[AES256_GCM,data:BElmHpU9Az88pwWfH5QToSFcTQ6brgU3K1r/m5jV1BZPSEMm8jUhRhQm+NnikOoZms9fAEKif7MSFw0Dvglcr5h15w9wkr1oxuOHgMQ20JyRQJQdj9cC8hGHr9DshA4aWiXMp992GHQng2vy/zRcdV38JMYNzVA79FEBVIUd1P0=,iv:4r9E8t3AHx/uX+JzwlhdOEle7X6PYtOjAs20AevItRk=,tag:OB0pr5kUEvaEURVixbEq1Q==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.1
