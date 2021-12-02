@@ -110,6 +110,11 @@ rec
             "${modifier}+Shift+8" = "move container to workspace number 8";
             "${modifier}+Shift+9" = "move container to workspace number 9";
             "${modifier}+Shift+0" = "move container to workspace number 1";
+
+            "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playecrtl play-pause";
+            "XF86AudioPause" = "exec ${pkgs.playerctl}/bin/playecrtl pause";
+            "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playecrtl next";
+            "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playecrtl previous";
           };
         terminal = "alacritty";
         modifier = "Mod4";
