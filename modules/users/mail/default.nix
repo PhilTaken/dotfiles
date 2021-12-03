@@ -76,6 +76,7 @@ in
 
     home.packages = with pkgs; [
       thunderbird
+      hydroxide
     ];
 
     systemd.user.services.hydroxide = {

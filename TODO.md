@@ -1,5 +1,8 @@
 # TODO:
 
+- nvidia driver kinda meh 
+    -> `sudo nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }, HDMI-1-1: nvidia-auto-select +3840+0 {ForceCompositionPipeline=On}"`
+
 ## IMPORTANT
 
 - write an issue on serokell/deploy-rs about the dbus problem when trying to deploy / write an email
@@ -24,6 +27,7 @@
     - move ttrss to beta + passthrough with nginx
 
 - nvim
+    - TODO: update config to 0.6
     - snippets
         - fortran 
             - module

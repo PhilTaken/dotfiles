@@ -71,6 +71,11 @@ in
             cfg.driver
           ] else [ ];
 
+        screenSection = mkIf (cfg.driver == "nvidia") ''
+          Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+          Option         "AllowIndirectGLXProtocol" "off"
+          Option         "TripleBuffer" "on"
+        '';
 
         libinput = {
           inherit enable;
