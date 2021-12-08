@@ -216,13 +216,13 @@ require('packer').startup{
         }
 
         -- mark specific comments for
-        use {
-            "folke/todo-comments.nvim",
-            requires = "nvim-lua/plenary.nvim",
-            config = function()
-                require("todo-comments").setup {}
-            end
-        }
+        --use {
+            --"folke/todo-comments.nvim",
+            --requires = "nvim-lua/plenary.nvim",
+            --config = function()
+                --require("todo-comments").setup{}
+            --end
+        --}
 
         -- fancy syntax hl for md files
         use {
@@ -236,87 +236,87 @@ require('packer').startup{
 
         -- config for the builtin language server
         use {
-            'neovim/nvim-lspconfig',
-            --event = 'BufRead',
-            config = function()
-                require('custom.lsp')
-            end,
-            requires = {
-                {
-                    "hrsh7th/cmp-nvim-lsp"
+            {
+                'neovim/nvim-lspconfig',
+                after = "null-ls.nvim",
+                config = function()
+                    require('custom.lsp')
+                end,
+                requires = {
+                    "hrsh7th/cmp-nvim-lsp",
+                    {
+                        'onsails/lspkind-nvim',
+                        config = function()
+                            require'lspkind'.init()
+                        end
+                    },
                 },
-                {
-                    'onsails/lspkind-nvim',
-                    config = function()
-                        require'lspkind'.init()
-                    end
+            },
+            {
+                "jose-elias-alvarez/null-ls.nvim",
+                requires = {
+                    "nvim-lua/plenary.nvim",
+                    "neovim/nvim-lspconfig",
                 },
-                --{
-                    --"jose-elias-alvarez/null-ls.nvim",
-                    --requires = {
-                        --"neovim/nvim-lspconfig",
-                        --"nvim-lua/plenary.nvim",
-                        --"jose-elias-alvarez/null-ls.nvim"
-                    --},
-                    --config = function()
-                        --local nls = require("null-ls")
-                        --local nfmt = nls.builtins.formatting
-                        --local nca = nls.builtins.code_actions
-                        --local nd = nls.builtins.diagnostics
-                        --nls.config({
-                            --sources = {
-                                --nfmt.stylua,
-                                --nfmt.black,
-                                --nfmt.fixjson,
-                                --nfmt.fnlfmt,
-                                --nfmt.fprettify,
-                                --nfmt.format_r,
-                                --nfmt.nixfmt,
-                                --nfmt.prettier,
-                                --nfmt.rustfmt,
+                config = function()
+                    local nls = require("null-ls")
+                    local nfmt = nls.builtins.formatting
+                    local nca = nls.builtins.code_actions
+                    local nd = nls.builtins.diagnostics
+                    nls.config({
+                        sources = {
+                            nfmt.stylua,
+                            nfmt.black,
+                            --nfmt.fixjson,
+                            --nfmt.fnlfmt,
+                            nfmt.fprettify,
+                            nfmt.format_r,
+                            nfmt.nixfmt,
+                            nfmt.prettier,
+                            --nfmt.rustfmt,
 
-                                --nca.gitsigns,
+                            nca.gitsigns,
 
-                                --nd.chktex,
-                                --nd.flake8,
-                                --nd.luacheck,
-                                --nd.pylint
-                            --}
-                        --})
-                    --end,
-                --}
+                            --nd.chktex,
+                            nd.flake8,
+                            nd.luacheck,
+                            nd.pylint
+                        }
+                    })
+                    require("lspconfig")['null-ls'].setup({})
+                end,
             }
         }
 
-
         -- generate comments / docs from code
-        use {
-            "danymat/neogen",
-            config = function()
-                require('neogen').setup{
-                    enabled = true,
-                }
-            end,
-            requires = "nvim-treesitter/nvim-treesitter",
-            module = "neogen",
-        }
+        --use {
+            --"danymat/neogen",
+            --config = function()
+                --require('neogen').setup{
+                    --enabled = true,
+                --}
+            --end,
+            --requires = "nvim-treesitter/nvim-treesitter",
+            --module = "neogen",
+        --}
 
         -- extra fancy lsp extras
-        use {
-            'glepnir/lspsaga.nvim',
-            config = function()
-                local saga = require 'lspsaga'
-                saga.init_lsp_saga{
-                    code_action_icon = ' ',
-                    code_action_prompt = {
-                      enable = true,
-                      sign = false,
-                      sign_priority = 20,
-                      virtual_text = false,
-                    },
-                }
-            end
-        }
+        --use {
+            ----'glepnir/lspsaga.nvim',
+            --'tami5/lspsaga.nvim',
+            --config = function()
+                --local saga = require 'lspsaga'
+                --saga.init_lsp_saga{
+                    --code_action_icon = '',
+                    --code_action_prompt = {
+                      --enable = true,
+                      --sign = false,
+                      --sign_priority = 20,
+                      --virtual_text = false,
+                    --},
+                --}
+            --end
+        --}
 
         -- ast-like code parsing utility for hl / indent / lsp
         use {

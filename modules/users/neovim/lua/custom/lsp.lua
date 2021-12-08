@@ -5,7 +5,6 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 -- set pythonpath (set to nil if no python in current env)
 pcall(function() Pythonpath = io.popen('which python 2>/dev/null'):read() end)
 
-
 -- signature help
 local signature_setup = {
     capabilities = capabilities,
@@ -19,7 +18,6 @@ local signature_setup = {
         })
     end,
 }
-
 
 -- Enable lsp servers
 lsp.elixirls.setup{
@@ -67,7 +65,6 @@ lsp.tsserver.setup(signature_setup)
 lsp.erlangls.setup(signature_setup)
 lsp.rust_analyzer.setup(signature_setup)
 lsp.r_language_server.setup(signature_setup)
---lsp['null-ls'].setup(signature_setup)
 
 lsp.pylsp.setup{
     on_attach = signature_setup.on_attach,
@@ -93,4 +90,3 @@ lsp.pylsp.setup{
         },
     },
 }
-

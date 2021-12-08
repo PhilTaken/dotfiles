@@ -32,8 +32,6 @@ local leadern = {
     [";"] = { function() R('custom.tele').buffers() end, "Buffers" },
     [";;"] = { function() R('custom.tele').project_search() end, "Project Search" },
 
-    K = { function() require('lspsaga.hover').render_hover_doc() end, "Hover Info" },
-
     ["<leader>"] = {
         ["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting"},
         f = {
@@ -61,20 +59,14 @@ local leadern = {
             s = { "<cmd>IronRepl<cr>", "Start iron repl" },
             l = { "<Plug>(iron-send-line)", "Send single line" },
         },
-        c = {
-            name = "code generation",
-            n = { function() require('neogen').generate() end, "Generate Comment from function"},
-        },
         l = {
             name = "+lsp",
-            s = { function() require('lspsaga.signaturehelp').signature_help() end, "Signature Help" },
-            n = { function() require('lspsaga.rename').rename() end, "Rename Variable" },
-            f = { function() require('lspsaga.provider').lsp_finder() end, "Lsp Finder" },
-            c = { function() require('lspsaga.codeaction').code_action() end, "Code Action" },
-            d = { function() require('lspsaga.provider').preview_definition() end, "Preview Definition"},
-            ["["] = { function() require('lspsaga.diagnostic').lsp_jump_diagnostic_prev() end, "Previous Diagnostic"},
-            ["]"] = { function() require('lspsaga.diagnostic').lsp_jump_diagnostic_next() end, "Next Diagnostic"},
-            ["="] = { function() vim.lsp.buf.formatting() end, "Formatting" },
+            n = { function() vim.lsp.buf.rename() end, "Rename Variable" },
+            c = { function() vim.lsp.buf.code_action() end, "Code Action" },
+            f = { function() vim.lsp.buf.formatting() end, "Formatting" },
+            s = { function() vim.lsp.buf.signature_help() end, "Signature Help" },
+            d = { function() vim.lsp.buf.definition() end, "Preview Definition"},
+            e = { function() vim.diagnostic.open_float() end, "Diagnostics float"},
         },
         g = {
             name = "+git",
