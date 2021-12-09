@@ -1,16 +1,14 @@
 # TODO:
 
-- nvidia driver kinda meh 
-    -> `sudo nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }, HDMI-1-1: nvidia-auto-select +3840+0 {ForceCompositionPipeline=On}"`
+- split server up into parts
 
 ## IMPORTANT
 
-- write an issue on serokell/deploy-rs about the dbus problem when trying to deploy / write an email
 
 ## main
 
 - beta
-    - set up nextcloud for small file hosting + floccus bookmark + browsersync, in container?
+    - photoview -> librephotos (docker in "./modules/hosts/server/default.nix")
     - set up hedgedoc
     - set up vaultwarden
     - enable ttrss
@@ -29,7 +27,7 @@
 - nvim
     - TODO: update config to 0.6
     - snippets
-        - fortran 
+        - fortran
             - module
     - plugins
         - quickfix list
@@ -38,8 +36,6 @@
             - https://github.com/chentau/marks.nvim
         - autopairs (no matching ' in lisp files...)
         - commentary
-
-    - figure out how to get `pylsp` working with envs and stuff
 
 # Ideas
 

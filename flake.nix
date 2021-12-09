@@ -247,7 +247,7 @@
             ];
           };
 
-        # raspberry pi @ home (192.168.8.236 / 10.100.0.2)
+        # raspberry pi @ home (192.168.0.120 / 10.100.0.2)
         beta =
           let
             hardware-config = import (./machines/beta);
@@ -260,7 +260,7 @@
               core = {
                 bootLoader = null;
                 hostName = "beta";
-                #docker = true;
+                docker = true;
               };
               server = {
                 enable = true;
@@ -268,7 +268,8 @@
                   openssh.enable = true;
                   jellyfin.enable = true;
                   telegraf.enable = true;
-                  #photoprism.enable = true;
+                  photoview.enable = true;
+                  nextcloud.enable = true;
                 };
               };
               fileshare = {
@@ -322,7 +323,7 @@
                   enable = true;
                   binds = [
                     {
-                      ip = "192.168.8.236";
+                      ip = "192.168.0.120";
                       dirs = [ "/media" ];
                     }
                   ];
@@ -389,7 +390,7 @@
         #};
 
         beta = {
-          hostname = "192.168.8.236";
+          hostname = "192.168.0.120";
           sshUser = "root";
           profiles.system.path = deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
         };

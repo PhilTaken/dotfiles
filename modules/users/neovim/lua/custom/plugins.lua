@@ -1,4 +1,5 @@
 -- Install packer
+--
 
 local execute = vim.api.nvim_command
 local fn = vim.fn
@@ -287,36 +288,6 @@ require('packer').startup{
                 end,
             }
         }
-
-        -- generate comments / docs from code
-        --use {
-            --"danymat/neogen",
-            --config = function()
-                --require('neogen').setup{
-                    --enabled = true,
-                --}
-            --end,
-            --requires = "nvim-treesitter/nvim-treesitter",
-            --module = "neogen",
-        --}
-
-        -- extra fancy lsp extras
-        --use {
-            ----'glepnir/lspsaga.nvim',
-            --'tami5/lspsaga.nvim',
-            --config = function()
-                --local saga = require 'lspsaga'
-                --saga.init_lsp_saga{
-                    --code_action_icon = '',
-                    --code_action_prompt = {
-                      --enable = true,
-                      --sign = false,
-                      --sign_priority = 20,
-                      --virtual_text = false,
-                    --},
-                --}
-            --end
-        --}
 
         -- ast-like code parsing utility for hl / indent / lsp
         use {

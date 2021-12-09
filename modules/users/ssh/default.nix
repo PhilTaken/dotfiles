@@ -55,7 +55,7 @@ in
           user = "root";
         };
         "raspi" = {
-          hostname = "192.168.8.236";
+          hostname = "192.168.0.120";
           user = "nixos";
         };
         "alpha" = {

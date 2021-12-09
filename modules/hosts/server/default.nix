@@ -72,8 +72,32 @@ in
         enable = mkEnableOption "telegraf metric reporting";
       };
 
-      photoprism = {
-        enable = mkEnableOption "photoprism picture service";
+      photoview = {
+        enable = mkEnableOption "photoview picture service";
+        port = mkOption {
+          description = "port for the photoview webinterface";
+          type = types.port;
+          default = 2342;
+        };
+        photoDir = mkOption {
+          description = "path to the photoview folder";
+          type = types.str;
+          default = "/media/Pictures";
+        };
+      };
+
+      nextcloud = {
+        enable = mkEnableOption "nextcloud filesharing server";
+        port = mkOption {
+          description = "port for the photoview webinterface";
+          type = types.port;
+          default = 8080;
+        };
+        home = mkOption {
+          description = "nextcloud home path";
+          type = types.str;
+          default = "/media/nextcloud";
+        };
       };
     };
   };
@@ -109,6 +133,20 @@ in
     services.jellyfin = {
       enable = cfg.services.jellyfin.enable;
       openFirewall = true;
+    };
+
+    # -----------------------------------------------
+
+    virtualisation.oci-containers.containers."nextcloud" = mkIf (cfg.services.nextcloud.enable) {
+      image = "nextcloud";
+      ports = [ "${builtins.toString cfg.services.nextcloud.port}:80" ];
+      volumes = [
+        "${cfg.services.nextcloud.home}:/var/www/html/data"
+      ];
+      environment = {
+        NEXTCLOUD_ADMIN_USER = "admin";
+        NEXTCLOUD_TRUSTED_DOMAINS = "domain1 domain2 domain3";
+      };
     };
 
     # -----------------------------------------------
@@ -229,67 +267,52 @@ in
 
     # -----------------------------------------------
 
-    virtualisation.oci-containers.containers = mkIf (cfg.services.photoprism.enable) {
-      photoprism = {
-        image = "photoprism/photoprism:latest";
-        ports = [ "127.0.0.1:2342:2342" ];
-        volumes = [
-          "~/Pictures:/photoprism/originals"
-          "~/Import:/photoprism/import"
-          "~/storage:/photoprism/storage"
-        ];
-        environment = {
-          PHOTOPRISM_ADMIN_PASSWORD = "insecure"; # PLEASE CHANGE: Your initial admin password (min 4 characters)
-          PHOTOPRISM_SITE_URL = "http://localhost:2342/"; # Public server URL incl http:// or https:// and /path, :port is optional
-          PHOTOPRISM_ORIGINALS_LIMIT = "1000000"; # File size limit for originals in MB (increase for high-res video)
-          PHOTOPRISM_HTTP_COMPRESSION = "none"; # Improves transfer speed and bandwidth utilization (none or gzip)
-          PHOTOPRISM_WORKERS = "2"; # Limits the number of indexing workers to reduce system load
-          PHOTOPRISM_DEBUG = "false"; # Run in debug mode (shows additional log messages)
-          PHOTOPRISM_PUBLIC = "false"; # No authentication required (disables password protection)
-          PHOTOPRISM_READONLY = "false"; # Don't modify originals directory (reduced functionality)
-          PHOTOPRISM_EXPERIMENTAL = "false"; # Enables experimental features
-          PHOTOPRISM_DISABLE_CHOWN = "false"; # Disables storage permission updates on startup
-          PHOTOPRISM_DISABLE_WEBDAV = "false"; # Disables built-in WebDAV server
-          PHOTOPRISM_DISABLE_SETTINGS = "false"; # Disables Settings in Web UI
-          PHOTOPRISM_DISABLE_TENSORFLOW = "false"; # Disables all features depending on TensorFlow
-          PHOTOPRISM_DISABLE_FACES = "false"; # Disables facial recognition
-          PHOTOPRISM_DISABLE_CLASSIFICATION = "false"; # Disables image classification
-          PHOTOPRISM_DARKTABLE_PRESETS = "true"; # Enables Darktable presets and disables concurrent RAW conversion
-          # PHOTOPRISM_FFMPEG_ENCODER = "h264_v4l2m2m";       # FFmpeg AVC encoder for video transcoding (default: libx264)
-          # PHOTOPRISM_FFMPEG_BUFFERS = "64";                 # FFmpeg capture buffers (default: 32)
-          PHOTOPRISM_DETECT_NSFW = "false"; # Flag photos as private that MAY be offensive
-          PHOTOPRISM_UPLOAD_NSFW = "true"; # Allow uploads that MAY be offensive
-          # PHOTOPRISM_DATABASE_DRIVER = "sqlite";            # SQLite is an embedded database that doesn't require a server
-          PHOTOPRISM_DATABASE_DRIVER = "mysql"; # Use MariaDB 10.5+ or MySQL 8+ instead of SQLite for improved performance
-          PHOTOPRISM_DATABASE_SERVER = "mariadb:3306"; # MariaDB or MySQL database server (hostname:port)
-          PHOTOPRISM_DATABASE_NAME = "photoprism"; # MariaDB or MySQL database schema name
-          PHOTOPRISM_DATABASE_USER = "photoprism"; # MariaDB or MySQL database user name
-          PHOTOPRISM_DATABASE_PASSWORD = "insecure"; # MariaDB or MySQL database user password
-          PHOTOPRISM_SITE_TITLE = "PhotoPrism";
-          PHOTOPRISM_SITE_CAPTION = "Browse Your Life";
-          PHOTOPRISM_SITE_DESCRIPTION = "";
-          PHOTOPRISM_SITE_AUTHOR = "";
-          ## Set a non-root user, group, or custom umask if your Docker environment doesn't support this natively =
-          # PHOTOPRISM_UID = 1000
-          # PHOTOPRISM_GID = 1000
-          # PHOTOPRISM_UMASK = 0000
-          HOME = "/photoprism";
-        };
-      };
+    systemd.services.init-photoview-network-and-files = mkIf (cfg.services.photoview.enable) {
+      description = "Create the network bridge photoview-br for photoview";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig.Type = "oneshot";
+      script = let
+        dockercli = "${config.virtualisation.docker.package}/bin/docker";
+      in ''
+        # Put a true at the end to prevent getting non-zero return code, which will crash the whole service
+        check=$(${dockercli} network ls | grep "photoview-br" || true)
+        if [ -z "$check" ]; then
+          ${dockercli} network create photoview-br
+        else
+          echo "photoview-br already exists in docker"
+        fi
+      '';
+    };
 
-      mariadb = {
-        image = "arm64v8/mariadb:10.6";
-        #command: mysqld --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
-        volumes = [
-          "./database:/var/lib/mysql" # Never remove
-        ];
-        environment = {
-          MYSQL_ROOT_PASSWORD = "insecure";
-          MYSQL_DATABASE = "photoprism";
-          MYSQL_USER = "photoprism";
-          MYSQL_PASSWORD = "insecure";
-        };
+    virtualisation.oci-containers.containers."mariadb-photoview" = mkIf (cfg.services.photoview.enable) {
+      image = "mariadb:10.5";
+      volumes = [
+        "db_data:/var/lib/mysql"
+      ];
+      environment = {
+        MYSQL_DATABASE = "photoview";
+        MYSQL_USER = "photoview";
+        MYSQL_PASSWORD = "photosecret";
+        MYSQL_RANDOM_ROOT_PASSWORD = "1";
       };
+      extraOptions = [ "--network=photoview-br" ];
+    };
+
+    virtualisation.oci-containers.containers."photoview" = mkIf (cfg.services.photoview.enable) {
+      image = "viktorstrate/photoview:2";
+      ports = [ "${builtins.toString cfg.services.photoview.port}:80" ];
+      volumes = [
+        "${cfg.services.photoview.photoDir}:/photos"
+      ];
+      environment = {
+        PHOTOVIEW_DATABASE_DRIVER = "mysql";
+        PHOTOVIEW_MYSQL_URL = "photoview:photosecret@tcp(mariadb-photoview)/photoview";
+        PHOTOVIEW_LISTEN_IP = "photoview";
+        PHOTOVIEW_LISTEN_PORT = "80";
+        PHOTOVIEW_MEDIA_CACHE = "/app/cache";
+      };
+      extraOptions = [ "--network=photoview-br" ];
     };
 
     # -----------------------------------------------
@@ -300,21 +323,29 @@ in
         allowedTCPPorts = [
           #80    # to get certs (let's encrypt)
           #443   # ---- " ----
+          cfg.services.photoview.port
+        ];
+
+        allowedUDPPorts = [
+          cfg.services.photoview.port
         ];
       };
 
       "tailscale0" = {
         allowedTCPPorts = [
           53 # dns (adguard home)
-          51820 # innernet
-          31111 # adguard home webinterface
           25565 # minecraft
+          31111 # adguard home webinterface
+          51820 # innernet
+          cfg.services.photoview.port
         ];
 
         allowedUDPPorts = [
           53 # dns (adguard home)
-          51820
+          8080 # nextcloud
           25565 # minecraft
+          51820
+          cfg.services.photoview.port
         ];
       };
 

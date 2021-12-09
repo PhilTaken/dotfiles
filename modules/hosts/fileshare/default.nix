@@ -92,7 +92,7 @@ in
       ips = mkOption {
         description = "ips to share to";
         type = types.listOf types.str;
-        default = [ (if wireguard.enable then "10.100.0.0/24" else "*") "192.168.8.0/24" ];
+        default = [ (if wireguard.enable then "10.100.0.0/24" else "*") "192.168.0.0/24" ];
       };
     };
 
@@ -129,7 +129,7 @@ in
         security = user
         #use sendfile = yes
         #max protocol = smb2
-        hosts allow = ${cfg.samba.ips} localhost 192.168.8.0/24
+        hosts allow = ${cfg.samba.ips} localhost 192.168.0.0/24
         hosts deny = 0.0.0.0/0
         guest account = nobody
         map to guest = bad user
