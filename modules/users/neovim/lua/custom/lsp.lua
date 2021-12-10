@@ -80,12 +80,12 @@ lsp.pylsp.setup{
                     fuzzy = true,
                 },
                 pycodestyle = {
-                    maxLineLength = 100,
+                    maxLineLength = 150,
                 },
-                flake8 = {
-                    enable = true,
-                    maxLineLength = 100,
-                },
+                --flake8 = {
+                    --enable = false,
+                    --maxLineLength = 120,
+                --},
             },
         },
     },

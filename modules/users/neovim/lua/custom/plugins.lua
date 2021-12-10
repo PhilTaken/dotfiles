@@ -239,7 +239,6 @@ require('packer').startup{
         use {
             {
                 'neovim/nvim-lspconfig',
-                after = "null-ls.nvim",
                 config = function()
                     require('custom.lsp')
                 end,
@@ -255,6 +254,7 @@ require('packer').startup{
             },
             {
                 "jose-elias-alvarez/null-ls.nvim",
+                disable = true,
                 requires = {
                     "nvim-lua/plenary.nvim",
                     "neovim/nvim-lspconfig",

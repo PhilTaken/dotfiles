@@ -92,3 +92,10 @@ opt.relativenumber = true
 opt.signcolumn = "auto"
 
 opt.wrap = false
+
+vim.diagnostic.config({
+    underline = false,
+    virtual_test = true,
+    signs = true,
+    severity_sort = true,
+})

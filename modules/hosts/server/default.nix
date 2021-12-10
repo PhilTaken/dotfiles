@@ -145,7 +145,8 @@ in
       ];
       environment = {
         NEXTCLOUD_ADMIN_USER = "admin";
-        NEXTCLOUD_TRUSTED_DOMAINS = "domain1 domain2 domain3";
+        #                            local         tailscale     yggdrasil
+        NEXTCLOUD_TRUSTED_DOMAINS = "192.168.0.120 100.105.96.43 10.100.0.2";
       };
     };
 
