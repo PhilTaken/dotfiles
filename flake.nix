@@ -266,8 +266,10 @@
                 enable = true;
                 services = {
                   openssh.enable = true;
-                  jellyfin.enable = true;
                   telegraf.enable = true;
+                  iperf.enable = true;
+
+                  jellyfin.enable = true;
                   photoview.enable = true;
                   nextcloud.enable = true;
                 };
@@ -358,6 +360,7 @@
               laptop = {
                 enable = true;
                 wirelessInterfaces = [ "wlp0s20f3" ];
+                enableVPN = false;
               };
               sound.enable = true;
               video = {

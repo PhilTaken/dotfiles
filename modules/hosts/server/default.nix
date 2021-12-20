@@ -99,6 +99,10 @@ in
           default = "/media/nextcloud";
         };
       };
+
+      iperf = {
+        enable = mkEnableOption "iperf throughput measuring";
+      };
     };
   };
 
@@ -132,6 +136,13 @@ in
 
     services.jellyfin = {
       enable = cfg.services.jellyfin.enable;
+      openFirewall = true;
+    };
+
+    # -----------------------------------------------
+
+    services.iperf3 = {
+      enable = cfg.services.iperf.enable;
       openFirewall = true;
     };
 
