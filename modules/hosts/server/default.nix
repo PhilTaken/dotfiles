@@ -103,6 +103,20 @@ in
       iperf = {
         enable = mkEnableOption "iperf throughput measuring";
       };
+
+      syncthing = {
+        enable = mkEnableOption "syncthing service";
+        dataFolder = mkOption {
+          description = "folder for synced folders";
+          type = types.str;
+          default = "/media/syncthing/data";
+        };
+        configFolder = mkOption {
+          description = "folder for syncthing config";
+          type = types.str;
+          default = "/media/syncthing/config";
+        };
+      };
     };
   };
 
@@ -329,17 +343,30 @@ in
 
     # -----------------------------------------------
 
+    # syncthing
+
+    services = {
+      syncthing = {
+        enable = cfg.services.syncthing.enable;
+        user = "nixos";
+        dataDir = cfg.services.syncthing.dataFolder;
+        configDir = cfg.services.syncthing.configFolder;
+        openDefaultPorts = true;
+        guiAddress = "0.0.0.0:8384";
+      };
+    };
+
+    # -----------------------------------------------
+
     # firewall
     networking.firewall.interfaces = {
       "eth0" = {
         allowedTCPPorts = [
           #80    # to get certs (let's encrypt)
           #443   # ---- " ----
-          cfg.services.photoview.port
         ];
 
         allowedUDPPorts = [
-          cfg.services.photoview.port
         ];
       };
 
@@ -349,7 +376,6 @@ in
           25565 # minecraft
           31111 # adguard home webinterface
           51820 # innernet
-          cfg.services.photoview.port
         ];
 
         allowedUDPPorts = [
@@ -357,7 +383,6 @@ in
           8080 # nextcloud
           25565 # minecraft
           51820
-          cfg.services.photoview.port
         ];
       };
 

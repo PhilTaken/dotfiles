@@ -1,6 +1,7 @@
 # TODO:
 
 - split server up into parts
+- reverse proxy for all webservices on raspi (traefik?)
 
 ## IMPORTANT
 

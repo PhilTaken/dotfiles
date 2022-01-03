@@ -32,6 +32,7 @@ in
 
   config = mkIf (cfg.enable) {
     sops.secrets.mullvad-privateKey = { };
+    programs.steam.enable = true;
 
     environment = {
       systemPackages = with pkgs; [

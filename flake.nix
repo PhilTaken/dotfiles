@@ -269,8 +269,8 @@
                   telegraf.enable = true;
                   iperf.enable = true;
 
+                  syncthing.enable = true;
                   jellyfin.enable = true;
-                  photoview.enable = true;
                   nextcloud.enable = true;
                 };
               };
@@ -352,6 +352,7 @@
             inherit hardware-config users;
 
             systemConfig = {
+              wireguard.enable = false;
               core.hostName = "nixos-laptop";
               server = {
                 enable = true;
