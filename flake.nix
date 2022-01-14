@@ -316,7 +316,7 @@
               video = {
                 enable = true;
                 driver = "nvidia";
-                manager = "xfce";
+                manager = "kde";
               };
               yubikey.enable = true;
               fileshare = {
