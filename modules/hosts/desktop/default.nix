@@ -50,6 +50,7 @@ in
         makemkv
         obs-studio
         google-chrome
+        gnucash
       ];
   };
 }

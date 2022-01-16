@@ -1,5 +1,14 @@
 # TODO:
 
+
+## DNS
+
+- dnsmasq on alpha? -> both for wireguard + tailscale
+    - all services on beta -> dns entry on alpha dnsmasq
+- generate all /etc/hosts entries from alpha/beta/... enabled servers?
+    - very finicky, prone to issues
+
+
 ## IMPORTANT
 
 - find suitable program/service for finance monitoring
@@ -7,6 +16,9 @@
     - open source
     - maybe free, not necessarily
         - good > free
+
+- figure out why accessing influxdb doesnt work for desktop etc.
+    - works with ssh tunnel?
 
 - fix adguard home error
 
@@ -29,6 +41,7 @@
     - maybe write custom module just for custom dockers
     - own, very simple take on docker-compose suited to my nixos needs
 - separate server services into their own files
+    - generate traefik config from enabled options -> name, prefix, host etc.
 
 - beta
     - photoview -> librephotos (docker in "./modules/hosts/server/default.nix")
@@ -42,7 +55,7 @@
         - push to gitlab from there? (with ci? / supervised?)
 
 - wayland
-    - sway on nvidia (?) 
+    - sway on nvidia (?)
         - newest beta driver
     - plasma wayland
         - keep an eye on https://github.com/NixOS/nixpkgs/issues/134334
@@ -75,4 +88,3 @@
 
 - webapps
     - roundcube mail client
-    - ihatemoney finance monitoring

@@ -228,7 +228,7 @@
 
                   influxdb2 = {
                     enable = true;
-                    url = "alpha.yggdrasil.vpn";
+                    url = "0.0.0.0";
                   };
 
                   adguardhome = {
