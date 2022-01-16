@@ -49,6 +49,7 @@ in
         handbrake
         makemkv
         obs-studio
+        google-chrome
       ];
   };
 }
