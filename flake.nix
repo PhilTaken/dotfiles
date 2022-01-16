@@ -232,7 +232,8 @@
                   };
 
                   adguardhome = {
-                    enable = true;
+                    # TODO: fix error -> fatal: dns configuration is not a map
+                    enable = false;
                   };
 
                   ttrss = {
@@ -387,11 +388,11 @@
 
       # deploy config
       deploy.nodes = {
-        #alpha = {
-          #hostname = "148.251.102.93";
-          #sshUser = "root";
-          #profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        #};
+        alpha = {
+          hostname = "148.251.102.93";
+          sshUser = "root";
+          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        };
 
         beta = {
           hostname = "192.168.0.120";
