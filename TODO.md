@@ -1,18 +1,45 @@
 # TODO:
 
-- split server up into parts
-- reverse proxy for all webservices on raspi (traefik?)
-
 ## IMPORTANT
 
+- find suitable program/service for finance monitoring
+    - selfhosted preferably
+    - open source
+    - maybe free, not necessarily
+        - good > free
+
+- fix adguard home error
+
+    ```nix
+    services.adguardhome.settings = {
+        dns = {
+            bind_host = "SET_TO_YOUR_DNS_IP";
+            bootstrap_dns = "SET_TO_YOUR_BOOTSTRAP_DNS";
+        };
+    };
+    ```
+
+    -> use this for all dns (unbound?)
 
 ## main
 
+- add bookstack service (native nixos module)
+
+- improve docker service handling
+    - maybe write custom module just for custom dockers
+    - own, very simple take on docker-compose suited to my nixos needs
+- separate server services into their own files
+
 - beta
     - photoview -> librephotos (docker in "./modules/hosts/server/default.nix")
+        - images in syncthing
     - set up hedgedoc
-    - set up vaultwarden
     - enable ttrss
+    - backup (important) syncthing folders to b2
+        - set up payment for b2 (only first 10g free)
+    - hosted gitea -> dotfiles
+        - gitea as main remote
+        - push to gitlab from there? (with ci? / supervised?)
 
 - wayland
     - sway on nvidia (?) 
@@ -24,12 +51,12 @@
     - set up revere proxy for all kinds of webservices on beta / gamma / etc.
     - set up backing up database to beta
     - move ttrss to beta + passthrough with nginx
+    - set up some custom dns routing for services hosted on beta
+        - e.g. jellyfin.home, bookstack.home
+        - overview website
+            - e.g. heimdall
 
 - nvim
-    - TODO: update config to 0.6
-    - snippets
-        - fortran
-            - module
     - plugins
         - quickfix list
             - https://github.com/kevinhwang91/nvim-bqf
@@ -37,12 +64,14 @@
             - https://github.com/chentau/marks.nvim
         - autopairs (no matching ' in lisp files...)
         - commentary
+            - tjdevries video
 
 # Ideas
 
 - expose all wireguard subnet adresses in config
     - useful in server module for webservices
     - useful for dns 
+- define all ips/hostnames/ -> host specific settings in central config file to import into stuff
 
 - webapps
     - roundcube mail client
