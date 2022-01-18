@@ -14,6 +14,11 @@
 - separate server services into their own files
     - generate traefik config from enabled options -> name, prefix, host etc.
 
+- transfer torrents to beta for seeding
+    - set up webinterface, automatic importing dir
+        - move torrent file downloads there
+        - download manager
+
 ## finances
 
 - selfhosted preferably
@@ -39,6 +44,8 @@
     ```
 
     -> use this for all dns (unbound?)
+
+- get waydroid working
 
 ## beta
 
