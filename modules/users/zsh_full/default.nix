@@ -336,7 +336,7 @@ rec {
       sd
       sshfs
       tokei
-      #tree
+      tree
       unzip
       usbutils
       wget
