@@ -22,6 +22,14 @@ in
   config = mkIf (cfg.enable) {
     programs.steam.enable = true;
 
+    # antivir daemon
+    services.clamav = {
+      daemon.enable = true;
+      updater.enable = true;
+    };
+
+    virtualisation.waydroid.enable = true;
+
     environment.systemPackages =
       let
         extensions = with pkgs.vscode-extensions; [
@@ -34,12 +42,6 @@ in
           vscode = pkgs.vscodium;
           vscodeExtensions = extensions;
         };
-
-        libbluray = pkgs.libbluray.override {
-          withAACS = true;
-          withBDplus = true;
-        };
-        vlc = pkgs.vlc.override { inherit libbluray; };
       in
       with pkgs; [
         #vscodium-with-extensions
@@ -50,7 +52,21 @@ in
         makemkv
         obs-studio
         google-chrome
-        gnucash
+        ungoogled-chromium
+
+        #uget
+        #uget-integrator
+
+        skrooge
+        yt-dlp
+
+        qbittorrent
+        pdfsam-basic
+        foliate
+        xournalpp
+        baobab
+        waydroid
+        beets
       ];
   };
 }
