@@ -1,21 +1,28 @@
 # TODO:
 
-
 ## DNS
 
-- dnsmasq on alpha? -> both for wireguard + tailscale
-    - all services on beta -> dns entry on alpha dnsmasq
+- unbound on beta -> set dns in wireguard, tailscale
+
 - generate all /etc/hosts entries from alpha/beta/... enabled servers?
     - very finicky, prone to issues
 
+- improve docker service handling
+    - maybe write custom module just for custom dockers
+    - own, very simple take on docker-compose suited to my nixos needs
 
-## IMPORTANT
+- separate server services into their own files
+    - generate traefik config from enabled options -> name, prefix, host etc.
 
-- find suitable program/service for finance monitoring
-    - selfhosted preferably
-    - open source
-    - maybe free, not necessarily
-        - good > free
+## finances
+
+- selfhosted preferably
+- open source
+- maybe free, not necessarily
+    - good > free
+- skrooge?
+
+## general issues
 
 - figure out why accessing influxdb doesnt work for desktop etc.
     - works with ssh tunnel?
@@ -33,53 +40,61 @@
 
     -> use this for all dns (unbound?)
 
-## main
+## beta
+
+- dns (see above)
+
+- torrenting setup
+    - music
+    - lidarr/radarr/sonarr
 
 - add bookstack service (native nixos module)
 
-- improve docker service handling
-    - maybe write custom module just for custom dockers
-    - own, very simple take on docker-compose suited to my nixos needs
-- separate server services into their own files
-    - generate traefik config from enabled options -> name, prefix, host etc.
+- backup (important) syncthing folders to b2
+    - rclone / borg
+    - set up payment for b2 (only first 10g free)
 
-- beta
-    - photoview -> librephotos (docker in "./modules/hosts/server/default.nix")
-        - images in syncthing
-    - set up hedgedoc
-    - enable ttrss
-    - backup (important) syncthing folders to b2
-        - set up payment for b2 (only first 10g free)
-    - hosted gitea -> dotfiles
-        - gitea as main remote
-        - push to gitlab from there? (with ci? / supervised?)
+- hosted gitea -> dotfiles
+    - gitea as main remote
+    - push to gitlab from there? (with ci? / supervised?)
 
-- wayland
-    - sway on nvidia (?)
-        - newest beta driver
-    - plasma wayland
-        - keep an eye on https://github.com/NixOS/nixpkgs/issues/134334
+- photoview -> librephotos (docker in "./modules/hosts/server/default.nix")
+    - images in syncthing
 
-- alpha
-    - set up revere proxy for all kinds of webservices on beta / gamma / etc.
-    - set up backing up database to beta
-    - move ttrss to beta + passthrough with nginx
-    - set up some custom dns routing for services hosted on beta
-        - e.g. jellyfin.home, bookstack.home
-        - overview website
-            - e.g. heimdall
+- set up hedgedoc
 
-- nvim
-    - plugins
-        - quickfix list
-            - https://github.com/kevinhwang91/nvim-bqf
-        - marks 
-            - https://github.com/chentau/marks.nvim
-        - autopairs (no matching ' in lisp files...)
-        - commentary
-            - tjdevries video
+- enable ttrss
 
-# Ideas
+## wayland
+
+- sway on nvidia (?)
+    - newest beta driver
+- plasma wayland
+    - keep an eye on https://github.com/NixOS/nixpkgs/issues/134334
+
+## alpha
+
+- set up backing up database to beta
+
+- move ttrss to beta + passthrough with nginx
+
+- set up some custom dns routing for services hosted on beta
+    - e.g. jellyfin.home, bookstack.home
+    - overview website
+        - e.g. heimdall
+
+## nvim
+
+- plugins
+    - quickfix list
+        - https://github.com/kevinhwang91/nvim-bqf
+    - marks 
+        - https://github.com/chentau/marks.nvim
+    - autopairs (no matching ' in lisp files...)
+    - commentary
+        - tjdevries video
+
+## Ideas
 
 - expose all wireguard subnet adresses in config
     - useful in server module for webservices
