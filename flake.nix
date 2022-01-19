@@ -171,10 +171,7 @@
               music = {
                 enable = true;
               };
-              i3 = {
-                enable = true;
-                bg = ./images/rick_morty.png;
-              };
+              kde.enable = true;
               git = {
                 enable = true;
                 userName = "Philipp Herzog";
@@ -223,21 +220,13 @@
                 services = {
                   openssh.enable = true;
                   fail2ban.enable = true;
-
                   telegraf.enable = true;
+                  ttrss.enable = true;
+                  adguardhome.enable = false;
 
                   influxdb2 = {
                     enable = true;
                     url = "0.0.0.0";
-                  };
-
-                  adguardhome = {
-                    # TODO: fix error -> fatal: dns configuration is not a map
-                    enable = false;
-                  };
-
-                  ttrss = {
-                    enable = true;
                   };
                 };
               };
@@ -272,7 +261,6 @@
 
                   syncthing.enable = true;
                   jellyfin.enable = true;
-                  nextcloud.enable = true;
                 };
               };
               fileshare = {

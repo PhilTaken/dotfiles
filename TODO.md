@@ -11,8 +11,7 @@
     - maybe write custom module just for custom dockers
     - own, very simple take on docker-compose suited to my nixos needs
 
-- separate server services into their own files
-    - generate traefik config from enabled options -> name, prefix, host etc.
+- generate traefik config from enabled options -> name, prefix, host etc.
 
 - transfer torrents to beta for seeding
     - set up webinterface, automatic importing dir
