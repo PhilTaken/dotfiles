@@ -42,6 +42,12 @@ in
       type = types.bool;
       default = false;
     };
+
+    domain = mkOption {
+      description = "wireguard domain";
+      type = types.str;
+      default = "yggdrasil.vpn";
+    };
   };
 
   config = mkIf (cfg.enable) {
@@ -60,7 +66,7 @@ in
             (item: builtins.map
               (ip: {
                 name = builtins.elemAt (builtins.split "/" ip) 0;
-                value = [ "${item.name}.yggdrasil.vpn" ];
+                value = [ "${item.name}.${cfg.domain}" ];
               })
               item.ips)
             (lib.mapAttrsToList
