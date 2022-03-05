@@ -328,7 +328,7 @@ rec {
       lolcat
       lshw
       magic-wormhole
-      ncat
+      nmap
       neofetch
       procs
       ripgrep
@@ -337,6 +337,7 @@ rec {
       sshfs
       tokei
       tree
+      unrar
       unzip
       usbutils
       wget

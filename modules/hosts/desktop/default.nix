@@ -22,6 +22,8 @@ in
   config = mkIf (cfg.enable) {
     programs.steam.enable = true;
 
+    hardware.opengl.enable = true;
+
     # antivir daemon
     services.clamav = {
       daemon.enable = true;
@@ -42,6 +44,16 @@ in
           vscode = pkgs.vscodium;
           vscodeExtensions = extensions;
         };
+
+        yuzu-ea-latest = (pkgs.yuzu-ea.override rec {
+          version = "2496";
+          src = pkgs.fetchFromGitHub {
+            owner = "pineappleEA";
+            repo = "pineapple-src";
+            rev = "EA-${version}";
+            sha256 = "sha256-jk265xoGW+V6wLyJj7BDNBEUSg3LLZqIMVLjdnAeBOc=";
+          };
+        });
       in
       with pkgs; [
         #vscodium-with-extensions
@@ -51,11 +63,16 @@ in
         handbrake
         makemkv
         obs-studio
-        google-chrome
-        ungoogled-chromium
+        citra
+        polymc
+        yuzu-ea-latest
 
-        #uget
-        #uget-integrator
+        #chromium
+        google-chrome
+        nyxt
+
+        uget
+        uget-integrator
 
         skrooge
         yt-dlp

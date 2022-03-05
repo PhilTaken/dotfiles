@@ -22,16 +22,9 @@ in
       type = types.listOf types.str;
       default = [ ];
     };
-
-    enableVPN = mkOption {
-      description = "enable the mullvad vpn";
-      type = types.bool;
-      default = true;
-    };
   };
 
   config = mkIf (cfg.enable) {
-    sops.secrets.mullvad-privateKey = { };
     programs.steam.enable = true;
 
     environment = {
@@ -51,27 +44,10 @@ in
       wifi.backend = "wpa_supplicant";
     };
 
-    # mullvad vpn definition for de-frankfurt
-    networking = {
-      wg-quick.interfaces = mkIf (cfg.enableVPN) {
-        mullvad = {
-          address = [ "10.69.90.26/32" "fc00:bbbb:bbbb:bb01::6:5a19/128" ];
-          dns = [ "193.138.218.74" ];
-          privateKeyFile = config.sops.secrets.mullvad-privateKey.path;
-          peers = [
-            {
-              publicKey = "vtqDtifokiHna0eBshGdJLedj/lzGW+iDvWKx+YjDFs=";
-              allowedIPs = [ "0.0.0.0/0" "::0/0" ];
-              endpoint = "193.27.14.98:51820";
-            }
-          ];
-        };
-      };
-      wireless = {
-        enable = true;
-        userControlled.enable = true;
-        interfaces = cfg.wirelessInterfaces;
-      };
+    networking.wireless = {
+      enable = true;
+      userControlled.enable = true;
+      interfaces = cfg.wirelessInterfaces;
     };
   };
 }

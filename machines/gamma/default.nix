@@ -11,7 +11,11 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  # downgrade to 4_19 to fix intel freezes (https://github.com/NixOS/nixpkgs/issues/80639)
+  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_4_19;
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
+
 
   nixpkgs.overlays = [
     (self: super: {

@@ -49,7 +49,7 @@ with builtins;
             keepassxc
             libreoffice
             magic-wormhole
-            obsidian
+            #obsidian
             signal-desktop
             tdesktop
             texlive.combined.scheme-medium

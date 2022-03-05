@@ -14,7 +14,9 @@
     ./wireguard
     ./fileshare
     ./development
+    ./mullvad
 
+    ./dns
     #./innernet-client
     #./innernet-server
   ];

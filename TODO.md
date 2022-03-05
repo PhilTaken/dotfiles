@@ -2,6 +2,9 @@
 
 ## DNS
 
+
+-> make wireguard network name configurable
+
 - unbound on beta -> set dns in wireguard, tailscale
 
 - generate all /etc/hosts entries from alpha/beta/... enabled servers?
@@ -53,6 +56,8 @@
 - torrenting setup
     - music
     - lidarr/radarr/sonarr
+
+- navidrome
 
 - add bookstack service (native nixos module)
 
@@ -109,3 +114,14 @@
 
 - webapps
     - roundcube mail client
+
+- figure out why the mullvad app works but the plain config doesnt
+    ```nix
+    boot.kernelModules = [ "tun" ];
+
+    # mullvad-daemon writes to /etc/iproute2/rt_tables
+    networking.iproute2.enable = true;
+
+    # See https://github.com/NixOS/nixpkgs/issues/113589
+    networking.firewall.checkReversePath = "loose";
+    ```

@@ -207,7 +207,8 @@ require('packer').startup{
 
         -- statusline
         use {
-            'glepnir/galaxyline.nvim',
+            --'glepnir/galaxyline.nvim',
+            'NTBBloodbath/galaxyline.nvim',
             branch = 'main',
             config = function()
                 require'custom.statusline'

@@ -1,6 +1,7 @@
 spotify-username: ENC[AES256_GCM,data:arlWnuOzJg24emt8,iv:t2Vj8DIf3OyshRYLYzY6/rYGX2YB3j+YMcJxIM617Cw=,tag:q+t91iqdBoCp2QVBoVBD+w==,type:str]
 spotify-password: ENC[AES256_GCM,data:AxjFQT2sHkQtY8MHmEWwjbU4M0hnEerS,iv:9tLdoCyuGN3OGST3Ji/03RCcSNdvW/YFm0Qp3L9z5Y4=,tag:UE7FTjDp/Fz9cZv0xQDIhw==,type:str]
 mullvad-privateKey: ENC[AES256_GCM,data:So+2CkhVERxTBnVW3gaZJ2mTbwH7LDMdNJ4STwrwDJz3DbIllQUnWF2pro0=,iv:ridGjiPx4vpMFxc/zVVPmkQDcEavE8l6+wkLcAbnD24=,tag:PrBE+SF6hQK1nLbgjQRN3g==,type:str]
+mullvad-privateKey-new: ENC[AES256_GCM,data:zXkxn2fuFz1ei5ESNHV2KTssJ4SPlhjC+zEdRW+9RZylLRSO70M5CZPiPSY=,iv:/77g88xzS9JCNfbnSSQnHtSDG5KfX1OnCyZfJhU9RSo=,tag:3RnPVlDEv4PdCfnxCCJP/Q==,type:str]
 vaultwarden-yubicoClientId: ENC[AES256_GCM,data:OJPDogs=,iv:yFYyQbrFAUUAOi6Sky78mTzsLXha8NHsym3EIm1Pl8Q=,tag:qE1jYffRpdg+w7Ls6k7AUg==,type:str]
 vaultwarden-yubicoSecretKey: ENC[AES256_GCM,data:0dLyAC963ioSmwKQ3eJiLuf50iCo+OIpZ0iCng==,iv:oTmNbdw/tmGnixmyEcKIhxXz7pgn+9jkoI3TWpVJZ5s=,tag:VLEDHV1xlwnRK2UE8sd4Mg==,type:str]
 vaultwarden-adminToken: ENC[AES256_GCM,data:h/8V7gpi4slp2wMVBmDtna3ga2PsUtRNmblQxicn2/2XCpc3EA+9SwFTemNhloBce9LezDozL+hc/8+UrYzQug==,iv:lmDuWnj/LchX6KLvalDolCGWWvrvUCDZLQZ7zYCQER8=,tag:joQUKMXyUNuFWALC5E0xLg==,type:str]
@@ -50,8 +51,8 @@ sops:
             YWxkVTRjR1plZElWZ24rL0pCSXpsNHMKmk3mhJbqW6FWAle7DYj6auwbXxX+zxpB
             G+ess+Z1wDHcgJYcd9FvNhdde/IrGfZNT6hS3Px6+Ora+w0A2iFoyw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2021-12-08T19:49:16Z"
-    mac: ENC[AES256_GCM,data:rsG7Qa8Hd7aTjq25Egagr8iD9uFDQiqZvolf2uPx7QcJW5NgQosW7F29K+Ye5jc3DgZqHHhP9meCWNGB90LgveGyjc8HZrHqPNeJR/ppmlrDXKcNh6RNDnBHtsVPNJf3BoYvD7Dg1NxWPpXPZ+EWY6IsQtrxnJUfOCP4oaLK9EQ=,iv:0nL5St5+tV59Js2MFNCgWh2xOEcGkNeVPXChktXt4gE=,tag:XuT1YTN7jXJndu02YnzOFg==,type:str]
+    lastmodified: "2022-01-24T12:27:31Z"
+    mac: ENC[AES256_GCM,data:mCvSIvivmF5z6EIZmYPzc/L7vxtjpQdZJXNwO+jS+7sVp8sqvanlZqGo628bWGcd5TlDslEsnGgMKLwi7u9Xb+d9e5Lywstml+KdaJEToe7qDD8tRTwoFEqbhqGc1aJnL8wqapf83GDvWApdE0oOAcgRw/yZjtpwCf3XkIwadpE=,iv:M5Mt3yQZox6FLuYezDzbWAAI+XLMFqrmSmrnAi9lqA0=,tag:wyaUurgmnoiRyrF2QFEx4Q==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.1

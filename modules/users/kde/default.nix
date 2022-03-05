@@ -55,6 +55,8 @@ in
       rofi
       #rofi-pass
       xclip
+
+      libsForQt5.bismuth
     ];
   };
 }

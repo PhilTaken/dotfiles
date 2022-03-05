@@ -50,6 +50,8 @@
       url = "github:PhilTaken/spicetify-nix";
       #url = "/home/nixos/Documents/gits/spicetify-nix";
     };
+
+    polymc.url = "github:PolyMC/PolyMC";
   };
   outputs =
     { self
@@ -63,6 +65,7 @@
     , sops-nix-src
     , neovim-nightly
     , spicetify
+    , polymc
     , ...
     }@inputs:
     let
@@ -78,6 +81,7 @@
         sops-nix-src.overlay
         deploy-rs.overlay
         #neovim-nightly.overlay
+        polymc.overlay
       ];
 
       nixpkgsFor = system:
@@ -159,9 +163,7 @@
                 sshKeys = [ sshKey ];
               };
             };
-            extraPackages = with pkgs; [
-              multimc
-            ];
+            extraPackages = with pkgs; [ ];
           };
 
           maelstroem = util.user.mkHMUser {
@@ -189,12 +191,7 @@
               };
             };
 
-            extraPackages = with pkgs; [
-              chromium
-              citra
-              multimc
-              openttd
-            ];
+            extraPackages = with pkgs; [ ];
           };
         };
 
@@ -252,6 +249,16 @@
                 hostName = "beta";
                 docker = true;
               };
+              dns = {
+                unbound.enable = false;
+                #subdomains = {
+                  #"home".ip = "10.100.0.2";
+                  #"jellyfin".ip = "10.100.0.2";
+                  #"syncthing".ip = "10.100.0.2";
+                  #"notes".ip = "10.100.0.2";
+                  #"influx".ip = "10.100.0.1";
+                #};
+              };
               server = {
                 enable = true;
                 services = {
@@ -295,10 +302,10 @@
                 docker = true;
                 hostName = "gamma";
               };
-              server = {
-                enable = true;
-                services.telegraf.enable = true;
-              };
+              wireguard.enable = true;
+              mullvad.enable = true;
+              server.services.telegraf.enable = true;
+
               nvidia.enable = true;
               desktop.enable = true;
               sound.enable = true;
@@ -347,10 +354,10 @@
                 enable = true;
                 services.telegraf.enable = true;
               };
+              mullvad.enable = false;
               laptop = {
                 enable = true;
                 wirelessInterfaces = [ "wlp0s20f3" ];
-                enableVPN = false;
               };
               sound.enable = true;
               video = {
@@ -367,6 +374,7 @@
 
       };
 
+      # shortcut for building with `nix build`
       systems = {
         nixos-laptop = self.nixosConfigurations.nixos-laptop.config.system.build.toplevel;
         alpha = self.nixosConfigurations.alpha.config.system.build.toplevel;

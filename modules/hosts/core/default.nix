@@ -54,19 +54,20 @@ in
       extraOptions = ''
         experimental-features = nix-command flakes
       '';
-      autoOptimiseStore = true;
-      trustedUsers = [ "root" "@wheel" ];
 
       # TODO add my own registry
       registry = { };
 
-      binaryCaches = [
-        "https://philtaken.cachix.org"
-      ];
-
-      binaryCachePublicKeys = [
-        "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
-      ];
+      settings = {
+        trusted-users = [ "root" "@wheel" ];
+        substituters = [
+          "https://philtaken.cachix.org"
+        ];
+        auto-optimise-store = true;
+        trusted-public-keys = [
+          "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
+        ];
+      };
     };
     hardware.enableRedistributableFirmware = true;
 
