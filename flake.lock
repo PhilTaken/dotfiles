@@ -181,11 +181,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1648532309,
-        "narHash": "sha256-3SMmIGuGfpnVxjbuTXZBFgrJoIgetb9eY8bWExYEK9I=",
+        "lastModified": 1648555005,
+        "narHash": "sha256-R6o3K1PJx/JxfW6jcu+cBFAsEsstnNdLFtW/UJOpKQA=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "d89a80fafc6cdf12f72dac2bcbd5055038a241dc",
+        "rev": "ba257d74b187e38cd591b2f4eb2a4f0f6483b358",
         "type": "github"
       },
       "original": {
@@ -283,11 +283,11 @@
         "quazip": "quazip"
       },
       "locked": {
-        "lastModified": 1648545982,
-        "narHash": "sha256-/fx9sw8pJsYySKip5gGtl9dV8fyZB4ducP+p86ib/XE=",
+        "lastModified": 1648557769,
+        "narHash": "sha256-72kSyKBmqV7KJIZSn2GJmuRxKuE+edZgaMMyNDAdW1M=",
         "owner": "PolyMC",
         "repo": "PolyMC",
-        "rev": "335115041caeab19b80c2ffd53036bfd6af10013",
+        "rev": "e22d54abd35560213377bb41f2bc902f67c8de64",
         "type": "github"
       },
       "original": {
