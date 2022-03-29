@@ -9,11 +9,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1643787431,
-        "narHash": "sha256-8IwuVgXulRE3ZWq6z8mytarawC32pKPKR20EyDtSH+w=",
+        "lastModified": 1648475189,
+        "narHash": "sha256-gAGAS6IagwoUr1B0ohE3iR6sZ8hP4LSqzYLC8Mq3WGU=",
         "owner": "serokell",
         "repo": "deploy-rs",
-        "rev": "4154ba1aaaf7333a916384c348d867d03b6f1409",
+        "rev": "83e0c78291cd08cb827ba0d553ad9158ae5a95c3",
         "type": "github"
       },
       "original": {
@@ -46,11 +46,11 @@
     "flake-compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1641205782,
-        "narHash": "sha256-4jY7RCWUoZ9cKD8co0/4tFARpWB+57+r1bLLvXNJliY=",
+        "lastModified": 1648199409,
+        "narHash": "sha256-JwPKdC2PoVBkG6E+eWw3j6BMR6sL3COpYWfif7RVb8Y=",
         "owner": "edolstra",
         "repo": "flake-compat",
-        "rev": "b7547d3eed6f32d06102ead8991ec52ab0a4f1a7",
+        "rev": "64a525ee38886ab9028e6f61790de0832aa3ef03",
         "type": "github"
       },
       "original": {
@@ -181,11 +181,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1648390203,
-        "narHash": "sha256-9BKjvgy0NHZdLjGQt2ymMDaHqoP96N7wZyR1A6iezmo=",
+        "lastModified": 1648532309,
+        "narHash": "sha256-3SMmIGuGfpnVxjbuTXZBFgrJoIgetb9eY8bWExYEK9I=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "a8e2c45b9462b740f22305397342b96586b88681",
+        "rev": "d89a80fafc6cdf12f72dac2bcbd5055038a241dc",
         "type": "github"
       },
       "original": {
@@ -261,11 +261,11 @@
     },
     "nur-src": {
       "locked": {
-        "lastModified": 1648376300,
-        "narHash": "sha256-XJjpw+PCxhvPZJipX0HeNJ8/XI+gE0ZCw2XD8+R7qIE=",
+        "lastModified": 1648526859,
+        "narHash": "sha256-9TPD9rPgFP206Z0F1HfTc0TKAt3osGTlzrx9l9yd7h8=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "0c53b3d3f3a2f51440083751df06a666b816610f",
+        "rev": "9077485415cbdafd82542133a309a074922d5931",
         "type": "github"
       },
       "original": {
@@ -283,11 +283,11 @@
         "quazip": "quazip"
       },
       "locked": {
-        "lastModified": 1648288844,
-        "narHash": "sha256-sh12gH0wufgJD/BxJJS2J/pVZF/fZH9duGrdXKYcPIc=",
+        "lastModified": 1648545982,
+        "narHash": "sha256-/fx9sw8pJsYySKip5gGtl9dV8fyZB4ducP+p86ib/XE=",
         "owner": "PolyMC",
         "repo": "PolyMC",
-        "rev": "81b50c0387c86de3acb1bf5a96b0045bf5f0aca7",
+        "rev": "335115041caeab19b80c2ffd53036bfd6af10013",
         "type": "github"
       },
       "original": {
@@ -384,11 +384,11 @@
     },
     "utils": {
       "locked": {
-        "lastModified": 1642700792,
-        "narHash": "sha256-XqHrk7hFb+zBvRg6Ghl+AZDq03ov6OshJLiSWOoX5es=",
+        "lastModified": 1648297722,
+        "narHash": "sha256-W+qlPsiZd8F3XkzXOzAoR+mpFqzm3ekQkJNa+PIh1BQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "846b2ae0fc4cc943637d3d1def4454213e203cba",
+        "rev": "0f8662f1319ad6abf89b3380dd2722369fc51ade",
         "type": "github"
       },
       "original": {
