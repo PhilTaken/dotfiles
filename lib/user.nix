@@ -8,7 +8,7 @@
 }:
 with builtins;
 {
-  mkHMUser = { userConfig, username, extraPackages ? [ ] }:
+  mkHMUser = { userConfig, username, extraPackages ? pkgs: [ ] }:
     let
       homeDirectory = "/home/${username}";
       stateVersion = "21.05";
@@ -40,9 +40,20 @@ with builtins;
 
             anki
             cachix
-            discord
+
+            # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
+            #discord
+            (pkgs.writeShellApplication {
+              name = "discord";
+              text = "${pkgs.discord}/bin/discord --use-gl=desktop";
+            })
+            (pkgs.makeDesktopItem {
+              name = "discord";
+              exec = "discord";
+              desktopName = "Discord";
+            })
+
             element-desktop
-            firefox
             gimp
             gping
             hyperfine
@@ -58,7 +69,7 @@ with builtins;
             wget
             youtube-dl
             zoom-us
-          ] ++ extraPackages;
+          ] ++ (extraPackages pkgs);
         };
 
         programs.home-manager.enable = true;

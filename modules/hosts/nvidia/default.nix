@@ -25,8 +25,8 @@ in
         # nvidiaPersistenced = false;
       };
       opengl = {
-        extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
-        extraPackages32 = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+        #extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+        #extraPackages32 = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
       };
     };
 

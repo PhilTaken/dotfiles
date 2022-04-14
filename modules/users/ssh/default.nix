@@ -46,6 +46,16 @@ in
           forwardX11 = true;
           forwardAgent = true;
         };
+        "juceda" = {
+          hostname = "icg2019.icg.kfa-juelich.de";
+          user = "herzog";
+          extraOptions = {
+            "HostkeyAlgorithms" = "+ssh-rsa";
+            "PubkeyAcceptedAlgorithms" = "+ssh-rsa";
+            "ServerAliveInterval" = "20";
+            "TCPKeepAlive" = "no";
+          };
+        };
         "mcserver" = {
           hostname = "192.168.192.42";
           user = "non-admin";

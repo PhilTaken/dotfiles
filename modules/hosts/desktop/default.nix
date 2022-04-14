@@ -21,6 +21,19 @@ in
 
   config = mkIf (cfg.enable) {
     programs.steam.enable = true;
+    programs.gamemode = {
+      enable = true;
+      enableRenice = true;
+      settings = {
+        general = {
+          renice = 10;
+        };
+        custom = {
+          start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+          end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+        };
+      };
+    };
 
     hardware.opengl.enable = true;
 
@@ -30,7 +43,10 @@ in
       updater.enable = true;
     };
 
-    virtualisation.waydroid.enable = true;
+    #virtualisation.waydroid.enable = true;
+
+    # qmk rules for flashing keebs
+    services.udev.packages = with pkgs; [ qmk-udev-rules ];
 
     environment.systemPackages =
       let

@@ -1,9 +1,11 @@
+# SSH fix: `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)`
 {
   # todo:
   # - clone rassword store into home dir
   inputs = {
     # unstable > stable
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
 
     # NUR
     nur-src = {
@@ -82,6 +84,10 @@
         deploy-rs.overlay
         #neovim-nightly.overlay
         polymc.overlay
+        (final: super: {
+          makeModulesClosure = x:
+            super.makeModulesClosure (x // { allowMissing = true; });
+        })
       ];
 
       nixpkgsFor = system:
@@ -128,10 +134,13 @@
       systemUsers = systemUsersFor pkgs;
     in
     {
-      #devShell."${system}" = util.shells.legacyShell;
+      #devShells."${system}".default = util.shells.legacyShell;
+      devShells."${system}".default = util.shells.devShell;
+
+      # older version for backwards compatibility
       devShell."${system}" = util.shells.devShell;
 
-      overlay = (import ./custom_pkgs);
+      overlays.default = (import ./custom_pkgs);
 
       homeManagerConfigurations =
         let
@@ -163,17 +172,17 @@
                 sshKeys = [ sshKey ];
               };
             };
-            extraPackages = with pkgs; [ ];
+            extraPackages = pkgs: with pkgs; [ ];
           };
 
           maelstroem = util.user.mkHMUser {
             username = "maelstroem";
 
             userConfig = {
-              music = {
-                enable = true;
-              };
-              kde.enable = true;
+              firefox.enable = true;
+              music.enable = true;
+              #kde.enable = true;
+              gnome.enable = true;
               git = {
                 enable = true;
                 userName = "Philipp Herzog";
@@ -191,7 +200,7 @@
               };
             };
 
-            extraPackages = with pkgs; [ ];
+            extraPackages = pkgs: with pkgs; [ hakuneko ];
           };
         };
 
@@ -217,7 +226,7 @@
                 services = {
                   openssh.enable = true;
                   fail2ban.enable = true;
-                  telegraf.enable = true;
+                  telegraf.enable = false;
                   ttrss.enable = true;
                   adguardhome.enable = false;
 
@@ -251,6 +260,7 @@
               };
               dns = {
                 unbound.enable = false;
+                traefik.enable = false;
                 #subdomains = {
                   #"home".ip = "10.100.0.2";
                   #"jellyfin".ip = "10.100.0.2";
@@ -263,7 +273,7 @@
                 enable = true;
                 services = {
                   openssh.enable = true;
-                  telegraf.enable = true;
+                  telegraf.enable = false;
                   iperf.enable = true;
 
                   syncthing.enable = true;
@@ -285,6 +295,7 @@
 
             extraimports = [
               nixos-hardware.nixosModules.raspberry-pi-4
+              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
             ];
           };
 
@@ -304,7 +315,7 @@
               };
               wireguard.enable = true;
               mullvad.enable = true;
-              server.services.telegraf.enable = true;
+              server.services.telegraf.enable = false;
 
               nvidia.enable = true;
               desktop.enable = true;
@@ -312,7 +323,7 @@
               video = {
                 enable = true;
                 driver = "nvidia";
-                manager = "kde";
+                manager = "gnome";
               };
               yubikey.enable = true;
               fileshare = {
@@ -327,14 +338,15 @@
                   ];
                 };
               };
+
               development = {
-                enable = true;
-                adb.enable = true;
+                enable = false;
+                adb.enable = false;
               };
             };
 
             extraimports = [
-              (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+              #(import "${localDev}/nixos/modules/services/networking/innernet.nix")
             ];
           };
 
@@ -352,7 +364,7 @@
               core.hostName = "nixos-laptop";
               server = {
                 enable = true;
-                services.telegraf.enable = true;
+                services.telegraf.enable = false;
               };
               mullvad.enable = false;
               laptop = {
@@ -380,6 +392,11 @@
         alpha = self.nixosConfigurations.alpha.config.system.build.toplevel;
         beta = self.nixosConfigurations.beta.config.system.build.toplevel;
         gamma = self.nixosConfigurations.gamma.config.system.build.toplevel;
+      };
+
+      # shortcut for building the sd card image for the raspberry pi
+      images = {
+        beta = self.nixosConfigurations.beta.config.system.build.sdImage;
       };
 
       # deploy config

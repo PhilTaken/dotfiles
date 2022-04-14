@@ -24,7 +24,7 @@ in
 
     manager = mkOption {
       description = "which window/desktop manager to enable\nxfce is xfce+i3";
-      type = (types.enum [ "kde" "sway" "i3" "xfce" ]);
+      type = (types.enum [ "kde" "sway" "i3" "xfce" "gnome" ]);
       default = "sway";
     };
   };
@@ -41,17 +41,17 @@ in
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [
-        libva
-        vaapiVdpau
-        libvdpau-va-gl
-        mesa_drivers
-      ];
+      #extraPackages = with pkgs; [
+        #libva
+        #vaapiVdpau
+        #libvdpau-va-gl
+        #mesa_drivers
+      #];
     };
 
     services.xserver =
       let
-        enable = (cfg.manager == "kde" || cfg.manager == "i3" || cfg.manager == "xfce");
+        enable = (cfg.manager != "sway");
       in
       {
         inherit enable;
@@ -60,10 +60,13 @@ in
         xkbOptions = "caps:escape,grp:shifts_toggle";
 
         displayManager = {
+          gdm.enable = (cfg.manager == "gnome");
           defaultSession =
             if (cfg.manager == "i3") then "none+i3" else
             if (cfg.manager == "xfce") then "xfce+i3" else
-            "plasma";
+            if (cfg.manager == "kde") then "plasma" else
+            if (cfg.manager == "gnome") then "gnome" else
+            null;
         };
 
         videoDrivers =
@@ -88,6 +91,7 @@ in
             enableXfwm = false;
           };
           plasma5.enable = (cfg.manager == "kde");
+          gnome.enable = (cfg.manager == "gnome");
           xterm.enable = false;
         };
 
@@ -111,6 +115,18 @@ in
         ];
       })
     ];
+
+    # ----------------------
+    # gnome
+    environment.systemPackages = if (cfg.manager == "gnome") then (with pkgs; [
+      gnomeExtensions.appindicator
+      networkmanager-vpnc
+      gnome.networkmanager-vpnc
+    ]) else [];
+
+    services.udev.packages = if (cfg.manager == "gnome") then (with pkgs; [
+      gnome3.gnome-settings-daemon
+    ]) else [];
 
     # ----------------------
     # kde

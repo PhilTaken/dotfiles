@@ -7,6 +7,7 @@
     ./gpg
     ./i3
     ./kde
+    ./gnome
     ./mail
     ./music
     ./neovim

@@ -14,10 +14,12 @@ in
     subdomains = mkOption {
       description = "";
       type = types.attrsOf (types.submodule {
-        ip = mkOption {
-          description = "";
-          type = types.str;
-          example = "192.168.192.1";
+        options = {
+          ip = mkOption {
+            description = "";
+            type = types.str;
+            example = "192.168.192.1";
+          };
         };
       });
 
@@ -40,7 +42,7 @@ in
   config = mkIf (cfg.unbound.enable) {
     services.unbound = {
       enable = true;
-      # TODO: generate settings from options
+      # WIP: generate settings from options
       # see https://dnswatch.com/dns-docs/UNBOUND/
       settings = {
         server = {
@@ -89,7 +91,7 @@ in
           "adserver.yahoo.com A 127.0.0.1"
         ] ++ (lib.mapAttrsToList (name: value: "${name}.home. IN AA ${value.ip}") cfg.subdomains);
 
-        local-data-ptr = lib.mapAttrsToList (name: value: "${value.ip} ${name}.home");
+        local-data-ptr = lib.mapAttrsToList (name: value: "${value.ip} ${name}.home") cfg.subdomains;
 
         forward-zone = [
           {

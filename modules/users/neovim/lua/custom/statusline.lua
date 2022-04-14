@@ -4,20 +4,28 @@ local utils = require('custom.statusline_utils')
 ---- source provider functions
 -- Code diagnostics
 local diagnostic = require("galaxyline.providers.diagnostic")
+
 -- Version control
 local vcs = require("galaxyline.providers.vcs")
+
 -- Core files information
 local fileinfo = require("galaxyline.providers.fileinfo")
+
 -- Extensions, aka plugins
 local extension = require("galaxyline.providers.extensions")
+
 -- Neovim highlighting
-local colors = require("galaxyline.highlighting")
+--local colors = require("galaxyline.highlighting")
+
 -- Buffer information, e.g. corresponding icon
 local buffer = require("galaxyline.providers.buffer")
+
 -- Search results
 local search = require("galaxyline.providers.search")
+
 -- Spacing
 local whitespace = require("galaxyline.providers.whitespace")
+
 -- Active language server information
 local lspclient = require("galaxyline.providers.lsp")
 
@@ -25,9 +33,6 @@ local condition = require("galaxyline.condition")
 
 -- setup dev icons
 require'nvim-web-devicons'.setup()
-
-print("test")
-
 
 local gls = gl.section
 gl.short_line_list = { 'defx', 'packager', 'vista', 'NvimTree' }
@@ -242,7 +247,7 @@ gls.right[7] = {
     PerCent = {
         provider = 'LinePercent',
         --separator = '',
-        separator = '',
+        separator = ' ',
         separator_highlight = { colors.blue, colors.bg },
         highlight = { colors.gray2, colors.blue }
     }
