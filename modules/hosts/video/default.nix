@@ -128,6 +128,8 @@ in
       gnome3.gnome-settings-daemon
     ]) else [];
 
+    services.gnome.chrome-gnome-shell.enable = (cfg.manager == "gnome");
+
     # ----------------------
     # kde
 

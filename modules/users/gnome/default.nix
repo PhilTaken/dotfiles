@@ -19,7 +19,7 @@ in
 
   config = mkIf (cfg.enable) {
     home.packages = with pkgs; [
-
+      chrome-gnome-shell
       flameshot
       foot
     ];
