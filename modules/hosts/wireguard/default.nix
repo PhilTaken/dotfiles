@@ -79,6 +79,9 @@ in
         )
       );
       firewall.allowedUDPPorts = [ listenPort ];
+
+      interfaces."yggdrasil".mtu = 576;
+
       wireguard = {
         enable = true;
         interfaces = {
