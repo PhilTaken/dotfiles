@@ -15,54 +15,46 @@ let
 in
 {
   options.phil.dns = {
-    traefik.enable = mkEnableOption "traefik reverse proxy";
+    nginx = {
+      enable = mkEnableOption "traefik reverse proxy";
+
+      proxy = mkOption {
+        description = "proxy definitions";
+        type = types.attrsOf types.port;
+        example = {
+          "jellyfin" = 1234;
+        };
+
+        default = {};
+      };
+    };
 
     apps = mkOption {
       description = "";
-      type = types.attrsOf (types.submodule {
-        options = {
-          host = mkOption {
-            description = "which host the application runs on";
-            type = types.enum hostnames;
-            example = config.networking.hostName;
-            default = (builtins.head hostnames);
-          };
-
-          port = mkOption {
-            description = "application port";
-            type = types.port;
-            example = 8096;
-          };
-
-          setDNS = mkOption {
-            description = "wether to also set the dns rebind for the current host";
-            type = types.bool;
-            default = true;
-          };
-        };
-      });
-
+      type = types.attrsOf (types.enum hostnames);
       example = {
-        "jellyfin" = {
-          host = "beta";
-          port = 8096;
-        };
+        "jellyfin" = "beta";
       };
 
-      default = {
-        "jellyfin" = {
-          host = "beta";
-          port = 8096;
-        };
-      };
+      default = { };
     };
   };
 
-  config = mkIf (cfg.traefik.enable) {
-    services.traefik = {
-      enable = true;
+  config = {
+    services.nginx = let
+      genconfig = subdomain: port: ''
+        server {
+          listen 80;
+          server_name ${subdomain}.home;
+          location / {
+            proxy_pass http://$server_addr:${toString port};
+          }
+        }
+      '';
+    in {
+      enable = cfg.nginx.enable;
+      httpConfig = concatStrings (lib.mapAttrsToList genconfig cfg.nginx.proxy);
     };
-
-    phil.dns.subdomains = (builtins.mapAttrs (name: value: { ip = iplot."${value.host}"; }) cfg.apps);
+    phil.dns.subdomains = (builtins.mapAttrs (name: value: { ip = iplot."${value}"; }) cfg.apps);
   };
 }

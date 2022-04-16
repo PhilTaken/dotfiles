@@ -46,6 +46,11 @@ in
       # see https://dnswatch.com/dns-docs/UNBOUND/
       settings = {
         server = {
+          access-control = [
+            "127.0.0.0/8 allow"      # localhost
+            "10.100.0.1/24 allow"    # yggdrasil
+            #"192.168.0.1/24 allow"   # local net
+          ];
           interface = [ "0.0.0.0" "::0" ];
           qname-minimisation = "yes";
           serve-expired-client-timeout = 1800;
@@ -69,29 +74,29 @@ in
 
           private-domain = "home.lan";
           val-clean-additional = "yes";
+
+          local-zone = [
+            "\"doubleclick.net\" redirect"
+            "\"googlesyndication.com\" redirect"
+            "\"googleadservices.com\" redirect"
+            "\"google-analytics.com\" redirect"
+            "\"ads.youtube.com\" redirect"
+            "\"adserver.yahoo.com\" redirect"
+
+            "\"home.\" static"
+          ];
+
+          local-data = [
+            "\"doubleclick.net A 127.0.0.1\""
+            "\"googlesyndication.com A 127.0.0.1\""
+            "\"googleadservices.com A 127.0.0.1\""
+            "\"google-analytics.com A 127.0.0.1\""
+            "\"ads.youtube.com A 127.0.0.1\""
+            "\"adserver.yahoo.com A 127.0.0.1\""
+          ] ++ (lib.mapAttrsToList (name: value: "\"${name}.home. IN A ${value.ip}\"") cfg.subdomains);
+
+          local-data-ptr = lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.home\"") cfg.subdomains;
         };
-
-        local-zone = [
-          "\"doubleclick.net\" redirect"
-          "\"googlesyndication.com\" redirect"
-          "\"googleadservices.com\" redirect"
-          "\"google-analytics.com\" redirect"
-          "\"ads.youtube.com\" redirect"
-          "\"adserver.yahoo.com\" redirect"
-
-          "\"home.\" static"
-        ];
-
-        local-data = [
-          "doubleclick.net A 127.0.0.1"
-          "googlesyndication.com A 127.0.0.1"
-          "googleadservices.com A 127.0.0.1"
-          "google-analytics.com A 127.0.0.1"
-          "ads.youtube.com A 127.0.0.1"
-          "adserver.yahoo.com A 127.0.0.1"
-        ] ++ (lib.mapAttrsToList (name: value: "${name}.home. IN AA ${value.ip}") cfg.subdomains);
-
-        local-data-ptr = lib.mapAttrsToList (name: value: "${value.ip} ${name}.home") cfg.subdomains;
 
         forward-zone = [
           {
@@ -102,10 +107,14 @@ in
             ];
           }
         ];
-        remote-control.control-enable = true;
+
+        remote-control = {
+          control-enable = true;
+        };
       };
 
       # interfaces = {};
+
     };
   };
 }

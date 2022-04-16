@@ -35,11 +35,14 @@ in
     networking.firewall.interfaces = {
       "eth0" = {
         allowedTCPPorts = [
+          53
           #80    # to get certs (let's encrypt)
           #443   # ---- " ----
         ];
 
-        allowedUDPPorts = [ ];
+        allowedUDPPorts = [
+          53
+        ];
       };
 
       "tailscale0" = {
@@ -56,16 +59,27 @@ in
 
       "yggdrasil" = {
         allowedUDPPorts = [
+          53   # dns (unbound)
           5353 # dns
-          #cfg.services.influxdb2.port
+          80   # http
+          443  # https
+
+          8086 # influxdb2
+
+          1900  # jellyfin
+          7359  # jellyfin
         ];
 
         allowedTCPPorts = [
-          53 # dns (adguard home)
-          80 # tt-rss webinterface
-          443 # tt-rss ssl
+          53 # dns (unbound)
+          80 # webinterfaces (reverse proxy)
+          443 # webinterfaces ssl (reverse proxy)
           31111 # adguard home webinterface
-          #cfg.services.influxdb2.port
+
+          8086 # influxdb2
+
+          8096 # jellyfin
+          8920 # jellyfin
         ];
       };
     };

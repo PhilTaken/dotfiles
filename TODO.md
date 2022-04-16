@@ -1,7 +1,29 @@
 # TODO:
 
-## DNS
+## general issues
 
+- fix freezing desktop (gamma)
+
+- fix ssh_agent/gpg_agent interaction 
+    - need to `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)` in every shell currently
+
+- fix adguard home error
+
+    ```nix
+    services.adguardhome.settings = {
+        dns = {
+            bind_host = "SET_TO_YOUR_DNS_IP";
+            bootstrap_dns = "SET_TO_YOUR_BOOTSTRAP_DNS";
+        };
+    };
+    ```
+
+    -> use this for all dns (unbound?)
+
+- get waydroid working
+
+
+## DNS
 
 -> make wireguard network name configurable
 
@@ -19,35 +41,8 @@
 - transfer torrents to beta for seeding
     - set up webinterface, automatic importing dir
         - move torrent file downloads there
-        - download manager
+        - download manager? / auto move with command
 
-## finances
-
-- selfhosted preferably
-- open source
-- maybe free, not necessarily
-    - good > free
-- skrooge?
-
-## general issues
-
-- figure out why accessing influxdb doesnt work for desktop etc.
-    - works with ssh tunnel?
-
-- fix adguard home error
-
-    ```nix
-    services.adguardhome.settings = {
-        dns = {
-            bind_host = "SET_TO_YOUR_DNS_IP";
-            bootstrap_dns = "SET_TO_YOUR_BOOTSTRAP_DNS";
-        };
-    };
-    ```
-
-    -> use this for all dns (unbound?)
-
-- get waydroid working
 
 ## beta
 
@@ -55,7 +50,7 @@
 
 - torrenting setup
     - music
-    - lidarr/radarr/sonarr
+    - lidarr/radarr/sonarr, the whole stack
 
 - navidrome
 
@@ -73,26 +68,13 @@
     - images in syncthing
 
 - set up hedgedoc
-
-- enable ttrss
-
-## wayland
-
-- sway on nvidia (?)
-    - newest beta driver
-- plasma wayland
-    - keep an eye on https://github.com/NixOS/nixpkgs/issues/134334
+- re-enable ttrss
 
 ## alpha
 
 - set up backing up database to beta
 
 - move ttrss to beta + passthrough with nginx
-
-- set up some custom dns routing for services hosted on beta
-    - e.g. jellyfin.home, bookstack.home
-    - overview website
-        - e.g. heimdall
 
 ## nvim
 
@@ -125,3 +107,11 @@
     # See https://github.com/NixOS/nixpkgs/issues/113589
     networking.firewall.checkReversePath = "loose";
     ```
+
+## finances
+
+- selfhosted preferably
+- open source
+- maybe free, not necessarily
+    - good > free
+- skrooge?

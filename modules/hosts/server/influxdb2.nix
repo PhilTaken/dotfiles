@@ -15,6 +15,7 @@ in
     url = mkOption {
       description = "influxdb url (webinterface)";
       type = types.str;
+      default = "";
     };
 
     port = mkOption {
