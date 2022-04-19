@@ -153,6 +153,7 @@
 
             userConfig = {
               sway.enable = true;
+              firefox.enable = true;
               music = {
                 enable = true;
               };
@@ -230,7 +231,7 @@
                   openssh.enable = true;
                   fail2ban.enable = true;
                   telegraf.enable = true;
-                  ttrss.enable = true;
+                  ttrss.enable = false;
                   adguardhome.enable = false;
 
                   influxdb2.enable = true;
@@ -260,13 +261,18 @@
               };
               dns = {
                 unbound.enable = true;
-                traefik.enable = false;
-                apps = {
-                  "jellyfin" = {
-                    host = "beta";
-                    port = 8096;
+
+                nginx = {
+                  enable = true;
+                  proxy = {
+                    "jellyfin" = 1234;
                   };
                 };
+
+                apps = {
+                  "jellyfin" = "beta";
+                };
+
                 #subdomains = {
                   #"home".ip = "10.100.0.2";
                   #"jellyfin".ip = "10.100.0.2";
@@ -368,13 +374,15 @@
             inherit hardware-config users;
 
             systemConfig = {
-              wireguard.enable = false;
+              wireguard.enable = true;
               core.hostName = "nixos-laptop";
               server = {
                 enable = true;
                 services.telegraf.enable = false;
               };
-              mullvad.enable = false;
+              mullvad.enable = true;
+              dns.nameserver = "beta";
+
               laptop = {
                 enable = true;
                 wirelessInterfaces = [ "wlp0s20f3" ];
@@ -409,14 +417,14 @@
 
       # deploy config
       deploy.nodes = {
-        alpha = {
-          hostname = "148.251.102.93";
-          sshUser = "root";
-          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        };
+        #alpha = {
+          #hostname = "148.251.102.93";
+          #sshUser = "root";
+          #profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        #};
 
         beta = {
-          hostname = "192.168.0.120";
+          hostname = "10.100.0.2";
           sshUser = "root";
           profiles.system.path = deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
         };

@@ -42,7 +42,8 @@ in
 
         outputs = {
           influxdb_v2 = {
-            urls = [ "http://alpha.yggdrasil.vpn:8086" ];
+            urls = [ "http://10.100.0.1:8086" ];
+            timeout = "60s";
             token = "$INFLUX_TOKEN";
             organization = "home";
             bucket = "data";

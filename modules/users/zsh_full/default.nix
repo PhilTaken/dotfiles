@@ -327,7 +327,7 @@ rec {
       jq
       lolcat
       lshw
-      magic-wormhole
+      #magic-wormhole
       nmap
       neofetch
       procs

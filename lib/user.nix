@@ -59,7 +59,7 @@ with builtins;
             hyperfine
             keepassxc
             libreoffice
-            magic-wormhole
+            #magic-wormhole
             #obsidian
             signal-desktop
             tdesktop

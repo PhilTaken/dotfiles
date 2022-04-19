@@ -296,7 +296,17 @@ require('packer').startup{
             run = ":TSUpdate",
             config = function()
                 require'nvim-treesitter.configs'.setup {
-                    ensure_installed = "maintained",
+                    ensure_installed = {
+                        "bash", "c", "clojure",
+                        "cmake", "comment", "commonlisp",
+                        "cpp", "css", "dockerfile", "fennel",
+                        "fortran", "help", "html", "http",
+                        "javascript", "json", "json5",
+                        "latex", "ledger", "lua", "make",
+                        "nix", "python", "r", "regex",
+                        "rst", "ruby", "rust", "toml",
+                        "typescript", "vim", "vue", "yaml"
+                    },
                     highlight = {
                         enable = true,
                     },
@@ -515,7 +525,7 @@ require('packer').startup{
             requires = {'tami5/sqlite.lua', module = 'sqlite'},
             config = function()
                 require('neoclip').setup{
-                    enable_persistant_history = true,
+                    enable_persistent_history = true,
                 }
                 require'lspkind'.init()
             end,

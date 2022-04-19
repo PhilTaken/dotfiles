@@ -1,2 +1,3 @@
-.direnv/
+.direnv
 tags
+result

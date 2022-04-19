@@ -38,6 +38,8 @@ in
     programs.light.enable = true;
     services.xserver.libinput.touchpad.accelProfile = "flat";
 
+    services.udev.packages = with pkgs; [ qmk-udev-rules ];
+
     services.connman = {
       enable = true;
       enableVPN = false;
