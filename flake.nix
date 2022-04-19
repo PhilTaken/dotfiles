@@ -230,7 +230,7 @@
                   openssh.enable = true;
                   fail2ban.enable = true;
                   telegraf.enable = true;
-                  ttrss.enable = false;
+                  ttrss.enable = true;
                   adguardhome.enable = false;
 
                   influxdb2.enable = true;
@@ -260,18 +260,13 @@
               };
               dns = {
                 unbound.enable = true;
-
-                nginx = {
-                  enable = true;
-                  proxy = {
-                    "jellyin" = 8096;
+                traefik.enable = false;
+                apps = {
+                  "jellyfin" = {
+                    host = "beta";
+                    port = 8096;
                   };
                 };
-
-                apps = {
-                  "jellyfin" = "beta";
-                };
-
                 #subdomains = {
                   #"home".ip = "10.100.0.2";
                   #"jellyfin".ip = "10.100.0.2";
@@ -414,11 +409,11 @@
 
       # deploy config
       deploy.nodes = {
-        #alpha = {
-          #hostname = "148.251.102.93";
-          #sshUser = "root";
-          #profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        #};
+        alpha = {
+          hostname = "148.251.102.93";
+          sshUser = "root";
+          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        };
 
         beta = {
           hostname = "192.168.0.120";

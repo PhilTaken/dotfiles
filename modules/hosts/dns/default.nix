@@ -28,7 +28,7 @@ in
   };
 
   config = mkIf (cfg.nameserver != null) {
-    networking.nameservers = mkDefault [ iplot."${cfg.nameserver}" ];
+    networking.nameservers = [ iplot."${cfg.nameserver}" "1.1.1.1" ];
     networking.networkmanager.dns = "none";
   };
 }
