@@ -68,7 +68,7 @@ in
                 echo -e "  - $i"
               done
             else
-              sudo nixos-rebuild --flake ".#$1" switch
+              nixos-rebuild --use-remote-sudo --flake ".#$1" switch
             fi
           '';
           category = "system";
