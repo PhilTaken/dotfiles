@@ -46,6 +46,8 @@ in
       default = null;
       example = "/dev/sda";
     };
+
+    enableBluetooth = mkEnableOption "bluetooth";
   };
 
   config = mkIf (cfg.enable) {
@@ -100,6 +102,13 @@ in
       tailscale.enable = true;
     };
 
+    hardware = {
+      bluetooth = {
+        enable = cfg.enableBluetooth;
+        powerOnBoot = true;
+      };
+    };
+    services.blueman.enable = cfg.enableBluetooth;
 
     programs = {
       mtr.enable = true;

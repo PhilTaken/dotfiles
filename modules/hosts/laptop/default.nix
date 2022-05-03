@@ -27,8 +27,10 @@ in
   config = mkIf (cfg.enable) {
     programs.steam.enable = true;
 
+    hardware.acpilight.enable = true;
     environment = {
       systemPackages = with pkgs; [
+        brightnessctl
         powertop
         cmst # connman system tray
       ];
@@ -39,6 +41,7 @@ in
     services.xserver.libinput.touchpad.accelProfile = "flat";
 
     services.udev.packages = with pkgs; [ qmk-udev-rules ];
+
 
     services.connman = {
       enable = true;
