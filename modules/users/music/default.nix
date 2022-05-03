@@ -15,9 +15,18 @@ in
       type = types.bool;
       default = false;
     };
+
+    enableMpris = mkEnableOption "mpris";
   };
 
   config = (mkIf cfg.enable) {
+
+    systemd.user.services.mpris-proxy = mkIf (cfg.enableMpris) {
+      Unit.Description = "Mpris proxy";
+      Unit.After = [ "network.target" "sound.target" ];
+      Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+      Install.WantedBy = [ "default.target" ];
+    };
 
     #programs.spicetify = {
       #enable = true;
