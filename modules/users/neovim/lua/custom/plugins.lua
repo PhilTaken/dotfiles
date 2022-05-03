@@ -300,7 +300,7 @@ require('packer').startup{
                         "bash", "c", "clojure",
                         "cmake", "comment", "commonlisp",
                         "cpp", "css", "dockerfile", "fennel",
-                        "fortran", "help", "html", "http",
+                        "help", "html", "http",
                         "javascript", "json", "json5",
                         "latex", "ledger", "lua", "make",
                         "nix", "python", "r", "regex",

@@ -58,13 +58,15 @@ lsp.sumneko_lua.setup{
 
 --lsp.pyright.setup(signature_setup)
 
-lsp.ccls.setup(signature_setup)
-lsp.rnix.setup(signature_setup)
+lsp.ccls.setup(signature_setup) -- c/cpp
+lsp.rnix.setup(signature_setup) --nix
 lsp.texlab.setup(signature_setup)
 lsp.tsserver.setup(signature_setup)
 lsp.erlangls.setup(signature_setup)
 lsp.rust_analyzer.setup(signature_setup)
 lsp.r_language_server.setup(signature_setup)
+lsp.clojure_lsp.setup(signature_setup)
+lsp.hls.setup(signature_setup)
 
 lsp.pylsp.setup{
     on_attach = signature_setup.on_attach,

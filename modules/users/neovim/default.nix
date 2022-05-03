@@ -42,6 +42,8 @@ in
         fortls # fortran
         erlang-ls # erlang
         elixir_ls # elixir
+        clojure-lsp # clojure
+        haskell-language-server # haskell
 
         git # version control
         ripgrep # telescope file finding
@@ -54,7 +56,6 @@ in
         neuron-notes # for zettelkasten note-taking
 
         sqlite # for sqlite.lua
-
         universal-ctags # ctags for anything
       ] ++ (with pkgs.nodePackages; [
         #pyright # python
