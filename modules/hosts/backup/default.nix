@@ -26,6 +26,10 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    services.borgbackup = {
+      #enable = cfg.enable;
+
+    };
     # add config here
   };
 }
