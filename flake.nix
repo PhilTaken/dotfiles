@@ -4,8 +4,8 @@
   # - clone rassword store into home dir
   inputs = {
     # unstable > stable
-    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/master";
 
     # NUR
     nur-src = {
@@ -156,6 +156,7 @@
               firefox.enable = true;
               music = {
                 enable = true;
+                enableMpris = true;
               };
               git = {
                 enable = true;
@@ -173,7 +174,11 @@
                 sshKeys = [ sshKey ];
               };
             };
-            extraPackages = pkgs: with pkgs; [ ];
+            extraPackages = pkgs: with pkgs; [
+              gnome3.adwaita-icon-theme
+              via
+              xournalpp
+            ];
           };
 
           maelstroem = util.user.mkHMUser {
@@ -325,6 +330,7 @@
                 docker = true;
                 hostName = "gamma";
               };
+
               wireguard.enable = true;
               mullvad.enable = true;
               server.services.telegraf.enable = false;
@@ -332,12 +338,14 @@
               nvidia.enable = true;
               desktop.enable = true;
               sound.enable = true;
+              yubikey.enable = true;
+
               video = {
                 enable = true;
                 driver = "nvidia";
                 manager = "gnome";
               };
-              yubikey.enable = true;
+
               fileshare = {
                 enable = true;
                 mount = {
@@ -374,25 +382,30 @@
             inherit hardware-config users;
 
             systemConfig = {
-              wireguard.enable = true;
+              wireguard.enable = false;
               core.hostName = "nixos-laptop";
+              core.enableBluetooth = true;
+
+              sound.enable = true;
+              yubikey.enable = true;
+              mullvad.enable = true;
+              #dns.nameserver = "beta";
+
+
               server = {
                 enable = true;
                 services.telegraf.enable = false;
               };
-              mullvad.enable = true;
-              dns.nameserver = "beta";
 
               laptop = {
                 enable = true;
                 wirelessInterfaces = [ "wlp0s20f3" ];
               };
-              sound.enable = true;
+
               video = {
                 enable = true;
                 manager = "sway";
               };
-              yubikey.enable = true;
             };
 
             extraimports = [
