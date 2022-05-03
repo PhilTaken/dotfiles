@@ -155,10 +155,14 @@ rec {
           flakify() {
             if [ ! -e flake.nix ]; then
               nix flake new -t github:nix-community/nix-direnv .
+              direnv allow
             fi
             if [ ! -e .envrc ]; then
               echo "use flake" > .envrc
               direnv allow
+            fi
+            if [ ! -e .gitignore ]; then
+              echo ".envrc\ntags\n.direnv" > .gitignore
             fi
             ''${EDITOR:-vim} flake.nix
           }
