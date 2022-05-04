@@ -7,24 +7,21 @@ with lib;
 
 let
   cfg = config.phil.server.services.nginx;
+
   wgpeers = import ../wireguard/wireguard-peers.nix;
   iplot = builtins.mapAttrs (name: value: builtins.elemAt (builtins.split "/" (lib.head value.ownIPs)) 0) wgpeers;
-
   hostnames = builtins.attrNames iplot;
-  myIP = iplot.${config.networking.hostname};
 in
 {
   options.phil.server.services.nginx = {
-    nginx = {
-      proxy = mkOption {
-        description = "proxy definitions";
-        type = types.attrsOf types.port;
-        example = {
-          "jellyfin" = 1234;
-        };
-
-        default = {};
+    proxy = mkOption {
+      description = "proxy definitions";
+      type = types.attrsOf types.port;
+      example = {
+        "jellyfin" = 1234;
       };
+
+      default = {};
     };
   };
 
@@ -40,8 +37,8 @@ in
         }
       '';
     in {
-      enable = (cfg.nginx.proxy != {});
-      httpConfig = concatStrings (lib.mapAttrsToList genconfig cfg.nginx.proxy);
+      enable = (cfg.proxy != {});
+      httpConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
     };
   };
 }

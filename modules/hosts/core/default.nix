@@ -129,6 +129,7 @@ in
       hwinfo
       nix-index
       htop
+      magic-wormhole
     ];
 
     system.stateVersion = "21.05";

@@ -23,6 +23,7 @@ in
     ./keycloak.nix
     ./nginx.nix
     ./unbound.nix
+    ./calibre-web.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";

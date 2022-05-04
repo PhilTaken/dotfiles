@@ -141,22 +141,6 @@
         "type": "github"
       }
     },
-    "localDev": {
-      "locked": {
-        "lastModified": 1628449618,
-        "narHash": "sha256-P8kyOd18QCaJx1s+fMGLOEFxZ1FXR7sW9u/9mKQlTv8=",
-        "owner": "PhilTaken",
-        "repo": "nixpkgs",
-        "rev": "3fe47e533c9fcd9e8c3183590ec0f9daa7f98626",
-        "type": "github"
-      },
-      "original": {
-        "owner": "PhilTaken",
-        "ref": "innernet-module",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "neovim-nightly": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -301,7 +285,6 @@
         "deploy-rs": "deploy-rs",
         "devshell": "devshell",
         "home-manager": "home-manager",
-        "localDev": "localDev",
         "neovim-nightly": "neovim-nightly",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

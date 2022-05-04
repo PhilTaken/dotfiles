@@ -31,10 +31,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # my fork of nixpkgs
-    #localDev.url = "/platte/Documents/gits/nixpkgs/";
-    localDev.url = "github:PhilTaken/nixpkgs/innernet-module";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # for secret managment
@@ -61,7 +57,6 @@
     , home-manager
     , deploy-rs
     , nur-src
-    , localDev
     , devshell
     , nixos-hardware
     , sops-nix-src
@@ -175,8 +170,10 @@
               };
             };
             extraPackages = pkgs: with pkgs; [
+              calibre
+              kicad
+
               gnome3.adwaita-icon-theme
-              via
               xournalpp
             ];
           };
@@ -207,13 +204,15 @@
             };
 
             extraPackages = pkgs: with pkgs; [
-              hakuneko
               nur.repos.shados.tmm
             ];
           };
         };
 
-      nixosConfigurations = {
+        nixosConfigurations = let
+          baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix";
+          raspInstallerImport = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix";
+        in {
         # vm on a hetzner server, debian host (10.100.0.1)
         alpha =
           let
@@ -233,6 +232,8 @@
               server = {
                 enable = true;
                 services = {
+                  keycloak.enable = true;
+
                   openssh.enable = true;
                   fail2ban.enable = true;
                   telegraf.enable = true;
@@ -245,7 +246,7 @@
             };
 
             extraimports = [
-              (import "${localDev}/nixos/modules/services/networking/innernet.nix")
+              baseInstallerImport
             ];
           };
 
@@ -264,37 +265,31 @@
                 hostName = "beta";
                 docker = true;
               };
-              dns = {
-                unbound.enable = true;
 
-                nginx = {
-                  enable = true;
-                  proxy = {
-                    "jellyfin" = 1234;
-                  };
-                };
-
-                apps = {
-                  "jellyfin" = "beta";
-                };
-
-                #subdomains = {
-                  #"home".ip = "10.100.0.2";
-                  #"jellyfin".ip = "10.100.0.2";
-                  #"syncthing".ip = "10.100.0.2";
-                  #"notes".ip = "10.100.0.2";
-                  #"influx".ip = "10.100.0.1";
-                #};
-              };
               server = {
                 enable = true;
                 services = {
+                  nginx.proxy = {
+                    "jellyfin" = 8096;
+                  };
+
+                  unbound = {
+                    enable = true;
+                    apps = {
+                      "jellyfin" = "beta";
+                      "keycloak" = "alpha";
+                      "influx" = "alpha";
+                    };
+                  };
+
                   openssh.enable = true;
                   telegraf.enable = true;
                   iperf.enable = true;
 
                   syncthing.enable = true;
                   jellyfin.enable = true;
+
+                  calibre.enable = true;
                 };
               };
               fileshare = {
@@ -312,7 +307,7 @@
 
             extraimports = [
               nixos-hardware.nixosModules.raspberry-pi-4
-              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
+              raspInstallerImport
             ];
           };
 
@@ -368,7 +363,7 @@
             };
 
             extraimports = [
-              #(import "${localDev}/nixos/modules/services/networking/innernet.nix")
+              baseInstallerImport
             ];
           };
 
@@ -382,15 +377,15 @@
             inherit hardware-config users;
 
             systemConfig = {
-              wireguard.enable = false;
+              wireguard.enable = true;
+              dns.nameserver = "beta";
+              mullvad.enable = true;
+
               core.hostName = "nixos-laptop";
               core.enableBluetooth = true;
 
               sound.enable = true;
               yubikey.enable = true;
-              mullvad.enable = true;
-              #dns.nameserver = "beta";
-
 
               server = {
                 enable = true;
@@ -410,6 +405,7 @@
 
             extraimports = [
               #nixos-hardware.nixosModules.lenovo-thinkpad-t490
+              baseInstallerImport
             ];
           };
 
@@ -423,9 +419,12 @@
         gamma = self.nixosConfigurations.gamma.config.system.build.toplevel;
       };
 
-      # shortcut for building the sd card image for the raspberry pi
+      # shortcut for building sd images / isos
       images = {
+        alpha = self.nixosConfigurations.alpha.config.system.build.isoImage;
         beta = self.nixosConfigurations.beta.config.system.build.sdImage;
+        gamma = self.nixosConfigurations.gamma.config.system.build.isoImage;
+        nixos-laptop = self.nixosConfigurations.nixos-laptop.config.system.build.isoImage;
       };
 
       # deploy config

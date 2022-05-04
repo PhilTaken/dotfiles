@@ -13,11 +13,6 @@ let
   hostnames = builtins.attrNames iplot;
 in
 {
-  imports = [
-    ./server.nix
-    ./apps.nix
-  ];
-
   options.phil.dns = {
     nameserver = mkOption {
       type = types.nullOr (types.enum hostnames);

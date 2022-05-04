@@ -26,10 +26,16 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    sops.secrets.keycloak-dbpass = { };
+
     services.keycloak = {
       enable = cfg.enable;
-      frontendUrl = cfg.url;
-      extraConfig = {};
+      database = {
+        passwordFile = config.sops.secrets.keycloak-dbpass.path;
+      };
+      settings = {
+        hostname = cfg.url;
+      };
     };
   };
 }

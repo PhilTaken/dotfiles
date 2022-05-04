@@ -7,6 +7,9 @@ with lib;
 
 let
   cfg = config.phil.server.services.unbound;
+  wgpeers = import ../wireguard/wireguard-peers.nix;
+  iplot = builtins.mapAttrs (name: value: builtins.elemAt (builtins.split "/" (lib.head value.ownIPs)) 0) wgpeers;
+  hostnames = builtins.attrNames iplot;
 in
 {
   options.phil.server.services.unbound = {

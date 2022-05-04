@@ -42,7 +42,6 @@ in
 
     services.udev.packages = with pkgs; [ qmk-udev-rules ];
 
-
     services.connman = {
       enable = true;
       enableVPN = false;

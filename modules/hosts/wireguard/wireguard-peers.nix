@@ -3,7 +3,7 @@ rec {
     publicKey = "LDOII0S7OWakg4oDrC1wUCoM/YXq3wXTEjYoqBbI2Sk=";
     ownIPs = [ "10.100.0.1/24" ];
     allowedIPs = [ "10.100.0.0/24" ];
-    endpoint = "148.251.102.93";
+    endpoint = "wg.pherzog.xyz";
     port = 51821;
   };
 

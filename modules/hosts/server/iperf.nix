@@ -11,7 +11,7 @@ in
 {
 
   options.phil.server.services.iperf = {
-    enable = mkEnableOption "iperf ssh login blocker";
+    enable = mkEnableOption "iperf bandwith benchmark tool";
   };
 
   config = mkIf (cfg.enable) {
