@@ -20,6 +20,9 @@ in
     ./telegraf.nix
     ./influxdb2.nix
     ./syncthing.nix
+    ./keycloak.nix
+    ./nginx.nix
+    ./unbound.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";

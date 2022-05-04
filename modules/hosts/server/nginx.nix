@@ -6,7 +6,7 @@
 with lib;
 
 let
-  cfg = config.phil.dns;
+  cfg = config.phil.server.services.nginx;
   wgpeers = import ../wireguard/wireguard-peers.nix;
   iplot = builtins.mapAttrs (name: value: builtins.elemAt (builtins.split "/" (lib.head value.ownIPs)) 0) wgpeers;
 
@@ -14,10 +14,8 @@ let
   myIP = iplot.${config.networking.hostname};
 in
 {
-  options.phil.dns = {
+  options.phil.server.services.nginx = {
     nginx = {
-      enable = mkEnableOption "traefik reverse proxy";
-
       proxy = mkOption {
         description = "proxy definitions";
         type = types.attrsOf types.port;
@@ -27,16 +25,6 @@ in
 
         default = {};
       };
-    };
-
-    apps = mkOption {
-      description = "";
-      type = types.attrsOf (types.enum hostnames);
-      example = {
-        "jellyfin" = "beta";
-      };
-
-      default = { };
     };
   };
 
@@ -52,9 +40,8 @@ in
         }
       '';
     in {
-      enable = cfg.nginx.enable;
+      enable = (cfg.nginx.proxy != {});
       httpConfig = concatStrings (lib.mapAttrsToList genconfig cfg.nginx.proxy);
     };
-    phil.dns.subdomains = (builtins.mapAttrs (name: value: { ip = iplot."${value}"; }) cfg.apps);
   };
 }

@@ -6,41 +6,27 @@
 with lib;
 
 let
-  cfg = config.phil.dns;
+  cfg = config.phil.server.services.unbound;
 in
 {
-  options.phil.dns = {
-    unbound.enable = mkEnableOption "enable the unbound server";
-    subdomains = mkOption {
+  options.phil.server.services.unbound = {
+    enable = mkEnableOption "enable the unbound server";
+
+    apps = mkOption {
       description = "";
-      type = types.attrsOf (types.submodule {
-        options = {
-          ip = mkOption {
-            description = "";
-            type = types.str;
-            example = "192.168.192.1";
-          };
-        };
-      });
-
+      type = types.attrsOf (types.enum hostnames);
       example = {
-        "alpha".ip = "192.168.192.1";
+        "jellyfin" = "beta";
       };
-
-      default = {};
-      #default = {
-        #"home".ip = "10.100.0.2";
-        #"jellyfin".ip = "10.100.0.2";
-        #"syncthing".ip = "10.100.0.2";
-        #"notes".ip = "10.100.0.2";
-        #"influx".ip = "10.100.0.1";
-      #};
+      default = { };
     };
   };
 
   # TODO: enable condition
-  config = mkIf (cfg.unbound.enable) {
-    services.unbound = {
+  config = mkIf (cfg.enable) {
+    services.unbound = let
+      subdomains = (builtins.mapAttrs (name: value: { ip = iplot."${value}"; }) cfg.apps);
+    in {
       enable = true;
       # WIP: generate settings from options
       # see https://dnswatch.com/dns-docs/UNBOUND/
@@ -93,9 +79,9 @@ in
             "\"google-analytics.com A 127.0.0.1\""
             "\"ads.youtube.com A 127.0.0.1\""
             "\"adserver.yahoo.com A 127.0.0.1\""
-          ] ++ (lib.mapAttrsToList (name: value: "\"${name}.home. IN A ${value.ip}\"") cfg.subdomains);
+          ] ++ (lib.mapAttrsToList (name: value: "\"${name}.home. IN A ${value.ip}\"") subdomains);
 
-          local-data-ptr = lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.home\"") cfg.subdomains;
+          local-data-ptr = lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.home\"") subdomains;
         };
 
         forward-zone = [
@@ -112,9 +98,6 @@ in
           control-enable = true;
         };
       };
-
-      # interfaces = {};
-
     };
   };
 }
