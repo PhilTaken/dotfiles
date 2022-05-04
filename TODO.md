@@ -2,13 +2,13 @@
 
 ## general issues
 
-- fix freezing desktop (gamma)
+- fix freezing desktop (gamma) (solved?)
 
 - fix ssh_agent/gpg_agent interaction 
     - need to `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)` in every shell currently
+    - works on nixos-laptop
 
 - fix adguard home error
-
     ```nix
     services.adguardhome.settings = {
         dns = {
@@ -18,16 +18,14 @@
     };
     ```
 
-    -> use this for all dns (unbound?)
-
 - get waydroid working
-
 
 ## DNS
 
--> make wireguard network name configurable
+- generate nginx config from enabled options -> name, prefix, host etc.
+    - add to settings per service
 
-- unbound on beta -> set dns in wireguard, tailscale
+-> make wireguard network name configurable
 
 - generate all /etc/hosts entries from alpha/beta/... enabled servers?
     - very finicky, prone to issues
@@ -36,12 +34,11 @@
     - maybe write custom module just for custom dockers
     - own, very simple take on docker-compose suited to my nixos needs
 
-- generate traefik config from enabled options -> name, prefix, host etc.
-
 - transfer torrents to beta for seeding
     - set up webinterface, automatic importing dir
         - move torrent file downloads there
         - download manager? / auto move with command
+    - mullvad on beta, torrenting just via mullvad interface
 
 
 ## beta

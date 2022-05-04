@@ -61,15 +61,15 @@ in
           vscodeExtensions = extensions;
         };
 
-        yuzu-ea-latest = (pkgs.yuzu-ea.override rec {
-          version = "2496";
-          src = pkgs.fetchFromGitHub {
-            owner = "pineappleEA";
-            repo = "pineapple-src";
-            rev = "EA-${version}";
-            sha256 = "sha256-jk265xoGW+V6wLyJj7BDNBEUSg3LLZqIMVLjdnAeBOc=";
-          };
-        });
+        #yuzu-ea-latest = (pkgs.yuzu-ea.override rec {
+          #version = "2496";
+          #src = pkgs.fetchFromGitHub {
+            #owner = "pineappleEA";
+            #repo = "pineapple-src";
+            #rev = "EA-${version}";
+            #sha256 = "sha256-jk265xoGW+V6wLyJj7BDNBEUSg3LLZqIMVLjdnAeBOc=";
+          #};
+        #});
       in
       with pkgs; [
         #vscodium-with-extensions
@@ -81,7 +81,7 @@ in
         obs-studio
         citra
         polymc
-        yuzu-ea-latest
+        #yuzu-ea-latest
 
         #chromium
         google-chrome

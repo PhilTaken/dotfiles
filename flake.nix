@@ -232,6 +232,10 @@
               server = {
                 enable = true;
                 services = {
+                  nginx.proxy = {
+                    "influx" = 8086;
+                  };
+
                   keycloak.enable = true;
 
                   openssh.enable = true;
@@ -246,7 +250,7 @@
             };
 
             extraimports = [
-              baseInstallerImport
+              #baseInstallerImport
             ];
           };
 
@@ -363,7 +367,7 @@
             };
 
             extraimports = [
-              baseInstallerImport
+              #baseInstallerImport
             ];
           };
 
@@ -405,7 +409,7 @@
 
             extraimports = [
               #nixos-hardware.nixosModules.lenovo-thinkpad-t490
-              baseInstallerImport
+              #baseInstallerImport
             ];
           };
 
