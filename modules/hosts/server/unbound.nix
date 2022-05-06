@@ -61,7 +61,7 @@ in
           msg-cache-size = "128m";
           so-rcvbuf = "8m";
 
-          private-domain = "home.lan";
+          #private-domain = "home.lan";
           val-clean-additional = "yes";
 
           local-zone = [
@@ -73,6 +73,7 @@ in
             "\"adserver.yahoo.com\" redirect"
 
             "\"home.\" static"
+            "\"pherzog.xyz.\" static"
           ];
 
           local-data = [
@@ -82,9 +83,13 @@ in
             "\"google-analytics.com A 127.0.0.1\""
             "\"ads.youtube.com A 127.0.0.1\""
             "\"adserver.yahoo.com A 127.0.0.1\""
-          ] ++ (lib.mapAttrsToList (name: value: "\"${name}.home. IN A ${value.ip}\"") subdomains);
+          ] ++
+            (lib.mapAttrsToList (name: value: "\"${name}.home. IN A ${value.ip}\"") subdomains) ++
+            (lib.mapAttrsToList (name: value: "\"${name}.pherzog.xyz. IN A ${value.ip}\"") subdomains);
 
-          local-data-ptr = lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.home\"") subdomains;
+          local-data-ptr =
+            (lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.home\"") subdomains) ++
+            (lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.pherzog.xyz\"") subdomains);
         };
 
         forward-zone = [
