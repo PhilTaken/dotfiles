@@ -10,7 +10,7 @@ let
   hostname = config.networking.hostName;
 
   peers = import ./wireguard-peers.nix;
-  mkPeer = { publicKey, ownIPs, allowedIPs ? ownIPs, endpoint ? null, port ? 51821, persistentKeepalive ? 25, presharedKey ? null }: {
+  mkPeer = { publicKey, ownIPs, allowedIPs ? ownIPs, endpoint ? null, port ? 51821, persistentKeepalive ? 25, presharedKey ? null, ... }: {
     inherit publicKey allowedIPs persistentKeepalive presharedKey;
     endpoint =
       if endpoint != null then
@@ -18,11 +18,13 @@ let
       else null;
   };
 
+  hasEndpoint = (peers.${hostname}.endpoint or null) != null;
   foreignPeers = lib.filterAttrs (name: value: name != hostname) peers;
-  foreignServerPeers = lib.filterAttrs (name: value: value.endpoint != null) foreignPeers;
+  foreignServerPeers = lib.filterAttrs (name: value: (value.endpoint or null) != null) foreignPeers;
 
+  # the vps knows all peers, the others only themselves + the vps => road-warrior setup
   peerlist =
-    if (peers.${hostname}.endpoint != null) then
+    if hasEndpoint then
       builtins.mapAttrs (name: mkPeer) foreignPeers
     else
       builtins.mapAttrs (name: mkPeer) foreignServerPeers;
@@ -35,12 +37,6 @@ in
       description = "enable wireguard module";
       type = types.bool;
       default = true;
-    };
-
-    nat = mkOption {
-      description = "enable nat for wireguard";
-      type = types.bool;
-      default = false;
     };
 
     domain = mkOption {
@@ -59,7 +55,7 @@ in
     };
 
     networking = {
-      nat.enable = cfg.nat;
+      nat.enable = hasEndpoint;
       hosts = (builtins.listToAttrs
         (builtins.concatLists
           (builtins.map
@@ -90,6 +86,8 @@ in
             ips = peers.${hostname}.ownIPs;
             inherit listenPort;
             privateKeyFile = config.sops.secrets.wireguard-key.path;
+            postSetup = peers.${hostname}.postSetup or "";
+            postShutdown = peers.${hostname}.postShutdown or "";
           };
         };
       };

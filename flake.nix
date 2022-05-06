@@ -210,7 +210,8 @@
         };
 
         nixosConfigurations = let
-          baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix";
+          # include in the imports to build an iso image for the respective systems (TODO: check if it works)
+          baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix";
           raspInstallerImport = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix";
         in {
         # vm on a hetzner server, debian host (10.100.0.1)
@@ -224,19 +225,20 @@
 
             systemConfig = {
               core = {
-                docker = true;
+                docker = false;
                 hostName = "alpha";
                 bootLoader = "grub";
                 grubDevice = "/dev/sda";
               };
+
               server = {
                 enable = true;
                 services = {
-                  nginx.proxy = {
+                  caddy.proxy = {
                     "influx" = 8086;
                   };
 
-                  keycloak.enable = true;
+                  #keycloak.enable = true;
 
                   openssh.enable = true;
                   fail2ban.enable = true;
@@ -273,15 +275,16 @@
               server = {
                 enable = true;
                 services = {
-                  nginx.proxy = {
+                  caddy.proxy = {
                     "jellyfin" = 8096;
+                    "calibre" = 8083;
                   };
 
                   unbound = {
                     enable = true;
                     apps = {
                       "jellyfin" = "beta";
-                      "keycloak" = "alpha";
+                      "calibre" = "beta";
                       "influx" = "alpha";
                     };
                   };
@@ -391,10 +394,7 @@
               sound.enable = true;
               yubikey.enable = true;
 
-              server = {
-                enable = true;
-                services.telegraf.enable = false;
-              };
+              server.services.telegraf.enable = false;
 
               laptop = {
                 enable = true;
@@ -423,21 +423,19 @@
         gamma = self.nixosConfigurations.gamma.config.system.build.toplevel;
       };
 
-      # shortcut for building sd images / isos
+      # shortcut for building a raspberry pi sd image
       images = {
-        alpha = self.nixosConfigurations.alpha.config.system.build.isoImage;
         beta = self.nixosConfigurations.beta.config.system.build.sdImage;
-        gamma = self.nixosConfigurations.gamma.config.system.build.isoImage;
-        nixos-laptop = self.nixosConfigurations.nixos-laptop.config.system.build.isoImage;
       };
 
       # deploy config
       deploy.nodes = {
-        #alpha = {
+        alpha = {
           #hostname = "148.251.102.93";
-          #sshUser = "root";
-          #profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        #};
+          hostname = "10.100.0.1";
+          sshUser = "root";
+          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        };
 
         beta = {
           hostname = "10.100.0.2";
@@ -447,6 +445,5 @@
       };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-
     };
 }

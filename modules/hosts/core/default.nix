@@ -102,11 +102,12 @@ in
       tailscale.enable = true;
     };
 
-    hardware = {
-      bluetooth = {
-        enable = cfg.enableBluetooth;
-        powerOnBoot = true;
-      };
+    hardware.bluetooth = let
+      benable = cfg.enableBluetooth;
+    in mkIf (benable) {
+      hsphfpd.enable = benable;
+      enable = benable;
+      powerOnBoot = true;
     };
     services.blueman.enable = cfg.enableBluetooth;
 

@@ -24,6 +24,7 @@ in
     ./nginx.nix
     ./unbound.nix
     ./calibre-web.nix
+    ./caddy.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";
@@ -38,52 +39,26 @@ in
     # firewall
     networking.firewall.interfaces = {
       "eth0" = {
-        allowedTCPPorts = [
-          53
-          #80    # to get certs (let's encrypt)
-          #443   # ---- " ----
-        ];
-
-        allowedUDPPorts = [
-          53
-        ];
+        allowedTCPPorts = [ ];
+        allowedUDPPorts = [ ];
       };
 
       "tailscale0" = {
-        allowedTCPPorts = [
-          53 # dns (adguard home)
-          31111 # adguard home webinterface
-        ];
-
-        allowedUDPPorts = [
-          53 # dns (adguard home)
-          51820
-        ];
+        allowedTCPPorts = [ ];
+        allowedUDPPorts = [ ];
       };
 
       "yggdrasil" = {
         allowedUDPPorts = [
           53   # dns (unbound)
-          5353 # dns
-          80   # http
-          443  # https
-
-          8086 # influxdb2
-
-          1900  # jellyfin
-          7359  # jellyfin
+          80   # http (caddy)
+          443  # https (caddy)
         ];
 
         allowedTCPPorts = [
           53 # dns (unbound)
-          80 # webinterfaces (reverse proxy)
-          443 # webinterfaces ssl (reverse proxy)
-          31111 # adguard home webinterface
-
-          8086 # influxdb2
-
-          8096 # jellyfin
-          8920 # jellyfin
+          80 # webinterfaces (caddy)
+          443 # webinterfaces ssl (caddy)
         ];
       };
     };
