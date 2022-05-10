@@ -54,6 +54,10 @@ in
       };
     };
 
+    systemd.network.wait-online.ignoredInterfaces = [
+      "yggdrasil"
+    ];
+
     networking = {
       nat.enable = hasEndpoint;
       hosts = (builtins.listToAttrs

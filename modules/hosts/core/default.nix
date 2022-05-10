@@ -105,7 +105,6 @@ in
     hardware.bluetooth = let
       benable = cfg.enableBluetooth;
     in mkIf (benable) {
-      hsphfpd.enable = benable;
       enable = benable;
       powerOnBoot = true;
     };
