@@ -108,6 +108,7 @@ in
       #iosevka-bin
       (nerdfonts.override {
         fonts = [
+          "SourceCodePro"
           "Iosevka"
           "FiraCode"
           "FiraMono"

@@ -14,5 +14,6 @@
     ./ssh
     ./sway
     ./zsh_full
+    ./spacemacs
   ];
 }

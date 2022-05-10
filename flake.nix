@@ -50,6 +50,11 @@
     };
 
     polymc.url = "github:PolyMC/PolyMC";
+
+    spacemacs-git = {
+      url = "github:syl20bnr/spacemacs";
+      flake = false;
+    };
   };
   outputs =
     { self
@@ -63,6 +68,7 @@
     , neovim-nightly
     , spicetify
     , polymc
+    , spacemacs-git
     , ...
     }@inputs:
     let
@@ -147,6 +153,11 @@
             username = "nixos";
 
             userConfig = {
+              spacemacs = {
+                enable = true;
+                spacemacs-path = "${spacemacs-git}";
+              };
+
               sway.enable = true;
               firefox.enable = true;
               music = {

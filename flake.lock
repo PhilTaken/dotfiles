@@ -291,6 +291,7 @@
         "nur-src": "nur-src",
         "polymc": "polymc",
         "sops-nix-src": "sops-nix-src",
+        "spacemacs-git": "spacemacs-git",
         "spicetify": "spicetify"
       }
     },
@@ -311,6 +312,22 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "spacemacs-git": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1651465442,
+        "narHash": "sha256-YWsW0kciGFquMx9rdfuaGIoPsS/tVcVzOVVchVCjp2I=",
+        "owner": "syl20bnr",
+        "repo": "spacemacs",
+        "rev": "c6c17748f649236e5c4afab6a0cabb97f0806bf9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "syl20bnr",
+        "repo": "spacemacs",
         "type": "github"
       }
     },
