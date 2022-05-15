@@ -317,7 +317,7 @@
                   dirs = [ "/media" ];
                 };
                 samba = {
-                  #enable = true;
+                  enable = true;
                   dirs = [ "/media" ];
                 };
               };

@@ -48,6 +48,8 @@ let
         browsable = "yes";
         "read only" = "no";
         "guest ok" = "yes";
+        "public" = "yes";
+        "force user" = "share";
         "create mask" = "0644";
         "directory mask" = "0755";
       };
@@ -119,20 +121,19 @@ in
       exports = mkSharesForIps cfg.shares.ips cfg.shares.dirs;
     };
 
+    services.samba-wsdd.enable = cfg.samba.enable;
     services.samba = mkIf (cfg.samba.enable) {
       enable = true;
       securityType = "user";
       extraConfig = ''
         workgroup = WORKGROUP
-        server string = smbnix
-        netbios name = smbnix
-        security = user
-        #use sendfile = yes
-        #max protocol = smb2
-        hosts allow = ${cfg.samba.ips} localhost 192.168.0.0/24
-        hosts deny = 0.0.0.0/0
-        guest account = nobody
-        map to guest = bad user
+        server string = Samba Server
+        server role = standalone server
+        log file = /var/log/samba/smbd.%m
+        max log size = 50
+        dns proxy = no
+        map to guest = Bad User
+        browseable = yes
       '';
       shares = mkSmbShares cfg.samba.dirs;
     };
