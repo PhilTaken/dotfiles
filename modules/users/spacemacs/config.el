@@ -24,7 +24,7 @@
 
     ;; If non-nil then Spacemacs will ask for confirmation before installing
     ;; a layer lazily. (default t)
-    dotspacemacs-ask-for-lazy-installation t
+    dotspacemacs-ask-for-lazy-installation nil
 
     ;; List of additional paths where to look for configuration layers.
     ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
@@ -39,21 +39,32 @@
        ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
        ;; `M-m f e R' (Emacs style) to install them.
        ;; ----------------------------------------------------------------
-       ;; auto-completion
-       ;; better-defaults
+       rust
+       (python :variables
+               python-backend 'lsp
+               python-lsp-server 'pylsp)
+       (haskell :variables
+               haskell-completion-backend 'lsp)
+       (nixos :variables
+              nix-backend 'lsp)
        emacs-lisp
-       ;; git
+       markdown
+
+       (lsp :variables
+            lsp-rust-server 'rust-analyzer)
+
+       (shell :variables
+              shell-default-height 30
+              shell-default-position 'bottom)
+
+       auto-completion
+       better-defaults
        helm
-       ;; lsp
-       ;; markdown
-       multiple-cursors
-       ;; org
-       ;; (shell :variables
-       ;;        shell-default-height 30
-       ;;        shell-default-position 'bottom)
+       git
+       org
+       syntax-checking
+       version-control
        ;; spell-checking
-       ;; syntax-checking
-       ;; version-control
        treemacs)
 
 
@@ -555,6 +566,10 @@
   configuration.
   Put your configuration code here, except for variables that should be set
   before packages are loaded."
+  (use-package direnv
+    :config (direnv-mode))
+  (use-package ayu-theme
+    :config (load-theme 'ayu-grey t))
   )
 
 
