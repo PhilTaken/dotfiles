@@ -53,12 +53,16 @@ in
           53   # dns (unbound)
           80   # http (caddy)
           443  # https (caddy)
+
+          8086
         ];
 
         allowedTCPPorts = [
           53 # dns (unbound)
           80 # webinterfaces (caddy)
           443 # webinterfaces ssl (caddy)
+
+          8086
         ];
       };
     };

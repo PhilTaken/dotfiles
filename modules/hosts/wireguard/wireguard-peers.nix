@@ -4,13 +4,13 @@ rec {
     ownIPs = [ "10.100.0.1/24" ];
     allowedIPs = [ "10.100.0.0/24" ];
     endpoint = "148.251.102.93";
-    port = 51821;
   };
 
   beta = {
     publicKey = "/DWBidRPbNdqBhXZJFGpD20K+Bs6ViEbq4DJOlw5f0U=";
     ownIPs = [ "10.100.0.2/24" ];
     allowedIPs = [ "10.100.0.2/32" ];
+    #endpoint = "192.168.0.120";
   };
 
   gamma = {

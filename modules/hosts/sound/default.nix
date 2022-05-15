@@ -16,25 +16,25 @@ in
       default = false;
     };
 
-    spotifyd_devicename = mkOption {
-      description = "spotifyd device name";
-      type = types.str;
-      default = "maelstroem";
-    };
+    #spotifyd_devicename = mkOption {
+      #description = "spotifyd device name";
+      #type = types.str;
+      #default = "maelstroem";
+    #};
 
-    spotifyd_username = mkOption {
-      description = "spotifyd username";
-      type = types.str;
-      default = "wtfusername?";
-    };
+    #spotifyd_username = mkOption {
+      #description = "spotifyd username";
+      #type = types.str;
+      #default = "wtfusername?";
+    #};
   };
 
   config = mkIf (cfg.enable) {
-    sops.secrets.spotify-username = { };
-    sops.secrets.spotify-password = {
-      group = "audio";
-      mode = "0440";
-    };
+    #sops.secrets.spotify-username = { };
+    #sops.secrets.spotify-password = {
+      #group = "audio";
+      #mode = "0440";
+    #};
 
     # Enable sound.
     sound.enable = true;
@@ -49,21 +49,21 @@ in
       jack.enable = true;
     };
 
-    services.spotifyd = {
-      enable = false;
-      settings = {
-        global = {
-          username = "${cfg.spotifyd_username}";
-          password_cmd = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.spotify-password.path}";
-          backend = "pulseaudio";
-          bitrate = 320;
-          volume_normalization = false;
-          device_type = "speaker";
-          no_audio_cache = true;
-          cache_path = "/tmp/spotifyd";
-        };
-      };
-    };
+    #services.spotifyd = {
+      #enable = false;
+      #settings = {
+        #global = {
+          #username = "${cfg.spotifyd_username}";
+          #password_cmd = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.spotify-password.path}";
+          #backend = "pulseaudio";
+          #bitrate = 320;
+          #volume_normalization = false;
+          #device_type = "speaker";
+          #no_audio_cache = true;
+          #cache_path = "/tmp/spotifyd";
+        #};
+      #};
+    #};
 
     xdg = {
       portal = {

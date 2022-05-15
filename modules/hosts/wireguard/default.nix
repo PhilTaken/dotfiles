@@ -6,6 +6,8 @@
 with lib;
 
 let
+  networkName = "yggdrasil";
+
   cfg = config.phil.wireguard;
   hostname = config.networking.hostName;
 
@@ -42,21 +44,23 @@ in
     domain = mkOption {
       description = "wireguard domain";
       type = types.str;
-      default = "yggdrasil.vpn";
+      default = "${networkName}.vpn";
     };
   };
 
   config = mkIf (cfg.enable) {
     sops.secrets = {
       wireguard-key = {
-        sopsFile = ../../../sops/${hostname}-wireguard.yaml;
-        #sopsFile = "../../../sops/${hostname}-wireguard.yaml";
+        #sopsFile = ../../../sops/${hostname}-wireguard.yaml;
+        sopsFile = ../../../sops + "/${hostname}-wireguard.yaml";
       };
     };
 
-    systemd.network.wait-online.ignoredInterfaces = [
-      "yggdrasil"
-    ];
+    systemd.network.wait-online = {
+      timeout = 20;
+      anyInterface = true;
+      ignoredInterfaces = [ networkName ];
+    };
 
     networking = {
       nat.enable = hasEndpoint;
@@ -78,14 +82,15 @@ in
           )
         )
       );
+
       firewall.allowedUDPPorts = [ listenPort ];
 
-      interfaces."yggdrasil".mtu = 576;
+      interfaces."${networkName}".mtu = 576;
 
       wireguard = {
         enable = true;
         interfaces = {
-          yggdrasil = {
+          "${networkName}" = {
             peers = (lib.mapAttrsToList (name: value: value) peerlist);
             ips = peers.${hostname}.ownIPs;
             inherit listenPort;

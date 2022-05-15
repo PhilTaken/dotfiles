@@ -96,16 +96,14 @@ in
 
     # TODO move these somewhere else
     virtualisation.docker.enable = cfg.docker;
-    #programs.steam.enable = true;
 
     services = {
       tailscale.enable = true;
     };
+    networking.firewall.checkReversePath = "loose";
 
-    hardware.bluetooth = let
-      benable = cfg.enableBluetooth;
-    in mkIf (benable) {
-      enable = benable;
+    hardware.bluetooth = mkIf (cfg.enableBluetooth) {
+      enable = cfg.enableBluetooth;
       powerOnBoot = true;
     };
     services.blueman.enable = cfg.enableBluetooth;
@@ -132,6 +130,6 @@ in
       magic-wormhole
     ];
 
-    system.stateVersion = "21.05";
+    system.stateVersion = "22.05";
   };
 }

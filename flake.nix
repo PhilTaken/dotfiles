@@ -1,4 +1,4 @@
-# SSH fix: `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)`
+# SSH fix for GNOME: `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)`
 {
   # todo:
   # - clone rassword store into home dir
@@ -138,9 +138,6 @@
       #devShells."${system}".default = util.shells.legacyShell;
       devShells."${system}".default = util.shells.devShell;
 
-      # older version for backwards compatibility
-      devShell."${system}" = util.shells.devShell;
-
       overlays.default = (import ./custom_pkgs);
 
       homeManagerConfigurations =
@@ -160,10 +157,8 @@
 
               sway.enable = true;
               firefox.enable = true;
-              music = {
-                enable = true;
-                enableMpris = true;
-              };
+              music.enable = true;
+
               git = {
                 enable = true;
                 userName = "Philipp Herzog";
@@ -195,18 +190,20 @@
             userConfig = {
               firefox.enable = true;
               music.enable = true;
-              #kde.enable = true;
-              gnome.enable = true;
+              kde.enable = true;
+              #gnome.enable = true;
               git = {
                 enable = true;
                 userName = "Philipp Herzog";
                 userEmail = "philipp.herzog@protonmail.com";
                 signKey = gpgKey;
               };
+
               mail.enable = true;
               neovim.enable = true;
               ssh.enable = true;
               zsh_full.enable = true;
+
               gpg = {
                 inherit gpgKey;
                 enable = true;
@@ -325,7 +322,7 @@
 
             extraimports = [
               nixos-hardware.nixosModules.raspberry-pi-4
-              raspInstallerImport
+              #raspInstallerImport
             ];
           };
 
@@ -339,14 +336,10 @@
             inherit hardware-config users;
 
             systemConfig = {
-              core = {
-                docker = true;
-                hostName = "gamma";
-              };
+              core.hostName = "gamma";
 
               wireguard.enable = true;
               mullvad.enable = true;
-              server.services.telegraf.enable = false;
 
               nvidia.enable = true;
               desktop.enable = true;
@@ -356,7 +349,12 @@
               video = {
                 enable = true;
                 driver = "nvidia";
-                manager = "gnome";
+                manager = "kde";
+              };
+
+              server = {
+                services.jellyfin.enable = true;
+                services.telegraf.enable = true;
               };
 
               fileshare = {
@@ -374,10 +372,10 @@
 
               dns.nameserver = "beta";
 
-              development = {
-                enable = false;
-                adb.enable = false;
-              };
+              #development = {
+                #enable = false;
+                #adb.enable = false;
+              #};
             };
 
             extraimports = [
@@ -395,12 +393,13 @@
             inherit hardware-config users;
 
             systemConfig = {
-              wireguard.enable = true;
-              dns.nameserver = "beta";
-              mullvad.enable = true;
-
               core.hostName = "nixos-laptop";
               core.enableBluetooth = true;
+
+              wireguard.enable = true;
+              dns.nameserver = "beta";
+
+              mullvad.enable = true;
 
               sound.enable = true;
               yubikey.enable = true;
@@ -441,12 +440,12 @@
 
       # deploy config
       deploy.nodes = {
-        alpha = {
-          #hostname = "148.251.102.93";
-          hostname = "10.100.0.1";
-          sshUser = "root";
-          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        };
+        #alpha = {
+          ##hostname = "148.251.102.93";
+          #hostname = "10.100.0.1";
+          #sshUser = "root";
+          #profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        #};
 
         beta = {
           hostname = "10.100.0.2";

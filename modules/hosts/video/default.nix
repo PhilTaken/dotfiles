@@ -121,6 +121,7 @@ in
     # gnome
     environment.systemPackages = if (cfg.manager == "gnome") then (with pkgs; [
       gnomeExtensions.appindicator
+      gnomeExtensions.gsconnect
       networkmanager-vpnc
       gnome.networkmanager-vpnc
     ]) else [];
