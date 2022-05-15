@@ -1,5 +1,11 @@
 # TODO:
 
+- set up worktrees for wip -> easier switching to stable config
+- figure out issues with telegraf metric reporting on beta & gamma
+    - mtu didnt fix (only temporarily, I fed it up)
+    - ports?
+    - influx accepted ips?
+
 ## general issues
 
 - fix freezing desktop (gamma) (solved?)
@@ -7,32 +13,25 @@
 - fix ssh_agent/gpg_agent interaction 
     - need to `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)` in every shell currently
     - works on nixos-laptop
-
-- fix adguard home error
-    ```nix
-    services.adguardhome.settings = {
-        dns = {
-            bind_host = "SET_TO_YOUR_DNS_IP";
-            bootstrap_dns = "SET_TO_YOUR_BOOTSTRAP_DNS";
-        };
-    };
-    ```
+        - GNOME issue, works under kde plasma ..?
 
 - get waydroid working
 
+- wireguard / headscale ?
+    - other, more direct approach than road-warrior wireguard with all traffic via external vps
+
 ## DNS
+
+### global network definitions file
 
 - generate nginx config from enabled options -> name, prefix, host etc.
     - add to settings per service
 
 -> make wireguard network name configurable
 
+
 - generate all /etc/hosts entries from alpha/beta/... enabled servers?
     - very finicky, prone to issues
-
-- improve docker service handling
-    - maybe write custom module just for custom dockers
-    - own, very simple take on docker-compose suited to my nixos needs
 
 - transfer torrents to beta for seeding
     - set up webinterface, automatic importing dir
@@ -42,8 +41,6 @@
 
 
 ## beta
-
-- dns (see above)
 
 - torrenting setup
     - music
@@ -69,13 +66,14 @@
 
 ## alpha
 
-- set up backing up database to beta
-
-- move ttrss to beta + passthrough with nginx
+- set up backing up database to beta or b2 directly
+- move ttrss to beta + passthrough with caddy
 
 ## nvim
 
 - plugins
+    - worktrees
+        - https://github.com/ThePrimeagen/git-worktree.nvim
     - quickfix list
         - https://github.com/kevinhwang91/nvim-bqf
     - marks 
