@@ -86,6 +86,9 @@
 
 ## Ideas
 
+- widgets to replace waybar / add functionality
+  - https://github.com/elkowar/eww
+
 - expose all wireguard subnet adresses in config
     - useful in server module for webservices
     - useful for dns 
