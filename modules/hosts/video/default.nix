@@ -24,7 +24,7 @@ in
 
     manager = mkOption {
       description = "which window/desktop manager to enable\nxfce is xfce+i3";
-      type = (types.enum [ "kde" "sway" "i3" "xfce" "gnome" ]);
+      type = (types.enum [ "kde" "sway" "i3" "xfce" "gnome" "xmonad" ]);
       default = "sway";
     };
   };
@@ -49,57 +49,55 @@ in
       #];
     };
 
-    services.xserver =
-      let
-        enable = (cfg.manager != "sway");
-      in
-      {
-        inherit enable;
-        layout = "us";
-        xkbVariant = "workman-intl,intl";
-        xkbOptions = "caps:escape,grp:shifts_toggle";
+    services.xserver = let
+      enable = (cfg.manager != "sway");
+    in {
+      inherit enable;
+      layout = "us";
+      xkbVariant = "workman-intl,intl";
+      xkbOptions = "caps:escape,grp:shifts_toggle";
 
-        displayManager = {
-          gdm.enable = (cfg.manager == "gnome");
-          defaultSession =
-            if (cfg.manager == "i3") then "none+i3" else
-            if (cfg.manager == "xfce") then "xfce+i3" else
-            if (cfg.manager == "kde") then "plasma" else
-            if (cfg.manager == "gnome") then "gnome" else
-            null;
-        };
-
-        videoDrivers =
-          if (cfg.driver != null) then [
-            cfg.driver
-          ] else [ ];
-
-        screenSection = mkIf (cfg.driver == "nvidia") ''
-          Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-          Option         "AllowIndirectGLXProtocol" "off"
-          Option         "TripleBuffer" "on"
-        '';
-
-        libinput = {
-          inherit enable;
-        };
-
-        desktopManager = {
-          xfce = {
-            enable = (cfg.manager == "xfce");
-            noDesktop = true;
-            enableXfwm = false;
-          };
-          plasma5.enable = (cfg.manager == "kde");
-          gnome.enable = (cfg.manager == "gnome");
-          xterm.enable = false;
-        };
-
-        windowManager.i3 = {
-          enable = (cfg.manager == "i3" || cfg.manager == "xfce");
-          package = pkgs.i3-gaps;
-        };
+      displayManager = {
+        gdm.enable = (cfg.manager == "gnome");
+        defaultSession =
+          if (cfg.manager == "i3") then "none+i3" else
+          if (cfg.manager == "xfce") then "xfce+i3" else
+          if (cfg.manager == "kde") then "plasma" else
+          if (cfg.manager == "gnome") then "gnome" else
+          null;
       };
+
+      videoDrivers =
+        if (cfg.driver != null) then [
+          cfg.driver
+        ] else [ ];
+
+      screenSection = mkIf (cfg.driver == "nvidia") ''
+        Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+        Option         "AllowIndirectGLXProtocol" "off"
+        Option         "TripleBuffer" "on"
+      '';
+
+      libinput = {
+        inherit enable;
+      };
+
+      desktopManager = {
+        xfce = {
+          enable = (cfg.manager == "xfce");
+          noDesktop = true;
+          enableXfwm = false;
+        };
+        plasma5.enable = (cfg.manager == "kde");
+        gnome.enable = (cfg.manager == "gnome");
+        xterm.enable = false;
+      };
+
+      windowManager.i3 = {
+        enable = (cfg.manager == "i3" || cfg.manager == "xfce");
+        package = pkgs.i3-gaps;
+      };
+    };
 
     console.useXkbConfig = true;
 
@@ -141,7 +139,7 @@ in
       let
         kde_ports = builtins.genList (x: x + 1714) (1764 - 1714 + 1);
       in
-      mkIf (cfg.manager == "kde") {
+      mkIf (cfg.manager == "kde" || cfg.manager == "gnome" || cfg.manager == "xfce") {
         allowedTCPPorts = kde_ports ++ [ 8888 ];
         allowedUDPPorts = kde_ports ++ [ 8888 ];
       };

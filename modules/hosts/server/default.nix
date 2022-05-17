@@ -31,8 +31,10 @@ in
 
   config = mkIf (cfg.enable) {
     environment.systemPackages = with pkgs; [
+      nmap
       hdparm
       htop
+      bottom
       usbutils
     ];
 

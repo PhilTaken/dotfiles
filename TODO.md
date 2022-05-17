@@ -1,10 +1,13 @@
 # TODO:
 
-- set up worktrees for wip -> easier switching to stable config
+- always start nvim outside of any shell
+
 - figure out issues with telegraf metric reporting on beta & gamma
     - mtu didnt fix (only temporarily, I fed it up)
     - ports?
     - influx accepted ips?
+
+- nvim projects (akin to emacs)
 
 ## general issues
 
@@ -71,7 +74,17 @@
 
 ## nvim
 
+- sk(im) sorter for telescope?
+
 - plugins
+    - parinfer-rust
+        - https://github.com/eraserhd/parinfer-rust
+    - zoxide integration for telescope
+        - https://github.com/jvgrootveld/telescope-zoxide
+    - neorg
+        - https://github.com/nvim-neorg/neorg-telescope
+    - symbol outlines (lsp)
+        - https://github.com/simrat39/symbols-outline.nvim
     - worktrees
         - https://github.com/ThePrimeagen/git-worktree.nvim
     - quickfix list
@@ -84,6 +97,10 @@
 
 ## Ideas
 
+- station application
+    - https://getstation.com/
+- devdocs api docs
+    - devdocs.io
 - widgets to replace waybar / add functionality
   - https://github.com/elkowar/eww
 

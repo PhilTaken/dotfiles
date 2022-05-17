@@ -83,7 +83,7 @@
         devshell.overlay
         sops-nix-src.overlay
         deploy-rs.overlay
-        #neovim-nightly.overlay
+        neovim-nightly.overlay
         polymc.overlay
         (final: super: {
           makeModulesClosure = x:
@@ -133,295 +133,292 @@
 
       raspiUsers = systemUsersFor aarch64_pkgs;
       systemUsers = systemUsersFor pkgs;
-    in
-    {
+    in {
       #devShells."${system}".default = util.shells.legacyShell;
       devShells."${system}".default = util.shells.devShell;
 
       overlays.default = (import ./custom_pkgs);
 
-      homeManagerConfigurations =
-        let
-          gpgKey = "BDCD0C4E9F252898";
-          sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
-        in
-        {
-          nixos = util.user.mkHMUser {
-            username = "nixos";
+      homeManagerConfigurations = let
+        gpgKey = "BDCD0C4E9F252898";
+        sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
+      in {
+        nixos = util.user.mkHMUser {
+          username = "nixos";
 
-            userConfig = {
-              spacemacs = {
-                enable = true;
-                spacemacs-path = "${spacemacs-git}";
-              };
-
-              sway.enable = true;
-              firefox.enable = true;
-              music.enable = true;
-
-              git = {
-                enable = true;
-                userName = "Philipp Herzog";
-                userEmail = "philipp.herzog@protonmail.com";
-                signKey = gpgKey;
-              };
-              mail.enable = true;
-              neovim.enable = true;
-              ssh.enable = true;
-              zsh_full.enable = true;
-              gpg = {
-                inherit gpgKey;
-                enable = true;
-                sshKeys = [ sshKey ];
-              };
-            };
-            extraPackages = pkgs: with pkgs; [
-              calibre
-              kicad
-
-              gnome3.adwaita-icon-theme
-              xournalpp
-            ];
-          };
-
-          maelstroem = util.user.mkHMUser {
-            username = "maelstroem";
-
-            userConfig = {
-              firefox.enable = true;
-              music.enable = true;
-              kde.enable = true;
-              #gnome.enable = true;
-              git = {
-                enable = true;
-                userName = "Philipp Herzog";
-                userEmail = "philipp.herzog@protonmail.com";
-                signKey = gpgKey;
-              };
-
-              mail.enable = true;
-              neovim.enable = true;
-              ssh.enable = true;
-              zsh_full.enable = true;
-
-              gpg = {
-                inherit gpgKey;
-                enable = true;
-                sshKeys = [ sshKey ];
-              };
+          userConfig = {
+            spacemacs = {
+              enable = true;
+              spacemacs-path = "${spacemacs-git}";
             };
 
-            extraPackages = pkgs: with pkgs; [
-              nur.repos.shados.tmm
-            ];
+            sway.enable = true;
+            firefox.enable = true;
+            music.enable = true;
+
+            git = {
+              enable = true;
+              userName = "Philipp Herzog";
+              userEmail = "philipp.herzog@protonmail.com";
+              signKey = gpgKey;
+            };
+            mail.enable = true;
+            neovim.enable = true;
+            ssh.enable = true;
+            zsh_full.enable = true;
+            gpg = {
+              inherit gpgKey;
+              enable = true;
+              sshKeys = [ sshKey ];
+            };
           };
+          extraPackages = pkgs: with pkgs; [
+            calibre
+            kicad
+
+            gnome3.adwaita-icon-theme
+            xournalpp
+          ];
         };
 
-        nixosConfigurations = let
-          # include in the imports to build an iso image for the respective systems (TODO: check if it works)
-          baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix";
-          raspInstallerImport = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix";
-        in {
-        # vm on a hetzner server, debian host (10.100.0.1)
-        alpha =
-          let
-            hardware-config = import (./machines/alpha);
-            users = with systemUsers; [ nixos ];
-          in
-          util.host.mkHost {
-            inherit hardware-config users;
+        maelstroem = util.user.mkHMUser {
+          username = "maelstroem";
 
-            systemConfig = {
-              core = {
-                docker = false;
-                hostName = "alpha";
-                bootLoader = "grub";
-                grubDevice = "/dev/sda";
-              };
+          userConfig = {
+            firefox = {
+              enable = true;
+              wayland = false;
+            };
+            music.enable = true;
 
-              server = {
-                enable = true;
-                services = {
-                  caddy.proxy = {
-                    "influx" = 8086;
-                  };
+            # de/wm
+            gnome.enable = false;
+            kde.enable = false;
+            i3.enable = true;
+            # TODO: xmonad.enable = true;
 
-                  #keycloak.enable = true;
-
-                  openssh.enable = true;
-                  fail2ban.enable = true;
-                  telegraf.enable = true;
-                  ttrss.enable = false;
-                  adguardhome.enable = false;
-
-                  influxdb2.enable = true;
-                };
-              };
+            git = {
+              enable = true;
+              userName = "Philipp Herzog";
+              userEmail = "philipp.herzog@protonmail.com";
+              signKey = gpgKey;
             };
 
-            extraimports = [
-              #baseInstallerImport
-            ];
+            mail.enable = true;
+            neovim.enable = true;
+            ssh.enable = true;
+            zsh_full.enable = true;
+
+            gpg = {
+              inherit gpgKey;
+              enable = true;
+              sshKeys = [ sshKey ];
+            };
           };
+
+          extraPackages = pkgs: with pkgs; [
+            nur.repos.shados.tmm
+          ];
+        };
+      };
+
+      nixosConfigurations = let
+        # include in the imports to build an iso image for the respective systems (TODO: check if it works)
+        baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix";
+        raspInstallerImport = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix";
+      in {
+        # vm on a hetzner server, debian host (10.100.0.1)
+        alpha = let
+          hardware-config = import (./machines/alpha);
+          users = with systemUsers; [ nixos ];
+        in util.host.mkHost {
+          inherit hardware-config users;
+
+          systemConfig = {
+            core = {
+              docker = false;
+              hostName = "alpha";
+              bootLoader = "grub";
+              grubDevice = "/dev/sda";
+            };
+
+            server = {
+              enable = true;
+              services = {
+                caddy.proxy = {
+                  "influx" = 8086;
+                };
+
+                #keycloak.enable = true;
+
+                openssh.enable = true;
+                fail2ban.enable = true;
+                telegraf.enable = true;
+                ttrss.enable = false;
+                adguardhome.enable = false;
+
+                influxdb2.enable = true;
+              };
+            };
+          };
+
+          extraimports = [
+            #baseInstallerImport
+          ];
+        };
 
         # raspberry pi @ home (192.168.0.120 / 10.100.0.2)
-        beta =
-          let
-            hardware-config = import (./machines/beta);
-            users = with raspiUsers; [ nixos ];
-          in
-          raspiUtil.host.mkHost {
-            inherit hardware-config users;
+        beta = let
+          hardware-config = import (./machines/beta);
+          users = with raspiUsers; [ nixos ];
+        in raspiUtil.host.mkHost {
+          inherit hardware-config users;
 
-            systemConfig = {
-              core = {
-                bootLoader = null;
-                hostName = "beta";
-                docker = true;
-              };
-
-              server = {
-                enable = true;
-                services = {
-                  caddy.proxy = {
-                    "jellyfin" = 8096;
-                    "calibre" = 8083;
-                  };
-
-                  unbound = {
-                    enable = true;
-                    apps = {
-                      "jellyfin" = "beta";
-                      "calibre" = "beta";
-                      "influx" = "alpha";
-                    };
-                  };
-
-                  openssh.enable = true;
-                  telegraf.enable = true;
-                  iperf.enable = true;
-
-                  syncthing.enable = true;
-                  jellyfin.enable = true;
-
-                  calibre.enable = true;
-                };
-              };
-              fileshare = {
-                enable = true;
-                shares = {
-                  enable = true;
-                  dirs = [ "/media" ];
-                };
-                samba = {
-                  enable = true;
-                  dirs = [ "/media" ];
-                };
-              };
+          systemConfig = {
+            core = {
+              bootLoader = null;
+              hostName = "beta";
+              docker = true;
             };
 
-            extraimports = [
-              nixos-hardware.nixosModules.raspberry-pi-4
-              #raspInstallerImport
-            ];
+            server = {
+              enable = true;
+              services = {
+                caddy.proxy = {
+                  "jellyfin" = 8096;
+                  "calibre" = 8083;
+                };
+
+                unbound = {
+                  enable = true;
+                  apps = {
+                    "jellyfin" = "beta";
+                    "calibre" = "beta";
+                    "influx" = "alpha";
+                  };
+                };
+
+                openssh.enable = true;
+                telegraf.enable = true;
+                iperf.enable = true;
+
+                syncthing.enable = true;
+                jellyfin.enable = true;
+
+                calibre.enable = true;
+              };
+            };
+            fileshare = {
+              enable = true;
+              shares = {
+                enable = true;
+                dirs = [ "/media" ];
+              };
+              samba = {
+                enable = true;
+                dirs = [ "/media" ];
+              };
+            };
           };
+
+          extraimports = [
+            nixos-hardware.nixosModules.raspberry-pi-4
+            #raspInstallerImport
+          ];
+        };
 
         # desktop @ home (192.168.8.230 / 10.100.0.3)
-        gamma =
-          let
-            hardware-config = import (./machines/gamma);
-            users = with systemUsers; [ maelstroem ];
-          in
-          util.host.mkHost {
-            inherit hardware-config users;
+        gamma = let
+          hardware-config = import (./machines/gamma);
+          users = with systemUsers; [ maelstroem ];
+        in util.host.mkHost {
+          inherit hardware-config users;
 
-            systemConfig = {
-              core.hostName = "gamma";
+          systemConfig = {
+            core.hostName = "gamma";
 
-              wireguard.enable = true;
-              mullvad.enable = true;
+            wireguard.enable = true;
+            mullvad.enable = true;
 
-              nvidia.enable = true;
-              desktop.enable = true;
-              sound.enable = true;
-              yubikey.enable = true;
+            nvidia.enable = true;
+            desktop.enable = true;
+            sound.enable = true;
+            yubikey.enable = true;
 
-              video = {
-                enable = true;
-                driver = "nvidia";
-                manager = "kde";
-              };
-
-              server = {
-                services.jellyfin.enable = true;
-                services.telegraf.enable = true;
-              };
-
-              fileshare = {
-                enable = true;
-                mount = {
-                  enable = true;
-                  binds = [
-                    {
-                      ip = "192.168.0.120";
-                      dirs = [ "/media" ];
-                    }
-                  ];
-                };
-              };
-
-              dns.nameserver = "beta";
-
-              #development = {
-                #enable = false;
-                #adb.enable = false;
-              #};
+            video = {
+              enable = true;
+              driver = "nvidia";
+              manager = "xfce";
             };
 
-            extraimports = [
-              #baseInstallerImport
-            ];
+            server = {
+              services.jellyfin.enable = true;
+              services.telegraf.enable = true;
+            };
+
+            fileshare = {
+              enable = true;
+              mount = {
+                enable = true;
+                binds = [
+                  {
+                    ip = "192.168.0.120";
+                    dirs = [ "/media" ];
+                  }
+                ];
+              };
+            };
+
+            dns.nameserver = "beta";
+
+            #development = {
+              #enable = false;
+              #adb.enable = false;
+            #};
           };
+
+          extraimports = [
+            #baseInstallerImport
+          ];
+        };
 
         # workplace-issued thinkpad (10.100.0.4)
-        nixos-laptop =
-          let
-            hardware-config = import (./machines/nixos-laptop);
-            users = with systemUsers; [ nixos ];
-          in
-          util.host.mkHost {
-            inherit hardware-config users;
+        nixos-laptop = let
+          hardware-config = import (./machines/nixos-laptop);
+          users = with systemUsers; [ nixos ];
+        in util.host.mkHost {
+          inherit hardware-config users;
 
-            systemConfig = {
-              core.hostName = "nixos-laptop";
-              core.enableBluetooth = true;
+          systemConfig = {
+            core.hostName = "nixos-laptop";
+            core.enableBluetooth = true;
 
-              wireguard.enable = true;
-              dns.nameserver = "beta";
+            wireguard.enable = true;
+            dns.nameserver = "beta";
 
-              mullvad.enable = true;
+            mullvad.enable = true;
 
-              sound.enable = true;
-              yubikey.enable = true;
+            sound.enable = true;
+            yubikey.enable = true;
 
-              server.services.telegraf.enable = false;
+            server.services.telegraf.enable = false;
 
-              laptop = {
-                enable = true;
-                wirelessInterfaces = [ "wlp0s20f3" ];
-              };
-
-              video = {
-                enable = true;
-                manager = "sway";
-              };
+            laptop = {
+              enable = true;
+              wirelessInterfaces = [ "wlp0s20f3" ];
             };
 
-            extraimports = [
-              #nixos-hardware.nixosModules.lenovo-thinkpad-t490
-              #baseInstallerImport
-            ];
+            video = {
+              enable = true;
+              manager = "sway";
+            };
           };
+
+          extraimports = [
+            #nixos-hardware.nixosModules.lenovo-thinkpad-t490
+            #baseInstallerImport
+          ];
+        };
 
       };
 
