@@ -7,8 +7,7 @@ with lib;
 
 let
   cfg = config.phil.neovim;
-in
-{
+in {
   options.phil.neovim = {
     enable = mkOption {
       description = "Enable the neovim module";
@@ -20,7 +19,7 @@ in
   config = mkIf (cfg.enable) {
     home.sessionVariables = {
       EDITOR = "nvim";
-      PAGER = "${pkgs.nvimpager}/bin/nvimpager";
+      #PAGER = "${pkgs.nvimpager}/bin/nvimpager";
     };
 
     programs.neovim = {
@@ -32,6 +31,9 @@ in
       withNodeJs = true;
       extraPython3Packages = (ps: with ps; [ pynvim ]);
       extraPackages = with pkgs; [
+        gcc11
+        gcc-unwrapped
+
         tree-sitter
 
         sumneko-lua-language-server # lua
@@ -71,12 +73,19 @@ in
         " set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM
         let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'"
         luafile ~/.config/nvim/init_.lua
+
+        " write to undofile in undodir
+        set undodir=${config.xdg.dataHome}
+        set undofile
+
       '';
     };
 
     home.packages = with pkgs; [
       visidata
       neovim-remote
+      (writeShellScriptBin "neovide-mg" "exec ${pkgs.neovide}/bin/neovide --multigrid")
+      neovide
     ];
 
     xdg.configFile."nvim/init_.lua".source = ./init.lua;

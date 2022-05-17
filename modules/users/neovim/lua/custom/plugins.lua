@@ -53,6 +53,7 @@ require('packer').startup{
                 config = function()
                     local catppuccin = require('catppuccin')
                     catppuccin.setup{
+                        term_colors = true,
                         --colorscheme = "dark_catppuccino",
                         integrations = {
                             lsp_saga = true,
@@ -79,7 +80,6 @@ require('packer').startup{
         }
 
         -- start menu
-        --use 'mhinz/vim-startify'
         use {
             'goolord/alpha-nvim',
             config = function()
@@ -199,10 +199,56 @@ require('packer').startup{
                     require('custom.tele_init')
                 end,
             },
+            -- fancy symbols
             {
                 'nvim-telescope/telescope-symbols.nvim',
                 after = 'telescope.nvim',
             },
+            -- git worktree integration
+            {
+                'ThePrimeagen/git-worktree.nvim',
+                requires = {
+                    'nvim-telescope/telescope.nvim',
+                },
+                config = function()
+                    require("telescope").load_extension("git_worktree")
+                end,
+                after = 'telescope.nvim',
+            },
+            -- fancy file browser
+            {
+                'nvim-telescope/telescope-file-browser.nvim',
+                requires = {
+                    'nvim-telescope/telescope.nvim',
+                },
+                config = function()
+                    require("telescope").load_extension("file_browser")
+                end,
+                after = "telescope.nvim",
+            },
+            -- telescope projects
+            {
+                'nvim-telescope/telescope-project.nvim',
+                requires = {
+                    'nvim-telescope/telescope.nvim',
+                },
+                config = function()
+                    require("telescope").load_extension("project")
+                end,
+                after = "telescope.nvim",
+            },
+            {
+                'jvgrootveld/telescope-zoxide',
+                requires = {
+                    'nvim-lua/popup.nvim',
+                    'nvim-lua/plenary.nvim',
+                    'nvim-telescope/telescope.nvim',
+                },
+                config = function()
+                    require("telescope").load_extension("zoxide")
+                end,
+                after = "telescope.nvim",
+            }
         }
 
         -- statusline
@@ -300,7 +346,7 @@ require('packer').startup{
                         "bash", "c", "clojure",
                         "cmake", "comment", "commonlisp",
                         "cpp", "css", "dockerfile", "fennel",
-                        "help", "html", "http",
+                        "help", "html", "http", "norg",
                         "javascript", "json", "json5",
                         "latex", "ledger", "lua", "make",
                         "nix", "python", "r", "regex",
@@ -356,7 +402,7 @@ require('packer').startup{
             module = "gitlinker",
         }
 
-        -- nix
+        -- specific language integrations
         use {
             -- rust-tools.nvim
             {
@@ -407,21 +453,30 @@ require('packer').startup{
         }
 
         use {
-            'lewis6991/gitsigns.nvim',
-            requires = { 'nvim-lua/plenary.nvim' },
-            tag = 'v0.2',
-            config = function()
-                require('gitsigns').setup {
-                    signs = {
-                        add          = {hl = 'GitGutterAdd'   , text = '+'},
-                        change       = {hl = 'GitGutterChange', text = '~'},
-                        delete       = {hl = 'GitGutterDelete', text = '_'},
-                        topdelete    = {hl = 'GitGutterDelete', text = '‾'},
-                        changedelete = {hl = 'GitGutterChange', text = '~'},
+            {
+                'lewis6991/gitsigns.nvim',
+                requires = { 'nvim-lua/plenary.nvim' },
+                tag = 'v0.2',
+                config = function()
+                    require('gitsigns').setup {
+                        signs = {
+                            add          = {hl = 'GitGutterAdd'   , text = '+'},
+                            change       = {hl = 'GitGutterChange', text = '~'},
+                            delete       = {hl = 'GitGutterDelete', text = '_'},
+                            topdelete    = {hl = 'GitGutterDelete', text = '‾'},
+                            changedelete = {hl = 'GitGutterChange', text = '~'},
+                        }
                     }
-                }
-            end,
-            event = "BufEnter"
+                end,
+                event = "BufEnter"
+            },
+            {
+                'sindrets/diffview.nvim',
+                requires = "nvim-lua/plenary.nvim",
+                config = function()
+                    require("diffview").setup{}
+                end
+            }
         }
 
         -- extra icons for completion
@@ -536,6 +591,62 @@ require('packer').startup{
         use {
             'ggandor/lightspeed.nvim',
             event = "BufRead"
+        }
+
+        use {
+            "nvim-neorg/neorg",
+            --ft = "norg",
+            after = { "nvim-treesitter" },
+            config = function()
+                require('neorg').setup {
+                    load = {
+                        ["core.defaults"] = {}, -- Load all the defaults
+                        ["core.gtd.base"] = {
+                            config = {
+                                workspace = "vault",
+                                exclude = { "notes/" }, -- Optional: all excluded files from the workspace are not part of the gtd workflow
+                                projects = {
+                                    show_completed_projects = false,
+                                    show_projects_without_tasks = false,
+                                },
+                                custom_tag_completion = true,
+                            },
+                        },
+                        ["core.norg.dirman"] = {
+                            config = {
+                                workspaces = {
+                                    vault = "~/Documents/syncthing/vault/",
+                                },
+                                --autochdir = true,
+                                index = "index.norg",
+                            },
+                        },
+                        ["core.presenter"] = {
+                            config = {
+                                zen_mode = "zen-mode",
+                            },
+                        },
+                        ["core.integrations.treesitter"] = {}, -- Enable the telescope module
+                        ["core.integrations.nvim-cmp"] = {},
+                        --["core.norg.journal"] = {},
+                        --["core.norg.q l.toc"] = {},
+                        ["core.norg.concealer"] = {},
+                        --["core.integrations.telescope"] = {}, -- Enable the telescope module
+                    },
+                }
+            end,
+            requires = {
+                "nvim-lua/plenary.nvim",
+                --{
+                    --"nvim-neorg/neorg-telescope",
+                --},
+                {
+                    "folke/zen-mode.nvim",
+                    config = function()
+                        require("zen-mode").setup{}
+                    end
+                }
+            };
         }
     end,
     config = {

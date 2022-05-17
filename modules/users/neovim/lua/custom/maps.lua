@@ -33,25 +33,28 @@ local leadern = {
     [";;"] = { function() R('custom.tele').project_search() end, "Project Search" },
 
     ["<leader>"] = {
-        ["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting"},
+        ["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting" },
+        r = { "<cmd>Rooter<cr>", "Root vim" },
+        z = { function() R('custom.tele').extensions.zoxide.list() end, "list zoxide dirs" },
         f = {
             name = "+find",
             s = { function() R('custom.tele').treesitter() end, "Treesitter Symbols" },
             g = { function() R('custom.tele').live_grep() end, "Live Grep in current dir" },
             f = { function() R('custom.tele').find_files({no_ignore = false, hidden = false}) end, "Find Files in current dir" },
             d = { function() R('custom.tele').find_dotfiles{} end, "Search in dotfiles" },
-            t = { function() R('custom.tele').tags{} end, "Browse workspace tags" },
-            y = { function() require('telescope').extensions.neoclip.default() end, "Manage yank register"},
+            t = { function() R('custom.tele').tags() end, "Browse workspace tags" },
+            y = { function() R('custom.tele').extensions.neoclip.default() end, "Manage yank register" },
+            b = { function() R('custom.tele').extensions.file_browser.file_browser() end, "Telescope file browser" },
         },
         t = {
             name = "+trouble",
-            t = { "<cmd>TroubleToggle<cr>", "Toggle trouble"},
-            a = { "<cmd>TodoTrouble<cr>", "Open TODOs in trouble"},
-            w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace Diagnostics"},
-            d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document Diagnostics"},
-            q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix List"},
-            l = { "<cmd>TroubleToggle loclist<cr>", "Loclist"},
-            r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences"},
+            t = { "<cmd>TroubleToggle<cr>", "Toggle trouble" },
+            a = { "<cmd>TodoTrouble<cr>", "Open TODOs in trouble" },
+            w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
+            d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document Diagnostics" },
+            q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix List" },
+            l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
+            r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences" },
         },
         -- TODO: maybe move to autocommands down below (like fennel, python)
         i = {
@@ -65,22 +68,32 @@ local leadern = {
             c = { function() vim.lsp.buf.code_action() end, "Code Action" },
             f = { function() vim.lsp.buf.formatting() end, "Formatting" },
             s = { function() vim.lsp.buf.signature_help() end, "Signature Help" },
-            d = { function() vim.lsp.buf.definition() end, "Preview Definition"},
-            e = { function() vim.diagnostic.open_float() end, "Diagnostics float"},
+            d = { function() vim.lsp.buf.definition() end, "Preview Definition" },
+            e = { function() vim.diagnostic.open_float() end, "Diagnostics float" },
+            -- symbols outline
         },
         g = {
             name = "+git",
-            g = { function() require('custom.terminals')['lazygit']:toggle() end, "Open LazyGit" },
-            y = { function() require('gitlinker').get_buf_range_url('n') end, 'copy link to file in remote to clipboard' },
-            o = { function() require('gitlinker').get_buf_range_url('n', {
-                action_callback = require("gitlinker.actions").open_in_browser
+            g = { function() R('custom.terminals')['lazygit']:toggle() end, "Open LazyGit" },
+            y = { function() R('gitlinker').get_buf_range_url('n') end, 'copy link to file in remote to clipboard' },
+            o = { function() R('gitlinker').get_buf_range_url('n', {
+                action_callback = R("gitlinker.actions").open_in_browser
             }) end, 'open current buffer\'s remote in browser' },
-            Y = { function() require('gitlinker').get_repo_url() end, "copy homepage url to clipboard" },
+            Y = { function() R('gitlinker').get_repo_url() end, "copy homepage url to clipboard" },
+            w = {
+                name = "+worktree",
+                s = { function() R('custom.tele').extensions.git_worktree.git_worktrees() end, "Switch worktree branch" },
+                c = { function() R('custom.tele').extensions.git_worktree.create_git_worktree() end, "create worktree branch" },
+            },
+        },
+        p = {
+            name = "+project",
+            p = { function() R('custom.tele').extensions.project.project{} end, "Browse projects" },
         },
         s = {
-            g = { function() require('custom.terminals')['lazygit']:toggle() end, "Toggle lazygit interface" },
-            h = { function() require('custom.terminals')['bottom']:toggle() end, "Toggle bottom resource monitor"},
-            s = { function() require('custom.terminals')['bgshell']:toggle() end, "Toggle random shell" },
+            g = { function() R('custom.terminals')['lazygit']:toggle() end, "Toggle lazygit interface" },
+            h = { function() R('custom.terminals')['bottom']:toggle() end, "Toggle bottom resource monitor" },
+            s = { function() R('custom.terminals')['bgshell']:toggle() end, "Toggle random shell" },
             c = { "<cmd>ToggleTermCloseAll<cr>", "Close all dangling terminals" },
         },
     },
@@ -167,12 +180,12 @@ _G.which_key_r = function()
         ['<leader>'] = {
             r = {
                 name = "+R",
-                s = { "<Plug>RStart", "Start the R integration"},
-                l = { "<Plug>RDSendLine", "Send current line"},
-                p = { "<Plug>RPlot", "Plot data frame"},
-                v = { "<Plug>RViewDF", "View data frame"},
-                o = { "<Plug>RUpdateObjBrowser", "Update the Object Browser"},
-                h = { "<Plug>RHelp", "Help"},
+                s = { "<Plug>RStart", "Start the R integration" },
+                l = { "<Plug>RDSendLine", "Send current line" },
+                p = { "<Plug>RPlot", "Plot data frame" },
+                v = { "<Plug>RViewDF", "View data frame" },
+                o = { "<Plug>RUpdateObjBrowser", "Update the Object Browser" },
+                h = { "<Plug>RHelp", "Help" },
                 f = { "<Plug>RSendFile", "Send the whole file" },
             },
         }

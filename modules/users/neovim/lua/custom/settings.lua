@@ -7,6 +7,7 @@ local opt = vim.opt
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ","
 vim.g.tex_flavor = 'latex'
+vim.g.loaded_perl_provider = 0
 
 -- ignore these in searches
 opt.wildignore = { "*.swp", "*.bak", "*.pyc", "*.class" }
@@ -38,9 +39,10 @@ opt.backup = false
 opt.swapfile = false
 opt.writebackup = false
 
+
 -- write to undofile in undodir
-vim.cmd[[set undodir=$XDG_DATA_HOME/nvim/undodir]]
-vim.cmd[[set undofile]]
+--vim.cmd[[set undodir=$XDG_DATA_HOME/nvim/undodir]]
+--vim.cmd[[set undofile]]
 
 --vim.cmd[[let R_external_term = 1]]
 
