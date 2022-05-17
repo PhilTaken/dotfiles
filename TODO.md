@@ -1,7 +1,5 @@
 # TODO:
 
-- always start nvim outside of any shell
-
 - figure out issues with telegraf metric reporting on beta & gamma
     - mtu didnt fix (only temporarily, I fed it up)
     - ports?
@@ -16,7 +14,7 @@
 - fix ssh_agent/gpg_agent interaction 
     - need to `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)` in every shell currently
     - works on nixos-laptop
-        - GNOME issue, works under kde plasma ..?
+        - GNOME issue, works under kde plasma & i3 ..?
 
 - get waydroid working
 

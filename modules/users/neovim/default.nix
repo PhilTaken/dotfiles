@@ -78,6 +78,10 @@ in {
         set undodir=${config.xdg.dataHome}
         set undofile
 
+        augroup rc
+        au!
+        au TermOpen * setlocal nobuflisted
+        augroup END
       '';
     };
 

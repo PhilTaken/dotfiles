@@ -140,7 +140,9 @@ in rec {
 
           source ${magic_enter_prompt}
 
-          if [[ $DISPLAY ]]; then
+          # dont run tmux in nvim shells or when display isn't set
+          PPNAME="$(ps -o comm= -p $PPID)"
+          if [[ ! "$PPNAME" == "nvim" ]] && [[ $DISPLAY ]]; then
             [[ $- != *i* ]] && return
             if [[ -z "$TMUX" ]]; then
               ID="$(${pkgs.tmux}/bin/tmux ls | grep -vm1 attached | cut -d: -f1)"
