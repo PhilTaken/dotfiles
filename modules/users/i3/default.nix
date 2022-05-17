@@ -33,8 +33,8 @@ rec
 
     bg = mkOption {
       description = "Main background";
-      type = types.nullOr types.path;
-      default = null;
+      type = types.path;
+      default = ../../../images/rick_morty.png;
     };
 
     terminal_font = mkOption {
@@ -44,6 +44,8 @@ rec
   };
 
   config = mkIf (cfg.enable) rec {
+    services.kdeconnect.enable = true;
+
     xsession.windowManager.i3 = rec {
       enable = true;
       package = cfg.package;
@@ -140,7 +142,7 @@ rec
 
     services.picom = {
       enable = true;
-      activeOpacity = "0.98";
+      activeOpacity = "0.985";
       opacityRule = [
         "100:class_g ?= 'Firefox'"
       ];
@@ -154,7 +156,7 @@ rec
       fade = true;
       fadeDelta = 8;
       inactiveDim = "0.1";
-      inactiveOpacity = "0.9";
+      inactiveOpacity = "0.96";
       shadow = true;
     };
 
@@ -173,8 +175,9 @@ rec
           offset-x = "12";
           offset-y = "5";
 
-          override-redirect = true;
+          tray-position = "right";
           wm-restack = "i3";
+          override-redirect = true;
 
           radius = "10";
           bottom = "false";
@@ -260,6 +263,23 @@ rec
     services.pulseeffects = {
       enable = false;
       package = pkgs.pulseeffects-legacy;
+    };
+
+    systemd.user.services.kdeconnect-indicator = {
+      Unit = {
+        Description = "Unit for the kdeconnect indicator daemon";
+        After = "graphical-session-pre.target";
+        PartOf = "graphical-session.target";
+      };
+
+      Service = {
+        ExecStart = "${pkgs.kdeconnect}/bin/kdeconnect-indicator";
+        Restart = "on-abort";
+      };
+
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
     };
 
     systemd.user.services.flameshot = {
