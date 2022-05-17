@@ -2,13 +2,12 @@
 , config
 , lib
 , ...
-}:
+}@inputs:
 with lib;
 
 let
   cfg = config.phil.zsh_full;
-in
-rec {
+in rec {
   options.phil.zsh_full = {
     enable = mkOption {
       description = "enable the zsh module";
@@ -19,8 +18,8 @@ rec {
 
   config = mkIf (cfg.enable) {
     home.sessionVariables = {
-      _FASD_DATA = "$XDG_DATA_HOME/fasd/fasd.data";
-      _Z_DATA = "$XDG_DATA_HOME/fasd/z.data";
+      _FASD_DATA = "${inputs.config.xdg.dataHome}/fasd/fasd.data";
+      _Z_DATA = "${inputs.config.xdg.dataHome}/fasd/z.data";
       _ZO_ECHO = 1;
     };
 
@@ -97,7 +96,7 @@ rec {
           ignoreDups = true;
           ignoreSpace = true;
           share = true;
-          path = "$XDG_DATA_HOME/zsh/histfile";
+          path = "${inputs.config.xdg.dataHome}/zsh/histfile";
         };
         initExtraBeforeCompInit = ''
           setopt prompt_subst
@@ -120,6 +119,7 @@ rec {
 
           unsetopt beep notify clobber
         '';
+
         initExtra = ''
           autoload -Uz zmv
           autoload -Uz zed
@@ -172,32 +172,52 @@ rec {
           else
             export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
           fi
-        '';
+          '' + (lib.optionalString inputs.config.programs.git.enable ''
+          cworktree() {
+              remote=$1
+              dir=$2
+
+              if [ -z "$remote" ]; then
+                  echo "usage: $0 remote [dir]" && return 1
+              fi
+
+              if [ -z "$dir" ]; then
+                  dir=''$(basename -s .git "$remote")
+              fi
+
+              mkdir "$dir"
+              pushd "$dir"
+              git clone --bare "$remote" .bare
+              echo "gitdir: ./.bare" > .git
+              git worktree add main
+              popd
+          }
+          '');
+
         shellGlobalAliases = {
           "%notif" = "&& notify-send 'done' || notify-send 'error'";
         };
-        shellAliases = {
+
+        shellAliases = rec {
           sudo = "sudo ";
           gre = "${pkgs.ripgrep}/bin/rg";
           df = "df -h";
           free = "${pkgs.procps}/bin/free -h";
           exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
+          ll = exal;
           exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
-          ll = "exal";
           cat = "${pkgs.bat}/bin/bat";
           ntop = "sudo ntop -u nobody";
-          # TBD
-          #open = "xdg-open";
-          #pass = "gopass";
 
-          sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
           top = "${pkgs.bottom}/bin/btm";
           du = "${pkgs.du-dust}/bin/dust";
           dmesg = "dmesg -H";
 
           # c/c++ dev
           bear = "${pkgs.bear}/bin/bear";
-
+        } // (lib.optionalAttrs inputs.config.wayland.windowManager.sway.enable {
+          sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
+        }) // (lib.optionalAttrs inputs.config.programs.git.enable {
           # git
           ga = "${pkgs.git}/bin/git add";
           gc = "${pkgs.git}/bin/git commit";
@@ -211,15 +231,13 @@ rec {
           gcm = "${pkgs.git}/bin/git checkout main";
           flkup = "nix flake update --commit-lock-file";
           lg = "${pkgs.lazygit}/bin/lazygit";
-        };
+        });
       };
 
-    programs.tmux =
-      let
+    programs.tmux = let
         airline_conf = ./tmux_airline.conf;
         colorscheme_conf = ./catppuccino_dark.conf;
-      in
-      {
+    in {
         enable = true;
         baseIndex = 1;
         escapeTime = 1;
@@ -229,7 +247,7 @@ rec {
         #terminal = "screen-256color";
         extraConfig = ''
           set -g default-terminal "tmux-256color"
-          set -ag terminal-overrides ",xterm-256color:RGB"
+          set -ag terminal-overrides ",alacritty:RGB"
 
           #set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
           #set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
