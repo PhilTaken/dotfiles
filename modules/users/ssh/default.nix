@@ -96,6 +96,11 @@ in
 
         # remote vps
 
+        "vps2" = {
+          hostname = "185.212.44.199";
+          user = "nixos";
+        };
+
         "alphadirect" = {
           hostname = "148.251.102.93";
           user = "nixos";

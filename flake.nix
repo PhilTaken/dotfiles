@@ -112,7 +112,7 @@
       systemUsersFor = pkgs: {
         nixos = {
           name = "nixos";
-          groups = [ "wheel" "video" "audio" "docker" "dialout" "adbusers" ];
+          groups = [ "wheel" "video" "audio" "docker" "dialout" "adbusers" "gpio" ];
           shell = pkgs.zsh;
           uid = 1001;
         };
@@ -218,6 +218,8 @@
 
           extraPackages = pkgs: with pkgs; [
             nur.repos.shados.tmm
+
+            plover.dev
           ];
         };
       };
@@ -235,6 +237,7 @@
           inherit hardware-config users;
 
           systemConfig = {
+            #wireguard.enable = false;
             core = {
               docker = false;
               hostName = "alpha";
@@ -303,8 +306,8 @@
                 iperf.enable = true;
 
                 syncthing.enable = true;
-                jellyfin.enable = true;
 
+                jellyfin.enable = true;
                 calibre.enable = true;
               };
             };
@@ -437,15 +440,16 @@
 
       # deploy config
       deploy.nodes = {
-        #alpha = {
-          ##hostname = "148.251.102.93";
+        alpha = {
+          hostname = "148.251.102.93";
           #hostname = "10.100.0.1";
-          #sshUser = "root";
-          #profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        #};
+          sshUser = "root";
+          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        };
 
         beta = {
-          hostname = "10.100.0.2";
+          #hostname = "10.100.0.2";
+          hostname = "192.168.0.120";
           sshUser = "root";
           profiles.system.path = deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
         };
