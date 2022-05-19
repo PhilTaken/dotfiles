@@ -56,11 +56,11 @@ in
       };
     };
 
-    systemd.network.wait-online = {
-      timeout = 20;
-      anyInterface = true;
-      ignoredInterfaces = [ networkName ];
-    };
+    #systemd.network.wait-online = {
+      #timeout = 20;
+      #anyInterface = true;
+      #ignoredInterfaces = [ networkName ];
+    #};
 
     networking = {
       nat.enable = hasEndpoint;
@@ -85,7 +85,6 @@ in
 
       firewall.allowedUDPPorts = [ listenPort ];
 
-      interfaces."${networkName}".mtu = 576;
 
       wireguard = {
         enable = true;

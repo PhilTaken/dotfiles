@@ -2,30 +2,36 @@
 let
   lib = pkgs.lib;
   ip4_eth0 = "148.251.102.93";
-in
-rec {
-
+  gateway_ip = "148.251.69.141";
+in rec {
   imports = [ ./hardware-configuration.nix ];
-
-  #boot.loader.grub.device = "/dev/sda";
 
   # networking
   networking = {
     hostName = "alpha";
     dhcpcd.enable = false;
     usePredictableInterfaceNames = false;
-    interfaces.eth0.ipv4.addresses = [{
-      address = ip4_eth0;
-      prefixLength = 32;
-    }];
-    defaultGateway = "";
+    interfaces = {
+      eth0.ipv4 = {
+        addresses = [
+          {
+            address = ip4_eth0;
+            prefixLength = 32;
+          }
+        ];
+        routes = [
+          {
+            address = gateway_ip;
+            prefixLength = 32;
+          }
+        ];
+      };
+      "yggdrasil".mtu = 1280;
+    };
+    defaultGateway = {
+      interface = "eth0";
+      address = gateway_ip;
+    };
     nameservers = [ "1.1.1.1" ];
-    localCommands =
-      ''
-
-      ip route add "148.251.69.141" dev "eth0"
-      ip route add default via "148.251.69.141" dev "eth0"
-
-    '';
   };
 }
