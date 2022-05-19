@@ -5,10 +5,10 @@
 }:
 with lib;
 
-let cfg = config.phil.kde;
+let cfg = config.phil.des.kde;
 in
 {
-  options.phil.kde = {
+  options.phil.des.kde = {
     enable = mkOption {
       description = "Enable the kde window manager (plasma 5)";
       type = types.bool;

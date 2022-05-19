@@ -4,15 +4,15 @@
 , config
 , lib
 , ...
-}:
+}@inputs:
 with lib;
 
 let
-  cfg = config.phil.i3;
+  cfg = config.phil.wms.i3;
 in
 rec
 {
-  options.phil.i3 = {
+  options.phil.wms.i3 = {
     enable = mkOption {
       description = "Enable i3";
       type = types.bool;
@@ -34,7 +34,7 @@ rec
     bg = mkOption {
       description = "Main background";
       type = types.path;
-      default = ../../../images/rick_morty.png;
+      default = ../../../../images/rick_morty.png;
     };
 
     terminal_font = mkOption {
@@ -50,11 +50,6 @@ rec
       enable = true;
       package = cfg.package;
       config = {
-        #assigns = {
-        #"1: Terminal" = [{ class = "alacritty"; }];
-        #"2: Web" = [{ class = "^Firefox$"; }];
-        #"4: Spotify" = [{ class = "Spotify"; }];
-        #};
         floating = {
           border = 0;
           criteria = [
@@ -64,15 +59,16 @@ rec
         };
         gaps = {
           inner = 12;
-          outer = 0;
-          top = 25;
+          #outer = 0;
+          #top = 25;
           smartBorders = "on";
         };
         bars = [ ];
         startup = [
           { command = "${pkgs.feh}/bin/feh --bg-scale ${cfg.bg}"; always = true; notification = false; }
+        ] ++ (lib.optional (inputs.config.phil.wms.bars.polybar.enable)
           { command = "systemctl --user restart polybar.service"; always = true; }
-        ];
+        );
         keybindings =
           let
             modifier = config.modifier;
@@ -158,106 +154,6 @@ rec
       inactiveDim = "0.1";
       inactiveOpacity = "0.96";
       shadow = true;
-    };
-
-    services.polybar = {
-      enable = true;
-      package = pkgs.polybar.override {
-        i3GapsSupport = true;
-        githubSupport = true;
-        pulseSupport = true;
-      };
-      config = {
-        "bar/base" = {
-          width = "100%:-24";
-          height = "32";
-
-          offset-x = "12";
-          offset-y = "5";
-
-          tray-position = "right";
-          wm-restack = "i3";
-          override-redirect = true;
-
-          radius = "10";
-          bottom = "false";
-
-          padding = "1";
-
-          fixed-center = "true";
-
-          font-N = "<fontconfig pattern>;<vertical offset>";
-          font-0 = "Iosevka;2";
-
-          modules-left = "workspaces";
-          modules-center = "date";
-          modules-right = "volume network cpu ram";
-        };
-
-        "module/network" = {
-          type = "internal/network";
-          interface = "enp0s25";
-          ping-interval = "3";
-        };
-
-        "module/date" = {
-          type = "internal/date";
-          interval = "1.0";
-          time = "%I:%M %p";
-          label = "%time%";
-
-          format = "<label>";
-          format-padding = "0";
-          label-padding = "4";
-        };
-
-        "module/volume" = {
-          type = "internal/pulseaudio";
-          format-volume = "<label-volume>  ";
-
-          label-volume = "%percentage%%";
-          label-volume-padding = "1";
-
-          format-muted = "<label-muted>";
-
-          label-muted = "0% (muted)";
-          label-muted-padding = "1";
-
-          format-volume-padding = "0";
-          format-muted-padding = "0";
-          ramp-headphones-0 = " ";
-        };
-
-
-        "module/cpu" = {
-          type = "internal/cpu";
-          interval = "0.5";
-          format = "<label>";
-          label = "%percentage%%";
-          label-padding = "1";
-          format-prefix-padding = "1";
-        };
-
-        "module/ram" = {
-          type = "internal/memory";
-          interval = "3";
-
-          format = "<label>";
-          label = "%percentage_used%%";
-          label-padding = "1";
-          format-prefix-padding = "1";
-        };
-
-        "module/workspaces" = {
-          type = "internal/i3";
-          format = "<label-state> <label-mode>";
-          index-sort = "true";
-          wrapping-scroll = "false";
-          strip-wsnumbers = "true";
-          pin-workspaces = "true";
-        };
-      };
-      script = "polybar base &";
     };
 
     services.pulseeffects = {

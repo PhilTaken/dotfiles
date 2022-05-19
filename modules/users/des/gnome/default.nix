@@ -6,10 +6,10 @@
 with lib;
 
 let
-  cfg = config.phil.gnome;
+  cfg = config.phil.des.gnome;
 in
 {
-  options.phil.gnome = {
+  options.phil.des.gnome = {
     enable = mkOption {
       description = "enable gnome module";
       type = types.bool;

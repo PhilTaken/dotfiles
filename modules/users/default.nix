@@ -2,18 +2,25 @@
 
 {
   imports = [
-    ./firefox
+    ./zsh_full
     ./git
+    ./ssh
     ./gpg
-    ./i3
-    ./kde
-    ./gnome
+
     ./mail
     ./music
+    ./firefox
+
     ./neovim
-    ./ssh
-    ./sway
-    ./zsh_full
     ./spacemacs
+
+    ./wms/sway
+    ./wms/i3
+
+    ./wms/bars/polybar
+    ./wms/bars/eww
+
+    ./des/kde
+    ./des/gnome
   ];
 }

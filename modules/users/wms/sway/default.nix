@@ -6,10 +6,10 @@
 with lib;
 
 let
-  cfg = config.phil.sway;
+  cfg = config.phil.wms.sway;
 in
 rec {
-  options.phil.sway = {
+  options.phil.wms.sway = {
     enable = mkOption {
       description = "Enable the sway module";
       type = types.bool;
