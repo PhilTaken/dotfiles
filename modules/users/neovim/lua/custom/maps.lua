@@ -11,6 +11,10 @@ vim.cmd[[au TermOpen * setlocal norelativenumber nonumber]]
 -- strip trailing whitespaces
 vim.cmd[[au FileType c,cpp,python,rust,nix,lua,ruby,r autocmd BufWritePre <buffer> :%s/\s\+$//e]]
 
+-- terminals
+local toggleterm = require('toggleterm')
+local terms = require('custom.terminals')
+
 --------------
 -- MAPPINGS --
 --------------
@@ -91,10 +95,12 @@ local leadern = {
             p = { function() R('custom.tele').extensions.project.project{} end, "Browse projects" },
         },
         s = {
-            g = { function() R('custom.terminals')['lazygit']:toggle() end, "Toggle lazygit interface" },
-            h = { function() R('custom.terminals')['bottom']:toggle() end, "Toggle bottom resource monitor" },
-            s = { function() R('custom.terminals')['bgshell']:toggle() end, "Toggle random shell" },
-            c = { "<cmd>ToggleTermCloseAll<cr>", "Close all dangling terminals" },
+            name = "+shells",
+            g = { function() terms['lazygit']:toggle() end, "Toggle lazygit interface" },
+            h = { function() terms['bottom']:toggle() end, "Toggle bottom resource monitor" },
+            f = { function() terms['bgshell']:toggle() end, "Toggle random shell" },
+            s = { function() terms['sideterminal']:toggle() end, "Toggle side shell" },
+            l = { function() toggleterm.send_lines_to_terminal("single_line", true, terms['sideterminal'].id) end, "Send current line" },
         },
     },
 }
@@ -107,8 +113,15 @@ local leaderv = {
             s = { "<Plug>(iron-visual-send)", "Send visual selection" },
         },
         r = {
-            name = "R",
+            name = "+R",
             s = { "<Plug>RSendSelection", "Send visual selection" }
+        },
+        s = {
+            name = "+terminal",
+            l = { "<cmd>ToggleTermSendVisualLines " .. terms['sideterminal'].id .. "<cr>", "Send Visual Lines" },
+            v = { "<cmd>ToggleTermSendVisualSelection " .. terms['sideterminal'].id .. "<cr>", "Send Visual Selection" },
+            --l = { function() toggleterm.send_lines_to_terminal("visual_lines", true, terms['sideterminal'].id) end, "Send Visual Lines" },
+            --v = { function() toggleterm.send_lines_to_terminal("visual_selection", true, terms['sideterminal'].id) end, "Send Visual Selection" },
         }
     },
     ["/"] = { 'y/<C-R>"<CR>', "Search using visual mode" },
@@ -116,21 +129,21 @@ local leaderv = {
 
 -- terminal mode mappings
 local leadert = {
-    ["jj"] = { require('custom.utils').t("<C-\\><C-n>"), "Escape from terminal mode" }
+    ["jj"] = { R('custom.utils').t("<C-\\><C-n>"), "Escape from terminal mode" }
 }
 
 local leaderi = {
-    ["<c-o>"] = { function() require('luasnip').jump(1) end, "jump to next snippet placeholder" },
-    ["<c-z>"] = { function() require('luasnip').jump(-1) end, "jump to previous snippet placeholder" },
+    ["<c-o>"] = { function() R('luasnip').jump(1) end, "jump to next snippet placeholder" },
+    ["<c-z>"] = { function() R('luasnip').jump(-1) end, "jump to previous snippet placeholder" },
 }
 
 local leaders = {
-    ["<c-o>"] = { function() require('luasnip').jump(1) end, "jump to next snippet placeholder" },
-    ["<c-z>"] = { function() require('luasnip').jump(-1) end, "jump to previous snippet placeholder" },
+    ["<c-o>"] = { function() R('luasnip').jump(1) end, "jump to next snippet placeholder" },
+    ["<c-z>"] = { function() R('luasnip').jump(-1) end, "jump to previous snippet placeholder" },
 }
 
 -- register all settings
-local wk = require("which-key")
+local wk = R("which-key")
 wk.register(leadern, { mode = "n" })
 wk.register(leaderv, { mode = "v" })
 wk.register(leadert, { mode = "t" })
