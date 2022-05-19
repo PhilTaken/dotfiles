@@ -53,8 +53,11 @@ in
   config = mkIf (cfg.enable) {
     nix = {
       package = pkgs.nixFlakes;
+      # Free up to 1GiB whenever there is less than 100MiB left.
       extraOptions = ''
         experimental-features = nix-command flakes
+        min-free = ${toString (100 * 1024 * 1024)}
+        max-free = ${toString (1024 * 1024 * 1024)}
       '';
 
       # TODO add my own registry
@@ -70,6 +73,12 @@ in
           "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
         ];
       };
+      # set up automatic garbage collection
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+      };
     };
     hardware.enableRedistributableFirmware = true;
 
@@ -79,6 +88,7 @@ in
     # links /libexec from derivations to /run/current-system/sw
     environment.pathsToLink = [ "/libexec" ];
 
+    # maybe move this to each machine?
     boot = mkIf (cfg.bootLoader != null) {
       loader =
         if (cfg.bootLoader == "efi") then {
@@ -97,17 +107,18 @@ in
     # TODO move these somewhere else
     virtualisation.docker.enable = cfg.docker;
 
-    services = {
-      tailscale.enable = true;
-    };
+    # tailscale - wireguard mesh vpn
+    services.tailscale.enable = true;
     networking.firewall.checkReversePath = "loose";
 
+    # bluetooth
     hardware.bluetooth = mkIf (cfg.enableBluetooth) {
       enable = cfg.enableBluetooth;
       powerOnBoot = true;
     };
     services.blueman.enable = cfg.enableBluetooth;
 
+    # core packages + shell setup
     programs = {
       mtr.enable = true;
       command-not-found.enable = false;
