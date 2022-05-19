@@ -77,8 +77,10 @@ in
     home.packages = with pkgs; [
       thunderbird
       hydroxide
+      mailspring
     ];
 
+    # protonmail bridge
     systemd.user.services.hydroxide = {
       Unit = {
         Description = "Unit for the hydroxide protonmail bridge";
