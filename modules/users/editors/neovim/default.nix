@@ -6,9 +6,9 @@
 with lib;
 
 let
-  cfg = config.phil.neovim;
+  cfg = config.phil.editors.neovim;
 in {
-  options.phil.neovim = {
+  options.phil.editors.neovim = {
     enable = mkOption {
       description = "Enable the neovim module";
       type = types.bool;

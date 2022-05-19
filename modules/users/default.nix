@@ -11,8 +11,8 @@
     ./music
     ./firefox
 
-    ./neovim
-    ./spacemacs
+    ./editors/neovim
+    ./editors/spacemacs
 
     ./wms/sway
     ./wms/i3

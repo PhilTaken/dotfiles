@@ -6,10 +6,10 @@
 with lib;
 
 let
-  cfg = config.phil.spacemacs;
+  cfg = config.phil.editors.spacemacs;
 in
 {
-  options.phil.spacemacs = {
+  options.phil.editors.spacemacs = {
     enable = mkOption {
       description = "enable spacemacs module";
       type = types.bool;

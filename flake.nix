@@ -149,11 +149,13 @@
           userEmail = "philipp.herzog@protonmail.com";
           signKey = gpgKey;
         };
-        spacemacs = {
-          enable = false;
-          spacemacs-path = "${spacemacs-git}";
+        editors = {
+          spacemacs = {
+            enable = false;
+            spacemacs-path = "${spacemacs-git}";
+          };
+          neovim.enable = true;
         };
-        neovim.enable = true;
         ssh.enable = true;
         gpg = {
           inherit gpgKey;
@@ -163,20 +165,21 @@
         zsh_full.enable = true;
         music.enable = true;
         mail.enable = true;
+        firefox.enable = true;
       in {
         nixos = util.user.mkHMUser {
           username = "nixos";
           userConfig = {
-            inherit git spacemacs neovim ssh gpg zsh_full music mail;
-
-            wms.sway.enable = true;
-
-            firefox.enable = true;
+            inherit git editors ssh gpg zsh_full music mail firefox;
+            wms = {
+              sway.enable = true;
+              bars.waybar.enable = true;
+            };
           };
+
           extraPackages = pkgs: with pkgs; [
             calibre
             kicad
-
             gnome3.adwaita-icon-theme
             xournalpp
           ];
@@ -184,9 +187,8 @@
 
         maelstroem = util.user.mkHMUser {
           username = "maelstroem";
-
           userConfig = {
-            inherit git spacemacs neovim ssh gpg zsh_full music mail;
+            inherit git editors ssh gpg zsh_full music mail;
 
             firefox = {
               enable = true;
@@ -199,11 +201,12 @@
               kde.enable = false;
             };
             wms = {
-              i3.enable = true;
-              #bars.polybar.enable = true;
-              bars.eww.enable = true;
               # TODO:
               # xmonad.enable = true;
+
+              i3.enable = true;
+              bars.eww.enable = true;
+              #bars.polybar.enable = true;
             };
 
           };
