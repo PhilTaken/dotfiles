@@ -142,35 +142,36 @@
       homeManagerConfigurations = let
         gpgKey = "BDCD0C4E9F252898";
         sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
+
+        git = {
+          enable = true;
+          userName = "Philipp Herzog";
+          userEmail = "philipp.herzog@protonmail.com";
+          signKey = gpgKey;
+        };
+        spacemacs = {
+          enable = false;
+          spacemacs-path = "${spacemacs-git}";
+        };
+        neovim.enable = true;
+        ssh.enable = true;
+        gpg = {
+          inherit gpgKey;
+          enable = true;
+          sshKeys = [ sshKey ];
+        };
+        zsh_full.enable = true;
+        music.enable = true;
+        mail.enable = true;
       in {
         nixos = util.user.mkHMUser {
           username = "nixos";
-
           userConfig = {
-            spacemacs = {
-              enable = true;
-              spacemacs-path = "${spacemacs-git}";
-            };
+            inherit git spacemacs neovim ssh gpg zsh_full music mail;
 
-            sway.enable = true;
+            wms.sway.enable = true;
+
             firefox.enable = true;
-            music.enable = true;
-
-            git = {
-              enable = true;
-              userName = "Philipp Herzog";
-              userEmail = "philipp.herzog@protonmail.com";
-              signKey = gpgKey;
-            };
-            mail.enable = true;
-            neovim.enable = true;
-            ssh.enable = true;
-            zsh_full.enable = true;
-            gpg = {
-              inherit gpgKey;
-              enable = true;
-              sshKeys = [ sshKey ];
-            };
           };
           extraPackages = pkgs: with pkgs; [
             calibre
@@ -185,35 +186,26 @@
           username = "maelstroem";
 
           userConfig = {
+            inherit git spacemacs neovim ssh gpg zsh_full music mail;
+
             firefox = {
               enable = true;
               wayland = false;
             };
-            music.enable = true;
 
-            # de/wm
-            gnome.enable = false;
-            kde.enable = false;
-            i3.enable = true;
-            # TODO: xmonad.enable = true;
-
-            git = {
-              enable = true;
-              userName = "Philipp Herzog";
-              userEmail = "philipp.herzog@protonmail.com";
-              signKey = gpgKey;
+            # de/wm config
+            des = {
+              gnome.enable = false;
+              kde.enable = false;
+            };
+            wms = {
+              i3.enable = true;
+              #bars.polybar.enable = true;
+              bars.eww.enable = true;
+              # TODO:
+              # xmonad.enable = true;
             };
 
-            mail.enable = true;
-            neovim.enable = true;
-            ssh.enable = true;
-            zsh_full.enable = true;
-
-            gpg = {
-              inherit gpgKey;
-              enable = true;
-              sshKeys = [ sshKey ];
-            };
           };
 
           extraPackages = pkgs: with pkgs; [

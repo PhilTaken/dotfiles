@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # vi: ft=sh
 
 symbol() {
