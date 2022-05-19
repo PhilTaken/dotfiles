@@ -443,7 +443,9 @@ require('packer').startup{
                 end,
                 ft = { "r", "rmd" },
             },
-            --
+            {
+                'elkowar/yuck.vim',
+            }
         }
 
         -- extra targets
@@ -604,6 +606,12 @@ require('packer').startup{
         }
 
         use {
+            'eraserhd/parinfer-rust',
+            cmd = "ParinferOn",
+            run = "nix-shell --run \"cargo build --release\"",
+        }
+
+        use {
             "nvim-neorg/neorg",
             --ft = "norg",
             after = { "nvim-treesitter" },
@@ -641,15 +649,15 @@ require('packer').startup{
                         --["core.norg.journal"] = {},
                         --["core.norg.q l.toc"] = {},
                         ["core.norg.concealer"] = {},
-                        --["core.integrations.telescope"] = {}, -- Enable the telescope module
+                        ["core.integrations.telescope"] = {}, -- Enable the telescope module
                     },
                 }
             end,
             requires = {
                 "nvim-lua/plenary.nvim",
-                --{
-                    --"nvim-neorg/neorg-telescope",
-                --},
+                {
+                    "nvim-neorg/neorg-telescope",
+                },
                 {
                     "folke/zen-mode.nvim",
                     config = function()

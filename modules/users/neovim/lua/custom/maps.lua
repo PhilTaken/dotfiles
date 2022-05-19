@@ -60,6 +60,10 @@ local leadern = {
             l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
             r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences" },
         },
+        n = {
+            name = "+neorg",
+            -- TODO: neorg keybinds
+        },
         -- TODO: maybe move to autocommands down below (like fennel, python)
         i = {
             name = "+iron",
