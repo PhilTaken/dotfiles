@@ -8,6 +8,10 @@ workspaces() {
     ws4=4
     ws5=5
     ws6=6
+    ws7=7
+    ws8=8
+    ws9=9
+    ws0=0
 
     # Unoccupied
     un="0"
@@ -17,24 +21,32 @@ workspaces() {
     }
 
     focused () {
-        i3-msg -t get_workspaces | jq 'if .[].num == 1 and .[].focused then 1 else 0 end' | grep 1
+        i3-msg -t get_workspaces | jq 'if .[].num == '$1' and .[].focused then 1 else 0 end' | grep 1
     }
 
     # check if Occupied
-    o1=$(occupied $ws1)
-    o2=$(occupied $ws2)
-    o3=$(occupied $ws3)
-    o4=$(occupied $ws4)
-    o5=$(occupied $ws5)
-    o6=$(occupied $ws6)
+    o1=$(occupied "$ws1")
+    o2=$(occupied "$ws2")
+    o3=$(occupied "$ws3")
+    o4=$(occupied "$ws4")
+    o5=$(occupied "$ws5")
+    o6=$(occupied "$ws6")
+    o7=$(occupied "$ws7")
+    o8=$(occupied "$ws8")
+    o9=$(occupied "$ws9")
+    o0=$(occupied "$ws0")
 
     # check if Focused
-    f1=$(focused $ws1)
-    f2=$(focused $ws2)
-    f3=$(focused $ws3)
-    f4=$(focused $ws4)
-    f5=$(focused $ws5)
-    f6=$(focused $ws6)
+    f1=$(focused "$ws1")
+    f2=$(focused "$ws2")
+    f3=$(focused "$ws3")
+    f4=$(focused "$ws4")
+    f5=$(focused "$ws5")
+    f6=$(focused "$ws6")
+    f7=$(focused "$ws7")
+    f8=$(focused "$ws8")
+    f9=$(focused "$ws9")
+    f0=$(focused "$ws0")
 
     # check if Urgent
     # u1=$(bspc query -D -d .urgent --names | grep 1)
@@ -52,12 +64,16 @@ workspaces() {
             :orientation \"h\"\
             :halign \"start\"\
             :spacing \"10\"\
-            (button :onclick \"$command $ws1 >/dev/null\" :class \"$un$o1$f1\" \"\")\
-            (button :onclick \"$command $ws2 >/dev/null\" :class \"$un$o2$f2\" \"\")\
-            (button :onclick \"$command $ws3 >/dev/null\" :class \"$un$o3$f3\" \"\")\
-            (button :onclick \"$command $ws4 >/dev/null\" :class \"$un$o4$f4\" \"\")\
-            (button :onclick \"$command $ws5 >/dev/null\" :class \"$un$o5$f5\" \"\")\
-            (button :onclick \"$command $ws6 >/dev/null\" :class \"$un$o6$f6\" \"\"))"
+            (button :onclick \"$command $ws1 >/dev/null\" :class \"$un$o1$f1\" \"\")\
+            (button :onclick \"$command $ws2 >/dev/null\" :class \"$un$o2$f2\" \"\")\
+            (button :onclick \"$command $ws3 >/dev/null\" :class \"$un$o3$f3\" \"\")\
+            (button :onclick \"$command $ws4 >/dev/null\" :class \"$un$o4$f4\" \"\")\
+            (button :onclick \"$command $ws5 >/dev/null\" :class \"$un$o5$f5\" \"\")\
+            (button :onclick \"$command $ws6 >/dev/null\" :class \"$un$o6$f6\" \"6\")\
+            (button :onclick \"$command $ws7 >/dev/null\" :class \"$un$o7$f7\" \"7\")\
+            (button :onclick \"$command $ws8 >/dev/null\" :class \"$un$o8$f8\" \"8\")\
+            (button :onclick \"$command $ws9 >/dev/null\" :class \"$un$o9$f9\" \"9\")\
+            (button :onclick \"$command $ws0 >/dev/null\" :class \"$un$o0$f0\" \"\"))"
 }
 
 workspaces

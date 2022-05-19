@@ -1,6 +1,14 @@
 # TODO:
 
+- work on eww bar config
+    - workspaces
+    - music popup?
+    - css styling
+    - onclick
+
 - set up xmonad
+    - xmobar
+
 - combine host + user config more 
     - enable appropriate configs for de/wm based on what is enabled on host
 
