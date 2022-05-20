@@ -55,6 +55,11 @@
       url = "github:syl20bnr/spacemacs";
       flake = false;
     };
+
+    eww-src = {
+      url = "github:elkowar/eww";
+      flake = false;
+    };
   };
   outputs =
     { self
@@ -80,6 +85,7 @@
         (import ./custom_pkgs)
         (import ./overlays/gopass-rofi.nix { inherit inputs; })
         (import ./overlays/rofi-overlay.nix { inherit inputs; })
+        (import ./overlays/eww.nix { inherit inputs; })
         devshell.overlay
         sops-nix-src.overlay
         deploy-rs.overlay

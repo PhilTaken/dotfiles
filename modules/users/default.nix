@@ -11,16 +11,9 @@
     ./music
     ./firefox
 
-    ./editors/neovim
-    ./editors/spacemacs
+    ./wms
+    ./des
 
-    ./wms/sway
-    ./wms/i3
-
-    ./wms/bars/polybar
-    ./wms/bars/eww
-
-    ./des/kde
-    ./des/gnome
+    ./editors
   ];
 }

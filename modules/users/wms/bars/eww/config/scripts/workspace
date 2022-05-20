@@ -17,11 +17,11 @@ workspaces() {
     un="0"
 
     occupied () {
-        i3-msg -t get_workspaces | jq 'if .[].num == '$1' then 1 else 0 end' | grep 1
+        i3-msg -t get_workspaces | jq '[if .[].num == '$1' then 1 else 0 end] | add'
     }
 
     focused () {
-        i3-msg -t get_workspaces | jq 'if .[].num == '$1' and .[].focused then 1 else 0 end' | grep 1
+        i3-msg -t get_workspaces | jq '[.[] | if .num == '$1' and .focused then 1 else 0 end] | add'
     }
 
     # check if Occupied
@@ -64,16 +64,16 @@ workspaces() {
             :orientation \"h\"\
             :halign \"start\"\
             :spacing \"10\"\
-            (button :onclick \"$command $ws1 >/dev/null\" :class \"$un$o1$f1\" \"\")\
-            (button :onclick \"$command $ws2 >/dev/null\" :class \"$un$o2$f2\" \"\")\
-            (button :onclick \"$command $ws3 >/dev/null\" :class \"$un$o3$f3\" \"\")\
-            (button :onclick \"$command $ws4 >/dev/null\" :class \"$un$o4$f4\" \"\")\
-            (button :onclick \"$command $ws5 >/dev/null\" :class \"$un$o5$f5\" \"\")\
-            (button :onclick \"$command $ws6 >/dev/null\" :class \"$un$o6$f6\" \"6\")\
-            (button :onclick \"$command $ws7 >/dev/null\" :class \"$un$o7$f7\" \"7\")\
-            (button :onclick \"$command $ws8 >/dev/null\" :class \"$un$o8$f8\" \"8\")\
-            (button :onclick \"$command $ws9 >/dev/null\" :class \"$un$o9$f9\" \"9\")\
-            (button :onclick \"$command $ws0 >/dev/null\" :class \"$un$o0$f0\" \"\"))"
+            (button :onclick \"$command $ws1 >/dev/null\" :class \"ws-$un$o1$f1\" \"\")\
+            (button :onclick \"$command $ws2 >/dev/null\" :class \"ws-$un$o2$f2\" \"\")\
+            (button :onclick \"$command $ws3 >/dev/null\" :class \"ws-$un$o3$f3\" \"\")\
+            (button :onclick \"$command $ws4 >/dev/null\" :class \"ws-$un$o4$f4\" \"\")\
+            (button :onclick \"$command $ws5 >/dev/null\" :class \"ws-$un$o5$f5\" \"\")\
+            (button :onclick \"$command $ws6 >/dev/null\" :class \"ws-$un$o6$f6\" \"6\")\
+            (button :onclick \"$command $ws7 >/dev/null\" :class \"ws-$un$o7$f7\" \"7\")\
+            (button :onclick \"$command $ws8 >/dev/null\" :class \"ws-$un$o8$f8\" \"8\")\
+            (button :onclick \"$command $ws9 >/dev/null\" :class \"ws-$un$o9$f9\" \"9\")\
+            (button :onclick \"$command $ws0 >/dev/null\" :class \"ws-$un$o0$f0\" \"\"))"
 }
 
 workspaces
@@ -84,4 +84,3 @@ done
 #bspc subscribe desktop node_transfer | while read -r _ ; do
     #workspaces
 #done
-

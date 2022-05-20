@@ -1,5 +1,3 @@
-# TODO: polybar colors
-# TODO: polybar modules separation / icons
 { pkgs
 , config
 , lib
@@ -9,9 +7,8 @@ with lib;
 
 let
   cfg = config.phil.wms.i3;
-in
-rec
-{
+  barcommand = inputs.config.phil.wms.bars.barcommand;
+in rec {
   options.phil.wms.i3 = {
     enable = mkOption {
       description = "Enable i3";
@@ -39,7 +36,14 @@ rec
 
     terminal_font = mkOption {
       description = "Font Familiy for the terminal";
+      type = types.str;
       default = "Iosevka Nerd Font";
+    };
+
+    barcommand = mkOption {
+      description = "command to reload the bar";
+      type = types.str;
+      default = "";
     };
   };
 
@@ -66,54 +70,56 @@ rec
         bars = [ ];
         startup = [
           { command = "${pkgs.feh}/bin/feh --bg-scale ${cfg.bg}"; always = true; notification = false; }
-        ] ++ (lib.optional (inputs.config.phil.wms.bars.polybar.enable)
-          { command = "systemctl --user restart polybar.service"; always = true; }
-        );
-        keybindings =
-          let
-            modifier = config.modifier;
-            terminal = "${programs.alacritty.package}/bin/alacritty";
-          in
-          {
-            "${modifier}+Return" = "exec ${terminal}";
-            "${modifier}+d" = "kill";
-            "${modifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show run";
-            "${modifier}+l" = "exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
-            "${modifier}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
-            "${modifier}+p" = "exec ${pkgs.rofi-pass}/bin/rofi-pass";
+        ] ++ (lib.optional (barcommand != "") { command = "\"${barcommand}\""; always = true; });
 
-            "${modifier}+y" = "focus left";
-            "${modifier}+n" = "focus down";
-            "${modifier}+e" = "focus up";
-            "${modifier}+o" = "focus right";
+        keybindings = let
+          modifier = config.modifier;
+          terminal = "${programs.alacritty.package}/bin/alacritty";
+        in {
+          "${modifier}+Return" = "exec ${terminal}";
+          "${modifier}+d" = "kill";
+          "${modifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show run";
+          "${modifier}+l" = "exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
+          "${modifier}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+          "${modifier}+p" = "exec ${pkgs.rofi-pass}/bin/rofi-pass";
 
-            "${modifier}+1" = "workspace number 1";
-            "${modifier}+2" = "workspace number 2";
-            "${modifier}+3" = "workspace number 3";
-            "${modifier}+4" = "workspace number 4";
-            "${modifier}+5" = "workspace number 5";
-            "${modifier}+6" = "workspace number 6";
-            "${modifier}+7" = "workspace number 7";
-            "${modifier}+8" = "workspace number 8";
-            "${modifier}+9" = "workspace number 9";
-            "${modifier}+0" = "workspace number 10";
+          "${modifier}+y" = "focus left";
+          "${modifier}+n" = "focus down";
+          "${modifier}+e" = "focus up";
+          "${modifier}+o" = "focus right";
 
-            "${modifier}+Shift+1" = "move container to workspace number 1";
-            "${modifier}+Shift+2" = "move container to workspace number 2";
-            "${modifier}+Shift+3" = "move container to workspace number 3";
-            "${modifier}+Shift+4" = "move container to workspace number 4";
-            "${modifier}+Shift+5" = "move container to workspace number 5";
-            "${modifier}+Shift+6" = "move container to workspace number 6";
-            "${modifier}+Shift+7" = "move container to workspace number 7";
-            "${modifier}+Shift+8" = "move container to workspace number 8";
-            "${modifier}+Shift+9" = "move container to workspace number 9";
-            "${modifier}+Shift+0" = "move container to workspace number 1";
+          "${modifier}+Shift+y" = "move container left";
+          "${modifier}+Shift+n" = "move container down";
+          "${modifier}+Shift+e" = "move container up";
+          "${modifier}+Shift+o" = "move container right";
 
-            "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playecrtl play-pause";
-            "XF86AudioPause" = "exec ${pkgs.playerctl}/bin/playecrtl pause";
-            "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playecrtl next";
-            "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playecrtl previous";
-          };
+          "${modifier}+1" = "workspace number 1";
+          "${modifier}+2" = "workspace number 2";
+          "${modifier}+3" = "workspace number 3";
+          "${modifier}+4" = "workspace number 4";
+          "${modifier}+5" = "workspace number 5";
+          "${modifier}+6" = "workspace number 6";
+          "${modifier}+7" = "workspace number 7";
+          "${modifier}+8" = "workspace number 8";
+          "${modifier}+9" = "workspace number 9";
+          "${modifier}+0" = "workspace number 10";
+
+          "${modifier}+Shift+1" = "move container to workspace number 1";
+          "${modifier}+Shift+2" = "move container to workspace number 2";
+          "${modifier}+Shift+3" = "move container to workspace number 3";
+          "${modifier}+Shift+4" = "move container to workspace number 4";
+          "${modifier}+Shift+5" = "move container to workspace number 5";
+          "${modifier}+Shift+6" = "move container to workspace number 6";
+          "${modifier}+Shift+7" = "move container to workspace number 7";
+          "${modifier}+Shift+8" = "move container to workspace number 8";
+          "${modifier}+Shift+9" = "move container to workspace number 9";
+          "${modifier}+Shift+0" = "move container to workspace number 10";
+
+          "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+          "XF86AudioPause" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+          "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+          "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+        };
         terminal = "alacritty";
         modifier = "Mod4";
         window.border = 0;
@@ -139,8 +145,10 @@ rec
     services.picom = {
       enable = true;
       activeOpacity = "0.985";
+      inactiveOpacity = "0.96";
       opacityRule = [
         "100:class_g ?= 'Firefox'"
+        "100:class_g ?= 'Google-chrome'"
       ];
       blur = true;
       blurExclude = [
@@ -152,7 +160,6 @@ rec
       fade = true;
       fadeDelta = 8;
       inactiveDim = "0.1";
-      inactiveOpacity = "0.96";
       shadow = true;
     };
 

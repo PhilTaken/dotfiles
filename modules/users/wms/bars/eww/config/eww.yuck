@@ -13,13 +13,13 @@
   (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
     (metric :label "🔊"
             :value volume
-            :onchange "amixer sset Master {}%")
+            :onchange "amixer sset Master {}%"
+            :onclick "amixer sset Master toggle"
+            :onrightclick "pavucontrol &")
     (metric :label ""
-            :value {EWW_RAM.used_mem_perc}
-            :onchange "")
+            :value {EWW_RAM.used_mem_perc})
     (metric :label "💾"
-            :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-            :onchange "")
+            :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)})
     time))
 
 (defwidget music []
@@ -29,11 +29,11 @@
        :halign "center"
     {music != "" ? "🎵${music}" : ""}))
 
-(defwidget metric [label value onchange]
+(defwidget metric [label value ?onchange ?onclick ?onrightclick]
   (box :orientation "h"
        :class "metric"
        :space-evenly false
-    (box :class "label" label)
+    (button :onclick onclick :onrightclick onrightclick :class "label" label)
     (scale :min 0
            :max 101
            :active {onchange != ""}

@@ -1,3 +1,5 @@
+# TODO: polybar colors
+# TODO: polybar modules separation / icons
 { pkgs
 , config
 , lib
@@ -7,8 +9,7 @@ with lib;
 
 let
   cfg = config.phil.wms.bars.polybar;
-in
-{
+in {
   options.phil.wms.bars.polybar = {
     enable = mkOption {
       description = "enable polybar module";
@@ -18,6 +19,8 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    phil.wms.bars.barcommand = "systemctl --user restart polybar.service";
+
     services.polybar = {
       enable = true;
       package = pkgs.polybar.override {
