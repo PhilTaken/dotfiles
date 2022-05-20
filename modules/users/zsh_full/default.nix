@@ -7,6 +7,34 @@ with lib;
 
 let
   cfg = config.phil.zsh_full;
+
+  # Automatically download the latest index from Mic92's nix-index-database.
+  nix-locate = pkgs.writeShellScriptBin "nix-locate" ''
+    set -euo pipefail
+    mkdir -p ~/.cache/nix-index && cd ~/.cache/nix-index
+    # Check for updates at most once a day
+    if [ ! -f last-check ] || [ $(find last-check -mtime +1) ]; then
+      filename="index-x86_64-$(uname | tr A-Z a-z)"
+      # Delete partial downloads
+      [ -f files ] || rm -f $filename
+      wget -q -N --show-progress \
+        https://github.com/Mic92/nix-index-database/releases/latest/download/$filename
+      ln -f $filename files
+      touch last-check
+    fi
+    exec ${pkgs.nix-index}/bin/nix-locate "$@"
+  '';
+
+  # Modified version of command-not-found.sh that uses our wrapped version of
+  # nix-locate, makes the output a bit less noisy, and adds color!
+  command-not-found = pkgs.runCommandLocal "command-not-found.sh" { } ''
+    mkdir -p $out/etc/profile.d
+    substitute ${./command-not-found.sh}                  \
+      $out/etc/profile.d/command-not-found.sh             \
+      --replace @nix-locate@ ${nix-locate}/bin/nix-locate \
+      --replace @tput@ ${pkgs.ncurses}/bin/tput
+  '';
+
 in rec {
   options.phil.zsh_full = {
     enable = mkOption {
@@ -23,69 +51,83 @@ in rec {
       _ZO_ECHO = 1;
     };
 
-    programs.password-store = {
-      enable = true;
-      package = pkgs.gopass;
-    };
-    programs.skim = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-    programs.htop.enable = true;
-    programs.bat.enable = true;
-    programs.direnv = {
-      enable = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
-    };
-    programs.man = {
-      enable = true;
-      generateCaches = false;
-    };
-    programs.zoxide = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-    programs.starship = {
-      enable = true;
-      enableZshIntegration = true;
-      settings = {
-        add_newline = false;
-        character = {
-          vicmd_symbol = "λ ·";
-          success_symbol = "λ ❱";
-          error_symbol = "Ψ ❱";
-          #use_symbol_for_status = true;
-        };
-        package.disabled = true;
-        python.symbol = "Py";
-        rust.symbol = "R";
-        nix_shell = {
-          symbol = "❄️ ";
-          style = "bold blue";
-          format = "[$symbol]($style) ";
-        };
-        git_status = {
-          conflicted = "=";
-          ahead = "⇡";
-          behind = "⇣";
-          diverged = "⇕";
-          untracked = "?";
-          stashed = "$";
-          modified = "!";
-          staged = "+";
-          renamed = "»";
-          deleted = "✘";
-        };
-        jobs.symbol = "+";
-      };
-    };
+    programs = {
+      htop.enable = true;
+      bat.enable = true;
 
-    programs.zsh =
-      let
+      nix-index = {
+        enable = true;
+        enableZshIntegration = true;
+        package = pkgs.symlinkJoin {
+          name = "nix-index";
+          # Don't provide 'bin/nix-index', since the index is updated automatically
+          # and it is easy to forget that. It can always be run manually with
+          # 'nix run nixpkgs#nix-index' if necessary.
+          paths = [ nix-locate command-not-found ];
+        };
+      };
+
+      password-store = {
+        enable = true;
+        package = pkgs.gopass;
+      };
+
+      skim = {
+        enable = true;
+        enableZshIntegration = true;
+      };
+
+      direnv = {
+        enable = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
+      };
+      man = {
+        enable = true;
+        generateCaches = false;
+      };
+      zoxide = {
+        enable = true;
+        enableZshIntegration = true;
+      };
+      starship = {
+        enable = true;
+        enableZshIntegration = true;
+        settings = {
+          add_newline = false;
+          character = {
+            vicmd_symbol = "λ ·";
+            success_symbol = "λ ❱";
+            error_symbol = "Ψ ❱";
+            #use_symbol_for_status = true;
+          };
+          package.disabled = true;
+          python.symbol = "Py";
+          rust.symbol = "R";
+          nix_shell = {
+            symbol = "❄️ ";
+            style = "bold blue";
+            format = "[$symbol]($style) ";
+          };
+          git_status = {
+            conflicted = "=";
+            ahead = "⇡";
+            behind = "⇣";
+            diverged = "⇕";
+            untracked = "?";
+            stashed = "$";
+            modified = "!";
+            staged = "+";
+            renamed = "»";
+            deleted = "✘";
+          };
+          jobs.symbol = "+";
+        };
+      };
+
+      zsh = let
         magic_enter_prompt = ./magic_enter.zsh;
-      in
-      {
+      in {
         enable = true;
         enableAutosuggestions = true;
         enableCompletion = true;
@@ -174,7 +216,7 @@ in rec {
           else
             export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
           fi
-          '' + (lib.optionalString inputs.config.programs.git.enable ''
+          '' + (lib.optionalString inputs.config.phil.git.enable ''
           cworktree() {
               remote=$1
               dir=$2
@@ -236,10 +278,10 @@ in rec {
         });
       };
 
-    programs.tmux = let
+      tmux = let
         airline_conf = ./tmux_airline.conf;
         colorscheme_conf = ./catppuccino_dark.conf;
-    in {
+      in {
         enable = true;
         baseIndex = 1;
         escapeTime = 1;
@@ -330,7 +372,7 @@ in rec {
           })
         ];
       };
-
+    };
     #xdg.configFile."page/init.vim".source = ./page/init.vim;
     #xdg.configFile."direnv/direnvrc".source = ./direnvrc;
     #xdg.configFile."zk/config.toml".source = ./zk/config.toml;
