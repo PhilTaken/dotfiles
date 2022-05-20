@@ -24,4 +24,10 @@ rec {
     ownIPs = [ "10.100.0.4/24" ];
     allowedIPs = [ "10.100.0.4/32" ];
   };
+
+  delta = {
+    publicKey = "598UtHyLn0L5ReObBtsT+UAJHtt7FtuFZiF5nRJ+nEg=";
+    ownIPs = [ "10.100.0.5/24"];
+    allowedIPs = [ "10.100.0.5/32"];
+  };
 }

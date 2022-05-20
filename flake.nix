@@ -1,11 +1,11 @@
-# SSH fix for GNOME: `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)`
 {
-  # todo:
-  # - clone rassword store into home dir
   inputs = {
-    # unstable > stable
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     #nixpkgs.url = "github:nixos/nixpkgs/master";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    spicetify.url = "github:PhilTaken/spicetify-nix";
+    polymc.url = "github:PolyMC/PolyMC";
 
     # NUR
     nur-src = {
@@ -31,8 +31,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
     # for secret managment
     sops-nix-src = {
       url = "github:Mic92/sops-nix";
@@ -43,13 +41,6 @@
       url = "github:neovim/neovim?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    spicetify = {
-      url = "github:PhilTaken/spicetify-nix";
-      #url = "/home/nixos/Documents/gits/spicetify-nix";
-    };
-
-    polymc.url = "github:PolyMC/PolyMC";
 
     spacemacs-git = {
       url = "github:syl20bnr/spacemacs";
@@ -139,6 +130,9 @@
 
       raspiUsers = systemUsersFor aarch64_pkgs;
       systemUsers = systemUsersFor pkgs;
+
+      gpgKey = "BDCD0C4E9F252898";
+      gpg-sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
     in {
       #devShells."${system}".default = util.shells.legacyShell;
       devShells."${system}".default = util.shells.devShell;
@@ -146,9 +140,6 @@
       overlays.default = (import ./custom_pkgs);
 
       homeManagerConfigurations = let
-        gpgKey = "BDCD0C4E9F252898";
-        sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
-
         git = {
           enable = true;
           userName = "Philipp Herzog";
@@ -166,7 +157,7 @@
         gpg = {
           inherit gpgKey;
           enable = true;
-          sshKeys = [ sshKey ];
+          sshKeys = [ gpg-sshKey ];
         };
         zsh_full.enable = true;
         music.enable = true;
@@ -227,9 +218,19 @@
 
       nixosConfigurations = let
         # include in the imports to build an iso image for the respective systems (TODO: check if it works)
-        baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix";
+        baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix";
         raspInstallerImport = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix";
       in {
+        x86-iso = util.host.mkHost {
+          users = [ systemUsers.nixos ];
+          systemConfig = {
+            core.hostName= "isoInstall";
+            wireguard.enable = false;
+            server.services.openssh.enable = true;
+          };
+          extraimports = [ baseInstallerImport ];
+        };
+
         # vm on a hetzner server, debian host (10.100.0.1)
         alpha = let
           hardware-config = import (./machines/alpha);
@@ -266,9 +267,7 @@
             };
           };
 
-          extraimports = [
-            #baseInstallerImport
-          ];
+          extraimports = [ ];
         };
 
         # raspberry pi @ home (192.168.0.120 / 10.100.0.2)
@@ -327,7 +326,7 @@
 
           extraimports = [
             nixos-hardware.nixosModules.raspberry-pi-4
-            #raspInstallerImport
+            raspInstallerImport
           ];
         };
 
@@ -381,9 +380,52 @@
             #};
           };
 
-          extraimports = [
-            #baseInstallerImport
-          ];
+          extraimports = [ ];
+        };
+
+        # old pc @ home (192.168.0.144 / 10.100.0.2)
+        delta = let
+          hardware-config = import (./machines/delta);
+          users = with systemUsers; [ nixos ];
+        in util.host.mkHost {
+          inherit hardware-config users;
+
+          systemConfig = {
+            core = {
+              bootLoader = "efi";
+              hostName = "delta";
+            };
+
+            server = {
+              enable = true;
+              services = {
+                #caddy.proxy = {
+                  #"jellyfin" = 8096;
+                  #"calibre" = 8083;
+                #};
+
+                openssh.enable = true;
+                telegraf.enable = true;
+                iperf.enable = true;
+                #syncthing.enable = true;
+                #jellyfin.enable = true;
+              };
+            };
+            fileshare = {
+              enable = true;
+              mount = {
+                enable = true;
+                binds = [
+                  {
+                    ip = "192.168.0.120";
+                    dirs = [ "/media" ];
+                  }
+                ];
+              };
+            };
+          };
+
+          extraimports = [ ];
         };
 
         # workplace-issued thinkpad (10.100.0.4)
@@ -420,7 +462,6 @@
 
           extraimports = [
             #nixos-hardware.nixosModules.lenovo-thinkpad-t490
-            #baseInstallerImport
           ];
         };
 
@@ -435,8 +476,9 @@
       };
 
       # shortcut for building a raspberry pi sd image
-      images = {
-        beta = self.nixosConfigurations.beta.config.system.build.sdImage;
+      packages."${system}" = {
+        x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
+        beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
       };
 
       # deploy config

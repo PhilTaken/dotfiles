@@ -5,7 +5,7 @@ rec {
   # set up a vanilla host without any home-manager
   mkHost =
     { users
-    , hardware-config
+    , hardware-config ? ({...}: {})
     , systemConfig
     , username ? "nixos"
     , wireless_interfaces ? [ ]
@@ -13,8 +13,7 @@ rec {
     }:
     let
       sys_users = (map (u: user.mkSystemUser u) users);
-    in
-    lib.nixosSystem {
+    in lib.nixosSystem {
       inherit system pkgs;
 
       modules = [
