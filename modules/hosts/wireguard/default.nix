@@ -7,11 +7,12 @@ with lib;
 
 let
   networkName = "yggdrasil";
+  postSetup = "${pkgs.inetutils}/bin/ifconfig ${networkName} mtu 1280 up";
 
   cfg = config.phil.wireguard;
   hostname = config.networking.hostName;
 
-  peers = import ./wireguard-peers.nix;
+  peers = import ./wireguard-peers.nix { inherit pkgs; };
   mkPeer = { publicKey, ownIPs, allowedIPs ? ownIPs, endpoint ? null, port ? 51821, persistentKeepalive ? 25, presharedKey ? null, ... }: {
     inherit publicKey allowedIPs persistentKeepalive presharedKey;
     endpoint =
@@ -89,12 +90,11 @@ in
         enable = true;
         interfaces = {
           "${networkName}" = {
+            inherit postSetup;
             peers = (lib.mapAttrsToList (name: value: value) peerlist);
             ips = peers.${hostname}.ownIPs;
             inherit listenPort;
             privateKeyFile = config.sops.secrets.wireguard-key.path;
-            postSetup = peers.${hostname}.postSetup or "";
-            postShutdown = peers.${hostname}.postShutdown or "";
           };
         };
       };

@@ -339,6 +339,7 @@
 
           systemConfig = {
             core.hostName = "gamma";
+            core.enableBluetooth = true;
 
             wireguard.enable = true;
             mullvad.enable = true;
@@ -495,6 +496,12 @@
           hostname = "192.168.0.120";
           sshUser = "root";
           profiles.system.path = deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
+        };
+
+        delta = {
+          hostname = "192.168.0.144";
+          sshUser = "root";
+          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
         };
       };
 

@@ -80,25 +80,39 @@ in
         "raspilocal" = {
           hostname = "192.168.0.120";
           user = "nixos";
+          forwardAgent = true;
+        };
+        "deltalocal" = {
+          hostname = "192.168.0.144";
+          user = "nixos";
+          forwardAgent = true;
         };
 
         # yggdrasil
 
-        "raspi" = {
-          hostname = "10.100.0.2";
-          user = "nixos";
-        };
         "alpha" = {
           hostname = "10.100.0.1";
           user = "nixos";
           forwardAgent = true;
         };
+        "beta" = {
+          hostname = "10.100.0.2";
+          user = "nixos";
+          forwardAgent = true;
+        };
+        "delta" = {
+          hostname = "10.100.0.5";
+          user = "nixos";
+          forwardAgent = true;
+        };
+
 
         # remote vps
 
         "vps2" = {
           hostname = "185.212.44.199";
           user = "nixos";
+          forwardAgent = true;
         };
 
         "alphadirect" = {

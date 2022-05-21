@@ -89,4 +89,6 @@
   #     }
   #   ];
   # };
+
+  #networking.interfaces."yggdrasil".mtu = 1280;
 }

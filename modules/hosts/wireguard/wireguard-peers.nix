@@ -1,3 +1,4 @@
+{ ... }:
 rec {
   alpha = {
     publicKey = "LDOII0S7OWakg4oDrC1wUCoM/YXq3wXTEjYoqBbI2Sk=";

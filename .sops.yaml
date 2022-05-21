@@ -3,6 +3,7 @@ keys:
   - &beta age18y20unz0zx00g6h2c64tt0l0a3h47ukaun4rn4ukggcretarppysprxuxv
   - &gamma age16wkq74zjg520vfp4rlq50yffp9p4tht6jtdyz5smzlkpdvg609pqnjshkg
   - &nixos-laptop age1kph642jksjds04ce5qtkqge5qqpdclz3k6elstgx0448vyh96s2q3hfd3s
+  - &delta age1h5zpdtg92fdax3x72n63dmum5xny0zcf8v87gqrf2ye732hz7fwqq6smyx
 creation_rules:
   - path_regex: sops/[^/]+\.yaml$
     key_groups:
@@ -11,3 +12,4 @@ creation_rules:
       - *beta
       - *gamma
       - *nixos-laptop
+      - *delta

@@ -26,7 +26,7 @@ in rec {
           }
         ];
       };
-      "yggdrasil".mtu = 1280;
+      #"yggdrasil".mtu = 1280;
     };
     defaultGateway = {
       interface = "eth0";
