@@ -121,13 +121,8 @@ in
     # core packages + shell setup
     programs = {
       mtr.enable = true;
+      zsh.enable = true;
       command-not-found.enable = false;
-      zsh = {
-        enable = true;
-        interactiveShellInit = ''
-          source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-        '';
-      };
     };
 
     environment.systemPackages = with pkgs; [
@@ -136,7 +131,6 @@ in
       git-crypt
       cryptsetup
       hwinfo
-      nix-index
       htop
       magic-wormhole
     ];

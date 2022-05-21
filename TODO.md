@@ -1,13 +1,18 @@
 # TODO:
 
+- nested flakes for better pinning
+    - spacemacs/neovim/eww/spicetify/polymc
+
 - work on eww bar config
     - workspaces
     - music popup?
     - css styling
     - onclick
 
-- set up xmonad
+- set up modules:
+    - xmonad
     - xmobar
+    - bspwm
 
 - combine host + user config more 
     - enable appropriate configs for de/wm based on what is enabled on host
@@ -74,6 +79,8 @@
 - sk(im) sorter for telescope?
 
 - plugins
+    - laststatus=3
+        - https://github.com/b0o/incline.nvim
     - symbol outlines (lsp)
         - https://github.com/simrat39/symbols-outline.nvim
     - quickfix list
