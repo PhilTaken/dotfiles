@@ -198,6 +198,7 @@
               kde.enable = false;
             };
             wms = {
+              udiskie.enable = true;
               # TODO:
               # xmonad.enable = true;
 

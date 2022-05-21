@@ -48,7 +48,10 @@ in rec {
   };
 
   config = mkIf (cfg.enable) rec {
-    services.kdeconnect.enable = true;
+    services.kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
 
     xsession.windowManager.i3 = rec {
       enable = true;
@@ -168,22 +171,6 @@ in rec {
       package = pkgs.pulseeffects-legacy;
     };
 
-    systemd.user.services.kdeconnect-indicator = {
-      Unit = {
-        Description = "Unit for the kdeconnect indicator daemon";
-        After = "graphical-session-pre.target";
-        PartOf = "graphical-session.target";
-      };
-
-      Service = {
-        ExecStart = "${pkgs.kdeconnect}/bin/kdeconnect-indicator";
-        Restart = "on-abort";
-      };
-
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
-    };
 
     systemd.user.services.flameshot = {
       Unit = {
