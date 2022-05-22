@@ -17,6 +17,9 @@ opt.langremap = true
 
 o.cmdheight = 2
 
+-- single statusline at the bottom
+o.laststatus = 3
+
 -- dont show the mode in the last line, have a status line for that
 o.showmode = false
 
