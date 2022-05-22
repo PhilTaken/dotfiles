@@ -1,6 +1,10 @@
 # TODO:
 
-- https://github.com/gin66/wg_netmanager
+- basic install script for custom image (basic partitioning -> back up all non-store files)
+
+- more dynamic wireguard network
+    - https://github.com/gin66/wg_netmanager
+    - access local nodes directly
 
 - nested flakes for better pinning
     - spacemacs/neovim/eww/spicetify/polymc
@@ -16,7 +20,7 @@
     - xmobar
     - bspwm
 
-- combine host + user config more 
+- combine host + user config more (?) TODO: decide
     - enable appropriate configs for de/wm based on what is enabled on host
 
 ## general issues
