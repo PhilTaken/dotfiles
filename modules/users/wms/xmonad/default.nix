@@ -20,7 +20,33 @@ in
   };
 
   config = mkIf (cfg.enable) {
-    # add config here
+    xsession.windowManager.xmonad = rec {
+      enable = true;
+      extraPackages = hPkgs: with hPkgs; [
+        xmonad-contrib
+        containers
+      ];
+      enableContribAndExtras = true;
+      config = ./Main.hs;
+
+      libFiles = {
+        "Tools.hs" = pkgs.writeText "Tools.hs" ''
+          module Tools where
+
+          screenshot = "scrot"
+        '';
+      };
+    };
+
+    home.packages = with pkgs; [
+      acpi
+      betterlockscreen
+      dunst
+      feh
+      picom
+
+      clipcat
+    ];
   };
 }
 

@@ -1,5 +1,7 @@
 # TODO:
 
+- https://github.com/gin66/wg_netmanager
+
 - nested flakes for better pinning
     - spacemacs/neovim/eww/spicetify/polymc
 
@@ -10,7 +12,7 @@
     - onclick
 
 - set up modules:
-    - xmonad
+    - xmonad (wip)
     - xmobar
     - bspwm
 
