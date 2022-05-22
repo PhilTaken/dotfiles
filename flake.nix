@@ -303,7 +303,12 @@
                 };
 
                 openssh.enable = true;
-                telegraf.enable = true;
+
+                telegraf = {
+                  enable = true;
+                  inputs.extrasensors = true;
+                };
+
                 iperf.enable = true;
 
                 syncthing.enable = true;

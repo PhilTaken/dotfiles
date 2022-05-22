@@ -7,11 +7,20 @@ with lib;
 
 let
   cfg = config.phil.server.services.telegraf;
-in
-{
-
+in {
   options.phil.server.services.telegraf = {
     enable = mkEnableOption "telegraf";
+    inputs = {
+      default = mkOption {
+        type = types.bool;
+        default = true;
+      };
+
+      extrasensors = mkOption {
+        type = types.bool;
+        default = false;
+      };
+    };
   };
 
   config = mkIf (cfg.enable) {
@@ -19,6 +28,8 @@ in
       owner = config.systemd.services.telegraf.serviceConfig.User;
       sopsFile = ../../../sops/telegraf.yaml;
     };
+
+    users.users.telegraf.extraGroups = [ "dialout" ];
 
     services.telegraf = {
       enable = true;
@@ -41,13 +52,23 @@ in
         };
 
         outputs = {
-          influxdb_v2 = {
+          influxdb_v2 = [
+            {
+              urls = [ "http://10.100.0.1:8086" ];
+              timeout = "60s";
+              token = "$INFLUX_TOKEN";
+              organization = "home";
+              bucket = "data";
+              namepass = [ "cpu" "disk" "diskio" "mem" "net" "processes" "swap" "system" ];
+            }
+          ] ++ (lib.optional cfg.inputs.extrasensors {
             urls = [ "http://10.100.0.1:8086" ];
             timeout = "60s";
             token = "$INFLUX_TOKEN";
             organization = "home";
-            bucket = "data";
-          };
+            bucket = "sensors";
+            namepass = [ "env_sensors" ];
+          });
         };
 
         inputs = {
@@ -68,7 +89,16 @@ in
           processes = { };
           swap = { };
           system = { };
-        };
+        } // (lib.optionalAttrs cfg.inputs.extrasensors {
+          tail = {
+            name_override = "env_sensors";
+            files = [ "/dev/serial/by-id/usb-Adafruit_QT2040_Trinkey_DF609C8067563726-if00" ];
+            precision = "100ms";
+            pipe = true;
+            data_format = "json";
+            json_strict = "true";
+          };
+        });
       };
     };
   };
