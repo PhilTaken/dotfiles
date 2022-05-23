@@ -355,6 +355,14 @@
             sound.enable = true;
             yubikey.enable = true;
 
+            arm = {
+              enable = true;
+              rawPath = "/platte/Documents/Video/in_progress/";
+              transcodePath = "/platte/Documents/Video/tmp/";
+              completedPath = "/platte/Documents/Video/encoded/";
+              logPath = "/platte/Documents/Video/logs/";
+            };
+
             video = {
               enable = true;
               driver = "nvidia";

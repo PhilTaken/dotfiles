@@ -15,6 +15,7 @@
     ./fileshare
     ./development
     ./mullvad
+    ./arm
 
     ./dns
     #./innernet-client

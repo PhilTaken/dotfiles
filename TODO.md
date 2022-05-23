@@ -1,5 +1,8 @@
 # TODO:
 
+- set up matrix server module
+    - matrix-conduit
+
 - basic install script for custom image (basic partitioning -> back up all non-store files)
 
 - more dynamic wireguard network
