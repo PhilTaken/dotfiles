@@ -6,6 +6,8 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify.url = "github:PhilTaken/spicetify-nix";
     polymc.url = "github:PolyMC/PolyMC";
+    comma.url = "github:nix-community/comma";
+    comma.inputs.nixpkgs.follows = "nixpkgs";
 
     # NUR
     nur-src = {
@@ -65,6 +67,7 @@
     , spicetify
     , polymc
     , spacemacs-git
+    , comma
     , ...
     }@inputs:
     let
@@ -211,7 +214,7 @@
 
           extraPackages = pkgs: with pkgs; [
             nur.repos.shados.tmm
-
+            comma.packages.${system}.comma
             plover.dev
           ];
         };
@@ -299,6 +302,7 @@
                     "jellyfin" = "beta";
                     "calibre" = "beta";
                     "influx" = "alpha";
+                    "arm" = "gamma";
                   };
                 };
 
