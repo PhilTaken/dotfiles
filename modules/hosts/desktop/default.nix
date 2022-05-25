@@ -38,10 +38,10 @@ in
     hardware.opengl.enable = true;
 
     # antivir daemon
-    services.clamav = {
-      daemon.enable = true;
-      updater.enable = true;
-    };
+    #services.clamav = {
+      #daemon.enable = true;
+      #updater.enable = true;
+    #};
 
     #virtualisation.waydroid.enable = true;
 
