@@ -67,9 +67,11 @@ in
         trusted-users = [ "root" "@wheel" ];
         substituters = [
           "https://philtaken.cachix.org"
+          "https://cache.iog.io"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
+          "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
           "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
         ];
       };
