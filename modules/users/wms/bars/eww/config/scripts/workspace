@@ -11,7 +11,7 @@ workspaces() {
     ws7=7
     ws8=8
     ws9=9
-    ws0=0
+    ws0=10
 
     # Unoccupied
     un="0"
