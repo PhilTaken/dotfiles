@@ -1,13 +1,21 @@
 local Terminal  = require('toggleterm.terminal').Terminal
 
+local on_open = function(term)
+    vim.cmd("startinsert!")
+    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+end
+
 local M = {}
 
-M.sideterminal = Terminal:new({
+M.vterm = Terminal:new({
     direction = 'vertical',
-    on_open = function(term)
-        vim.cmd("startinsert!")
-        vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
-    end,
+    on_open = on_open,
+    close_on_exit = true,
+})
+
+M.hterm = Terminal:new({
+    direction = 'horizontal',
+    on_open = on_open,
     close_on_exit = true,
 })
 

@@ -100,11 +100,14 @@ local leadern = {
         },
         s = {
             name = "+shells",
-            g = { function() terms['lazygit']:toggle() end, "Toggle lazygit interface" },
-            h = { function() terms['bottom']:toggle() end, "Toggle bottom resource monitor" },
-            f = { function() terms['bgshell']:toggle() end, "Toggle random shell" },
-            s = { function() terms['sideterminal']:toggle() end, "Toggle side shell" },
-            l = { function() toggleterm.send_lines_to_terminal("single_line", true, terms['sideterminal'].id) end, "Send current line" },
+            g = { function() terms['lazygit']:toggle() end, "Toggle lazygit interface" },      -- git
+            t = { function() terms['bottom']:toggle() end, "Toggle bottom resource monitor" }, -- top
+            f = { function() terms['bgshell']:toggle() end, "Toggle random shell" },           -- flot
+
+            v = { function() terms['vterm']:toggle() end, "Toggle side shell (horizontal split)" },               -- vertical
+            h = { function() terms['hterm']:toggle() end, "Toggle side shell (vertical split)" },               -- horizontal
+
+            l = { function() toggleterm.send_lines_to_terminal("single_line", true, terms['vterm'].id) end, "Send current line" }, -- send Line
         },
     },
 }
@@ -122,10 +125,10 @@ local leaderv = {
         },
         s = {
             name = "+terminal",
-            l = { "<cmd>ToggleTermSendVisualLines " .. terms['sideterminal'].id .. "<cr>", "Send Visual Lines" },
-            v = { "<cmd>ToggleTermSendVisualSelection " .. terms['sideterminal'].id .. "<cr>", "Send Visual Selection" },
-            --l = { function() toggleterm.send_lines_to_terminal("visual_lines", true, terms['sideterminal'].id) end, "Send Visual Lines" },
-            --v = { function() toggleterm.send_lines_to_terminal("visual_selection", true, terms['sideterminal'].id) end, "Send Visual Selection" },
+            l = { "<cmd>ToggleTermSendVisualLines " .. terms['vterm'].id .. "<cr>", "Send Visual Lines" },
+            v = { "<cmd>ToggleTermSendVisualSelection " .. terms['vterm'].id .. "<cr>", "Send Visual Selection" },
+            --l = { function() toggleterm.send_lines_to_terminal("visual_lines", true, terms['vterm'].id) end, "Send Visual Lines" },
+            --v = { function() toggleterm.send_lines_to_terminal("visual_selection", true, terms['vterm'].id) end, "Send Visual Selection" },
         }
     },
     ["/"] = { 'y/<C-R>"<CR>', "Search using visual mode" },
