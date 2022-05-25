@@ -1,16 +1,21 @@
 # TODO:
 
-- set up matrix server module
-    - matrix-conduit
+## general issues
 
-- basic install script for custom image (basic partitioning -> back up all non-store files)
+- rewrite arm module in one of 
+    - python
+    - rust
+    - haskell
+
+    - finish arm module -> use it
+
+- gitea module
+    - set up on beta/delta/epsilon
+    - ci/cd with hydra/rain
 
 - more dynamic wireguard network
     - https://github.com/gin66/wg_netmanager
     - access local nodes directly
-
-- nested flakes for better pinning
-    - spacemacs/neovim/eww/spicetify/polymc
 
 - work on eww bar config
     - workspaces
@@ -23,16 +28,17 @@
     - xmobar
     - bspwm
 
+- basic install script for custom image (basic partitioning -> back up all non-store files)
+
+- nested flakes for better pinning
+    - spacemacs/neovim/eww/spicetify/polymc
+
+- set up matrix server module
+    - matrix-conduit
+    - selfhost matrix
+
 - combine host + user config more (?) TODO: decide
     - enable appropriate configs for de/wm based on what is enabled on host
-
-## general issues
-
-- fix freezing desktop (gamma) (solved?)
-
-- fix ssh_agent/gpg_agent interaction 
-    - GNOME issue (!), works under kde plasma & i3 ..?
-    - need to `export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)` in every shell currently
 
 - get waydroid working
 
@@ -42,6 +48,11 @@
 ## DNS
 
 - "global" network definitions file
+    - expose all wireguard subnet adresses in config
+        - useful in server module for webservices
+        - useful for dns
+
+    - define all ips/hostnames/ -> host specific settings in central config file to import into stuff
 
 - generate nginx config from enabled options -> name, prefix, host etc.
     - add to settings per service
@@ -56,13 +67,11 @@
 
 ## beta
 
-- torrenting setup
-    - music
-    - lidarr/radarr/sonarr, the whole stack
+- -arr services for metadata
 
 - navidrome
 
-- add bookstack service (native nixos module)
+- bookstack service (native nixos module)
 
 - backup (important) syncthing folders to b2
     - rclone / borg
@@ -88,8 +97,6 @@
 - sk(im) sorter for telescope?
 
 - plugins
-    - laststatus=3
-        - https://github.com/b0o/incline.nvim
     - symbol outlines (lsp)
         - https://github.com/simrat39/symbols-outline.nvim
     - quickfix list
@@ -106,14 +113,6 @@
 
 - devdocs api docs
     - devdocs.io
-
-- widgets to replace waybar / add functionality
-  - https://github.com/elkowar/eww
-
-- expose all wireguard subnet adresses in config
-    - useful in server module for webservices
-    - useful for dns 
-- define all ips/hostnames/ -> host specific settings in central config file to import into stuff
 
 - webapps
     - roundcube mail client
