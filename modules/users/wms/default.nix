@@ -6,13 +6,17 @@ let
 
   # udiskie
   commandArgs = concatStringsSep " " (map (opt: "-" + opt) [
-    "a"
+    (if cfg.udiskie.automount then "a" else "A")
     "n"
     "T"
   ] ++ optional config.xsession.preferStatusNotifierItems "--appindicator");
+
+  yaml = pkgs.formats.yaml { };
+
 in {
   options.phil.wms = {
     udiskie.enable = mkEnableOption "udiskie";
+    udiskie.automount = mkEnableOption "auto mount devices";
     bars.barcommand = mkOption {
       description = "comand to (re)start the bar(s)";
       type = types.str;
@@ -31,6 +35,15 @@ in {
 
       Service = { ExecStart = "${pkgs.udiskie}/bin/udiskie ${commandArgs}"; };
       Install = { WantedBy = [ "graphical-session.target" ]; };
+    };
+
+    xdg.configFile."udiskie/config.yml".source = yaml.generate "config.yml" {
+      device_config = [
+        {
+          device_file = "/dev/sr0";
+          ignore = true;
+        }
+      ];
     };
   };
 
