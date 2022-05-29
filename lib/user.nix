@@ -16,7 +16,7 @@ with builtins;
     home-manager.lib.homeManagerConfiguration {
       inherit system username pkgs homeDirectory stateVersion;
 
-      configuration = {
+      configuration = rec {
         phil = userConfig;
         nixpkgs.overlays = overlays;
         nixpkgs.config.allowUnfree = true;
@@ -43,6 +43,7 @@ with builtins;
 
             # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
             #discord
+            (if phil.wms.sway.enable or false then
             (pkgs.writeShellApplication {
               name = "discord";
               text = "${pkgs.discord}/bin/discord --use-gl=desktop";
@@ -52,6 +53,7 @@ with builtins;
               exec = "discord";
               desktopName = "Discord";
             })
+            else discord)
 
             element-desktop
             gimp
