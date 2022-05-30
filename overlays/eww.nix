@@ -5,7 +5,7 @@ final: prev: let
     version = "git-${toString withWayland}";
 
     src = inputs.eww-src;
-    cargoSha256 = "sha256-2v+3dMTQOwQx9LoZEIWlgewMLzJm+oCu+vjwGNUKzaE=";
+    cargoSha256 = "sha256-lTy3fIgBQAWODbBTDxqksA+aJHSF/xeFHMoHymVijk0=";
 
     nativeBuildInputs = [ prev.pkg-config ];
     buildInputs = [ prev.gtk3 ] ++ prev.lib.optional withWayland prev.gtk-layer-shell;

@@ -279,8 +279,10 @@ in rec {
       };
 
       tmux = let
-        airline_conf = ./tmux_airline.conf;
-        colorscheme_conf = ./catppuccino_dark.conf;
+        #airline_conf = ./tmux_airline.conf;
+        #colorscheme_conf = ./catppuccino_dark.conf;
+        catppuccin_tmux_conf = ./catppuccin.conf;
+        #colorscheme_conf = "${inputs.inputs.tmux-colorscheme}/catppuccin.conf";
       in {
         enable = true;
         baseIndex = 1;
@@ -290,8 +292,8 @@ in rec {
         shortcut = "a";
         #terminal = "screen-256color";
         extraConfig = ''
-          set -g default-terminal "tmux-256color"
-          set -ag terminal-overrides ",alacritty:RGB"
+          set -g default-terminal "xterm-256color"
+          set-option -ga terminal-overrides ",xterm-256color:Tc"
 
           #set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
           #set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
@@ -353,13 +355,13 @@ in rec {
 
           # --------------------------
 
-          source ${airline_conf}
-          source ${colorscheme_conf}
-
+          source ${catppuccin_tmux_conf}
         '';
+        # source {airline_conf}
+        # source {colorscheme_conf}
+
         plugins = with pkgs.tmuxPlugins; [
           sessionist
-
           (mkTmuxPlugin rec {
             pluginName = "nvr";
             version = "unstable-2021-07-07";
