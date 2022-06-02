@@ -53,6 +53,7 @@ require('packer').startup{
                 config = function()
                     local catppuccin = require('catppuccin')
                     catppuccin.setup{
+                        transparent_background = false,
                         term_colors = true,
                         --colorscheme = "dark_catppuccino",
                         integrations = {
@@ -70,7 +71,7 @@ require('packer').startup{
                             barbar = true,
                         },
                     }
-                    -- catppuccino.load()
+                    vim.g.catppuccin_flavour = "mocha"
                     vim.cmd[[colorscheme catppuccin]]
                 end
             },
