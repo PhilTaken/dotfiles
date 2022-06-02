@@ -2,17 +2,6 @@
 
 ## general issues
 
-- rewrite arm module in one of 
-    - python
-    - rust
-    - haskell
-
-    - finish arm module -> use it
-
-- gitea module
-    - set up on beta/delta/epsilon
-    - ci/cd with hydra/rain
-
 - more dynamic wireguard network
     - https://github.com/gin66/wg_netmanager
     - access local nodes directly
@@ -26,21 +15,33 @@
 - set up modules:
     - xmonad (wip)
     - xmobar
+    - set up matrix server module
+        - matrix-conduit
+        - selfhost matrix
+    - elasticsearch stack
+        - filebeat
+        - kibana
+    - gitea module
+        - set up on beta/delta/epsilon
+        - ci/cd with hydra/rain
     - bspwm
+    - nextcloud
+    - iris/mopidy
+    - subsonic music streaming
+    - home-assistant
+    - grocy
+    - pleroma
+    - radicale
+    - snapcast server/clients
+
 
 - basic install script for custom image (basic partitioning -> back up all non-store files)
 
 - nested flakes for better pinning
     - spacemacs/neovim/eww/spicetify/polymc
 
-- set up matrix server module
-    - matrix-conduit
-    - selfhost matrix
-
 - combine host + user config more (?) TODO: decide
     - enable appropriate configs for de/wm based on what is enabled on host
-
-- get waydroid working
 
 - wireguard / headscale ?
     - other, more direct approach than road-warrior wireguard with all traffic via external vps
