@@ -31,7 +31,7 @@ in rec {
     bg = mkOption {
       description = "Main background";
       type = types.path;
-      default = ../../../../images/rick_morty.png;
+      default = ../../../../images/cat-sound.png;
     };
 
     terminal_font = mkOption {
@@ -62,6 +62,7 @@ in rec {
           criteria = [
             { title = "Steam - Update News"; }
             { class = "Pavucontrol"; }
+            { class = ".blueman-manager-wrapped"; }
           ];
         };
         gaps = {
@@ -141,6 +142,7 @@ in rec {
         settings = {
           font.normal.family = cfg.terminal_font;
           font.size = 12;
+          env.TERM = "xterm-256color";
         };
       };
     };
@@ -151,9 +153,11 @@ in rec {
       inactiveOpacity = "0.96";
       opacityRule = [
         "100:class_g ?= 'Firefox'"
+        "100:class_g ?= 'librewolf'"
         "100:class_g ?= 'Google-chrome'"
       ];
       blur = true;
+      experimentalBackends = true;
       blurExclude = [
         "class_g = 'slop'"
         "class_i = 'polybar'"
@@ -164,6 +168,12 @@ in rec {
       fadeDelta = 8;
       inactiveDim = "0.1";
       shadow = true;
+      extraOptions = ''
+        frame-opacity = 1;
+        blur-background = true;
+        blur-kern = "11x11gaussian";
+        blur-background-exclude = [];
+      '';
     };
 
     services.pulseeffects = {
