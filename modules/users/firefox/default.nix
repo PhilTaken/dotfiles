@@ -6,8 +6,7 @@
 with lib;
 
 let cfg = config.phil.firefox;
-in
-{
+in {
   options.phil.firefox = {
     enable = mkOption {
       description = "Enable firefox";
@@ -20,18 +19,22 @@ in
       type = types.bool;
       default = true;
     };
+
+    librewolf = mkOption {
+      description = "use librewolf instead";
+      type = types.bool;
+      default = true;
+    };
   };
 
-  config = (mkIf cfg.enable) {
+  config = let
+    pkg = if cfg.librewolf then pkgs.librewolf else pkgs.firefox;
+    waylandpkg = if cfg.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
+  in (mkIf cfg.enable) {
     programs.firefox = {
       enable = true;
-      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-        forceWayland = cfg.wayland;
-        extraPolicies = {
-          ExtensionSettings = { };
-        };
-      };
 
+      package = if cfg.wayland then waylandpkg else pkg;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         betterttv
         bitwarden
