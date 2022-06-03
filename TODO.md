@@ -118,6 +118,11 @@
 - webapps
     - roundcube mail client
 
+- distributed file system
+    - ceph
+    - gluster
+    - xtreemfs
+
 ## finances
 
 - selfhosted preferably
