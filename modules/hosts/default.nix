@@ -3,23 +3,25 @@
 {
   imports = [
     ./core
+
+    ./yubikey
+
     ./laptop
     ./sound
     ./video
-    ./yubikey
-    ./server
     ./desktop
-    ./backup
     ./nvidia
-    ./wireguard
-    ./fileshare
-    ./development
-    ./mullvad
-    ./arm
-    ./nebula
 
+    ./server
     ./dns
-    #./innernet-client
-    #./innernet-server
+
+    ./development
+    ./fileshare
+    ./backup
+    ./arm
+
+    ./wireguard
+    ./mullvad
+    ./nebula
   ];
 }

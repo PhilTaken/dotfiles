@@ -14,6 +14,7 @@ in
     enable = mkEnableOption "tiny tiny rss";
     url = mkOption {
       description = "ttrss url (webinterface)";
+      default = "rss.home";
       type = types.str;
     };
   };
@@ -26,8 +27,7 @@ in
         autoLogin = true;
       };
       registration.enable = false;
-      selfUrlPath = "https://rss.pherzog.xyz";
-      virtualHost = "rss.pherzog.xyz";
+      selfUrlPath = "https://${cfg.url}";
       themePackages = with pkgs; [ tt-rss-theme-feedly ];
     };
   };

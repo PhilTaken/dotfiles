@@ -319,9 +319,12 @@
                   enable = true;
                   apps = {
                     "jellyfin" = "beta";
+                    "jellyfin2" = "delta";
                     "calibre" = "beta";
                     "influx" = "alpha";
                     "arm" = "gamma";
+                    "seafile" = "delta";
+                    # "rss" = "delta";
                   };
                 };
 
@@ -422,7 +425,7 @@
           extraimports = [ ];
         };
 
-        # old pc @ home (192.168.0.144 / 10.100.0.2)
+        # old pc @ home (192.168.0.21 / 10.100.0.5 / 10.200.0.4)
         delta = let
           hardware-config = import (./machines/delta);
           users = with systemUsers; [ nixos ];
@@ -440,32 +443,22 @@
             server = {
               enable = true;
               services = {
-                #caddy.proxy = {
-                  #"jellyfin" = 8096;
-                  #"calibre" = 8083;
-                #};
+                caddy.proxy = {
+                  "jellyfin2" = 8096;
+                  #"rss" = 80;
+                  "seafile" = 8084;
+                };
 
                 openssh.enable = true;
                 telegraf.enable = true;
                 iperf.enable = true;
-                #syncthing.enable = true;
-                #jellyfin.enable = true;
+
+                jellyfin.enable = true;
+
+                # ttrss.enable = true;
+                # seafile.enable = true;
               };
             };
-
-            fileshare = {
-              enable = false;
-              mount = {
-                enable = false;
-                binds = [
-                  {
-                    ip = "192.168.0.120";
-                    dirs = [ "/media" ];
-                  }
-                ];
-              };
-            };
-
           };
 
           extraimports = [ ];

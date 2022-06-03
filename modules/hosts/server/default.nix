@@ -10,21 +10,22 @@ let
 in
 {
   imports = [
-    ./fail2ban.nix
-    ./openssh.nix
-    ./jellyfin.nix
-    ./grafana.nix
-    ./ttrss.nix
     ./adguardhome.nix
-    ./iperf.nix
-    ./telegraf.nix
-    ./influxdb2.nix
-    ./syncthing.nix
-    ./keycloak.nix
-    ./nginx.nix
-    ./unbound.nix
-    ./calibre-web.nix
     ./caddy.nix
+    ./calibre-web.nix
+    ./fail2ban.nix
+    ./grafana.nix
+    ./influxdb2.nix
+    ./iperf.nix
+    ./jellyfin.nix
+    ./keycloak.nix
+    ./seafile.nix
+    ./nginx.nix
+    ./openssh.nix
+    ./syncthing.nix
+    ./telegraf.nix
+    ./ttrss.nix
+    ./unbound.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";
