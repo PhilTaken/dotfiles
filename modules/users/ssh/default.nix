@@ -83,7 +83,7 @@ in
           forwardAgent = true;
         };
         "deltalocal" = {
-          hostname = "192.168.0.144";
+          hostname = "192.168.0.21";
           user = "nixos";
           forwardAgent = true;
         };

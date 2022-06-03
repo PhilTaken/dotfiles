@@ -196,6 +196,10 @@ in rec {
             fi
           fi
 
+          loc() { 
+              nix-locate $1 | ${pkgs.choose}/bin/choose 0 | sort | uniq
+          }
+
           flakify() {
             if [ ! -e flake.nix ]; then
               nix flake new -t github:nix-community/nix-direnv .

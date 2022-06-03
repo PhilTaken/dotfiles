@@ -34,4 +34,6 @@ in rec {
     };
     nameservers = [ "1.1.1.1" ];
   };
+
+  system.stateVersion = "21.05";
 }

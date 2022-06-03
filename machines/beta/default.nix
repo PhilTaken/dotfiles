@@ -90,5 +90,5 @@
   #   ];
   # };
 
-  #networking.interfaces."yggdrasil".mtu = 1280;
+  system.stateVersion = "21.05";
 }

@@ -12,10 +12,7 @@
   boot.extraModulePackages = [ ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  # downgrade to 4_19 to fix intel freezes (https://github.com/NixOS/nixpkgs/issues/80639)
-  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_4_19;
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
-
 
   nixpkgs.overlays = [
     (self: super: {
@@ -27,8 +24,6 @@
       };
     })
   ];
-
-
 
   boot.initrd.luks = {
     devices = {
@@ -65,5 +60,7 @@
     [{ device = "/dev/disk/by-uuid/3e5936d8-03a3-48be-b03d-a9b5495fccdf"; }];
 
   # high-resolution display
-  #hardware.video.hidpi.enable = lib.mkDefault true;
+  hardware.video.hidpi.enable = lib.mkDefault true;
+
+  system.stateVersion = "21.05";
 }

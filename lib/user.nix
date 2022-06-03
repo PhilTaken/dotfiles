@@ -109,7 +109,6 @@ with builtins;
         isNormalUser = true;
         isSystemUser = false;
         extraGroups = groups;
-        initialPassword = "raspberry";
         openssh.authorizedKeys.keys = sshKeys;
       };
     };

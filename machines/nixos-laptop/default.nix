@@ -50,4 +50,6 @@ rec {
   services.udev = {
     extraRules = builtins.readFile ./50-qmk.rules;
   };
+
+  system.stateVersion = "21.05";
 }

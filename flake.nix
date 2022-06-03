@@ -53,6 +53,21 @@
       url = "github:elkowar/eww";
       flake = false;
     };
+
+    neovide-src = {
+      url = "github:neovide/neovide";
+      flake = false;
+    };
+
+    tmux-colorscheme = {
+      url = "github:catppuccin/tmux";
+      flake = false;
+    };
+
+    catppucin-wallpapers = {
+      url = "github:catppuccin/wallpapers";
+      flake = false;
+    };
   };
   outputs =
     { self
@@ -80,6 +95,7 @@
         (import ./overlays/gopass-rofi.nix { inherit inputs; })
         (import ./overlays/rofi-overlay.nix { inherit inputs; })
         (import ./overlays/eww.nix { inherit inputs; })
+        #(import ./overlays/neovide.nix {inherit inputs; })
         devshell.overlay
         sops-nix-src.overlay
         deploy-rs.overlay
@@ -106,6 +122,11 @@
           ];
           extraHMImports = [
             spicetify.homeManagerModule
+            ({  ... }: {
+              _module.args = {
+                inherit inputs;
+              };
+            })
           ];
         };
 
@@ -198,7 +219,7 @@
             # de/wm config
             des = {
               gnome.enable = false;
-              kde.enable = false;
+              #kde.enable = false;
             };
             wms = {
               udiskie.enable = true;
@@ -260,9 +281,10 @@
 
                 #keycloak.enable = true;
 
-                openssh.enable = true;
+                openssh.enable = false;
                 fail2ban.enable = true;
                 telegraf.enable = true;
+
                 ttrss.enable = false;
                 adguardhome.enable = false;
 
@@ -360,7 +382,7 @@
             yubikey.enable = true;
 
             arm = {
-              enable = true;
+              enable = false;
               rawPath = "/platte/Documents/Video/in_progress/";
               transcodePath = "/platte/Documents/Video/tmp/";
               completedPath = "/platte/Documents/Video/encoded/";
@@ -430,10 +452,11 @@
                 #jellyfin.enable = true;
               };
             };
+
             fileshare = {
-              enable = true;
+              enable = false;
               mount = {
-                enable = true;
+                enable = false;
                 binds = [
                   {
                     ip = "192.168.0.120";
@@ -442,6 +465,7 @@
                 ];
               };
             };
+
           };
 
           extraimports = [ ];
@@ -494,6 +518,7 @@
         gamma = self.nixosConfigurations.gamma.config.system.build.toplevel;
       };
 
+
       # shortcut for building a raspberry pi sd image
       packages."${system}" = {
         x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
@@ -517,7 +542,7 @@
         };
 
         delta = {
-          hostname = "192.168.0.144";
+          hostname = "192.168.0.21";
           sshUser = "root";
           profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
         };
