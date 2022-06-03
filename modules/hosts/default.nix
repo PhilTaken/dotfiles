@@ -16,6 +16,7 @@
     ./development
     ./mullvad
     ./arm
+    ./nebula
 
     ./dns
     #./innernet-client

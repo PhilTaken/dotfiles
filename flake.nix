@@ -122,11 +122,6 @@
           ];
           extraHMImports = [
             spicetify.homeManagerModule
-            ({  ... }: {
-              _module.args = {
-                inherit inputs;
-              };
-            })
           ];
         };
 
@@ -217,12 +212,8 @@
             };
 
             # de/wm config
-            des = {
-              gnome.enable = false;
-              #kde.enable = false;
-            };
             wms = {
-              udiskie.enable = true;
+              tools.udiskie.enable = true;
               # TODO:
               # xmonad.enable = true;
 
@@ -245,6 +236,9 @@
         # include in the imports to build an iso image for the respective systems (TODO: check if it works)
         baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix";
         raspInstallerImport = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix";
+
+        wireguard.enable = true;
+        nebula.enable = true;
       in {
         x86-iso = util.host.mkHost {
           users = [ systemUsers.nixos ];
@@ -264,7 +258,8 @@
           inherit hardware-config users;
 
           systemConfig = {
-            #wireguard.enable = false;
+            inherit wireguard nebula;
+
             core = {
               docker = false;
               hostName = "alpha";
@@ -281,7 +276,7 @@
 
                 #keycloak.enable = true;
 
-                openssh.enable = false;
+                openssh.enable = true;
                 fail2ban.enable = true;
                 telegraf.enable = true;
 
@@ -304,6 +299,8 @@
           inherit hardware-config users;
 
           systemConfig = {
+            inherit wireguard nebula;
+
             core = {
               bootLoader = null;
               hostName = "beta";
@@ -370,10 +367,11 @@
           inherit hardware-config users;
 
           systemConfig = {
+            inherit wireguard nebula;
+
             core.hostName = "gamma";
             core.enableBluetooth = true;
 
-            wireguard.enable = true;
             mullvad.enable = true;
 
             nvidia.enable = true;
@@ -432,6 +430,8 @@
           inherit hardware-config users;
 
           systemConfig = {
+            inherit wireguard nebula;
+
             core = {
               bootLoader = "efi";
               hostName = "delta";
@@ -479,10 +479,11 @@
           inherit hardware-config users;
 
           systemConfig = {
+            inherit wireguard nebula;
+
             core.hostName = "nixos-laptop";
             core.enableBluetooth = true;
 
-            wireguard.enable = true;
             dns.nameserver = "beta";
 
             mullvad.enable = true;

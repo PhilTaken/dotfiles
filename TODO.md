@@ -2,10 +2,6 @@
 
 ## general issues
 
-- more dynamic wireguard network
-    - https://github.com/gin66/wg_netmanager
-    - access local nodes directly
-
 - work on eww bar config
     - workspaces
     - music popup?
