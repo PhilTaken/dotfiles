@@ -58,8 +58,6 @@ let
 in
 {
   options.phil.fileshare = {
-    enable = mkEnableOption "the fileshare module";
-
     mount = {
       enable = mkEnableOption "mounting shares";
 
@@ -78,17 +76,15 @@ in
             };
           };
         });
-        default = [ ];
+        default = [];
       };
     };
 
     shares = {
-      enable = mkEnableOption "nfs sharing";
-
       dirs = mkOption {
         description = "directories to share";
-        type = types.nullOr (types.listOf types.str);
-        default = null;
+        type = types.listOf types.str;
+        default = [];
       };
 
       ips = mkOption {
@@ -99,12 +95,10 @@ in
     };
 
     samba = {
-      enable = mkEnableOption "samba sharing";
-
       dirs = mkOption {
         description = "directories to share";
-        type = types.nullOr (types.listOf types.str);
-        default = null;
+        type = types.listOf types.str;
+        default = [];
       };
 
       ips = mkOption {
@@ -115,15 +109,20 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
-    services.nfs.server = mkIf (cfg.shares.enable) {
-      enable = true;
+  config = let
+    enableSamba = cfg.samba.dirs != [];
+    enableMount = cfg.mount.binds != [];
+    enableShare = cfg.shares.dirs != [];
+  in
+    mkIf (enableSamba || enableMount || enableShare) {
+    services.nfs.server = {
+      enable = enableShare;
       exports = mkSharesForIps cfg.shares.ips cfg.shares.dirs;
     };
 
-    services.samba-wsdd.enable = cfg.samba.enable;
-    services.samba = mkIf (cfg.samba.enable) {
-      enable = true;
+    services.samba-wsdd.enable = enableSamba;
+    services.samba = {
+      enable = enableSamba;
       securityType = "user";
       extraConfig = ''
         workgroup = WORKGROUP
@@ -139,15 +138,15 @@ in
     };
 
     networking.firewall.allowedTCPPorts = [ ] ++
-      (if (cfg.shares.enable) then [ 2049 ] else [ ]) ++
-      (if (cfg.samba.enable) then [ 445 139 ] else [ ]);
+      (if enableShare then [ 2049 ] else [ ]) ++
+      (if enableSamba then [ 445 139 ] else [ ]);
 
     networking.firewall.allowedUDPPorts = [ ] ++
-      (if (cfg.samba.enable) then [ 137 138 ] else [ ]);
+      (if enableSamba then [ 137 138 ] else [ ]);
 
-    fileSystems = (if (cfg.mount.enable) then
+    fileSystems = (if enableMount then
       mkMountsForBinds cfg.mount.binds
-    else { }) // (if (cfg.shares.enable) then
+    else { }) // (if enableShare then
       mkBindsForDirs cfg.shares.dirs
     else { });
   };

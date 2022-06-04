@@ -23,6 +23,11 @@ in
       type = types.port;
       default = 8086;
     };
+
+    host = mkOption {
+      type = types.str;
+      default = "influx";
+    };
   };
 
   config = mkIf (cfg.enable) {
@@ -34,5 +39,6 @@ in
         #vault-addr = "10.100.0.1:8200";
       };
     };
+    phil.server.services.caddy.proxy."${cfg.host}" = cfg.port;
   };
 }

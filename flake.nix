@@ -239,11 +239,19 @@
 
         wireguard.enable = true;
         nebula.enable = true;
+
+        # TODO: generate this set from list
+        dnsBinds = {
+          "jellyfin" = "beta";
+          "jellyfin2" = "delta";
+          "calibre" = "beta";
+          "influx" = "alpha";
+        };
       in {
         x86-iso = util.host.mkHost {
           users = [ systemUsers.nixos ];
           systemConfig = {
-            core.hostName= "isoInstall";
+            core.hostName = "isoInstall";
             wireguard.enable = false;
             server.services.openssh.enable = true;
           };
@@ -251,110 +259,31 @@
         };
 
         # vm on a hetzner server, debian host (10.100.0.1)
-        alpha = let
-          hardware-config = import (./machines/alpha);
-          users = with systemUsers; [ nixos ];
-        in util.host.mkHost {
-          inherit hardware-config users;
-
-          systemConfig = {
-            inherit wireguard nebula;
-
-            core = {
-              docker = false;
-              hostName = "alpha";
-              bootLoader = "grub";
-              grubDevice = "/dev/sda";
-            };
-
-            server = {
-              enable = true;
-              services = {
-                caddy.proxy = {
-                  "influx" = 8086;
-                };
-
-                #keycloak.enable = true;
-
-                openssh.enable = true;
-                fail2ban.enable = true;
-                telegraf.enable = true;
-
-                ttrss.enable = false;
-                adguardhome.enable = false;
-
-                influxdb2.enable = true;
-              };
-            };
-          };
-
-          extraimports = [ ];
+        alpha = util.server.mkServer {
+          servername = "alpha";
+          services = [ "influxdb2" ];
         };
 
+        # mini nas @ home (192.168.0.21 / 10.100.0.5 / 10.200.0.4)
+        delta = util.server.mkServer {
+          servername = "delta";
+          services = [ "jellyfin" ];
+        };
+
+
         # raspberry pi @ home (192.168.0.120 / 10.100.0.2)
-        beta = let
-          hardware-config = import (./machines/beta);
-          users = with raspiUsers; [ nixos ];
-        in raspiUtil.host.mkHost {
-          inherit hardware-config users;
-
-          systemConfig = {
-            inherit wireguard nebula;
-
-            core = {
-              bootLoader = null;
-              hostName = "beta";
-              docker = true;
-            };
-
-            server = {
-              enable = true;
-              services = {
-                caddy.proxy = {
-                  "jellyfin" = 8096;
-                  "calibre" = 8083;
-                };
-
-                unbound = {
-                  enable = true;
-                  apps = {
-                    "jellyfin" = "beta";
-                    "jellyfin2" = "delta";
-                    "calibre" = "beta";
-                    "influx" = "alpha";
-                    "arm" = "gamma";
-                    "seafile" = "delta";
-                    # "rss" = "delta";
-                  };
-                };
-
-                openssh.enable = true;
-
-                telegraf = {
-                  enable = true;
-                  inputs.extrasensors = true;
-                };
-
-                iperf.enable = true;
-
-                syncthing.enable = true;
-
-                jellyfin.enable = true;
-                calibre.enable = true;
-              };
-            };
-            fileshare = {
-              enable = true;
-              shares = {
-                enable = true;
-                dirs = [ "/media" ];
-              };
-              samba = {
-                enable = true;
-                dirs = [ "/media" ];
-              };
-            };
-          };
+        beta = raspiUtil.server.mkServer {
+          servername = "beta";
+          services = [
+            "jellyfin"
+            "calibre"
+            "syncthing"
+            {
+              unbound.apps = dnsBinds;
+              telegraf.inputs.extrasensors = true;
+            }
+          ];
+          fileshare.shares.dirs = [ "/media" ];
 
           extraimports = [
             nixos-hardware.nixosModules.raspberry-pi-4
@@ -382,14 +311,6 @@
             sound.enable = true;
             yubikey.enable = true;
 
-            arm = {
-              enable = false;
-              rawPath = "/platte/Documents/Video/in_progress/";
-              transcodePath = "/platte/Documents/Video/tmp/";
-              completedPath = "/platte/Documents/Video/encoded/";
-              logPath = "/platte/Documents/Video/logs/";
-            };
-
             video = {
               enable = true;
               driver = "nvidia";
@@ -402,9 +323,7 @@
             };
 
             fileshare = {
-              enable = true;
               mount = {
-                enable = true;
                 binds = [
                   {
                     ip = "192.168.0.120";
@@ -415,53 +334,7 @@
             };
 
             dns.nameserver = "beta";
-
-            #development = {
-              #enable = false;
-              #adb.enable = false;
-            #};
           };
-
-          extraimports = [ ];
-        };
-
-        # old pc @ home (192.168.0.21 / 10.100.0.5 / 10.200.0.4)
-        delta = let
-          hardware-config = import (./machines/delta);
-          users = with systemUsers; [ nixos ];
-        in util.host.mkHost {
-          inherit hardware-config users;
-
-          systemConfig = {
-            inherit wireguard nebula;
-
-            core = {
-              bootLoader = "efi";
-              hostName = "delta";
-            };
-
-            server = {
-              enable = true;
-              services = {
-                caddy.proxy = {
-                  "jellyfin2" = 8096;
-                  #"rss" = 80;
-                  "seafile" = 8084;
-                };
-
-                openssh.enable = true;
-                telegraf.enable = true;
-                iperf.enable = true;
-
-                jellyfin.enable = true;
-
-                # ttrss.enable = true;
-                # seafile.enable = true;
-              };
-            };
-          };
-
-          extraimports = [ ];
         };
 
         # workplace-issued thinkpad (10.100.0.4)
@@ -496,10 +369,6 @@
               manager = "sway";
             };
           };
-
-          extraimports = [
-            #nixos-hardware.nixosModules.lenovo-thinkpad-t490
-          ];
         };
 
       };

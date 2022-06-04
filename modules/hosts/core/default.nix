@@ -34,19 +34,6 @@ in
       default = "Europe/Berlin";
     };
 
-    bootLoader = mkOption {
-      description = "which bootloader to install";
-      type = types.nullOr (types.enum [ "grub" "efi" ]);
-      default = "efi";
-    };
-
-    grubDevice = mkOption {
-      description = "which device to install grub on (if enabled via bootLoader)";
-      type = types.nullOr types.str;
-      default = null;
-      example = "/dev/sda";
-    };
-
     enableBluetooth = mkEnableOption "bluetooth";
   };
 
@@ -93,17 +80,17 @@ in
     environment.pathsToLink = [ "/libexec" ];
 
     # maybe move this to each machine?
-    boot = mkIf (cfg.bootLoader != null) {
-      loader =
-        if (cfg.bootLoader == "efi") then {
-          systemd-boot.enable = true;
-          efi.canTouchEfiVariables = true;
-        } else {
-          grub.enable = true;
-          grub.version = 2;
-          grub.device = if (cfg.grubDevice != null) then cfg.grubDevice else throw "you need to set a grub device";
-        };
-    };
+    #boot = mkIf (cfg.bootLoader != null) {
+      #loader =
+        #if (cfg.bootLoader == "efi") then {
+          #systemd-boot.enable = true;
+          #efi.canTouchEfiVariables = true;
+        #} else {
+          #grub.enable = true;
+          #grub.version = 2;
+          #grub.device = if (cfg.grubDevice != null) then cfg.grubDevice else throw "you need to set a grub device";
+        #};
+    #};
 
     networking.hostName = cfg.hostName;
     time.timeZone = cfg.timeZone;

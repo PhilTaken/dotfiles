@@ -18,7 +18,6 @@
     ./development
     ./fileshare
     ./backup
-    ./arm
 
     ./wireguard
     ./mullvad

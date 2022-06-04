@@ -35,5 +35,11 @@ in rec {
     nameservers = [ "1.1.1.1" ];
   };
 
+  boot.loader = {
+    grub.enable = true;
+    grub.version = 2;
+    grub.device = "/dev/sda";
+  };
+
   system.stateVersion = "21.05";
 }
