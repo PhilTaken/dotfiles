@@ -242,8 +242,8 @@
 
         # TODO: generate this set from list
         dnsBinds = {
-          "jellyfin" = "beta";
-          "jellyfin2" = "delta";
+          #"jellyfin" = "beta";
+          "jellyfin" = "delta";
           "calibre" = "beta";
           "influx" = "alpha";
         };

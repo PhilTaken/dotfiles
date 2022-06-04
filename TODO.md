@@ -2,6 +2,10 @@
 
 ## general issues
 
+- combine host + user config more (?) TODO: decide
+    - enable appropriate configs for de/wm based on what is enabled on host
+    - PRIORITY: use nebula for dns and web services -> rewrite dependency on wireguard-peers.nix
+
 - work on eww bar config
     - workspaces
     - music popup?
@@ -9,20 +13,14 @@
     - onclick
 
 - set up modules:
-    - xmonad (wip)
-    - xmobar
-    - set up matrix server module
-        - matrix-conduit
-        - selfhost matrix
     - elasticsearch stack
         - filebeat
         - kibana
     - gitea module
-        - set up on beta/delta/epsilon
-        - ci/cd with hydra/rain
-    - bspwm
-    - nextcloud
-    - iris/mopidy
+        - set up on delta
+        - ci/cd with hydra/rain semi-automated with deploy-rs
+    - set up matrix server module
+        - matrix-conduit
     - subsonic music streaming
     - home-assistant
     - grocy
@@ -30,17 +28,18 @@
     - radicale
     - snapcast server/clients
 
+    - xmonad (wip)
+    - xmobar
+    - bspwm
+
+    - seafile
+    - iris/mopidy
+
 
 - basic install script for custom image (basic partitioning -> back up all non-store files)
 
 - nested flakes for better pinning
     - spacemacs/neovim/eww/spicetify/polymc
-
-- combine host + user config more (?) TODO: decide
-    - enable appropriate configs for de/wm based on what is enabled on host
-
-- wireguard / headscale ?
-    - other, more direct approach than road-warrior wireguard with all traffic via external vps
 
 ## DNS
 
@@ -54,32 +53,25 @@
 - generate nginx config from enabled options -> name, prefix, host etc.
     - add to settings per service
 
--> make wireguard network name configurable
-
 - transfer torrents to beta for seeding
     - set up webinterface, automatic importing dir
-        - move torrent file downloads there
-        - download manager? / auto move with command
-    - mullvad on beta, torrenting just via mullvad interface
+        - download manager? / auto move with command?
 
 ## beta
 
 - -arr services for metadata
 
-- navidrome
-
 - bookstack service (native nixos module)
 
 - backup (important) syncthing folders to b2
     - rclone / borg
-    - set up payment for b2 (only first 10g free)
 
 - hosted gitea -> dotfiles
     - gitea as main remote
     - push to gitlab from there? (with ci? / supervised?)
 
 - photoview -> librephotos
-    - images in syncthing
+    - images in syncthing / seafile
 
 - set up hedgedoc
 - re-enable ttrss
