@@ -152,6 +152,9 @@
 
       gpgKey = "BDCD0C4E9F252898";
       gpg-sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
+
+      net = import ./network.nix {};
+      iplot = net.networks.default;
     in {
       #devShells."${system}".default = util.shells.legacyShell;
       devShells."${system}".default = util.shells.devShell;
@@ -268,6 +271,12 @@
         delta = util.server.mkServer {
           servername = "delta";
           services = [ "jellyfin" ];
+          fileshare.mount.binds = [
+            {
+              ip = iplot.beta;
+              dirs = [ "/media" ];
+            }
+          ];
         };
 
 
@@ -304,12 +313,14 @@
             core.hostName = "gamma";
             core.enableBluetooth = true;
 
+            dns.nameserver = "beta";
             mullvad.enable = true;
+
+            sound.enable = true;
+            yubikey.enable = true;
 
             nvidia.enable = true;
             desktop.enable = true;
-            sound.enable = true;
-            yubikey.enable = true;
 
             video = {
               enable = true;
@@ -317,23 +328,15 @@
               manager = "xfce";
             };
 
-            server = {
-              services.jellyfin.enable = true;
-              services.telegraf.enable = true;
-            };
+            server.services.telegraf.enable = true;
 
-            fileshare = {
-              mount = {
-                binds = [
-                  {
-                    ip = "192.168.0.120";
-                    dirs = [ "/media" ];
-                  }
-                ];
-              };
-            };
+            fileshare.mount.binds = [
+              {
+                ip = iplot.beta;
+                dirs = [ "/media" ];
+              }
+            ];
 
-            dns.nameserver = "beta";
           };
         };
 
@@ -351,13 +354,11 @@
             core.enableBluetooth = true;
 
             dns.nameserver = "beta";
-
             mullvad.enable = true;
 
             sound.enable = true;
             yubikey.enable = true;
 
-            server.services.telegraf.enable = false;
 
             laptop = {
               enable = true;
@@ -368,6 +369,8 @@
               enable = true;
               manager = "sway";
             };
+
+            server.services.telegraf.enable = false;
           };
         };
 
@@ -392,19 +395,20 @@
       deploy.nodes = {
         alpha = {
           hostname = "148.251.102.93";
-          #hostname = "10.100.0.1";
+          #hostname = "10.200.0.1";
           sshUser = "root";
           profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
         };
 
         beta = {
-          #hostname = "10.100.0.2";
+          #hostname = "10.200.0.2";
           hostname = "192.168.0.120";
           sshUser = "root";
           profiles.system.path = deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
         };
 
         delta = {
+          #hostname = "10.200.0.4";
           hostname = "192.168.0.21";
           sshUser = "root";
           profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;

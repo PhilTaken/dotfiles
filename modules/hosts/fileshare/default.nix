@@ -8,6 +8,7 @@ with lib;
 let
   cfg = config.phil.fileshare;
   wireguard = config.phil.wireguard;
+  nebula = config.phil.nebula;
 
   mkSharesForIps = ips: shares:
     ("/export\t" + (lib.concatMapStrings (ip: "${ip}(rw,fsid=0,no_subtree_check,crossmnt,fsid=0) ") ips)) + "\n" +
@@ -90,7 +91,9 @@ in
       ips = mkOption {
         description = "ips to share to";
         type = types.listOf types.str;
-        default = [ (if wireguard.enable then "10.100.0.0/24" else "*") "192.168.0.0/24" ];
+        default = [ "192.168.0.0/24" ] ++
+        (if wireguard.enable then [ "10.100.0.0/24" ] else []) ++
+        (if nebula.enable then [ "10.200.0.0/24" ] else []);
       };
     };
 
