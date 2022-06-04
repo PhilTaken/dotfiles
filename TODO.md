@@ -4,7 +4,6 @@
 
 - combine host + user config more (?) TODO: decide
     - enable appropriate configs for de/wm based on what is enabled on host
-    - PRIORITY: use nebula for dns and web services -> rewrite dependency on wireguard-peers.nix
 
 - work on eww bar config
     - workspaces
@@ -40,6 +39,8 @@
 
 - nested flakes for better pinning
     - spacemacs/neovim/eww/spicetify/polymc
+
+- implement proper tagging for nebula
 
 ## DNS
 

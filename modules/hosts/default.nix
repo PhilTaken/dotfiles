@@ -20,7 +20,7 @@
     ./backup
 
     ./wireguard
-    ./mullvad
     ./nebula
+    ./mullvad
   ];
 }

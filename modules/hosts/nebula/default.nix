@@ -7,35 +7,33 @@ with lib;
 
 let
   cfg = config.phil.nebula;
-  peers = import ./nebula-peers.nix;
   networkName = "milkyway";
+
+  net = import ../../../network.nix {};
+  iplot = net.networks."${networkName}";
+  hostnames = builtins.attrNames iplot;
   hostname = config.networking.hostName;
-  hostMap = {
-    "10.200.0.1" = [ "148.251.102.93:4242" ];
-  };
+  port = 4242;
+
+  hostMap = builtins.listToAttrs
+    (map
+      (endp: {
+        name = iplot.${endp};
+        value = [ (net.endpoints.${endp} + ":${toString port}") ];
+      })
+      (builtins.attrNames net.endpoints));
+
+  isLighthouse = builtins.elem hostname (builtins.attrNames net.endpoints);
+  lighthouses = if isLighthouse then [] else builtins.attrNames hostMap;
+
   owner = config.systemd.services."nebula@${networkName}".serviceConfig.User or "root";
   sopsFile = ../../../sops/nebula.yaml;
-  lighthouses = if builtins.elem hostname cfg.lighthosts then [] else builtins.attrNames hostMap;
 
+  # TODO: rework this
   any = { port = "any"; proto = "any"; host = "any"; };
-
 in {
-  options.phil.nebula = {
-    enable = mkOption {
-      description = "enable nebula module";
-      type = types.bool;
-      default = false;
-    };
-
-    lighthosts = mkOption {
-      description = "list of lighthouses";
-      type = types.listOf types.str;
-      default = [ "alpha" ];
-    };
-  };
-
+  options.phil.nebula.enable = mkEnableOption "nebula";
   config = mkIf (cfg.enable) {
-
     sops.secrets.ca = {
       inherit owner sopsFile;
     };
@@ -48,13 +46,12 @@ in {
 
     services.nebula.networks."${networkName}" = {
       inherit (cfg) enable;
-      inherit lighthouses;
+      inherit lighthouses isLighthouse;
 
       ca = config.sops.secrets.ca.path;
       key = config.sops.secrets."${hostname}-key".path;
       cert = config.sops.secrets."${hostname}-crt".path;
 
-      isLighthouse = builtins.elem hostname cfg.lighthosts;
       staticHostMap = hostMap;
       firewall.inbound = [ any ];
       firewall.outbound = [ any ];
