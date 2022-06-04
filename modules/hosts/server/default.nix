@@ -7,8 +7,8 @@ with lib;
 
 let
   cfg = config.phil.server;
-in
-{
+  net = import ../../../network.nix {};
+in {
   imports = [
     ./adguardhome.nix
     ./caddy.nix
@@ -51,7 +51,7 @@ in
         allowedUDPPorts = [ ];
       };
 
-      "yggdrasil" = {
+      "${net.networks.default.interfaceName}" = {
         allowedUDPPorts = [
           53   # dns (unbound)
           80   # http (caddy)

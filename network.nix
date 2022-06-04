@@ -11,6 +11,7 @@
     # due to how nebula works with certificates, changing these will not actually change
     # the hosts ips, just name resolution for hosted services
     milkyway = {
+      interfaceName = "nebula.milkyway";
       gateway = "10.200.0.0/24";
 
       alpha = "10.200.0.1";
@@ -22,6 +23,7 @@
 
     # these can be adjusted however you desire
     yggdrasil = {
+      interfaceName = "yggdrasil";
       gateway = "10.100.0.0/24";
 
       alpha = "10.100.0.1";
