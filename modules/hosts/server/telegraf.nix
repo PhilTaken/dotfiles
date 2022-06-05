@@ -7,6 +7,7 @@ with lib;
 
 let
   cfg = config.phil.server.services.telegraf;
+  outputUrl = "http://10.200.0.1:8086";
 in {
   options.phil.server.services.telegraf = {
     enable = mkEnableOption "telegraf";
@@ -33,7 +34,15 @@ in {
 
     services.telegraf = {
       enable = true;
-      environmentFiles = [ config.sops.secrets.telegraf-shared.path ];
+      environmentFiles = [
+        config.sops.secrets.telegraf-shared.path
+        (pkgs.writeTextFile {
+          name = "telegraf-path-env";
+          text = ''
+            PATH="$PATH:${pkgs.lm_sensors}/bin"
+          '';
+        })
+      ];
       extraConfig = {
         agent = {
           interval = "10s";
@@ -54,16 +63,16 @@ in {
         outputs = {
           influxdb_v2 = [
             {
-              urls = [ "http://10.100.0.1:8086" ];
-              timeout = "60s";
+              urls = [ outputUrl ];
+              timeout = "10s";
               token = "$INFLUX_TOKEN";
               organization = "home";
               bucket = "data";
-              namepass = [ "cpu" "disk" "diskio" "mem" "net" "processes" "swap" "system" ];
+              namepass = [ "cpu" "disk" "diskio" "mem" "net" "processes" "swap" "system" "sensors" ];
             }
           ] ++ (lib.optional cfg.inputs.extrasensors {
-            urls = [ "http://10.100.0.1:8086" ];
-            timeout = "60s";
+            urls = [ outputUrl ];
+            timeout = "10s";
             token = "$INFLUX_TOKEN";
             organization = "home";
             bucket = "sensors";
@@ -89,6 +98,7 @@ in {
           processes = { };
           swap = { };
           system = { };
+          sensors = { };
         } // (lib.optionalAttrs cfg.inputs.extrasensors {
           tail = {
             name_override = "env_sensors";
