@@ -41,20 +41,6 @@ with builtins;
             anki
             cachix
 
-            # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
-            #discord
-            (if phil.wms.sway.enable or false then
-            (pkgs.writeShellApplication {
-              name = "discord";
-              text = "${pkgs.discord}/bin/discord --use-gl=desktop";
-            })
-            (pkgs.makeDesktopItem {
-              name = "discord";
-              exec = "discord";
-              desktopName = "Discord";
-            })
-            else discord)
-
             element-desktop
             gimp
             gping
@@ -71,7 +57,22 @@ with builtins;
             wget
             youtube-dl
             zoom-us
-          ] ++ (extraPackages pkgs);
+          ] ++ (extraPackages pkgs) ++
+            # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
+            #discord
+            (if phil.wms.sway.enable or false then [
+            (pkgs.writeShellApplication {
+              name = "discord";
+              text = "${pkgs.discord}/bin/discord --use-gl=desktop";
+            })
+            (pkgs.makeDesktopItem {
+              name = "discord";
+              exec = "discord";
+              desktopName = "Discord";
+            })
+            ]
+            else [ discord ]);
+
         };
 
         programs.home-manager.enable = true;
