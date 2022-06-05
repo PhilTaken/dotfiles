@@ -245,8 +245,8 @@
 
         # TODO: generate this set from list
         dnsBinds = {
-          #"jellyfin" = "beta";
           "jellyfin" = "delta";
+          "gitea" = "delta";
           "calibre" = "beta";
           "influx" = "alpha";
         };
@@ -270,7 +270,18 @@
         # mini nas @ home (192.168.0.21 / 10.100.0.5 / 10.200.0.4)
         delta = util.server.mkServer {
           servername = "delta";
-          services = [ "jellyfin" ];
+          services = [
+            "gitea"
+            "jellyfin"
+            #"calibre"
+            {
+              syncthing = {
+                enable = false;
+                dataFolder = "/media/syncthing/data";
+                configFolder = "/media/syncthing/config";
+              };
+            }
+          ];
           fileshare.mount.binds = [
             {
               ip = iplot.beta;
@@ -284,7 +295,7 @@
         beta = raspiUtil.server.mkServer {
           servername = "beta";
           services = [
-            "jellyfin"
+            "jellyfin"       # TODO: phase out
             "calibre"
             "syncthing"
             {

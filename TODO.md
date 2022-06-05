@@ -2,9 +2,6 @@
 
 ## general issues
 
-- combine host + user config more (?) TODO: decide
-    - enable appropriate configs for de/wm based on what is enabled on host
-
 - work on eww bar config
     - workspaces
     - music popup?
@@ -12,19 +9,16 @@
     - onclick
 
 - set up modules:
-    - elasticsearch stack
-        - filebeat
-        - kibana
     - gitea module
-        - set up on delta
         - ci/cd with hydra/rain semi-automated with deploy-rs
     - set up matrix server module
         - matrix-conduit
-    - subsonic music streaming
+    - graylog module
     - home-assistant
     - grocy
     - pleroma
     - radicale
+    - subsonic music streaming
     - snapcast server/clients
 
     - xmonad (wip)
@@ -34,13 +28,15 @@
     - seafile
     - iris/mopidy
 
-
 - basic install script for custom image (basic partitioning -> back up all non-store files)
 
 - nested flakes for better pinning
     - spacemacs/neovim/eww/spicetify/polymc
 
 - implement proper tagging for nebula
+
+- combine host + user config more (?) TODO: decide
+    - enable appropriate configs for de/wm based on what is enabled on host
 
 ## DNS
 

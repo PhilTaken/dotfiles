@@ -14,14 +14,15 @@ in {
     ./caddy.nix
     ./calibre-web.nix
     ./fail2ban.nix
+    ./gitea.nix
     ./grafana.nix
     ./influxdb2.nix
     ./iperf.nix
     ./jellyfin.nix
     ./keycloak.nix
-    ./seafile.nix
     ./nginx.nix
     ./openssh.nix
+    ./seafile.nix
     ./syncthing.nix
     ./telegraf.nix
     ./ttrss.nix
