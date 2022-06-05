@@ -39,36 +39,5 @@ in {
       bottom
       usbutils
     ];
-
-    # firewall
-    networking.firewall.interfaces = {
-      "eth0" = {
-        allowedTCPPorts = [ ];
-        allowedUDPPorts = [ ];
-      };
-
-      "tailscale0" = {
-        allowedTCPPorts = [ ];
-        allowedUDPPorts = [ ];
-      };
-
-      "${net.networks.default.interfaceName}" = {
-        allowedUDPPorts = [
-          53   # dns (unbound)
-          80   # http (caddy)
-          443  # https (caddy)
-
-          22   # ssh
-        ];
-
-        allowedTCPPorts = [
-          53 # dns (unbound)
-          80 # webinterfaces (caddy)
-          443 # webinterfaces ssl (caddy)
-
-          22 # ssh
-        ];
-      };
-    };
   };
 }

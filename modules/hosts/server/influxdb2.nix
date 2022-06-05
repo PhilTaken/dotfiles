@@ -31,6 +31,10 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
+      allowedUDPorts = [ cfg.port ];
+      allowedTCPPorts = [ cfg.port ];
+    };
     services.influxdb2 = {
       enable = true;
       settings = {

@@ -40,5 +40,10 @@ in {
       enable = true;
       extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
     };
+
+    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
+      allowedUDPorts = [ 80 443 ];
+      allowedTCPPorts = [ 80 443 ];
+    };
   };
 }

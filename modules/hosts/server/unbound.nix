@@ -27,6 +27,10 @@ in
 
   # TODO: enable condition
   config = mkIf (cfg.enable) {
+    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
+      allowedUDPorts = [ 53 ];
+      allowedTCPPorts = [ 53 ];
+    };
     services.unbound = let
       subdomains = (builtins.mapAttrs (name: value: { ip = iplot."${value}"; }) cfg.apps);
     in {
