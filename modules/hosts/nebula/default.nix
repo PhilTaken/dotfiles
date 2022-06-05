@@ -52,7 +52,9 @@ in {
       key = config.sops.secrets."${hostname}-key".path;
       cert = config.sops.secrets."${hostname}-crt".path;
 
+      tun.device = networkName;
       staticHostMap = hostMap;
+
       firewall.inbound = [ any ];
       firewall.outbound = [ any ];
     };

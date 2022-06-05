@@ -58,7 +58,7 @@ in {
           80   # http (caddy)
           443  # https (caddy)
 
-          8086
+          22   # ssh
         ];
 
         allowedTCPPorts = [
@@ -66,7 +66,7 @@ in {
           80 # webinterfaces (caddy)
           443 # webinterfaces ssl (caddy)
 
-          8086
+          22 # ssh
         ];
       };
     };
