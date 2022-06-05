@@ -7,6 +7,7 @@ with lib;
 
 let
   cfg = config.phil.server.services.influxdb2;
+  net = import ../../../network.nix {};
 in
 {
 
@@ -32,7 +33,7 @@ in
 
   config = mkIf (cfg.enable) {
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPorts = [ cfg.port ];
+      allowedUDPPorts = [ cfg.port ];
       allowedTCPPorts = [ cfg.port ];
     };
     services.influxdb2 = {
