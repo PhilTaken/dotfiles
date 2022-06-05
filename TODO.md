@@ -9,11 +9,14 @@
     - onclick
 
 - set up modules:
+    - logging
+        - graylog module
+        - syslog configs
+        - vector.dev ?
     - gitea module
         - ci/cd with hydra/rain semi-automated with deploy-rs
     - set up matrix server module
         - matrix-conduit
-    - graylog module
     - home-assistant
     - grocy
     - pleroma
@@ -38,6 +41,8 @@
 - combine host + user config more (?) TODO: decide
     - enable appropriate configs for de/wm based on what is enabled on host
 
+- consul?
+
 ## DNS
 
 - "global" network definitions file
@@ -58,14 +63,10 @@
 
 - -arr services for metadata
 
-- bookstack service (native nixos module)
+- bookstack service
 
 - backup (important) syncthing folders to b2
     - rclone / borg
-
-- hosted gitea -> dotfiles
-    - gitea as main remote
-    - push to gitlab from there? (with ci? / supervised?)
 
 - photoview -> librephotos
     - images in syncthing / seafile
@@ -87,7 +88,7 @@
         - https://github.com/simrat39/symbols-outline.nvim
     - quickfix list
         - https://github.com/kevinhwang91/nvim-bqf
-    - marks 
+    - marks
         - https://github.com/chentau/marks.nvim
     - commentary
         - tjdevries video
