@@ -75,7 +75,7 @@ in
           user = "nixos";
         };
         "delta" = {
-          hostname = "10.200.0.4";
+          hostname = "10.200.0.5";
           user = "nixos";
         };
 
