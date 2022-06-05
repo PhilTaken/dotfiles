@@ -197,8 +197,6 @@
           };
 
           extraPackages = pkgs: with pkgs; [
-            calibre
-            kicad
             gnome3.adwaita-icon-theme
             xournalpp
           ];
@@ -381,7 +379,7 @@
               manager = "sway";
             };
 
-            server.services.telegraf.enable = false;
+            server.services.telegraf.enable = true;
           };
         };
 
