@@ -24,11 +24,18 @@ in
   config = mkIf (cfg.enable) {
     programs.ssh = {
       enable = true;
-      matchBlocks = {
+      matchBlocks = rec {
         # work
         "jureca" = {
           hostname = "jureca.fz-juelich.de";
           user = "herzog1";
+        };
+        "jurecat" = {
+          inherit (jureca) hostname user;
+          extraOptions = {
+            "RequestTTY" = "yes";
+            "RemoteCommand" = "tmux attach || tmux new";
+          };
         };
         "judac" = {
           hostname = "judac.fz-juelich.de";

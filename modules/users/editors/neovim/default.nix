@@ -59,6 +59,8 @@ in {
 
         sqlite # for sqlite.lua
         universal-ctags # ctags for anything
+
+        inetutils # remote editing
       ] ++ (with pkgs.nodePackages; [
         #pyright # python
         typescript-language-server # js / ts
