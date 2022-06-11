@@ -3,11 +3,11 @@
     "catppucin-wallpapers": {
       "flake": false,
       "locked": {
-        "lastModified": 1650479838,
-        "narHash": "sha256-FiilS+t6QszTsnaIFVRRC8pQ6oTcv6qvKMf9cD5AoBQ=",
+        "lastModified": 1654936739,
+        "narHash": "sha256-6o3UwyI89RN9rb0/Rv41jUd0s3wx3It0PpX3U+U7/Lk=",
         "owner": "catppuccin",
         "repo": "wallpapers",
-        "rev": "61d997b8f4c33f6890b0d138bfed6329f3aff794",
+        "rev": "a6714a87cd8062cb1420e42c148dc402a581d5e0",
         "type": "github"
       },
       "original": {
@@ -26,11 +26,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1654522640,
-        "narHash": "sha256-0QTVKFLcEq/2GGt2WG75b/1e7MuGBaoFXROkOWsTxUg=",
+        "lastModified": 1654966696,
+        "narHash": "sha256-2goV0sragAmkFM9iM4Jc3bBk/WmyBpLKQI6XpHiVMAM=",
         "owner": "nix-community",
         "repo": "comma",
-        "rev": "13102d58c26267574982465b5b9b5b0f98ca98cc",
+        "rev": "75c9adac36eee0d6ed7217b61fc5d8e259a91de0",
         "type": "github"
       },
       "original": {
@@ -279,11 +279,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1654852437,
-        "narHash": "sha256-CH1Y8z0emqNPZ0MqRJUJv6NxHGXMo1QMCiC9KbMK0Mo=",
+        "lastModified": 1654939943,
+        "narHash": "sha256-ERN4VEfevYZx0WgLFT84gUTxxX43xF2yKd08HB6pFWk=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "e15d31b530c443daea04d7a772b24da737397c53",
+        "rev": "c87a5ebbc31c56867f9d6f6d27bb8b7ddecc837e",
         "type": "github"
       },
       "original": {
@@ -311,11 +311,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1654845941,
-        "narHash": "sha256-uXulXu4BQ9ch1ItV0FlL2Ns8X83m6unT5h/0X//VRLQ=",
+        "lastModified": 1654931879,
+        "narHash": "sha256-OyKm0DPMaHdRcZ8c+jaXmecEeSe3Fd1K+yirg7zDsys=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7b3e907a6fef935794b5049c2c57c519853deb90",
+        "rev": "c0d782e7b7b81174e056f7dbc991e82314488239",
         "type": "github"
       },
       "original": {
@@ -443,11 +443,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1654734522,
-        "narHash": "sha256-1ozLPWQHYXherlaZiOAigxtm+jzhtQBSLKPEXgfzm/g=",
+        "lastModified": 1654969551,
+        "narHash": "sha256-mcQIDMKK1yloAByYk6mnuG21K/mDznHWdmd2zHGZcRY=",
         "owner": "PolyMC",
         "repo": "PolyMC",
-        "rev": "309013efb3e148310ba4802ee946a55c01d1d56e",
+        "rev": "2bd8e7dca4aa55c836cb0bf33dc8d4be84fc938c",
         "type": "github"
       },
       "original": {
@@ -473,8 +473,7 @@
         "sops-nix-src": "sops-nix-src",
         "spacemacs-git": "spacemacs-git",
         "spicetify": "spicetify",
-        "tmux-colorscheme": "tmux-colorscheme",
-        "vms": "vms"
+        "tmux-colorscheme": "tmux-colorscheme"
       }
     },
     "sops-nix-src": {
@@ -502,11 +501,11 @@
     "spacemacs-git": {
       "flake": false,
       "locked": {
-        "lastModified": 1654867346,
-        "narHash": "sha256-3q9Uo61vMIMeG9jbtucd6N8tziQ2fMDamNG5z273x0U=",
+        "lastModified": 1654950264,
+        "narHash": "sha256-U+onWPTiTxL/E+WyOy7jjL75/KMypfZ54H+CkQwcKFQ=",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "87823c308176b8ae39348498d0b7ea7c2fbaa032",
+        "rev": "c41bb1406bf89026c34875df73e31aa4434c117e",
         "type": "github"
       },
       "original": {
@@ -608,22 +607,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "vms": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1567314613,
-        "narHash": "sha256-POhnauiMBZt8hfQ7vQuAF6EZEYIQb8qVc+eXy2kxdgY=",
-        "owner": "Nekroze",
-        "repo": "vms.nix",
-        "rev": "2457c391a9934fe18b209cca9dcfabc7b500c88f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Nekroze",
-        "repo": "vms.nix",
         "type": "github"
       }
     }
