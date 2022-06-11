@@ -27,6 +27,7 @@ in {
     ./telegraf.nix
     ./ttrss.nix
     ./unbound.nix
+    ./vector.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";
