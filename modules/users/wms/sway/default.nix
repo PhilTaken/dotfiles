@@ -74,6 +74,10 @@ rec {
           "936:42233:OLKB_Planck" = {
             xkb_layout = "us(intl)";
           };
+          # wireless lopro corne
+          "7504:24926:ZMK_Project_Corne_Keyboard" = {
+            xkb_layout = "us(intl)";
+          };
           # all other keyboard
           "*" = {
             xkb_layout = "us(workman-intl)";
@@ -189,7 +193,7 @@ rec {
           }
           {
             command = "opacity 1";
-            criteria = { app_id = "firefox"; };
+            criteria = { app_id = "librewolf|firefox"; };
           }
           {
             command = "opacity 1";
