@@ -193,12 +193,14 @@
             wms = {
               sway.enable = true;
               bars.waybar.enable = true;
+              tools.udiskie.enable = true;
             };
           };
 
           extraPackages = pkgs: with pkgs; [
             gnome3.adwaita-icon-theme
             xournalpp
+            comma.packages.${system}.comma
           ];
         };
 
@@ -243,10 +245,11 @@
 
         # TODO: generate this set from list
         dnsBinds = {
+          "influx" = "alpha";
+          "grafana" = "alpha";
+          "calibre" = "beta";
           "jellyfin" = "delta";
           "gitea" = "delta";
-          "calibre" = "beta";
-          "influx" = "alpha";
         };
       in {
         x86-iso = util.host.mkHost {
@@ -262,7 +265,10 @@
         # vm on a hetzner server, debian host (10.100.0.1)
         alpha = util.server.mkServer {
           servername = "alpha";
-          services = [ "influxdb2" ];
+          services = [
+            "influxdb2"
+            "grafana"
+          ];
         };
 
         # mini nas @ home (192.168.0.21 / 10.100.0.5 / 10.200.0.4)
@@ -293,7 +299,7 @@
         beta = raspiUtil.server.mkServer {
           servername = "beta";
           services = [
-            "jellyfin"       # TODO: phase out
+            #"jellyfin"       # TODO: phase out
             "calibre"
             "syncthing"
             {
@@ -338,6 +344,7 @@
             };
 
             server.services.telegraf.enable = true;
+            server.services.vector.enable = true;
 
             fileshare.mount.binds = [
               {
@@ -345,8 +352,10 @@
                 dirs = [ "/media" ];
               }
             ];
-
           };
+
+          extraimports = [
+          ];
         };
 
         # workplace-issued thinkpad (10.100.0.4)
@@ -424,6 +433,11 @@
         };
       };
 
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      # filter darwin system checks
+      checks = lib.filterAttrs
+        (system: _: ! lib.hasInfix "darwin" system)
+        (builtins.mapAttrs
+          (system: deployLib: deployLib.deployChecks self.deploy)
+          deploy-rs.lib);
     };
 }

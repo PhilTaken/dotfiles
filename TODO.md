@@ -2,20 +2,17 @@
 
 ## general issues
 
-- work on eww bar config
-    - workspaces
-    - music popup?
-    - css styling
-    - onclick
-
 - set up modules:
     - logging
-        - graylog module
         - syslog configs
         - vector.dev ?
+        - grafana config
+            - todo: provisions
+
     - gitea module
         - ci/cd with hydra/rain semi-automated with deploy-rs
-    - set up matrix server module
+
+    - matrix server module
         - matrix-conduit
     - home-assistant
     - grocy
@@ -30,6 +27,12 @@
 
     - seafile
     - iris/mopidy
+
+- work on eww bar config
+    - workspaces
+    - music popup?
+    - css styling
+    - onclick
 
 - basic install script for custom image (basic partitioning -> back up all non-store files)
 
