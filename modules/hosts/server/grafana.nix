@@ -10,6 +10,7 @@ let
   outputUrl = "http://10.200.0.1:8086";
   domain = "grafana.home";
   port = 3010;
+  net = import ../../../network.nix {};
 in {
   options.phil.server.services.grafana = {
     enable = mkEnableOption "grafana";
@@ -30,6 +31,11 @@ in {
     };
 
     phil.server.services.caddy.proxy."grafana" = port;
+
+    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
+      allowedUDPPorts = [ 3100 ];
+      allowedTCPPorts = [ 3100 ];
+    };
 
     services.loki = {
       enable = true;

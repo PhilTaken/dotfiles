@@ -17,6 +17,7 @@ let
     "openssh"
     "fail2ban"
     "telegraf"
+    "vector"
     "iperf"
   ];
 in rec {

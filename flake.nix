@@ -299,7 +299,6 @@
         beta = raspiUtil.server.mkServer {
           servername = "beta";
           services = [
-            #"jellyfin"       # TODO: phase out
             "calibre"
             "syncthing"
             {
@@ -389,6 +388,7 @@
             };
 
             server.services.telegraf.enable = true;
+            server.services.vector.enable = true;
           };
         };
 

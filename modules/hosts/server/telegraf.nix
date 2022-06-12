@@ -53,7 +53,7 @@ in {
           flush_interval = "20s";
           flush_jitter = "0s";
           precision = "";
-          debug = true;
+          debug = false;
           quiet = false;
           logfile = "";
           hostname = "";
