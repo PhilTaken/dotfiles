@@ -3,18 +3,18 @@
 ## general issues
 
 - set up modules:
-    - logging
-        - syslog configs
-        - vector.dev ?
-        - grafana config
-            - todo: provisions
 
     - gitea module
         - ci/cd with hydra/rain semi-automated with deploy-rs
 
-    - matrix server module
-        - matrix-conduit
+    - dashboard (homer)
+        - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
+    
+    - central services file akin to network file
+
+    - matrix-conduit
     - home-assistant
+    - roundcube mail client
     - grocy
     - pleroma
     - radicale
@@ -34,6 +34,12 @@
     - css styling
     - onclick
 
+- logging
+    - grafana config
+        - todo: provisions
+    - extend vector to replace telegraf
+        - geoip mapping ip adresses -> store in influxdb, visualize in grafana
+
 - basic install script for custom image (basic partitioning -> back up all non-store files)
 
 - nested flakes for better pinning
@@ -44,25 +50,9 @@
 - combine host + user config more (?) TODO: decide
     - enable appropriate configs for de/wm based on what is enabled on host
 
-- consul?
+- http://consul.io?
 
-## DNS
-
-- "global" network definitions file
-    - expose all wireguard subnet adresses in config
-        - useful in server module for webservices
-        - useful for dns
-
-    - define all ips/hostnames/ -> host specific settings in central config file to import into stuff
-
-- generate nginx config from enabled options -> name, prefix, host etc.
-    - add to settings per service
-
-- transfer torrents to beta for seeding
-    - set up webinterface, automatic importing dir
-        - download manager? / auto move with command?
-
-## beta
+## delta
 
 - -arr services for metadata
 
@@ -103,9 +93,6 @@
 
 - devdocs api docs
     - devdocs.io
-
-- webapps
-    - roundcube mail client
 
 - distributed file system
     - ceph
