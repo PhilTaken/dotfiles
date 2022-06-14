@@ -1,11 +1,12 @@
 { ... }:
 
 {
-  endpoints = {
-    "alpha" = "148.251.102.93";
-  };
 
   networks = rec {
+    endpoints = {
+      "alpha" = "148.251.102.93";
+    };
+
     default = milkyway;
 
     # due to how nebula works with certificates, changing these will not actually change
@@ -32,5 +33,23 @@
       nixos-laptop = "10.100.0.4";
       delta = "10.100.0.5";
     };
+  };
+
+  services = {
+    alpha = [
+      "influxdb2"
+      "grafana"
+    ];
+
+    beta = [
+      "calibre"
+      "syncthing"
+    ];
+
+    delta = [
+      "gitea"
+      "jellyfin"
+      #"calibre"
+    ];
   };
 }

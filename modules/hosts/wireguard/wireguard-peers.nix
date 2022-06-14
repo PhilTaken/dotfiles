@@ -14,9 +14,9 @@ let
     inherit publicKey;
     ownIPs = mkOwnIPs host;
     allowedIPs = mkAllowedIPs host;
-  } (if builtins.hasAttr host net.endpoints then {
+  } (if builtins.hasAttr host net.networks.endpoints then {
     allowedIPs = [ iplot.gateway ];
-    endpoint = net.endpoints.${host};
+    endpoint = net.networks.endpoints.${host};
   } else {});
 
   pubkeys = {

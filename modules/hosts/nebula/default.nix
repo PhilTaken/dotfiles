@@ -19,11 +19,11 @@ let
     (map
       (endp: {
         name = iplot.${endp};
-        value = [ (net.endpoints.${endp} + ":${toString port}") ];
+        value = [ (net.networks.endpoints.${endp} + ":${toString port}") ];
       })
-      (builtins.attrNames net.endpoints));
+      (builtins.attrNames net.networks.endpoints));
 
-  isLighthouse = builtins.elem hostname (builtins.attrNames net.endpoints);
+  isLighthouse = builtins.elem hostname (builtins.attrNames net.networks.endpoints);
   lighthouses = if isLighthouse then [] else builtins.attrNames hostMap;
 
   owner = config.systemd.services."nebula@${networkName}".serviceConfig.User or "root";

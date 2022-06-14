@@ -32,6 +32,9 @@ in {
           };
         };
 
+        transforms = {
+        };
+
         sinks = {
           loki = {
             acknowledgements.enabled = false;
@@ -52,7 +55,7 @@ in {
 
           #out = {
             #inputs = [
-              ##"journald"
+              #"journald"
             #];
             #encoding.codec = "text";
 
