@@ -14,13 +14,18 @@ let
     ("/export\t" + (lib.concatMapStrings (ip: "${ip}(rw,fsid=0,no_subtree_check,crossmnt,fsid=0) ") ips)) + "\n" +
     (lib.concatMapStrings (share: "/export${share}\t" + (lib.concatMapStrings (ip: "${ip}(rw,nohide,insecure,no_subtree_check) ") ips) + "\n") shares);
 
+  net = import ../../../network.nix {};
+  iplot = net.networks.default;
+
   mkMountsForBinds = binds: builtins.listToAttrs (builtins.concatLists (
     (builtins.map
       (bind: builtins.map
         (dir: {
-          name = "/mnt${dir}";
-          value = {
-            device = "${bind.ip}:${dir}";
+          name = "${dir}";
+          value = let
+            ip = if bind.host == null then bind.ip else net.networks.default.${host};
+          in {
+            device = "${ip}:${dir}";
             fsType = "nfs4";
             # mount on first access instead of boot, unmount after 10 mins
             options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
@@ -68,7 +73,13 @@ in
           options = {
             ip = mkOption {
               description = "ip of the sharing server";
-              type = types.str;
+              type = types.nullOr types.str;
+              default = null;
+            };
+            host = mkOption {
+              description = "hostname of the sharing server";
+              type = types.nullOr types.str;
+              default = null;
             };
             dirs = mkOption {
               description = "shares to mount";

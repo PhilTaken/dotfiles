@@ -23,6 +23,7 @@
     };
 
     # these can be adjusted however you desire
+    # fallback network -> no p2p
     yggdrasil = {
       interfaceName = "yggdrasil";
       gateway = "10.100.0.0/24";

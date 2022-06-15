@@ -10,8 +10,17 @@ let
   net = import ../../../network.nix {};
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
-in
-{
+
+  mkDnsBindsFromServices = services: builtins.mapAttrs
+    # TODO: sensible handling for identical services on multiple hosts
+    (_: hosts: builtins.head hosts)
+    (lib.zipAttrs
+      (builtins.map
+        (host: builtins.listToAttrs (builtins.map
+          (service: { name = service; value = host; })
+          services.${host}))
+        (builtins.attrNames services)));
+in {
   options.phil.server.services.unbound = {
     enable = mkEnableOption "enable the unbound server";
 
@@ -21,7 +30,7 @@ in
       example = {
         "jellyfin" = "beta";
       };
-      default = { };
+      default = mkDnsBindsFromServices net.services;
     };
   };
 

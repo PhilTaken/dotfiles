@@ -117,12 +117,8 @@
         import ./lib rec {
           inherit home-manager lib overlays system;
           pkgs = nixpkgsFor system;
-          extramodules = [
-            sops-nix-src.nixosModules.sops
-          ];
-          extraHMImports = [
-            spicetify.homeManagerModule
-          ];
+          extramodules = [ sops-nix-src.nixosModules.sops ];
+          extraHMImports = [ spicetify.homeManagerModule ];
         };
 
       systemUsersFor = pkgs: {
@@ -242,33 +238,13 @@
 
         wireguard.enable = true;
         nebula.enable = true;
-
-        # TODO: generate this set from list
-        dnsBinds = {
-          "influx" = "alpha";
-          "grafana" = "alpha";
-          "calibre" = "beta";
-          "jellyfin" = "delta";
-          "gitea" = "delta";
-        };
       in {
-        x86-iso = util.host.mkHost {
-          users = [ systemUsers.nixos ];
-          systemConfig = {
-            core.hostName = "isoInstall";
-            wireguard.enable = false;
-            server.services.openssh.enable = true;
-          };
-          extraimports = [ baseInstallerImport ];
-        };
+        x86-iso = util.iso.mkIso "isoInstall";
 
         # vm on a hetzner server, debian host (10.100.0.1)
         alpha = util.server.mkServer {
           servername = "alpha";
-          services = [
-            "influxdb2"
-            "grafana"
-          ];
+          services = [ "influxdb2" "grafana" ];
         };
 
         # mini nas @ home (192.168.0.21 / 10.100.0.5 / 10.200.0.4)
@@ -278,18 +254,12 @@
             "gitea"
             "jellyfin"
             #"calibre"
-            {
-              syncthing = {
-                enable = false;
-                dataFolder = "/media/syncthing/data";
-                configFolder = "/media/syncthing/config";
-              };
-            }
+            #"syncthing"
           ];
           fileshare.mount.binds = [
             {
-              ip = iplot.beta;
-              dirs = [ "/media" ];
+              host = "beta";
+              dirs = [ "/mnt/media" ];
             }
           ];
         };
@@ -301,8 +271,8 @@
           services = [
             "calibre"
             "syncthing"
+            "unbound"
             {
-              unbound.apps = dnsBinds;
               telegraf.inputs.extrasensors = true;
             }
           ];
@@ -347,14 +317,11 @@
 
             fileshare.mount.binds = [
               {
-                ip = iplot.beta;
-                dirs = [ "/media" ];
+                host = "beta";
+                dirs = [ "/mnt/media" ];
               }
             ];
           };
-
-          extraimports = [
-          ];
         };
 
         # workplace-issued thinkpad (10.100.0.4)
