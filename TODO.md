@@ -4,13 +4,11 @@
 
 - set up modules:
 
-    - gitea module
-        - ci/cd with hydra/rain semi-automated with deploy-rs
-
     - dashboard (homer)
         - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
-    
-    - central services file akin to network file
+
+    - gitea module
+        - ci/cd with hydra/rain semi-automated with deploy-rs
 
     - matrix-conduit
     - home-assistant
@@ -46,6 +44,7 @@
     - spacemacs/neovim/eww/spicetify/polymc
 
 - implement proper tagging for nebula
+    - signing script with sops secrets
 
 - combine host + user config more (?) TODO: decide
     - enable appropriate configs for de/wm based on what is enabled on host
@@ -101,8 +100,5 @@
 
 ## finances
 
-- selfhosted preferably
-- open source
-- maybe free, not necessarily
-    - good > free
+- selfhosted
 - skrooge?
