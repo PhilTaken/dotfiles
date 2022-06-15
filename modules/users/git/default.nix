@@ -12,7 +12,7 @@ in
     enable = mkOption {
       description = "Enable git";
       type = types.bool;
-      default = false;
+      default = true;
     };
 
     userName = mkOption {

@@ -13,7 +13,7 @@ in
     enable = mkOption {
       description = "enable yubikey module";
       type = types.bool;
-      default = false;
+      default = true;
     };
 
     debug = mkOption {

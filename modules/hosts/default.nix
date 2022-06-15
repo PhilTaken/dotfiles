@@ -1,8 +1,8 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, nixpkgs, ... }:
 
 {
   imports = [
-    ./core
+    (import ./core { inherit pkgs config lib nixpkgs; })
 
     ./yubikey
 

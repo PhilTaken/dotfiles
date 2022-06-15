@@ -20,6 +20,9 @@ let
     "vector"
     "iperf"
   ];
+  users = [ nixos ];
+  # allows value to overwrite enabled when specified explicitly
+  defaultEnabled = builtins.mapAttrs (_: value: lib.mergeAttrs { enable = true; } value);
 in rec {
   mkServer = { servername
   , services ? []
@@ -29,9 +32,6 @@ in rec {
   }:
   let
     hardware-config = import (../machines + "/${servername}");
-    users = [ nixos ];
-    # allows value to overwrite enabled when specified explicitly
-    defaultEnabled = builtins.mapAttrs (_: value: lib.mergeAttrs { enable = true; } value);
   in host.mkHost {
     inherit hardware-config users extraimports;
 
@@ -43,6 +43,10 @@ in rec {
 
       core.hostName = servername;
       core.docker = false;
+
+      sound.enable = false;
+      video.enable = false;
+      yubikey.enable = false;
 
       server = {
         enable = true;

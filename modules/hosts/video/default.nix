@@ -13,7 +13,7 @@ in
     enable = mkOption {
       description = "enable video module";
       type = types.bool;
-      default = false;
+      default = true;
     };
 
     driver = mkOption {

@@ -11,7 +11,7 @@ in {
     enable = mkOption {
       description = "Enable firefox";
       type = types.bool;
-      default = false;
+      default = true;
     };
 
     wayland = mkOption {

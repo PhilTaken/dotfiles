@@ -12,7 +12,7 @@ in {
     enable = mkOption {
       description = "Enable the neovim module";
       type = types.bool;
-      default = false;
+      default = true;
     };
   };
 

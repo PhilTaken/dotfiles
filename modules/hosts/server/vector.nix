@@ -10,7 +10,11 @@ let
   loki_url = "10.200.0.1:3100";
 in {
   options.phil.server.services.vector = {
-    enable = mkEnableOption "vector";
+    enable = mkOption {
+      description = "enable the vector module";
+      type = types.bool;
+      default = true;
+    };
   };
 
   config = mkIf (cfg.enable) {

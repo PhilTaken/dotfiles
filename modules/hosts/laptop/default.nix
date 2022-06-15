@@ -27,6 +27,8 @@ in
   config = mkIf (cfg.enable) {
     programs.steam.enable = true;
 
+    phil.core.enableBluetooth = true;
+
     hardware.acpilight.enable = true;
     environment = {
       systemPackages = with pkgs; [

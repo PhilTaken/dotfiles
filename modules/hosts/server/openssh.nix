@@ -9,7 +9,6 @@ let
   cfg = config.phil.server.services.openssh;
 in
 {
-
   options.phil.server.services.openssh = {
     enable = mkEnableOption "openssh daemon";
     sshKeys = mkOption {

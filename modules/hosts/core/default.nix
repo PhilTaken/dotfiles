@@ -48,7 +48,8 @@ in
       '';
 
       # TODO add my own registry
-      registry = { };
+      registry = {
+      };
 
       settings = {
         trusted-users = [ "root" "@wheel" ];
@@ -78,19 +79,6 @@ in
 
     # links /libexec from derivations to /run/current-system/sw
     environment.pathsToLink = [ "/libexec" ];
-
-    # maybe move this to each machine?
-    #boot = mkIf (cfg.bootLoader != null) {
-      #loader =
-        #if (cfg.bootLoader == "efi") then {
-          #systemd-boot.enable = true;
-          #efi.canTouchEfiVariables = true;
-        #} else {
-          #grub.enable = true;
-          #grub.version = 2;
-          #grub.device = if (cfg.grubDevice != null) then cfg.grubDevice else throw "you need to set a grub device";
-        #};
-    #};
 
     networking.hostName = cfg.hostName;
     time.timeZone = cfg.timeZone;

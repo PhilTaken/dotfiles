@@ -23,7 +23,7 @@ let
         (dir: {
           name = "${dir}";
           value = let
-            ip = if bind.host == null then bind.ip else net.networks.default.${host};
+            ip = if bind.host == null then bind.ip else net.networks.default.${bind.host};
           in {
             device = "${ip}:${dir}";
             fsType = "nfs4";

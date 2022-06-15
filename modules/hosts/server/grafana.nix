@@ -17,7 +17,7 @@ in {
     inputs = {
       default = mkOption {
         type = types.bool;
-        default = true;
+        default = false;
       };
     };
   };

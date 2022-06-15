@@ -13,7 +13,7 @@ in
     enable = mkOption {
       description = "Enable the music module";
       type = types.bool;
-      default = false;
+      default = true;
     };
 
     enableMpris = mkEnableOption "mpris";

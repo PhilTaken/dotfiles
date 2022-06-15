@@ -1,4 +1,11 @@
-{ system, pkgs, lib, user, extramodules ? [ ], ... }:
+{ system
+, pkgs
+, lib
+, user
+, extramodules ? [ ]
+, nixpkgs
+, ...
+}:
 with builtins;
 
 rec {
@@ -25,10 +32,11 @@ rec {
 
           phil = systemConfig;
 
+          nix.registry.nixpkgs.flake = nixpkgs;
+
           sops.defaultSopsFile = ../sops/sops.yaml;
           sops.age.keyFile = "/var/lib/sops-nix/key.txt";
           sops.age.generateKey = true;
-
         }
       ] ++ extramodules;
     };

@@ -48,6 +48,7 @@ in rec {
   };
 
   config = mkIf (cfg.enable) rec {
+    phil.wms.tools.udiskie.enable = true;
     services.kdeconnect = {
       enable = true;
       indicator = true;

@@ -6,8 +6,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify.url = "github:PhilTaken/spicetify-nix";
     polymc.url = "github:PolyMC/PolyMC";
-    comma.url = "github:nix-community/comma";
-    comma.inputs.nixpkgs.follows = "nixpkgs";
 
     # NUR
     nur-src = {
@@ -53,358 +51,151 @@
       url = "github:elkowar/eww";
       flake = false;
     };
-
-    neovide-src = {
-      url = "github:neovide/neovide";
-      flake = false;
-    };
-
-    tmux-colorscheme = {
-      url = "github:catppuccin/tmux";
-      flake = false;
-    };
-
-    catppucin-wallpapers = {
-      url = "github:catppuccin/wallpapers";
-      flake = false;
-    };
   };
-  outputs =
-    { self
-    , nixpkgs
-    , home-manager
-    , deploy-rs
-    , nur-src
-    , devshell
-    , nixos-hardware
-    , sops-nix-src
-    , neovim-nightly
-    , spicetify
-    , polymc
-    , spacemacs-git
-    , comma
-    , ...
-    }@inputs:
-    let
-      inherit (nixpkgs) lib;
-      system = "x86_64-linux";
 
-      overlays = [
-        nur-src.overlay
-        (import ./custom_pkgs)
-        (import ./overlays/gopass-rofi.nix { inherit inputs; })
-        (import ./overlays/rofi-overlay.nix { inherit inputs; })
-        (import ./overlays/eww.nix { inherit inputs; })
-        #(import ./overlays/neovide.nix {inherit inputs; })
-        devshell.overlay
-        sops-nix-src.overlay
-        deploy-rs.overlay
-        neovim-nightly.overlay
-        polymc.overlay
-        (final: super: {
-          makeModulesClosure = x:
-            super.makeModulesClosure (x // { allowMissing = true; });
-        })
-      ];
+  outputs = { self, nixpkgs, ... }@inputs: let
+    inherit (nixpkgs) lib;
+    system = "x86_64-linux";
 
-      nixpkgsFor = system:
-        import nixpkgs {
-          inherit system overlays;
-          config.allowUnfree = true;
+    libFor = system: import ./lib { inherit system inputs; };
+    net = import ./network.nix {};
+
+    util = libFor "x86_64-linux";
+    raspiUtil = libFor "aarch64-linux";
+    pkgs = util.pkgs;
+  in {
+    devShells."${system}".default = util.shells.devShell;
+
+    overlays.default = (import ./custom_pkgs);
+
+    homeManagerConfigurations = {
+      nixos = util.user.mkHMUser {
+        username = "nixos";
+        userConfig = {
+          wms.sway.enable = true;
+          wms.bars.waybar.enable = true;
         };
 
-      libFor = system:
-        import ./lib rec {
-          inherit home-manager lib overlays system;
-          pkgs = nixpkgsFor system;
-          extramodules = [ sops-nix-src.nixosModules.sops ];
-          extraHMImports = [ spicetify.homeManagerModule ];
-        };
-
-      systemUsersFor = pkgs: {
-        nixos = {
-          name = "nixos";
-          groups = [ "wheel" "video" "audio" "docker" "dialout" "adbusers" "gpio" ];
-          shell = pkgs.zsh;
-          uid = 1001;
-        };
-
-        maelstroem = {
-          name = "maelstroem";
-          groups = [ "wheel" "video" "audio" "docker" "dialout" "cdrom" ];
-          shell = pkgs.zsh;
-          uid = 1000;
-        };
+        extraPackages = pkgs: with pkgs; [
+          gnome3.adwaita-icon-theme
+          xournalpp
+        ];
       };
 
-      util = libFor "x86_64-linux";
-      raspiUtil = libFor "aarch64-linux";
-
-      aarch64_pkgs = nixpkgsFor "aarch64-linux";
-      pkgs = nixpkgsFor "x86_64-linux";
-
-      raspiUsers = systemUsersFor aarch64_pkgs;
-      systemUsers = systemUsersFor pkgs;
-
-      gpgKey = "BDCD0C4E9F252898";
-      gpg-sshKey = "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B";
-
-      net = import ./network.nix {};
-      iplot = net.networks.default;
-    in {
-      #devShells."${system}".default = util.shells.legacyShell;
-      devShells."${system}".default = util.shells.devShell;
-
-      overlays.default = (import ./custom_pkgs);
-
-      homeManagerConfigurations = let
-        git = {
-          enable = true;
-          userName = "Philipp Herzog";
-          userEmail = "philipp.herzog@protonmail.com";
-          signKey = gpgKey;
-        };
-        editors = {
-          spacemacs = {
-            enable = false;
-            spacemacs-path = "${spacemacs-git}";
-          };
-          neovim.enable = true;
-        };
-        ssh.enable = true;
-        gpg = {
-          inherit gpgKey;
-          enable = true;
-          sshKeys = [ gpg-sshKey ];
-        };
-        zsh_full.enable = true;
-        music.enable = true;
-        mail.enable = true;
-        firefox.enable = true;
-      in {
-        nixos = util.user.mkHMUser {
-          username = "nixos";
-          userConfig = {
-            inherit git editors ssh gpg zsh_full music mail firefox;
-            wms = {
-              sway.enable = true;
-              bars.waybar.enable = true;
-              tools.udiskie.enable = true;
-            };
+      maelstroem = util.user.mkHMUser {
+        username = "maelstroem";
+        userConfig = {
+          firefox = {
+            enable = true;
+            wayland = false;
           };
 
-          extraPackages = pkgs: with pkgs; [
-            gnome3.adwaita-icon-theme
-            xournalpp
-            comma.packages.${system}.comma
-          ];
+          # de/wm config
+          wms.i3.enable = true;
+          wms.bars.eww.enable = true;
         };
 
-        maelstroem = util.user.mkHMUser {
-          username = "maelstroem";
-          userConfig = {
-            inherit git editors ssh gpg zsh_full music mail;
-
-            firefox = {
-              enable = true;
-              wayland = false;
-            };
-
-            # de/wm config
-            wms = {
-              tools.udiskie.enable = true;
-              # TODO:
-              # xmonad.enable = true;
-
-              i3.enable = true;
-              bars.eww.enable = true;
-              #bars.polybar.enable = true;
-            };
-
-          };
-
-          extraPackages = pkgs: with pkgs; [
-            nur.repos.shados.tmm
-            comma.packages.${system}.comma
-            plover.dev
-          ];
-        };
+        extraPackages = pkgs: with pkgs; [
+          nur.repos.shados.tmm
+          plover.dev
+        ];
       };
-
-      nixosConfigurations = let
-        # include in the imports to build an iso image for the respective systems (TODO: check if it works)
-        baseInstallerImport = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix";
-        raspInstallerImport = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix";
-
-        wireguard.enable = true;
-        nebula.enable = true;
-      in {
-        x86-iso = util.iso.mkIso "isoInstall";
-
-        # vm on a hetzner server, debian host (10.100.0.1)
-        alpha = util.server.mkServer {
-          servername = "alpha";
-          services = [ "influxdb2" "grafana" ];
-        };
-
-        # mini nas @ home (192.168.0.21 / 10.100.0.5 / 10.200.0.4)
-        delta = util.server.mkServer {
-          servername = "delta";
-          services = [
-            "gitea"
-            "jellyfin"
-            #"calibre"
-            #"syncthing"
-          ];
-          fileshare.mount.binds = [
-            {
-              host = "beta";
-              dirs = [ "/mnt/media" ];
-            }
-          ];
-        };
-
-
-        # raspberry pi @ home (192.168.0.120 / 10.100.0.2)
-        beta = raspiUtil.server.mkServer {
-          servername = "beta";
-          services = [
-            "calibre"
-            "syncthing"
-            "unbound"
-            {
-              telegraf.inputs.extrasensors = true;
-            }
-          ];
-          fileshare.shares.dirs = [ "/media" ];
-
-          extraimports = [
-            nixos-hardware.nixosModules.raspberry-pi-4
-            raspInstallerImport
-          ];
-        };
-
-        # desktop @ home (192.168.8.230 / 10.100.0.3)
-        gamma = let
-          hardware-config = import (./machines/gamma);
-          users = with systemUsers; [ maelstroem ];
-        in util.host.mkHost {
-          inherit hardware-config users;
-
-          systemConfig = {
-            inherit wireguard nebula;
-
-            core.hostName = "gamma";
-            core.enableBluetooth = true;
-
-            dns.nameserver = "beta";
-            mullvad.enable = true;
-
-            sound.enable = true;
-            yubikey.enable = true;
-
-            nvidia.enable = true;
-            desktop.enable = true;
-
-            video = {
-              enable = true;
-              driver = "nvidia";
-              manager = "xfce";
-            };
-
-            server.services.telegraf.enable = true;
-            server.services.vector.enable = true;
-
-            fileshare.mount.binds = [
-              {
-                host = "beta";
-                dirs = [ "/mnt/media" ];
-              }
-            ];
-          };
-        };
-
-        # workplace-issued thinkpad (10.100.0.4)
-        nixos-laptop = let
-          hardware-config = import (./machines/nixos-laptop);
-          users = with systemUsers; [ nixos ];
-        in util.host.mkHost {
-          inherit hardware-config users;
-
-          systemConfig = {
-            inherit wireguard nebula;
-
-            core.hostName = "nixos-laptop";
-            core.enableBluetooth = true;
-
-            dns.nameserver = "beta";
-            mullvad.enable = true;
-
-            sound.enable = true;
-            yubikey.enable = true;
-
-
-            laptop = {
-              enable = true;
-              wirelessInterfaces = [ "wlp0s20f3" ];
-            };
-
-            video = {
-              enable = true;
-              manager = "sway";
-            };
-
-            server.services.telegraf.enable = true;
-            server.services.vector.enable = true;
-          };
-        };
-
-      };
-
-      # shortcut for building with `nix build`
-      systems = {
-        nixos-laptop = self.nixosConfigurations.nixos-laptop.config.system.build.toplevel;
-        alpha = self.nixosConfigurations.alpha.config.system.build.toplevel;
-        beta = self.nixosConfigurations.beta.config.system.build.toplevel;
-        gamma = self.nixosConfigurations.gamma.config.system.build.toplevel;
-      };
-
-
-      # shortcut for building a raspberry pi sd image
-      packages."${system}" = {
-        x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
-        beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
-      };
-
-      # deploy config
-      deploy.nodes = {
-        alpha = {
-          hostname = "148.251.102.93";
-          #hostname = "10.200.0.1";
-          sshUser = "root";
-          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-        };
-
-        beta = {
-          #hostname = "10.200.0.2";
-          hostname = "192.168.0.120";
-          sshUser = "root";
-          profiles.system.path = deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
-        };
-
-        delta = {
-          #hostname = "10.200.0.4";
-          hostname = "192.168.0.21";
-          sshUser = "root";
-          profiles.system.path = deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
-        };
-      };
-
-      # filter darwin system checks
-      checks = lib.filterAttrs
-        (system: _: ! lib.hasInfix "darwin" system)
-        (builtins.mapAttrs
-          (system: deployLib: deployLib.deployChecks self.deploy)
-          deploy-rs.lib);
     };
+
+    nixosConfigurations = let
+      wireguard.enable = true;
+      nebula.enable = true;
+    in {
+      # usb stick iso
+      x86-iso = util.iso.mkIso "isoInstall";
+
+      # desktop @ home
+      gamma = let
+        hardware-config = import (./machines/gamma);
+        users = [ { name = "maelstroem"; uid = 1000; }];
+      in util.host.mkHost {
+        inherit hardware-config users;
+
+        systemConfig = {
+          inherit wireguard nebula;
+
+          core.hostName = "gamma";
+          core.enableBluetooth = true;
+
+          dns.nameserver = "beta";
+          mullvad.enable = true;
+
+          nvidia.enable = true;
+          desktop.enable = true;
+
+          video = {
+            driver = "nvidia";
+            manager = "xfce";
+          };
+        };
+      };
+
+      # workplace-issued thinkpad
+      nixos-laptop = let
+        hardware-config = import (./machines/nixos-laptop);
+        users = [{ name = "nixos"; uid = 1001; }];
+      in util.host.mkHost {
+        inherit hardware-config users;
+
+        systemConfig = {
+          inherit wireguard nebula;
+
+          core.hostName = "nixos-laptop";
+          laptop.enable = true;
+          laptop.wirelessInterfaces = [ "wlp0s20f3" ];
+          dns.nameserver = "beta";
+
+          mullvad.enable = true;
+          video.manager = "sway";
+        };
+      };
+    } // builtins.mapAttrs (servername: services: let
+      sUtil = if servername == "beta" then raspiUtil else util;
+    in sUtil.server.mkServer { inherit servername services; }) net.services;
+
+    # shortcut for building with `nix build`
+    systems = builtins.mapAttrs (system: _: self.nixosConfigurations.${system}.config.system.build.toplevel) self.nixosConfigurations;
+
+    # shortcut for building a raspberry pi sd image
+    packages."${system}" = {
+      x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
+      beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
+    };
+
+    # deploy config
+    deploy.nodes = {
+      alpha = {
+        hostname = "148.251.102.93";
+        #hostname = "10.200.0.1";
+        sshUser = "root";
+        profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+      };
+
+      beta = {
+        #hostname = "10.200.0.2";
+        hostname = "192.168.0.120";
+        sshUser = "root";
+        profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
+      };
+
+      delta = {
+        #hostname = "10.200.0.4";
+        hostname = "192.168.0.21";
+        sshUser = "root";
+        profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
+      };
+    };
+
+    # filter darwin system checks
+    checks = lib.filterAttrs
+      (system: _: ! lib.hasInfix "darwin" system)
+      (builtins.mapAttrs
+        (system: deployLib: deployLib.deployChecks self.deploy)
+        inputs.deploy-rs.lib);
+  };
 }

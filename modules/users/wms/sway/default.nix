@@ -30,6 +30,8 @@ rec {
   };
 
   config = mkIf (cfg.enable) rec {
+    phil.wms.tools.udiskie.enable = true;
+
     home.sessionVariables = {
       XDG_CURRENT_DESKTOP = "sway";
       MOZ_ENABLE_WAYLAND = 1;

@@ -13,19 +13,19 @@ in
     enable = mkOption {
       description = "enable gpg module";
       type = types.bool;
-      default = false;
+      default = true;
     };
 
     gpgKey = mkOption {
       description = "default gpg key";
       type = types.nullOr types.str;
-      default = null;
+      default = "BDCD0C4E9F252898";
     };
 
     sshKeys = mkOption {
       description = "User's ssh keys for gpg-agent";
       type = types.listOf types.str;
-      default = [ ];
+      default = [ "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B" ];
     };
   };
 

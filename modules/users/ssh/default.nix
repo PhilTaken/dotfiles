@@ -17,7 +17,7 @@ in
     enable = mkOption {
       description = "Enable the ssh module";
       type = types.bool;
-      default = false;
+      default = true;
     };
   };
 

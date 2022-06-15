@@ -41,12 +41,6 @@
 
     tmpOnTmpfs = true;
     initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
-
-    #loader.raspberryPi = {
-      #enable = true;
-      #version = 4;
-    #};
-    #loader.grub.enable = false;
   };
 
   hardware.raspberry-pi."4".fkms-3d.enable = true;
@@ -61,34 +55,8 @@
     SUBSYSTEM=="gpio", KERNEL=="gpio*", ACTION=="add",RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value ; chmod 660 /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value'"
   '';
 
-  # # Enable SATA-HAT GPIO features
-  # #boot.loader.raspberryPi = {
-  #   #enable = true;
-  #   #version = 4;
-  #   #firmwareConfig = ''
-  #     #iomem=relaxed
-  #     #strict-devmem=0
-  #     #dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4
-  #     #dtoverlay=w1-gpio
-  #     #dtparam=i2c1=on
-  #   #'';
-  # #};
-
-  # # Load PWM hardware timers
-  # hardware.deviceTree = {
-  #   enable = true;
-  #   #filter = "*-rpi-*.dtb";
-  #   overlays = [
-  #     {
-  #       name = "pwm-2chan";
-  #       dtboFile = "${pkgs.device-tree_rpi.overlays}/pwm-2chan.dtbo";
-  #     }
-  #     {
-  #       name = "w1-gpio";
-  #       dtboFile = "${pkgs.device-tree_rpi.overlays}/w1-gpio.dtbo";
-  #     }
-  #   ];
-  # };
+  phil.server.services.telegraf.inputs.extrasensors = true;
+  phil.fileshare.shares.dirs = [ "/media" ];
 
   system.stateVersion = "21.05";
 }

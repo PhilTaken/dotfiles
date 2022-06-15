@@ -13,7 +13,7 @@ in
     enable = mkOption {
       description = "enable the sound module";
       type = types.bool;
-      default = false;
+      default = true;
     };
 
     #spotifyd_devicename = mkOption {

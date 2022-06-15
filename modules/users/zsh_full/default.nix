@@ -40,7 +40,7 @@ in rec {
     enable = mkOption {
       description = "enable the zsh module";
       type = types.bool;
-      default = false;
+      default = true;
     };
   };
 
@@ -196,7 +196,7 @@ in rec {
             fi
           fi
 
-          loc() { 
+          loc() {
               nix-locate $1 | ${pkgs.choose}/bin/choose 0 | sort | uniq
           }
 
@@ -385,6 +385,7 @@ in rec {
     #xdg.configFile."zk/templates/daily.md".source = ./zk/templates/daily.md;
 
     home.packages = with pkgs; [
+      comma
       bandwhich
       cmake
       dig

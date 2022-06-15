@@ -66,5 +66,10 @@
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
 
+  phil.fileshare.mount.binds = [{
+    host = "beta";
+    dirs = [ "/mnt/media" ];
+  }];
+
   system.stateVersion = "21.05";
 }
