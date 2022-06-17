@@ -44,7 +44,7 @@ in
           colorArg = "always";
           pager = "${pkgs.delta}/bin/delta -s --paging=never";
         };
-        os.editCommand = "${pkgs.neovim-remote}/bin/nvr -cc vsplit --remote-wait +'set bufhidden=wipe'";
+        #os.editCommand = "${pkgs.neovim-remote}/bin/nvr -cc vsplit --remote-wait +'set bufhidden=wipe'";
       };
     };
 

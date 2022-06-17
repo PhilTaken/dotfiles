@@ -112,7 +112,7 @@
       # desktop @ home
       gamma = let
         hardware-config = import (./machines/gamma);
-        users = [ { name = "maelstroem"; uid = 1000; }];
+        users = [{ name = "maelstroem"; uid = 1000; }];
       in util.host.mkHost {
         inherit hardware-config users;
 

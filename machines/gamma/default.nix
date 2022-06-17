@@ -68,7 +68,7 @@
 
   phil.fileshare.mount.binds = [{
     host = "beta";
-    dirs = [ "/mnt/media" ];
+    dirs = [ "/media" ];
   }];
 
   system.stateVersion = "21.05";

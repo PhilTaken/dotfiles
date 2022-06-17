@@ -21,7 +21,7 @@ let
     (builtins.map
       (bind: builtins.map
         (dir: {
-          name = "${dir}";
+          name = "/mnt/${dir}";
           value = let
             ip = if bind.host == null then bind.ip else net.networks.default.${bind.host};
           in {

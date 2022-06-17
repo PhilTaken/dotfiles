@@ -84,7 +84,7 @@ in {
 
     home.packages = with pkgs; [
       visidata
-      neovim-remote
+      #neovim-remote
       (writeShellScriptBin "neovide-mg" "exec ${pkgs.neovide}/bin/neovide --multigrid")
       neovide
     ];

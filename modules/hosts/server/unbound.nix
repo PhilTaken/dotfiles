@@ -5,6 +5,8 @@
 }:
 with lib;
 
+# TODO: remove unbound dns entry
+
 let
   cfg = config.phil.server.services.unbound;
   net = import ../../../network.nix {};
