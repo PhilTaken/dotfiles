@@ -1,6 +1,7 @@
-
-{
-  lib, config, pkgs, ...
+{ lib
+, config
+, pkgs
+, ...
 }:
 with lib;
 
@@ -14,7 +15,8 @@ let
   ] ++ optional config.xsession.preferStatusNotifierItems "--appindicator");
 
   yaml = pkgs.formats.yaml { };
-in {
+in
+{
   options.phil.wms.tools.udiskie = {
     enable = mkEnableOption "udiskie";
     automount = mkEnableOption "auto mount devices";

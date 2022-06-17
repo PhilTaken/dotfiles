@@ -8,7 +8,8 @@ with lib;
 let
   cfg = config.phil.wms.i3;
   barcommand = inputs.config.phil.wms.bars.barcommand;
-in rec {
+in
+rec {
   options.phil.wms.i3 = {
     enable = mkOption {
       description = "Enable i3";
@@ -77,54 +78,56 @@ in rec {
           { command = "${pkgs.feh}/bin/feh --bg-scale ${cfg.bg}"; always = true; notification = false; }
         ] ++ (lib.optional (barcommand != "") { command = "\"${barcommand}\""; always = true; });
 
-        keybindings = let
-          modifier = config.modifier;
-          terminal = "${programs.alacritty.package}/bin/alacritty";
-        in {
-          "${modifier}+Return" = "exec ${terminal}";
-          "${modifier}+d" = "kill";
-          "${modifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show run";
-          "${modifier}+l" = "exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
-          "${modifier}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
-          "${modifier}+p" = "exec ${pkgs.rofi-pass}/bin/rofi-pass";
+        keybindings =
+          let
+            modifier = config.modifier;
+            terminal = "${programs.alacritty.package}/bin/alacritty";
+          in
+          {
+            "${modifier}+Return" = "exec ${terminal}";
+            "${modifier}+d" = "kill";
+            "${modifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show run";
+            "${modifier}+l" = "exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
+            "${modifier}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+            "${modifier}+p" = "exec ${pkgs.rofi-pass}/bin/rofi-pass";
 
-          "${modifier}+y" = "focus left";
-          "${modifier}+n" = "focus down";
-          "${modifier}+e" = "focus up";
-          "${modifier}+o" = "focus right";
+            "${modifier}+y" = "focus left";
+            "${modifier}+n" = "focus down";
+            "${modifier}+e" = "focus up";
+            "${modifier}+o" = "focus right";
 
-          "${modifier}+Shift+y" = "move container left";
-          "${modifier}+Shift+n" = "move container down";
-          "${modifier}+Shift+e" = "move container up";
-          "${modifier}+Shift+o" = "move container right";
+            "${modifier}+Shift+y" = "move container left";
+            "${modifier}+Shift+n" = "move container down";
+            "${modifier}+Shift+e" = "move container up";
+            "${modifier}+Shift+o" = "move container right";
 
-          "${modifier}+1" = "workspace number 1";
-          "${modifier}+2" = "workspace number 2";
-          "${modifier}+3" = "workspace number 3";
-          "${modifier}+4" = "workspace number 4";
-          "${modifier}+5" = "workspace number 5";
-          "${modifier}+6" = "workspace number 6";
-          "${modifier}+7" = "workspace number 7";
-          "${modifier}+8" = "workspace number 8";
-          "${modifier}+9" = "workspace number 9";
-          "${modifier}+0" = "workspace number 10";
+            "${modifier}+1" = "workspace number 1";
+            "${modifier}+2" = "workspace number 2";
+            "${modifier}+3" = "workspace number 3";
+            "${modifier}+4" = "workspace number 4";
+            "${modifier}+5" = "workspace number 5";
+            "${modifier}+6" = "workspace number 6";
+            "${modifier}+7" = "workspace number 7";
+            "${modifier}+8" = "workspace number 8";
+            "${modifier}+9" = "workspace number 9";
+            "${modifier}+0" = "workspace number 10";
 
-          "${modifier}+Shift+1" = "move container to workspace number 1";
-          "${modifier}+Shift+2" = "move container to workspace number 2";
-          "${modifier}+Shift+3" = "move container to workspace number 3";
-          "${modifier}+Shift+4" = "move container to workspace number 4";
-          "${modifier}+Shift+5" = "move container to workspace number 5";
-          "${modifier}+Shift+6" = "move container to workspace number 6";
-          "${modifier}+Shift+7" = "move container to workspace number 7";
-          "${modifier}+Shift+8" = "move container to workspace number 8";
-          "${modifier}+Shift+9" = "move container to workspace number 9";
-          "${modifier}+Shift+0" = "move container to workspace number 10";
+            "${modifier}+Shift+1" = "move container to workspace number 1";
+            "${modifier}+Shift+2" = "move container to workspace number 2";
+            "${modifier}+Shift+3" = "move container to workspace number 3";
+            "${modifier}+Shift+4" = "move container to workspace number 4";
+            "${modifier}+Shift+5" = "move container to workspace number 5";
+            "${modifier}+Shift+6" = "move container to workspace number 6";
+            "${modifier}+Shift+7" = "move container to workspace number 7";
+            "${modifier}+Shift+8" = "move container to workspace number 8";
+            "${modifier}+Shift+9" = "move container to workspace number 9";
+            "${modifier}+Shift+0" = "move container to workspace number 10";
 
-          "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-          "XF86AudioPause" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-          "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
-          "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
-        };
+            "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+            "XF86AudioPause" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+            "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+            "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+          };
         terminal = "alacritty";
         modifier = "Mod4";
         window.border = 0;

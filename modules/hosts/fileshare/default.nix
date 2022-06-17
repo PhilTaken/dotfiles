@@ -14,7 +14,7 @@ let
     ("/export\t" + (lib.concatMapStrings (ip: "${ip}(rw,fsid=0,no_subtree_check,crossmnt,fsid=0) ") ips)) + "\n" +
     (lib.concatMapStrings (share: "/export${share}\t" + (lib.concatMapStrings (ip: "${ip}(rw,nohide,insecure,no_subtree_check) ") ips) + "\n") shares);
 
-  net = import ../../../network.nix {};
+  net = import ../../../network.nix { };
   iplot = net.networks.default;
 
   mkMountsForBinds = binds: builtins.listToAttrs (builtins.concatLists (
@@ -22,14 +22,16 @@ let
       (bind: builtins.map
         (dir: {
           name = "/mnt/${dir}";
-          value = let
-            ip = if bind.host == null then bind.ip else net.networks.default.${bind.host};
-          in {
-            device = "${ip}:${dir}";
-            fsType = "nfs4";
-            # mount on first access instead of boot, unmount after 10 mins
-            options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
-          };
+          value =
+            let
+              ip = if bind.host == null then bind.ip else net.networks.default.${bind.host};
+            in
+            {
+              device = "${ip}:${dir}";
+              fsType = "nfs4";
+              # mount on first access instead of boot, unmount after 10 mins
+              options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
+            };
         })
         bind.dirs)
       binds)
@@ -88,7 +90,7 @@ in
             };
           };
         });
-        default = [];
+        default = [ ];
       };
     };
 
@@ -96,15 +98,15 @@ in
       dirs = mkOption {
         description = "directories to share";
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
       };
 
       ips = mkOption {
         description = "ips to share to";
         type = types.listOf types.str;
         default = [ "192.168.0.0/24" ] ++
-        (if wireguard.enable then [ "10.100.0.0/24" ] else []) ++
-        (if nebula.enable then [ "10.200.0.0/24" ] else []);
+          (if wireguard.enable then [ "10.100.0.0/24" ] else [ ]) ++
+          (if nebula.enable then [ "10.200.0.0/24" ] else [ ]);
       };
     };
 
@@ -112,7 +114,7 @@ in
       dirs = mkOption {
         description = "directories to share";
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
       };
 
       ips = mkOption {
@@ -123,45 +125,46 @@ in
     };
   };
 
-  config = let
-    enableSamba = cfg.samba.dirs != [];
-    enableMount = cfg.mount.binds != [];
-    enableShare = cfg.shares.dirs != [];
-  in
+  config =
+    let
+      enableSamba = cfg.samba.dirs != [ ];
+      enableMount = cfg.mount.binds != [ ];
+      enableShare = cfg.shares.dirs != [ ];
+    in
     mkIf (enableSamba || enableMount || enableShare) {
-    services.nfs.server = {
-      enable = enableShare;
-      exports = mkSharesForIps cfg.shares.ips cfg.shares.dirs;
+      services.nfs.server = {
+        enable = enableShare;
+        exports = mkSharesForIps cfg.shares.ips cfg.shares.dirs;
+      };
+
+      services.samba-wsdd.enable = enableSamba;
+      services.samba = {
+        enable = enableSamba;
+        securityType = "user";
+        extraConfig = ''
+          workgroup = WORKGROUP
+          server string = Samba Server
+          server role = standalone server
+          log file = /var/log/samba/smbd.%m
+          max log size = 50
+          dns proxy = no
+          map to guest = Bad User
+          browseable = yes
+        '';
+        shares = mkSmbShares cfg.samba.dirs;
+      };
+
+      networking.firewall.allowedTCPPorts = [ ] ++
+        (if enableShare then [ 2049 ] else [ ]) ++
+        (if enableSamba then [ 445 139 ] else [ ]);
+
+      networking.firewall.allowedUDPPorts = [ ] ++
+        (if enableSamba then [ 137 138 ] else [ ]);
+
+      fileSystems = (if enableMount then
+        mkMountsForBinds cfg.mount.binds
+      else { }) // (if enableShare then
+        mkBindsForDirs cfg.shares.dirs
+      else { });
     };
-
-    services.samba-wsdd.enable = enableSamba;
-    services.samba = {
-      enable = enableSamba;
-      securityType = "user";
-      extraConfig = ''
-        workgroup = WORKGROUP
-        server string = Samba Server
-        server role = standalone server
-        log file = /var/log/samba/smbd.%m
-        max log size = 50
-        dns proxy = no
-        map to guest = Bad User
-        browseable = yes
-      '';
-      shares = mkSmbShares cfg.samba.dirs;
-    };
-
-    networking.firewall.allowedTCPPorts = [ ] ++
-      (if enableShare then [ 2049 ] else [ ]) ++
-      (if enableSamba then [ 445 139 ] else [ ]);
-
-    networking.firewall.allowedUDPPorts = [ ] ++
-      (if enableSamba then [ 137 138 ] else [ ]);
-
-    fileSystems = (if enableMount then
-      mkMountsForBinds cfg.mount.binds
-    else { }) // (if enableShare then
-      mkBindsForDirs cfg.shares.dirs
-    else { });
-  };
 }

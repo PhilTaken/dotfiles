@@ -1,11 +1,14 @@
-{
-  config, pkgs, lib, ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 with lib;
 
 let
 
-in {
+in
+{
   options.phil.wms.bars = {
     barcommand = mkOption {
       description = "command to (re)start the bar(s)";

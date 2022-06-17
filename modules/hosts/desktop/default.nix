@@ -39,8 +39,8 @@ in
 
     # antivir daemon
     #services.clamav = {
-      #daemon.enable = true;
-      #updater.enable = true;
+    #daemon.enable = true;
+    #updater.enable = true;
     #};
 
     #virtualisation.waydroid.enable = true;
@@ -66,13 +66,13 @@ in
         };
 
         #yuzu-ea-latest = (pkgs.yuzu-ea.override rec {
-          #version = "2496";
-          #src = pkgs.fetchFromGitHub {
-            #owner = "pineappleEA";
-            #repo = "pineapple-src";
-            #rev = "EA-${version}";
-            #sha256 = "sha256-jk265xoGW+V6wLyJj7BDNBEUSg3LLZqIMVLjdnAeBOc=";
-          #};
+        #version = "2496";
+        #src = pkgs.fetchFromGitHub {
+        #owner = "pineappleEA";
+        #repo = "pineapple-src";
+        #rev = "EA-${version}";
+        #sha256 = "sha256-jk265xoGW+V6wLyJj7BDNBEUSg3LLZqIMVLjdnAeBOc=";
+        #};
         #});
       in
       with pkgs; [

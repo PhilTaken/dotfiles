@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 {
   imports = [ ./configuration.nix ];
   phil.fileshare.mount.binds = [{

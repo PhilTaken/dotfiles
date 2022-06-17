@@ -1,5 +1,6 @@
 { inputs, ... }:
-final: prev: let
+final: prev:
+let
   eww-base = withWayland: prev.rustPlatform.buildRustPackage rec {
     pname = "eww";
     version = "git-${toString withWayland}";
@@ -19,7 +20,8 @@ final: prev: let
     # requires unstable rust features
     RUSTC_BOOTSTRAP = 1;
   };
-in {
+in
+{
   eww-git = eww-base false;
   eww-git-wayland = eww-base true;
 }

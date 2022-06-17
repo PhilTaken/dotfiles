@@ -29,11 +29,11 @@ in
     };
 
     #programs.spicetify = {
-      #enable = true;
-      #theme = "Onepunch";
-      ##colorScheme = "Nord-Dark";
-      ##enabledCustomApps = ["reddit"];
-      ##enabledExtensions = ["newRelease.js"];
+    #enable = true;
+    #theme = "Onepunch";
+    ##colorScheme = "Nord-Dark";
+    ##enabledCustomApps = ["reddit"];
+    ##enabledExtensions = ["newRelease.js"];
     #};
 
     home.packages = with pkgs; [

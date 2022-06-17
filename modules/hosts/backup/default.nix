@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.backup;
-in {
+in
+{
   options.phil.backup = {
     enable = mkOption {
       description = "enable backup module";
@@ -24,7 +25,8 @@ in {
 
   config = mkIf (cfg.enable) {
     services.borgbackup.jobs =
-      let common-excludes = [
+      let
+        common-excludes = [
           # Largest cache dirs
           ".cache"
           "*/cache2" # firefox
@@ -56,7 +58,8 @@ in {
           user = "danbst";
           exclude = map (x: paths + "/" + x) common-excludes;
         };
-      in {
+      in
+      {
         home-danbst = basicBorgJob "backups/station/home-danbst" // rec {
           paths = "/home/danbst";
           exclude = work-dirs ++ map (x: paths + "/" + x) (common-excludes ++ [
@@ -70,5 +73,5 @@ in {
           paths = "/media/extra-drive/important";
         };
       };
-    };
-  }
+  };
+}

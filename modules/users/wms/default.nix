@@ -4,7 +4,8 @@ with lib;
 let
   cfg = config.phil.wms;
 
-in {
+in
+{
   imports = [
     ./sway
     ./i3

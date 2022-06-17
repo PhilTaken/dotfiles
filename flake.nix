@@ -53,149 +53,161 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: let
-    inherit (nixpkgs) lib;
-    system = "x86_64-linux";
+  outputs = { self, nixpkgs, ... }@inputs:
+    let
+      inherit (nixpkgs) lib;
+      system = "x86_64-linux";
 
-    libFor = system: import ./lib { inherit system inputs; };
-    net = import ./network.nix {};
+      libFor = system: import ./lib { inherit system inputs; };
+      net = import ./network.nix { };
 
-    util = libFor "x86_64-linux";
-    raspiUtil = libFor "aarch64-linux";
-    pkgs = util.pkgs;
-  in {
-    devShells."${system}".default = util.shells.devShell;
+      util = libFor "x86_64-linux";
+      raspiUtil = libFor "aarch64-linux";
+      pkgs = util.pkgs;
+    in
+    {
+      devShells."${system}".default = util.shells.devShell;
 
-    overlays.default = (import ./custom_pkgs);
+      overlays.default = (import ./custom_pkgs);
 
-    homeManagerConfigurations = {
-      nixos = util.user.mkHMUser {
-        username = "nixos";
-        userConfig = {
-          wms.sway.enable = true;
-          wms.bars.waybar.enable = true;
-        };
-
-        extraPackages = pkgs: with pkgs; [
-          gnome3.adwaita-icon-theme
-          xournalpp
-        ];
-      };
-
-      maelstroem = util.user.mkHMUser {
-        username = "maelstroem";
-        userConfig = {
-          firefox = {
-            enable = true;
-            wayland = false;
+      homeManagerConfigurations = {
+        nixos = util.user.mkHMUser {
+          username = "nixos";
+          userConfig = {
+            wms.sway.enable = true;
+            wms.bars.waybar.enable = true;
           };
 
-          # de/wm config
-          wms.i3.enable = true;
-          wms.bars.eww.enable = true;
+          extraPackages = pkgs: with pkgs; [
+            gnome3.adwaita-icon-theme
+            xournalpp
+          ];
         };
 
-        extraPackages = pkgs: with pkgs; [
-          nur.repos.shados.tmm
-          plover.dev
-        ];
-      };
-    };
+        maelstroem = util.user.mkHMUser {
+          username = "maelstroem";
+          userConfig = {
+            firefox = {
+              enable = true;
+              wayland = false;
+            };
 
-    nixosConfigurations = let
-      wireguard.enable = true;
-      nebula.enable = true;
-    in {
-      # usb stick iso
-      x86-iso = util.iso.mkIso "isoInstall";
-
-      # desktop @ home
-      gamma = let
-        hardware-config = import (./machines/gamma);
-        users = [{ name = "maelstroem"; uid = 1000; }];
-      in util.host.mkHost {
-        inherit hardware-config users;
-
-        systemConfig = {
-          inherit wireguard nebula;
-
-          core.hostName = "gamma";
-          core.enableBluetooth = true;
-
-          dns.nameserver = "beta";
-          mullvad.enable = true;
-
-          nvidia.enable = true;
-          desktop.enable = true;
-
-          video = {
-            driver = "nvidia";
-            manager = "xfce";
+            # de/wm config
+            wms.i3.enable = true;
+            wms.bars.eww.enable = true;
           };
+
+          extraPackages = pkgs: with pkgs; [
+            nur.repos.shados.tmm
+            plover.dev
+          ];
         };
       };
 
-      # workplace-issued thinkpad
-      nixos-laptop = let
-        hardware-config = import (./machines/nixos-laptop);
-        users = [{ name = "nixos"; uid = 1001; }];
-      in util.host.mkHost {
-        inherit hardware-config users;
+      nixosConfigurations =
+        let
+          wireguard.enable = true;
+          nebula.enable = true;
+        in
+        {
+          # usb stick iso
+          x86-iso = util.iso.mkIso "isoInstall";
 
-        systemConfig = {
-          inherit wireguard nebula;
+          # desktop @ home
+          gamma =
+            let
+              hardware-config = import (./machines/gamma);
+              users = [{ name = "maelstroem"; uid = 1000; }];
+            in
+            util.host.mkHost {
+              inherit hardware-config users;
 
-          core.hostName = "nixos-laptop";
-          laptop.enable = true;
-          laptop.wirelessInterfaces = [ "wlp0s20f3" ];
-          dns.nameserver = "beta";
+              systemConfig = {
+                inherit wireguard nebula;
 
-          mullvad.enable = true;
-          video.manager = "sway";
+                core.hostName = "gamma";
+                core.enableBluetooth = true;
+
+                dns.nameserver = "beta";
+                mullvad.enable = true;
+
+                nvidia.enable = true;
+                desktop.enable = true;
+
+                video = {
+                  driver = "nvidia";
+                  manager = "xfce";
+                };
+              };
+            };
+
+          # workplace-issued thinkpad
+          nixos-laptop =
+            let
+              hardware-config = import (./machines/nixos-laptop);
+              users = [{ name = "nixos"; uid = 1001; }];
+            in
+            util.host.mkHost {
+              inherit hardware-config users;
+
+              systemConfig = {
+                inherit wireguard nebula;
+
+                core.hostName = "nixos-laptop";
+                laptop.enable = true;
+                laptop.wirelessInterfaces = [ "wlp0s20f3" ];
+                dns.nameserver = "beta";
+
+                mullvad.enable = true;
+                video.manager = "sway";
+              };
+            };
+        } // builtins.mapAttrs
+          (servername: services:
+            let
+              sUtil = if servername == "beta" then raspiUtil else util;
+            in
+            sUtil.server.mkServer { inherit servername services; })
+          net.services;
+
+      # shortcut for building with `nix build`
+      systems = builtins.mapAttrs (system: _: self.nixosConfigurations.${system}.config.system.build.toplevel) self.nixosConfigurations;
+
+      # shortcut for building a raspberry pi sd image
+      packages."${system}" = {
+        x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
+        beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
+      };
+
+      # deploy config
+      deploy.nodes = {
+        alpha = {
+          hostname = "148.251.102.93";
+          #hostname = "10.200.0.1";
+          sshUser = "root";
+          profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
+        };
+
+        beta = {
+          #hostname = "10.200.0.2";
+          hostname = "192.168.0.120";
+          sshUser = "root";
+          profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
+        };
+
+        delta = {
+          #hostname = "10.200.0.4";
+          hostname = "192.168.0.21";
+          sshUser = "root";
+          profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
         };
       };
-    } // builtins.mapAttrs (servername: services: let
-      sUtil = if servername == "beta" then raspiUtil else util;
-    in sUtil.server.mkServer { inherit servername services; }) net.services;
 
-    # shortcut for building with `nix build`
-    systems = builtins.mapAttrs (system: _: self.nixosConfigurations.${system}.config.system.build.toplevel) self.nixosConfigurations;
-
-    # shortcut for building a raspberry pi sd image
-    packages."${system}" = {
-      x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
-      beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
+      # filter darwin system checks
+      checks = lib.filterAttrs
+        (system: _: ! lib.hasInfix "darwin" system)
+        (builtins.mapAttrs
+          (system: deployLib: deployLib.deployChecks self.deploy)
+          inputs.deploy-rs.lib);
     };
-
-    # deploy config
-    deploy.nodes = {
-      alpha = {
-        hostname = "148.251.102.93";
-        #hostname = "10.200.0.1";
-        sshUser = "root";
-        profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
-      };
-
-      beta = {
-        #hostname = "10.200.0.2";
-        hostname = "192.168.0.120";
-        sshUser = "root";
-        profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
-      };
-
-      delta = {
-        #hostname = "10.200.0.4";
-        hostname = "192.168.0.21";
-        sshUser = "root";
-        profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
-      };
-    };
-
-    # filter darwin system checks
-    checks = lib.filterAttrs
-      (system: _: ! lib.hasInfix "darwin" system)
-      (builtins.mapAttrs
-        (system: deployLib: deployLib.deployChecks self.deploy)
-        inputs.deploy-rs.lib);
-  };
 }

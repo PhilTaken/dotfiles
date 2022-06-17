@@ -7,8 +7,9 @@ with lib;
 
 let
   cfg = config.phil.server;
-  net = import ../../../network.nix {};
-in {
+  net = import ../../../network.nix { };
+in
+{
   imports = [
     ./adguardhome.nix
     ./caddy.nix

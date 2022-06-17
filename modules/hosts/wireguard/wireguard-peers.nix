@@ -3,21 +3,23 @@
 with pkgs.lib;
 
 let
-  net = import ../../../network.nix {};
+  net = import ../../../network.nix { };
   iplot = net.networks.yggdrasil;
   hostnames = builtins.attrNames iplot;
 
   mkOwnIPs = host: [ "${iplot.${host}}/24" ];
   mkAllowedIPs = host: [ "${iplot.${host}}/32" ];
 
-  mkPeer = {host, publicKey}: mergeAttrs {
-    inherit publicKey;
-    ownIPs = mkOwnIPs host;
-    allowedIPs = mkAllowedIPs host;
-  } (if builtins.hasAttr host net.networks.endpoints then {
-    allowedIPs = [ iplot.gateway ];
-    endpoint = net.networks.endpoints.${host};
-  } else {});
+  mkPeer = { host, publicKey }: mergeAttrs
+    {
+      inherit publicKey;
+      ownIPs = mkOwnIPs host;
+      allowedIPs = mkAllowedIPs host;
+    }
+    (if builtins.hasAttr host net.networks.endpoints then {
+      allowedIPs = [ iplot.gateway ];
+      endpoint = net.networks.endpoints.${host};
+    } else { });
 
   pubkeys = {
     alpha = "LDOII0S7OWakg4oDrC1wUCoM/YXq3wXTEjYoqBbI2Sk=";
@@ -27,4 +29,5 @@ let
     nixos-laptop = "Xbi0ylobPYxxcxCvxaJ2mvC2WqGlODnMkeIYPG9tlVo=";
   };
 
-in mapAttrs (host: publicKey: mkPeer { inherit host publicKey; }) pubkeys
+in
+mapAttrs (host: publicKey: mkPeer { inherit host publicKey; }) pubkeys

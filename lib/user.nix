@@ -12,7 +12,8 @@ with builtins;
     let
       homeDirectory = "/home/${username}";
       stateVersion = "21.05";
-    in home-manager.lib.homeManagerConfiguration {
+    in
+    home-manager.lib.homeManagerConfiguration {
       inherit system username pkgs homeDirectory stateVersion;
 
       configuration = rec {
@@ -57,9 +58,9 @@ with builtins;
             youtube-dl
             zoom-us
           ] ++ (extraPackages pkgs) ++
-            # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
-            #discord
-            (if phil.wms.sway.enable or false then [
+          # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
+          #discord
+          (if phil.wms.sway.enable or false then [
             (pkgs.writeShellApplication {
               name = "discord";
               text = "${pkgs.discord}/bin/discord --use-gl=desktop";
@@ -69,8 +70,8 @@ with builtins;
               exec = "discord";
               desktopName = "Discord";
             })
-            ]
-            else [ discord ]);
+          ]
+          else [ discord ]);
 
         };
 

@@ -57,9 +57,9 @@ in
     };
 
     #systemd.network.wait-online = {
-      #timeout = 20;
-      #anyInterface = true;
-      #ignoredInterfaces = [ networkName ];
+    #timeout = 20;
+    #anyInterface = true;
+    #ignoredInterfaces = [ networkName ];
     #};
 
     networking = {

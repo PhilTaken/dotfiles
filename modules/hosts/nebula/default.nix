@@ -9,7 +9,7 @@ let
   cfg = config.phil.nebula;
   networkName = "milkyway";
 
-  net = import ../../../network.nix {};
+  net = import ../../../network.nix { };
   iplot = net.networks."${networkName}";
   hostnames = builtins.attrNames iplot;
   hostname = config.networking.hostName;
@@ -24,14 +24,15 @@ let
       (builtins.attrNames net.networks.endpoints));
 
   isLighthouse = builtins.elem hostname (builtins.attrNames net.networks.endpoints);
-  lighthouses = if isLighthouse then [] else builtins.attrNames hostMap;
+  lighthouses = if isLighthouse then [ ] else builtins.attrNames hostMap;
 
   owner = config.systemd.services."nebula@${networkName}".serviceConfig.User or "root";
   sopsFile = ../../../sops/nebula.yaml;
 
   # TODO: rework this
   any = { port = "any"; proto = "any"; host = "any"; };
-in {
+in
+{
   options.phil.nebula.enable = mkEnableOption "nebula";
   config = mkIf (cfg.enable) {
     sops.secrets.ca = {

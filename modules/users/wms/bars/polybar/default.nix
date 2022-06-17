@@ -9,7 +9,8 @@ with lib;
 
 let
   cfg = config.phil.wms.bars.polybar;
-in {
+in
+{
   options.phil.wms.bars.polybar = {
     enable = mkOption {
       description = "enable polybar module";

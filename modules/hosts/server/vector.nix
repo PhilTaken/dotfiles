@@ -8,7 +8,8 @@ with lib;
 let
   cfg = config.phil.server.services.vector;
   loki_url = "10.200.0.1:3100";
-in {
+in
+{
   options.phil.server.services.vector = {
     enable = mkOption {
       description = "enable the vector module";
@@ -29,15 +30,14 @@ in {
           journald = {
             acknowledgements.enabled = true;
             type = "journald";
-            include_units = [];
+            include_units = [ ];
             current_boot_only = true;
             exclude_matches.SYSLOG_IDENTIFIER = [ "xsession" ];
             since_now = true;
           };
         };
 
-        transforms = {
-        };
+        transforms = { };
 
         sinks = {
           loki = {
@@ -58,13 +58,13 @@ in {
           };
 
           #out = {
-            #inputs = [
-              #"journald"
-            #];
-            #encoding.codec = "text";
+          #inputs = [
+          #"journald"
+          #];
+          #encoding.codec = "text";
 
-            #type = "file";
-            #path = "/var/lib/vector/test.log";
+          #type = "file";
+          #path = "/var/lib/vector/test.log";
           #};
         };
       };

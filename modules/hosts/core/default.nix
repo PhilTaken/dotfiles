@@ -48,8 +48,7 @@ in
       '';
 
       # TODO add my own registry
-      registry = {
-      };
+      registry = { };
 
       settings = {
         trusted-users = [ "root" "@wheel" ];

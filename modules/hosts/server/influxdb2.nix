@@ -7,7 +7,7 @@ with lib;
 
 let
   cfg = config.phil.server.services.influxdb2;
-  net = import ../../../network.nix {};
+  net = import ../../../network.nix { };
 in
 {
 

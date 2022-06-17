@@ -47,7 +47,7 @@
   hardware.i2c.enable = true;
 
   # don't forget to add the user to the gpio group
-  users.groups.gpio = {};
+  users.groups.gpio = { };
 
   services.udev.extraRules = ''
     SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio",MODE="0660"

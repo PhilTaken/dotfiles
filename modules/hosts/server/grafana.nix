@@ -10,8 +10,9 @@ let
   outputUrl = "http://10.200.0.1:8086";
   domain = "grafana.home";
   port = 3010;
-  net = import ../../../network.nix {};
-in {
+  net = import ../../../network.nix { };
+in
+{
   options.phil.server.services.grafana = {
     enable = mkEnableOption "grafana";
     inputs = {

@@ -34,7 +34,8 @@ let
   ];
 
   extraHMImports = [ inputs.spicetify.homeManagerModule ];
-in rec {
+in
+rec {
   inherit pkgs;
 
   user = import ./user.nix { inherit pkgs home-manager lib system overlays extraHMImports; };

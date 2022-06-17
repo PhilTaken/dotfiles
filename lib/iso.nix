@@ -6,7 +6,8 @@
 }:
 
 let
-in {
+in
+{
   # TODO: add install script (+ binary cache?)
   mkIso = hostName: lib.nixosSystem {
     inherit system pkgs;

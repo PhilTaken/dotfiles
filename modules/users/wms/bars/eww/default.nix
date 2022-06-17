@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.wms.bars.eww;
-in {
+in
+{
   options.phil.wms.bars.eww = {
     enable = mkOption {
       description = "enable eww module";
@@ -56,14 +57,16 @@ in {
         PartOf = "graphical-session.target";
       };
 
-      Service = let
-        eww = "${inputs.config.programs.eww.package}/bin/eww";
-      in {
-        ExecStart = ''
-          ${eww} --no-daemonize daemon
-        '';
-        Restart = "on-abort";
-      };
+      Service =
+        let
+          eww = "${inputs.config.programs.eww.package}/bin/eww";
+        in
+        {
+          ExecStart = ''
+            ${eww} --no-daemonize daemon
+          '';
+          Restart = "on-abort";
+        };
 
       Install = {
         WantedBy = [ "graphical-session.target" ];

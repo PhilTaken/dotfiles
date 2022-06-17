@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.editors.neovim;
-in {
+in
+{
   options.phil.editors.neovim = {
     enable = mkOption {
       description = "Enable the neovim module";

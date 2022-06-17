@@ -8,7 +8,8 @@ with lib;
 let
   cfg = config.phil.server.services.telegraf;
   outputUrl = "http://10.200.0.1:8086";
-in {
+in
+{
   options.phil.server.services.telegraf = {
     enable = mkEnableOption "telegraf";
     inputs = {

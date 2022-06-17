@@ -42,62 +42,64 @@ in
       driSupport = true;
       driSupport32Bit = true;
       #extraPackages = with pkgs; [
-        #libva
-        #vaapiVdpau
-        #libvdpau-va-gl
-        #mesa_drivers
+      #libva
+      #vaapiVdpau
+      #libvdpau-va-gl
+      #mesa_drivers
       #];
     };
 
-    services.xserver = let
-      enable = (cfg.manager != "sway");
-    in {
-      inherit enable;
-      layout = "us";
-      xkbVariant = "workman-intl,intl";
-      xkbOptions = "caps:escape,grp:shifts_toggle";
-
-      displayManager = {
-        gdm.enable = (cfg.manager == "gnome");
-        defaultSession =
-          if (cfg.manager == "i3") then "none+i3" else
-          if (cfg.manager == "xfce") then "xfce+i3" else
-          if (cfg.manager == "kde") then "plasma" else
-          if (cfg.manager == "gnome") then "gnome" else
-          null;
-      };
-
-      videoDrivers =
-        if (cfg.driver != null) then [
-          cfg.driver
-        ] else [ ];
-
-      screenSection = mkIf (cfg.driver == "nvidia") ''
-        Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-        Option         "AllowIndirectGLXProtocol" "off"
-        Option         "TripleBuffer" "on"
-      '';
-
-      libinput = {
+    services.xserver =
+      let
+        enable = (cfg.manager != "sway");
+      in
+      {
         inherit enable;
-      };
+        layout = "us";
+        xkbVariant = "workman-intl,intl";
+        xkbOptions = "caps:escape,grp:shifts_toggle";
 
-      desktopManager = {
-        xfce = {
-          enable = (cfg.manager == "xfce");
-          noDesktop = true;
-          enableXfwm = false;
+        displayManager = {
+          gdm.enable = (cfg.manager == "gnome");
+          defaultSession =
+            if (cfg.manager == "i3") then "none+i3" else
+            if (cfg.manager == "xfce") then "xfce+i3" else
+            if (cfg.manager == "kde") then "plasma" else
+            if (cfg.manager == "gnome") then "gnome" else
+            null;
         };
-        plasma5.enable = (cfg.manager == "kde");
-        gnome.enable = (cfg.manager == "gnome");
-        xterm.enable = false;
-      };
 
-      windowManager.i3 = {
-        enable = (cfg.manager == "i3" || cfg.manager == "xfce");
-        package = pkgs.i3-gaps;
+        videoDrivers =
+          if (cfg.driver != null) then [
+            cfg.driver
+          ] else [ ];
+
+        screenSection = mkIf (cfg.driver == "nvidia") ''
+          Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+          Option         "AllowIndirectGLXProtocol" "off"
+          Option         "TripleBuffer" "on"
+        '';
+
+        libinput = {
+          inherit enable;
+        };
+
+        desktopManager = {
+          xfce = {
+            enable = (cfg.manager == "xfce");
+            noDesktop = true;
+            enableXfwm = false;
+          };
+          plasma5.enable = (cfg.manager == "kde");
+          gnome.enable = (cfg.manager == "gnome");
+          xterm.enable = false;
+        };
+
+        windowManager.i3 = {
+          enable = (cfg.manager == "i3" || cfg.manager == "xfce");
+          package = pkgs.i3-gaps;
+        };
       };
-    };
 
     console.useXkbConfig = true;
 
@@ -117,16 +119,20 @@ in
 
     # ----------------------
     # gnome
-    environment.systemPackages = if (cfg.manager == "gnome") then (with pkgs; [
-      gnomeExtensions.appindicator
-      gnomeExtensions.gsconnect
-      networkmanager-vpnc
-      gnome.networkmanager-vpnc
-    ]) else [];
+    environment.systemPackages =
+      if (cfg.manager == "gnome") then
+        (with pkgs; [
+          gnomeExtensions.appindicator
+          gnomeExtensions.gsconnect
+          networkmanager-vpnc
+          gnome.networkmanager-vpnc
+        ]) else [ ];
 
-    services.udev.packages = if (cfg.manager == "gnome") then (with pkgs; [
-      gnome3.gnome-settings-daemon
-    ]) else [];
+    services.udev.packages =
+      if (cfg.manager == "gnome") then
+        (with pkgs; [
+          gnome3.gnome-settings-daemon
+        ]) else [ ];
 
     services.gnome.chrome-gnome-shell.enable = (cfg.manager == "gnome");
 

@@ -22,21 +22,21 @@
       delta = "10.200.0.5";
     };
 
-  # these can be adjusted however you desire
-  # fallback network -> no p2p
-  yggdrasil = {
-    interfaceName = "yggdrasil";
-    gateway = "10.100.0.0/24";
+    # these can be adjusted however you desire
+    # fallback network -> no p2p
+    yggdrasil = {
+      interfaceName = "yggdrasil";
+      gateway = "10.100.0.0/24";
 
-    alpha = "10.100.0.1";
-    beta = "10.100.0.2";
-    gamma = "10.100.0.3";
-    nixos-laptop = "10.100.0.4";
-    delta = "10.100.0.5";
+      alpha = "10.100.0.1";
+      beta = "10.100.0.2";
+      gamma = "10.100.0.3";
+      nixos-laptop = "10.100.0.4";
+      delta = "10.100.0.5";
+    };
   };
-};
 
-services = {
+  services = {
     # vm on a hetzner server, debian host
     alpha = [
       "influxdb2"

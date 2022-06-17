@@ -320,23 +320,25 @@ in
     };
 
     home.file.".spacemacs".source = ./config.el;
-    home.file.".spacemacs.env".text = let
-      extraPackages = with pkgs; [
+    home.file.".spacemacs.env".text =
+      let
+        extraPackages = with pkgs; [
           rust-analyzer
           rnix-lsp
           haskell-language-server # haskell
           (python3.withPackages (pypacks: with pypacks; [
             python-lsp-server
           ]))
-      ];
-      extraPath = lib.concatStringsSep ":" (builtins.map (pkg: "${pkg}/bin") extraPackages);
-    in ''
-      USER=nixos
-      HOME=/home/nixos
-      PWD=/home/nixos
-      SHELL=/run/current-system/sw/bin/zsh
-      PATH=/run/wrappers/bin:/home/nixos/.nix-profile/bin:/etc/profiles/per-user/nixos/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:${extraPath}
-    '';
+        ];
+        extraPath = lib.concatStringsSep ":" (builtins.map (pkg: "${pkg}/bin") extraPackages);
+      in
+      ''
+        USER=nixos
+        HOME=/home/nixos
+        PWD=/home/nixos
+        SHELL=/run/current-system/sw/bin/zsh
+        PATH=/run/wrappers/bin:/home/nixos/.nix-profile/bin:/etc/profiles/per-user/nixos/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:${extraPath}
+      '';
   };
 }
 

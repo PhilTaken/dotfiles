@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.phil.dns;
 
-  net = import ../../../network.nix {};
+  net = import ../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
 in

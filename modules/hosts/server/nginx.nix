@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.phil.server.services.nginx;
 
-  net = import ../../../network.nix {};
+  net = import ../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
 in
@@ -21,24 +21,26 @@ in
         "jellyfin" = 1234;
       };
 
-      default = {};
+      default = { };
     };
   };
 
   config = {
-    services.nginx = let
-      genconfig = subdomain: port: ''
-        server {
-          listen 80;
-          server_name ${subdomain}.home;
-          location / {
-            proxy_pass http://$server_addr:${toString port};
+    services.nginx =
+      let
+        genconfig = subdomain: port: ''
+          server {
+            listen 80;
+            server_name ${subdomain}.home;
+            location / {
+              proxy_pass http://$server_addr:${toString port};
+            }
           }
-        }
-      '';
-    in {
-      enable = (cfg.proxy != {});
-      httpConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
-    };
+        '';
+      in
+      {
+        enable = (cfg.proxy != { });
+        httpConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
+      };
   };
 }

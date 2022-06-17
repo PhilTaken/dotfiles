@@ -21,7 +21,7 @@ in
   config = mkIf (cfg.enable) {
     services.seafile = {
       enable = true;
-      seafilePackage = pkgs.seafile-server.overrideAttrs(old: {
+      seafilePackage = pkgs.seafile-server.overrideAttrs (old: {
         version = "git";
         src = pkgs.fetchFromGitHub {
           owner = "haiwen";
