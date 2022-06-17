@@ -45,6 +45,7 @@ services = {
 
     # raspberry pi @ home
     beta = [
+      "unbound"
       "calibre"
       "syncthing"
     ];
@@ -53,6 +54,7 @@ services = {
     delta = [
       "gitea"
       "jellyfin"
+      "nextcloud"
       #"calibre"
     ];
   };

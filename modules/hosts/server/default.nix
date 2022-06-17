@@ -16,10 +16,12 @@ in {
     ./fail2ban.nix
     ./gitea.nix
     ./grafana.nix
+    ./grafana.nix
     ./influxdb2.nix
     ./iperf.nix
     ./jellyfin.nix
     ./keycloak.nix
+    ./nextcloud.nix
     ./nginx.nix
     ./openssh.nix
     ./seafile.nix
@@ -28,7 +30,6 @@ in {
     ./ttrss.nix
     ./unbound.nix
     ./vector.nix
-    ./grafana.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";
