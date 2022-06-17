@@ -16,10 +16,6 @@ in
       type = types.str;
       default = "/var/lib/seafile";
     };
-    hostName = mkOption {
-      type = types.str;
-      default = "seafile.home";
-    };
   };
 
   config = mkIf (cfg.enable) {
