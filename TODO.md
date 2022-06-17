@@ -6,6 +6,10 @@
 
     - dashboard (homer)
         - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
+        - https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md
+
+     - seafile / nextcloud
+        - https://gitlab.com/matrss/nixfiles/-/blob/main/hosts/nelvte/nextcloud.nix
 
     - gitea module
         - ci/cd with hydra/rain semi-automated with deploy-rs
@@ -23,8 +27,7 @@
     - xmobar
     - bspwm
 
-    - seafile
-    - iris/mopidy
+    - iris/mopidy (https://github.com/mopidy/mopidy-spotify/issues/110)
 
 - work on eww bar config
     - workspaces
