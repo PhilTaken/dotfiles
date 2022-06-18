@@ -10,7 +10,6 @@ let
   net = import ../../../network.nix { };
 in
 {
-
   options.phil.server.services.influxdb2 = {
     enable = mkEnableOption "influxdb2 - time series database";
     url = mkOption {

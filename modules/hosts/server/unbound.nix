@@ -12,14 +12,18 @@ let
   net = import ../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
-
   mkDnsBindsFromServices = services: builtins.mapAttrs
     # TODO: sensible handling for identical services on multiple hosts
     (_: hosts: builtins.head hosts)
     (lib.zipAttrs
       (builtins.map
         (host: builtins.listToAttrs (builtins.map
-          (service: { name = service; value = host; })
+          (service:
+            let
+              name = config.phil.server.services.${service}.host or service;
+              value = host;
+            in
+            { inherit name value; })
           services.${host}))
         (builtins.attrNames services)));
 in
