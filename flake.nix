@@ -108,6 +108,7 @@
         let
           wireguard.enable = true;
           nebula.enable = true;
+          server.services.telegraf.enable = true;
         in
         {
           # usb stick iso
@@ -122,8 +123,9 @@
             util.host.mkHost {
               inherit hardware-config users;
 
+
               systemConfig = {
-                inherit wireguard nebula;
+                inherit wireguard nebula server;
 
                 core.hostName = "gamma";
                 core.enableBluetooth = true;
@@ -151,7 +153,7 @@
               inherit hardware-config users;
 
               systemConfig = {
-                inherit wireguard nebula;
+                inherit wireguard nebula server;
 
                 core.hostName = "nixos-laptop";
                 laptop.enable = true;
