@@ -15,6 +15,11 @@ in
       type = types.str;
       default = "/media/nextcloud/";
     };
+
+    host = mkOption {
+      type = types.str;
+      default = "nextcloud";
+    };
   };
 
   config =
@@ -39,7 +44,8 @@ in
       containers.nextcloud =
         let
           adminpassFile = config.sops.secrets.nextcloud-adminpass.path;
-          datadir = "/media";
+          home = "/media";
+          datadir = "/var/lib/nextcloud";
         in
         mkIf (cfg.enable) {
           ephemeral = false;
@@ -58,6 +64,11 @@ in
               hostPath = cfg.datadir;
               isReadOnly = false;
             };
+
+            ${home} = {
+              hostPath = home;
+              isReadOnly = false;
+            };
           };
 
           config = { config, pkgs, ... }: {
@@ -66,9 +77,11 @@ in
             services.nextcloud = {
               enable = true;
               package = pkgs.nextcloud24;
-              hostName = "nextcloud.home";
+
+              inherit home datadir;
+              hostName = cfg.host;
+
               caching.redis = true;
-              home = datadir;
               config = {
                 adminuser = "admin";
                 inherit adminpassFile;
