@@ -44,7 +44,7 @@ in
       containers.nextcloud =
         let
           adminpassFile = config.sops.secrets.nextcloud-adminpass.path;
-          home = "/media";
+          home = "/media/nextcloud";
           datadir = "/var/lib/nextcloud";
         in
         mkIf (cfg.enable) {

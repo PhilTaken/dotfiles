@@ -27,14 +27,18 @@ in
       type = types.str;
       default = "/media/gitea";
     };
+    host = mkOption {
+      type = types.str;
+      default = "gitea";
+    };
   };
 
   config = mkIf (cfg.enable) {
     services.gitea = {
       inherit (cfg) stateDir enable;
 
-      domain = "gitea.home";
-      rootUrl = "https://gitea.home/";
+      domain = "${cfg.host}.home";
+      rootUrl = "https://${cfg.host}.home/";
       #httpAddress = "http://gitea.home/";
 
       httpPort = cfg.port;

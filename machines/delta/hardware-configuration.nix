@@ -30,6 +30,10 @@
     {
       device = "media";
       fsType = "zfs";
+      options = [
+        # gitea had some permission issues
+        "mode=777"
+      ];
     };
 
   swapDevices = [ ];

@@ -9,7 +9,11 @@ with builtins;
 let
   nixos = {
     name = "nixos";
-    groups = [ "wheel" "video" "audio" "docker" "dialout" "adbusers" "gpio" ];
+    groups = [
+      "wheel" "video" "audio" "docker" "dialout" "adbusers" "gpio"
+      # only temporary for testing makemkv
+      "cdrom"
+  ];
     shell = pkgs.zsh;
     uid = 1001;
   };
