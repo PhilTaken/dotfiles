@@ -109,6 +109,8 @@
       };
     in
     {
+      lib = util;
+
       devShells."${system}".default = util.shells.devShell;
 
       overlays.default = (import ./custom_pkgs);

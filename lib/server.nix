@@ -17,7 +17,7 @@ let
 
   users = [{
     name = "nixos";
-    groups = [
+    extraGroups = [
       "wheel"
       "video"
       "audio"

@@ -29,9 +29,8 @@ rec {
         (lib.range 1000 (builtins.length users + 1000));
 
       contains = val: builtins.foldl' (accum: elem: elem == val || accum) false;
-      part = builtins.partition (lib.flip contains ["nixos" "maelstroem"]) raw_users;
-      sys_users = map user.mkSystemUser part.right;
-      guest_users = map user.mkGuestUser part.wrong;
+      part = builtins.partition (raw_user: contains raw_user.name ["nixos" "maelstroem"]) raw_users;
+      sys_users = (map user.mkSystemUser part.right) ++ (map user.mkGuestUser part.wrong);
     in
     lib.nixosSystem {
       inherit system pkgs;

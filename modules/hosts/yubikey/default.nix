@@ -7,6 +7,7 @@ with lib;
 
 let
   cfg = config.phil.yubikey;
+  contains = val: builtins.foldl' (accum: elem: elem == val || accum) false;
 in
 {
   options.phil.yubikey = {
@@ -36,12 +37,12 @@ in
   };
 
   config = mkIf (cfg.enable) {
-    sops.secrets.nixos-ykchal = {
+    sops.secrets.nixos-ykchal = mkIf (contains "nixos" (builtins.attrNames config.users.users)) {
       owner = "nixos";
       path = "${cfg.chalRespPath}/nixos-14321676";
     };
 
-    sops.secrets.maelstroem-ykchal = {
+    sops.secrets.maelstroem-ykchal = mkIf (contains "maelstroem" (builtins.attrNames config.users.users)) {
       owner = "maelstroem";
       path = "${cfg.chalRespPath}/maelstroem-14321676";
     };
