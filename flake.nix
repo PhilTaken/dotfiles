@@ -64,45 +64,44 @@
       util = libFor "x86_64-linux";
       raspiUtil = libFor "aarch64-linux";
       pkgs = util.pkgs;
+
+      hmUsers.nixos = util.user.mkConfig {
+        username = "nixos";
+        userConfig = {
+          wms.sway.enable = true;
+          wms.bars.waybar.enable = true;
+        };
+
+        extraPackages = pkgs: with pkgs; [
+          gnome3.adwaita-icon-theme
+          xournalpp
+        ];
+      };
+
+      hmUsers.maelstroem = util.user.mkConfig {
+        username = "maelstroem";
+        userConfig = {
+          firefox = {
+            enable = true;
+            wayland = false;
+          };
+
+          # de/wm config
+          wms.i3.enable = true;
+          wms.bars.eww.enable = true;
+        };
+
+        extraPackages = pkgs: with pkgs; [
+          nur.repos.shados.tmm
+          plover.dev
+        ];
+      };
     in
     {
       devShells."${system}".default = util.shells.devShell;
 
       overlays.default = (import ./custom_pkgs);
-
-      homeManagerConfigurations = {
-        nixos = util.user.mkHMUser {
-          username = "nixos";
-          userConfig = {
-            wms.sway.enable = true;
-            wms.bars.waybar.enable = true;
-          };
-
-          extraPackages = pkgs: with pkgs; [
-            gnome3.adwaita-icon-theme
-            xournalpp
-          ];
-        };
-
-        maelstroem = util.user.mkHMUser {
-          username = "maelstroem";
-          userConfig = {
-            firefox = {
-              enable = true;
-              wayland = false;
-            };
-
-            # de/wm config
-            wms.i3.enable = true;
-            wms.bars.eww.enable = true;
-          };
-
-          extraPackages = pkgs: with pkgs; [
-            nur.repos.shados.tmm
-            plover.dev
-          ];
-        };
-      };
+      homeConfigurations = lib.mapAttrs (username: config: util.user.mkHMUser config) hmUsers;
 
       nixosConfigurations =
         let
@@ -123,6 +122,7 @@
             util.host.mkHost {
               inherit hardware-config users;
 
+              hmConfigs = with hmUsers; [ maelstroem ];
 
               systemConfig = {
                 inherit wireguard nebula server;
@@ -151,6 +151,8 @@
             in
             util.host.mkHost {
               inherit hardware-config users;
+
+              hmConfigs = with hmUsers; [ nixos ];
 
               systemConfig = {
                 inherit wireguard nebula server;

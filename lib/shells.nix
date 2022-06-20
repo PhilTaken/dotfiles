@@ -79,13 +79,13 @@ in
           help = "Build + switch to a user configuration with home-manager";
           command = ''
             if [[ -z "$@" || "$1" == "help" ]]; then
-              eval configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.homeManagerConfigurations)) ++ [")"]))')
+              eval configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.homeConfigurations)) ++ [")"]))')
               echo -e "Available configs:"
               for i in ''${configurations[@]}; do
                 echo -e "  - $i"
               done
             else
-              nix build ".#homeManagerConfigurations.$1.activationPackage" && result/activate
+              nix build ".#homeConfigurations.$1.activationPackage" && result/activate
             fi
           '';
           category = "system";

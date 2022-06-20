@@ -8,90 +8,96 @@
 }:
 with builtins;
 {
-  mkHMUser = { userConfig, username, extraPackages ? pkgs: [ ] }:
-    let
-      homeDirectory = "/home/${username}";
-      stateVersion = "21.05";
-    in
-    home-manager.lib.homeManagerConfiguration {
-      inherit system username pkgs homeDirectory stateVersion;
+  mkConfig = { username
+  , userConfig
+  , extraPackages ? pkgs: []
+  , stateVersion ? "21.05"
+  , homeDirectory ? "/home/${username}"
+  }: rec {
+    phil = userConfig;
+    nixpkgs.overlays = overlays;
+    nixpkgs.config.allowUnfree = true;
+    systemd.user.startServices = true;
+    home = {
+      inherit username homeDirectory stateVersion;
 
-      configuration = rec {
-        phil = userConfig;
-        nixpkgs.overlays = overlays;
-        nixpkgs.config.allowUnfree = true;
-        systemd.user.startServices = true;
-        home = {
-          inherit username homeDirectory stateVersion;
-
-          # tbh no clue
-          sessionVariables = {
-            MOZ_USE_XINPUT2 = 1;
-            GTK_USE_PORTAL = 1;
-            AWT_TOOLKIT = "MToolkit";
-          };
-
-          packages = with pkgs; [
-            cacert
-            coreutils
-            qt5.qtbase
-            weather-icons
-            hicolor-icon-theme
-
-            anki
-            cachix
-
-            element-desktop
-            gimp
-            gping
-            hyperfine
-            keepassxc
-            libreoffice
-            #magic-wormhole
-            #obsidian
-            signal-desktop
-            tdesktop
-            texlive.combined.scheme-medium
-            tokei
-            vpnc
-            wget
-            youtube-dl
-            zoom-us
-          ] ++ (extraPackages pkgs) ++
-          # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
-          #discord
-          (if phil.wms.sway.enable or false then [
-            (pkgs.writeShellApplication {
-              name = "discord";
-              text = "${pkgs.discord}/bin/discord --use-gl=desktop";
-            })
-            (pkgs.makeDesktopItem {
-              name = "discord";
-              exec = "discord";
-              desktopName = "Discord";
-            })
-          ]
-          else [ discord ]);
-
-        };
-
-        programs.home-manager.enable = true;
-        programs.zathura.enable = true;
-
-        services.syncthing.enable = true;
-
-        xdg = {
-          enable = true;
-          configHome = "${homeDirectory}/.config";
-          dataHome = "${homeDirectory}/.local/share";
-          cacheHome = "${homeDirectory}/.cache";
-        };
-
-        imports = [
-          ../modules/users
-        ] ++ extraHMImports;
+      sessionVariables = {
+        MOZ_USE_XINPUT2 = 1;
+        GTK_USE_PORTAL = 1;
+        AWT_TOOLKIT = "MToolkit";
       };
+
+      packages = with pkgs; [
+        cacert
+        coreutils
+        qt5.qtbase
+        weather-icons
+        hicolor-icon-theme
+
+        anki
+        cachix
+
+        element-desktop
+        gimp
+        gping
+        hyperfine
+        keepassxc
+        libreoffice
+        #magic-wormhole
+        #obsidian
+        signal-desktop
+        tdesktop
+        texlive.combined.scheme-medium
+        tokei
+        vpnc
+        wget
+        youtube-dl
+        zoom-us
+      ] ++ (extraPackages pkgs) ++
+      # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
+      #discord
+      (if phil.wms.sway.enable or false then [
+        (pkgs.writeShellApplication {
+          name = "discord";
+          text = "${pkgs.discord}/bin/discord --use-gl=desktop";
+        })
+        (pkgs.makeDesktopItem {
+          name = "discord";
+          exec = "discord";
+          desktopName = "Discord";
+        })
+      ]
+      else [ discord ]);
     };
+
+    programs.home-manager.enable = true;
+    programs.zathura.enable = true;
+
+    services.syncthing.enable = true;
+
+    xdg = {
+      enable = true;
+      configHome = "${homeDirectory}/.config";
+      dataHome = "${homeDirectory}/.local/share";
+      cacheHome = "${homeDirectory}/.cache";
+    };
+
+    imports = [
+      ../modules/users
+    ] ++ extraHMImports;
+  };
+
+  mkHMUser = { config }: home-manager.lib.homeManagerConfiguration {
+    inherit system pkgs;
+    inherit (config.home) username homeDirectory stateVersion;
+    configuration = mkConfig args;
+  };
+
+  mkNixosModule = { config }: {
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.${config.home.username} = config;
+  };
 
   mkSystemUser =
     { name

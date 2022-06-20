@@ -17,6 +17,7 @@ rec {
     , username ? "nixos"
     , wireless_interfaces ? [ ]
     , extraimports ? [ ]
+    , hmConfigs ? []
     }:
     let
       sys_users = (map (u: user.mkSystemUser u) users);
@@ -26,10 +27,10 @@ rec {
 
       modules = [
         {
-          imports = ([
+          imports = [
             hardware-config
             ../modules/hosts
-          ] ++ sys_users) ++ extraimports;
+          ] ++ sys_users ++ extraimports;
 
           phil = systemConfig;
 
@@ -39,6 +40,6 @@ rec {
           sops.age.keyFile = "/var/lib/sops-nix/key.txt";
           sops.age.generateKey = true;
         }
-      ] ++ extramodules;
+      ] ++ hmConfigs ++ extramodules;
     };
 }
