@@ -82,7 +82,7 @@
     - quickfix list
         - https://github.com/kevinhwang91/nvim-bqf
     - marks
-        - https://github.com/chentau/marks.nvim
+        - https://github.com/chentoast/marks.nvim
     - commentary
         - tjdevries video
 

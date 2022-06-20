@@ -94,6 +94,19 @@
           plover.dev
         ];
       };
+
+      hmUsers.test = util.user.mkConfig {
+        username = "test";
+        userConfig = {
+          firefox = {
+            enable = true;
+            wayland = false;
+          };
+          des.gnome.enable = true;
+
+          # ...
+        };
+      };
     in
     {
       devShells."${system}".default = util.shells.devShell;
@@ -114,7 +127,7 @@
 
           # desktop @ home
           gamma = util.host.mkHost rec {
-            users = [ "maelstroem" ];
+            users = [ "maelstroem" "test" ];
             hmConfigs = mkHMUsers users;
             systemConfig = {
               inherit wireguard nebula server;

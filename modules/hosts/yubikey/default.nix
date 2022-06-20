@@ -37,12 +37,12 @@ in
 
   config = mkIf (cfg.enable) {
     sops.secrets.nixos-ykchal = {
-      #owner = "nixos";
+      owner = "nixos";
       path = "${cfg.chalRespPath}/nixos-14321676";
     };
 
     sops.secrets.maelstroem-ykchal = {
-      #owner = "maelstroem";
+      owner = "maelstroem";
       path = "${cfg.chalRespPath}/maelstroem-14321676";
     };
 
