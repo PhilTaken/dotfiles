@@ -56,14 +56,12 @@
   outputs = { self, nixpkgs, ... }@inputs:
     let
       inherit (nixpkgs) lib;
-      system = "x86_64-linux";
-
       libFor = system: import ./lib { inherit system inputs; };
-      net = import ./network.nix { };
 
-      util = libFor "x86_64-linux";
-      raspiUtil = libFor "aarch64-linux";
-      pkgs = util.pkgs;
+      system = "x86_64-linux";
+      util = libFor system;
+
+      net = import ./network.nix { };
 
       hmUsers.nixos = util.user.mkConfig {
         username = "nixos";
@@ -108,68 +106,56 @@
           wireguard.enable = true;
           nebula.enable = true;
           server.services.telegraf.enable = true;
+          mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
         in
         {
           # usb stick iso
           x86-iso = util.iso.mkIso "isoInstall";
 
           # desktop @ home
-          gamma =
-            let
-              hardware-config = import (./machines/gamma);
-              users = [{ name = "maelstroem"; uid = 1000; }];
-            in
-            util.host.mkHost {
-              inherit hardware-config users;
+          gamma = util.host.mkHost rec {
+            users = [ "maelstroem" ];
+            hmConfigs = mkHMUsers users;
+            systemConfig = {
+              inherit wireguard nebula server;
 
-              hmConfigs = with hmUsers; [ maelstroem ];
+              core.hostName = "gamma";
+              core.enableBluetooth = true;
 
-              systemConfig = {
-                inherit wireguard nebula server;
+              dns.nameserver = "beta";
+              mullvad.enable = true;
 
-                core.hostName = "gamma";
-                core.enableBluetooth = true;
+              nvidia.enable = true;
+              desktop.enable = true;
 
-                dns.nameserver = "beta";
-                mullvad.enable = true;
-
-                nvidia.enable = true;
-                desktop.enable = true;
-
-                video = {
-                  driver = "nvidia";
-                  manager = "xfce";
-                };
+              video = {
+                driver = "nvidia";
+                manager = "xfce";
               };
             };
+          };
 
           # workplace-issued thinkpad
-          nixos-laptop =
-            let
-              hardware-config = import (./machines/nixos-laptop);
-              users = [{ name = "nixos"; uid = 1001; }];
-            in
-            util.host.mkHost {
-              inherit hardware-config users;
+          nixos-laptop = util.host.mkHost rec {
+            users = [ "nixos" ];
+            hmConfigs = mkHMUsers users;
+            systemConfig = {
+              inherit wireguard nebula server;
 
-              hmConfigs = with hmUsers; [ nixos ];
+              core.hostName = "nixos-laptop";
+              dns.nameserver = "beta";
+              mullvad.enable = true;
 
-              systemConfig = {
-                inherit wireguard nebula server;
+              laptop.enable = true;
+              laptop.wirelessInterfaces = [ "wlp0s20f3" ];
 
-                core.hostName = "nixos-laptop";
-                laptop.enable = true;
-                laptop.wirelessInterfaces = [ "wlp0s20f3" ];
-                dns.nameserver = "beta";
-
-                mullvad.enable = true;
-                video.manager = "sway";
-              };
+              video.manager = "sway";
             };
+          };
         } // builtins.mapAttrs
           (servername: services:
             let
-              sUtil = if servername == "beta" then raspiUtil else util;
+              sUtil = if servername == "beta" then (libFor "aarch64-linux") else util;
             in
             sUtil.server.mkServer { inherit servername services; })
           net.services;

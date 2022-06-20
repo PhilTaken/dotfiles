@@ -12,15 +12,22 @@ rec {
   # set up a vanilla host without any home-manager
   mkHost =
     { users
-    , hardware-config ? ({ ... }: { })
     , systemConfig
-    , username ? "nixos"
     , wireless_interfaces ? [ ]
     , extraimports ? [ ]
-    , hmConfigs ? []
+    , hmConfigs ? [ ]
+    , hardware-config ? (import ../machines/${systemConfig.core.hostName})
     }:
     let
-      sys_users = (map (u: user.mkSystemUser u) users);
+      raw_users = lib.zipListsWith
+        (name: uid:
+          if builtins.isAttrs name then
+            (lib.mergeAttrs { inherit uid; } name)
+          else
+            { inherit name uid; })
+        users
+        (lib.range 1000 (builtins.length users + 1000));
+      sys_users = map user.mkSystemUser raw_users;
     in
     lib.nixosSystem {
       inherit system pkgs;
@@ -40,6 +47,6 @@ rec {
           sops.age.keyFile = "/var/lib/sops-nix/key.txt";
           sops.age.generateKey = true;
         }
-      ] ++ hmConfigs ++ extramodules;
+      ] ++ extramodules ++ hmConfigs;
     };
 }

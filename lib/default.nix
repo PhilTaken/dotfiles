@@ -28,10 +28,10 @@ let
 
   extramodules = [
     inputs.sops-nix-src.nixosModules.sops
+    inputs.home-manager.nixosModules.home-manager
   ] ++ lib.optionals (system == "aarch64-linux") [
     "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   extraHMImports = [ inputs.spicetify.homeManagerModule ];

@@ -7,16 +7,6 @@
 with builtins;
 
 let
-  nixos = {
-    name = "nixos";
-    groups = [
-      "wheel" "video" "audio" "docker" "dialout" "adbusers" "gpio"
-      # only temporary for testing makemkv
-      "cdrom"
-  ];
-    shell = pkgs.zsh;
-    uid = 1001;
-  };
   defaults = [
     "openssh"
     "fail2ban"
@@ -24,7 +14,23 @@ let
     "vector"
     "iperf"
   ];
-  users = [ nixos ];
+
+  users = [{
+    name = "nixos";
+    groups = [
+      "wheel"
+      "video"
+      "audio"
+      "docker"
+      "dialout"
+      "adbusers"
+      "gpio"
+      # only temporary for testing makemkv
+      "cdrom"
+    ];
+    shell = pkgs.zsh;
+  }];
+
   # allows value to overwrite enabled when specified explicitly
   defaultEnabled = builtins.mapAttrs (_: value: lib.mergeAttrs { enable = true; } value);
 in
