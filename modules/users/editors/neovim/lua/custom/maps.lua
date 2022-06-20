@@ -11,6 +11,9 @@ vim.cmd[[au TermOpen * setlocal norelativenumber nonumber]]
 -- strip trailing whitespaces
 vim.cmd[[au FileType c,cpp,python,rust,nix,lua,ruby,r autocmd BufWritePre <buffer> :%s/\s\+$//e]]
 
+-- create non-exist files under cursor
+vim.cmd[[map gf :e <cfile><CR>]]
+
 -- terminals
 local toggleterm = require('toggleterm')
 local terms = require('custom.terminals')
