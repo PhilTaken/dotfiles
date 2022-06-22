@@ -137,6 +137,8 @@
               core.hostName = "gamma";
               core.enableBluetooth = true;
 
+              development.adb.enable = true;
+
               dns.nameserver = "beta";
               mullvad.enable = true;
 
