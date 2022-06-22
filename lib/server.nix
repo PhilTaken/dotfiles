@@ -46,7 +46,13 @@ rec {
       hardware-config = import (../machines + "/${servername}");
     in
     host.mkHost {
-      inherit hardware-config users extraimports;
+      inherit hardware-config users;
+
+      extraimports = extraimports ++ [{
+        documentation.enable = false;
+        environment.noXlibs = true;
+        i18n.supportedLocales = lib.mkForce [ "en_US.UTF-8/UTF-8" ];
+      }];
 
       systemConfig = {
         inherit fileshare;
