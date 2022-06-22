@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.phil.server.services.caddy;
 
-  net = import ../../../network.nix { };
+  net = import ../../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
   ipOpts = { ... }: {
@@ -56,6 +56,12 @@ in
           '';
       in
       {
+        package = (pkgs.callPackage ./custom_caddy.nix {
+          plugins = [
+            "github.com/caddy-dns/cloudflare"
+          ];
+          vendorSha256 = "sha256-1SBOXv2RGLlTT/mguPjTASU5AeQNIVySgVMgvu5BH6w=";
+        });
         enable = true;
         extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };
