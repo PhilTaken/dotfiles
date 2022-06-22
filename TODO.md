@@ -2,8 +2,10 @@
 
 ## general issues
 
-- set up modules:
+- set up 
+    - dns over tls
 
+- set up modules:
     - dashboard (homer)
         - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
         - https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md
@@ -74,8 +76,19 @@
 
 ## nvim
 
-- sk(im) sorter for telescope?
+### TOOD
 
+- window navigation
+- work with builtin `makeprg`
+- marks workflow
+- quickfix list
+- lsp definition/implementation
+- scroll doc windows
+
+### ideas
+
+- https://github.com/extrawurst/gitui vs lazygit
+- sk(im) sorter for telescope?
 - plugins
     - symbol outlines (lsp)
         - https://github.com/simrat39/symbols-outline.nvim
@@ -86,10 +99,12 @@
     - commentary
         - tjdevries video
 
-## Ideas
+## general Ideas
 
-- https://getstation.com/
-    - /matrix bridges
+- flake templates for common languages
+
+- matrix bridges for common services
+
 - devdocs.io
 
 - distributed file system
