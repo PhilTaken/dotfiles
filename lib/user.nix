@@ -113,22 +113,25 @@ rec {
     , ...
     }: mkUser { inherit uid name shell extraGroups sshKeys; };
 
-    mkGuestUser = { name, uid ? 1000, shell ? pkgs.zsh , extraGroups ? [] }@args: mkUser { inherit name uid shell extraGroups; };
+  mkGuestUser = { name, uid ? 1000, shell ? pkgs.zsh, extraGroups ? [ ] }@args: mkUser { inherit name uid shell extraGroups; };
 
-    mkUser = {name
+  mkUser =
+    { name
     , uid
     , shell
     , extraGroups
-    , sshKeys ? []
-  }: {
-      users.users."${name}" = let
-      defaultGroups = [ "video" "audio" "cdrom" ];
-    in {
-        inherit name uid shell;
-        extraGroups = extraGroups ++ defaultGroups;
-        isNormalUser = true;
-        isSystemUser = false;
-        openssh.authorizedKeys.keys = sshKeys;
-      };
+    , sshKeys ? [ ]
+    }: {
+      users.users."${name}" =
+        let
+          defaultGroups = [ "video" "audio" "cdrom" ];
+        in
+        {
+          inherit name uid shell;
+          extraGroups = extraGroups ++ defaultGroups;
+          isNormalUser = true;
+          isSystemUser = false;
+          openssh.authorizedKeys.keys = sshKeys;
+        };
     };
 }
