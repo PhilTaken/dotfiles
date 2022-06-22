@@ -37,7 +37,6 @@ local leadern = {
     ["<s-tab>"] = { "<cmd>bp<cr>", "Previous Buffer" },
 
     [";"] = { function() R('custom.tele').buffers() end, "Buffers" },
-    [";;"] = { function() R('custom.tele').project_search() end, "Project Search" },
 
     ["<leader>"] = {
         ["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting" },
@@ -63,16 +62,11 @@ local leadern = {
             l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
             r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences" },
         },
-        n = {
-            name = "+neorg",
-            -- TODO: neorg keybinds
+        m = {
+            name = "+make",
+            -- TODO: make keybinds
         },
         -- TODO: maybe move to autocommands down below (like fennel, python)
-        i = {
-            name = "+iron",
-            s = { "<cmd>IronRepl<cr>", "Start iron repl" },
-            l = { "<Plug>(iron-send-line)", "Send single line" },
-        },
         l = {
             name = "+lsp",
             n = { function() vim.lsp.buf.rename() end, "Rename Variable" },
@@ -105,7 +99,7 @@ local leadern = {
             name = "+shells",
             g = { function() terms['lazygit']:toggle() end, "Toggle lazygit interface" },      -- git
             t = { function() terms['bottom']:toggle() end, "Toggle bottom resource monitor" }, -- top
-            f = { function() terms['bgshell']:toggle() end, "Toggle random shell" },           -- flot
+            f = { function() terms['bgshell']:toggle() end, "Toggle random shell" },           -- float
 
             v = { function() terms['vterm']:toggle() end, "Toggle side shell (horizontal split)" },               -- vertical
             h = { function() terms['hterm']:toggle() end, "Toggle side shell (vertical split)" },               -- horizontal
@@ -118,10 +112,6 @@ local leadern = {
 -- visual mode mappings
 local leaderv = {
     ["<leader>"] = {
-        i = {
-            name = "+iron",
-            s = { "<Plug>(iron-visual-send)", "Send visual selection" },
-        },
         r = {
             name = "+R",
             s = { "<Plug>RSendSelection", "Send visual selection" }
@@ -139,7 +129,7 @@ local leaderv = {
 
 -- terminal mode mappings
 local leadert = {
-    ["jj"] = { R('custom.utils').t("<C-\\><C-n>"), "Escape from terminal mode" }
+    [";;"] = { R('custom.utils').t("<C-\\><C-n>"), "Escape from terminal mode" }
 }
 
 local leaderi = {
