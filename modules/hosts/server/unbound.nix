@@ -8,6 +8,8 @@ with lib;
 # TODO: remove unbound dns entry
 
 let
+  contains = val: builtins.foldl' (accum: elem: elem == val || accum) false;
+
   cfg = config.phil.server.services.unbound;
   net = import ../../../network.nix { };
   iplot = net.networks.default;
@@ -24,8 +26,26 @@ let
               value = host;
             in
             { inherit name value; })
-          services.${host}))
+          (builtins.filter (lib.flip contains [ "unbound" "caddy" ]) services.${host})))
         (builtins.attrNames services)));
+
+  adblockLocalZones = pkgs.stdenv.mkDerivation {
+    name = "unbound-zones-adblock";
+
+    src = (pkgs.fetchFromGitHub
+      {
+        owner = "StevenBlack";
+        repo = "hosts";
+        rev = "3.0.0";
+        sha256 = "01g6pc9s1ah2w1cbf6bvi424762hkbpbgja9585a0w99cq0n6bxv";
+      } + "/hosts");
+
+    phases = [ "installPhase" ];
+
+    installPhase = ''
+      ${pkgs.gawk}/bin/awk '{sub(/\r$/,"")} {sub(/^127\.0\.0\.1/,"0.0.0.0")} BEGIN { OFS = "" } NF == 2 && $1 == "0.0.0.0" { print "local-zone: \"", $2, "\" static"}' $src | tr '[:upper:]' '[:lower:]' | sort -u >  $out
+    '';
+  };
 in
 {
   options.phil.server.services.unbound = {
@@ -53,17 +73,23 @@ in
       in
       {
         enable = true;
-        # WIP: generate settings from options
-        # see https://dnswatch.com/dns-docs/UNBOUND/
         settings = {
           server = {
             access-control = [
               "127.0.0.0/8 allow" # localhost
               "10.100.0.1/24 allow" # yggdrasil
               "10.200.0.1/24 allow" # milkyway
-              #"192.168.0.1/24 allow"   # local net
+              "192.168.0.1/24 allow" # local net
             ];
-            interface = [ "0.0.0.0" "::0" ];
+            interfaces = [ "0.0.0.0" "::0" ];
+
+            #tls-cert-bundle: /etc/ssl/certs/ca-certificates.crt
+            #tls-upstream: yes
+            extraConfig = ''
+              so-reuseport: yes
+              include: "${adblockLocalZones}"
+            '';
+
             qname-minimisation = "yes";
             serve-expired-client-timeout = 1800;
             do-ip4 = "yes";
@@ -84,7 +110,6 @@ in
             msg-cache-size = "128m";
             so-rcvbuf = "8m";
 
-            #private-domain = "home.lan";
             val-clean-additional = "yes";
 
             local-zone = [
