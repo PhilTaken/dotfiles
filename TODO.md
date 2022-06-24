@@ -116,3 +116,5 @@
 
 - selfhosted
 - skrooge?
+
+udev script encrypted backup bitwarden
