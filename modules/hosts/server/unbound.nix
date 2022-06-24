@@ -41,6 +41,11 @@ in
       };
       default = mkDnsBindsFromServices net.services;
     };
+
+    host = mkOption {
+      type = types.str;
+      default = "dns";
+    };
   };
 
   # TODO: enable condition

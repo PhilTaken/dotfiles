@@ -14,7 +14,7 @@ in
     enable = mkEnableOption "gitea";
     url = mkOption {
       description = "gitea url (webinterface)";
-      default = "https://gitea.home";
+      default = "https://gitea.pherzog.xyz";
       type = types.str;
     };
     port = mkOption {
@@ -37,9 +37,8 @@ in
     services.gitea = {
       inherit (cfg) stateDir enable;
 
-      domain = "${cfg.host}.home";
-      rootUrl = "https://${cfg.host}.home/";
-      #httpAddress = "http://gitea.home/";
+      domain = "${cfg.host}.pherzog.xyz";
+      rootUrl = "https://${cfg.host}.pherzog.xyz/";
 
       httpPort = cfg.port;
       ssh.enable = true;

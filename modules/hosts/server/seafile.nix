@@ -32,7 +32,7 @@ in
       });
       adminEmail = "john@example.com";
       initialAdminPassword = "test123";
-      ccnetSettings.General.SERVICE_URL = "seafile.home:8084";
+      ccnetSettings.General.SERVICE_URL = "seafile.pherzog.xyz:8084";
     };
   };
 }

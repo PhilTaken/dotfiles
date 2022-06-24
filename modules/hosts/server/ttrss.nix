@@ -14,7 +14,7 @@ in
     enable = mkEnableOption "tiny tiny rss";
     url = mkOption {
       description = "ttrss url (webinterface)";
-      default = "rss.home";
+      default = "rss.pherzog.xyz";
       type = types.str;
     };
   };

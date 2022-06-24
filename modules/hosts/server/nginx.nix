@@ -31,7 +31,7 @@ in
         genconfig = subdomain: port: ''
           server {
             listen 80;
-            server_name ${subdomain}.home;
+            server_name ${subdomain}.pherzog.xyz;
             location / {
               proxy_pass http://$server_addr:${toString port};
             }

@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.phil.server.services.grafana;
   outputUrl = "http://10.200.0.1:8086";
-  domain = "grafana.home";
+  domain = "grafana.pherzog.xyz";
   port = 3010;
   net = import ../../../network.nix { };
 in

@@ -19,7 +19,7 @@ in
     url = mkOption {
       description = "webinterface url";
       type = types.str;
-      default = "keycloak.home";
+      default = "keycloak.pherzog.xyz";
     };
 
     # more options
