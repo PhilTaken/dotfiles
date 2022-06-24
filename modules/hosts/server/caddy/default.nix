@@ -41,6 +41,8 @@ in
       owner = config.systemd.services.caddy.serviceConfig.User;
     };
 
+    systemd.services.caddy.serviceConfig.AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+
     services.caddy =
       let
         genconfig = subdomain: config:
@@ -50,23 +52,21 @@ in
           in
           ''
             ${subdomain}.pherzog.xyz {
-              tls internal
               reverse_proxy http://${ip}:${toString port}
+              tls {
+                import ${inputs.config.sops.secrets.caddy_dns_cf.path}
+              }
             }
           '';
       in
       {
         enable = true;
-        #user = "root";
         package = (pkgs.callPackage ./custom_caddy.nix {
           plugins = [
             "github.com/caddy-dns/cloudflare"
           ];
           vendorSha256 = "sha256-1SBOXv2RGLlTT/mguPjTASU5AeQNIVySgVMgvu5BH6w=";
         });
-        #globalConfig = ''
-          #import ${inputs.config.sops.secrets.caddy_dns_cf.path}
-        #'';
         extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };
 

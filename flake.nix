@@ -66,7 +66,6 @@
       hmUsers.nixos = util.user.mkConfig {
         username = "nixos";
         userConfig = {
-          work.enable = false;
           wms.sway.enable = true;
           wms.bars.waybar.enable = true;
         };
