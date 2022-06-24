@@ -5,8 +5,6 @@
 }:
 with lib;
 
-# TODO: remove unbound dns entry
-
 let
   contains = val: builtins.foldl' (accum: elem: elem == val || accum) false;
 
@@ -26,9 +24,10 @@ let
               value = host;
             in
             { inherit name value; })
-          (builtins.filter (lib.flip contains [ "unbound" "caddy" ]) services.${host})))
+          # TODO: negate filter
+          #(builtins.filter (lib.flip contains [ "unbound" "caddy" ]) services.${host})))
+          services.${host}))
         (builtins.attrNames services)));
-
 in
 {
   options.phil.server.services.unbound = {
@@ -64,14 +63,10 @@ in
               "10.200.0.1/24 allow" # milkyway
               "192.168.0.1/24 allow" # local net
             ];
-            interfaces = [ "0.0.0.0" "::0" ];
+            interface = [ "0.0.0.0" "::0" ];
 
             #tls-cert-bundle: /etc/ssl/certs/ca-certificates.crt
             #tls-upstream: yes
-            extraConfig = ''
-              so-reuseport: yes
-            '';
-
             qname-minimisation = "yes";
             serve-expired-client-timeout = 1800;
             do-ip4 = "yes";
@@ -91,6 +86,7 @@ in
             rrset-cache-size = "256m";
             msg-cache-size = "128m";
             so-rcvbuf = "8m";
+            so-reuseport = "yes";
 
             val-clean-additional = "yes";
 
