@@ -66,6 +66,7 @@
       hmUsers.nixos = util.user.mkConfig {
         username = "nixos";
         userConfig = {
+          work.enable = false;
           wms.sway.enable = true;
           wms.bars.waybar.enable = true;
         };
@@ -189,22 +190,22 @@
       # deploy config
       deploy.nodes = {
         alpha = {
-          hostname = "148.251.102.93";
-          #hostname = "10.200.0.1";
+          #hostname = "148.251.102.93";
+          hostname = "10.200.0.1";
           sshUser = "root";
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
         };
 
         beta = {
-          #hostname = "10.200.0.2";
-          hostname = "192.168.0.120";
+          hostname = "10.200.0.2";
+          #hostname = "192.168.0.120";
           sshUser = "root";
           profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
         };
 
         delta = {
-          #hostname = "10.200.0.4";
-          hostname = "192.168.0.21";
+          hostname = "10.200.0.5";
+          #hostname = "192.168.0.21";
           sshUser = "root";
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
         };

@@ -2,7 +2,7 @@
 , config
 , lib
 , ...
-}:
+}@inputs:
 with lib;
 
 let
@@ -37,6 +37,10 @@ in
   };
 
   config = mkIf (cfg.proxy != { }) {
+    sops.secrets.caddy_dns_cf = {
+      owner = config.systemd.services.caddy.serviceConfig.User;
+    };
+
     services.caddy =
       let
         genconfig = subdomain: config:
@@ -49,20 +53,20 @@ in
               tls internal
               reverse_proxy http://${ip}:${toString port}
             }
-            ${subdomain}.home {
-              tls internal
-              reverse_proxy http://${ip}:${toString port}
-            }
           '';
       in
       {
+        enable = true;
+        #user = "root";
         package = (pkgs.callPackage ./custom_caddy.nix {
           plugins = [
             "github.com/caddy-dns/cloudflare"
           ];
           vendorSha256 = "sha256-1SBOXv2RGLlTT/mguPjTASU5AeQNIVySgVMgvu5BH6w=";
         });
-        enable = true;
+        #globalConfig = ''
+          #import ${inputs.config.sops.secrets.caddy_dns_cf.path}
+        #'';
         extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };
 

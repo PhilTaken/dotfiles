@@ -29,23 +29,6 @@ let
           (builtins.filter (lib.flip contains [ "unbound" "caddy" ]) services.${host})))
         (builtins.attrNames services)));
 
-  adblockLocalZones = pkgs.stdenv.mkDerivation {
-    name = "unbound-zones-adblock";
-
-    src = (pkgs.fetchFromGitHub
-      {
-        owner = "StevenBlack";
-        repo = "hosts";
-        rev = "3.0.0";
-        sha256 = "01g6pc9s1ah2w1cbf6bvi424762hkbpbgja9585a0w99cq0n6bxv";
-      } + "/hosts");
-
-    phases = [ "installPhase" ];
-
-    installPhase = ''
-      ${pkgs.gawk}/bin/awk '{sub(/\r$/,"")} {sub(/^127\.0\.0\.1/,"0.0.0.0")} BEGIN { OFS = "" } NF == 2 && $1 == "0.0.0.0" { print "local-zone: \"", $2, "\" static"}' $src | tr '[:upper:]' '[:lower:]' | sort -u >  $out
-    '';
-  };
 in
 {
   options.phil.server.services.unbound = {
@@ -87,7 +70,6 @@ in
             #tls-upstream: yes
             extraConfig = ''
               so-reuseport: yes
-              include: "${adblockLocalZones}"
             '';
 
             qname-minimisation = "yes";
@@ -120,7 +102,6 @@ in
               "\"ads.youtube.com\" redirect"
               "\"adserver.yahoo.com\" redirect"
 
-              "\"home.\" static"
               "\"pherzog.xyz.\" static"
             ];
 
@@ -132,12 +113,9 @@ in
               "\"ads.youtube.com A 127.0.0.1\""
               "\"adserver.yahoo.com A 127.0.0.1\""
             ] ++
-            (lib.mapAttrsToList (name: value: "\"${name}.home. IN A ${value.ip}\"") subdomains) ++
             (lib.mapAttrsToList (name: value: "\"${name}.pherzog.xyz. IN A ${value.ip}\"") subdomains);
 
-            local-data-ptr =
-              (lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.home\"") subdomains) ++
-              (lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.pherzog.xyz\"") subdomains);
+            local-data-ptr = (lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.pherzog.xyz\"") subdomains);
           };
 
           forward-zone = [
