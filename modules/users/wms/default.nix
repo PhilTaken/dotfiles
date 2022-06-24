@@ -7,6 +7,7 @@ let
 in
 {
   imports = [
+    ./xmonad
     ./sway
     ./i3
 

@@ -15,7 +15,7 @@ opt.wildmode = { 'list', 'longest' }
 
 opt.langremap = true
 
-o.cmdheight = 2
+o.cmdheight = 1
 
 -- single statusline at the bottom
 o.laststatus = 3
