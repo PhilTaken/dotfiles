@@ -122,6 +122,7 @@
           nebula.enable = true;
           server.services.telegraf.enable = true;
           mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
+          dns.nameserver = "beta";
         in
         {
           # usb stick iso
@@ -132,14 +133,13 @@
             users = [ "maelstroem" "test" ];
             hmConfigs = mkHMUsers users;
             systemConfig = {
-              inherit wireguard nebula server;
+              inherit wireguard nebula server dns;
 
               core.hostName = "gamma";
               core.enableBluetooth = true;
 
               development.adb.enable = true;
 
-              dns.nameserver = "beta";
               mullvad.enable = true;
 
               nvidia.enable = true;
@@ -157,10 +157,9 @@
             users = [ "nixos" ];
             hmConfigs = mkHMUsers users;
             systemConfig = {
-              inherit wireguard nebula server;
+              inherit wireguard nebula server dns;
 
               core.hostName = "nixos-laptop";
-              dns.nameserver = "beta";
               mullvad.enable = true;
 
               laptop.enable = true;
@@ -203,8 +202,8 @@
         };
 
         delta = {
-          hostname = "10.200.0.5";
-          #hostname = "192.168.0.21";
+          #hostname = "10.200.0.5";
+          hostname = "192.168.0.21";
           sshUser = "root";
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
         };

@@ -4,6 +4,7 @@
 , ...
 }:
 with lib;
+# TODO: dns over tls
 
 let
   contains = val: builtins.foldl' (accum: elem: elem == val || accum) false;
@@ -51,9 +52,10 @@ in
   # TODO: enable condition
   config = mkIf (cfg.enable) {
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [ 53 ];
-      allowedTCPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 853 ];
+      allowedTCPPorts = [ 53 853 ];
     };
+
     services.unbound =
       let
         subdomains = (builtins.mapAttrs (name: value: { ip = iplot."${value}"; }) cfg.apps);
@@ -68,16 +70,24 @@ in
               "10.200.0.1/24 allow" # milkyway
               "192.168.0.1/24 allow" # local net
             ];
-            interface = [ "0.0.0.0" "::0" ];
 
-            #tls-cert-bundle: /etc/ssl/certs/ca-certificates.crt
-            #tls-upstream: yes
-            qname-minimisation = "yes";
-            serve-expired-client-timeout = 1800;
-            do-ip4 = "yes";
-            do-ip6 = "no";
+            interface = [
+              "0.0.0.0@53" "::0@53"
+              "0.0.0.0@853" "::0@853"
+            ];
+
+            tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
+            tls-upstream = "yes";
+            tls-port = 853;
+
             do-udp = "yes";
+            #udp-upstream-without-downstream = "yes";
+
             do-tcp = "yes";
+            do-ip4 = "yes";
+            do-ip6 = "yes";
+
+            qname-minimisation = "yes"; # increase client privacy
             hide-identity = "yes";
             hide-version = "yes";
             harden-glue = "yes";
@@ -85,12 +95,13 @@ in
             use-caps-for-id = "no";
             cache-min-ttl = 3600;
             cache-max-ttl = 86400;
+            incoming-num-tcp = 1000;
             prefetch = "yes";
 
             # performance
             rrset-cache-size = "256m";
             msg-cache-size = "128m";
-            so-rcvbuf = "8m";
+            so-rcvbuf = "425984";
             so-reuseport = "yes";
 
             val-clean-additional = "yes";
@@ -113,8 +124,7 @@ in
               "\"google-analytics.com A 127.0.0.1\""
               "\"ads.youtube.com A 127.0.0.1\""
               "\"adserver.yahoo.com A 127.0.0.1\""
-            ] ++
-            (lib.mapAttrsToList (name: value: "\"${name}.pherzog.xyz. IN A ${value.ip}\"") subdomains);
+            ] ++ (lib.mapAttrsToList (name: value: "\"${name}.pherzog.xyz. IN A ${value.ip}\"") subdomains);
 
             local-data-ptr = (lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.pherzog.xyz\"") subdomains);
           };
@@ -122,16 +132,26 @@ in
           forward-zone = [
             {
               name = ".";
+              #forward-tls-upstream = "yes";
+              #forward-first = "no";
               forward-addr = [
-                "94.247.43.254"
-                "1.1.1.1"
+                "2a0e:dc0:6:23::2@853#dot-ch.blahdns.com"
+                "2a01:4f8:151:34aa::198@853#dnsforge.de"
+                "2001:678:e68:f000::@853#dot.ffmuc.net"
+                "2a05:fc84::42@853#dns.digitale-gesellschaft.ch"
+
+                #"1.1.1.1" # cloudflare
+                #"80.241.218.68" # dismail
+                #"194.242.2.2" # mullvad no adblock
+                #"194.242.2.3" # mullvad ablock
+                #"94.247.43.254" # open nic
               ];
             }
           ];
 
-          remote-control = {
-            control-enable = true;
-          };
+          #remote-control = {
+          #control-enable = true;
+          #};
         };
       };
   };
