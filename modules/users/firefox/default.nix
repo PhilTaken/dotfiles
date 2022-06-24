@@ -70,7 +70,6 @@ in
               "browser.contentblocking.category" = "strict";
               "browser.discovery.enabled" = false;
               "browser.shell.checkDefaultBrowser" = false;
-              "browser.startup.homepage" = "https://now.hackertab.dev/"; # TODO add as extension
               "browser.url.placeHolderName" = "DuckDuckGo";
 
               "network.cookieBehaviour" = 5;
