@@ -27,25 +27,22 @@ in
     networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
     networking.nameservers = [
-      "${iplot.${cfg.nameserver}}@853#dns.pherzog.xyz"
+      "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"
     ];
 
 
     services.resolved = {
-      enable = false;
-      domains = [
-        "pherzog.xyz"
-      ];
+      enable = true;
 
       fallbackDns = [
-        "2a0e:dc0:6:23::2@853#dot-ch.blahdns.com"
+        "2a0e:dc0:6:23::2#dot-ch.blahdns.com"
       ];
 
       extraConfig = ''
-        #DNSOverTLS=yes
+        DNSOverTLS=yes
       '';
 
-      dnssec = "true";
+      dnssec = "false";
     };
   };
 }
