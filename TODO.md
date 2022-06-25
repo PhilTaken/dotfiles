@@ -2,9 +2,6 @@
 
 ## general issues
 
-- set up 
-    - dns over tls
-
 - set up modules:
     - dashboard (homer)
         - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
@@ -49,6 +46,11 @@
     - music popup?
     - css styling
     - onclick
+
+- change module 
+    - caddy acme -> services.acme
+        - removes need to compile caddy with cloudflare
+        - better access to certificates from other services (unbound etc)
 
 - logging
     - grafana config
