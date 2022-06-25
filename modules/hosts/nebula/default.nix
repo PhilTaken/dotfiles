@@ -58,6 +58,15 @@ in
 
       firewall.inbound = [ any ];
       firewall.outbound = [ any ];
+
+      settings = {
+        cipher = "aes";
+        tun.mtu = 2000;
+        tun.tx_queue = 5000;
+        listen.write_buffer = 10485760;
+        listen.read_buffer = 10485760;
+        listen.batch = 128;
+      };
     };
   };
 }
