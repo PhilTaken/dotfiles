@@ -121,8 +121,9 @@
           wireguard.enable = true;
           nebula.enable = true;
           server.services.telegraf.enable = true;
+          dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
+
           mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
-          dns.nameserver = "beta";
         in
         {
           # usb stick iso

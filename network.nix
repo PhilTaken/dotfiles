@@ -45,13 +45,14 @@
 
     # raspberry pi @ home
     beta = [
-      "unbound"
       "calibre"
       "syncthing"
     ];
 
     # mini nas @ home
     delta = [
+      "unbound"
+
       "gitea"
       "jellyfin"
       "nextcloud"

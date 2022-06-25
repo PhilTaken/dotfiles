@@ -98,6 +98,10 @@ in
             incoming-num-tcp = 1000;
             prefetch = "yes";
 
+            serve-expired = "yes";
+            serve-expired-ttl = 259200;
+            serve-expired-client-timeout = 200;
+
             # performance
             rrset-cache-size = "256m";
             msg-cache-size = "128m";
