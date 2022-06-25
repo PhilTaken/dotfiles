@@ -55,6 +55,8 @@ in
               reverse_proxy http://${ip}:${toString port}
               tls {
                 import ${inputs.config.sops.secrets.caddy_dns_cf.path}
+
+                resolvers 1.1.1.1
               }
             }
           '';
