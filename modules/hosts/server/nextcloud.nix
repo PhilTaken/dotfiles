@@ -79,7 +79,7 @@ in
               package = pkgs.nextcloud24;
 
               inherit home datadir;
-              hostName = cfg.host;
+              hostName = "${cfg.host}.pherzog.xyz";
 
               caching.redis = true;
               config = {
