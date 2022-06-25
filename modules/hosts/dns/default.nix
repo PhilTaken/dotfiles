@@ -14,6 +14,7 @@ let
 in
 {
   options.phil.dns = {
+    enable = mkEnableOption "dns over tls";
     nameserver = mkOption {
       type = types.nullOr (types.enum hostnames);
       description = "dns host";
@@ -23,7 +24,28 @@ in
   };
 
   config = mkIf (cfg.nameserver != null) {
-    networking.nameservers = [ iplot."${cfg.nameserver}" "1.1.1.1" ];
     networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
+
+    networking.nameservers = [
+      "${iplot.${cfg.nameserver}}@853#dns.pherzog.xyz"
+    ];
+
+
+    services.resolved = {
+      enable = false;
+      domains = [
+        "pherzog.xyz"
+      ];
+
+      fallbackDns = [
+        "2a0e:dc0:6:23::2@853#dot-ch.blahdns.com"
+      ];
+
+      extraConfig = ''
+        #DNSOverTLS=yes
+      '';
+
+      dnssec = "true";
+    };
   };
 }
