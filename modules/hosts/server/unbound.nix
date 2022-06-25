@@ -64,6 +64,10 @@ in
       in
       {
         enable = true;
+
+        # allow access to tls certs
+        user = "caddy";
+
         settings = {
           server = {
             access-control = [
@@ -78,9 +82,12 @@ in
               "0.0.0.0@853" "::0@853"
             ];
 
-            tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
+            # /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.pherzog.xyz/
             tls-upstream = "yes";
-            tls-port = 853;
+            tls-service-key = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.pherzog.xyz/dns.pherzog.xyz.key"; # -> .key
+            tls-service-pem = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.pherzog.xyz/dns.pherzog.xyz.crt"; # -> .crt
+
+            tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
 
             do-udp = "yes";
             #udp-upstream-without-downstream = "yes";
@@ -138,8 +145,8 @@ in
           forward-zone = [
             {
               name = ".";
-              #forward-tls-upstream = "yes";
-              #forward-first = "no";
+              forward-tls-upstream = "yes"; # use dns over tls forwarder
+              #forward-first = "no";         # don't send directly
               forward-addr = [
                 "2a0e:dc0:6:23::2@853#dot-ch.blahdns.com"
                 "2a01:4f8:151:34aa::198@853#dnsforge.de"
