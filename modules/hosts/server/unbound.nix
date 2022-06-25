@@ -82,20 +82,22 @@ in
               "0.0.0.0@853" "::0@853"
             ];
 
-            # /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.pherzog.xyz/
+            # tls upstream
             tls-upstream = "yes";
             tls-service-key = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.pherzog.xyz/dns.pherzog.xyz.key"; # -> .key
             tls-service-pem = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.pherzog.xyz/dns.pherzog.xyz.crt"; # -> .crt
 
+            # tls downstream
             tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
 
-            do-udp = "yes";
             #udp-upstream-without-downstream = "yes";
+            do-udp = "yes";
 
             do-tcp = "yes";
             do-ip4 = "yes";
             do-ip6 = "yes";
 
+            # privacy + performance
             qname-minimisation = "yes"; # increase client privacy
             hide-identity = "yes";
             hide-version = "yes";
@@ -107,6 +109,7 @@ in
             incoming-num-tcp = 1000;
             prefetch = "yes";
 
+            # more speeed
             serve-expired = "yes";
             serve-expired-ttl = 259200;
             serve-expired-client-timeout = 200;
@@ -116,9 +119,9 @@ in
             msg-cache-size = "128m";
             so-rcvbuf = "425984";
             so-reuseport = "yes";
-
             val-clean-additional = "yes";
 
+            # block nasty ads
             local-zone = [
               "\"doubleclick.net\" redirect"
               "\"googlesyndication.com\" redirect"
@@ -142,6 +145,7 @@ in
             local-data-ptr = (lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.pherzog.xyz\"") subdomains);
           };
 
+          # downstream dns resolver
           forward-zone = [
             {
               name = ".";
