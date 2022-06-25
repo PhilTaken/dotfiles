@@ -51,10 +51,12 @@ in
 
   # TODO: enable condition
   config = mkIf (cfg.enable) {
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
+    networking.firewall = {
       allowedUDPPorts = [ 53 853 ];
       allowedTCPPorts = [ 53 853 ];
     };
+
+    phil.server.services.caddy.proxy."${cfg.host}" = 853;
 
     services.unbound =
       let
@@ -65,14 +67,14 @@ in
         settings = {
           server = {
             access-control = [
-              "127.0.0.0/8 allow" # localhost
-              "10.100.0.1/24 allow" # yggdrasil
-              "10.200.0.1/24 allow" # milkyway
-              "192.168.0.1/24 allow" # local net
+              "127.0.0.0/8 allow"     # localhost
+              "10.100.0.1/24 allow"   # yggdrasil
+              "10.200.0.1/24 allow"   # milkyway
+              "192.168.0.1/24 allow"  # local net
             ];
 
             interface = [
-              "0.0.0.0@53" "::0@53"
+              "0.0.0.0@53"  "::0@53"
               "0.0.0.0@853" "::0@853"
             ];
 
