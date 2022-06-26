@@ -2,6 +2,8 @@
 
 ## general issues
 
+- write a readme file
+
 - set up modules:
     - dashboard (homer)
         - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix

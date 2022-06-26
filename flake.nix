@@ -90,6 +90,12 @@
         };
 
         extraPackages = pkgs: with pkgs; [
+          guitarix
+          qjackctl
+          jack2Full
+
+          reaper
+
           nur.repos.shados.tmm
           plover.dev
         ];
