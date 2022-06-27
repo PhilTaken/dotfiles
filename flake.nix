@@ -42,6 +42,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland = {
+      url = "github:vaxerski/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     spacemacs-git = {
       url = "github:syl20bnr/spacemacs";
       flake = false;
@@ -101,8 +106,8 @@
         ];
       };
 
-      hmUsers.test = util.user.mkConfig {
-        username = "test";
+      hmUsers.jaid = util.user.mkConfig {
+        username = "jaid";
         userConfig = {
           firefox = {
             enable = true;
@@ -137,7 +142,7 @@
 
           # desktop @ home
           gamma = util.host.mkHost rec {
-            users = [ "maelstroem" "test" ];
+            users = [ "maelstroem" "jaid" ];
             hmConfigs = mkHMUsers users;
             systemConfig = {
               inherit wireguard nebula server dns;
@@ -154,7 +159,7 @@
 
               video = {
                 driver = "nvidia";
-                manager = "xfce";
+                managers = [ "gnome" ];
               };
             };
           };
@@ -172,7 +177,7 @@
               laptop.enable = true;
               laptop.wirelessInterfaces = [ "wlp0s20f3" ];
 
-              video.manager = "sway";
+              #video.managers = [ "sway" ];
             };
           };
         } // builtins.mapAttrs
