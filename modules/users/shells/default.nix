@@ -110,7 +110,12 @@ in
       #enable = true;
       #};
 
-      atuin.enable = true;
+      atuin = {
+        enable = true;
+        settings = {
+          search_mode = "fuzzy";
+        };
+      };
 
       direnv = {
         enable = true;

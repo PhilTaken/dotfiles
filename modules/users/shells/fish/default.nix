@@ -20,26 +20,34 @@ rec {
       functions = {
         gitignore = "curl -sL https://www.gitignore.io/api/$argv";
         su = "command su --shell=${pkgs.fish}/bin/fish $argv";
+        magic_enter_cmd = ''
+          set -l cmd
+          if command git rev-parse --is-inside-work-tree &>/dev/null
+            set cmd "ls && git status -sb"
+          else
+            set cmd "ls"
+          end
+          echo $cmd
+        '';
         enter_ls = ''
           set -l cmd (commandline)
           if test -z "$cmd"
-              echo
-              ls
+            commandline -r (magic_enter_cmd)
           end
           commandline -f execute
         '';
       };
 
       plugins = [
-        {
-          name = "magic-enter";
-          src = pkgs.fetchFromGitHub {
-            owner = "mattmc3";
-            repo = "magic-enter.fish";
-            rev = "bb82182784c625f0b56f131daa0ec8daac690623";
-            sha256 = "sha256-/I75w2NCthTqB/rrQiP2YzzsEU1xgiiupGrlVliWxkY";
-          };
-        }
+        #{
+          #name = "magic-enter";
+          #src = pkgs.fetchFromGitHub {
+            #owner = "mattmc3";
+            #repo = "magic-enter.fish";
+            #rev = "bb82182784c625f0b56f131daa0ec8daac690623";
+            #sha256 = "sha256-/I75w2NCthTqB/rrQiP2YzzsEU1xgiiupGrlVliWxkY";
+          #};
+        #}
       ];
 
       interactiveShellInit = ''
@@ -47,14 +55,25 @@ rec {
 
         set -gx ATUIN_NOBIND "true"
 
-        bind -M insert \cr _atuin_search
-        bind -M insert -k up _atuin_bind_up
-        bind -M insert \eOA _atuin_bind_up
-        bind -M insert \e\[A _atuin_bind_up
-        bind -M insert \t 'commandline -f complete && _atuin_suppress_tui'
-        bind -M insert \e 'commandline -f cancel && _atuin_unsuppress_tui'
-        bind -M insert \r 'enter_ls && _atuin_unsuppress_tui'
-        bind -M insert \n 'enter_ls && _atuin_unsuppress_tui'
+        bind \cr _atuin_search
+        bind -k up _atuin_bind_up
+        bind \eOA _atuin_bind_up
+        bind \e\[A _atuin_bind_up
+        bind \t 'commandline -f complete && _atuin_suppress_tui'
+        bind \e 'commandline -f cancel && _atuin_unsuppress_tui'
+        bind \r 'enter_ls && _atuin_unsuppress_tui'
+        bind \n 'enter_ls && _atuin_unsuppress_tui'
+
+        if bind -M insert >/dev/null 2>&1
+          bind -M insert \cr _atuin_search
+          bind -M insert -k up _atuin_bind_up
+          bind -M insert \eOA _atuin_bind_up
+          bind -M insert \e\[A _atuin_bind_up
+          bind -M insert \t 'commandline -f complete && _atuin_suppress_tui'
+          bind -M insert \e 'commandline -f cancel && _atuin_unsuppress_tui'
+          bind -M insert \r 'enter_ls && _atuin_unsuppress_tui'
+          bind -M insert \n 'enter_ls && _atuin_unsuppress_tui'
+        end
       '';
 
       shellAliases = rec {
