@@ -7,7 +7,6 @@ with lib;
 # TODO: dns over tls
 
 let
-  contains = val: builtins.foldl' (accum: elem: elem == val || accum) false;
 
   cfg = config.phil.server.services.unbound;
   net = import ../../../network.nix { };
@@ -26,7 +25,7 @@ let
             in
             { inherit name value; })
           # TODO: negate filter
-          #(builtins.filter (lib.flip contains [ "unbound" "caddy" ]) services.${host})))
+          #(builtins.filter (lib.flip builtins.elem [ "unbound" "caddy" ]) services.${host})))
           services.${host}))
         (builtins.attrNames services)));
 in
@@ -71,15 +70,17 @@ in
         settings = {
           server = {
             access-control = [
-              "127.0.0.0/8 allow"     # localhost
-              "10.100.0.1/24 allow"   # yggdrasil
-              "10.200.0.1/24 allow"   # milkyway
-              "192.168.0.1/24 allow"  # local net
+              "127.0.0.0/8 allow" # localhost
+              "10.100.0.1/24 allow" # yggdrasil
+              "10.200.0.1/24 allow" # milkyway
+              "192.168.0.1/24 allow" # local net
             ];
 
             interface = [
-              "0.0.0.0@53"  "::0@53"
-              "0.0.0.0@853" "::0@853"
+              "0.0.0.0@53"
+              "::0@53"
+              "0.0.0.0@853"
+              "::0@853"
             ];
 
             # tls upstream
