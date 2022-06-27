@@ -371,6 +371,7 @@ rec {
 
           plugins = with pkgs.tmuxPlugins; [
             sessionist
+            tmux-thumbs
             (mkTmuxPlugin rec {
               pluginName = "nvr";
               version = "unstable-2021-07-07";
