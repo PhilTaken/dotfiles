@@ -55,6 +55,7 @@ rec {
       indicator = true;
     };
 
+    xsession.enable = true;
     xsession.windowManager.i3 = rec {
       enable = true;
       package = cfg.package;
@@ -75,8 +76,20 @@ rec {
         };
         bars = [ ];
         startup = [
-          { command = "${pkgs.feh}/bin/feh --bg-scale ${cfg.bg}"; always = true; notification = false; }
-        ] ++ (lib.optional (barcommand != "") { command = "\"${barcommand}\""; always = true; });
+          {
+            command = "xrandr --output \"DP-0\" --below \"DVI-D-0\" --primary --mode 2560x1440 --rate 74.97";
+            always = true;
+            notification = false;
+          }
+          {
+            command = "${pkgs.feh}/bin/feh --bg-scale ${cfg.bg}";
+            always = true;
+            notification = false;
+          }
+        ] ++ (lib.optional (barcommand != "") {
+          command = "\"${barcommand}\"";
+          always = true;
+        });
 
         keybindings =
           let
@@ -185,7 +198,6 @@ rec {
       package = pkgs.pulseeffects-legacy;
     };
 
-
     systemd.user.services.flameshot = {
       Unit = {
         Description = "Unit for the flameshot daemon";
@@ -203,7 +215,6 @@ rec {
       };
     };
 
-
     home.packages = with pkgs; [
       flameshot
       feh
@@ -219,8 +230,6 @@ rec {
       flameshot
 
       xclip
-
-      #rofi-pass
     ];
   };
 }

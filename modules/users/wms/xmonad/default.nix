@@ -15,16 +15,18 @@ in
       type = types.bool;
       default = false;
     };
-
-    # more options
   };
 
   config = mkIf (cfg.enable) {
+    xsession.enable = true;
     xsession.windowManager.xmonad = rec {
       enable = true;
       extraPackages = hPkgs: with hPkgs; [
-        xmonad-contrib
         containers
+        dbus
+        List
+        monad-logger
+        xmonad
       ];
       enableContribAndExtras = true;
       config = ./Main.hs;

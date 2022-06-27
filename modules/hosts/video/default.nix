@@ -7,6 +7,15 @@ with lib;
 
 let
   cfg = config.phil.video;
+
+  session_map = {
+    "xfce" = "xfce";
+    "kde" = "plasma";
+    "gnome" = "gnome";
+  };
+
+  manager_enum = types.enum (builtins.attrNames session_map);
+  enabled = lib.flip builtins.elem cfg.managers;
 in
 {
   options.phil.video = {
@@ -22,10 +31,10 @@ in
       default = null;
     };
 
-    manager = mkOption {
-      description = "which window/desktop manager to enable\nxfce is xfce+i3";
-      type = (types.enum [ "kde" "sway" "i3" "xfce" "gnome" "xmonad" ]);
-      default = "sway";
+    managers = mkOption {
+      description = "which window/desktop manager to enable";
+      type = types.listOf manager_enum;
+      default = [ ];
     };
   };
 
@@ -41,71 +50,11 @@ in
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      #extraPackages = with pkgs; [
-      #libva
-      #vaapiVdpau
-      #libvdpau-va-gl
-      #mesa_drivers
-      #];
     };
-
-    services.xserver =
-      let
-        enable = (cfg.manager != "sway");
-      in
-      {
-        inherit enable;
-        layout = "us";
-        xkbVariant = "workman-intl,intl";
-        xkbOptions = "caps:escape,grp:shifts_toggle";
-
-        displayManager = {
-          gdm.enable = (cfg.manager == "gnome");
-          defaultSession =
-            if (cfg.manager == "i3") then "none+i3" else
-            if (cfg.manager == "xfce") then "xfce+i3" else
-            if (cfg.manager == "kde") then "plasma" else
-            if (cfg.manager == "gnome") then "gnome" else
-            null;
-        };
-
-        videoDrivers =
-          if (cfg.driver != null) then [
-            cfg.driver
-          ] else [ ];
-
-        screenSection = mkIf (cfg.driver == "nvidia") ''
-          Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-          Option         "AllowIndirectGLXProtocol" "off"
-          Option         "TripleBuffer" "on"
-        '';
-
-        libinput = {
-          inherit enable;
-        };
-
-        desktopManager = {
-          xfce = {
-            enable = (cfg.manager == "xfce");
-            noDesktop = true;
-            enableXfwm = false;
-          };
-          plasma5.enable = (cfg.manager == "kde");
-          gnome.enable = (cfg.manager == "gnome");
-          xterm.enable = false;
-        };
-
-        windowManager.i3 = {
-          enable = (cfg.manager == "i3" || cfg.manager == "xfce");
-          package = pkgs.i3-gaps;
-        };
-      };
 
     console.useXkbConfig = true;
 
-
     fonts.fonts = with pkgs; [
-      #iosevka-bin
       (nerdfonts.override {
         fonts = [
           "SourceCodePro"
@@ -117,56 +66,59 @@ in
       })
     ];
 
+    services.xserver =
+      let
+        enable = true;
+      in
+      {
+        inherit enable;
+        layout = "us";
+        xkbVariant = "intl,workman-intl";
+        xkbOptions = "caps:escape,grp:shifts_toggle";
+
+        videoDrivers = if (cfg.driver != null) then [ cfg.driver ] else [ ];
+
+        displayManager = {
+          gdm.enable = true;
+          gdm.wayland = false;
+          defaultSession = mkIf (builtins.length cfg.managers > 0) session_map.${builtins.head cfg.managers};
+        };
+
+        screenSection = mkIf (cfg.driver == "nvidia") ''
+          Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+          Option         "AllowIndirectGLXProtocol" "off"
+          Option         "TripleBuffer" "on"
+        '';
+
+        libinput = { inherit enable; };
+
+        desktopManager = {
+          xfce = {
+            enable = enabled "xfce";
+            noDesktop = true;
+            enableXfwm = false;
+          };
+          plasma5.enable = enabled "kde";
+          gnome.enable = enabled "gnome";
+          xterm.enable = false;
+        };
+      };
+
     # ----------------------
     # gnome
-    environment.systemPackages =
-      if (cfg.manager == "gnome") then
-        (with pkgs; [
-          gnomeExtensions.appindicator
-          gnomeExtensions.gsconnect
-          networkmanager-vpnc
-          gnome.networkmanager-vpnc
-        ]) else [ ];
-
-    services.udev.packages =
-      if (cfg.manager == "gnome") then
-        (with pkgs; [
-          gnome3.gnome-settings-daemon
-        ]) else [ ];
-
-    services.gnome.chrome-gnome-shell.enable = (cfg.manager == "gnome");
-
-    # ----------------------
-    # kde
+    services.gnome.chrome-gnome-shell.enable = (enabled "gnome");
+    services.udev.packages = if (enabled "gnome") then [ pkgs.gnome3.gnome-settings-daemon ] else [ ];
+    services.dbus.packages = if (enabled "gnome") then [ pkgs.dconf ] else [ ];
 
     # enable kdeconnect + open the required ports
-    programs.kdeconnect.enable = (cfg.manager == "kde");
+    programs.kdeconnect.enable = true;
     networking.firewall =
       let
-        kde_ports = builtins.genList (x: x + 1714) (1764 - 1714 + 1);
+        kde_ports = lib.range 1714 1764;
       in
-      mkIf (cfg.manager == "kde" || cfg.manager == "gnome" || cfg.manager == "xfce") {
+      {
         allowedTCPPorts = kde_ports ++ [ 8888 ];
         allowedUDPPorts = kde_ports ++ [ 8888 ];
       };
-
-    # ----------------------
-    # sway
-
-    programs.sway = {
-      enable = (cfg.manager == "sway");
-      wrapperFeatures.gtk = true;
-    };
-
-    services.greetd = mkIf (cfg.manager == "sway") {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${lib.makeBinPath [pkgs.greetd.tuigreet] }/tuigreet --time --cmd sway";
-          user = "greeter";
-        };
-      };
-    };
   };
 }
-

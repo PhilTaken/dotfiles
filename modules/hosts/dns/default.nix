@@ -24,7 +24,7 @@ in
   };
 
   config = mkIf (cfg.nameserver != null) {
-    networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
+    #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
     networking.nameservers = [
       "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"

@@ -45,6 +45,8 @@ rec {
       in
       {
         enable = true;
+        wrapperFeatures.gtk = true;
+
         config = {
           up = "e";
           down = "n";
