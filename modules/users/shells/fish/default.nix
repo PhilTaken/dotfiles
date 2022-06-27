@@ -39,15 +39,15 @@ rec {
       };
 
       plugins = [
-        #{
-          #name = "magic-enter";
-          #src = pkgs.fetchFromGitHub {
-            #owner = "mattmc3";
-            #repo = "magic-enter.fish";
-            #rev = "bb82182784c625f0b56f131daa0ec8daac690623";
-            #sha256 = "sha256-/I75w2NCthTqB/rrQiP2YzzsEU1xgiiupGrlVliWxkY";
-          #};
-        #}
+        {
+          name = "pisces";
+          src = pkgs.fetchFromGitHub {
+            owner = "laughedelic";
+            repo = "pisces";
+            rev = "e45e0869855d089ba1e628b6248434b2dfa709c4";
+            sha256 = "sha256-Oou2IeNNAqR00ZT3bss/DbhrJjGeMsn9dBBYhgdafBw";
+          };
+        }
       ];
 
       interactiveShellInit = ''
