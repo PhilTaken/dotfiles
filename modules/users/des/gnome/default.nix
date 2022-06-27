@@ -31,7 +31,7 @@ in
     home.packages = with pkgs; [
       chrome-gnome-shell
       # gnome3 apps
-      gnome3.eog    # image viewer
+      gnome3.eog # image viewer
       gnome3.evince # pdf reader
 
       # desktop look & feel

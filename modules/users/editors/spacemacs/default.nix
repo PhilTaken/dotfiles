@@ -336,9 +336,9 @@ in
         USER=nixos
         HOME=/home/nixos
         PWD=/home/nixos
-        SHELL=/run/current-system/sw/bin/zsh
         PATH=/run/wrappers/bin:/home/nixos/.nix-profile/bin:/etc/profiles/per-user/nixos/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:${extraPath}
       '';
+    #SHELL=/run/current-system/sw/bin/zsh
   };
 }
 
