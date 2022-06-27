@@ -19,6 +19,7 @@
         - rclone / borg
 
     - xmonad (wip)
+    - xbrowsersync
     - grocy
 
     - -arr services for metadata
