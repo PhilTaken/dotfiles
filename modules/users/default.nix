@@ -6,7 +6,10 @@
 
 {
   imports = [
-    ./zsh_full
+    ./shells
+
+    ./tmux
+
     ./git
     ./ssh
     ./gpg

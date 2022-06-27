@@ -68,56 +68,59 @@
 
       net = import ./network.nix { };
 
-      hmUsers.nixos = util.user.mkConfig {
-        username = "nixos";
-        userConfig = {
-          wms.sway.enable = true;
-          wms.bars.waybar.enable = true;
-        };
-
-        extraPackages = pkgs: with pkgs; [
-          gnome3.adwaita-icon-theme
-          xournalpp
-        ];
-      };
-
-      hmUsers.maelstroem = util.user.mkConfig {
-        username = "maelstroem";
-        userConfig = {
-          firefox = {
+      hmUsers =
+        let
+          shells.fish.enable = true;
+          tmux = {
             enable = true;
-            wayland = false;
+            defaultShell = "fish";
+          };
+        in
+        {
+          nixos = util.user.mkConfig {
+            username = "nixos";
+            userConfig = {
+              inherit shells tmux;
+              wms.sway.enable = true;
+              wms.bars.waybar.enable = true;
+            };
+
+            extraPackages = pkgs: with pkgs; [
+              gnome3.adwaita-icon-theme
+              xournalpp
+            ];
           };
 
-          # de/wm config
-          wms.i3.enable = true;
-          wms.bars.eww.enable = true;
-        };
+          maelstroem = util.user.mkConfig {
+            username = "maelstroem";
+            userConfig = {
+              inherit shells tmux;
 
-        extraPackages = pkgs: with pkgs; [
-          guitarix
-          qjackctl
-          jack2Full
+              # de/wm config
+              wms.i3.enable = true;
+              wms.bars.eww.enable = true;
+            };
 
-          reaper
+            extraPackages = pkgs: with pkgs; [
+              guitarix
+              qjackctl
+              jack2Full
 
-          nur.repos.shados.tmm
-          plover.dev
-        ];
-      };
-
-      hmUsers.jaid = util.user.mkConfig {
-        username = "jaid";
-        userConfig = {
-          firefox = {
-            enable = true;
-            wayland = false;
+              nur.repos.shados.tmm
+              plover.dev
+            ];
           };
-          des.gnome.enable = true;
 
-          # ...
+          jaid = util.user.mkConfig {
+            username = "jaid";
+            userConfig = {
+              inherit shells;
+
+              firefox.wayland = false;
+              des.gnome.enable = true;
+            };
+          };
         };
-      };
     in
     {
       lib = util;

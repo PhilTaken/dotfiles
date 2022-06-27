@@ -57,7 +57,7 @@ in
         }
 
         {
-          name = "switch";
+          name = "cswitch";
           help = "Switch to a NixOS Configuration (local)";
           command = ''
             if [[ -z "$@" || "$1" == "help" ]]; then
