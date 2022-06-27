@@ -2,7 +2,7 @@
 , config
 , lib
 , ...
-}:
+}@inputs:
 with lib;
 
 let cfg = config.phil.firefox;
@@ -18,7 +18,7 @@ in
     wayland = mkOption {
       description = "Force wayland";
       type = types.bool;
-      default = true;
+      default = !inputs.config.xsession.enable;
     };
 
     librewolf = mkOption {
