@@ -80,6 +80,40 @@ in
 
               inherit home datadir;
               hostName = "${cfg.host}.pherzog.xyz";
+              https = true;
+
+              extraApps = {
+                #talk = pkgs.fetchNextcloudApp {
+                  #name = "spreed";
+                  #sha256 = lib.fakeSha256;
+                  #url = "";
+                  #version = "";
+                #};
+                #calendar = pkgs.fetchNextcloudApp {
+                  #name = "calendar";
+                  #sha256 = lib.fakeSha256;
+                  #url = "";
+                  #version = "";
+                #};
+                news = pkgs.fetchNextcloudApp {
+                  name = "news";
+                  sha256 = "sha256-jmrocdJmRpau0zV8UtLyvrlX/k7O6zlZ8G9zry8ibEw=";
+                  url = "https://github.com/nextcloud/news/releases/download/18.1.0/news.tar.gz";
+                  version = "18.1.0";
+                };
+                deck = pkgs.fetchNextcloudApp {
+                  name = "deck";
+                  sha256 = "sha256-qIM6NvOP/1LlIqeQlImmrG6kPHbrF2O1E0yAQCJNDh4=";
+                  url = "https://github.com/nextcloud/deck/releases/download/v1.7.0/deck.tar.gz";
+                  version = "1.7.0";
+                };
+                bookmarks = pkgs.fetchNextcloudApp {
+                  name = "bookmarks";
+                  sha256 = "sha256-v3Ug4zdmjWGsFTf6epI4fis6f8rQ43WD65Dy/Ife4kI=";
+                  url = "https://github.com/nextcloud/bookmarks/releases/download/v10.5.1/bookmarks-10.5.1.tar.gz";
+                  version = "10.5.1";
+                };
+              };
 
               caching.redis = true;
               config = {
@@ -90,6 +124,7 @@ in
                 dbname = "nextcloud";
                 dbuser = "nextcloud";
                 defaultPhoneRegion = "DE";
+                overwriteProtocol = "https";
               };
             };
 
