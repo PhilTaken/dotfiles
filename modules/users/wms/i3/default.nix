@@ -158,7 +158,7 @@ rec {
         package = pkgs.alacritty;
         settings = {
           font.normal.family = cfg.terminal_font;
-          font.size = 12;
+          font.size = 10;
           env.TERM = "xterm-256color";
         };
       };

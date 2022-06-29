@@ -68,7 +68,7 @@ in
 
     services.xserver =
       let
-        enable = true;
+        enable = cfg.managers != [ ];
       in
       {
         inherit enable;
