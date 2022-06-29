@@ -34,8 +34,8 @@ in
       };
 
       networking.nat = {
-        enable = mkDefault cfg.enable;
-        internalInterfaces = [ "ve-*" ];
+        enable = true;
+        internalInterfaces = [ "ve-+" ];
         externalInterface = "enp1s0";
       };
 
@@ -72,6 +72,11 @@ in
           };
 
           config = { config, pkgs, ... }: {
+            networking.nameservers = [
+              # TODO: https://github.com/NixOS/nixpkgs/issues/162686
+              "1.1.1.1"
+            ];
+
             networking.firewall.enable = false;
 
             services.nextcloud = {

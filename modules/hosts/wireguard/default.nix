@@ -63,7 +63,7 @@ in
     #};
 
     networking = {
-      nat.enable = hasEndpoint;
+      nat.enable = mkDefault hasEndpoint;
       hosts = (builtins.listToAttrs
         (builtins.concatLists
           (builtins.map
