@@ -56,9 +56,6 @@ rec {
         set -gx ATUIN_NOBIND "true"
 
         bind \cr _atuin_search
-        bind -k up _atuin_bind_up
-        bind \eOA _atuin_bind_up
-        bind \e\[A _atuin_bind_up
         bind \t 'commandline -f complete && _atuin_suppress_tui'
         bind \e 'commandline -f cancel && _atuin_unsuppress_tui'
         bind \r 'enter_ls && _atuin_unsuppress_tui'
@@ -66,9 +63,6 @@ rec {
 
         if bind -M insert >/dev/null 2>&1
           bind -M insert \cr _atuin_search
-          bind -M insert -k up _atuin_bind_up
-          bind -M insert \eOA _atuin_bind_up
-          bind -M insert \e\[A _atuin_bind_up
           bind -M insert \t 'commandline -f complete && _atuin_suppress_tui'
           bind -M insert \e 'commandline -f cancel && _atuin_unsuppress_tui'
           bind -M insert \r 'enter_ls && _atuin_unsuppress_tui'
