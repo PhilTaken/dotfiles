@@ -6,10 +6,10 @@
 with lib;
 
 let
-  cfg = config.phil.navidrome;
+  cfg = config.phil.server.services.navidrome;
 in
 {
-  options.phil.navidrome = {
+  options.phil.server.services.navidrome = {
     enable = mkEnableOption "navidrome";
     host = mkOption {
       type = types.str;
