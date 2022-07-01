@@ -22,6 +22,7 @@ in
     ./iperf.nix
     ./jellyfin.nix
     ./keycloak.nix
+    ./navidrome.nix
     ./nextcloud.nix
     ./nginx.nix
     ./openssh.nix
