@@ -9,6 +9,7 @@
     ./shells
 
     ./tmux
+    ./zellij
 
     ./git
     ./ssh

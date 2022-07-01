@@ -70,17 +70,19 @@
 
       hmUsers =
         let
-          shells.fish.enable = true;
-          tmux = {
-            enable = true;
-            defaultShell = "fish";
+          defaultConfig = {
+            shells.fish.enable = true;
+            tmux = {
+              enable = true;
+              defaultShell = "fish";
+            };
+            zellij.enable = true;
           };
         in
         {
           nixos = util.user.mkConfig {
             username = "nixos";
-            userConfig = {
-              inherit shells tmux;
+            userConfig = defaultConfig // {
               wms.sway.enable = true;
               wms.bars.waybar.enable = true;
             };
@@ -93,9 +95,7 @@
 
           maelstroem = util.user.mkConfig {
             username = "maelstroem";
-            userConfig = {
-              inherit shells tmux;
-
+            userConfig = defaultConfig // {
               # de/wm config
               wms.i3.enable = true;
               wms.bars.eww.enable = true;
@@ -114,10 +114,9 @@
           jaid = util.user.mkConfig {
             username = "jaid";
             userConfig = {
-              inherit shells;
-
-              firefox.wayland = false;
+              shells.zsh.enable = true;
               des.gnome.enable = true;
+              firefox.wayland = false;
             };
           };
         };
@@ -203,15 +202,15 @@
       # deploy config
       deploy.nodes = {
         alpha = {
-          #hostname = "148.251.102.93";
-          hostname = "10.200.0.1";
+          hostname = "148.251.102.93";
+          #hostname = "10.200.0.1";
           sshUser = "root";
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
         };
 
         beta = {
-          hostname = "10.200.0.2";
-          #hostname = "192.168.0.120";
+          #hostname = "10.200.0.2";
+          hostname = "192.168.0.120";
           sshUser = "root";
           profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
         };

@@ -5,12 +5,16 @@
 - write a readme file
 
 - set up modules:
-    - subsonic music streaming
+    - arm module (get rust running + spinning)
+
+    - navidrome music streaming
     - torrenting container
 
     - dashboard (homer)
         - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
         - https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md
+
+    - shiori
 
     - hydra module
         - ci/cd with hydra webhooks from gitea
@@ -106,6 +110,7 @@
     - gluster
     - xtreemfs
 - udev script encrypted backup bitwarden to usb stick (bitwarden-cli)
+- gromit-mpx
 
 ## finances
 

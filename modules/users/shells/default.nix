@@ -143,7 +143,7 @@ in
           python.symbol = "Py";
           rust.symbol = "R";
           nix_shell = {
-            symbol = "❄️ ";
+            symbol = " ";
             style = "bold blue";
             format = "[$symbol]($style) ";
           };

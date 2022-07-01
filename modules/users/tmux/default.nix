@@ -26,16 +26,17 @@ rec {
         #colorscheme_conf = "${inputs.inputs.tmux-colorscheme}/catppuccin.conf";
       in
       {
+        # TODO: tmuxp configs
+        tmuxp.enable = true;
         enable = true;
         baseIndex = 1;
         escapeTime = 1;
         keyMode = "vi";
         secureSocket = true;
         shortcut = "a";
-        #terminal = "screen-256color";
+        shell = "${pkgs.${cfg.defaultShell}}/bin/${cfg.defaultShell}";
+        terminal = "xterm-256color";
         extraConfig = ''
-          set -g default-terminal "xterm-256color"
-          set-option -g default-shell ${pkgs.${cfg.defaultShell}}/bin/${cfg.defaultShell}
           set-option -ga terminal-overrides ",xterm-256color:Tc"
 
           #set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
@@ -67,6 +68,8 @@ rec {
 
           # ------------------------------------------------------------------------------
           # BINDS
+
+          # tmux-thumbs trigger
 
           bind Escape copy-mode
           unbind p
@@ -106,7 +109,14 @@ rec {
 
         plugins = with pkgs.tmuxPlugins; [
           sessionist
-          tmux-thumbs
+          {
+            plugin = tmux-thumbs;
+            extraConfig = ''
+              set -g @thumbs-key F
+              set -g @thumbs-contrast 1
+              set -g @thumbs-unique enabled
+            '';
+          }
           (mkTmuxPlugin rec {
             pluginName = "nvr";
             version = "unstable-2021-07-07";

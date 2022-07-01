@@ -53,8 +53,8 @@ rec {
           left = "y";
           right = "o";
           modifier = "Mod4";
-          terminal = "${pkgs.foot}/bin/foot";
-          #terminal = "${pkgs.alacritty}/bin/alacritty";
+          #terminal = "${pkgs.foot}/bin/foot";
+          terminal = "${pkgs.alacritty}/bin/alacritty";
           menu = "rofi -show run";
           floating.border = 0;
           focus.followMouse = "always";
@@ -242,7 +242,8 @@ rec {
         enable = true;
         settings = {
           font.normal.family = "Iosevka Nerd Font";
-          font.size = 12.0;
+          font.size = 12;
+          env.TERM = "xterm-256color";
         };
       };
     };
@@ -301,9 +302,9 @@ rec {
     };
 
     xdg.configFile."foot/foot.ini".text = ''
-      font=Iosevka Nerd Font:size=13
+      font=Iosevka Nerd Font:size=12
       bold-text-in-bright=yes
-      dpi-aware=no
+      dpi-aware=yes
 
       [url]
       launch=firefox ''${url}
