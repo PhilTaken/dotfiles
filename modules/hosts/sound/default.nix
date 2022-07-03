@@ -81,7 +81,7 @@ in
           #};
           #};
         };
-        gtkUsePortal = true;
+        #gtkUsePortal = true;
         extraPortals = with pkgs; [
           #xdg-desktop-portal-gtk
         ];
