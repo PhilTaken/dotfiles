@@ -28,8 +28,8 @@ in
 
     networking.nameservers = [
       "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"
+      "1.1.1.1"
     ];
-
 
     services.resolved = {
       enable = true;
