@@ -67,7 +67,7 @@
   hardware.video.hidpi.enable = lib.mkDefault true;
 
   phil.fileshare.mount.binds = [{
-    host = "beta";
+    host = "delta";
     dirs = [ "/media" ];
   }];
 

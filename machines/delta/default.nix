@@ -1,8 +1,7 @@
 { pkgs, ... }:
 {
   imports = [ ./configuration.nix ];
-  phil.fileshare.mount.binds = [{
-    host = "beta";
-    dirs = [ "/media" ];
-  }];
+
+  phil.server.services.telegraf.inputs.extrasensors = true;
+  phil.fileshare.shares.dirs = [ "/media" ];
 }

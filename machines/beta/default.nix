@@ -55,8 +55,5 @@
     SUBSYSTEM=="gpio", KERNEL=="gpio*", ACTION=="add",RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value ; chmod 660 /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value'"
   '';
 
-  phil.server.services.telegraf.inputs.extrasensors = true;
-  phil.fileshare.shares.dirs = [ "/media" ];
-
   system.stateVersion = "21.05";
 }

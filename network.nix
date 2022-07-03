@@ -46,7 +46,6 @@
     # raspberry pi @ home
     beta = [
       "calibre"
-      "syncthing"
     ];
 
     # mini nas @ home
@@ -55,7 +54,9 @@
 
       "gitea"
       "jellyfin"
+      "syncthing"
       "nextcloud"
+      #"navidrome"
       #"calibre"
     ];
   };

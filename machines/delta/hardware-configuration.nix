@@ -28,6 +28,13 @@
 
   fileSystems."/media" =
     {
+      device = "/dev/disk/by-label/seagate";
+      fsType = "ext4";
+      options = [ "defaults" "user" "rw" "exec" ];
+    };
+
+  fileSystems."/media_int" =
+    {
       device = "media";
       fsType = "zfs";
     };

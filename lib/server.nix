@@ -10,8 +10,8 @@ let
   defaults = [
     "openssh"
     "fail2ban"
-    "telegraf"
-    "vector"
+    #"telegraf"
+    #"vector"
     "iperf"
   ];
 
