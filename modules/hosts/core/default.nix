@@ -48,7 +48,19 @@ in
       '';
 
       # TODO add my own registry
-      registry = { };
+      registry = {
+        flake-templates = {
+          from = {
+            id = "custom";
+            type = "indirect";
+          };
+          to = {
+            owner = "PhilTaken";
+            repo = "flake-templates";
+            type = "github";
+          };
+        };
+      };
 
       settings = {
         trusted-users = [ "root" "@wheel" ];
