@@ -15,6 +15,8 @@ let
     inputs.deploy-rs.overlay
     inputs.neovim-nightly.overlay
     inputs.polymc.overlay
+    inputs.arm-rs.overlays.default
+    inputs.hyprland.overlays.default
     (final: super: {
       makeModulesClosure = x:
         super.makeModulesClosure (x // { allowMissing = true; });
@@ -27,6 +29,8 @@ let
   };
 
   extramodules = [
+    inputs.arm-rs.nixosModules.default
+    inputs.hyprland.nixosModules.default
     inputs.sops-nix-src.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
     inputs.hyprland.nixosModules.default
