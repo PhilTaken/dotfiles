@@ -82,6 +82,11 @@ in
       usbutils
       wget
       yt-dlp
+
+      ranger
+      lsof
+      psmisc
+      joshuto
     ];
 
     programs = {

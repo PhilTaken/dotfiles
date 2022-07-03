@@ -23,9 +23,9 @@ rec {
         magic_enter_cmd = ''
           set -l cmd
           if command git rev-parse --is-inside-work-tree &>/dev/null
-            set cmd "ls && git status -sb"
+            set cmd "${pkgs.exa}/bin/exa && git status -sb"
           else
-            set cmd "ls"
+            set cmd "${pkgs.exa}/bin/exa"
           end
           echo $cmd
         '';
