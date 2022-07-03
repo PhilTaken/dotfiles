@@ -86,6 +86,7 @@
 - quickfix list
 - lsp definition/implementation
 - scroll doc windows
+- diffviewopen telescope integration
 
 ### ideas
 
