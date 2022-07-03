@@ -64,13 +64,18 @@ in
       gping
       hexyl
       hyperfine
+      joshuto
       jq
       lolcat
       lshw
+      lsof
       magic-wormhole
       neofetch
       nmap
       procs
+      psmisc
+      pup
+      ranger
       ripgrep
       rsync
       sd
@@ -82,11 +87,6 @@ in
       usbutils
       wget
       yt-dlp
-
-      ranger
-      lsof
-      psmisc
-      joshuto
     ];
 
     programs = {
