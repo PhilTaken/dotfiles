@@ -86,8 +86,8 @@ in
     home.packages = with pkgs; [
       visidata
       #neovim-remote
-      (writeShellScriptBin "neovide-mg" "exec ${pkgs.neovide}/bin/neovide --multigrid")
-      neovide
+      #(writeShellScriptBin "neovide-mg" "exec ${pkgs.neovide}/bin/neovide --multigrid")
+      #neovide
     ];
 
     xdg.configFile."nvim/init_.lua".source = ./init.lua;
