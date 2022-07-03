@@ -47,6 +47,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    arm-rs = {
+      url = "github:PhilTaken/arm.rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     spacemacs-git = {
       url = "github:syl20bnr/spacemacs";
       flake = false;
@@ -102,6 +107,7 @@
             };
 
             extraPackages = pkgs: with pkgs; [
+              xfce.thunar
               guitarix
               qjackctl
               jack2Full
@@ -131,10 +137,12 @@
 
       nixosConfigurations =
         let
-          wireguard.enable = true;
-          nebula.enable = true;
-          server.services.telegraf.enable = true;
-          dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
+          defaultConfig = {
+            wireguard.enable = true;
+            nebula.enable = true;
+            server.services.telegraf.enable = false;
+            dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
+          };
 
           mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
         in
@@ -146,14 +154,11 @@
           gamma = util.host.mkHost rec {
             users = [ "maelstroem" "jaid" ];
             hmConfigs = mkHMUsers users;
-            systemConfig = {
-              inherit wireguard nebula server dns;
-
+            systemConfig = defaultConfig // {
               core.hostName = "gamma";
               core.enableBluetooth = true;
 
               development.adb.enable = true;
-
               mullvad.enable = true;
 
               nvidia.enable = true;
@@ -170,9 +175,7 @@
           nixos-laptop = util.host.mkHost rec {
             users = [ "nixos" ];
             hmConfigs = mkHMUsers users;
-            systemConfig = {
-              inherit wireguard nebula server dns;
-
+            systemConfig = defaultConfig // {
               core.hostName = "nixos-laptop";
               mullvad.enable = true;
 
@@ -208,12 +211,12 @@
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
         };
 
-        beta = {
-          #hostname = "10.200.0.2";
-          hostname = "192.168.0.120";
-          sshUser = "root";
-          profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
-        };
+        #beta = {
+          ##hostname = "10.200.0.2";
+          #hostname = "192.168.0.120";
+          #sshUser = "root";
+          #profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
+        #};
 
         delta = {
           #hostname = "10.200.0.5";
