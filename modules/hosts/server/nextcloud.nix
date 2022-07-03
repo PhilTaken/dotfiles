@@ -72,10 +72,10 @@ in
           };
 
           config = { config, pkgs, ... }: {
-            networking.nameservers = [
-              # TODO: https://github.com/NixOS/nixpkgs/issues/162686
-              "1.1.1.1"
-            ];
+            # https://github.com/NixOS/nixpkgs/issues/162686
+            networking.nameservers = [ "1.1.1.1" ];
+            # WORKAROUND
+            environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
 
             networking.firewall.enable = false;
 
@@ -88,12 +88,6 @@ in
               https = true;
 
               extraApps = {
-                talk = pkgs.fetchNextcloudApp {
-                  name = "spreed";
-                  sha256 = "sha256-sMEH22UWoyRoo6whJ9Eh/CVYOIAXtQ8U8XvkDoKExc0=";
-                  url = "https://github.com/nextcloud-releases/spreed/releases/download/v14.0.2/spreed-v14.0.2.tar.gz";
-                  version = "14.0.2";
-                };
                 calendar = pkgs.fetchNextcloudApp {
                   name = "calendar";
                   sha256 = "sha256-c+iiz/pRs7fw2+DneSODWENRnZPZ2BDRa6dOjicABMY=";
