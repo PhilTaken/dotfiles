@@ -111,9 +111,9 @@ in
             prefetch = "yes";
 
             # more speeed
-            serve-expired = "yes";
-            serve-expired-ttl = 259200;
-            serve-expired-client-timeout = 200;
+            #serve-expired = "no";
+            #serve-expired-ttl = 259200;
+            #serve-expired-client-timeout = 200;
 
             # performance
             rrset-cache-size = "256m";
@@ -150,9 +150,10 @@ in
           forward-zone = [
             {
               name = ".";
-              forward-tls-upstream = "yes"; # use dns over tls forwarder
-              #forward-first = "no";         # don't send directly
+              forward-tls-upstream = "yes";  # use dns over tls forwarder
+              #forward-first = "no";          # don't send directly
               forward-addr = [
+                "1.1.1.1@853#cloudflare-dns.com"
                 "2a0e:dc0:6:23::2@853#dot-ch.blahdns.com"
                 "2a01:4f8:151:34aa::198@853#dnsforge.de"
                 "2001:678:e68:f000::@853#dot.ffmuc.net"
