@@ -21,6 +21,10 @@ rec {
         gitignore = "curl -sL https://www.gitignore.io/api/$argv";
         license = "curl -sL https://choosealicense.com/licenses/$argv | ${pkgs.pup}/bin/pup -p pre#license-text text{}";
         su = "command su --shell=${pkgs.fish}/bin/fish $argv";
+        fix_git_perms = ''
+          git diff --summary | grep --color 'mode change 100755 => 100644' | cut -d' ' -f7- | xargs -d'\n' chmod +x 2>/dev/null
+          git diff --summary | grep --color 'mode change 100644 => 100755' | cut -d' ' -f7- | xargs -d'\n' chmod -x 2>/dev/null
+        '';
         magic_enter_cmd = ''
           set -l cmd
           if command git rev-parse --is-inside-work-tree &>/dev/null
