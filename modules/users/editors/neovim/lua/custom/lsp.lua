@@ -19,21 +19,26 @@ local signature_setup = {
     end,
 }
 
--- Enable lsp servers
-lsp.elixirls.setup{
-    cmd = { "elixir-ls" },
-    on_attach = signature_setup.on_attach,
-    capabilities = signature_setup.capabilities,
-}
+-- extend signature_setup with custom arguments
+local function custom_setup(...)
+    local out = {}
+    local arg = {...}
+    for k,v in pairs(signature_setup) do out[k] = v end
+    for k, v in pairs(arg) do out[k] = v end
+    return out
+end
 
-lsp.fortls.setup {
+-- Enable lsp servers
+lsp.elixirls.setup(custom_setup{
+    cmd = { "elixir-ls"}
+})
+
+lsp.fortls.setup(custom_setup{
     cmd = { "fortls", "--hover_signature", "--enable_code_actions" },
     root_dir = lsp.util.root_pattern('.git'),
-    on_attach = signature_setup.on_attach,
-    capabilities = signature_setup.capabilities,
-}
+})
 
-lsp.sumneko_lua.setup{
+lsp.sumneko_lua.setup(custom_setup{
     cmd = { "lua-language-server" },
     settings = {
         Lua = {
@@ -52,25 +57,25 @@ lsp.sumneko_lua.setup{
             },
         },
     },
-    on_attach = signature_setup.on_attach,
-    capabilities = signature_setup.capabilities,
-}
+})
 
---lsp.pyright.setup(signature_setup)
+lsp.rust_analyzer.setup(custom_setup{
+    settings = {
+        ["rust-analyzer"] = {
+            cargo = {
+                loadOutDirsFromCheck = true
+            },
+            procMacro = {
+                enable = true
+            }
+        }
+    };
+    init_options = {
+        procMacro = { enable = true };
+    };
+})
 
-lsp.ccls.setup(signature_setup) -- c/cpp
-lsp.rnix.setup(signature_setup) --nix
-lsp.texlab.setup(signature_setup)
-lsp.tsserver.setup(signature_setup)
-lsp.erlangls.setup(signature_setup)
-lsp.rust_analyzer.setup(signature_setup)
-lsp.r_language_server.setup(signature_setup)
-lsp.clojure_lsp.setup(signature_setup)
-lsp.hls.setup(signature_setup)
-
-lsp.pylsp.setup{
-    on_attach = signature_setup.on_attach,
-    capabilities = signature_setup.capabilities,
+lsp.pylsp.setup(custom_setup{
     settings = {
         pylsp = {
             plugins = {
@@ -91,4 +96,17 @@ lsp.pylsp.setup{
             },
         },
     },
-}
+})
+
+--lsp.pyright.setup(signature_setup)
+
+lsp.ccls.setup(signature_setup) -- c/cpp
+lsp.rnix.setup(signature_setup) -- nix
+lsp.texlab.setup(signature_setup)
+lsp.tsserver.setup(signature_setup)
+lsp.erlangls.setup(signature_setup)
+
+lsp.r_language_server.setup(signature_setup)
+lsp.clojure_lsp.setup(signature_setup)
+lsp.hls.setup(signature_setup)
+
