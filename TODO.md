@@ -2,8 +2,6 @@
 
 ## general issues
 
-- write a readme file
-
 - set up modules:
     - arm module (get rust running + spinning)
 
