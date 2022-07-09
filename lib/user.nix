@@ -87,12 +87,13 @@ rec {
     };
 
   mkHMUser = config: home-manager.lib.homeManagerConfiguration {
-    inherit system pkgs;
-    inherit (config.home) username homeDirectory stateVersion;
-    configuration = (config // {
-      nixpkgs.overlays = overlays;
-      nixpkgs.config.allowUnfree = true;
-    });
+    inherit pkgs;
+    modules = [ config ];
+    #inherit (config.home) username homeDirectory stateVersion;
+    #configuration = (config // {
+      #nixpkgs.overlays = overlays;
+      #nixpkgs.config.allowUnfree = true;
+    #});
   };
 
   mkNixosModule = config: {
