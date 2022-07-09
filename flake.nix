@@ -89,6 +89,7 @@
             username = "nixos";
             userConfig = defaultConfig // {
               wms.sway.enable = true;
+              wms.hyprland.enable = true;
               wms.bars.waybar.enable = true;
             };
 

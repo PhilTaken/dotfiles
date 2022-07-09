@@ -69,6 +69,7 @@ in
     # https://github.com/nix-community/home-manager/issues/2017
     # https://github.com/NixOS/nixpkgs/issues/158025
     programs.sway.enable = true;
+    programs.hyprland.enable = true;
 
     services.xserver =
       let
