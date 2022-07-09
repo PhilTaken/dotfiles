@@ -33,7 +33,7 @@ rec {
     phil.wms.tools.udiskie.enable = true;
 
     home.sessionVariables = {
-      XDG_CURRENT_DESKTOP = "sway";
+      #XDG_CURRENT_DESKTOP = "sway";
       MOZ_ENABLE_WAYLAND = 1;
     };
 
@@ -42,6 +42,7 @@ rec {
         std_opacity = "0.96";
         lock = "swaylock -c 000000";
         screen_recorder = ./record_screen.sh;
+        menu = "${pkgs.rofi}/bin/rofi -show run";
       in
       {
         enable = true;
@@ -55,7 +56,6 @@ rec {
           modifier = "Mod4";
           #terminal = "${pkgs.foot}/bin/foot";
           terminal = "${pkgs.alacritty}/bin/alacritty";
-          menu = "rofi -show run";
           floating.border = 0;
           focus.followMouse = "always";
           bindkeysToCode = false;
@@ -65,6 +65,7 @@ rec {
             outer = 0;
             smartBorders = "on";
           };
+
           input = {
             # integrated keyboard
             "1:1:AT_Translated_Set_2_keyboard" = {
@@ -90,62 +91,58 @@ rec {
               xkb_options = "caps:escape";
             };
           };
+
           keybindings =
             let
-              swayconf = wayland.windowManager.sway.config;
-              term = swayconf.terminal;
-              mod = swayconf.modifier;
-              menu = swayconf.menu;
-              up = swayconf.up;
-              down = swayconf.down;
-              left = swayconf.left;
-              right = swayconf.right;
+              inherit menu;
+              inherit (wayland.windowManager.sway.config) terminal modifier up down left right;
             in
             {
-              "${mod}+Shift+c" = "reload";
-              "${mod}+Shift+u" = "exit";
-              "${mod}+Return" = "exec ${term}";
-              "${mod}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
-              "${mod}+d" = "kill";
-              "${mod}+Space" = "exec ${menu}";
-              "${mod}+p" = "exec gopass-rofi";
-              "${mod}+u" = "exec rofi -terminal ${term} -show ssh";
-              "${mod}+s" = "layout tabbed";
-              "${mod}+j" = "layout toggle split";
-              "${mod}+f" = "fullscreen";
-              "${mod}+Shift+space" = "floating toggle";
-              "${mod}+${left}" = "focus left";
-              "${mod}+${right}" = "focus right";
-              "${mod}+${up}" = "focus up";
-              "${mod}+${down}" = "focus down";
-              "${mod}+Shift+${left}" = "move left";
-              "${mod}+Shift+${right}" = "move right";
-              "${mod}+Shift+${up}" = "move up";
-              "${mod}+Shift+${down}" = "move down";
-              "${mod}+Ctrl+${left}" = "move workspace output left";
-              "${mod}+Ctrl+${right}" = "move workspace output right";
-              "${mod}+Ctrl+${up}" = "move workspace output up";
-              "${mod}+Ctrl+${down}" = "move workspace output down";
-              "${mod}+1" = "workspace 1";
-              "${mod}+2" = "workspace 2";
-              "${mod}+3" = "workspace 3";
-              "${mod}+4" = "workspace 4";
-              "${mod}+5" = "workspace 5";
-              "${mod}+6" = "workspace 6";
-              "${mod}+7" = "workspace 7";
-              "${mod}+8" = "workspace 8";
-              "${mod}+9" = "workspace 9";
-              "${mod}+0" = "workspace 10";
-              "${mod}+Shift+1" = "move container to workspace 1";
-              "${mod}+Shift+2" = "move container to workspace 2";
-              "${mod}+Shift+3" = "move container to workspace 3";
-              "${mod}+Shift+4" = "move container to workspace 4";
-              "${mod}+Shift+5" = "move container to workspace 5";
-              "${mod}+Shift+6" = "move container to workspace 6";
-              "${mod}+Shift+7" = "move container to workspace 7";
-              "${mod}+Shift+8" = "move container to workspace 8";
-              "${mod}+Shift+9" = "move container to workspace 9";
-              "${mod}+Shift+0" = "move container to workspace 10";
+              "${modifier}+Shift+c" = "reload";
+              "${modifier}+Shift+u" = "exit";
+              "${modifier}+Return" = "exec ${terminal}";
+              "${modifier}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+              "${modifier}+d" = "kill";
+              "${modifier}+Space" = "exec ${menu}";
+              "${modifier}+p" = "exec gopass-rofi";
+              "${modifier}+u" = "exec rofi -terminal ${terminal} -show ssh";
+              "${modifier}+s" = "layout tabbed";
+              "${modifier}+j" = "layout toggle split";
+              "${modifier}+f" = "fullscreen";
+              "${modifier}+Shift+space" = "floating toggle";
+              "${modifier}+${left}" = "focus left";
+              "${modifier}+${right}" = "focus right";
+              "${modifier}+${up}" = "focus up";
+              "${modifier}+${down}" = "focus down";
+              "${modifier}+Shift+${left}" = "move left";
+              "${modifier}+Shift+${right}" = "move right";
+              "${modifier}+Shift+${up}" = "move up";
+              "${modifier}+Shift+${down}" = "move down";
+              "${modifier}+Ctrl+${left}" = "move workspace output left";
+              "${modifier}+Ctrl+${right}" = "move workspace output right";
+              "${modifier}+Ctrl+${up}" = "move workspace output up";
+              "${modifier}+Ctrl+${down}" = "move workspace output down";
+              "${modifier}+1" = "workspace 1";
+              "${modifier}+2" = "workspace 2";
+              "${modifier}+3" = "workspace 3";
+              "${modifier}+4" = "workspace 4";
+              "${modifier}+5" = "workspace 5";
+              "${modifier}+6" = "workspace 6";
+              "${modifier}+7" = "workspace 7";
+              "${modifier}+8" = "workspace 8";
+              "${modifier}+9" = "workspace 9";
+              "${modifier}+0" = "workspace 10";
+              "${modifier}+Shift+1" = "move container to workspace 1";
+              "${modifier}+Shift+2" = "move container to workspace 2";
+              "${modifier}+Shift+3" = "move container to workspace 3";
+              "${modifier}+Shift+4" = "move container to workspace 4";
+              "${modifier}+Shift+5" = "move container to workspace 5";
+              "${modifier}+Shift+6" = "move container to workspace 6";
+              "${modifier}+Shift+7" = "move container to workspace 7";
+              "${modifier}+Shift+8" = "move container to workspace 8";
+              "${modifier}+Shift+9" = "move container to workspace 9";
+              "${modifier}+Shift+0" = "move container to workspace 10";
+
               "XF86MonBrightnessUp" = "exec light -T 1.4 && lightctl";
               "XF86MonBrightnessDown" = "exec light -T 0.72 && lightctl";
               "XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer -t";
@@ -155,7 +152,7 @@ rec {
               "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
               "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
               "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-              "${mod}+l" = "exec ${pkgs.swaylock}/bin/swaylock # --screenshots --clock #--effect-blur 7x5 --effect-vignette 0.5:0.5 --effect-pixelate 2 --grace 5 --fade-in 0.5";
+              "${modifier}+l" = "exec ${lock}";
             };
           assigns = {
             "2" = [{ app_id = "firefox"; }];
@@ -180,8 +177,8 @@ rec {
             #      before-sleep 'swaylock -i ${lock_bg} -f -c 000000'
             #  '';
             #}
-          ] ++ (lib.optional (inputs.config.phil.wms.bars.waybar.enable)
-            { command = "\"${pkgs.procps}/bin/pkill --signal 9 waybar; ${pkgs.waybar}/bin/waybar\""; always = true; }
+          ] ++ (lib.optional (inputs.config.phil.wms.bars.barcommand != "")
+            { command = inputs.config.phil.wms.bars.barcommand; always = false; }
           );
 
           window.commands = [

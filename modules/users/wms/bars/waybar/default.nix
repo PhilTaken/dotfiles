@@ -18,6 +18,8 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    phil.wms.bars.barcommand = "waybar";
+
     programs.waybar =
       let
         css_file = ./style.css;
@@ -29,7 +31,7 @@ in
             layer = "top";
             position = "top";
             height = 15;
-            modules-left = [ "idle_inhibitor" "sway/workspaces" "sway/mode" ];
+            modules-left = [ "idle_inhibitor" "wlr/workspaces" "sway/mode" ];
             #modules-center = [ "custom/weather" ];
             modules-right = [ "pulseaudio" "battery" "memory" "network" "custom/vpn" "clock" "tray" ];
             modules = {
