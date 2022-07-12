@@ -47,6 +47,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zellij = {
+      url = "github:zellij-org/zellij";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     arm-rs = {
       url = "github:PhilTaken/arm.rs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -88,7 +93,6 @@
           nixos = util.user.mkConfig {
             username = "nixos";
             userConfig = defaultConfig // {
-              wms.sway.enable = true;
               wms.hyprland.enable = true;
               wms.bars.waybar.enable = true;
             };
@@ -213,10 +217,10 @@
         };
 
         #beta = {
-          ##hostname = "10.200.0.2";
-          #hostname = "192.168.0.120";
-          #sshUser = "root";
-          #profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
+        ##hostname = "10.200.0.2";
+        #hostname = "192.168.0.120";
+        #sshUser = "root";
+        #profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
         #};
 
         delta = {

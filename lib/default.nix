@@ -17,6 +17,7 @@ let
     inputs.polymc.overlay
     inputs.arm-rs.overlays.default
     inputs.hyprland.overlays.default
+    inputs.zellij.overlays.default
     (final: super: {
       makeModulesClosure = x:
         super.makeModulesClosure (x // { allowMissing = true; });

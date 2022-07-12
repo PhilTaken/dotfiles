@@ -116,11 +116,11 @@ rec {
             popd
           }
         '') + (lib.optionalString inputs.config.phil.tmux.enable ''
-          # dont run tmux in nvim shells or when display isn't set
+          # dont run tmux in nvim shells, in zellij splits or when display isn't set
           PPNAME="$(ps -o comm= -p $PPID)"
           if [[ ! "$PPNAME" == "nvim" ]] && [[ $DISPLAY ]]; then
             [[ $- != *i* ]] && return
-            if [[ -z "$TMUX" ]]; then
+            if [[ -z "$TMUX" ]] && [[ -z "$ZELLIJ" ]]; then
               ID="$(${pkgs.tmux}/bin/tmux ls | grep -vm1 attached | cut -d: -f1)"
               if [[ -z "$ID" ]]; then
                 ${pkgs.tmux}/bin/tmux new-session
