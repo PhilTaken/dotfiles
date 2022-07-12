@@ -91,8 +91,8 @@ rec {
     modules = [ config ];
     #inherit (config.home) username homeDirectory stateVersion;
     #configuration = (config // {
-      #nixpkgs.overlays = overlays;
-      #nixpkgs.config.allowUnfree = true;
+    #nixpkgs.overlays = overlays;
+    #nixpkgs.config.allowUnfree = true;
     #});
   };
 

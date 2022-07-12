@@ -150,7 +150,7 @@ in
           forward-zone = [
             {
               name = ".";
-              forward-tls-upstream = "yes";  # use dns over tls forwarder
+              forward-tls-upstream = "yes"; # use dns over tls forwarder
               #forward-first = "no";          # don't send directly
               forward-addr = [
                 "1.1.1.1@853#cloudflare-dns.com"
