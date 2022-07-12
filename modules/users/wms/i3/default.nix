@@ -38,7 +38,7 @@ rec {
     terminal_font = mkOption {
       description = "Font Familiy for the terminal";
       type = types.str;
-      default = "Iosevka Nerd Font";
+      default = "Iosevka Term";
     };
 
     barcommand = mkOption {

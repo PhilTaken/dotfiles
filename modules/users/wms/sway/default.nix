@@ -27,6 +27,12 @@ rec {
       type = types.path;
       default = ../../../../images/nix-wallpaper-dracula.png;
     };
+
+    default_font = mkOption {
+      description = "default font";
+      type = types.str;
+      default = "Iosevka Comfy";
+    };
   };
 
   config = mkIf (cfg.enable) rec {
@@ -224,7 +230,7 @@ rec {
         enable = true;
         maxVisible = 5;
         defaultTimeout = 5000;
-        font = "iosevka";
+        font = cfg.default_font;
         backgroundColor = "#FFFFFF";
         textColor = "#000000";
         borderColor = "#000000";
@@ -238,8 +244,8 @@ rec {
       alacritty = {
         enable = true;
         settings = {
-          font.normal.family = "Iosevka Nerd Font";
-          font.size = 12;
+          font.normal.family = cfg.default_font;
+          font.size = 13;
           env.TERM = "xterm-256color";
         };
       };
@@ -299,7 +305,7 @@ rec {
     };
 
     xdg.configFile."foot/foot.ini".text = ''
-      font=Iosevka Nerd Font:size=12
+      font=${cfg.default_font}:size=12
       bold-text-in-bright=yes
       dpi-aware=yes
 

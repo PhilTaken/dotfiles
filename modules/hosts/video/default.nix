@@ -55,6 +55,7 @@ in
     console.useXkbConfig = true;
 
     fonts.fonts = with pkgs; [
+      iosevka-comfy.comfy
       (nerdfonts.override {
         fonts = [
           "SourceCodePro"

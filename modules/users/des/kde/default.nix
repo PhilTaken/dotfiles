@@ -14,6 +14,12 @@ in
       type = types.bool;
       default = false;
     };
+
+    default_font = mkOption {
+      description = "default font";
+      type = types.str;
+      default = "Iosevka Comfy";
+    };
   };
 
   config = mkIf (cfg.enable) {
@@ -23,7 +29,7 @@ in
       alacritty = {
         enable = true;
         settings = {
-          font.normal.family = "iosevka";
+          font.normal.family = cfg.default_font;
           font.size = 12.0;
         };
       };
