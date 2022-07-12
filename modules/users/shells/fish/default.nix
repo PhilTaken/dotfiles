@@ -38,8 +38,11 @@ rec {
           set -l cmd (commandline)
           if test -z "$cmd"
             commandline -r (magic_enter_cmd)
+            commandline -f execute
+          else
+            commandline -f execute
+            _atuin_unsuppress_tui
           end
-          commandline -f execute
         '';
       };
 
@@ -70,26 +73,25 @@ rec {
           bind -M insert \cr _atuin_search
           bind -M insert \t 'commandline -f complete && _atuin_suppress_tui'
           bind -M insert \e 'commandline -f cancel && _atuin_unsuppress_tui'
-          bind -M insert \r 'enter_ls && _atuin_unsuppress_tui'
-          bind -M insert \n 'enter_ls && _atuin_unsuppress_tui'
+          bind -M insert \r 'enter_ls'
+          bind -M insert \n 'enter_ls'
         end
       '';
 
       shellAliases = rec {
-        sudo = "sudo ";
+        zj = "${pkgs.zellij}/bin/zellij";
         gre = "${pkgs.ripgrep}/bin/rg";
-        df = "df -h";
+        cat = "${pkgs.bat}/bin/bat";
+        top = "${pkgs.bottom}/bin/btm";
+        du = "${pkgs.du-dust}/bin/dust";
         free = "${pkgs.procps}/bin/free -h";
+        sudo = "sudo ";
+        df = "df -h";
         exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
         ll = exal;
         exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
-        cat = "${pkgs.bat}/bin/bat";
         ntop = "sudo ntop -u nobody";
-
-        top = "${pkgs.bottom}/bin/btm";
-        du = "${pkgs.du-dust}/bin/dust";
         dmesg = "dmesg -H";
-
         # c/c++ dev
         bear = "${pkgs.bear}/bin/bear";
       } // (lib.optionalAttrs inputs.config.wayland.windowManager.sway.enable {
@@ -106,8 +108,8 @@ rec {
         glog = "${pkgs.git}/bin/git log";
         gco = "${pkgs.git}/bin/git checkout";
         gcm = "${pkgs.git}/bin/git checkout main";
-        flkup = "nix flake update --commit-lock-file";
         lg = "${pkgs.lazygit}/bin/lazygit";
+        flkup = "nix flake update --commit-lock-file";
       });
     };
   };
