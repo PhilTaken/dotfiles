@@ -6,10 +6,11 @@
 
 {
   imports = [
+    ./terminals
     ./shells
-
     ./tmux
     ./zellij
+    ./editors
 
     ./git
     ./ssh
@@ -21,7 +22,5 @@
 
     ./wms
     ./des
-
-    ./editors
   ];
 }

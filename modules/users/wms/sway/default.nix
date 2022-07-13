@@ -33,6 +33,13 @@ rec {
       type = types.str;
       default = "Iosevka Comfy";
     };
+
+    # TODO: enum? pkg?
+    terminal = mkOption {
+      description = "default terminal";
+      type = types.str;
+      default = "wezterm";
+    };
   };
 
   config = mkIf (cfg.enable) rec {
@@ -60,8 +67,7 @@ rec {
           left = "y";
           right = "o";
           modifier = "Mod4";
-          #terminal = "${pkgs.foot}/bin/foot";
-          terminal = "${pkgs.alacritty}/bin/alacritty";
+          terminal = "${pkgs.${cfg.terminal}}/bin/${cfg.terminal}";
           floating.border = 0;
           focus.followMouse = "always";
           bindkeysToCode = false;
@@ -241,14 +247,6 @@ rec {
         enable = true;
         #package = pkgs.rofi-wayland;
       };
-      alacritty = {
-        enable = true;
-        settings = {
-          font.normal.family = cfg.default_font;
-          font.size = 13;
-          env.TERM = "xterm-256color";
-        };
-      };
     };
 
     # for the work laptop
@@ -304,20 +302,10 @@ rec {
       };
     };
 
-    xdg.configFile."foot/foot.ini".text = ''
-      font=${cfg.default_font}:size=12
-      bold-text-in-bright=yes
-      dpi-aware=yes
-
-      [url]
-      launch=firefox ''${url}
-      osc8-underline=always
-    '';
-
     home.packages = with pkgs; [
       swaylock
-
       flameshot
+
       #grim
       #slurp
       #sway-contrib.grimshot
@@ -328,11 +316,13 @@ rec {
       feh
       wev
       wf-recorder
-      xorg.xauth
       ydotool
+
       libnotify
       libappindicator
       glibcLocales
+
+      xorg.xauth
     ];
   };
 }

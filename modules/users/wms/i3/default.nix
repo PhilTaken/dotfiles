@@ -38,7 +38,7 @@ rec {
     terminal_font = mkOption {
       description = "Font Familiy for the terminal";
       type = types.str;
-      default = "Iosevka Term";
+      default = "Iosevka Comfy";
     };
 
     barcommand = mkOption {
@@ -153,44 +153,35 @@ rec {
         enable = true;
         package = pkgs.rofi;
       };
-      alacritty = {
-        enable = true;
-        package = pkgs.alacritty;
-        settings = {
-          font.normal.family = cfg.terminal_font;
-          font.size = 10;
-          env.TERM = "xterm-256color";
-        };
-      };
     };
 
     services.picom = {
       enable = true;
-      activeOpacity = "0.985";
-      inactiveOpacity = "0.96";
-      opacityRule = [
-        "100:class_g ?= 'Firefox'"
-        "100:class_g ?= 'librewolf'"
-        "100:class_g ?= 'Google-chrome'"
-      ];
-      blur = true;
+      activeOpacity = 0.985;
+      inactiveOpacity = 0.96;
       experimentalBackends = true;
-      blurExclude = [
-        "class_g = 'slop'"
-        "class_i = 'polybar'"
-        "class_i = 'rofi'"
-        "class_g = 'rofi'"
-      ];
+      #opacityRule = [
+      #"100:class_g ?= 'Firefox'"
+      #"100:class_g ?= 'librewolf'"
+      #"100:class_g ?= 'Google-chrome'"
+      #];
+      #blur = true;
+      #blurExclude = [
+      #"class_g = 'slop'"
+      #"class_i = 'polybar'"
+      #"class_i = 'rofi'"
+      #"class_g = 'rofi'"
+      #];
+      #inactiveDim = "0.1";
       fade = true;
       fadeDelta = 8;
-      inactiveDim = "0.1";
       shadow = true;
-      extraOptions = ''
-        frame-opacity = 1;
-        blur-background = true;
-        blur-kern = "11x11gaussian";
-        blur-background-exclude = [];
-      '';
+      #extraOptions = ''
+      #frame-opacity = 1;
+      #blur-background = true;
+      #blur-kern = "11x11gaussian";
+      #blur-background-exclude = [];
+      #'';
     };
 
     services.pulseeffects = {

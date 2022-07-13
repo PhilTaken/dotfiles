@@ -59,31 +59,14 @@ rec {
         workspace=eDP-1,1
 
         input {
-            kb_layout=us(workman-intl)
+            kb_layout=us(intl)
             kb_options=caps:escape
             follow_mouse=1
 
             # integrated keyboard
-            device:1:1:AT_Translated_Set_2_keyboard {
-              kb_layout=us(workman-intl),us(intl)
-              kb_options=caps:escape,grp:shifts_toggle
-            }
-
-            # office keyboard
-            device:1241:36:HOLDCHIP_USB_Gaming_Keyboard {
+            device:AT Translated Set 2 keyboard {
               kb_layout=us(workman-intl)
-              kb_options=caps:escape,altwin:swap_alt_win
-            };
-
-            # office planck
-            device:936:42233:OLKB_Planck {
-              kb_layout=us(intl)
-            };
-
-            # wireless lopro corne
-            device:7504:24926:ZMK_Project_Corne_Keyboard {
-              kb_layout=us(intl)
-            };
+            }
         }
 
         general {
@@ -190,6 +173,7 @@ rec {
         exec-once=${barcommand}
       '';
 
+    # TODO: move someplace else
     programs = {
       mako = {
         enable = true;
@@ -207,79 +191,7 @@ rec {
         enable = true;
         #package = pkgs.rofi-wayland;
       };
-
-      alacritty = {
-        enable = true;
-        settings = {
-          font.normal.family = cfg.default_font;
-          font.size = 13;
-          env.TERM = "xterm-256color";
-        };
-      };
     };
-
-    # for the work laptop
-    services.kanshi = {
-      enable = true;
-      profiles = {
-        "dockstation" = {
-          exec = "notify-send 'Kanshi switched to dockstation profile'";
-          outputs = [
-            {
-              criteria = "eDP-1";
-              status = "disable";
-            }
-            {
-              criteria = "Dell Inc. DELL U2415 XKV0P05J16ZS";
-              mode = "1920x1200";
-              position = "0,720";
-            }
-            {
-              criteria = "Dell Inc. DELL U2415 XKV0P05J16YS";
-              mode = "1920x1200";
-              transform = "270";
-              position = "1920,0";
-            }
-          ];
-        };
-        "default" = {
-          exec = "notify-send 'Kanshi switched to default profile'";
-          outputs = [
-            {
-              criteria = "eDP-1";
-              status = "enable";
-              mode = "1920x1080";
-              position = "0,0";
-            }
-          ];
-        };
-        "at-home-1" = {
-          exec = "notfiy-send 'Welcome home!'";
-          outputs = [
-            {
-              criteria = "eDP-1";
-              mode = "1920x1080";
-              position = "0,0";
-            }
-            {
-              criteria = "Philips Consumer Electronics Company PHL 245E1 0x000072DC";
-              mode = "2560x1440@74.968Hz";
-              position = "1920,0";
-            }
-          ];
-        };
-      };
-    };
-
-    xdg.configFile."foot/foot.ini".text = ''
-      font=${cfg.default_font}:size=12
-      bold-text-in-bright=yes
-      dpi-aware=yes
-
-      [url]
-      launch=firefox ''${url}
-      osc8-underline=always
-    '';
 
     home.packages = with pkgs; [
       hyprland
