@@ -7,6 +7,7 @@ with lib;
 
 let
   cfg = config.phil.wms.bars.eww;
+  package = if cfg.enableWayland then pkgs.eww-git-wayland else pkgs.eww-git;
 in
 {
   options.phil.wms.bars.eww = {
@@ -19,20 +20,27 @@ in
     enableWayland = mkOption {
       description = "build wayland package";
       type = types.bool;
-      default = false;
+      default = true;
+    };
+
+    autostart = mkOption {
+      description = "autotstart the bar";
+      type = types.bool;
+      default = true;
     };
   };
 
   config = mkIf (cfg.enable) {
-    phil.wms.bars.barcommand = "eww open bar";
+    phil.wms.bars.barcommand = mkIf (cfg.autostart) "${package}/bin/eww open bar";
 
     home.packages = with pkgs; [
       kde-gtk-config
+      package
     ];
 
     programs.eww = {
       enable = true;
-      package = if cfg.enableWayland then pkgs.eww-git-wayland else pkgs.eww-git;
+      inherit package;
       configDir = (pkgs.stdenv.mkDerivation rec {
         pname = "eww-configfolder";
         version = "0.1";
@@ -50,27 +58,23 @@ in
       });
     };
 
-    systemd.user.services.eww-bar = {
-      Unit = {
-        Description = "Unit for the eww daemon";
-        After = "graphical-session-pre.target";
-        PartOf = "graphical-session.target";
-      };
+    #systemd.user.services.eww-bar = {
+      #Unit = {
+        #Description = "Unit for the eww daemon";
+        #After = "graphical-session-pre.target";
+        #PartOf = "graphical-session.target";
+      #};
 
-      Service =
-        let
-          eww = "${inputs.config.programs.eww.package}/bin/eww";
-        in
-        {
-          ExecStart = ''
-            ${eww} --no-daemonize daemon
-          '';
-          Restart = "on-abort";
-        };
+      #Service = {
+        #ExecStart = ''
+          #${package}/bin/eww --no-daemonize daemon
+        #'';
+        #Restart = "on-abort";
+      #};
 
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
-    };
+      #Install = {
+        #WantedBy = [ "graphical-session.target" ];
+      #};
+    #};
   };
 }

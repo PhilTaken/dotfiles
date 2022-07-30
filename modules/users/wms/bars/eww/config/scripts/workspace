@@ -57,12 +57,28 @@ workspaces() {
 
     command="i3-msg workspace number"
 
+
+    #"(box
+        #:class \"works\"
+        #:orientation \"v\"
+        #:halign \"center\"
+        #:valign \"start\"
+        #:space-evenly \"false\"
+        #:spacing \"-5\"
+        #(button :onclick \"bspc desktop -f $ws1\"   :class \"$un$o1$f1\" \"\")
+        #(button :onclick \"bspc desktop -f $ws2\"   :class \"$un$o2$f2\" \"\")
+        #(button :onclick \"bspc desktop -f $ws3\"   :class \"$un$o3$f3\" \"\")
+        #(button :onclick \"bspc desktop -f $ws4\"   :class \"$un$o4$f4\" \"\")
+        #(button :onclick \"bspc desktop -f $ws5\"   :class \"$un$o5$f5\" \"\")
+        #(button :onclick \"bspc desktop -f $ws6\"   :class \"$un$o6$f6\" \"\"))"
+
     echo "\
         (box \
-            :class \"workspaces\"\
-            :space-evenly \"true\"\
-            :orientation \"h\"\
-            :halign \"start\"\
+            :class \"works\"\
+            :orientation \"v\"\
+            :halign \"center\"\
+            :valign \"start\"\
+            :space-evenly \"false\"\
             :spacing \"10\"\
             (button :onclick \"$command $ws1 >/dev/null\" :class \"ws-$un$o1$f1\" \"\")\
             (button :onclick \"$command $ws2 >/dev/null\" :class \"ws-$un$o2$f2\" \"\")\

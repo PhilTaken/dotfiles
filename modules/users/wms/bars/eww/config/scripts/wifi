@@ -2,8 +2,8 @@
 # vi: ft=sh
 
 symbol() {
-    [ $(cat /sys/class/net/w*/operstate) = down ] && echo  && exit
-    echo 
+    [ $(cat /sys/class/net/w*/operstate) = down ] && echo 睊 && exit
+    echo 
 }
 
 name() {
