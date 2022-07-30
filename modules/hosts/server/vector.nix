@@ -14,7 +14,7 @@ in
     enable = mkOption {
       description = "enable the vector module";
       type = types.bool;
-      default = true;
+      default = false;
     };
   };
 
