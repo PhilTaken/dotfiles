@@ -36,7 +36,7 @@ rec {
           anki
           cachix
 
-          element-desktop
+          #element-desktop
           gimp
           gping
           hyperfine
@@ -81,9 +81,7 @@ rec {
         cacheHome = "${homeDirectory}/.cache";
       };
 
-      imports = [
-        ../modules/users
-      ] ++ extraHMImports;
+      imports = [ ../modules/users ] ++ extraHMImports;
     };
 
   mkHMUser = config: home-manager.lib.homeManagerConfiguration {

@@ -1,4 +1,8 @@
-{ inputs, system, extraHMImports ? [ ], ... }:
+{ inputs
+, system
+, extraHMImports ? [ ]
+, ...
+}:
 
 let
   inherit (inputs) home-manager nixpkgs;
@@ -21,6 +25,9 @@ let
     (final: super: {
       makeModulesClosure = x:
         super.makeModulesClosure (x // { allowMissing = true; });
+    })
+    (final: super: {
+      inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${system}) gopass;
     })
   ];
 
