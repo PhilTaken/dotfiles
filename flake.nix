@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    #nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify.url = "github:PhilTaken/spicetify-nix";
@@ -94,12 +94,17 @@
             username = "nixos";
             userConfig = defaultConfig // {
               wms.hyprland.enable = true;
-              wms.bars.waybar.enable = true;
+              wms.sway.enable = true;
+              #wms.bars.waybar.enable = true;
+
+              wms.bars.eww.enable = true;
+              #wms.bars.eww.autostart = false;
             };
 
             extraPackages = pkgs: with pkgs; [
               gnome3.adwaita-icon-theme
               xournalpp
+              xfce.thunar
             ];
           };
 
@@ -109,6 +114,10 @@
               # de/wm config
               wms.i3.enable = true;
               wms.bars.eww.enable = true;
+              wms.bars.eww.enableWayland = false;
+
+              #wms.hyprland.enable = true;
+              #wms.bars.waybar.enable = true;
             };
 
             extraPackages = pkgs: with pkgs; [
