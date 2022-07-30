@@ -88,7 +88,6 @@ in
         #yuzu-ea-latest
 
         #chromium
-        google-chrome
         nyxt
 
         uget

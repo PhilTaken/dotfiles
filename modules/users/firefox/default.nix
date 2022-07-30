@@ -34,6 +34,10 @@ in
       waylandpkg = if cfg.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
     in
     (mkIf cfg.enable) {
+      home.packages = with pkgs; [
+        google-chrome
+      ];
+
       programs.firefox = {
         enable = true;
 
