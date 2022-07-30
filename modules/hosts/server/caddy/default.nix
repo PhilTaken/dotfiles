@@ -65,9 +65,10 @@ in
         enable = true;
         package = (pkgs.callPackage ./custom_caddy.nix {
           plugins = [
-            "github.com/caddy-dns/cloudflare"
+            { name = "github.com/caddy-dns/cloudflare"; version = "91cf700356a1cd0127bcc4e784dd50ed85794af5"; }
           ];
-          vendorSha256 = "sha256-1SBOXv2RGLlTT/mguPjTASU5AeQNIVySgVMgvu5BH6w=";
+
+          vendorSha256 = "sha256-zGmSqBC+fOkt8Eolc2wki/sx0vo63ZaLzc5Bvyphttc=";
         });
         extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };
