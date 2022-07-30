@@ -15,25 +15,9 @@ in
       type = types.bool;
       default = false;
     };
-
-    default_font = mkOption {
-      description = "default font";
-      type = types.str;
-      default = "Iosevka Comfy";
-    };
   };
 
   config = mkIf (cfg.enable) {
-    programs = {
-      alacritty = {
-        enable = true;
-        settings = {
-          font.normal.family = cfg.default_font;
-          font.size = 12.0;
-        };
-      };
-    };
-
     home.packages = with pkgs; [
       chrome-gnome-shell
       # gnome3 apps

@@ -56,6 +56,7 @@ in
 
     fonts.fonts = with pkgs; [
       iosevka-comfy.comfy
+      font-awesome
       (nerdfonts.override {
         fonts = [
           "SourceCodePro"
