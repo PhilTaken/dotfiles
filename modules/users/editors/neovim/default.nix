@@ -15,6 +15,44 @@ in
       type = types.bool;
       default = true;
     };
+
+    langs = {
+      python = mkOption {
+        description = "enable the python integration";
+        type = types.bool;
+        default = false;
+      };
+
+      ts = mkOption {
+        description = "enable the js/ts integration";
+        type = types.bool;
+        default = true;
+      };
+
+      cpp = mkOption {
+        description = "enable the cpp integration";
+        type = types.bool;
+        default = true;
+      };
+
+      rust = mkOption {
+        description = "enable the rust integration";
+        type = types.bool;
+        default = true;
+      };
+
+      haskell = mkOption {
+        description = "enable the haskell integration";
+        type = types.bool;
+        default = true;
+      };
+
+      extra = mkOption {
+        description = "enable extra integrations";
+        type = types.bool;
+        default = true;
+      };
+    };
   };
 
   config = mkIf (cfg.enable) {
@@ -37,17 +75,6 @@ in
 
         tree-sitter
 
-        sumneko-lua-language-server # lua
-        ccls # c/c++
-        rnix-lsp # nix
-        rust-analyzer # rust
-        texlab # latex
-        fortls # fortran
-        erlang-ls # erlang
-        elixir_ls # elixir
-        clojure-lsp # clojure
-        haskell-language-server # haskell
-
         git # version control
         ripgrep # telescope file finding
         fd # faster find
@@ -62,24 +89,38 @@ in
         universal-ctags # ctags for anything
 
         inetutils # remote editing
-      ] ++ (with pkgs.nodePackages; [
-        #pyright # python
-        typescript-language-server # js / ts
-      ]) ++ (with pkgs.python39Packages; [
+
+        sumneko-lua-language-server # lua
+        rnix-lsp # nix
+
+      ]
+      ++ optionals (cfg.langs.python) (with pkgs.python39Packages; [
         python-lsp-server
         python-lsp-black
         pyls-isort
         hy
-      ]);
+      ])
+      ++ (optionals (cfg.langs.ts) [ pkgs.nodePackages.typescript-language-server ])
+      ++ (optionals (cfg.langs.cpp) [ pkgs.ccls ])
+      ++ (optionals (cfg.langs.rust) [ pkgs.rust-analyzer ])
+      ++ (optionals (cfg.langs.haskell) [ pkgs.haskell-language-server ])
+      ++ (optionals (cfg.langs.extra) (with pkgs; [
+        fortls
+        erlang-ls
+        texlab
+        erlang-ls # erlang
+        elixir_ls # elixir
+        clojure-lsp # clojure
+      ]));
 
       extraConfig = ''
-        " set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM
         let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'"
-        luafile ~/.config/nvim/init_.lua
 
         " write to undofile in undodir
         set undodir=${config.xdg.dataHome}
         set undofile
+
+        luafile ~/.config/nvim/init_.lua
       '';
     };
 

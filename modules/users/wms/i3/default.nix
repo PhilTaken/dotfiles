@@ -41,6 +41,12 @@ rec {
       default = "Iosevka Comfy";
     };
 
+    terminal = mkOption {
+      description = "default terminal";
+      type = types.str;
+      default = "wezterm";
+    };
+
     barcommand = mkOption {
       description = "command to reload the bar";
       type = types.str;
@@ -94,7 +100,7 @@ rec {
         keybindings =
           let
             modifier = config.modifier;
-            terminal = "${programs.alacritty.package}/bin/alacritty";
+            terminal = "${pkgs.${cfg.terminal}}/bin/${cfg.terminal}";
           in
           {
             "${modifier}+Return" = "exec ${terminal}";
@@ -156,7 +162,7 @@ rec {
     };
 
     services.picom = {
-      enable = true;
+      enable = false;
       activeOpacity = 0.985;
       inactiveOpacity = 0.96;
       experimentalBackends = true;
