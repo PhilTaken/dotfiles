@@ -58,15 +58,20 @@ rec {
         monitor=,1920x1080@60,0x0,1
         workspace=eDP-1,1
 
-        input {
-            kb_layout=us(intl)
-            kb_options=caps:escape
-            follow_mouse=1
+        device:at_translated_set_2_keyboard {
+          kb_layout=us,
+          kb_variant=workman,
+        }
 
+        device:yubico_yubikey_otp+fido+ccid {
+          kb_layout=de,
+        }
+
+        input {
+            kb_layout=us(workman-intl),
+            #kb_variant=workman,
+            kb_options=caps:escape,
             # integrated keyboard
-            device:AT Translated Set 2 keyboard {
-              kb_layout=us(workman-intl)
-            }
         }
 
         general {
@@ -171,7 +176,10 @@ rec {
         exec-once=systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
         exec-once=${pkgs.swaybg}/bin/swaybg -i ${cfg.background_image}
         exec-once=${barcommand}
+
       '';
+
+      # exec-once=xrandr --output \"DP-0\" --below \"DVI-D-0\" --primary --mode 2560x1440 --rate 74.97
 
     # TODO: move someplace else
     programs = {
@@ -194,8 +202,6 @@ rec {
     };
 
     home.packages = with pkgs; [
-      hyprland
-      xwayland
       wofi
 
       swaylock
