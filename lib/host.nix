@@ -8,6 +8,9 @@
 }:
 with builtins;
 
+let
+  net = import ../network.nix { };
+in
 rec {
   # set up a vanilla host without any home-manager
   mkHost =
@@ -51,4 +54,17 @@ rec {
         }
       ] ++ extramodules ++ hmConfigs;
     };
+
+  mkWorkstation = inpargs:
+    let
+      args = lib.mergeAttrs {
+        systemConfig = lib.mergeAttrs {
+          wireguard.enable = true;
+          nebula.enable = true;
+          server.services.telegraf.enable = false;
+          mullvad.enable = true;
+          dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
+        } inpargs.systemConfig;
+      } inpargs;
+    in mkHost args;
 }

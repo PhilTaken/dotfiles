@@ -42,11 +42,8 @@ rec {
     , extraimports ? [ ]
     , fileshare ? { }
     }:
-    let
-      hardware-config = import (../machines + "/${servername}");
-    in
     host.mkHost {
-      inherit hardware-config users;
+      inherit users;
 
       extraimports = extraimports ++ [{
         documentation.enable = false;

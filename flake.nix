@@ -103,7 +103,6 @@
 
             extraPackages = pkgs: with pkgs; [
               gnome3.adwaita-icon-theme
-              xournalpp
               xfce.thunar
             ];
           };
@@ -120,15 +119,7 @@
               #wms.bars.waybar.enable = true;
             };
 
-            extraPackages = pkgs: with pkgs; [
-              xfce.thunar
-              guitarix
-              qjackctl
-              jack2Full
-
-              nur.repos.shados.tmm
-              plover.dev
-            ];
+            extraPackages = pkgs: with pkgs; [ ];
           };
 
           jaid = util.user.mkConfig {
@@ -138,8 +129,11 @@
               des.gnome.enable = true;
               firefox.wayland = false;
             };
+
+            extraPackages = pkgs: with pkgs; [ ];
           };
         };
+        mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
     in
     {
       lib = util;
@@ -149,68 +143,52 @@
       overlays.default = (import ./custom_pkgs);
       homeConfigurations = lib.mapAttrs (username: config: util.user.mkHMUser config) hmUsers;
 
-      nixosConfigurations =
-        let
-          defaultConfig = {
-            wireguard.enable = true;
-            nebula.enable = true;
-            server.services.telegraf.enable = false;
-            dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
-          };
+      nixosConfigurations = {
+        # usb stick iso
+        x86-iso = util.iso.mkIso "isoInstall";
 
-          mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
-        in
-        {
-          # usb stick iso
-          x86-iso = util.iso.mkIso "isoInstall";
+        # desktop @ home
+        gamma = util.host.mkHost rec {
+          users = [ "maelstroem" "jaid" ];
+          hmConfigs = mkHMUsers users;
+          systemConfig = {
+            core.hostName = "gamma";
+            core.enableBluetooth = true;
 
-          # desktop @ home
-          gamma = util.host.mkHost rec {
-            users = [ "maelstroem" "jaid" ];
-            hmConfigs = mkHMUsers users;
-            systemConfig = defaultConfig // {
-              core.hostName = "gamma";
-              core.enableBluetooth = true;
+            nvidia.enable = true;
+            desktop.enable = true;
 
-              development.adb.enable = true;
-              mullvad.enable = true;
-
-              nvidia.enable = true;
-              desktop.enable = true;
-
-              video = {
-                driver = "nvidia";
-                managers = [ "gnome" ];
-              };
+            video = {
+              driver = "nvidia";
+              managers = [ "gnome" ];
             };
           };
+        };
 
-          # workplace-issued thinkpad
-          nixos-laptop = util.host.mkHost rec {
-            users = [ "nixos" ];
-            hmConfigs = mkHMUsers users;
-            systemConfig = defaultConfig // {
-              core.hostName = "nixos-laptop";
-              mullvad.enable = true;
+        # workplace-issued thinkpad
+        nixos-laptop = util.host.mkHost rec {
+          users = [ "nixos" ];
+          hmConfigs = mkHMUsers users;
+          systemConfig = {
+            core.hostName = "nixos-laptop";
+            laptop.enable = true;
+            laptop.wirelessInterfaces = [ "wlp0s20f3" ];
 
-              laptop.enable = true;
-              laptop.wirelessInterfaces = [ "wlp0s20f3" ];
-
-              #video.managers = [ "sway" ];
-            };
+            #video.managers = [ "sway" ];
           };
-        } // builtins.mapAttrs
-          (servername: services:
-            let
-              sUtil = if servername == "beta" then (libFor "aarch64-linux") else util;
-            in
-            sUtil.server.mkServer { inherit servername services; })
-          net.services;
+        };
+      } // builtins.mapAttrs
+        (servername: services:
+          let
+            sUtil = if servername == "beta" then (libFor "aarch64-linux") else util;
+          in
+          sUtil.server.mkServer { inherit servername services; })
+        net.services;
 
       # shortcut for building with `nix build`
       systems = builtins.mapAttrs (system: _: self.nixosConfigurations.${system}.config.system.build.toplevel) self.nixosConfigurations;
 
-      # shortcut for building a raspberry pi sd image
+      # shortcut for building images
       packages."${system}" = {
         x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
         beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
@@ -224,13 +202,6 @@
           sshUser = "root";
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.alpha;
         };
-
-        #beta = {
-        ##hostname = "10.200.0.2";
-        #hostname = "192.168.0.120";
-        #sshUser = "root";
-        #profiles.system.path = inputs.deploy-rs.lib."aarch64-linux".activate.nixos self.nixosConfigurations.beta;
-        #};
 
         delta = {
           #hostname = "10.200.0.5";

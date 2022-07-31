@@ -87,6 +87,8 @@ in
         polymc
         #yuzu-ea-latest
 
+        calibre
+
         #chromium
         nyxt
 
@@ -96,6 +98,8 @@ in
         skrooge
         yt-dlp
 
+        xfce.thunar
+
         qbittorrent
         pdfsam-basic
         foliate
@@ -103,6 +107,13 @@ in
         baobab
         waydroid
         beets
+
+        guitarix
+        qjackctl
+        jack2Full
+
+        nur.repos.shados.tmm
+        plover.dev
       ];
   };
 }
