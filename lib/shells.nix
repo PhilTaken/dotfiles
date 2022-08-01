@@ -57,6 +57,13 @@ in
         }
 
         {
+          name = "sign";
+          help = "sign nebula certificates - wrapper around nebula-sign (needs sudo)";
+          category = "dev";
+          command = "nebsign";
+        }
+
+        {
           name = "cswitch";
           help = "Switch to a NixOS Configuration (local)";
           command = ''

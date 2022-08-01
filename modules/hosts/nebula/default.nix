@@ -26,8 +26,10 @@ let
   isLighthouse = builtins.elem hostname (builtins.attrNames net.networks.endpoints);
   lighthouses = if isLighthouse then [ ] else builtins.attrNames hostMap;
 
-  owner = config.systemd.services."nebula@${networkName}".serviceConfig.User or "root";
-  sopsFile = ../../../sops/nebula.yaml;
+  sopsConfig = {
+    owner = config.systemd.services."nebula@${networkName}".serviceConfig.User or "root";
+    sopsFile = ../../../sops/nebula.yaml;
+  };
 
   # TODO: rework this
   any = { port = "any"; proto = "any"; host = "any"; };
@@ -35,15 +37,9 @@ in
 {
   options.phil.nebula.enable = mkEnableOption "nebula";
   config = mkIf (cfg.enable) {
-    sops.secrets.ca = {
-      inherit owner sopsFile;
-    };
-    sops.secrets."${hostname}-key" = {
-      inherit owner sopsFile;
-    };
-    sops.secrets."${hostname}-crt" = {
-      inherit owner sopsFile;
-    };
+    sops.secrets.ca = sopsConfig;
+    sops.secrets."${hostname}-key" = sopsConfig;
+    sops.secrets."${hostname}-crt" = sopsConfig;
 
     services.nebula.networks."${networkName}" = {
       inherit (cfg) enable;

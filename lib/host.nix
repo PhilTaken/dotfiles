@@ -20,6 +20,7 @@ rec {
     , extraimports ? [ ]
     , hmConfigs ? [ ]
     , hardware-config ? (import ../machines/${systemConfig.core.hostName})
+    , extraHostModules ? [ ]
     }:
     let
       raw_users = lib.zipListsWith
@@ -52,19 +53,42 @@ rec {
           sops.age.keyFile = "/var/lib/sops-nix/key.txt";
           sops.age.generateKey = true;
         }
-      ] ++ extramodules ++ hmConfigs;
+      ] ++ extramodules ++ hmConfigs ++ extraHostModules;
     };
 
   mkWorkstation = inpargs:
     let
-      args = lib.mergeAttrs {
-        systemConfig = lib.mergeAttrs {
-          wireguard.enable = true;
-          nebula.enable = true;
-          server.services.telegraf.enable = false;
-          mullvad.enable = true;
-          dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
-        } inpargs.systemConfig;
-      } inpargs;
-    in mkHost args;
+      args = inpargs // {
+        systemConfig = lib.mergeAttrs
+          {
+            wireguard.enable = true;
+            nebula.enable = true;
+            server.services.telegraf.enable = false;
+            mullvad.enable = true;
+            dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
+          }
+          inpargs.systemConfig;
+        extraHostModules = (inpargs.extraHostModules or [ ]) ++ [
+          ({ config, ... }:
+            let
+              sopsConfig = {
+                group = "wheel";
+                sopsFile = ../sops/nebula.yaml;
+              };
+            in
+            {
+              sops.secrets.key.sopsFile = ../sops/nebula.yaml;
+              sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
+
+              environment.systemPackages = [
+                (pkgs.writeShellScriptBin "nebsign" ''
+                  ${pkgs.nebula}/bin/nebula-cert sign -ca-crt ${config.sops.secrets.ca.path} -ca-key ${config.sops.secrets.key.path} "$@"
+                  cp ${config.sops.secrets.ca.path} ./ca.pem
+                '')
+              ];
+            })
+        ];
+      };
+    in
+    mkHost args;
 }
