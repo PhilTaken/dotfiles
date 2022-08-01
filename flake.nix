@@ -133,7 +133,7 @@
             extraPackages = pkgs: with pkgs; [ ];
           };
         };
-        mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
+      mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
     in
     {
       lib = util;
@@ -148,7 +148,7 @@
         x86-iso = util.iso.mkIso "isoInstall";
 
         # desktop @ home
-        gamma = util.host.mkHost rec {
+        gamma = util.host.mkWorkstation rec {
           users = [ "maelstroem" "jaid" ];
           hmConfigs = mkHMUsers users;
           systemConfig = {
@@ -166,7 +166,7 @@
         };
 
         # workplace-issued thinkpad
-        nixos-laptop = util.host.mkHost rec {
+        nixos-laptop = util.host.mkWorkstation rec {
           users = [ "nixos" ];
           hmConfigs = mkHMUsers users;
           systemConfig = {
