@@ -600,9 +600,16 @@ require('packer').startup{
             module = "telescope",
         }
 
+        use {
+            "rktjmp/hotpot.nvim",
+            config = function()
+                require("hotpot").setup({ })
+            end
+        }
+
         -- crazy fast movement
         use {
-            'ggandor/lightspeed.nvim',
+            'ggandor/leap.nvim',
             event = "BufRead"
         }
 
@@ -680,4 +687,7 @@ require('packer').startup{
 -- install updates if packer has just been downloaded
 if install_packages then
     execute("PackerInstall")
+    return false
 end
+
+return true

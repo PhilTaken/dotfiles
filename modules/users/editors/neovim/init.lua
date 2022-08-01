@@ -36,14 +36,19 @@
 --                  WX0X                         NOOXW
 
 
--- plugins
-require('custom.plugins')
-
 -- utils
 require("custom.utils")
+
 
 -- default settings
 require('custom.settings')
 
--- mappings
-require("custom.maps")
+-- plugins
+-- will return false if plugins need to be installed
+-- to prevent the config from throwing a bunch of errors
+if require('custom.plugins') then
+
+    -- mappings
+    require("custom.maps")
+end
+
