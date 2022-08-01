@@ -185,6 +185,20 @@ require('packer').startup{
                     vim.cmd[[let g:float_preview#docked = 1]]
                 end,
                 event = "InsertEnter"
+            },
+
+            {
+                "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+                config = function()
+                    require("lsp_lines").setup()
+                    vim.diagnostic.config({
+                        virtual_text = false,
+                        virtual_lines = {
+                            only_current_line = true
+                        }
+                    })
+                end,
+                event = 'InsertEnter'
             }
         }
 
