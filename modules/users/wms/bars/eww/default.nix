@@ -59,22 +59,22 @@ in
     };
 
     #systemd.user.services.eww-bar = {
-      #Unit = {
-        #Description = "Unit for the eww daemon";
-        #After = "graphical-session-pre.target";
-        #PartOf = "graphical-session.target";
-      #};
+    #Unit = {
+    #Description = "Unit for the eww daemon";
+    #After = "graphical-session-pre.target";
+    #PartOf = "graphical-session.target";
+    #};
 
-      #Service = {
-        #ExecStart = ''
-          #${package}/bin/eww --no-daemonize daemon
-        #'';
-        #Restart = "on-abort";
-      #};
+    #Service = {
+    #ExecStart = ''
+    #${package}/bin/eww --no-daemonize daemon
+    #'';
+    #Restart = "on-abort";
+    #};
 
-      #Install = {
-        #WantedBy = [ "graphical-session.target" ];
-      #};
+    #Install = {
+    #WantedBy = [ "graphical-session.target" ];
+    #};
     #};
   };
 }

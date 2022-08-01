@@ -179,7 +179,7 @@ rec {
 
       '';
 
-      # exec-once=xrandr --output \"DP-0\" --below \"DVI-D-0\" --primary --mode 2560x1440 --rate 74.97
+    # exec-once=xrandr --output \"DP-0\" --below \"DVI-D-0\" --primary --mode 2560x1440 --rate 74.97
 
     # TODO: move someplace else
     programs = {

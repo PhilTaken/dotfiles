@@ -11,8 +11,8 @@
 with lib;
 
 let
-  imports = flip concatMapStrings plugins ({name, version}: "\t_ \"${name}\"\n");
-  gogets = flip concatMapStrings plugins ({name, version}: "go get \"${name}@${version}\"");
+  imports = flip concatMapStrings plugins ({ name, version }: "\t_ \"${name}\"\n");
+  gogets = flip concatMapStrings plugins ({ name, version }: "go get \"${name}@${version}\"");
 
   pname = "caddy";
   version = "2.5.2";
@@ -32,29 +32,31 @@ let
     }
   '';
 
-in if plugins == []
+in
+if plugins == [ ]
 then caddy
-else caddy.override {
-  buildGoModule = args:
-    buildGoModule (args // {
-      inherit vendorSha256;
+else
+  caddy.override {
+    buildGoModule = args:
+      buildGoModule (args // {
+        inherit vendorSha256;
 
-      passthru.plugins = plugins;
+        passthru.plugins = plugins;
 
-      pname = "${pname}-with-plugins";
+        pname = "${pname}-with-plugins";
 
-      overrideModAttrs = _: {
-        preBuild = ''
+        overrideModAttrs = _: {
+          preBuild = ''
+            echo '${main}' > cmd/caddy/main.go
+            ${gogets}
+          '';
+          postInstall = "cp go.sum go.mod $out/";
+        };
+
+        postPatch = ''
           echo '${main}' > cmd/caddy/main.go
-          ${gogets}
         '';
-        postInstall = "cp go.sum go.mod $out/";
-      };
 
-      postPatch = ''
-        echo '${main}' > cmd/caddy/main.go
-      '';
-
-      postConfigure = "cp vendor/go.sum vendor/go.mod .";
-    });
-}
+        postConfigure = "cp vendor/go.sum vendor/go.mod .";
+      });
+  }
