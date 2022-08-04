@@ -58,20 +58,14 @@ rec {
         monitor=,1920x1080@60,0x0,1
         workspace=eDP-1,1
 
-        device:at_translated_set_2_keyboard {
-          kb_layout=us,
-          kb_variant=workman,
-        }
-
-        device:yubico_yubikey_otp+fido+ccid {
-          kb_layout=de,
+        device:AT Translated Set 2 keyboard {
+          kb_layout=us(workman-intl),us(intl),
+          kb_options=caps:escape,grp:shifts_toggle,
         }
 
         input {
-            kb_layout=us(workman-intl),
-            #kb_variant=workman,
+            kb_layout=us,
             kb_options=caps:escape,
-            # integrated keyboard
         }
 
         general {
@@ -102,8 +96,8 @@ rec {
         animations {
             enabled=1
             animation=windows,1,7,default
-            animation=borders,1,10,default
-            animation=fadein,1,10,default
+            animation=border,1,10,default
+            animation=fade,1,10,default
             animation=workspaces,1,6,default
         }
 
