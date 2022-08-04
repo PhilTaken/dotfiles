@@ -79,6 +79,11 @@ rec {
           };
 
           input = {
+            # intuos pen
+            "1386:827:Wacom_Intuos_S_2_Pen" = {
+              map_from_region = "0.75x0 1x0.3";
+            };
+
             # integrated keyboard
             "1:1:AT_Translated_Set_2_keyboard" = {
               xkb_layout = "us(workman-intl),us(intl)";
