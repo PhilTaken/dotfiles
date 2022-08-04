@@ -35,6 +35,7 @@ in
     in
     (mkIf cfg.enable) {
       home.packages = with pkgs; [
+        nyxt
         google-chrome
       ];
 

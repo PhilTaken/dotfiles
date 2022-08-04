@@ -52,20 +52,19 @@ in
     };
 
     home.packages = with pkgs; [
-      bandwhich
       cmake
       comma
       dig
+      dogdns
       exa
       fasd
       fd
       file
       fortune
+      gopass
       gping
       hexyl
       hyperfine
-      joshuto
-      jq
       lolcat
       lshw
       lsof
@@ -74,11 +73,9 @@ in
       nmap
       procs
       psmisc
-      pup
       ranger
       ripgrep
       rsync
-      sd
       sshfs
       tokei
       tree
@@ -87,6 +84,13 @@ in
       usbutils
       wget
       yt-dlp
+
+      tealdeer
+      jq
+      bandwhich
+      sd
+      pup
+      joshuto
     ];
 
     programs = {
@@ -106,7 +110,7 @@ in
 
       password-store = {
         enable = true;
-        package = pkgs.gopass;
+        #package = pkgs.pass;
       };
 
       skim.enable = true;
