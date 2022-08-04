@@ -103,7 +103,6 @@
 
             extraPackages = pkgs: with pkgs; [
               gnome3.adwaita-icon-theme
-              xfce.thunar
             ];
           };
 
@@ -119,7 +118,15 @@
               #wms.bars.waybar.enable = true;
             };
 
-            extraPackages = pkgs: with pkgs; [ ];
+            extraPackages = pkgs: with pkgs; [
+              # e-guitar stuff
+              guitarix
+              qjackctl
+              jack2Full
+
+              nur.repos.shados.tmm
+              plover.dev
+            ];
           };
 
           jaid = util.user.mkConfig {

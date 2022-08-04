@@ -6,19 +6,20 @@
 
     ./yubikey
 
-    ./laptop
     ./sound
     ./video
-    ./desktop
     ./nvidia
 
+    ./workstation
+    ./laptop
+
     ./server
-    ./dns
 
     ./development
     ./fileshare
     ./backup
 
+    ./dns
     ./wireguard
     ./nebula
     ./mullvad

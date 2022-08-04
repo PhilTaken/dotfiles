@@ -66,6 +66,7 @@ rec {
             server.services.telegraf.enable = false;
             mullvad.enable = true;
             dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
+            workstation.enable = true;
           }
           inpargs.systemConfig;
         extraHostModules = (inpargs.extraHostModules or [ ]) ++ [
