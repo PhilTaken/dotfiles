@@ -6,7 +6,7 @@
 
 let
   inherit (inputs) home-manager nixpkgs;
-  lib = nixpkgs.lib;
+  inherit (nixpkgs) lib;
 
   overlays = [
     (import ../custom_pkgs)
@@ -23,11 +23,10 @@ let
     inputs.hyprland.overlays.default
     inputs.zellij.overlays.default
     (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
-    })
-    (final: super: {
-      inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${system}) gopass;
+      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
+
+      inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${system}) gopass iosevka;
+      inherit (inputs.nixpkgs-unstable-comfy.outputs.legacyPackages.${system}) iosevka-comfy;
     })
   ];
 

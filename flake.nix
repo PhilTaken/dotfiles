@@ -1,7 +1,9 @@
 {
   inputs = {
+
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.05";
+    nixpkgs-unstable-comfy.url = "github:NixOS/nixpkgs/0d440c18119406feb8a32cd5ec2ff0b83fc9104b";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify.url = "github:PhilTaken/spicetify-nix";
