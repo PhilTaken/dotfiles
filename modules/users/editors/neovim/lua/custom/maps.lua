@@ -72,9 +72,9 @@ local leadern = {
             n = { function() vim.lsp.buf.rename() end, "Rename Variable" },
             c = { function() vim.lsp.buf.code_action() end, "Code Action" },
             f = { function() vim.lsp.buf.formatting() end, "Formatting" },
-            s = { function() vim.lsp.buf.signature_help() end, "Signature Help" },
             d = { function() vim.lsp.buf.definition() end, "Preview Definition" },
             e = { function() vim.diagnostic.open_float() end, "Diagnostics float" },
+            k = { function() vim.lsp.buf.hover() end, "Show tooltips/docs"},
             -- symbols outline
         },
         g = {

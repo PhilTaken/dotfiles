@@ -20,7 +20,7 @@ in
       python = mkOption {
         description = "enable the python integration";
         type = types.bool;
-        default = false;
+        default = true;
       };
 
       ts = mkOption {
@@ -96,8 +96,7 @@ in
       ]
       ++ optionals (cfg.langs.python) (with pkgs.python39Packages; [
         python-lsp-server
-        python-lsp-black
-        pyls-isort
+        #python-lsp-black
         hy
       ])
       ++ (optionals (cfg.langs.ts) [ pkgs.nodePackages.typescript-language-server ])
