@@ -42,8 +42,13 @@ rec {
       let
         terminal = "${pkgs.wezterm}/bin/wezterm";
         #terminal = "${pkgs.alacritty}/bin/alacritty";
+
+        #screenhsot = "${pkgs.flameshot}/bin/flameshot gui";
+        screenshot = "${pkgs.grim}/bin/grim -t jpeg -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/jpeg";
+
         lock = "swaylock -c 000000";
         menu = "${pkgs.rofi-wayland}/bin/rofi -show run";
+
         inherit (inputs.config.phil.wms.bars) barcommand;
         left = "y";
         down = "n";
@@ -108,6 +113,8 @@ rec {
 
 
         windowrule=float,Pinentry
+        windowrule=float,Media viewer
+        windowrule=float,title:Picture-in-Picture
 
         # example window rules
         # for windows named/classed as abc and xyz
@@ -127,7 +134,7 @@ rec {
         bind=SUPER,space,exec,${menu}
         bind=SUPER,return,exec,${terminal}
         bind=SUPER,l,exec,${lock}
-        bind=SUPER,q,exec,${pkgs.flameshot}/bin/flameshot gui
+        bind=SUPER,q,exec,
 
         bind=SUPER,${left},movefocus,l
         bind=SUPER,${down},movefocus,d
