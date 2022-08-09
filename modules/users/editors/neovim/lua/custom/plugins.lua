@@ -125,9 +125,9 @@ require('packer').startup{
         -- add visible indent aid
         use {
             "lukas-reineke/indent-blankline.nvim",
-            requires = {
-                'nvim-treesitter/nvim-treesitter',
-            },
+            --requires = {
+                --'nvim-treesitter/nvim-treesitter',
+            --},
             config = function()
                 require("indent_blankline").setup {
                     buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
@@ -349,30 +349,6 @@ require('packer').startup{
                     require("lspconfig")['null-ls'].setup({})
                 end,
             }
-        }
-
-        -- ast-like code parsing utility for hl / indent / lsp
-        use {
-            'nvim-treesitter/nvim-treesitter',
-            run = ":TSUpdate",
-            config = function()
-                require'nvim-treesitter.configs'.setup {
-                    ensure_installed = {
-                        "bash", "c", "clojure",
-                        "cmake", "comment", "commonlisp",
-                        "cpp", "css", "dockerfile", "fennel",
-                        "help", "html", "http", "norg",
-                        "javascript", "json", "json5",
-                        "latex", "ledger", "lua", "make",
-                        "nix", "python", "r", "regex",
-                        "rst", "ruby", "rust", "toml",
-                        "typescript", "vim", "vue", "yaml"
-                    },
-                    highlight = {
-                        enable = true,
-                    },
-                }
-            end
         }
 
         -- completion management
@@ -636,7 +612,7 @@ require('packer').startup{
         use {
             "nvim-neorg/neorg",
             --ft = "norg",
-            after = { "nvim-treesitter" },
+            --after = { "nvim-treesitter" },
             config = function()
                 require('neorg').setup {
                     load = {

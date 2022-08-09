@@ -94,11 +94,7 @@ in
         rnix-lsp # nix
 
       ]
-      ++ optionals (cfg.langs.python) (with pkgs.python39Packages; [
-        python-lsp-server
-        #python-lsp-black
-        hy
-      ])
+      ++ (optionals (cfg.langs.python) (with pkgs.python39Packages; [ python-lsp-server hy ]))
       ++ (optionals (cfg.langs.ts) [ pkgs.nodePackages.typescript-language-server ])
       ++ (optionals (cfg.langs.cpp) [ pkgs.ccls ])
       ++ (optionals (cfg.langs.rust) [ pkgs.rust-analyzer ])
@@ -121,6 +117,11 @@ in
 
         luafile ~/.config/nvim/init_.lua
       '';
+
+      # install treesitter with nix to prevent all kinds of libstdc++ so shenenigans
+      plugins = with pkgs.vimPlugins; [
+          (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      ];
     };
 
     home.packages = with pkgs; [
