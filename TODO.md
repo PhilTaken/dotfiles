@@ -7,6 +7,8 @@
 - set up modules:
     - arm module (get rust running + spinning)
 
+    - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
+
     - navidrome music streaming
     - torrenting container
 
