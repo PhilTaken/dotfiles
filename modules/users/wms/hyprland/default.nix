@@ -40,7 +40,8 @@ rec {
 
     xdg.configFile."hypr/hyprland.conf".text =
       let
-        terminal = "${pkgs.alacritty}/bin/alacritty";
+        terminal = "${pkgs.wezterm}/bin/wezterm";
+        #terminal = "${pkgs.alacritty}/bin/alacritty";
         lock = "swaylock -c 000000";
         menu = "${pkgs.rofi-wayland}/bin/rofi -show run";
         inherit (inputs.config.phil.wms.bars) barcommand;
@@ -104,6 +105,9 @@ rec {
         dwindle {
             pseudotile=0 # enable pseudotiling on dwindle
         }
+
+
+        windowrule=float,Pinentry
 
         # example window rules
         # for windows named/classed as abc and xyz
