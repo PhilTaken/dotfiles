@@ -1,5 +1,7 @@
 # TODO:
 
+- fix loki: unknown variant `loki`, expected `unit_test` for key `sinks.loki`
+
 ## general issues
 
 - set up modules:
@@ -88,6 +90,8 @@
 
 ### ideas
 
+- zrythm 
+    - https://www.zrythm.org/en/index.html
 - https://github.com/extrawurst/gitui vs lazygit
 - sk(im) sorter for telescope?
 - plugins
@@ -99,6 +103,8 @@
         - https://github.com/chentoast/marks.nvim
     - commentary
         - tjdevries video
+    - run scripts
+        - https://github.com/stevearc/overseer.nvim
 
 ## general Ideas
 
