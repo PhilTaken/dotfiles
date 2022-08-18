@@ -41,9 +41,9 @@ in
       rootUrl = "https://${cfg.host}.pherzog.xyz/";
 
       httpPort = cfg.port;
-      ssh.enable = true;
+      #ssh.enable = true;
       lfs.enable = true;
-      cookieSecure = true;
+      settings.session.COOKIE_SECURE = true;
       appName = "Oroboros";
     };
 

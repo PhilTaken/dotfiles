@@ -161,6 +161,8 @@
           users = [ "maelstroem" "jaid" ];
           hmConfigs = mkHMUsers users;
           systemConfig = {
+            server.services.openssh.enable = true;
+
             core.hostName = "gamma";
             core.enableBluetooth = true;
 
