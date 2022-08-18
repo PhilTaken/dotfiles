@@ -134,7 +134,7 @@ rec {
         bind=SUPER,space,exec,${menu}
         bind=SUPER,return,exec,${terminal}
         bind=SUPER,l,exec,${lock}
-        bind=SUPER,q,exec,
+        bind=SUPER,q,exec,${screenshot}
 
         bind=SUPER,${left},movefocus,l
         bind=SUPER,${down},movefocus,d
