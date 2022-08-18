@@ -165,7 +165,6 @@
             core.enableBluetooth = true;
 
             nvidia.enable = true;
-            desktop.enable = true;
 
             video = {
               driver = "nvidia";
