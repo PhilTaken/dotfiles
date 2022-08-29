@@ -72,6 +72,8 @@ in
     # https://github.com/NixOS/nixpkgs/issues/158025
     programs.sway.enable = true;
     programs.hyprland.enable = true;
+    # https://wiki.hyprland.org/Nix/#modules-mixnmatch
+    #programs.hyprland.package = null;
 
     services.xserver =
       let
@@ -87,8 +89,9 @@ in
 
         displayManager = {
           gdm.enable = true;
-          gdm.wayland = false;
-          defaultSession = mkIf (builtins.length cfg.managers > 0) session_map.${builtins.head cfg.managers};
+          #gdm.wayland = false;
+          #defaultSession = mkIf (builtins.length cfg.managers > 0) session_map.${builtins.head cfg.managers};
+          #defaultSession = "none+Hyprland";
         };
 
         screenSection = mkIf (cfg.driver == "nvidia") ''
@@ -100,14 +103,10 @@ in
         libinput = { inherit enable; };
 
         desktopManager = {
-          xfce = {
-            enable = enabled "xfce";
-            noDesktop = true;
-            enableXfwm = false;
-          };
           plasma5.enable = enabled "kde";
+          xfce.enable = enabled "xfce";
           gnome.enable = enabled "gnome";
-          xterm.enable = false;
+          xterm.enable = true;
         };
       };
 
@@ -127,5 +126,21 @@ in
         allowedTCPPorts = kde_ports ++ [ 8888 ];
         allowedUDPPorts = kde_ports ++ [ 8888 ];
       };
+
+
+    # https://wiki.hyprland.org/Nvidia/#how-to-get-hyprland-to-possibly-work-on-nvidia
+    environment.variables = mkIf (cfg.driver == "nvidia") {
+      LIBVA_DRIVER_NAME = "nvidia";
+      CLUTTER_BACKEND = "wayland";
+      XDG_SESSION_TYPE = "wayland";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+      GBM_BACKEND = "nvidia-drm";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      WLR_BACKEND = "vulkan";
+      QT_QPA_PLATFORM = "wayland";
+      GDK_BACKEND = "wayland";
+    };
   };
 }
