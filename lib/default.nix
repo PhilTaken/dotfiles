@@ -26,7 +26,6 @@ let
       makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
 
       inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${system}) gopass iosevka;
-      inherit (inputs.nixpkgs-unstable-comfy.outputs.legacyPackages.${system}) iosevka-comfy;
     })
   ];
 
@@ -45,7 +44,10 @@ let
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
   ];
 
-  extraHMImports = [ inputs.spicetify.homeManagerModule ];
+  extraHMImports = [
+    inputs.spicetify.homeManagerModule
+    inputs.hyprland.homeManagerModules.default
+  ];
 in
 rec {
   inherit pkgs;
