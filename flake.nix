@@ -1,9 +1,8 @@
 {
   inputs = {
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.05";
-    nixpkgs-unstable-comfy.url = "github:NixOS/nixpkgs/0d440c18119406feb8a32cd5ec2ff0b83fc9104b";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify.url = "github:PhilTaken/spicetify-nix";
@@ -46,7 +45,7 @@
 
     hyprland = {
       url = "github:vaxerski/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zellij = {
@@ -96,7 +95,7 @@
             username = "nixos";
             userConfig = defaultConfig // {
               wms.hyprland.enable = true;
-              wms.sway.enable = true;
+              #wms.sway.enable = true;
               #wms.bars.waybar.enable = true;
 
               wms.bars.eww.enable = true;
@@ -112,9 +111,11 @@
             username = "maelstroem";
             userConfig = defaultConfig // {
               # de/wm config
-              wms.i3.enable = true;
+              wms.hyprland.enable = true;
+              #wms.i3.enable = true;
+
               wms.bars.eww.enable = true;
-              wms.bars.eww.enableWayland = false;
+              #wms.bars.eww.enableWayland = false;
 
               #wms.hyprland.enable = true;
               #wms.bars.waybar.enable = true;
@@ -158,7 +159,7 @@
 
         # desktop @ home
         gamma = util.host.mkWorkstation rec {
-          users = [ "maelstroem" "jaid" ];
+          users = [ "maelstroem" ]; # "jaid"
           hmConfigs = mkHMUsers users;
           systemConfig = {
             server.services.openssh.enable = true;
@@ -170,12 +171,12 @@
 
             video = {
               driver = "nvidia";
-              managers = [ "gnome" ];
+              #managers = [ "gnome" ];
             };
           };
         };
 
-        # workplace-issued thinkpad
+        # future laptop config
         nixos-laptop = util.host.mkWorkstation rec {
           users = [ "nixos" ];
           hmConfigs = mkHMUsers users;
