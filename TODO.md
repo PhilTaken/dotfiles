@@ -5,16 +5,20 @@
 ## general issues
 
 - set up modules:
+    - find working way to add Hyprland/sway to gdm session list (no show?)
+
     - arm module (get rust running + spinning)
-
-    - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
-
-    - navidrome music streaming
-    - torrenting container
 
     - dashboard (homer)
         - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
         - https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md
+
+    - navidrome music streaming
+    - torrenting container
+    - -arr services for metadata
+
+    - photoview -> librephotos
+        - images in syncthing / seafile
 
     - shiori
 
@@ -28,16 +32,13 @@
     - xbrowsersync
     - grocy
 
-    - -arr services for metadata
-
     - matrix-conduit
         - matrix bridges
 
     - roundcube mail client
     - radicale
 
-    - photoview -> librephotos
-        - images in syncthing / seafile
+    - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
 
     - ttrss
     - home-assistant
