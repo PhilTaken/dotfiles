@@ -68,12 +68,14 @@ in
           "https://philtaken.cachix.org"
           "https://arm-rs.cachix.org"
           "https://cache.iog.io"
+          "https://hyprland.cachix.org"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
           "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
           "arm-rs.cachix.org-1:bgjtu4We0K2fhd7n2E5Dv136XeLk2yXZcrTrCguWsls="
           "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         ];
       };
       # set up automatic garbage collection
