@@ -29,44 +29,43 @@ rec {
         packages = with pkgs; [
           cacert
           coreutils
+          hicolor-icon-theme
           qt5.qtbase
           weather-icons
-          hicolor-icon-theme
 
-          anki
+          #magic-wormhole
           cachix
-
-          #element-desktop
-          gimp
           gping
           hyperfine
-          keepassxc
-          libreoffice
-          #magic-wormhole
-          #obsidian
-          signal-desktop
-          tdesktop
           texlive.combined.scheme-medium
           tokei
           vpnc
           wget
           youtube-dl
+
+          #obsidian
+          anki
+          element-desktop
+          gimp
+          keepassxc
+          libreoffice
+          signal-desktop
+          tdesktop
           zoom-us
         ] ++ (extraPackages pkgs) ++
         # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
         #discord
-        (if phil.wms.sway.enable or false then [
+        (if true then [
           (pkgs.writeShellApplication {
             name = "discord";
-            text = "${pkgs.discord}/bin/discord --use-gl=desktop";
+            text = "${pkgs.discord}/bin/discord --use-gl=desktop --disable-gpu-sandbox";
           })
           (pkgs.makeDesktopItem {
             name = "discord";
             exec = "discord";
             desktopName = "Discord";
           })
-        ]
-        else [ discord ]);
+        ] else [ discord ]);
       };
 
       programs.home-manager.enable = true;
