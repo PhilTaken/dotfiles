@@ -90,8 +90,7 @@ in
         displayManager = {
           gdm.enable = true;
           #gdm.wayland = false;
-          #defaultSession = mkIf (builtins.length cfg.managers > 0) session_map.${builtins.head cfg.managers};
-          #defaultSession = "none+Hyprland";
+          defaultSession = mkIf (builtins.length cfg.managers > 0) session_map.${builtins.head cfg.managers};
         };
 
         screenSection = mkIf (cfg.driver == "nvidia") ''
@@ -113,6 +112,7 @@ in
     # ----------------------
     # gnome
     services.gnome.chrome-gnome-shell.enable = (enabled "gnome");
+    services.gnome.gnome-keyring.enable = mkForce false;
     services.udev.packages = if (enabled "gnome") then [ pkgs.gnome3.gnome-settings-daemon ] else [ ];
     services.dbus.packages = if (enabled "gnome") then [ pkgs.dconf ] else [ ];
 
@@ -128,19 +128,44 @@ in
       };
 
 
+    environment.systemPackages = with pkgs; [
+      slurp
+    ];
+
     # https://wiki.hyprland.org/Nvidia/#how-to-get-hyprland-to-possibly-work-on-nvidia
     environment.variables = mkIf (cfg.driver == "nvidia") {
-      LIBVA_DRIVER_NAME = "nvidia";
-      CLUTTER_BACKEND = "wayland";
-      XDG_SESSION_TYPE = "wayland";
+      #LIBVA_DRIVER_NAME = "nvidia";
+      #CLUTTER_BACKEND = "wayland";
+      #XDG_SESSION_TYPE = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       MOZ_ENABLE_WAYLAND = "1";
-      GBM_BACKEND = "nvidia-drm";
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      #GBM_BACKEND = "nvidia-drm";
+      #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
       WLR_NO_HARDWARE_CURSORS = "1";
-      WLR_BACKEND = "vulkan";
-      QT_QPA_PLATFORM = "wayland";
-      GDK_BACKEND = "wayland";
+      #WLR_BACKEND = "vulkan";
+      #QT_QPA_PLATFORM = "wayland";
+      #GDK_BACKEND = "wayland";
+    };
+
+    xdg = {
+      portal = {
+        enable = true;
+        wlr = {
+          enable = true;
+          settings = {
+            screencast = {
+              #max_fps = 30;
+              chooser_type = "simple";
+              chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+            };
+          };
+        };
+        #gtkUsePortal = true;
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-wlr
+          #xdg-desktop-portal-gtk
+        ];
+      };
     };
   };
 }
