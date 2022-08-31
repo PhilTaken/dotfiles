@@ -31,6 +31,9 @@ opt.pumblend = 20
 -- enable mouse
 opt.mouse = "a"
 
+-- guifont for neovide
+opt.guifont = "Iosevka_comfy:h12"
+
 -- no folds pls
 opt.foldenable = false
 
