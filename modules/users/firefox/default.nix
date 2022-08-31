@@ -37,7 +37,7 @@ in
       home.packages = with pkgs; [
         nyxt
         firefox
-        google-chrome-dev
+        google-chrome
         #chromium
         ungoogled-chromium
       ];
