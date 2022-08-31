@@ -127,8 +127,18 @@ in
     home.packages = with pkgs; [
       visidata
       #neovim-remote
-      #(writeShellScriptBin "neovide-mg" "exec ${pkgs.neovide}/bin/neovide --multigrid")
-      #neovide
+
+      # https://github.com/neovide/neovide/issues/1280
+      # start neovide in xwayland for now
+      (pkgs.writeShellApplication {
+        name = "neovide";
+        text = "WINIT_UNIX_BACKEND=x11 ${pkgs.neovide}/bin/neovide --multigrid";
+      })
+      (pkgs.makeDesktopItem {
+        name = "Neovide";
+        exec = "neovide";
+        desktopName = "Neovide";
+      })
     ];
 
     xdg.configFile."nvim/init_.lua".source = ./init.lua;
