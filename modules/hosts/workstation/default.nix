@@ -46,10 +46,6 @@ in
     # qmk rules for flashing keebs
     services.udev.packages = with pkgs; [ qmk-udev-rules ];
 
-    # for mailspring
-    # https://github.com/NixOS/nixpkgs/issues/102637
-    services.gnome.gnome-keyring.enable = true;
-
     environment.systemPackages =
       let
         extensions = with pkgs.vscode-extensions; [
