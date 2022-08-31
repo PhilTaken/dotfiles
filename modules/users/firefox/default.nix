@@ -36,7 +36,10 @@ in
     (mkIf cfg.enable) {
       home.packages = with pkgs; [
         nyxt
-        google-chrome
+        firefox
+        google-chrome-dev
+        #chromium
+        ungoogled-chromium
       ];
 
       programs.firefox = {
