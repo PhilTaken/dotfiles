@@ -7,6 +7,9 @@
 - set up modules:
     - find working way to add Hyprland/sway to gdm session list (no show?)
 
+    - setup script 
+        - akin to https://github.com/cleverca22/nix-tests/blob/master/kexec/justdoit.nix
+
     - arm module (get rust running + spinning)
 
     - dashboard (homer)
