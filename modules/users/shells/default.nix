@@ -68,7 +68,7 @@ in
       lolcat
       lshw
       lsof
-      magic-wormhole
+      #magic-wormhole
       neofetch
       nmap
       procs

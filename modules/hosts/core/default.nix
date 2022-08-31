@@ -124,7 +124,7 @@ in
       cryptsetup
       hwinfo
       htop
-      magic-wormhole
+      #magic-wormhole
     ];
   };
 }
