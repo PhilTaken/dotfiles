@@ -111,10 +111,12 @@
             username = "maelstroem";
             userConfig = defaultConfig // {
               # de/wm config
-              wms.hyprland.enable = true;
+              #wms.hyprland.enable = true;
               #wms.i3.enable = true;
 
-              wms.bars.eww.enable = true;
+              des.gnome.enable = true;
+
+              #wms.bars.eww.enable = true;
               #wms.bars.eww.enableWayland = false;
 
               #wms.hyprland.enable = true;
@@ -126,6 +128,8 @@
               guitarix
               qjackctl
               jack2Full
+
+              slack-dark
 
               nur.repos.shados.tmm
               plover.dev
@@ -171,7 +175,7 @@
 
             video = {
               driver = "nvidia";
-              #managers = [ "gnome" ];
+              managers = [ "gnome" ];
             };
           };
         };
