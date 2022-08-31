@@ -2,7 +2,7 @@
 -- add all nvim plugins to runtimepath
 local sourced = false
 local uv = vim.loop
-local plugindir = "/home/nixos/Documents/personal/nvim_plugins/"
+local plugindir = "/home/maelstroem/Documents/syncthing/personal/programming/nvim_plugins/"
 local M = {}
 
 if not sourced then
