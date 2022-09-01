@@ -17,6 +17,20 @@ vim.cmd[[map gf :e <cfile><CR>]]
 -- terminals
 local toggleterm = require('toggleterm')
 local terms = require('custom.terminals')
+local diffview = require('diffview')
+
+local function visual_selection_range()
+  -- https://github.com/neovim/neovim/pull/13896#issuecomment-774680224
+  --local csrow = vim.api.nvim_buf_get_mark(0, "<")[1]
+  --local cerow = vim.api.nvim_buf_get_mark(0, ">")[1]
+  local csrow = vim.fn.getpos('v')[2]
+  local cerow = vim.api.nvim_win_get_cursor(0)[1]
+  if csrow <= cerow then
+    return { csrow, cerow }
+  else
+    return { cerow, csrow }
+  end
+end
 
 --------------
 -- MAPPINGS --
@@ -91,6 +105,14 @@ local leadern = {
                 c = { function() R('custom.tele').extensions.git_worktree.create_git_worktree() end, "create worktree branch" },
             },
         },
+        d = {
+            name = "+diffview";
+            o = { function() diffview.open() end, "Open Diffview" },
+            c = { function() diffview.close() end, "Close Diffview"},
+            h = { function() diffview.file_history() end, "Diffview History"},
+            f = { function() diffview.file_history(nil, "%") end, "Diffview File History"},
+        };
+
         p = {
             name = "+project",
             p = { function() R('custom.tele').extensions.project.project{} end, "Browse projects" },
@@ -112,6 +134,15 @@ local leadern = {
 -- visual mode mappings
 local leaderv = {
     ["<leader>"] = {
+        d = {
+            name = "+diffview";
+            h = { function()
+                local range = visual_selection_range()
+                vim.pretty_print(vim.inspect(range))
+                diffview.file_history(range)
+            end,
+            "Diffview file history" },
+        },
         r = {
             name = "+R",
             s = { "<Plug>RSendSelection", "Send visual selection" }
