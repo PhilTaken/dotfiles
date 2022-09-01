@@ -42,6 +42,18 @@ let
   ] ++ lib.optionals (system == "aarch64-linux") [
     "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    (self: super: {
+      slack  = super.slack.overrideAttrs (old: {
+        installPhase = old.installPhase + ''
+          rm $out/bin/slack
+
+          makeWrapper $out/lib/slack/slack $out/bin/slack \
+          --prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
+          --prefix PATH : ${lib.makeBinPath [pkgs.xdg-utils]} \
+          --add-flags "--enable-features=WebRTCPipeWireCapturer %U"
+        '';
+      });
+    })
   ];
 
   extraHMImports = [
