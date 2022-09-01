@@ -140,41 +140,6 @@ rec {
         shellGlobalAliases = {
           "%notif" = "&& notify-send 'done' || notify-send 'error'";
         };
-
-        shellAliases = rec {
-          sudo = "sudo ";
-          gre = "${pkgs.ripgrep}/bin/rg";
-          df = "df -h";
-          free = "${pkgs.procps}/bin/free -h";
-          exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
-          ll = exal;
-          exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
-          cat = "${pkgs.bat}/bin/bat";
-          ntop = "sudo ntop -u nobody";
-
-          top = "${pkgs.bottom}/bin/btm";
-          du = "${pkgs.du-dust}/bin/dust";
-          dmesg = "dmesg -H";
-
-          # c/c++ dev
-          bear = "${pkgs.bear}/bin/bear";
-        } // (lib.optionalAttrs inputs.config.wayland.windowManager.sway.enable {
-          sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
-        }) // (lib.optionalAttrs inputs.config.programs.git.enable {
-          # git
-          ga = "${pkgs.git}/bin/git add";
-          gc = "${pkgs.git}/bin/git commit";
-          gd = "${pkgs.git}/bin/git diff";
-          gr = "${pkgs.git}/bin/git reset";
-          grv = "${pkgs.git}/bin/git remote -v";
-          gl = "${pkgs.git}/bin/git pull";
-          gp = "${pkgs.git}/bin/git push";
-          glog = "${pkgs.git}/bin/git log";
-          gco = "${pkgs.git}/bin/git checkout";
-          gcm = "${pkgs.git}/bin/git checkout main";
-          flkup = "nix flake update --commit-lock-file";
-          lg = "${pkgs.lazygit}/bin/lazygit";
-        });
       };
   };
 }

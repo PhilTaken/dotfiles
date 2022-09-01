@@ -51,6 +51,37 @@ in
       _ZO_ECHO = 1;
     };
 
+    home.shellAliases = rec {
+      zj = "${pkgs.zellij}/bin/zellij";
+      gre = "${pkgs.ripgrep}/bin/rg";
+      cat = "${pkgs.bat}/bin/bat";
+      top = "${pkgs.bottom}/bin/btm";
+      du = "${pkgs.du-dust}/bin/dust";
+      free = "${pkgs.procps}/bin/free -h";
+      sudo = "sudo ";
+      df = "df -h";
+      exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
+      ll = exal;
+      exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
+      ntop = "sudo ntop -u nobody";
+      dmesg = "dmesg -H";
+    } // (lib.optionalAttrs inputs.config.wayland.windowManager.sway.enable {
+      sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
+    }) // (lib.optionalAttrs inputs.config.programs.git.enable {
+      ga = "${pkgs.git}/bin/git add";
+      gc = "${pkgs.git}/bin/git commit";
+      gd = "${pkgs.git}/bin/git diff";
+      gr = "${pkgs.git}/bin/git reset";
+      grv = "${pkgs.git}/bin/git remote -v";
+      gl = "${pkgs.git}/bin/git pull";
+      gp = "${pkgs.git}/bin/git push";
+      glog = "${pkgs.git}/bin/git log";
+      gco = "${pkgs.git}/bin/git checkout";
+      gcm = "${pkgs.git}/bin/git checkout main";
+      lg = "${pkgs.lazygit}/bin/lazygit";
+      flkup = "nix flake update --commit-lock-file";
+    });
+
     home.packages = with pkgs; [
       cmake
       comma
@@ -96,6 +127,7 @@ in
     programs = {
       htop.enable = true;
       bat.enable = true;
+      noti.enable = true;
 
       nix-index = {
         enable = true;
