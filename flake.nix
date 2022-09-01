@@ -129,7 +129,7 @@
               qjackctl
               jack2Full
 
-              slack-dark
+              slack
 
               nur.repos.shados.tmm
               plover.dev
