@@ -134,6 +134,7 @@ in
 
     # https://wiki.hyprland.org/Nvidia/#how-to-get-hyprland-to-possibly-work-on-nvidia
     environment.variables = mkIf (cfg.driver == "nvidia") {
+      NIXOS_OZONE_WL = "1";
       #LIBVA_DRIVER_NAME = "nvidia";
       #CLUTTER_BACKEND = "wayland";
       #XDG_SESSION_TYPE = "wayland";
