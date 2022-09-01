@@ -1,6 +1,12 @@
 -- nvim_lsp object
 local lsp = require'lspconfig'
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local cpb = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require('cmp_nvim_lsp').update_capabilities(cpb)
+
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
 
 -- set pythonpath (set to nil if no python in current env)
 pcall(function() Pythonpath = io.popen('which python 2>/dev/null'):read() end)
@@ -14,7 +20,7 @@ local signature_setup = {
             handler_opts = {
                 border = "single"
             },
-            use_lspsage = true,
+            --use_lspsage = true,
         })
     end,
 }
@@ -39,22 +45,22 @@ lsp.fortls.setup(custom_setup{
 })
 
 lsp.sumneko_lua.setup(custom_setup{
-    cmd = { "lua-language-server" },
     settings = {
         Lua = {
             runtime = {
                 version = 'LuaJIT',
-                path = vim.split(package.path, ';'),
+                --path = vim.split(package.path, ';'),
             },
             diagnostics = {
                 globals = {'vim'},
             },
             workspace = {
-                library = {
-                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                },
+                library = vim.api.nvim_get_runtime_file("", true),
             },
+
+            telemetry = {
+                enable = false,
+            }
         },
     },
 })
@@ -109,4 +115,3 @@ lsp.erlangls.setup(signature_setup)
 lsp.r_language_server.setup(signature_setup)
 lsp.clojure_lsp.setup(signature_setup)
 lsp.hls.setup(signature_setup)
-

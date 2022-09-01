@@ -132,7 +132,8 @@ require('packer').startup{
                 require("indent_blankline").setup {
                     buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
                     filetype_exclude = { "startify", "dashboard", "man" },
-                    show_current_context = true,
+                    show_current_context_start = true,
+                    use_treesitter = true
                 }
             end
         }
@@ -303,8 +304,13 @@ require('packer').startup{
                 'neovim/nvim-lspconfig',
                 config = function()
                     require('custom.lsp')
+                    require('ufo').setup()
                 end,
                 requires = {
+                    {
+                        'kevinhwang91/nvim-ufo',
+                        requires = 'kevinhwang91/promise-async'
+                    },
                     "hrsh7th/cmp-nvim-lsp",
                     {
                         'onsails/lspkind-nvim',

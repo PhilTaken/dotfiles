@@ -23,6 +23,13 @@ o.laststatus = 3
 -- dont show the mode in the last line, have a status line for that
 o.showmode = false
 
+-- folds
+--o.foldmethod = "syntax"
+o.foldcolumn = 0 -- 'auto:1'
+o.foldlevel = 99
+o.foldlevelstart = 99
+o.foldenable = true
+
 opt.termguicolors = true
 
 -- popup menu opacity
