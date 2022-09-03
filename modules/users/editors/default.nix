@@ -4,5 +4,6 @@
   imports = [
     ./neovim
     ./spacemacs
+    ./helix
   ];
 }
