@@ -9,10 +9,7 @@
     polymc.url = "github:PolyMC/PolyMC";
 
     # NUR
-    nur-src = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nur-src.url = "github:nix-community/NUR";
 
     # local user package managment
     home-manager = {
@@ -130,6 +127,7 @@
               jack2Full
 
               slack
+              fractal
 
               nur.repos.shados.tmm
               plover.dev
