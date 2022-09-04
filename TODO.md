@@ -5,20 +5,23 @@
 ## general issues
 
 - set up modules:
-    - find working way to add Hyprland/sway to gdm session list (no show?)
+    - arm module (get rust running + spinning)
 
     - setup script 
         - akin to https://github.com/cleverca22/nix-tests/blob/master/kexec/justdoit.nix
 
-    - arm module (get rust running + spinning)
+    - torrenting container
+    - -arr services for metadata
+    - backup (important) syncthing folders to b2
+        - rclone / borg
+
+    - find way to add Hyprland/sway to gdm session list (no show?)
 
     - dashboard (homer)
         - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
         - https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md
 
     - navidrome music streaming
-    - torrenting container
-    - -arr services for metadata
 
     - photoview -> librephotos
         - images in syncthing / seafile
@@ -27,9 +30,6 @@
 
     - hydra module
         - ci/cd with hydra webhooks from gitea
-
-    - backup (important) syncthing folders to b2
-        - rclone / borg
 
     - xmonad (wip)
     - xbrowsersync
@@ -44,7 +44,6 @@
     - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
 
     - ttrss
-    - home-assistant
     - iris/mopidy (https://github.com/mopidy/mopidy-spotify/issues/110)
 
     - bspwm/awesomewm/river/hyprland
@@ -53,7 +52,6 @@
     - snapcast server/clients
     - pleroma
     - shiori bookmark manager
-    - xbrowsersync (just stick with floccus for now?)
 
 - work on eww bar config
     - workspaces
@@ -92,13 +90,12 @@
 
 ### todo
 
+- reload wip plugin files (plenary on special runtimepath match?)
 - window navigation
 - work with builtin `makeprg`
-- marks workflow
-- quickfix list
-- lsp definition/implementation
-- scroll doc windows
+- lsp implementation
 - diffviewopen telescope integration
+- marks workflow
 
 ### ideas
 
