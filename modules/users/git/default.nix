@@ -51,6 +51,9 @@ in
 
     programs.git = {
       enable = true;
+      ignores = [
+        "tags"
+      ];
       lfs.enable = true;
       delta = {
         enable = true;
