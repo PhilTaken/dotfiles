@@ -64,7 +64,7 @@ in
       enable = true;
 
       settings = {
-        theme = "onedark";
+        theme = "catppuccin_mocha";
 
         editor = {
           line-number = "relative";
