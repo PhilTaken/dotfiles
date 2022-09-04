@@ -93,6 +93,8 @@ in
 
         #skrooge
         #waydroid
+
+        deploy-rs.deploy-rs
       ];
   };
 }
