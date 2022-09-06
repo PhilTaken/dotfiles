@@ -166,7 +166,7 @@ rec {
           bind=SUPERSHIFT,3,movetoworkspace,3
           bind=SUPERSHIFT,4,movetoworkspace,4
           bind=SUPERSHIFT,5,movetoworkspace,5
-          #bind=SUPERSHIFT,6,movetoworkspace,6
+          bind=SUPERSHIFT,6,movetoworkspace,6
           bind=SUPERSHIFT,7,movetoworkspace,7
           bind=SUPERSHIFT,8,movetoworkspace,8
           bind=SUPERSHIFT,9,movetoworkspace,9
