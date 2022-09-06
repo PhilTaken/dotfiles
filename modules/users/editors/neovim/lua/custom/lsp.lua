@@ -14,14 +14,13 @@ pcall(function() Pythonpath = io.popen('which python 2>/dev/null'):read() end)
 -- signature help
 local signature_setup = {
     capabilities = capabilities,
-    on_attach = function(_, _)
+    on_attach = function(_, bufnr)
         require'lsp_signature'.on_attach({
             bind = true,
             handler_opts = {
                 border = "single"
             },
-            --use_lspsage = true,
-        })
+        }, bufnr)
     end,
 }
 
@@ -44,23 +43,27 @@ lsp.fortls.setup(custom_setup{
     root_dir = lsp.util.root_pattern('.git'),
 })
 
-lsp.sumneko_lua.setup(custom_setup{
+--lsp.sumneko_lua.setup(custom_setup{
+lsp.sumneko_lua.setup({
+    on_attach = signature_setup.on_attach,
     settings = {
         Lua = {
             runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                 version = 'LuaJIT',
-                --path = vim.split(package.path, ';'),
             },
             diagnostics = {
+                -- Get the language server to recognize the `vim` global
                 globals = {'vim'},
             },
             workspace = {
+                -- Make the server aware of Neovim runtime files
                 library = vim.api.nvim_get_runtime_file("", true),
             },
-
+            -- Do not send telemetry data containing a randomized but unique identifier
             telemetry = {
                 enable = false,
-            }
+            },
         },
     },
 })
