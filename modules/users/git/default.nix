@@ -53,6 +53,7 @@ in
       enable = true;
       ignores = [
         "tags"
+        "result"
       ];
       lfs.enable = true;
       delta = {
