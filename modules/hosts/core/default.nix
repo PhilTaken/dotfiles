@@ -45,6 +45,7 @@ in
         experimental-features = nix-command flakes
         min-free = ${toString (100 * 1024 * 1024)}
         max-free = ${toString (1024 * 1024 * 1024)}
+        tarball-ttl = ${toString (7 * 24 * 60 * 60)}
       '';
 
       # TODO add my own registry
@@ -69,6 +70,8 @@ in
           "https://arm-rs.cachix.org"
           "https://cache.iog.io"
           "https://hyprland.cachix.org"
+          "s3://serokell-private-nix-cache?endpoint=s3.us-west-000.backblazeb2.com&profile=serokell-private-nix-cache"
+          "s3://serokell-private-cache?endpoint=s3.eu-central-1.wasabisys.com&profile=serokell-private-cache"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
@@ -76,6 +79,7 @@ in
           "arm-rs.cachix.org-1:bgjtu4We0K2fhd7n2E5Dv136XeLk2yXZcrTrCguWsls="
           "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+          "serokell-1:aIojg2Vxgv7MkzPJoftOO/I8HKX622sT+c0fjnZBLj0="
         ];
       };
       # set up automatic garbage collection

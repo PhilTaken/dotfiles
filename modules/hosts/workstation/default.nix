@@ -35,6 +35,15 @@ in
 
     hardware.opengl.enable = true;
 
+    # serokell binary cache secrets
+    sops.secrets = {
+      aws-credentials = {
+        sopsFile = ../../../sops + "/serokell.yaml";
+        path = "/root/.aws/credentials";
+        owner = config.users.users."maelstroem".name;
+      };
+    };
+
     # antivir daemon
     #services.clamav = {
     #daemon.enable = true;
