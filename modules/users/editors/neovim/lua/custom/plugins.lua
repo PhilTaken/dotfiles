@@ -83,6 +83,7 @@ require('packer').startup{
         -- start menu
         use {
             'goolord/alpha-nvim',
+            requires = { 'kyazdani42/nvim-web-devicons' },
             config = function()
                 require'alpha'.setup(require'alpha.themes.startify'.opts)
             end
@@ -106,13 +107,6 @@ require('packer').startup{
             end
         }
 
-        -- buffers visible above in a bar
-        --use {
-            --'romgrk/barbar.nvim',
-            --requires = { 'kyazdani42/nvim-web-devicons' },
-            --event = "BufRead",
-        --}
-
         -- colorize color codes (e.g. #f2f34f)
         use {
             'norcalli/nvim-colorizer.lua',
@@ -125,9 +119,6 @@ require('packer').startup{
         -- add visible indent aid
         use {
             "lukas-reineke/indent-blankline.nvim",
-            --requires = {
-                --'nvim-treesitter/nvim-treesitter',
-            --},
             config = function()
                 require("indent_blankline").setup {
                     buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
@@ -165,42 +156,6 @@ require('packer').startup{
                 g.pear_tree_map_special_keys = 0
                 g.pear_tree_ft_disabled = { 'TelescopePrompt', 'nofile', 'terminal' }
             end
-        }
-
-        -- show function arguments - floating!
-        use {
-            {
-                "ray-x/lsp_signature.nvim"
-            },
-            {
-                'Shougo/echodoc.vim',
-                config = function()
-                    local cmd = vim.cmd
-                    cmd[[let g:echodoc#enable_at_startup = 1]]
-                    cmd[[let g:echodoc#type = 'floating']]
-                end
-            },
-            {
-                'ncm2/float-preview.nvim',
-                config = function()
-                    vim.cmd[[let g:float_preview#docked = 1]]
-                end,
-                event = "InsertEnter"
-            },
-
-            {
-                "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-                config = function()
-                    require("lsp_lines").setup()
-                    vim.diagnostic.config({
-                        virtual_text = false,
-                        virtual_lines = {
-                            only_current_line = true
-                        }
-                    })
-                end,
-                event = 'InsertEnter'
-            }
         }
 
         -- telescope
@@ -275,27 +230,8 @@ require('packer').startup{
             config = function()
                 require'custom.statusline'
             end,
-            requires = {'kyazdani42/nvim-web-devicons', opt = true},
+            requires = 'kyazdani42/nvim-web-devicons',
             event = "BufEnter",
-        }
-
-        -- mark specific comments for
-        --use {
-            --"folke/todo-comments.nvim",
-            --requires = "nvim-lua/plenary.nvim",
-            --config = function()
-                --require("todo-comments").setup{}
-            --end
-        --}
-
-        -- fancy syntax hl for md files
-        use {
-            'vim-pandoc/vim-pandoc',
-            requires = 'vim-pandoc/vim-pandoc-syntax',
-            config = function()
-                vim.cmd[[let g:pandoc#spell#enabled = 0]]
-            end,
-            ft = { "markdown", "pandoc" },
         }
 
         -- config for the builtin language server
@@ -306,13 +242,47 @@ require('packer').startup{
                     require('custom.lsp')
                     -- https://github.com/kevinhwang91/nvim-ufo#customize-fold-text
                     require('ufo').setup()
+                    -- TODO: move lsp signature setup here?
+                    --require('lsp_signature').setup({ })
                 end,
                 requires = {
+                    {
+                        'Shougo/echodoc.vim',
+                        config = function()
+                            local cmd = vim.cmd
+                            cmd[[let g:echodoc#enable_at_startup = 1]]
+                            cmd[[let g:echodoc#type = 'floating']]
+                        end
+                    },
+                    {
+                        'ncm2/float-preview.nvim',
+                        config = function()
+                            vim.cmd[[let g:float_preview#docked = 1]]
+                        end,
+                        event = "InsertEnter"
+                    },
+
+                    {
+                        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+                        config = function()
+                            require("lsp_lines").setup()
+                            vim.diagnostic.config({
+                                virtual_text = false,
+                                virtual_lines = {
+                                    only_current_line = true
+                                }
+                            })
+                        end,
+                        event = 'InsertEnter'
+                    },
                     {
                         'kevinhwang91/nvim-ufo',
                         requires = 'kevinhwang91/promise-async'
                     },
                     "hrsh7th/cmp-nvim-lsp",
+                    {
+                        "ray-x/lsp_signature.nvim"
+                    },
                     {
                         'onsails/lspkind-nvim',
                         config = function()
@@ -443,6 +413,14 @@ require('packer').startup{
             },
             {
                 'elkowar/yuck.vim',
+            },
+            {
+                'vim-pandoc/vim-pandoc',
+                requires = 'vim-pandoc/vim-pandoc-syntax',
+                config = function()
+                    vim.cmd[[let g:pandoc#spell#enabled = 0]]
+                end,
+                ft = { "markdown", "pandoc" },
             }
         }
 
@@ -452,21 +430,14 @@ require('packer').startup{
             event = "BufEnter"
         }
 
+        -- git util
         use {
             {
                 'lewis6991/gitsigns.nvim',
-                requires = { 'nvim-lua/plenary.nvim' },
+                requires = 'nvim-lua/plenary.nvim',
                 --tag = 'v0.2',
                 config = function()
-                    require('gitsigns').setup {
-                        signs = {
-                            add          = {hl = 'GitGutterAdd'   , text = '+'},
-                            change       = {hl = 'GitGutterChange', text = '~'},
-                            delete       = {hl = 'GitGutterDelete', text = '_'},
-                            topdelete    = {hl = 'GitGutterDelete', text = '‾'},
-                            changedelete = {hl = 'GitGutterChange', text = '~'},
-                        }
-                    }
+                    require('gitsigns').setup {}
                 end,
                 event = "BufEnter"
             },
@@ -482,6 +453,7 @@ require('packer').startup{
         -- extra icons for completion
         -- manage surrounds e.g. quotation marks, html tags, ...
         use {
+            -- TODO: surrond.nvim
             'tpope/vim-surround',
             event = "BufRead",
             requires = {
@@ -568,9 +540,7 @@ require('packer').startup{
             'kyazdani42/nvim-tree.lua',
             requires = 'kyazdani42/nvim-web-devicons',
             config = function()
-                require'nvim-tree'.setup {
-                    auto_close = true,
-                }
+                require'nvim-tree'.setup { }
             end,
             cmd = "NvimTreeToggle",
         }
