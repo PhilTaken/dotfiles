@@ -107,11 +107,11 @@ require('packer').startup{
         }
 
         -- buffers visible above in a bar
-        use {
-            'romgrk/barbar.nvim',
-            requires = { 'kyazdani42/nvim-web-devicons' },
-            event = "BufRead",
-        }
+        --use {
+            --'romgrk/barbar.nvim',
+            --requires = { 'kyazdani42/nvim-web-devicons' },
+            --event = "BufRead",
+        --}
 
         -- colorize color codes (e.g. #f2f34f)
         use {
@@ -456,7 +456,7 @@ require('packer').startup{
             {
                 'lewis6991/gitsigns.nvim',
                 requires = { 'nvim-lua/plenary.nvim' },
-                tag = 'v0.2',
+                --tag = 'v0.2',
                 config = function()
                     require('gitsigns').setup {
                         signs = {

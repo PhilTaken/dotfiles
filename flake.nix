@@ -37,6 +37,7 @@
 
     neovim-nightly = {
       url = "github:neovim/neovim?dir=contrib";
+      #url = "github:andersevenrud/neovim?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -108,7 +109,7 @@
             username = "maelstroem";
             userConfig = defaultConfig // {
               # de/wm config
-              #wms.hyprland.enable = true;
+              wms.hyprland.enable = true;
               #wms.i3.enable = true;
 
               des.gnome.enable = true;

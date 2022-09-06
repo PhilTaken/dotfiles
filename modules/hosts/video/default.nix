@@ -88,7 +88,7 @@ in
         videoDrivers = if (cfg.driver != null) then [ cfg.driver ] else [ ];
 
         displayManager = {
-          gdm.enable = true;
+          sddm.enable = true;
           #gdm.wayland = false;
           defaultSession = mkIf (builtins.length cfg.managers > 0) session_map.${builtins.head cfg.managers};
         };
