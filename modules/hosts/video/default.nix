@@ -79,7 +79,7 @@ in
       let
         enable = cfg.managers != [ ];
       in
-      {
+      mkIf enable {
         inherit enable;
         layout = "us";
         xkbVariant = "intl,workman-intl";
@@ -89,8 +89,7 @@ in
 
         displayManager = {
           sddm.enable = true;
-          #gdm.wayland = false;
-          defaultSession = mkIf (builtins.length cfg.managers > 0) session_map.${builtins.head cfg.managers};
+          defaultSession = session_map.${builtins.head cfg.managers};
         };
 
         screenSection = mkIf (cfg.driver == "nvidia") ''
