@@ -186,7 +186,7 @@ rec {
           exec-once=${pkgs.swaybg}/bin/swaybg -i ${cfg.background_image}
           exec-once=${barcommand}
         '';
-    };
+      };
 
 
     # TODO: move someplace else

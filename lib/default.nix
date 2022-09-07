@@ -43,7 +43,7 @@ let
     "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     (self: super: {
-      slack  = super.slack.overrideAttrs (old: {
+      slack = super.slack.overrideAttrs (old: {
         installPhase = old.installPhase + ''
           rm $out/bin/slack
 
