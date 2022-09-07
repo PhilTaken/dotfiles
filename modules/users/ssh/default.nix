@@ -26,35 +26,21 @@ in
       enable = true;
       matchBlocks = rec {
         # work
-        "jureca" = {
-          hostname = "jureca.fz-juelich.de";
-          user = "herzog1";
+        "*.aquarius.serokell.team" = {
+          user = "maelstroem";
+          port = 17788;
         };
-        "jurecat" = {
-          inherit (jureca) hostname user;
-          extraOptions = {
-            "RequestTTY" = "yes";
-            "RemoteCommand" = "tmux attach || tmux new";
-          };
+        "albali" = {
+          extraOptions."CanonicalizeHostname" = "yes";
+          hostname = "albali.aquarius.serokell.team";
         };
-        "judac" = {
-          hostname = "judac.fz-juelich.de";
-          user = "herzog1";
+        "skat" = {
+          extraOptions."CanonicalizeHostname" = "yes";
+          hostname = "skat.aquarius.serokell.team";
         };
-        "vulkan" = {
-          hostname = "iek8691.iek.kfa-juelich.de";
-          user = "p.herzog";
-          forwardX11 = true;
-        };
-        "juceda" = {
-          hostname = "icg2019.icg.kfa-juelich.de";
-          user = "herzog";
-          extraOptions = {
-            "HostkeyAlgorithms" = "+ssh-rsa";
-            "PubkeyAcceptedAlgorithms" = "+ssh-rsa";
-            "ServerAliveInterval" = "20";
-            "TCPKeepAlive" = "no";
-          };
+        "bunda" = {
+          extraOptions."CanonicalizeHostname" = "yes";
+          hostname = "bunda.aquarius.serokell.team";
         };
 
         # home
@@ -72,7 +58,6 @@ in
         };
 
         # yggdrasil
-
         "alpha" = {
           hostname = "10.200.0.1";
           user = "nixos";
@@ -88,12 +73,10 @@ in
 
 
         # remote vps
-
         "vps2" = {
           hostname = "185.212.44.199";
           user = "nixos";
         };
-
         "alphadirect" = {
           hostname = "148.251.102.93";
           user = "nixos";
