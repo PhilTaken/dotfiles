@@ -205,7 +205,7 @@
       # shortcut for building images
       packages."${system}" = {
         x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
-        beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
+        #beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
       };
 
       # deploy config

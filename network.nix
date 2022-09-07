@@ -44,7 +44,7 @@
     ];
 
     # raspberry pi @ home
-    beta = [ ];
+    #beta = [ ];
 
     # mini nas @ home
     delta = [
