@@ -96,7 +96,7 @@
               #wms.sway.enable = true;
               #wms.bars.waybar.enable = true;
 
-              wms.bars.eww.enable = true;
+              #wms.bars.eww.enable = true;
               #wms.bars.eww.autostart = false;
             };
 
@@ -116,7 +116,7 @@
 
               des.gnome.enable = true;
 
-              wms.bars.eww.enable = true;
+              #wms.bars.eww.enable = true;
               #wms.bars.eww.enableWayland = false;
 
               #wms.hyprland.enable = true;
