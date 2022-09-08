@@ -4,8 +4,8 @@
 
 - nvim highlight for folds
 - nvim heirline, other plugins (see tabstash)
-    - include clock?
-        - stabilize eww
+- eww workspaces
+     
 
 ## general issues
 
