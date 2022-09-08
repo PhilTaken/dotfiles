@@ -23,6 +23,9 @@ o.laststatus = 3
 -- dont show the mode in the last line, have a status line for that
 o.showmode = false
 
+-- show path to file above buffer
+o.winbar = "%f"
+
 -- folds
 --o.foldmethod = "syntax"
 --o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
