@@ -3,6 +3,9 @@
 - fix loki: unknown variant `loki`, expected `unit_test` for key `sinks.loki`
 
 - nvim highlight for folds
+- nvim heirline, other plugins (see tabstash)
+    - include clock?
+        - stabilize eww
 
 ## general issues
 
