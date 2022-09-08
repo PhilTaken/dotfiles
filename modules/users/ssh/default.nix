@@ -27,6 +27,7 @@ in
       matchBlocks = rec {
         # work
         "*.aquarius.serokell.team" = {
+          extraOptions."AddressFamily" = "inet";
           user = "maelstroem";
           port = 17788;
         };
