@@ -14,10 +14,13 @@ end
 -- Only required if you have packer in your `opt` pack
 vim.cmd [[packadd packer.nvim]]
 
-local use = require('packer').use
+require("packer").init {
+	auto_reload_compiled = true
+}
+
 require('packer').startup{
     compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua',
-    function()
+    function(use)
         -- pack packer
         use {
             'wbthomason/packer.nvim',
@@ -50,25 +53,37 @@ require('packer').startup{
         use {
             {
                 'catppuccin/nvim',
+                as = "catppuccin",
+                run = ":CatppuccinCompile",
                 config = function()
                     local catppuccin = require('catppuccin')
                     catppuccin.setup{
                         transparent_background = false,
                         term_colors = true,
+                        compile = {
+                            enable = true,
+                        },
+                        dim_inactive = {
+                            enabled = true,
+                            percentage = 0.05,
+                        },
                         --colorscheme = "dark_catppuccino",
                         integrations = {
-                            lsp_saga = true,
+                            --lsp_saga = true,
+                            markdown = true,
                             gitsigns = true,
                             telescope = true,
                             which_key = true,
-                            nvimtree = {
-                                enabled = true,
-                            },
+                            nvimtree = true,
+                            cmp = true,
+                            treesitter = true,
+
                             indent_blankline = {
                                 enabled = true,
-                                colored_indent_levels = true,
                             },
-                            barbar = true,
+                            native_lsp = {
+                                enabled = true,
+                            },
                         },
                     }
                     vim.g.catppuccin_flavour = "mocha"

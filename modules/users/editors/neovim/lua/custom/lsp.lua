@@ -108,13 +108,17 @@ lsp.pylsp.setup(custom_setup{
 })
 
 --lsp.pyright.setup(signature_setup)
+local other_lsps = {
+    'ccls',
+    'rnix',
+    'texlab',
+    'tsserver',
+    'erlangls',
+    'r_language_server',
+    'clojure_lsp',
+    'hls'
+}
 
-lsp.ccls.setup(signature_setup) -- c/cpp
-lsp.rnix.setup(signature_setup) -- nix
-lsp.texlab.setup(signature_setup)
-lsp.tsserver.setup(signature_setup)
-lsp.erlangls.setup(signature_setup)
-
-lsp.r_language_server.setup(signature_setup)
-lsp.clojure_lsp.setup(signature_setup)
-lsp.hls.setup(signature_setup)
+for _, ls in ipairs(other_lsps) do
+    require('lspconfig')[ls].setup(signature_setup)
+end
