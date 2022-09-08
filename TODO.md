@@ -2,6 +2,8 @@
 
 - fix loki: unknown variant `loki`, expected `unit_test` for key `sinks.loki`
 
+- nvim highlight for folds
+
 ## general issues
 
 - set up modules:
