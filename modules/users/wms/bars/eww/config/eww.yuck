@@ -210,7 +210,7 @@
     :height "100%"
     :anchor "left center"
     :width "47px")
-  :monitor 0
+  :monitor 1
   :reserve (struts :distance "35px" :side "left")
   :wm-ignore false
   :stacking "bt"
