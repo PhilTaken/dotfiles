@@ -85,15 +85,16 @@
     "eww-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1662315613,
-        "narHash": "sha256-wzgWx3QxZvCAzRKLFmo/ru8hsIQsEDNeb4cPdlEyLxE=",
+        "lastModified": 1662300997,
+        "narHash": "sha256-OaKhvcKS+mqGIQmpd0oZeLtdnIjLOJsL4tb1Utcj4uo=",
         "owner": "elkowar",
         "repo": "eww",
-        "rev": "d58d91de78d2b9984a1bbb8314be197bc0e283dc",
+        "rev": "7623e7e692042f4da8525bb1e4ef140831fcdb6a",
         "type": "github"
       },
       "original": {
         "owner": "elkowar",
+        "ref": "7623e7e692042f4da8525bb1e4ef140831fcdb6a",
         "repo": "eww",
         "type": "github"
       }

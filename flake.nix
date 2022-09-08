@@ -2,6 +2,7 @@
   inputs = {
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -11,9 +12,12 @@
     # NUR
     nur-src.url = "github:nix-community/NUR";
 
+    # eww bar
+    eww-git.url = "github:elkowar/eww?ref=7623e7e692042f4da8525bb1e4ef140831fcdb6a";
+
     # local user package managment
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager?ref=5bd66dc6cd967033489c69d486402b75d338eeb6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -61,10 +65,6 @@
       flake = false;
     };
 
-    eww-src = {
-      url = "github:elkowar/eww";
-      flake = false;
-    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -108,13 +108,15 @@
           maelstroem = util.user.mkConfig {
             username = "maelstroem";
             userConfig = defaultConfig // {
+              work.enable = true;
+
               # de/wm config
               wms.hyprland.enable = true;
               #wms.i3.enable = true;
 
               des.gnome.enable = true;
 
-              #wms.bars.eww.enable = true;
+              wms.bars.eww.enable = true;
               #wms.bars.eww.enableWayland = false;
 
               #wms.hyprland.enable = true;
