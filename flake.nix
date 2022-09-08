@@ -13,7 +13,8 @@
     nur-src.url = "github:nix-community/NUR";
 
     # eww bar
-    eww-git.url = "github:elkowar/eww?ref=7623e7e692042f4da8525bb1e4ef140831fcdb6a";
+    #eww-git.url = "github:elkowar/eww?ref=7623e7e692042f4da8525bb1e4ef140831fcdb6a";
+    eww-git.url = "github:PhilTaken/eww?ref=7837576ee0d2b5ba93b7c9bace0a66338897f5ef";
 
     # local user package managment
     home-manager = {
@@ -96,7 +97,7 @@
               #wms.sway.enable = true;
               #wms.bars.waybar.enable = true;
 
-              #wms.bars.eww.enable = true;
+              wms.bars.eww.enable = true;
               #wms.bars.eww.autostart = false;
             };
 
@@ -116,7 +117,7 @@
 
               des.gnome.enable = true;
 
-              #wms.bars.eww.enable = true;
+              wms.bars.eww.enable = true;
               #wms.bars.eww.enableWayland = false;
 
               #wms.hyprland.enable = true;
