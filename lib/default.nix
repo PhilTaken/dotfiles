@@ -12,7 +12,6 @@ let
     (import ../custom_pkgs)
     (import ../overlays/gopass-rofi.nix { inherit inputs; })
     (import ../overlays/rofi-overlay.nix { inherit inputs; })
-    (import ../overlays/eww.nix { inherit inputs; })
     inputs.nur-src.overlay
     inputs.devshell.overlay
     inputs.sops-nix-src.overlay
@@ -22,6 +21,7 @@ let
     inputs.arm-rs.overlays.default
     inputs.hyprland.overlays.default
     inputs.zellij.overlays.default
+    inputs.eww-git.overlays.default
     (final: super: {
       makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
 

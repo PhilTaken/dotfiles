@@ -39,7 +39,8 @@ in
     sops.secrets = {
       aws-credentials = {
         sopsFile = ../../../sops + "/serokell.yaml";
-        path = "/root/.aws/credentials";
+        #path = "/root/.aws/credentials";
+        mode = "600";
         owner = config.users.users."maelstroem".name;
       };
     };

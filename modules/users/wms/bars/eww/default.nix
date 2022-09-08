@@ -7,7 +7,7 @@ with lib;
 
 let
   cfg = config.phil.wms.bars.eww;
-  package = if cfg.enableWayland then pkgs.eww-git-wayland else pkgs.eww-git;
+  package = if cfg.enableWayland then pkgs.eww-wayland else pkgs.eww;
 in
 {
   options.phil.wms.bars.eww = {

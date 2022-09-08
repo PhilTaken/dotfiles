@@ -78,8 +78,7 @@ in
     services.xserver =
       let
         enable = cfg.managers != [ ];
-      in
-      mkIf enable {
+      in {
         inherit enable;
         layout = "us";
         xkbVariant = "intl,workman-intl";
@@ -88,7 +87,7 @@ in
         videoDrivers = if (cfg.driver != null) then [ cfg.driver ] else [ ];
 
         displayManager = {
-          sddm.enable = true;
+          sddm.enable = enable;
           defaultSession = session_map.${builtins.head cfg.managers};
         };
 
