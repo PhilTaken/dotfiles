@@ -65,7 +65,7 @@ rec {
   inherit pkgs;
 
   user = import ./user.nix { inherit pkgs home-manager lib system overlays extraHMImports; };
-  host = import ./host.nix { inherit system pkgs home-manager lib user extramodules nixpkgs; };
+  host = import ./host.nix { inherit system pkgs home-manager lib user extramodules nixpkgs inputs; };
   server = import ./server.nix { inherit pkgs host lib; };
   shells = import ./shells.nix { inherit pkgs; };
   iso = import ./iso.nix { inherit pkgs nixpkgs lib system; };

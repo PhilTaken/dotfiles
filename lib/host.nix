@@ -4,6 +4,7 @@
 , user
 , extramodules ? [ ]
 , nixpkgs
+, inputs
 , ...
 }:
 with builtins;
@@ -53,6 +54,8 @@ rec {
           sops.defaultSopsFile = ../sops/sops.yaml;
           sops.age.keyFile = "/var/lib/sops-nix/key.txt";
           sops.age.generateKey = true;
+
+          system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
         }
       ] ++ extramodules ++ hmConfigs ++ extraHostModules;
     };
