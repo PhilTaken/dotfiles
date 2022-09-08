@@ -104,7 +104,7 @@
 
 - zrythm 
     - https://www.zrythm.org/en/index.html
-- https://github.com/extrawurst/gitui vs lazygit
+- https://github.com/extrawurst/gitui vs lazygit => diffview
 - sk(im) sorter for telescope?
 - plugins
     - symbol outlines (lsp)
@@ -117,6 +117,7 @@
         - tjdevries video
     - run scripts
         - https://github.com/stevearc/overseer.nvim
+    - navic
 
 ## general Ideas
 
