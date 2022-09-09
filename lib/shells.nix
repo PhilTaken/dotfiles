@@ -8,7 +8,21 @@ let
 
     sops-import-keys-hook
     ssh-to-age
+    nvd
   ];
+
+  mkSystemScript = commands: ''
+    if [[ -z "$@" || "$1" == "help" ]]; then
+      eval configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.nixosConfigurations)) ++ [")"]))')
+
+      echo -e "Available configs:"
+      for i in ''${configurations[@]}; do
+        echo -e "  - $i"
+      done
+    else
+      ${commands}
+    fi
+  '';
 in
 {
   legacyShell = pkgs.mkShell {
@@ -64,19 +78,20 @@ in
         }
 
         {
+          name = "cbuild";
+          help = "Build and compare a NixOS Configuration (local)";
+          command = mkSystemScript ''
+            nixos-rebuild --use-remote-sudo --flake ".#$1" build ''${@:2}
+            ${pkgs.nvd}/bin/nvd diff /run/current-system result
+          '';
+          category = "system";
+        }
+
+        {
           name = "cswitch";
           help = "Switch to a NixOS Configuration (local)";
-          command = ''
-            if [[ -z "$@" || "$1" == "help" ]]; then
-              eval configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.nixosConfigurations)) ++ [")"]))')
-
-              echo -e "Available configs:"
-              for i in ''${configurations[@]}; do
-                echo -e "  - $i"
-              done
-            else
-              nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2}
-            fi
+          command = mkSystemScript ''
+            nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2}
           '';
           category = "system";
         }
