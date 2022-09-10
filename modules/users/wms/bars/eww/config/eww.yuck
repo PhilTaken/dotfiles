@@ -9,20 +9,20 @@
 (defvar eww "@eww@")
 (defvar brightnessctl "@brightnessctl@")
 (defvar date "@date@")
-(defvar reload-wm "@reload_wm@")
+(defvar reload-wm '@reload_wm@')
 (defvar quit-wm "@quit_wm@")
-(defvar lock-wm "@lock_wm@")
+(defvar lock-wm "@lock_wm@ &")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                          Widget Section's                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Launcher Widgets ;;
-(defpoll current-volume :interval "1s" "amixer sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll current-volume :interval "1s" "@amixer@ sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
 (defpoll battery            :interval "1s"  "scripts/battery icon")
 (defpoll battery-cappacity  :interval "1s"  "scripts/battery percent")
 (defpoll wifi-icon :interval "1s" "scripts/wifi icon")
 (defpoll wifi-name :interval "1s" "scripts/wifi name")
-(defpoll current-brightness :interval "1s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defpoll current-brightness :interval "1s" "@brightnessctl@ -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 (defpoll hour   :interval "1s"  "date '+%H'")
 (defpoll min    :interval "1s"  "date '+%M'")
 (defpoll calendar_day :interval "10h" "date '+%d'")
@@ -60,8 +60,8 @@
 
 ;; Brightness Widgets ;;
 (defwidget bright []
-  (eventbox :onhover "eww update bright=true"
-            :onhoverlost "eww update bright=false"
+  (eventbox :onhover "${eww} update bright=true"
+            :onhoverlost "${eww} update bright=false"
     (box    :orientation "v"
             :space-evenly "false"
             :spacing 2
@@ -71,7 +71,7 @@
         (scale :class "bribar"
                :value current-brightness
                :tooltip "Brightness: ${current-brightness}%"
-               :onchange "brightnessctl set {}%"
+               :onchange "${brightnessctl} set {}%"
                :orientation "v"
                :flipped true
                :max 101
@@ -82,8 +82,8 @@
 
 ;; Volume Widgets ;;
 (defwidget volum []
-  (eventbox :onhover "eww update volum=true"
-            :onhoverlost "eww update volum=false"
+  (eventbox :onhover "${eww} update volum=true"
+            :onhoverlost "${eww} update volum=false"
     (box      :orientation "v"
               :space-evenly "false"
               :spacing "2"
@@ -97,7 +97,7 @@
                   :tooltip "Volume: ${current-volume}%"
                   :max 101
                   :min 0
-                  :onchange "amixer -D pulse sset Master {}%" ))
+                  :onchange "${amixer} -D pulse sset Master {}%" ))
       (button   :onclick "scripts/popup audio"   :class "volume-icon" ""))))
 (defvar volum false)
 
@@ -133,8 +133,8 @@
 
 ;; Powermenu Widgets ;;
 (defwidget power []
-  (eventbox   :onhover "eww update power=true"
-              :onhoverlost "eww update power=false"
+  (eventbox   :onhover "${eww} update power=true"
+              :onhoverlost "${eww} update power=false"
     (box        :orientation "v"
                 :space-evenly "false"
                 :vexpand "false"
@@ -146,8 +146,8 @@
                     :space-evenly "false"
 
           (button     :class "button-bspres"
-                      :tooltip "BSPWM Restart"
-                      :onclick "hyperctl reload && notify-send \"ok\"" "勒" )
+                      :tooltip "Restart WM"
+                      :onclick reload-wm "勒" )
 
           (button     :class "button-reb"
                       :tooltip "Reboot"
@@ -155,11 +155,11 @@
 
           (button     :class "button-quit"
                       :tooltip "Logout"
-                      :onclick "killall Hyprland" "")
+                      :onclick quit-wm "")
 
           (button     :class "button-lock"
                       :tooltip "Lock Screen"
-                      :onclick "sleep 1 && swaylock -c 000000"  "")))
+                      :onclick lock-wm  "")))
 
       (button     :class "button-off"
                   :tooltip "Shutdown"
@@ -210,7 +210,7 @@
     :height "100%"
     :anchor "left center"
     :width "47px")
-  :monitor 1
+  :monitor @main_monitor@
   :reserve (struts :distance "35px" :side "left")
   :wm-ignore false
   :stacking "bt"
@@ -221,7 +221,7 @@
 
 ;; Calendar Windows ;;
 (defwindow calendar
-  :monitor 0
+  :monitor @main_monitor@
   :wm-ignore false
   :geometry (geometry
     :x "70px"

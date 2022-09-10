@@ -28,6 +28,30 @@ in
       type = types.bool;
       default = true;
     };
+
+    reload_cmd = mkOption {
+      description = "command to reload the wm";
+      type = types.str;
+      default = "hyprctl reload && notify-send \"ok\"";
+    };
+
+    quit_cmd = mkOption {
+      description = "command to quit the wm";
+      type = types.str;
+      default = "hyprctl kill";
+    };
+
+    lock_cmd = mkOption {
+      description = "command to lock the wm";
+      type = types.str;
+      default = "${pkgs.swaylock}/bin/swaylock -c 000000";
+    };
+
+    main_monitor = mkOption {
+      description = "main monitor for the sidebar + calendar popup";
+      type = types.int;
+      default = 1;
+    };
   };
 
   config = mkIf (cfg.enable) {
@@ -44,17 +68,23 @@ in
       configDir = (pkgs.stdenv.mkDerivation rec {
         pname = "eww-configfolder";
         version = "0.1";
+        phases = [ "patchPhase" ];
 
         src = ./config;
 
         # TODO: replace commands with actual paths to binaries
-        buildPhase = ''
-
-        '';
-
-        installPhase = ''
+        patchPhase = ''
           mkdir -p $out
           cp -r $src/* $out
+
+          substituteInPlace $out/eww.yuck \
+            --replace '@amixer@' '${pkgs.alsa-utils}/bin/amixer' \
+            --replace '@eww@' '${package}/bin/eww' \
+            --replace '@brightnessctl@' '${pkgs.brightnessctl}/bin/brightnessctl' \
+            --replace '@reload_wm@' '${cfg.reload_cmd}' \
+            --replace '@quit_wm@' '${cfg.quit_cmd}' \
+            --replace '@lock_wm@' '${cfg.lock_cmd}' \
+            --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
         '';
       });
     };

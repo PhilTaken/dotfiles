@@ -17,11 +17,13 @@ workspaces() {
     un="0"
 
     occupied () {
-        i3-msg -t get_workspaces | jq '[if .[].num == '$1' then 1 else 0 end] | add'
+        #i3-msg -t get_workspaces | jq '[if .[].num == '$1' then 1 else 0 end] | add'
+        [ 1 -eq 0 ]
     }
 
     focused () {
-        i3-msg -t get_workspaces | jq '[.[] | if .num == '$1' and .focused then 1 else 0 end] | add'
+        #i3-msg -t get_workspaces | jq '[.[] | if .num == '$1' and .focused then 1 else 0 end] | add'
+        [ 1 -eq 0 ]
     }
 
     # check if Occupied
@@ -55,7 +57,8 @@ workspaces() {
     # u4=$(bspc query -D -d .urgent --names | grep 4)
     # u5=$(bspc query -D -d .urgent --names | grep 5)
 
-    command="i3-msg workspace number"
+    #command="i3-msg workspace number"
+    command="echo"
 
 
     #"(box
