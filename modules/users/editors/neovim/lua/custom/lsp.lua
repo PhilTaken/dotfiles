@@ -2,6 +2,7 @@
 local lsp = require'lspconfig'
 local cpb = vim.lsp.protocol.make_client_capabilities()
 local capabilities = require('cmp_nvim_lsp').update_capabilities(cpb)
+local navic = require('nvim-navic')
 
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
@@ -14,7 +15,8 @@ pcall(function() Pythonpath = io.popen('which python 2>/dev/null'):read() end)
 -- signature help
 local signature_setup = {
     capabilities = capabilities,
-    on_attach = function(_, bufnr)
+    on_attach = function(client, bufnr)
+        navic.attach(client, bufnr)
         require'lsp_signature'.on_attach({
             bind = true,
             handler_opts = {

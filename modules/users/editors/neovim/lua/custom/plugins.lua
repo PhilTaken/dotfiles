@@ -294,16 +294,15 @@ require('packer').startup{
                         'kevinhwang91/nvim-ufo',
                         requires = 'kevinhwang91/promise-async'
                     },
-                    "hrsh7th/cmp-nvim-lsp",
-                    {
-                        "ray-x/lsp_signature.nvim"
-                    },
                     {
                         'onsails/lspkind-nvim',
                         config = function()
                             require'lspkind'.init()
                         end
                     },
+                    "hrsh7th/cmp-nvim-lsp",
+                    "ray-x/lsp_signature.nvim",
+                    "SmiteshP/nvim-navic",
                 },
             },
             {
@@ -461,6 +460,12 @@ require('packer').startup{
                 requires = "nvim-lua/plenary.nvim",
                 config = function()
                     require("diffview").setup{}
+                end
+            },
+            {
+                'rcarriga/nvim-notify',
+                config = function()
+                    vim.notify = require("notify")
                 end
             }
         }
