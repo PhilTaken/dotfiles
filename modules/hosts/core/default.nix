@@ -72,6 +72,8 @@ in
           "https://hyprland.cachix.org"
           "s3://serokell-private-nix-cache?endpoint=s3.us-west-000.backblazeb2.com&profile=serokell-private-nix-cache"
           "s3://serokell-private-cache?endpoint=s3.eu-central-1.wasabisys.com&profile=serokell-private-cache"
+          "https://nixpkgs-wayland.cachix.org"
+          "https://cache.nixos.org"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
@@ -80,6 +82,8 @@ in
           "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
           "serokell-1:aIojg2Vxgv7MkzPJoftOO/I8HKX622sT+c0fjnZBLj0="
+          "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         ];
       };
       # set up automatic garbage collection
@@ -89,6 +93,7 @@ in
         options = "--delete-older-than 30d";
       };
     };
+
     hardware.enableRedistributableFirmware = true;
 
     # link to cachix token env file

@@ -56,6 +56,9 @@ rec {
           sops.age.generateKey = true;
 
           system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
+          nixpkgs.overlays = [
+            inputs.nixpkgs-wayland.overlay
+          ];
         }
       ] ++ extramodules ++ hmConfigs ++ extraHostModules;
     };

@@ -13,12 +13,16 @@
     nur-src.url = "github:nix-community/NUR";
 
     # eww bar
+    # TODO: once my prs are merged revert to main repo
     #eww-git.url = "github:elkowar/eww?ref=7623e7e692042f4da8525bb1e4ef140831fcdb6a";
     eww-git.url = "github:PhilTaken/eww?ref=7837576ee0d2b5ba93b7c9bace0a66338897f5ef";
 
+
+    nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
+
     # local user package managment
     home-manager = {
-      url = "github:nix-community/home-manager?ref=5bd66dc6cd967033489c69d486402b75d338eeb6";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
