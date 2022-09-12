@@ -17,12 +17,7 @@ local signature_setup = {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         navic.attach(client, bufnr)
-        require'lsp_signature'.on_attach({
-            bind = true,
-            handler_opts = {
-                border = "single"
-            },
-        }, bufnr)
+        --require'lsp_signature'.on_attach(, bufnr)
     end,
 }
 

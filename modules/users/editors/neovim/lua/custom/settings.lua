@@ -24,7 +24,8 @@ o.laststatus = 3
 o.showmode = false
 
 -- show path to file above buffer
-o.winbar = "%f"
+--o.winbar = "%f"
+o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- folds
 --o.foldmethod = "syntax"

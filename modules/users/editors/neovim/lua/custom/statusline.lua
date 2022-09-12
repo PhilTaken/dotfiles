@@ -145,8 +145,8 @@ gls.left[3] = {
         provider = get_current_file_name,
         condition = buffer_not_empty,
         highlight = { colors.fg, colors.section_bg },
-        --separator = "",
-        separator = "",
+        separator = "",
+        --separator = "",
         separator_highlight = { colors.section_bg, colors.bg }
     }
 }
@@ -246,8 +246,8 @@ gls.right[6] = {
 gls.right[7] = {
     PerCent = {
         provider = 'LinePercent',
-        --separator = '',
-        separator = ' ',
+        separator = '',
+        --separator = ' ',
         separator_highlight = { colors.blue, colors.bg },
         highlight = { colors.gray2, colors.blue }
     }

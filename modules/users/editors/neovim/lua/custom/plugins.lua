@@ -258,7 +258,12 @@ require('packer').startup{
                     -- https://github.com/kevinhwang91/nvim-ufo#customize-fold-text
                     require('ufo').setup()
                     -- TODO: move lsp signature setup here?
-                    --require('lsp_signature').setup({ })
+                    require('lsp_signature').setup({
+                        bind = true,
+                        handler_opts = {
+                            border = "single"
+                        },
+                    })
                 end,
                 requires = {
                     {
