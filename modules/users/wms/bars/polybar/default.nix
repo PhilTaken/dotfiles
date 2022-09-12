@@ -19,7 +19,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     phil.wms.bars.barcommand = "systemctl --user restart polybar.service";
 
     services.polybar = {

@@ -5,9 +5,6 @@
 }:
 with lib;
 
-let
-
-in
 {
   options.phil.wms.bars = {
     barcommand = mkOption {

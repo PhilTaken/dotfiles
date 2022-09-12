@@ -19,7 +19,7 @@ in
   };
 
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     programs = {
       #lieer.enable = true;
       #notmuch.enable = true;

@@ -14,7 +14,7 @@ let
   hostnames = builtins.attrNames iplot;
   mkDnsBindsFromServices = services: builtins.mapAttrs
     # TODO: sensible handling for identical services on multiple hosts
-    (_: hosts: builtins.head hosts)
+    (_: builtins.head)
     (lib.zipAttrs
       (builtins.map
         (host: builtins.listToAttrs (builtins.map
@@ -49,7 +49,7 @@ in
   };
 
   # TODO: enable condition
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     networking.firewall = {
       allowedUDPPorts = [ 53 853 ];
       allowedTCPPorts = [ 53 853 ];
@@ -59,7 +59,7 @@ in
 
     services.unbound =
       let
-        subdomains = (builtins.mapAttrs (name: value: { ip = iplot."${value}"; }) cfg.apps);
+        subdomains = builtins.mapAttrs (name: value: { ip = iplot."${value}"; }) cfg.apps;
       in
       {
         enable = true;
@@ -143,7 +143,7 @@ in
               "\"adserver.yahoo.com A 127.0.0.1\""
             ] ++ (lib.mapAttrsToList (name: value: "\"${name}.pherzog.xyz. IN A ${value.ip}\"") subdomains);
 
-            local-data-ptr = (lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.pherzog.xyz\"") subdomains);
+            local-data-ptr = lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.pherzog.xyz\"") subdomains;
           };
 
           # downstream dns resolver

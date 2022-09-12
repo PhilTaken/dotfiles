@@ -19,7 +19,7 @@ in
     adb.enable = mkEnableOption "android adb";
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     programs = {
       adb.enable = cfg.adb.enable;
     };

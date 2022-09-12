@@ -17,7 +17,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     programs.steam.enable = true;
     programs.gamemode = {
       enable = true;

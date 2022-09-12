@@ -18,10 +18,10 @@ in
   # TODO: multiple mullvad locations
   config = {
     # mullvad vpn definition for de-frankfurt and de-duesseldorf
-    sops.secrets.mullvad-privateKey = mkIf (cfg.enable-old) { };
-    sops.secrets.mullvad-privateKey-new = mkIf (cfg.enable-new) { };
+    sops.secrets.mullvad-privateKey = mkIf cfg.enable-old { };
+    sops.secrets.mullvad-privateKey-new = mkIf cfg.enable-new { };
 
-    environment.systemPackages = with pkgs; mkIf (cfg.enable) [
+    environment.systemPackages = with pkgs; mkIf cfg.enable [
       mullvad-vpn
     ];
 
@@ -30,7 +30,7 @@ in
     services.mullvad-vpn.enable = cfg.enable;
 
     networking.wg-quick.interfaces = {
-      mlvd-de22 = mkIf (cfg.enable-old) {
+      mlvd-de22 = mkIf cfg.enable-old {
         address = [ "10.69.90.26/32" "fc00:bbbb:bbbb:bb01::6:5a19/128" ];
         dns = [ "193.138.218.74" ];
         privateKeyFile = config.sops.secrets.mullvad-privateKey.path;
@@ -42,7 +42,7 @@ in
           }
         ];
       };
-      mlvd-de20 = mkIf (cfg.enable-new) {
+      mlvd-de20 = mkIf cfg.enable-new {
         address = [ "10.67.54.255/32" "fc00:bbbb:bbbb:bb01::4:36fe/128" ];
         dns = [ "100.64.0.3" ];
         privateKeyFile = config.sops.secrets.mullvad-privateKey-new.path;

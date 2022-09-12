@@ -28,7 +28,7 @@ in
       hostAddress = "192.0.0.1";
       localAddress = "192.0.0.2";
     in
-    mkIf (cfg.enable) {
+    mkIf cfg.enable {
       sops.secrets.nextcloud-adminpass = {
         mode = "777";
       };
@@ -47,7 +47,7 @@ in
           home = "/media/nextcloud";
           datadir = "/var/lib/nextcloud";
         in
-        mkIf (cfg.enable) {
+        mkIf cfg.enable {
           ephemeral = false;
           autoStart = true;
 

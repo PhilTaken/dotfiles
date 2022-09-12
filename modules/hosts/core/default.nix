@@ -37,7 +37,7 @@ in
     enableBluetooth = mkEnableOption "bluetooth";
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     nix = {
       package = pkgs.nixFlakes;
       # Free up to 1GiB whenever there is less than 100MiB left.
@@ -108,7 +108,7 @@ in
     networking.firewall.checkReversePath = "loose";
 
     # bluetooth
-    hardware.bluetooth = mkIf (cfg.enableBluetooth) {
+    hardware.bluetooth = mkIf cfg.enableBluetooth {
       enable = cfg.enableBluetooth;
       powerOnBoot = true;
     };

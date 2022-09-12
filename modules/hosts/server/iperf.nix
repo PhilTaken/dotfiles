@@ -18,7 +18,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     services.iperf3 = {
       inherit (cfg) port;
       enable = true;

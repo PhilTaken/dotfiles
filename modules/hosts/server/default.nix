@@ -36,7 +36,7 @@ in
 
   options.phil.server.enable = mkEnableOption "server module";
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       nmap
       hdparm

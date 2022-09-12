@@ -23,7 +23,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     sops.secrets.grafana-adminpass = {
       owner = config.systemd.services.grafana.serviceConfig.User;
     };

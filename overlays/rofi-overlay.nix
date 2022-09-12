@@ -1,4 +1,4 @@
-{ ... }:
+_:
 let
   rofi_overlay = final: prev: {
     rofi-wayland = prev.rofi-unwrapped.overrideAttrs (old: {

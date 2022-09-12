@@ -39,7 +39,7 @@ in
         '';
       in
       {
-        enable = (cfg.proxy != { });
+        enable = cfg.proxy != { };
         httpConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };
   };

@@ -17,7 +17,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     hardware = {
       nvidia = {
         # package = config.boot.kernelPackages.nvidiaPackages.beta;

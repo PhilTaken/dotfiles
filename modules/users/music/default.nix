@@ -21,7 +21,7 @@ in
 
   config = (mkIf cfg.enable) {
 
-    systemd.user.services.mpris-proxy = mkIf (cfg.enableMpris) {
+    systemd.user.services.mpris-proxy = mkIf cfg.enableMpris {
       Unit.Description = "Mpris proxy";
       Unit.After = [ "network.target" "sound.target" ];
       Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";

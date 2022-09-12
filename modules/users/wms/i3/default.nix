@@ -7,7 +7,7 @@ with lib;
 
 let
   cfg = config.phil.wms.i3;
-  barcommand = inputs.config.phil.wms.bars.barcommand;
+  inherit (inputs.config.phil.wms.bars) barcommand;
 in
 rec {
   options.phil.wms.i3 = {
@@ -54,7 +54,7 @@ rec {
     };
   };
 
-  config = mkIf (cfg.enable) rec {
+  config = mkIf cfg.enable rec {
     phil.wms.tools.udiskie.enable = true;
     services.kdeconnect = {
       enable = true;
@@ -64,7 +64,7 @@ rec {
     xsession.enable = true;
     xsession.windowManager.i3 = rec {
       enable = true;
-      package = cfg.package;
+      inherit (cfg) package;
       config = {
         floating = {
           border = 0;
@@ -99,7 +99,7 @@ rec {
 
         keybindings =
           let
-            modifier = config.modifier;
+            inherit (config) modifier;
             terminal = "${pkgs.${cfg.terminal}}/bin/${cfg.terminal}";
           in
           {

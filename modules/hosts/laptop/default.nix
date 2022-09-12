@@ -24,7 +24,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     programs.steam.enable = true;
 
     phil.core.enableBluetooth = true;

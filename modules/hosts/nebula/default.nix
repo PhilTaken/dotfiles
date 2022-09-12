@@ -36,7 +36,7 @@ let
 in
 {
   options.phil.nebula.enable = mkEnableOption "nebula";
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     sops.secrets.ca = sopsConfig;
     sops.secrets."${hostname}-key" = sopsConfig;
     sops.secrets."${hostname}-crt" = sopsConfig;

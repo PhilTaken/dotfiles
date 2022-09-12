@@ -29,7 +29,7 @@ in
     #};
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     #sops.secrets.spotify-username = { };
     #sops.secrets.spotify-password = {
     #group = "audio";

@@ -18,7 +18,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     services.adguardhome = {
       enable = true;
       host = "http://127.0.0.1";

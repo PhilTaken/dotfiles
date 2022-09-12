@@ -25,8 +25,8 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
-    sops.secrets.telegraf-shared = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
+    sops.secrets.telegraf-shared = mkIf cfg.enable {
       owner = config.systemd.services.telegraf.serviceConfig.User;
       sopsFile = ../../../sops/telegraf.yaml;
     };

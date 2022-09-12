@@ -22,7 +22,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     services.kdeconnect.enable = true;
 
     programs = {

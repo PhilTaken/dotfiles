@@ -149,15 +149,15 @@
             extraPackages = pkgs: with pkgs; [ ];
           };
         };
-      mkHMUsers = users: map (user: util.user.mkNixosModule hmUsers.${user}) users;
+      mkHMUsers = map (user: util.user.mkNixosModule hmUsers.${user});
     in
     {
       lib = util;
 
       devShells."${system}".default = util.shells.devShell;
 
-      overlays.default = (import ./custom_pkgs);
-      homeConfigurations = lib.mapAttrs (username: config: util.user.mkHMUser config) hmUsers;
+      overlays.default = import ./custom_pkgs;
+      homeConfigurations = lib.mapAttrs (username: util.user.mkHMUser) hmUsers;
 
       nixosConfigurations = {
         # usb stick iso

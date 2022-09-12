@@ -49,7 +49,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     sops.secrets = {
       wireguard-key = {
         sopsFile = ../../../sops + "/${hostname}-wireguard.yaml";
@@ -64,7 +64,7 @@ in
 
     networking = {
       nat.enable = mkDefault hasEndpoint;
-      hosts = (builtins.listToAttrs
+      hosts = builtins.listToAttrs
         (builtins.concatLists
           (builtins.map
             (item: builtins.map
@@ -75,13 +75,12 @@ in
               item.ips)
             (lib.mapAttrsToList
               (name: value: {
-                name = name;
+                inherit name;
                 ips = value.ownIPs;
               })
               peers)
           )
-        )
-      );
+        );
 
       firewall.allowedUDPPorts = [ listenPort ];
 
@@ -91,7 +90,7 @@ in
         interfaces = {
           "${networkName}" = {
             inherit postSetup;
-            peers = (lib.mapAttrsToList (name: value: value) peerlist);
+            peers = lib.mapAttrsToList (name: value: value) peerlist;
             ips = peers.${hostname}.ownIPs;
             inherit listenPort;
             privateKeyFile = config.sops.secrets.wireguard-key.path;

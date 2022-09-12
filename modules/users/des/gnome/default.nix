@@ -17,7 +17,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       chrome-gnome-shell
       # gnome3 apps

@@ -23,7 +23,7 @@ in
   };
 
   config = {
-    systemd.user.services.udiskie = mkIf (cfg.enable) {
+    systemd.user.services.udiskie = mkIf cfg.enable {
       Unit = {
         Description = "udiskie mount daemon";
         #Requires = [ "tray.target" ];

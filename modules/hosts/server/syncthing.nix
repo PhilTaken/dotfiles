@@ -24,7 +24,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     services.syncthing = {
       enable = true;
       user = "nixos";

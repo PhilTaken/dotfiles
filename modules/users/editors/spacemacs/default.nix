@@ -22,7 +22,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     programs.emacs = {
       enable = true;
       extraPackages = epkgs: with epkgs; [

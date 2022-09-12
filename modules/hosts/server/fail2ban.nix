@@ -14,7 +14,7 @@ in
     enable = mkEnableOption "fail2ban ssh login blocker";
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       fail2ban
     ];

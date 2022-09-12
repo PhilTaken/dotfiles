@@ -55,7 +55,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     home.sessionVariables = {
       EDITOR = "nvim";
       #PAGER = "${pkgs.nvimpager}/bin/nvimpager";
@@ -68,7 +68,7 @@ in
       vimAlias = true;
       withPython3 = true;
       withNodeJs = true;
-      extraPython3Packages = (ps: with ps; [ pynvim ]);
+      extraPython3Packages = ps: with ps; [ pynvim ];
       extraPackages = with pkgs; [
         gcc11
         gcc-unwrapped
@@ -94,12 +94,12 @@ in
         rnix-lsp # nix
 
       ]
-      ++ (optionals (cfg.langs.python) (with pkgs.python39Packages; [ python-lsp-server hy ]))
-      ++ (optionals (cfg.langs.ts) [ pkgs.nodePackages.typescript-language-server ])
-      ++ (optionals (cfg.langs.cpp) [ pkgs.ccls ])
-      ++ (optionals (cfg.langs.rust) [ pkgs.rust-analyzer ])
-      ++ (optionals (cfg.langs.haskell) [ pkgs.haskell-language-server ])
-      ++ (optionals (cfg.langs.extra) (with pkgs; [
+      ++ (optionals cfg.langs.python (with pkgs.python39Packages; [ python-lsp-server hy ]))
+      ++ (optionals cfg.langs.ts [ pkgs.nodePackages.typescript-language-server ])
+      ++ (optionals cfg.langs.cpp [ pkgs.ccls ])
+      ++ (optionals cfg.langs.rust [ pkgs.rust-analyzer ])
+      ++ (optionals cfg.langs.haskell [ pkgs.haskell-language-server ])
+      ++ (optionals cfg.langs.extra (with pkgs; [
         fortls
         erlang-ls
         texlab

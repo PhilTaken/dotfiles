@@ -18,7 +18,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     services.vector = {
       enable = true;
       journaldAccess = true;

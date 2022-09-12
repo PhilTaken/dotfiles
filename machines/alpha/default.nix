@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  lib = pkgs.lib;
+  inherit (pkgs) lib;
   ip4_eth0 = "148.251.102.93";
   gateway_ip = "148.251.69.141";
 in

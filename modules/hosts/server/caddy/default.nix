@@ -11,7 +11,7 @@ let
   net = import ../../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
-  ipOpts = { ... }: {
+  ipOpts = _: {
     options = {
       ip = mkOption {
         type = types.str;
@@ -63,13 +63,13 @@ in
       in
       {
         enable = true;
-        package = (pkgs.callPackage ./custom_caddy.nix {
+        package = pkgs.callPackage ./custom_caddy.nix {
           plugins = [
             { name = "github.com/caddy-dns/cloudflare"; version = "91cf700356a1cd0127bcc4e784dd50ed85794af5"; }
           ];
 
           vendorSha256 = "sha256-zGmSqBC+fOkt8Eolc2wki/sx0vo63ZaLzc5Bvyphttc=";
-        });
+        };
         extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };
 

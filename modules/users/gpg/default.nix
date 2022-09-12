@@ -29,7 +29,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     programs.gpg = {
       enable = true;
       settings.default-key = mkIf (cfg.gpgKey != null) cfg.gpgKey;
@@ -38,7 +38,7 @@ in
     services.gpg-agent = mkIf (cfg.sshKeys != [ ]) {
       enable = true;
       enableSshSupport = true;
-      sshKeys = cfg.sshKeys;
+      inherit (cfg) sshKeys;
     };
   };
 }

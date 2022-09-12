@@ -17,7 +17,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     phil.wms.bars.barcommand = "waybar";
 
     programs.waybar =

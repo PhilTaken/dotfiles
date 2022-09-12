@@ -1,4 +1,4 @@
-{ ... }:
+_:
 final: prev: {
   gopass-rofi = prev.writeShellScriptBin "gopass-rofi" ''
     gopass list --flat |

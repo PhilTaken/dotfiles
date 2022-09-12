@@ -54,8 +54,8 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
-    phil.wms.bars.barcommand = mkIf (cfg.autostart) "${package}/bin/eww open bar";
+  config = mkIf cfg.enable {
+    phil.wms.bars.barcommand = mkIf cfg.autostart "${package}/bin/eww open bar";
 
     home.packages = with pkgs; [
       kde-gtk-config
@@ -65,7 +65,7 @@ in
     programs.eww = {
       enable = true;
       inherit package;
-      configDir = (pkgs.stdenv.mkDerivation rec {
+      configDir = pkgs.stdenv.mkDerivation rec {
         pname = "eww-configfolder";
         version = "0.1";
         phases = [ "patchPhase" ];
@@ -86,7 +86,7 @@ in
             --replace '@lock_wm@' '${cfg.lock_cmd}' \
             --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
         '';
-      });
+      };
     };
 
     #systemd.user.services.eww-bar = {

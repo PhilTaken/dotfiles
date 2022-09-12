@@ -19,7 +19,7 @@ in
     # more options
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     # add config here
   };
 }

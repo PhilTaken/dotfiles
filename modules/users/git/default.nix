@@ -35,7 +35,7 @@ in
   };
 
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     programs.lazygit = {
       enable = true;
       settings = {
@@ -63,8 +63,8 @@ in
         };
       };
 
-      userEmail = cfg.userEmail;
-      userName = cfg.userName;
+      inherit (cfg) userEmail;
+      inherit (cfg) userName;
       signing = mkIf (cfg.signKey != null) {
         key = cfg.signKey;
         signByDefault = true;
@@ -96,7 +96,7 @@ in
         };
       extraConfig = {
         pull.rebase = true;
-        commit.gpgsign = (cfg.signKey != null);
+        commit.gpgsign = cfg.signKey != null;
         commit.verbose = true;
         push.default = "tracking";
         status.submoduleSummary = true;

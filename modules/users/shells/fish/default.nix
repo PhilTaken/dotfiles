@@ -13,7 +13,7 @@ rec {
     enable = mkEnableOption "fish";
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     programs.fish = {
       enable = true;
 

@@ -35,7 +35,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     sops.secrets.nixos-ykchal = mkIf (builtins.elem "nixos" (builtins.attrNames config.users.users)) {
       owner = "nixos";
       path = "${cfg.chalRespPath}/nixos-14321676";
@@ -50,7 +50,7 @@ in
 
     security.pam.yubico = {
       enable = true;
-      debug = cfg.debug;
+      inherit (cfg) debug;
       mode = "challenge-response";
       challengeResponsePath = cfg.chalRespPath;
     };

@@ -38,7 +38,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     nixpkgs.config = mkIf (cfg.driver == "nvidia") {
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "nvidia-x11"
@@ -109,7 +109,7 @@ in
 
     # ----------------------
     # gnome
-    services.gnome.chrome-gnome-shell.enable = (enabled "gnome");
+    services.gnome.chrome-gnome-shell.enable = enabled "gnome";
     services.gnome.gnome-keyring.enable = mkForce false;
     services.udev.packages = if (enabled "gnome") then [ pkgs.gnome3.gnome-settings-daemon ] else [ ];
     services.dbus.packages = if (enabled "gnome") then [ pkgs.dconf ] else [ ];

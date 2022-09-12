@@ -31,7 +31,7 @@ rec {
     };
   };
 
-  config = mkIf (cfg.enable) rec {
+  config = mkIf cfg.enable rec {
     phil.wms.tools.udiskie.enable = true;
 
     home.sessionVariables = {

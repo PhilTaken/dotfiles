@@ -17,7 +17,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     xsession.enable = true;
     xsession.windowManager.xmonad = rec {
       enable = true;

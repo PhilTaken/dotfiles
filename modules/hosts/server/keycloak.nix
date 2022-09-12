@@ -25,11 +25,11 @@ in
     # more options
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     sops.secrets.keycloak-dbpass = { };
 
     services.keycloak = {
-      enable = cfg.enable;
+      inherit (cfg) enable;
       database = {
         passwordFile = config.sops.secrets.keycloak-dbpass.path;
       };

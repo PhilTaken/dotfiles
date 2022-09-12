@@ -5,8 +5,6 @@
 , ...
 }:
 
-let
-in
 {
   # TODO: add install script (+ binary cache?)
   mkIso = hostName: lib.nixosSystem {

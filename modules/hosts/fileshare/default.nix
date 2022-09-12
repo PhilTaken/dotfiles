@@ -7,8 +7,8 @@ with lib;
 
 let
   cfg = config.phil.fileshare;
-  wireguard = config.phil.wireguard;
-  nebula = config.phil.nebula;
+  inherit (config.phil) wireguard;
+  inherit (config.phil) nebula;
 
   mkSharesForIps = ips: shares:
     ("/export\t" + (lib.concatMapStrings (ip: "${ip}(rw,fsid=0,no_subtree_check,crossmnt,fsid=0) ") ips)) + "\n" +
@@ -17,8 +17,7 @@ let
   net = import ../../../network.nix { };
   iplot = net.networks.default;
 
-  mkMountsForBinds = binds: builtins.listToAttrs (builtins.concatLists (
-    (builtins.map
+  mkMountsForBinds = binds: builtins.listToAttrs (builtins.concatLists (builtins.map
       (bind: builtins.map
         (dir: {
           name = "/mnt/${dir}";
@@ -34,8 +33,7 @@ let
             };
         })
         bind.dirs)
-      binds)
-  ));
+      binds));
 
 
   mkBindsForDirs = dirs: builtins.listToAttrs (builtins.map

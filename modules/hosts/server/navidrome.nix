@@ -32,7 +32,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     services.navidrome = {
       enable = true;
       settings = {

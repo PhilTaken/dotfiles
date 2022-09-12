@@ -32,7 +32,7 @@ let
   }];
 
   # allows value to overwrite enabled when specified explicitly
-  defaultEnabled = builtins.mapAttrs (_: value: lib.mergeAttrs { enable = true; } value);
+  defaultEnabled = builtins.mapAttrs (_: lib.mergeAttrs { enable = true; });
 in
 rec {
   mkServer =

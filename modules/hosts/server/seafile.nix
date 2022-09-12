@@ -18,7 +18,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     services.seafile = {
       enable = true;
       seafilePackage = pkgs.seafile-server.overrideAttrs (old: {

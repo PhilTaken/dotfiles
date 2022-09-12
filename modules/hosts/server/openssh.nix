@@ -21,7 +21,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     # general open ssh config
     services.openssh = {
       enable = true;
