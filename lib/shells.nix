@@ -9,6 +9,7 @@ let
     sops-import-keys-hook
     ssh-to-age
     nvd
+    statix
   ];
 
   mkSystemScript = commands: ''
@@ -39,6 +40,13 @@ in
           name = "fmt";
           help = "Autoformat Nix files";
           command = "nixpkgs-fmt \${@} $PRJ_ROOT";
+          category = "dev";
+        }
+
+        {
+          name = "statix";
+          help = "Static analysis for nix files";
+          package = pkgs.statix;
           category = "dev";
         }
 
