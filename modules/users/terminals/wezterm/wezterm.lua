@@ -1,6 +1,6 @@
 local wezterm = require("wezterm")
 local catppuccin = require("catppuccin").setup {
-    sync = false,
+    sync = true,
     flavour = "mocha",
 }
 
