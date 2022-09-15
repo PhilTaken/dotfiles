@@ -137,7 +137,7 @@
               slack
               fractal
 
-              nur.repos.shados.tmm
+              #nur.repos.shados.tmm
               plover.dev
             ];
           };
