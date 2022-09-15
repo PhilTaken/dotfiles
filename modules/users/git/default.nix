@@ -56,12 +56,17 @@ in
         "result"
       ];
       lfs.enable = true;
-      delta = {
+      difftastic = {
         enable = true;
-        options = {
-          line-numbers = true;
-        };
+        background = "dark";
+        display = "inline";
       };
+      #delta = {
+        #enable = true;
+        #options = {
+          #line-numbers = true;
+        #};
+      #};
 
       inherit (cfg) userEmail;
       inherit (cfg) userName;
