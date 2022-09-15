@@ -17,6 +17,9 @@
     #eww-git.url = "github:elkowar/eww?ref=7623e7e692042f4da8525bb1e4ef140831fcdb6a";
     eww-git.url = "github:PhilTaken/eww?ref=7837576ee0d2b5ba93b7c9bace0a66338897f5ef";
 
+    # better discord clone/fork
+    webcord.url = "github:fufexan/webcord-flake";
+
 
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
 

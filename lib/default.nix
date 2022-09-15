@@ -22,10 +22,23 @@ let
     inputs.hyprland.overlays.default
     inputs.zellij.overlays.default
     inputs.eww-git.overlays.default
-    (final: super: {
-      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
+    (final: prev: {
+      makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
 
-      inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${system}) gopass iosevka;
+      webcord = inputs.webcord.packages.${prev.system}.default;
+
+      slack = prev.slack.overrideAttrs (old: {
+        installPhase = old.installPhase + ''
+          rm $out/bin/slack
+
+          makeWrapper $out/lib/slack/slack $out/bin/slack \
+          --prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
+          --prefix PATH : ${lib.makeBinPath [prev.xdg-utils]} \
+          --add-flags "--enable-features=WebRTCPipeWireCapturer %U"
+        '';
+      });
+
+      inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) gopass iosevka;
     })
   ];
 
@@ -42,18 +55,6 @@ let
   ] ++ lib.optionals (system == "aarch64-linux") [
     "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
-    (self: super: {
-      slack = super.slack.overrideAttrs (old: {
-        installPhase = old.installPhase + ''
-          rm $out/bin/slack
-
-          makeWrapper $out/lib/slack/slack $out/bin/slack \
-          --prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
-          --prefix PATH : ${lib.makeBinPath [pkgs.xdg-utils]} \
-          --add-flags "--enable-features=WebRTCPipeWireCapturer %U"
-        '';
-      });
-    })
   ];
 
   extraHMImports = [

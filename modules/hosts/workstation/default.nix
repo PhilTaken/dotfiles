@@ -105,6 +105,8 @@ in
         #waydroid
 
         deploy-rs.deploy-rs
+
+        webcord
       ];
   };
 }
