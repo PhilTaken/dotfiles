@@ -605,66 +605,24 @@ require('packer').startup{
             event = "BufRead"
         }
 
+        use({
+            "ghillb/cybu.nvim",
+            branch = "main", -- timely updates
+            -- branch = "v1.x", -- won't receive breaking changes
+            requires = { "kyazdani42/nvim-web-devicons", "nvim-lua/plenary.nvim"}, -- optional for icon support
+            config = function()
+                local ok, cybu = pcall(require, "cybu")
+                if not ok then
+                    return
+                end
+                cybu.setup()
+            end,
+        })
+
         use {
             'eraserhd/parinfer-rust',
             cmd = "ParinferOn",
             run = "nix-shell --run \"cargo build --release\"",
-        }
-
-        use {
-            "nvim-neorg/neorg",
-            --ft = "norg",
-            --after = { "nvim-treesitter" },
-            config = function()
-                require('neorg').setup {
-                    load = {
-                        ["core.defaults"] = {}, -- Load all the defaults
-                        ["core.gtd.base"] = {
-                            config = {
-                                workspace = "vault",
-                                exclude = { "notes/" }, -- Optional: all excluded files from the workspace are not part of the gtd workflow
-                                projects = {
-                                    show_completed_projects = false,
-                                    show_projects_without_tasks = false,
-                                },
-                                custom_tag_completion = true,
-                            },
-                        },
-                        ["core.norg.dirman"] = {
-                            config = {
-                                workspaces = {
-                                    vault = "~/Documents/syncthing/vault/",
-                                },
-                                --autochdir = true,
-                                index = "index.norg",
-                            },
-                        },
-                        ["core.presenter"] = {
-                            config = {
-                                zen_mode = "zen-mode",
-                            },
-                        },
-                        ["core.integrations.treesitter"] = {}, -- Enable the telescope module
-                        ["core.integrations.nvim-cmp"] = {},
-                        --["core.norg.journal"] = {},
-                        --["core.norg.q l.toc"] = {},
-                        ["core.norg.concealer"] = {},
-                        ["core.integrations.telescope"] = {}, -- Enable the telescope module
-                    },
-                }
-            end,
-            requires = {
-                "nvim-lua/plenary.nvim",
-                {
-                    "nvim-neorg/neorg-telescope",
-                },
-                {
-                    "folke/zen-mode.nvim",
-                    config = function()
-                        require("zen-mode").setup{}
-                    end
-                }
-            };
         }
     end,
     config = {

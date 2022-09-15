@@ -47,8 +47,12 @@ local leadern = {
     ["<A-a>"] = { "<C-a>", "Increment Number" },
     ["<A-x>"] = { "<C-x>", "Decrement Number" },
 
-    ["<tab>"] = { "<cmd>bn<cr>", "Next Buffer" },
-    ["<s-tab>"] = { "<cmd>bp<cr>", "Previous Buffer" },
+    ["<c-tab>"] = { "<Plug>(CybuLastusedNext)", "Next Buffer" },
+    ["<c-s-tab>"] = { "<Plug>(CybuLastusedPrev)", "Previous Buffer" },
+    ["<tab>"] = { "<Plug>(CybuNext)", "Next Buffer" },
+    ["<s-tab>"] = { "<Plug>(CybuPrev)", "Previous Buffer" },
+    --["<tab>"] = { "<cmd>bn<cr>", "Next Buffer" },
+    --["<s-tab>"] = { "<cmd>bp<cr>", "Previous Buffer" },
 
     [";"] = { function() R('custom.tele').buffers() end, "Buffers" },
 
