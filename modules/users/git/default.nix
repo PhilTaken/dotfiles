@@ -54,6 +54,7 @@ in
       ignores = [
         "tags"
         "result"
+        ".direnv"
       ];
       lfs.enable = true;
       difftastic = {
