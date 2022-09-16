@@ -16,12 +16,6 @@ in
       default = true;
     };
 
-    docker = mkOption {
-      description = "Enable docker";
-      type = types.bool;
-      default = false;
-    };
-
     hostName = mkOption {
       description = "System hostname";
       type = types.str;
@@ -104,9 +98,6 @@ in
 
     networking.hostName = cfg.hostName;
     time.timeZone = cfg.timeZone;
-
-    # TODO move these somewhere else
-    virtualisation.docker.enable = cfg.docker;
 
     # tailscale - wireguard mesh vpn
     services.tailscale.enable = true;
