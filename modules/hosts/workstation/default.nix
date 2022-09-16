@@ -52,6 +52,7 @@ in
     #};
 
     #virtualisation.waydroid.enable = true;
+    virtualisation.docker.enable = true;
 
     # qmk rules for flashing keebs
     services.udev.packages = with pkgs; [ qmk-udev-rules ];
