@@ -615,7 +615,9 @@ require('packer').startup{
                 if not ok then
                     return
                 end
-                cybu.setup()
+                cybu.setup({
+                    display_time = 350,
+                })
             end,
         })
 
