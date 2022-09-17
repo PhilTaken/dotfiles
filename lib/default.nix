@@ -27,16 +27,16 @@ let
 
       webcord = inputs.webcord.packages.${prev.system}.default;
 
-      slack = prev.slack.overrideAttrs (old: {
-        installPhase = old.installPhase + ''
-          rm $out/bin/slack
+      #slack = prev.slack.overrideAttrs (old: {
+        #installPhase = old.installPhase + ''
+          #rm $out/bin/slack
 
-          makeWrapper $out/lib/slack/slack $out/bin/slack \
-          --prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
-          --prefix PATH : ${lib.makeBinPath [prev.xdg-utils]} \
-          --add-flags "--enable-features=WebRTCPipeWireCapturer %U"
-        '';
-      });
+          #makeWrapper $out/lib/slack/slack $out/bin/slack \
+          #--prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
+          #--prefix PATH : ${lib.makeBinPath [prev.xdg-utils]} \
+          #--add-flags "--enable-features=WebRTCPipeWireCapturer %U"
+        #'';
+      #});
 
       inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) gopass iosevka;
     })

@@ -87,7 +87,8 @@ in
         videoDrivers = if (cfg.driver != null) then [ cfg.driver ] else [ ];
 
         displayManager = {
-          sddm.enable = enable;
+          #sddm.enable = enable;
+          gdm.enable = true;
           defaultSession = session_map.${builtins.head cfg.managers};
         };
 
