@@ -92,7 +92,7 @@ in
         #makemkv
 
         # games
-        #polymc
+        polymc
         #citra
         #yuzu-ea
         osu-lazer
