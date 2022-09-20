@@ -71,7 +71,6 @@ rec {
             wireguard.enable = true;
             nebula.enable = true;
             mullvad.enable = true;
-            dns.nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
             workstation.enable = true;
           }
           inpargs.systemConfig;

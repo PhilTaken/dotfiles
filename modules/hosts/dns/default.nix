@@ -11,6 +11,7 @@ let
   net = import ../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
+  default_nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
 in
 {
   options.phil.dns = {
@@ -19,7 +20,8 @@ in
       type = types.nullOr (types.enum hostnames);
       description = "dns host";
       example = "gamma";
-      default = null;
+      #default = null;
+      default = default_nameserver;
     };
   };
 
