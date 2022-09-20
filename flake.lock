@@ -491,11 +491,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1663618128,
-        "narHash": "sha256-E/TgcXiKhVynyc68bBKm1NuQYQ6sqwI9W7UBA3ohBwY=",
+        "lastModified": 1663665418,
+        "narHash": "sha256-FfHLjo7Cz1U0GRKaGwmBOrbv25LhFfKXkLaJ/PCelHY=",
         "owner": "vaxerski",
         "repo": "Hyprland",
-        "rev": "a8943246a79faff415f2da7e210e80ae51b00d95",
+        "rev": "cde624ec6a98b751e67967cbaffd68b1215e8531",
         "type": "github"
       },
       "original": {
@@ -581,11 +581,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1663658903,
-        "narHash": "sha256-TJnm04rTmN/YFHT3GuZ3PpS8MgKujCr0mqMYujQC2v8=",
+        "lastModified": 1663668932,
+        "narHash": "sha256-Hx8y6wzot/IvtZdYsERJiLWjW6u11tUyiA2PK90hGD4=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "10196f1b462400b8a4a9e8f13893da2514f8c850",
+        "rev": "abe2d90693e5cec3428c0162c48f0ea38972ff31",
         "type": "github"
       },
       "original": {
