@@ -57,7 +57,7 @@ rec {
         nebula.enable = true;
 
         core.hostName = servername;
-        core.docker = false;
+        #core.docker = false;
 
         sound.enable = false;
         video.enable = false;
