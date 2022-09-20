@@ -11,7 +11,12 @@ let
 in
 {
   options.phil.server.services.telegraf = {
-    enable = mkEnableOption "telegraf";
+    enable = mkOption {
+      description = "enable telegraf";
+      type = types.bool;
+      default = true;
+    };
+
     inputs = {
       default = mkOption {
         type = types.bool;
