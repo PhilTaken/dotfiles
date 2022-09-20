@@ -7,8 +7,8 @@ with lib;
 
 let
   cfg = config.phil.server.services.telegraf;
-  #outputUrl = "http://influx.pherzog.xyz:8086";
-  outputUrl = "http://10.200.0.5:8086";
+  port = config.phil.server.services.influxdb2.port;
+  outputUrl = "http://influx.pherzog.xyz:${builtins.toString port}";
 in
 {
   options.phil.server.services.telegraf = {
