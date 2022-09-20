@@ -129,7 +129,11 @@ rec {
           #windowrule=pseudo,abc
           #windowrule=monitor 0,xyz
 
-          # example binds
+          # mouse binds
+          bindm=SUPER,mouse:272,movewindow
+          bindm=SUPER,mouse:273,resizewindow
+
+          # keyboard binds
           bind=SUPER,P,pseudo,
           bind=SUPER,D,killactive,
           bind=SUPER,C,exit,
