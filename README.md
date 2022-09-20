@@ -50,5 +50,3 @@ Secrets are provisioned by [sops-nix](https://github.com/Mic92/sops-nix) using [
 **early WIP**
 
 I have implemented some basic [telegraf](https://www.influxdata.com/time-series-platform/telegraf/) to [influxdb2](https://www.influxdata.com/) monitoring for basic metrics such as temperature and cpu utilisation as well as [vector](https://vector.dev/) to send the system's syslog to [grafana](https://grafana.com/).
-
-Something broke it (probably me), so currently neither is functional.
