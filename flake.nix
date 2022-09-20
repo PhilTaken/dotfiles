@@ -231,7 +231,7 @@
           hostname = "10.200.0.5";
           #hostname = "192.168.0.21";
           sshUser = "root";
-          remoteBuild = true;
+          #remoteBuild = true;
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
         };
       };
