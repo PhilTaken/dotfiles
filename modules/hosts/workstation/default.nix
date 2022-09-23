@@ -88,7 +88,7 @@ in
         # audio/video
         audacity
         obs-studio
-        #handbrake
+        handbrake
         #makemkv
 
         # games
