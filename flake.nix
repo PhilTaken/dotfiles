@@ -140,7 +140,13 @@
               slack
               fractal
 
-              #nur.repos.shados.tmm
+              (nur.repos.shados.tmm.overrideAttrs(old: {
+                version = "4.3.3";
+                src = builtins.fetchurl {
+                  url = "https://release.tinymediamanager.org/v4/dist/tmm_4.3.3_linux-amd64.tar.gz";
+                  sha256 = "sha256:17jdhxlk100dl6fvbnzrvcs523lz4dghw742pdspmjwgqq1pjj0g";
+                };
+              }))
               plover.dev
             ];
           };
