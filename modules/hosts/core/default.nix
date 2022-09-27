@@ -64,7 +64,7 @@ in
           "https://arm-rs.cachix.org"
           "https://cache.iog.io"
           "https://hyprland.cachix.org"
-          "s3://serokell-private-nix-cache?endpoint=s3.us-west-000.backblazeb2.com&profile=serokell-private-nix-cache"
+          #"s3://serokell-private-nix-cache?endpoint=s3.us-west-000.backblazeb2.com&profile=serokell-private-nix-cache"
           "s3://serokell-private-cache?endpoint=s3.eu-central-1.wasabisys.com&profile=serokell-private-cache"
           "https://nixpkgs-wayland.cachix.org"
           "https://cache.nixos.org"
