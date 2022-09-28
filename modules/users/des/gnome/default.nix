@@ -21,11 +21,11 @@ in
     home.packages = with pkgs; [
       chrome-gnome-shell
       # gnome3 apps
-      gnome3.eog # image viewer
-      gnome3.evince # pdf reader
+      gnome.eog # image viewer
+      gnome.evince # pdf reader
 
       # desktop look & feel
-      gnome3.gnome-tweaks
+      gnome.gnome-tweaks
 
       # extensions
       gnomeExtensions.dash-to-dock

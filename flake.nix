@@ -109,7 +109,7 @@
             };
 
             extraPackages = pkgs: with pkgs; [
-              gnome3.adwaita-icon-theme
+              gnome.adwaita-icon-theme
             ];
           };
 
@@ -135,7 +135,7 @@
               # e-guitar stuff
               guitarix
               qjackctl
-              jack2Full
+              jack2
 
               slack
               fractal
