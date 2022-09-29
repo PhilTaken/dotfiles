@@ -26,22 +26,10 @@ in
       enable = true;
       matchBlocks = rec {
         # work
-        "*.aquarius.serokell.team" = {
+        "*.*.serokell.team" = {
           extraOptions."AddressFamily" = "inet";
           user = "maelstroem";
           port = 17788;
-        };
-        "albali" = {
-          extraOptions."CanonicalizeHostname" = "yes";
-          hostname = "albali.aquarius.serokell.team";
-        };
-        "skat" = {
-          extraOptions."CanonicalizeHostname" = "yes";
-          hostname = "skat.aquarius.serokell.team";
-        };
-        "bunda" = {
-          extraOptions."CanonicalizeHostname" = "yes";
-          hostname = "bunda.aquarius.serokell.team";
         };
 
         # home
