@@ -107,7 +107,7 @@ lsp.pylsp.setup(custom_setup{
 --lsp.pyright.setup(signature_setup)
 local other_lsps = {
     'ccls',
-    'rnix',
+    'nil_ls',
     'texlab',
     'tsserver',
     'erlangls',
