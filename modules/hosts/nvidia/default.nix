@@ -7,6 +7,13 @@ with lib;
 
 let
   cfg = config.phil.nvidia;
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec "$@"
+  '';
 in
 {
   options.phil.nvidia = {
@@ -18,6 +25,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    services.xserver.videoDrivers = lib.mkDefault [ "nvidia" ];
+
+    environment.systemPackages = [ nvidia-offload ];
+
     hardware = {
       nvidia = {
         # package = config.boot.kernelPackages.nvidiaPackages.beta;
@@ -25,7 +36,7 @@ in
         # nvidiaPersistenced = false;
       };
       opengl = {
-        #extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+        extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
         #extraPackages32 = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
       };
     };

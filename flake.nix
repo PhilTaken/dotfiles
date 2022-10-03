@@ -193,6 +193,12 @@
               managers = [ "gnome" ];
             };
           };
+          extraHostModules = [
+            inputs.nixos-hardware.nixosModules.common-pc
+            inputs.nixos-hardware.nixosModules.common-pc-ssd
+            inputs.nixos-hardware.nixosModules.common-cpu-amd
+            #inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+          ];
         };
 
         # future laptop config
