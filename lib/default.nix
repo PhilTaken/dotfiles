@@ -17,7 +17,7 @@ let
     inputs.sops-nix-src.overlay
     inputs.deploy-rs.overlay
     inputs.neovim-nightly.overlay
-    inputs.polymc.overlay
+    #inputs.polymc.overlay
     inputs.arm-rs.overlays.default
     inputs.hyprland.overlays.default
     inputs.zellij.overlays.default
