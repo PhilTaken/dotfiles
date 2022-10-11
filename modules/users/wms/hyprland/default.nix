@@ -119,6 +119,7 @@ rec {
           windowrule=float,Pinentry
           windowrule=float,Media viewer
           windowrule=float,title:Picture-in-Picture
+          windowrule=float,title:Firefox — Sharing Indicator
 
           # example window rules
           # for windows named/classed as abc and xyz
