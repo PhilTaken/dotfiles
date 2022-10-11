@@ -28,6 +28,12 @@ let
 
       webcord = inputs.webcord.packages.${prev.system}.default;
 
+      # devdocs.io
+      devdocs-desktop = prev.writeShellApplication {
+        name = "devdocs";
+        text = "${prev.devdocs-desktop}/bin/devdocs-desktop --no-sandbox";
+      };
+
       #slack = prev.slack.overrideAttrs (old: {
       #installPhase = old.installPhase + ''
       #rm $out/bin/slack

@@ -54,6 +54,7 @@ rec {
           zoom-us
         ] ++ (extraPackages pkgs) ++
         # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
+
         #discord
         (if true then [
           (pkgs.writeShellApplication {
