@@ -25,11 +25,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.steam.enable = true;
+    programs.steam.enable = lib.mkDefault true;
 
-    phil.core.enableBluetooth = true;
+    phil.core.enableBluetooth = lib.mkDefault true;
 
     hardware.acpilight.enable = true;
+
     environment = {
       systemPackages = with pkgs; [
         brightnessctl

@@ -18,8 +18,9 @@ _:
       alpha = "10.200.0.1";
       beta = "10.200.0.2";
       gamma = "10.200.0.3";
-      nixos-laptop = "10.200.0.4";
+      #nixos-laptop = "10.200.0.4";
       delta = "10.200.0.5";
+      epsilon = "10.200.0.6";
     };
 
     # these can be adjusted however you desire
@@ -31,8 +32,9 @@ _:
       alpha = "10.100.0.1";
       beta = "10.100.0.2";
       gamma = "10.100.0.3";
-      nixos-laptop = "10.100.0.4";
+      #nixos-laptop = "10.100.0.4";
       delta = "10.100.0.5";
+      epsilon = "10.100.0.6";
     };
   };
 

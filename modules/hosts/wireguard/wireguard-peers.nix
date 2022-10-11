@@ -26,7 +26,7 @@ let
     beta = "/DWBidRPbNdqBhXZJFGpD20K+Bs6ViEbq4DJOlw5f0U=";
     gamma = "1w8CC/pEfXFPvdzyspDkuw/s8k2bkqAqk4KKg35IvQc=";
     delta = "598UtHyLn0L5ReObBtsT+UAJHtt7FtuFZiF5nRJ+nEg=";
-    nixos-laptop = "Xbi0ylobPYxxcxCvxaJ2mvC2WqGlODnMkeIYPG9tlVo=";
+    epsilon = "Xbi0ylobPYxxcxCvxaJ2mvC2WqGlODnMkeIYPG9tlVo=";
   };
 
 in

@@ -56,12 +56,6 @@ in
       };
     };
 
-    #systemd.network.wait-online = {
-    #timeout = 20;
-    #anyInterface = true;
-    #ignoredInterfaces = [ networkName ];
-    #};
-
     networking = {
       nat.enable = mkDefault hasEndpoint;
       hosts = builtins.listToAttrs

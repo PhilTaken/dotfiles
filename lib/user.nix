@@ -37,9 +37,9 @@ rec {
           cachix
           gping
           hyperfine
-          texlive.combined.scheme-medium
+          #texlive.combined.scheme-medium
           tokei
-          vpnc
+          #vpnc
           wget
           youtube-dl
 

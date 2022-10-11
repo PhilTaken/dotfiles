@@ -193,25 +193,32 @@
               managers = [ "gnome" ];
             };
           };
-          extraHostModules = [
-            inputs.nixos-hardware.nixosModules.common-pc
-            inputs.nixos-hardware.nixosModules.common-pc-ssd
-            inputs.nixos-hardware.nixosModules.common-cpu-amd
-            #inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+
+          extraHostModules = with inputs.nixos-hardware.nixosModules; [
+            common-pc
+            common-pc-ssd
+            common-cpu-amd
+            #common-gpu-nvidia
           ];
         };
 
         # future laptop config
-        nixos-laptop = util.host.mkWorkstation rec {
-          users = [ "nixos" ];
+        epsilon = util.host.mkWorkstation rec {
+          users = [ "maelstroem" ];
           hmConfigs = mkHMUsers users;
           systemConfig = {
-            core.hostName = "nixos-laptop";
+            server.services.openssh.enable = true;
+            core.hostName = "epsilon";
             laptop.enable = true;
-            laptop.wirelessInterfaces = [ "wlp0s20f3" ];
-
-            #video.managers = [ "sway" ];
+            laptop.wirelessInterfaces = [ "wlp3s0" ];
           };
+
+          extraHostModules = with inputs.nixos-hardware.nixosModules; [
+            common-pc-laptop
+            common-pc-laptop-ssd
+            common-cpu-intel-cpu-only
+            common-cpu-intel-kaby-lake
+          ];
         };
       } // builtins.mapAttrs
         (servername: services:
@@ -227,7 +234,6 @@
       # shortcut for building images
       packages."${system}" = {
         x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
-        #beta-iso = self.nixosConfigurations.beta.config.system.build.sdImage;
       };
 
       # deploy config
@@ -245,6 +251,12 @@
           sshUser = "root";
           #remoteBuild = true;
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
+        };
+
+        epsilon = {
+          hostname = "192.168.0.130";
+          sshUser = "root";
+          profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.epsilon;
         };
       };
 

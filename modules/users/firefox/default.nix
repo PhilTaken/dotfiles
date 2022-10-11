@@ -62,9 +62,6 @@ in
           stylus
           terms-of-service-didnt-read
           ublock-origin
-          unpaywall
-          zoom-redirector
-          privacy-redirect
         ];
 
         profiles = {
