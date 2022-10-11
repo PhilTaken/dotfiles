@@ -60,6 +60,11 @@ in
           user = "nixos";
         };
 
+        "epsilon" = {
+          hostname = "10.200.0.4";
+          user = "maelstroem";
+        };
+
 
         # remote vps
         "vps2" = {
