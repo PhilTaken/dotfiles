@@ -36,9 +36,6 @@
 --                  WX0X                         NOOXW
 
 
--- utils
-require("custom.utils")
-
 
 -- default settings
 require('custom.settings')
@@ -47,10 +44,14 @@ require('custom.settings')
 -- will return false if plugins need to be installed
 -- to prevent the config from throwing a bunch of errors
 if require('custom.plugins') then
+    -- utils
+    require("custom.utils")
+
     -- lsp settings
     require('custom.lsp')
 
     -- mappings
     require("custom.maps")
+else
+    print("Initial install, reload nvim to start hacking!")
 end
-
