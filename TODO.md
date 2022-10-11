@@ -11,6 +11,9 @@
 - declarative syncthing config
 - setup script
     - akin to https://github.com/cleverca22/nix-tests/blob/master/kexec/justdoit.nix
+- age-key script + master age-key backup
+- auto import gpg public key
+- ssh known hosts
 
 
 - delta as dns on nebula
