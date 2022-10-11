@@ -87,28 +87,28 @@ in
       };
 
       #extraPackages = with pkgs; [
-        #gcc11
-        #gcc-unwrapped
+      #gcc11
+      #gcc-unwrapped
 
-        #tree-sitter
+      #tree-sitter
 
-        #git # version control
-        #ripgrep # telescope file finding
-        #fd # faster find
-        #gcc # for treesitter
+      #git # version control
+      #ripgrep # telescope file finding
+      #fd # faster find
+      #gcc # for treesitter
 
-        #bottom # custom floaterm
-        #lazygit # lazy git managment
+      #bottom # custom floaterm
+      #lazygit # lazy git managment
 
-        #neuron-notes # for zettelkasten note-taking
+      #neuron-notes # for zettelkasten note-taking
 
-        #sqlite # for sqlite.lua
-        #universal-ctags # ctags for anything
+      #sqlite # for sqlite.lua
+      #universal-ctags # ctags for anything
 
-        #inetutils # remote editing
+      #inetutils # remote editing
 
-        #sumneko-lua-language-server # lua
-        #rnix-lsp # nix
+      #sumneko-lua-language-server # lua
+      #rnix-lsp # nix
 
       #]
       #++ (optionals (cfg.langs.python) (with pkgs.python39Packages; [ python-lsp-server hy ]))
@@ -117,12 +117,12 @@ in
       #++ (optionals (cfg.langs.rust) [ pkgs.rust-analyzer ])
       #++ (optionals (cfg.langs.haskell) [ pkgs.haskell-language-server ])
       #++ (optionals (cfg.langs.extra) (with pkgs; [
-        #fortls
-        #erlang-ls
-        #texlab
-        #erlang-ls # erlang
-        #elixir_ls # elixir
-        #clojure-lsp # clojure
+      #fortls
+      #erlang-ls
+      #texlab
+      #erlang-ls # erlang
+      #elixir_ls # elixir
+      #clojure-lsp # clojure
       #]));
     };
   };

@@ -63,10 +63,10 @@ in
         display = "inline";
       };
       #delta = {
-        #enable = true;
-        #options = {
-          #line-numbers = true;
-        #};
+      #enable = true;
+      #options = {
+      #line-numbers = true;
+      #};
       #};
 
       inherit (cfg) userEmail;

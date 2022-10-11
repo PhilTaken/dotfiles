@@ -78,7 +78,8 @@ in
     services.xserver =
       let
         enable = cfg.managers != [ ];
-      in {
+      in
+      {
         inherit enable;
         layout = "us";
         xkbVariant = "intl,workman-intl";

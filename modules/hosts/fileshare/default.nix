@@ -18,22 +18,22 @@ let
   iplot = net.networks.default;
 
   mkMountsForBinds = binds: builtins.listToAttrs (builtins.concatLists (builtins.map
-      (bind: builtins.map
-        (dir: {
-          name = "/mnt/${dir}";
-          value =
-            let
-              ip = if bind.host == null then bind.ip else net.networks.default.${bind.host};
-            in
-            {
-              device = "${ip}:${dir}";
-              fsType = "nfs4";
-              # mount on first access instead of boot, unmount after 10 mins
-              options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
-            };
-        })
-        bind.dirs)
-      binds));
+    (bind: builtins.map
+      (dir: {
+        name = "/mnt/${dir}";
+        value =
+          let
+            ip = if bind.host == null then bind.ip else net.networks.default.${bind.host};
+          in
+          {
+            device = "${ip}:${dir}";
+            fsType = "nfs4";
+            # mount on first access instead of boot, unmount after 10 mins
+            options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
+          };
+      })
+      bind.dirs)
+    binds));
 
 
   mkBindsForDirs = dirs: builtins.listToAttrs (builtins.map

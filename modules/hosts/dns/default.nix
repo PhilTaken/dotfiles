@@ -32,11 +32,12 @@ in
   config = mkIf (cfg.nameserver != null) {
     #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
-    networking.nameservers = if config.networking.hostName != cfg.nameserver then [
-      "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"
-    ] else [
-      "localhost"
-    ];
+    networking.nameservers =
+      if config.networking.hostName != cfg.nameserver then [
+        "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"
+      ] else [
+        "localhost"
+      ];
 
     services.resolved = {
       enable = true;

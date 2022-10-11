@@ -27,12 +27,14 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/dd7e63f1-7c6a-4928-b556-2497c62bd764";
+    {
+      device = "/dev/disk/by-uuid/dd7e63f1-7c6a-4928-b556-2497c62bd764";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/4BD0-8F85";
+    {
+      device = "/dev/disk/by-uuid/4BD0-8F85";
       fsType = "vfat";
     };
 

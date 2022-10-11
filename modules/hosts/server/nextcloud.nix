@@ -127,10 +127,10 @@ in
               };
 
               #phpOptions = {
-                #redis.host = config.services.redis.servers.nextcloud.unixSocket;
-                #redis.port = "0";
-                #redis.dbindex = "0";
-                #redis.timeout = "1.5";
+              #redis.host = config.services.redis.servers.nextcloud.unixSocket;
+              #redis.port = "0";
+              #redis.dbindex = "0";
+              #redis.timeout = "1.5";
               #};
             };
 
