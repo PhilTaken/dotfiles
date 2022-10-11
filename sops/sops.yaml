@@ -13,6 +13,7 @@ keycloak-dbpass: ENC[AES256_GCM,data:jCKc51Kb9XaSwEkYlKY=,iv:2mJE6/TZNjpQDybBgSy
 grafana-adminpass: ENC[AES256_GCM,data:wrenJ3rHyw==,iv:P37yv6z90YvCcsclNWEood1fHh8qSchA9VAddGt2eTE=,tag:RGD0yGQXGIoIUYGkQHpghg==,type:str]
 grafana-admindbpass: ENC[AES256_GCM,data:YIJhYomQIg==,iv:eHZwfq40oHQyqhqnBw/yg+ODFrpDZ6YUtwrFQHk4JLg=,tag:qmXlNoKFh4dnu7Vx0cuGSg==,type:str]
 caddy_dns_cf: ENC[AES256_GCM,data:jgJOffjBEqhcu33c+2r2A38XcsXjoubVC+3dCXIN8NTqSXU40Irq/ZgUbvg1rAbQeONRjfUb83w=,iv:BJwbvRokkWtL7pKX4Zln47K1HnZHwfCbV4Ev+ZRdro0=,tag:Qilq9iIGNF9iB4oRAlnXTA==,type:str]
+wifi-passwords: ENC[AES256_GCM,data:/UJnsU9Gxc+nBU6sIoHr1oI5CbNW,iv:nnRnEH8YaYikeMjeAnnT3NVdHjAYhkbS4HajeUx3S0k=,tag:T2Hh+xIlFaq0HzinUAAvBw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -64,8 +65,8 @@ sops:
             eC9RYzZDdDQ5dms3Q0trMmlMUmtZOWcK9LGYYp76XD4eZaJYnBduh2ESntTfoxUU
             3BtmKOWueIMcVAVQX3cp9IDZP/EpGFKnETZYfXXDM2Z6QUxusTpLaw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-06-25T17:46:01Z"
-    mac: ENC[AES256_GCM,data:CEontcEaS9F+eUFxduhZl2nP6vZKvqk1XPqzeOHxkWLoGbfozGGrQPmEyTOaz4rVYIGqtzl9hbWAsnSsSyB0Pl4XRjp0PxIjulLlB/v3jYFEg26pjhFpsN4oMXLYrt3kUHtQnyqjR8BrTcJfmHp4WE06sZTs+S/PP5I4xl/16Fk=,iv:mb+LCpHuBtf7iB1eVADD+6RR1/qC+o6X91a7XynSdAM=,tag:EH3zin9HKEMUA2pPb13cmQ==,type:str]
+    lastmodified: "2022-10-11T22:31:13Z"
+    mac: ENC[AES256_GCM,data:y5pPagieWpGwcKYTZsqqRkkjV9YawZvMzzz65WKkSmkPIrxmb1CuSYRwwgAcLYV0/GMIw314BlGXfvBla0IAlq1b7w3DAbYVbvQZkQ4CRIq22ufgBlc3dS62Qi/LJ10Mk7FML5u2PG4xj8ftmpLncQs0vp750fwxM5c4WBXSyMc=,iv:OMeiKVbNrQ7c3ldKUl/Ao9sbYmnVY96Cz34FvkT6TmE=,tag:Ncb3lKBJT82U2IIxlue5YA==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3

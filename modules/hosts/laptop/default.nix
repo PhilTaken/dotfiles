@@ -25,10 +25,9 @@ in
   };
 
   config = mkIf cfg.enable {
+
     programs.steam.enable = lib.mkDefault true;
-
     phil.core.enableBluetooth = lib.mkDefault true;
-
     hardware.acpilight.enable = true;
 
     environment = {
@@ -51,10 +50,17 @@ in
       wifi.backend = "wpa_supplicant";
     };
 
+    sops.secrets.wifi-passwords = { };
     networking.wireless = {
       enable = true;
-      userControlled.enable = true;
+      #userControlled.enable = true;
       interfaces = cfg.wirelessInterfaces;
+      environmentFile = config.sops.secrets.wifi-passwords.path;
+      networks = {
+        "BBC TV truck #20" = {
+          psk = "@PSK_HOME@";
+        };
+      };
     };
   };
 }
