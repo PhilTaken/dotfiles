@@ -11,7 +11,11 @@ let
   net = import ../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
-  default_nameserver = builtins.head (builtins.attrNames (lib.filterAttrs (name: value: lib.hasInfix "unbound" (lib.concatStrings value)) net.services));
+  default_nameserver = builtins.head
+    (builtins.attrNames
+      (lib.filterAttrs
+        (name: value: lib.hasInfix "unbound" (lib.concatStrings value))
+        net.services));
 in
 {
   options.phil.dns = {
@@ -28,9 +32,10 @@ in
   config = mkIf (cfg.nameserver != null) {
     #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
-    networking.nameservers = [
+    networking.nameservers = if config.networking.hostName != cfg.nameserver then [
       "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"
-      #"1.1.1.1"
+    ] else [
+      "localhost"
     ];
 
     services.resolved = {
