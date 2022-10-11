@@ -71,6 +71,9 @@
     - pleroma
     - shiori bookmark manager
 
+    - github actions + cachix
+    - build server for low-powered laptop
+
 - change module 
     - caddy acme -> services.acme
         - removes need to compile caddy with cloudflare
