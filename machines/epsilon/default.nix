@@ -39,14 +39,6 @@
   swapDevices = [ ];
 
   # -----------------------------------------------------------------------------------------------------
-
-  networking.tempAddresses = "enabled";
-
-  # dhcp config
-  networking.useDHCP = false;
-  networking.interfaces.wlp3s0.useDHCP = true;
-
-  # -----------------------------------------------------------------------------------------------------
   # TODO move to keyboard ( qmk ?) module
 
   services.udev = {

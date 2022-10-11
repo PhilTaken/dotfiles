@@ -137,16 +137,16 @@
               qjackctl
               jack2
 
-              slack
-              fractal
-
-              (nur.repos.shados.tmm.overrideAttrs(old: {
-                version = "4.3.3";
+              # tiny media manager
+              (nur.repos.shados.tmm.overrideAttrs(old: rec {
+                version = "4.3.4";
                 src = builtins.fetchurl {
-                  url = "https://release.tinymediamanager.org/v4/dist/tmm_4.3.3_linux-amd64.tar.gz";
-                  sha256 = "sha256:17jdhxlk100dl6fvbnzrvcs523lz4dghw742pdspmjwgqq1pjj0g";
+                  url = "https://release.tinymediamanager.org/v4/dist/tmm_${version}_linux-amd64.tar.gz";
+                  sha256 = "sha256:1aj97m186lagaqqvcs2s7hmgk638l5mb98ril4gwgpjqaqj8s57n";
                 };
               }))
+
+              # typey-typey
               plover.dev
             ];
           };

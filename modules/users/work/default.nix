@@ -22,6 +22,11 @@ in
   config = mkIf cfg.enable {
     # add config here
     home.file.".aws/credentials".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/aws-credentials";
+
+    home.packages = with pkgs; [
+      slack
+      fractal
+    ];
   };
 }
 
