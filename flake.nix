@@ -20,6 +20,8 @@
     # better discord clone/fork
     webcord.url = "github:fufexan/webcord-flake";
 
+    # best nix language server
+    nil-ls.url = "github:oxalica/nil";
 
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
 
@@ -72,7 +74,6 @@
       url = "github:syl20bnr/spacemacs";
       flake = false;
     };
-
   };
 
   outputs = { self, nixpkgs, ... }@inputs:

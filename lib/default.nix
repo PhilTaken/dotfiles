@@ -22,6 +22,7 @@ let
     inputs.hyprland.overlays.default
     inputs.zellij.overlays.default
     inputs.eww-git.overlays.default
+    inputs.nil-ls.overlays.default
     (final: prev: {
       makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
 

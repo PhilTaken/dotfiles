@@ -26,6 +26,7 @@ in
     home.packages = with pkgs; [
       slack
       fractal
+      devdocs-desktop
     ];
   };
 }
