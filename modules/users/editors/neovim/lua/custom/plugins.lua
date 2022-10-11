@@ -254,7 +254,6 @@ require('packer').startup{
             {
                 'neovim/nvim-lspconfig',
                 config = function()
-                    require('custom.lsp')
                     -- https://github.com/kevinhwang91/nvim-ufo#customize-fold-text
                     require('ufo').setup()
                     -- TODO: move lsp signature setup here?

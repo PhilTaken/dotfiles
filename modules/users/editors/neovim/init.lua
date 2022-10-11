@@ -47,6 +47,8 @@ require('custom.settings')
 -- will return false if plugins need to be installed
 -- to prevent the config from throwing a bunch of errors
 if require('custom.plugins') then
+    -- lsp settings
+    require('custom.lsp')
 
     -- mappings
     require("custom.maps")
