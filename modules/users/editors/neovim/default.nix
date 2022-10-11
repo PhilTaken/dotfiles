@@ -91,9 +91,8 @@ in
         inetutils # remote editing
 
         sumneko-lua-language-server # lua
-        #rnix-lsp # nix
-        nil
 
+        nil # nix
       ]
       ++ (optionals cfg.langs.python (with pkgs.python39Packages; [ python-lsp-server hy ]))
       ++ (optionals cfg.langs.ts [ pkgs.nodePackages.typescript-language-server ])
