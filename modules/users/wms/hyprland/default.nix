@@ -40,11 +40,11 @@ rec {
 
     wayland.windowManager.hyprland =
       let
-        terminal = "${pkgs.foot}/bin/foot";
-        #terminal = "${pkgs.wezterm}/bin/wezterm";
+        #terminal = "${pkgs.foot}/bin/foot";
+        terminal = "${pkgs.wezterm}/bin/wezterm";
         #terminal = "${pkgs.alacritty}/bin/alacritty";
 
-        #screenhsot = "${pkgs.flameshot}/bin/flameshot gui";
+        #screenshot = "${pkgs.flameshot}/bin/flameshot gui";
         screenshot = "${pkgs.grim}/bin/grim -t jpeg -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/jpeg";
 
         lock = "swaylock -c 000000";
