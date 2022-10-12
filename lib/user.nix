@@ -14,7 +14,7 @@ rec {
     , extraPackages ? pkgs: [ ]
     , stateVersion ? "21.05"
     , homeDirectory ? "/home/${username}"
-    }: rec {
+    }: {
       phil = userConfig;
       systemd.user.startServices = true;
       home = {
@@ -107,7 +107,7 @@ rec {
     , ...
     }: mkUser { inherit uid name shell extraGroups sshKeys; };
 
-  mkGuestUser = { name, uid ? 1000, shell ? pkgs.zsh, extraGroups ? [ ] }@args: mkUser { inherit name uid shell extraGroups; };
+  mkGuestUser = { name, uid ? 1000, shell ? pkgs.zsh, extraGroups ? [ ] }@args: mkUser args;
 
   mkUser =
     { name

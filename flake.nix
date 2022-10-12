@@ -178,7 +178,10 @@
         x86-iso = util.iso.mkIso "isoInstall";
 
         # desktop @ home
-        gamma = util.host.mkWorkstation rec {
+        gamma = let
+          # screw nvidia
+          mkHMUsers = map (user: util.user.mkNixosModule (hmUsers.${user} // { phil.wms.hyprland.terminal = "alacritty"; }));
+        in util.host.mkWorkstation rec {
           users = [ "maelstroem" ]; # "jaid"
           hmConfigs = mkHMUsers users;
           systemConfig = {

@@ -35,7 +35,7 @@ in {
             hide_tab_bar_if_only_one_tab = true,
             color_scheme = "Catppuccin Mocha",
             font = wezterm.font("${cfg.default_font}"),
-            font_size = 13.0,
+            font_size = 11.0,
             dpi = 192.0,
           }
         '';

@@ -29,9 +29,15 @@ rec {
       type = types.str;
       default = "Iosevka Comfy";
     };
+
+    terminal = mkOption {
+      description  = "terminal to use";
+      type = types.enum ["wezterm" "alacritty" "foot"];
+      default = "wezterm";
+    };
   };
 
-  config = mkIf cfg.enable rec {
+  config = mkIf cfg.enable {
     phil.wms.tools.udiskie.enable = true;
 
     home.sessionVariables = {
@@ -40,9 +46,7 @@ rec {
 
     wayland.windowManager.hyprland =
       let
-        #terminal = "${pkgs.foot}/bin/foot";
-        terminal = "${pkgs.wezterm}/bin/wezterm";
-        #terminal = "${pkgs.alacritty}/bin/alacritty";
+        inherit (cfg) terminal;
 
         #screenshot = "${pkgs.flameshot}/bin/flameshot gui";
         screenshot = "${pkgs.grim}/bin/grim -t jpeg -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/jpeg";
@@ -141,7 +145,7 @@ rec {
           bind=SUPERSHIFT,space,togglefloating,
 
           bind=SUPER,space,exec,${menu}
-          bind=SUPER,return,exec,${terminal}
+          bind=SUPER,return,exec,${pkgs.${terminal}}/bin/${terminal}
           bind=SUPER,l,exec,${lock}
           bind=SUPER,q,exec,${screenshot}
 
