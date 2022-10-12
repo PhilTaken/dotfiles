@@ -34,7 +34,7 @@ in
       systemPackages = with pkgs; [
         brightnessctl
         powertop
-        cmst # connman system tray
+        acpi
       ];
       sessionVariables.LIBVA_DRIVER_NAME = "iHD";
     };
