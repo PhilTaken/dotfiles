@@ -1,7 +1,9 @@
 # TODO:
 
+- hyprland config
+    - w/d for keybinds -> keycodes/letter?
+
 - eww config
-    - try the tray pr
     - workspaces
     - music popup?
     - css styling
@@ -15,12 +17,8 @@
 - auto import gpg public key
 - ssh known hosts
 
-
 - delta as dns on nebula
     - set on all servers
-
-- nvim heirline, other plugins (see tabstash)
-- nvim highlight for folds
 
 - fix loki: unknown variant `loki`, expected `unit_test` for key `sinks.loki`
 
@@ -85,7 +83,6 @@
     - extend vector to replace telegraf
         - geoip mapping ip adresses -> store in influxdb, visualize in grafana
 
-- basic install script for custom image (basic partitioning -> back up all non-store files)
 
 - nebula
     - implement proper tagging
@@ -96,9 +93,6 @@
     - better access to certificates from other services (unbound etc)
 
 - http://consul.io?
-
-- nested flakes for better pinning
-    - spacemacs/neovim/eww/spicetify/polymc
 
 ## NVIM
 
@@ -113,9 +107,11 @@
 
 ### ideas
 
-- zrythm 
+- nvim heirline, other plugins (see tabstash)
+- nvim highlight for folds
+
+- zrythm
     - https://www.zrythm.org/en/index.html
-- https://github.com/extrawurst/gitui vs lazygit => diffview
 - sk(im) sorter for telescope?
 - plugins
     - symbol outlines (lsp)
@@ -128,12 +124,10 @@
         - tjdevries video
     - run scripts
         - https://github.com/stevearc/overseer.nvim
-    - navic
 
 ## general Ideas
 
 - flake templates for common languages
-- devdocs.io
 - distributed file system
     - ceph
     - gluster
@@ -145,3 +139,14 @@
 
 - selfhosted
 - skrooge?
+
+# for newer setups
+
+- basic install script for custom image (basic partitioning -> back up all non-store files)
+- declarative syncthing config
+- setup script
+    - akin to https://github.com/cleverca22/nix-tests/blob/master/kexec/justdoit.nix
+- age-key script + master age-key backup
+- auto import gpg public key
+- ssh known hosts
+
