@@ -18,7 +18,7 @@ return {
     window_close_confirmation = "NeverPrompt",
     window_decorations = "NONE",
 
-    colors = catppuccin,
+    color_scheme = "Catppuccin Mocha",
 
     dpi = 140,
     font = wezterm.font("Iosevka Comfy"),

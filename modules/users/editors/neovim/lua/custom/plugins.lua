@@ -54,7 +54,7 @@ require('packer').startup{
             {
                 'catppuccin/nvim',
                 as = "catppuccin",
-                run = ":CatppuccinCompile",
+                --run = ":CatppuccinCompile",
                 config = function()
                     local catppuccin = require('catppuccin')
                     catppuccin.setup{
