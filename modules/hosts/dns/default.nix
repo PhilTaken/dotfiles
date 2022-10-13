@@ -16,6 +16,7 @@ let
       (lib.filterAttrs
         (name: value: lib.hasInfix "unbound" (lib.concatStrings value))
         net.services));
+  same-server = config.networking.hostName == cfg.nameserver;
 in
 {
   options.phil.dns = {
@@ -33,18 +34,12 @@ in
     #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
     networking.nameservers =
-      if config.networking.hostName != cfg.nameserver then [
-        "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"
-      ] else [
-        "localhost"
-      ];
+      if same-server then [ "localhost" ] else [ "${iplot.${cfg.nameserver}}#dns.pherzog.xyz" ];
 
     services.resolved = {
-      enable = true;
+      enable = ! same-server;
 
-      fallbackDns = [
-        "2a0e:dc0:6:23::2#dot-ch.blahdns.com"
-      ];
+      fallbackDns = [ "2a0e:dc0:6:23::2#dot-ch.blahdns.com" ];
 
       extraConfig = ''
         DNSOverTLS=yes
