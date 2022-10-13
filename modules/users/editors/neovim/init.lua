@@ -40,18 +40,26 @@
 -- default settings
 require('custom.settings')
 
--- plugins
--- will return false if plugins need to be installed
--- to prevent the config from throwing a bunch of errors
-if require('custom.plugins') then
-    -- utils
-    require("custom.utils")
+-- plugin configs
+require('custom.plugins')
 
-    -- lsp settings
-    require('custom.lsp')
+-- utils
+require("custom.utils")
 
-    -- mappings
-    require("custom.maps")
-else
-    print("Initial install, reload nvim to start hacking!")
-end
+-- lsp settings
+require('custom.lsp')
+
+-- mappings
+require("custom.maps")
+
+-- statusline
+require('custom.statusline')
+
+-- luasnip snippets
+require('custom.snippets')
+
+-- cmp completion engine
+require('custom.cmp_init')
+
+-- telscope init
+require('custom.tele_init')
