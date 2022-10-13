@@ -120,6 +120,15 @@ in
           '';
           category = "system";
         }
+
+        {
+          name = "goback";
+          help = "revert to previous config";
+          command = ''
+            sudo nixos-rebuild switch --rollback --flake .
+          '';
+          category = "system";
+        }
       ];
   };
 }
