@@ -86,13 +86,13 @@ rec {
 
   mkHMUser = config: home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
-    modules = [ config ];
+    modules = [ (mkConfig config) ];
   };
 
   mkNixosModule = config: {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
-    home-manager.users.${config.home.username} = config;
+    home-manager.users.${config.username} = mkConfig config;
   };
 
   mkSystemUser =

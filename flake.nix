@@ -98,7 +98,7 @@
           };
         in
         {
-          nixos = util.user.mkConfig {
+          nixos = {
             username = "nixos";
             userConfig = defaultConfig // {
               wms.hyprland.enable = true;
@@ -114,7 +114,7 @@
             ];
           };
 
-          maelstroem = util.user.mkConfig {
+          maelstroem = {
             username = "maelstroem";
             userConfig = defaultConfig // {
               work.enable = true;
@@ -152,7 +152,7 @@
             ];
           };
 
-          jaid = util.user.mkConfig {
+          jaid = {
             username = "jaid";
             userConfig = {
               shells.zsh.enable = true;
@@ -180,7 +180,7 @@
         # desktop @ home
         gamma = let
           # screw nvidia
-          mkHMUsers = map (user: util.user.mkNixosModule (hmUsers.${user} // { phil.wms.hyprland.terminal = "alacritty"; }));
+          mkHMUsers = map (user: util.user.mkNixosModule (lib.recursiveUpdate hmUsers.${user} { userConfig.wms.hyprland.terminal = "alacritty"; }));
         in util.host.mkWorkstation rec {
           users = [ "maelstroem" ]; # "jaid"
           hmConfigs = mkHMUsers users;
