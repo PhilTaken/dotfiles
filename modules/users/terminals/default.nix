@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.terminals;
-in {
+in
+{
   options.phil.terminals = {
     default_font = mkOption {
       description = "default font";

@@ -31,8 +31,8 @@ rec {
     };
 
     terminal = mkOption {
-      description  = "terminal to use";
-      type = types.enum ["wezterm" "alacritty" "foot"];
+      description = "terminal to use";
+      type = types.enum [ "wezterm" "alacritty" "foot" ];
       default = "wezterm";
     };
   };

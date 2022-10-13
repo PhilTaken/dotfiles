@@ -178,33 +178,35 @@
         x86-iso = util.iso.mkIso "isoInstall";
 
         # desktop @ home
-        gamma = let
-          # screw nvidia
-          mkHMUsers = map (user: util.user.mkNixosModule (lib.recursiveUpdate hmUsers.${user} { userConfig.wms.hyprland.terminal = "alacritty"; }));
-        in util.host.mkWorkstation rec {
-          users = [ "maelstroem" ]; # "jaid"
-          hmConfigs = mkHMUsers users;
-          systemConfig = {
-            server.services.openssh.enable = true;
+        gamma =
+          let
+            # screw nvidia
+            mkHMUsers = map (user: util.user.mkNixosModule (lib.recursiveUpdate hmUsers.${user} { userConfig.wms.hyprland.terminal = "alacritty"; }));
+          in
+          util.host.mkWorkstation rec {
+            users = [ "maelstroem" ]; # "jaid"
+            hmConfigs = mkHMUsers users;
+            systemConfig = {
+              server.services.openssh.enable = true;
 
-            core.hostName = "gamma";
-            core.enableBluetooth = true;
+              core.hostName = "gamma";
+              core.enableBluetooth = true;
 
-            nvidia.enable = true;
+              nvidia.enable = true;
 
-            video = {
-              driver = "nvidia";
-              managers = [ "gnome" ];
+              video = {
+                driver = "nvidia";
+                managers = [ "gnome" ];
+              };
             };
-          };
 
-          extraHostModules = with inputs.nixos-hardware.nixosModules; [
-            common-pc
-            common-pc-ssd
-            common-cpu-amd
-            #common-gpu-nvidia
-          ];
-        };
+            extraHostModules = with inputs.nixos-hardware.nixosModules; [
+              common-pc
+              common-pc-ssd
+              common-cpu-amd
+              #common-gpu-nvidia
+            ];
+          };
 
         # future laptop config
         epsilon = util.host.mkWorkstation rec {
