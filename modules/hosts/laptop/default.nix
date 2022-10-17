@@ -72,6 +72,9 @@ in
         "BBC TV truck #20" = {
           psk = "@PSK_HOME@";
         };
+        "TALKTALK9738BE" = {
+          psk = "@PSK_JAID@";
+        };
       };
     };
   };
