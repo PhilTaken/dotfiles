@@ -40,6 +40,7 @@ in
         min-free = ${toString (100 * 1024 * 1024)}
         max-free = ${toString (1024 * 1024 * 1024)}
         tarball-ttl = ${toString (7 * 24 * 60 * 60)}
+        builders-use-substitutes = true
       '';
 
       # TODO add my own registry
