@@ -101,8 +101,10 @@ rec {
     , shell ? pkgs.zsh
     , extraGroups ? [ "wheel" "docker" "dialout" "adbusers" "gpio" "fuse" ]
     , sshKeys ? [
+        # yubikey
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCoABVjBx1az00D8EBjw9/NS9luqO2lN4Y87/2xsQqPTx9P7aXzfX53TwmU9Wpmp7qOIKykd8GSkBdCizMEzgaGmJl6+Di2GYvEfN0NrsLdBrjmIh7AQyR6UbY7qoTFjZ28864rk9QV9to2R1APL7o1wzdmCrFtTsemV+lw9MglqcPLT+ae2mba9fD84FFDmcSJMg5x1QHrO5GuWg/Ng7SE1eRhDbDmz66+HhdgvRRDJ9VwPGcH5ruXsDKvi/nrLVSxw7afvuM5KcNYoy+9CrA/N10cO5zdn4/q2DLYujkOvAucCDJ4bUEe8q6xEZw1LfCjKWIoFxzt+hetfkjS/Y3wWWTcHfcOx/BV6cOxyAFUGbu9RX/iUpyt8LAfjQv6L1zcD7vxYpfKz88jI/4zL7mHwILg+XQklBeiBsEQ4PyO1+4oIfuju241hVk+bFZYUD+AzzCNv7GKNNHe4aa4MWN6RLLhNxe9QlOTnsw0l2XNypr62Q1V8nxZkSY7mW8Hn0hLxTT82mTLuAff2yHPu+w+i0ELkk0BO28apxU1dPPbScHvojRlXTwIBvH3HN6TWdj2YnNFMdGvZgxxFNbi4l/7Gar1FKgi79KOwcm89ATmjONfbQMub+TaeBACefMZ9Q7uzbWeNO3mZpVA8nvM5eleqLemxYoeAQBuYjBjJlAHzQ== cardno:000614321676"
-        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCoABVjBx1az00D8EBjw9/NS9luqO2lN4Y87/2xsQqPTx9P7aXzfX53TwmU9Wpmp7qOIKykd8GSkBdCizMEzgaGmJl6+Di2GYvEfN0NrsLdBrjmIh7AQyR6UbY7qoTFjZ28864rk9QV9to2R1APL7o1wzdmCrFtTsemV+lw9MglqcPLT+ae2mba9fD84FFDmcSJMg5x1QHrO5GuWg/Ng7SE1eRhDbDmz66+HhdgvRRDJ9VwPGcH5ruXsDKvi/nrLVSxw7afvuM5KcNYoy+9CrA/N10cO5zdn4/q2DLYujkOvAucCDJ4bUEe8q6xEZw1LfCjKWIoFxzt+hetfkjS/Y3wWWTcHfcOx/BV6cOxyAFUGbu9RX/iUpyt8LAfjQv6L1zcD7vxYpfKz88jI/4zL7mHwILg+XQklBeiBsEQ4PyO1+4oIfuju241hVk+bFZYUD+AzzCNv7GKNNHe4aa4MWN6RLLhNxe9QlOTnsw0l2XNypr62Q1V8nxZkSY7mW8Hn0hLxTT82mTLuAff2yHPu+w+i0ELkk0BO28apxU1dPPbScHvojRlXTwIBvH3HN6TWdj2YnNFMdGvZgxxFNbi4l/7Gar1FKgi79KOwcm89ATmjONfbQMub+TaeBACefMZ9Q7uzbWeNO3mZpVA8nvM5eleqLemxYoeAQBuYjBjJlAHzQ== (none)"
+        # nix remote building
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8KpkIxe5zytz/Vv2kcSivSQ2KALMVCihYDZTfUZP04wDYhn/Sg/lHiTo7n1IE39w9JtmEaK003/7MKX04s1qA6ZI9H9Buq6QlyqClwIizwnMJa7Qbfv6C+WCEtGdU6Mdoam/4jZY9wNol4d1vjfStafkPDJqGDJaN/8KuPl9sVniUaFwMvxblzBC2RaStCUnwZMkAMi9V7re86PyfL7am7S9DwtxinTuaEqXe63b0k5RHjhPSVPAMFuItgnQOJUNa9vuD5x2Ao6pBMSpt0FSgwv13JHTC8Is3NgUofV4Vrt5nqv50aK+9pwpFOnjnvP5+lK//uqjMNRwPUG5ObKjA+4SDxfWUZ+cjQZ78U9LOyrRoqDF0fLCcLSpdRw6gZw4nN4pgowW4L/D1lO9FnZKwFVfdLMg0Fq/Q1X5VO+Jd0aPdE4MzmrAg34MxwX/qcZbz9vpRojz3G8C3+/bIFVAq4SP/l6RfdMPiwSn69wgKnu3/1EMwhjQnO+VdLS42ZPM= maelstroem@epsilon"
       ]
     , ...
     }: mkUser { inherit uid name shell extraGroups sshKeys; };
