@@ -50,7 +50,7 @@ in
     main_monitor = mkOption {
       description = "main monitor for the sidebar + calendar popup";
       type = types.int;
-      default = 1;
+      default = 0;
     };
   };
 

@@ -181,7 +181,10 @@
         gamma =
           let
             # screw nvidia
-            mkHMUsers = map (user: util.user.mkNixosModule (lib.recursiveUpdate hmUsers.${user} { userConfig.wms.hyprland.terminal = "alacritty"; }));
+            mkHMUsers = map (user: util.user.mkNixosModule (lib.recursiveUpdate hmUsers.${user} {
+              userConfig.wms.hyprland.terminal = "alacritty";
+              userConfig.wms.bars.eww.main_monitor = 1;
+            }));
           in
           util.host.mkWorkstation rec {
             users = [ "maelstroem" ]; # "jaid"
