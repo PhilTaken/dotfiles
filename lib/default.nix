@@ -17,12 +17,12 @@ let
     inputs.sops-nix-src.overlay
     inputs.deploy-rs.overlay
     inputs.neovim-nightly.overlay
-    #inputs.polymc.overlay
     inputs.arm-rs.overlays.default
     inputs.hyprland.overlays.default
     inputs.zellij.overlays.default
     inputs.eww-git.overlays.default
     inputs.nil-ls.overlays.default
+    inputs.vim-extra-plugins.overlays.default
     (final: prev: {
       makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
 

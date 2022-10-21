@@ -104,11 +104,10 @@ in
       ++ (optionals cfg.langs.haskell [ pkgs.haskell-language-server ])
       ++ (optionals cfg.langs.extra (with pkgs; [
         fortls
-        erlang-ls
         texlab
-        erlang-ls # erlang
-        elixir_ls # elixir
-        clojure-lsp # clojure
+        #erlang-ls # erlang
+        #elixir_ls # elixir
+        #clojure-lsp # clojure
       ]));
 
       extraConfig = ''
@@ -122,7 +121,7 @@ in
       '';
 
       # install treesitter with nix to prevent all kinds of libstdc++ so shenenigans
-      plugins = with pkgs.vimPlugins; [
+      plugins = (with pkgs.vimPlugins; [
         (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
         impatient-nvim
         vim-startuptime
@@ -185,58 +184,27 @@ in
         nvim-neoclip-lua
         sqlite-lua
         hotpot-nvim
-        # TODO: flakify neovim config with plugin inputs
-        (buildVimPluginFrom2Nix rec {
-          pname = "nvim-navic";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "SmiteshP";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-OzzH/DNZk2g8HPbYw6ulM+ScxQW6NU3YZxTgLycWQOM=";
-          };
-        })
-        (buildVimPluginFrom2Nix rec {
-          pname = "promise-async";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "kevinhwang91";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-rGbi5nCCz1qO6CzoWxbze8iKWP6baqIZBd/Je2LU6jw=";
-          };
-        })
-        (buildVimPluginFrom2Nix rec {
-          pname = "nvim-ufo";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "kevinhwang91";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-vH6I3kImt96ZqMuzQpIfnF057Fw6/iXNPoTHJ/lSLBM=";
-          };
-        })
-        (buildVimPluginFrom2Nix rec {
+        nvim-navic
+        leap-nvim
+
+        # for parinfer
+        packer-nvim
+      ]) ++ (with pkgs.vimExtraPlugins; [
+        nvim-ufo
+        cybu-nvim
+        vim-hy
+      ]) ++ (map buildVimPluginFrom2Nix [
+        rec {
           pname = "janet.vim";
           version = "master";
           src = fetchFromGitHub {
             owner = "bakpakin";
             repo = pname;
             rev = "master";
-            sha256 = "sha256-7euLzQxPuT9uUzwP5NWU+xBSyHz4AscHhqpdwCusewc=";
+            sha256 = "sha256-cySG6PuwlRfhNePUFdXP0w6m5GrYIxgMRcdpgFvJ+VA=";
           };
-        })
-        (buildVimPluginFrom2Nix rec {
-          pname = "vim-hy";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "hylang";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-j3Y9gWFAlaUrvoUO8BwkAJor9uzIjCXIKcg1jTwzOjA=";
-          };
-        })
-        (buildVimPluginFrom2Nix rec {
+        }
+        rec {
           pname = "yuck.vim";
           version = "master";
           src = fetchFromGitHub {
@@ -245,31 +213,8 @@ in
             rev = "master";
             sha256 = "sha256-lp7qJWkvelVfoLCyI0aAiajTC+0W1BzDhmtta7tnICE=";
           };
-        })
-        (buildVimPluginFrom2Nix rec {
-          pname = "leap.nvim";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "ggandor";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-JGRU9aktCLpmEjNM+5EQQSQyxLENthfsVBdNjaDiziY=";
-          };
-        })
-        (buildVimPluginFrom2Nix rec {
-          pname = "cybu.nvim";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "ghillb";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-mSJdHx+pzKqp2ImugTmMVuC+xAjJKcCGgd+JfBy636Q=";
-          };
-        })
-
-        # for parinfer
-        packer-nvim
-      ];
+        }
+      ]);
     };
 
     home.packages = with pkgs; [

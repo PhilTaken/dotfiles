@@ -7,7 +7,9 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify.url = "github:PhilTaken/spicetify-nix";
-    polymc.url = "github:PolyMC/PolyMC";
+    #polymc.url = "github:PolyMC/PolyMC";
+
+    vim-extra-plugins.url = "github:m15a/nixpkgs-vim-extra-plugins";
 
     # NUR
     nur-src.url = "github:nix-community/NUR";
