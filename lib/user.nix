@@ -44,14 +44,14 @@ rec {
           youtube-dl
 
           #obsidian
-          anki
+          #anki
           element-desktop
-          gimp
-          keepassxc
+          #gimp
+          #keepassxc
           libreoffice
           signal-desktop
           tdesktop
-          zoom-us
+          #zoom-us
         ] ++ (extraPackages pkgs) ++
         # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
 
