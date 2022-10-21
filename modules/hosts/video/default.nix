@@ -111,7 +111,7 @@ in
 
     # ----------------------
     # gnome
-    services.gnome.chrome-gnome-shell.enable = enabled "gnome";
+    services.gnome.gnome-browser-connector.enable = enabled "gnome";
     services.gnome.gnome-keyring.enable = mkForce false;
     services.udev.packages = if (enabled "gnome") then [ pkgs.gnome.gnome-settings-daemon ] else [ ];
     services.dbus.packages = if (enabled "gnome") then [ pkgs.dconf ] else [ ];
