@@ -25,7 +25,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.nix-remote-sshkey = {};
+    sops.secrets.nix-remote-sshkey = { };
 
     programs.steam.enable = lib.mkDefault true;
     phil.core.enableBluetooth = lib.mkDefault true;
@@ -79,4 +79,3 @@ in
     };
   };
 }
-
