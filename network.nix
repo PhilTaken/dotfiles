@@ -58,6 +58,8 @@ _:
       "nextcloud"
       "calibre"
 
+      "nix-serve"
+
       #"navidrome"
     ];
   };

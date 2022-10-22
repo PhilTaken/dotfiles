@@ -68,6 +68,9 @@ in
           "s3://serokell-private-cache?endpoint=s3.eu-central-1.wasabisys.com&profile=serokell-private-cache"
           "https://nixpkgs-wayland.cachix.org"
           "https://cache.nixos.org"
+
+          # TODO: get this from network.nix?
+          "ssh://nixos@10.200.0.5"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [

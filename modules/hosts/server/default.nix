@@ -32,6 +32,7 @@ in
     ./ttrss.nix
     ./unbound.nix
     ./vector.nix
+    ./nix-serve.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";
