@@ -88,29 +88,21 @@ in
               https = true;
 
               extraApps = {
-                calendar = pkgs.fetchNextcloudApp {
-                  name = "calendar";
-                  sha256 = "sha256-c+iiz/pRs7fw2+DneSODWENRnZPZ2BDRa6dOjicABMY=";
+                calendar = pkgs.fetchzip {
                   url = "https://github.com/nextcloud/calendar/archive/refs/tags/v3.3.2.tar.gz";
-                  version = "3.3.2";
+                  sha256 = "sha256-I39pTEwotYj52BAdMZfP+o6zxPxBtxsIL82FNoR9fOQ=";
                 };
                 news = pkgs.fetchNextcloudApp {
-                  name = "news";
-                  sha256 = "sha256-jmrocdJmRpau0zV8UtLyvrlX/k7O6zlZ8G9zry8ibEw=";
                   url = "https://github.com/nextcloud/news/releases/download/18.1.0/news.tar.gz";
-                  version = "18.1.0";
+                  sha256 = "sha256-+M/Suc5ENgN8DxbCDfMlahB98OU90BTv9J+AHVLTNas=";
                 };
                 deck = pkgs.fetchNextcloudApp {
-                  name = "deck";
-                  sha256 = "sha256-qIM6NvOP/1LlIqeQlImmrG6kPHbrF2O1E0yAQCJNDh4=";
                   url = "https://github.com/nextcloud/deck/releases/download/v1.7.0/deck.tar.gz";
-                  version = "1.7.0";
+                  sha256 = "sha256-CB6y8oIxFu7KPRGvqJiOgaAGpvXyVjCEm+v/HKFBg+k=";
                 };
                 bookmarks = pkgs.fetchNextcloudApp {
-                  name = "bookmarks";
-                  sha256 = "sha256-v3Ug4zdmjWGsFTf6epI4fis6f8rQ43WD65Dy/Ife4kI=";
                   url = "https://github.com/nextcloud/bookmarks/releases/download/v10.5.1/bookmarks-10.5.1.tar.gz";
-                  version = "10.5.1";
+                  sha256 = "sha256-bAXC9FTLC5TDGF/f+BtmaP1Sujfac3M9tdAKmlbIbbM=";
                 };
               };
 

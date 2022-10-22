@@ -68,7 +68,7 @@ in
             { name = "github.com/caddy-dns/cloudflare"; version = "91cf700356a1cd0127bcc4e784dd50ed85794af5"; }
           ];
 
-          vendorSha256 = "sha256-uyS1RWbv7fCIRAMdt9qeiDPrA94EWpKjLFG+QdIkhX0=";
+          vendorSha256 = "sha256-2GsdT76Kvey69mLuUlePzHb6TLlTPZepOtcUlVuphxc=";
         };
         extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };
