@@ -75,24 +75,26 @@ rec {
           }
           inpargs.systemConfig;
         extraHostModules = (inpargs.extraHostModules or [ ]) ++ [
-          ({ config, ... }:
-            let
-              sopsConfig = {
-                group = "wheel";
-                sopsFile = ../sops/nebula.yaml;
-              };
-            in
-            {
-              sops.secrets.key.sopsFile = ../sops/nebula.yaml;
-              sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
+          ({ config, ... }: {
+            sops.secrets.key.sopsFile = ../sops/nebula.yaml;
+            sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
 
-              environment.systemPackages = [
-                (pkgs.writeShellScriptBin "nebsign" ''
-                  ${pkgs.nebula}/bin/nebula-cert sign -ca-crt ${config.sops.secrets.ca.path} -ca-key ${config.sops.secrets.key.path} "$@"
-                  cp ${config.sops.secrets.ca.path} ./ca.pem
+            environment.systemPackages = [
+              (pkgs.writeShellScriptBin "signall" (lib.concatStrings (lib.mapAttrsToList
+                (name: ip: ''
+                  ${pkgs.nebula}/bin/nebula-cert sign \
+                    -ca-crt ${config.sops.secrets.ca.path} \
+                    -ca-key ${config.sops.secrets.key.path} \
+                    -name ${name} -ip ${ip}
                 '')
-              ];
-            })
+                (lib.filterAttrs (n: _: ! builtins.elem n [ "interfaceName" "gateway" ]) net.networks.milkyway))))
+
+              #(pkgs.writeShellScriptBin "nebsign" ''
+              #${pkgs.nebula}/bin/nebula-cert sign -ca-crt ${config.sops.secrets.ca.path} -ca-key ${config.sops.secrets.key.path} "$@"
+              #cp ${config.sops.secrets.ca.path} ./ca.pem
+              #'')
+            ];
+          })
         ];
       };
     in
