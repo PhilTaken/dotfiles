@@ -60,17 +60,17 @@ in
       settings = {
         trusted-users = [ "root" "@wheel" ];
         substituters = [
+          "https://cache.nixos.org"
           "https://philtaken.cachix.org"
           "https://arm-rs.cachix.org"
-          "https://cache.iog.io"
-          "https://hyprland.cachix.org"
+          "https://nix-store.pherzog.xyz"
+
           #"s3://serokell-private-nix-cache?endpoint=s3.us-west-000.backblazeb2.com&profile=serokell-private-nix-cache"
           "s3://serokell-private-cache?endpoint=s3.eu-central-1.wasabisys.com&profile=serokell-private-cache"
           "https://nixpkgs-wayland.cachix.org"
-          "https://cache.nixos.org"
 
-          # TODO: get this from network.nix?
-          "ssh://nixos@10.200.0.5"
+          "https://cache.iog.io"
+          "https://hyprland.cachix.org"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
@@ -81,6 +81,7 @@ in
           "serokell-1:aIojg2Vxgv7MkzPJoftOO/I8HKX622sT+c0fjnZBLj0="
           "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "nix-store-01:fxqZS/VJggrfBpFFOT/iULWYRaz5NvpY0daV+knaCCA="
         ];
       };
       # set up automatic garbage collection
