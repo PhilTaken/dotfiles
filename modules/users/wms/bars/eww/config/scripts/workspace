@@ -4,8 +4,8 @@
 # TODO: make more compositor-agnostic
 
 workspaces() {
-    active_workspace=$(hyprctl activewindow -j | jq '.workspace.id')
-    command="hyprctl dispatch workspace"
+    active_workspace=$(@hyprctl@ activewindow -j | jq '.workspace.id')
+    command="@hyprctl@ dispatch workspace"
     raw_box="(box\
         :class \"works\"\
         :orientation \"v\"\
@@ -22,8 +22,8 @@ workspaces() {
         fi
     }
 
-    for wsid in $(hyprctl workspaces -j | jq '.[].id' | sort); do
-        name=$(hyprctl workspaces -j | jq '[.[] | if .id == '$wsid' then .name else "" end] | join("")')
+    for wsid in $(@hyprctl@ workspaces -j | @jq@ '.[].id' | sort); do
+        name=$(@hyprctl@ workspaces -j | @jq@ '[.[] | if .id == '$wsid' then .name else "" end] | join("")')
         foc=$(focused $wsid)
         occ=1
         urg=0
@@ -45,4 +45,4 @@ function handle {
     fi
 }
 
-socat - UNIX-CONNECT:/tmp/hypr/$(echo $HYPRLAND_INSTANCE_SIGNATURE)/.socket2.sock | while read line; do handle $line; done
+@socat@ - UNIX-CONNECT:/tmp/hypr/$(echo $HYPRLAND_INSTANCE_SIGNATURE)/.socket2.sock | while read line; do handle $line; done

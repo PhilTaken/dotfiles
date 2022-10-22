@@ -85,6 +85,11 @@ in
             --replace '@quit_wm@' '${cfg.quit_cmd}' \
             --replace '@lock_wm@' '${cfg.lock_cmd}' \
             --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
+
+          substituteInPlace $out/scripts/workspace \
+            --replace '@socat@' '${pkgs.socat}/bin/socat' \
+            --replace '@hyprctl@' '${pkgs.hyprland}/bin/hyprctl' \
+            --replace '@jq@' '${pkgs.jq}/bin/jq'
         '';
       };
     };
