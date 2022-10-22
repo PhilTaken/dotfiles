@@ -9,8 +9,6 @@ let
   cfg = config.phil.server.services.caddy;
 
   net = import ../../../../network.nix { };
-  iplot = net.networks.default;
-  hostnames = builtins.attrNames iplot;
   ipOpts = _: {
     options = {
       ip = mkOption {
