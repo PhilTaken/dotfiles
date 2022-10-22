@@ -20,6 +20,8 @@
 - delta as dns on nebula
     - set on all servers
 
+- better ssh keys handling (public keys copied everywhere)
+
 - fix loki: unknown variant `loki`, expected `unit_test` for key `sinks.loki`
 
 ## general issues
