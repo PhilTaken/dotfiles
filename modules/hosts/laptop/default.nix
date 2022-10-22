@@ -44,7 +44,7 @@ in
       sshKey = config.sops.secrets.nix-remote-sshkey.path;
     }];
 
-    nix.extraOptions = lib.optional cfg.low_power ''
+    nix.extraOptions = lib.optionalString cfg.low_power ''
       max-jobs = 0
       builders-use-substitutes = true
     '';
