@@ -162,7 +162,7 @@
               firefox.wayland = false;
             };
 
-            extraPackages = pkgs: with pkgs; [ ];
+            extraPackages = pkgs: [ ];
           };
         };
       mkHMUsers = map (user: util.user.mkNixosModule hmUsers.${user});
@@ -220,8 +220,10 @@
           systemConfig = {
             server.services.openssh.enable = true;
             core.hostName = "epsilon";
+
             laptop.enable = true;
             laptop.wirelessInterfaces = [ "wlp3s0" ];
+            laptop.low_power = true;
           };
 
           extraHostModules = with inputs.nixos-hardware.nixosModules; [
