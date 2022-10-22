@@ -22,6 +22,8 @@ in
       type = types.listOf types.str;
       default = [ ];
     };
+
+    low_power = mkEnableOption "low powered laptop";
   };
 
   config = mkIf cfg.enable {
@@ -41,6 +43,11 @@ in
       publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUFPaHBOYm56ekt1em91SUoxMjNDa3VDNFJPRXp3cWhDbmJPVGVUeXF1N1Ygcm9vdEBkZWx0YQo=";
       sshKey = config.sops.secrets.nix-remote-sshkey.path;
     }];
+
+    nix.extraOptions = lib.optional cfg.low_power ''
+      max-jobs = 0
+      builders-use-substitutes = true
+    '';
 
     environment = {
       systemPackages = with pkgs; [
