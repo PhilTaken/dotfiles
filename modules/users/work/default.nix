@@ -27,6 +27,7 @@ in
       slack
       fractal
       devdocs-desktop
+      mutagen
     ];
   };
 }
