@@ -10,6 +10,9 @@ let
     ssh-to-age
     nvd
     statix
+
+    jq
+    cachix
   ];
 
   mkSystemScript = commands: ''
