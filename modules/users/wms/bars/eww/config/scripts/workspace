@@ -4,8 +4,8 @@
 # TODO: make more compositor-agnostic
 
 workspaces() {
-    command="@hyprctl@dispatch workspace"
-    active_workspace=$(@hyprctl@ activewindow -j | jq '.workspace.id')
+    active_workspace=$1
+    command="@hyprctl@ dispatch workspace"
 
     focused () {
         if [[ "$1" == "$active_workspace" ]]; then
@@ -29,13 +29,12 @@ workspaces() {
 
 function handle {
     if [[ ${1:0:9} == "workspace" ]]; then
-        workspaces
-    elif [[ ${1:0:15} == "createworkspace" ]]; then
-        workspaces
-    elif [[ ${1:0:16} == "destroyworkspace" ]]; then
-        workspaces
+        num=${1:11}
+        workspaces $num
     elif [[ ${1:0:10} == "focusedmon" ]]; then
-        workspaces
+        mon=$(echo ${1:12} | cut -d ',' -f 1)
+        num=$(echo ${1:12} | cut -d ',' -f 2)
+        workspaces $num
     fi
 }
 
