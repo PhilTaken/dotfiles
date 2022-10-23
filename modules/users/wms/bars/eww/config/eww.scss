@@ -46,7 +46,7 @@ $white: $foreground;
 
 
 /* # workspaces */
-.ws-0 , .ws-1 { margin: .55rem 0 .55rem 0; }
+.ws-0 , .ws-1 { margin: .35rem 0 .35rem 0; }
 /* ## not focused */
 .ws-0 { color: $gray; }
 /* ## focused */
@@ -54,12 +54,13 @@ $white: $foreground;
 
 // Control Panel
 .control {
-padding: .5rem;
-font-family: Material Icons;
-font-size: 1.6em;
-background-color: $black;
-border-radius: 5px;
+    padding: .5rem;
+    font-family: Material Icons;
+    font-size: 1.6em;
+    background-color: $black;
+    border-radius: 5px;
 }
+
 .bat{
   font-family: JetBrainsMono Nerd Font;
   font-size: 1.2em;
