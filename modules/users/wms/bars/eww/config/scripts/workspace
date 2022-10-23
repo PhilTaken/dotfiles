@@ -20,10 +20,8 @@ workspaces() {
     for wsid in $(@hyprctl@ workspaces -j | @jq@ '.[].id' | sort -h); do
         name=$(@hyprctl@ workspaces -j | @jq@ '[.[] | if .id == '$wsid' then .name else "" end] | join("")')
         foc=$(focused $wsid)
-        occ=1
-        urg=0
 
-        raw_box="$raw_box (button :onclick \"$command $wsid\" :class \"ws-$urg$occ$foc\" $name)"
+        raw_box="$raw_box (button :onclick \"$command $wsid\" :class \"ws-$foc\" $name)"
     done
 
     echo "$raw_box)"
