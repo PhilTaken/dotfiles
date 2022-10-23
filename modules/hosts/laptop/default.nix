@@ -69,6 +69,8 @@ in
       wifi.backend = "wpa_supplicant";
     };
 
+    services.tlp.enable = true;
+
     sops.secrets.wifi-passwords = { };
     networking.wireless = {
       enable = true;
