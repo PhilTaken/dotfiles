@@ -99,7 +99,7 @@ in
       lolcat
       lshw
       lsof
-      #magic-wormhole
+      magic-wormhole
       neofetch
       nmap
       procs
@@ -115,6 +115,7 @@ in
       usbutils
       wget
       yt-dlp
+      glances
 
       tealdeer
       jq
