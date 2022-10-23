@@ -17,7 +17,7 @@ workspaces() {
 
     raw_box="(box :class \"works\" :orientation \"v\" :halign \"center\" :valign \"start\" :space-evenly \"false\" :spacing \"10\""
 
-    for wsid in $(@hyprctl@ workspaces -j | @jq@ '.[].id' | sort); do
+    for wsid in $(@hyprctl@ workspaces -j | @jq@ '.[].id' | sort -h); do
         name=$(@hyprctl@ workspaces -j | @jq@ '[.[] | if .id == '$wsid' then .name else "" end] | join("")')
         foc=$(focused $wsid)
         occ=1
