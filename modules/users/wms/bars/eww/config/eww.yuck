@@ -55,8 +55,7 @@
 (defwidget wifi []
   (box        :orientation "v"
               :tooltip wifi-name
-    (button     :onclick "scripts/popup wifi"
-                :class "wifi-icon" wifi-icon)))
+    (button   :class "wifi-icon" wifi-icon)))
 
 ;; Brightness Widgets ;;
 (defwidget bright []
@@ -97,7 +96,7 @@
                   :tooltip "Volume: ${current-volume}%"
                   :max 101
                   :min 0
-                  :onchange "${amixer} -D pulse sset Master {}%" ))
+                  :onchange "${amixer} sset Master {}%" ))
       (button   :onclick "scripts/popup audio"   :class "volume-icon" ""))))
 (defvar volum false)
 
@@ -159,11 +158,12 @@
 
           (button     :class "button-lock"
                       :tooltip "Lock Screen"
-                      :onclick lock-wm  "")))
+                      :onclick "${eww} update power=false && ${lock-wm}" "")))
 
       (button     :class "button-off"
                   :tooltip "Shutdown"
                   :onclick "shutdown now" ""))))
+
 (defvar power false)
 
 ;; Top Widgets ;;
@@ -213,7 +213,6 @@
   :monitor @main_monitor@
   :reserve (struts :distance "35px" :side "left")
   :wm-ignore false
-  :stacking "bt"
   :exclusive "true"
   :hexpand "false"
   :vexpand "false"

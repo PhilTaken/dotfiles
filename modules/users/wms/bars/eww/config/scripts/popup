@@ -20,8 +20,6 @@ calendar() {
 
 if [ "$1" = "launcher" ]; then
     @rofi@ -show run &
-elif [ "$1" = "wifi" ]; then
-    @terminal@ -e nmtui &
 elif [ "$1" = "audio" ]; then
     @pavucontrol@ &
 elif [ "$1" = "calendar" ]; then
