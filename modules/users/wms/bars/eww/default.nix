@@ -86,6 +86,11 @@ in
             --replace '@lock_wm@' '${cfg.lock_cmd}' \
             --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
 
+          substituteInPlace $out/scripts/popup \
+            --replace '@rofi@' '${pkgs.rofi-wayland}/bin/rofi' \
+            --replace '@terminal@' '${pkgs.kitty}/bin/kitty' \
+            --replace '@pavucontrol@' '${pkgs.pavucontrol}/bin/pavucontrol'
+
           substituteInPlace $out/scripts/workspace \
             --replace '@socat@' '${pkgs.socat}/bin/socat' \
             --replace '@hyprctl@' '${pkgs.hyprland}/bin/hyprctl' \

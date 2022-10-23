@@ -19,11 +19,11 @@ calendar() {
 }
 
 if [ "$1" = "launcher" ]; then
-    rofi -show run &
+    @rofi@ -show run &
 elif [ "$1" = "wifi" ]; then
-    kitty -e nmtui &
+    @terminal@ -e nmtui &
 elif [ "$1" = "audio" ]; then
-    pavucontrol &
+    @pavucontrol@ &
 elif [ "$1" = "calendar" ]; then
     calendar &
 fi
