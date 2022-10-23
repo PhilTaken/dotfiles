@@ -4,15 +4,8 @@
 # TODO: make more compositor-agnostic
 
 workspaces() {
+    command="@hyprctl@dispatch workspace"
     active_workspace=$(@hyprctl@ activewindow -j | jq '.workspace.id')
-    command="@hyprctl@ dispatch workspace"
-    raw_box="(box\
-        :class \"works\"\
-        :orientation \"v\"\
-        :halign \"center\"\
-        :valign \"start\"\
-        :space-evenly \"false\"\
-        :spacing \"10\""
 
     focused () {
         if [[ "$1" == "$active_workspace" ]]; then
@@ -22,27 +15,33 @@ workspaces() {
         fi
     }
 
+    raw_box="(box :class \"works\" :orientation \"v\" :halign \"center\" :valign \"start\" :space-evenly \"false\" :spacing \"10\""
+
     for wsid in $(@hyprctl@ workspaces -j | @jq@ '.[].id' | sort); do
         name=$(@hyprctl@ workspaces -j | @jq@ '[.[] | if .id == '$wsid' then .name else "" end] | join("")')
         foc=$(focused $wsid)
         occ=1
         urg=0
 
-        raw_box="$raw_box""(button \
-            :onclick \"$command $wsid\"\
-            :class \"ws-$urg$occ$foc\"\
-            $name)"
+        raw_box="$raw_box (button :onclick \"$command $wsid\" :class \"ws-$urg$occ$foc\" $name)"
     done
 
-    echo "$raw_box"")"
+    echo "$raw_box)"
 }
 
 function handle {
     if [[ ${1:0:9} == "workspace" ]]; then
+        workspaces
+    elif [[ ${1:0:15} == "createworkspace" ]]; then
+        workspaces
+    elif [[ ${1:0:16} == "destroyworkspace" ]]; then
         workspaces
     elif [[ ${1:0:10} == "focusedmon" ]]; then
         workspaces
     fi
 }
 
-@socat@ - UNIX-CONNECT:/tmp/hypr/$(echo $HYPRLAND_INSTANCE_SIGNATURE)/.socket2.sock | while read line; do handle $line; done
+workspaces
+@socat@ -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r event; do
+    handle "$event"
+done

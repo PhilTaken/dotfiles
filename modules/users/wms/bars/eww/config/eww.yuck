@@ -38,9 +38,9 @@
        :onclick "scripts/popup launcher" "ﲽ")))
 
 ;; Workspaces Widgets ;;
+(deflisten workspace "scripts/workspace")
 (defwidget workspaces []
   (literal :content workspace))
-(deflisten workspace "scripts/workspace")
 
 ;; Battery Widgets ;;
 (defwidget bat []
