@@ -65,7 +65,7 @@ in
     programs.eww = {
       enable = true;
       inherit package;
-      configDir = pkgs.stdenv.mkDerivation rec {
+      configDir = pkgs.stdenv.mkDerivation {
         pname = "eww-configfolder";
         version = "0.1";
         phases = [ "patchPhase" ];
@@ -98,24 +98,5 @@ in
         '';
       };
     };
-
-    #systemd.user.services.eww-bar = {
-    #Unit = {
-    #Description = "Unit for the eww daemon";
-    #After = "graphical-session-pre.target";
-    #PartOf = "graphical-session.target";
-    #};
-
-    #Service = {
-    #ExecStart = ''
-    #${package}/bin/eww --no-daemonize daemon
-    #'';
-    #Restart = "on-abort";
-    #};
-
-    #Install = {
-    #WantedBy = [ "graphical-session.target" ];
-    #};
-    #};
   };
 }

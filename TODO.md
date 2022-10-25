@@ -1,10 +1,11 @@
 # TODO:
 
+- backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
+
 - hyprland config
     - w/d for keybinds -> keycodes/letter?
+
 - eww config
-    - workspaces (theme / colors)
-    - css styling
     - music popup?
 - declarative syncthing/mutagen config
 
