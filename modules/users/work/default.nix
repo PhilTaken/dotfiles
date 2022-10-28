@@ -38,7 +38,7 @@ in
       };
 
       Service = {
-        ExecStart = "${pkgs.mutagen}/bin/mutagen daemon";
+        ExecStart = "${pkgs.mutagen}/bin/mutagen daemon start";
         Restart = "on-abort";
       };
 
