@@ -29,6 +29,23 @@ in
       devdocs-desktop
       mutagen
     ];
+
+    systemd.user.services.mutagen-daemon = {
+      Unit = {
+        Description = "Unit for the mutagen daemon";
+        After = "graphical-session-pre.target";
+        PartOf = "graphical-session.target";
+      };
+
+      Service = {
+        ExecStart = "${pkgs.mutagen}/bin/mutagen daemon";
+        Restart = "on-abort";
+      };
+
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
   };
 }
 
