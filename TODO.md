@@ -1,28 +1,24 @@
 # TODO:
 
-- backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
-
-- hyprland config
-    - w/d for keybinds -> keycodes/letter?
-
-- eww config
-    - music popup?
-- declarative syncthing/mutagen config
-
-- setup script
-    - akin to https://github.com/cleverca22/nix-tests/blob/master/kexec/justdoit.nix
-- age-key script + master age-key backup
-- auto import gpg public key
-- ssh known hosts
-
-- delta as dns on nebula
-    - set on all servers
+## general
 
 - better ssh keys handling (public keys copied everywhere)
+- generate ssh targets from network file
 
-- fix loki: unknown variant `loki`, expected `unit_test` for key `sinks.loki`
+- hyprland config
+    - w/d for keybinds -> keycodes
 
-## general issues
+- improve zellij config
+
+- eww config
+    - bar styling
+    - bar modules
+    - music popup?
+    - bluetooth/wifi/airplane mode
+
+- declarative syncthing/mutagen config
+
+- backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
 
 - set up modules:
     - arm module (get rust running + spinning)
@@ -72,7 +68,7 @@
     - github actions + cachix
     - build server for low-powered laptop
 
-- change module 
+- change module
     - caddy acme -> services.acme
         - removes need to compile caddy with cloudflare
         - better access to certificates from other services (unbound etc)
@@ -147,6 +143,6 @@
 - setup script
     - akin to https://github.com/cleverca22/nix-tests/blob/master/kexec/justdoit.nix
 - age-key script + master age-key backup
+
 - auto import gpg public key
 - ssh known hosts
-
