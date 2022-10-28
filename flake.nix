@@ -6,8 +6,7 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    spicetify.url = "github:PhilTaken/spicetify-nix";
-    #polymc.url = "github:PolyMC/PolyMC";
+    spicetify.url = "github:the-argus/spicetify-nix";
 
     vim-extra-plugins.url = "github:m15a/nixpkgs-vim-extra-plugins";
 

@@ -36,10 +36,24 @@ in
     ##enabledExtensions = ["newRelease.js"];
     #};
 
+    programs.spicetify = {
+      enable = true;
+      theme = "catppuccin-mocha";
+      # OR
+      # theme = spicetify-nix.pkgSets.${pkgs.system}.themes.catppuccin-mocha;
+      colorScheme = "flamingo";
+
+      enabledExtensions = [
+        "fullAppDisplay.js"
+        "shuffle+.js"
+        "hidePodcasts.js"
+      ];
+    };
+
     home.packages = with pkgs; [
       #spotify-unwrapped
+      #spotify
 
-      spotify
       ffmpeg
       playerctl
       pamixer

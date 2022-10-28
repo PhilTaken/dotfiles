@@ -838,18 +838,17 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1635781173,
-        "narHash": "sha256-nTA2y2jIJiVj5RawHUNhlZUIy5J/Q2CA6YP4T1qBkLo=",
+        "lastModified": 1666792786,
+        "narHash": "sha256-uG81j5Axyps2IjedvlmRbWhCCUXOAI4wNpH3O0dVG0s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7053541084bf5ce2921ef307e5585d39d7ba8b3f",
+        "rev": "5bdb380ee7fa036d47b19e9d854928f4881c50a1",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
       }
     },
     "nixpkgs_9": {
@@ -1095,36 +1094,19 @@
     },
     "spicetify": {
       "inputs": {
-        "nixpkgs": "nixpkgs_8",
-        "spicetify-themes": "spicetify-themes"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1636034101,
-        "narHash": "sha256-M+CH1lBG5pRWB3SQ5DwWiXwBtR28uaBf4qxv/c0fHB0=",
-        "owner": "PhilTaken",
+        "lastModified": 1666059600,
+        "narHash": "sha256-ceVk8Yeg1jwrToeGReF3aphq0JPHykla6FjgVP0+d3s=",
+        "owner": "the-argus",
         "repo": "spicetify-nix",
-        "rev": "746dfe7e1f4690481364652a168ebc294eb8005a",
+        "rev": "56f9397313b1f97ba94b1b2f947133fff4a12cee",
         "type": "github"
       },
       "original": {
-        "owner": "PhilTaken",
+        "owner": "the-argus",
         "repo": "spicetify-nix",
-        "type": "github"
-      }
-    },
-    "spicetify-themes": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1635811827,
-        "narHash": "sha256-diKIBEbgru1iJ9JoU8HhRxj7ciuvc9IkSSXXqZP/iI0=",
-        "owner": "morpheusthewhite",
-        "repo": "spicetify-themes",
-        "rev": "5046217e28084f7eaf69543f1f7c1b7c276496cc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "morpheusthewhite",
-        "repo": "spicetify-themes",
         "type": "github"
       }
     },
