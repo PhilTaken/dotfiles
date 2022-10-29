@@ -69,13 +69,16 @@ lsp_extra_config['rust_analyzer'] = {
 
 
 -- set pythonpath (set to nil if no python in current env)
-pcall(function() Pythonpath = io.popen('which python 2>/dev/null'):read() end)
 lsp_extra_config['pylsp'] = {
+    on_new_config = function(config)
+        local pythonpath = io.popen('which python 2>/dev/null'):read()
+        config.settings.pylsp.plugins.jedi.environment = pythonpath
+    end,
     settings = {
         pylsp = {
             plugins = {
                 jedi = {
-                    environment = Pythonpath,
+                    environment = nil,
                 },
                 jedi_completion = {
                     include_params = true,
