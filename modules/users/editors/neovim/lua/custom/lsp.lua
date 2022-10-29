@@ -1,7 +1,6 @@
 -- nvim_lsp object
 local lsp = require'lspconfig'
-local cpb = vim.lsp.protocol.make_client_capabilities()
-local capabilities = require('cmp_nvim_lsp').update_capabilities(cpb)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local navic = require('nvim-navic')
 
 capabilities.textDocument.foldingRange = {
@@ -9,40 +8,27 @@ capabilities.textDocument.foldingRange = {
     lineFoldingOnly = true
 }
 
--- set pythonpath (set to nil if no python in current env)
-pcall(function() Pythonpath = io.popen('which python 2>/dev/null'):read() end)
+local lsp_extra_config = {}
 
--- signature help
-local signature_setup = {
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        navic.attach(client, bufnr)
-        --require'lsp_signature'.on_attach(, bufnr)
-    end,
+lsp_extra_config['elixirls'] = {
+    cmd = { "elixir-ls"}
 }
 
--- extend signature_setup with custom arguments
-local function custom_setup(...)
-    local out = {}
-    local arg = {...}
-    for k,v in pairs(signature_setup) do out[k] = v end
-    for k, v in pairs(arg) do out[k] = v end
-    return out
-end
+lsp_extra_config['hls'] = {
+    on_new_config = function(config, new_root)
+        local cabalfiles = require('plenary.scandir').scan_dir(new_root, { depth = 1, search_pattern = ".*.cabal"})
+        if #cabalfiles > 0 then
+            config.cmd = { "haskell-language-server", "--lsp" }
+        end
+    end
+}
 
--- Enable lsp servers
-lsp.elixirls.setup(custom_setup{
-    cmd = { "elixir-ls"}
-})
-
-lsp.fortls.setup(custom_setup{
+lsp_extra_config['fortls'] = {
     cmd = { "fortls", "--hover_signature", "--enable_code_actions" },
     root_dir = lsp.util.root_pattern('.git'),
-})
+}
 
---lsp.sumneko_lua.setup(custom_setup{
-lsp.sumneko_lua.setup({
-    on_attach = signature_setup.on_attach,
+lsp_extra_config['sumneko_lua'] = {
     settings = {
         Lua = {
             runtime = {
@@ -63,9 +49,9 @@ lsp.sumneko_lua.setup({
             },
         },
     },
-})
+}
 
-lsp.rust_analyzer.setup(custom_setup{
+lsp_extra_config['rust_analyzer'] = {
     settings = {
         ["rust-analyzer"] = {
             cargo = {
@@ -79,9 +65,12 @@ lsp.rust_analyzer.setup(custom_setup{
     init_options = {
         procMacro = { enable = true };
     };
-})
+}
 
-lsp.pylsp.setup(custom_setup{
+
+-- set pythonpath (set to nil if no python in current env)
+pcall(function() Pythonpath = io.popen('which python 2>/dev/null'):read() end)
+lsp_extra_config['pylsp'] = {
     settings = {
         pylsp = {
             plugins = {
@@ -95,17 +84,12 @@ lsp.pylsp.setup(custom_setup{
                 pycodestyle = {
                     maxLineLength = 150,
                 },
-                --flake8 = {
-                    --enable = false,
-                    --maxLineLength = 120,
-                --},
             },
         },
     },
-})
+}
 
---lsp.pyright.setup(signature_setup)
-local other_lsps = {
+local enabled_lsps = {
     'ccls',
     'nil_ls',
     'texlab',
@@ -113,9 +97,28 @@ local other_lsps = {
     'erlangls',
     'r_language_server',
     'clojure_lsp',
-    'hls'
+    'hls',
+    'elixirls',
+    'fortls',
+    'sumneko_lua',
+    'rust_analyzer',
+    'pylsp'
 }
 
-for _, ls in ipairs(other_lsps) do
-    require('lspconfig')[ls].setup(signature_setup)
+-- signature help
+local signature_setup = {
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        navic.attach(client, bufnr)
+    end,
+}
+
+for _, ls in ipairs(enabled_lsps) do
+    local config
+    if lsp_extra_config[ls] then
+        config = vim.tbl_deep_extend("force", signature_setup, lsp_extra_config[ls])
+    else
+        config = signature_setup
+    end
+    require('lspconfig')[ls].setup(config)
 end
