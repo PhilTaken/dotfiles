@@ -115,6 +115,7 @@ in
     services.gnome.gnome-keyring.enable = mkForce false;
     services.udev.packages = if (enabled "gnome") then [ pkgs.gnome.gnome-settings-daemon ] else [ ];
     services.dbus.packages = if (enabled "gnome") then [ pkgs.dconf ] else [ ];
+    programs.dconf.enable = true;
 
     # enable kdeconnect + open the required ports
     programs.kdeconnect.enable = true;

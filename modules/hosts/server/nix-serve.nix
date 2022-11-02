@@ -28,7 +28,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.nix-serve-secret-key = {};
+    sops.secrets.nix-serve-secret-key = { };
     phil.server.services.caddy.proxy.${cfg.host} = cfg.port;
 
     services.nix-serve = {

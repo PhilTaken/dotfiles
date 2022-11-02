@@ -50,6 +50,8 @@ in
       ];
     };
 
+    services.easyeffects.enable = true;
+
     home.packages = with pkgs; [
       #spotify-unwrapped
       #spotify

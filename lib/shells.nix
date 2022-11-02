@@ -28,7 +28,7 @@ let
     fi
   '';
 
-  net  = import ../network.nix { };
+  net = import ../network.nix { };
 in
 {
   legacyShell = pkgs.mkShell {
@@ -130,14 +130,17 @@ in
           # TODO: rotate keys with sops, this script just generates new certs
           name = "signall";
           help = "sign all confiurations";
-          command = lib.concatStrings (lib.mapAttrsToList (name: ip: let
-            cidr = builtins.elemAt (lib.splitString "/" net.networks.milkyway.gateway) 1;
-          in ''
-              ${pkgs.nebula}/bin/nebula-cert sign \
-                -ca-crt /run/secrets/ca \
-                -ca-key /run/secrets/key \
-                -name ${name} -ip ${ip}/${cidr}
-            '')
+          command = lib.concatStrings (lib.mapAttrsToList
+            (name: ip:
+              let
+                cidr = builtins.elemAt (lib.splitString "/" net.networks.milkyway.gateway) 1;
+              in
+              ''
+                ${pkgs.nebula}/bin/nebula-cert sign \
+                  -ca-crt /run/secrets/ca \
+                  -ca-key /run/secrets/key \
+                  -name ${name} -ip ${ip}/${cidr}
+              '')
             (lib.filterAttrs (n: _: ! builtins.elem n [ "interfaceName" "gateway" ]) net.networks.milkyway));
         }
 
