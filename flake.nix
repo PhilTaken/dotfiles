@@ -172,7 +172,22 @@
       devShells."${system}".default = util.shells.devShell;
 
       overlays.default = import ./custom_pkgs;
-      homeConfigurations = lib.mapAttrs (username: util.user.mkHMUser) hmUsers;
+
+      nixosModules = lib.mapAttrs
+        (n: _: import (./. + "/modules/hosts/${n}"))
+        (lib.filterAttrs
+          (_: v: v == "directory")
+          (builtins.readDir ./modules/hosts));
+
+      hmModules = lib.mapAttrs
+        (n: _: import (./. + "/modules/users/${n}"))
+        (lib.filterAttrs
+          (_: v: v == "directory")
+          (builtins.readDir ./modules/users));
+
+      homeConfigurations = lib.mapAttrs
+        (username: util.user.mkHMUser)
+        hmUsers;
 
       nixosConfigurations = {
         # usb stick iso
