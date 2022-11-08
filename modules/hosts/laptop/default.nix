@@ -37,7 +37,7 @@ in
     nix.buildMachines = [{
       sshUser = "nixos";
       hostName = "10.200.0.5";
-      system = "x86_64-linux";
+      systems = [ "x86_64-linux" "i686-linux" ];
       speedFactor = 2;
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUFPaHBOYm56ekt1em91SUoxMjNDa3VDNFJPRXp3cWhDbmJPVGVUeXF1N1Ygcm9vdEBkZWx0YQo=";
