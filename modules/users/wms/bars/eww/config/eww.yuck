@@ -38,9 +38,10 @@
 (defwidget launcher []
   (box :orientation "v"
        :space-evenly "false"
-        :spacing -15
-        (button :class "launcher_icon"
-       :onclick "scripts/popup launcher" "ﲽ")))
+       :spacing -15
+       (button :class "launcher_icon"
+         :onclick "scripts/popup dashboard"
+         "❄")))
 
 ;; Workspaces Widgets ;;
 (deflisten workspace "scripts/workspace")
@@ -265,3 +266,14 @@
     :width "270px"
     :height "60px")
   (cal))
+
+(defwindow dashboard
+  :monitor @main_monitor@
+  :wm-ignore false
+  :anchor "top left"
+  :geometry (geometry
+    :x "20px"
+    :y "20px"
+    :width "100px"
+    :height "100px")
+  (box :class "eww_bar"))
