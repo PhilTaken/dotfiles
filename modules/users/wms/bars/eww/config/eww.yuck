@@ -29,6 +29,9 @@
 (defpoll calendar_month :interval "10h" "scripts/calendar")
 (defpoll calendar_year :interval "10h" "date '+%Y'")
 
+(defpoll current-cpu :interval "1s" "@mpstat@ -o JSON | @jq@ '100 - .sysstat.hosts[0].statistics[0].\"cpu-load\"[0].idle'")
+(defpoll current-ram :interval "1s" "@brightnessctl@ -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+
 
 (defwidget launcher []
   (box :orientation "v"
@@ -130,6 +133,36 @@
                 :month calendar_month
                 :year calendar_year))))
 
+(defwidget sysinfo []
+  (box :class "sysinfo"
+       :orientation "v"
+    (box :class "sysinfo-inner-box"
+      :orientation "h"
+      (scale 
+        ;:class "usage-ram"
+        :class "volbar"
+        :active false
+        :visible true
+        :value '${EWW_RAM.used_mem_perc}'
+        :tooltip "RAM usage ${EWW_RAM.used_mem_perc}%"
+        :orientation "v"
+        :flipped true
+        :round-digits 2
+        :max 101
+        :min 0)
+      (scale 
+        ;:class "usage-cpu"
+        :class "bribar"
+        :active false
+        :visible true
+        :value '${EWW_CPU.avg}'
+        :tooltip "CPU usage ${EWW_CPU.avg}%"
+        :orientation "v"
+        :flipped true
+        :round-digits 2
+        :max 101
+        :min 0))))
+
 ;; Powermenu Widgets ;;
 (defwidget power []
   (eventbox   :onhover "${eww} update power=true"
@@ -188,6 +221,7 @@
        :valign "end"
        :spacing 5
     (control)
+    (sysinfo)
     (bottom)))
 
 ;; Bar Widgets ;;
@@ -216,6 +250,7 @@
   :exclusive "true"
   :hexpand "false"
   :vexpand "false"
+  :space-evenly: false
   (bar))
 
 ;; Calendar Windows ;;

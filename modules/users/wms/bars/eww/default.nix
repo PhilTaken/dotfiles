@@ -79,6 +79,8 @@ in
 
           substituteInPlace $out/eww.yuck \
             --replace '@amixer@' '${pkgs.alsa-utils}/bin/amixer' \
+            --replace '@jq@' '${pkgs.jq}/bin/jq' \
+            --replace '@mpstat@' '${pkgs.sysstat}/bin/mpstat' \
             --replace '@eww@' '${package}/bin/eww' \
             --replace '@brightnessctl@' '${pkgs.brightnessctl}/bin/brightnessctl' \
             --replace '@reload_wm@' '${cfg.reload_cmd}' \
