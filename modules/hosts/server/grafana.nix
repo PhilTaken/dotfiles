@@ -2,12 +2,11 @@
 , config
 , lib
 , ...
-}@inputs:
+}:
 with lib;
 
 let
   cfg = config.phil.server.services.grafana;
-  outputUrl = "http://10.200.0.1:8086";
   domain = "grafana.pherzog.xyz";
   port = 3010;
   net = import ../../../network.nix { };
@@ -80,29 +79,37 @@ in
       };
     };
 
-    services.grafana = rec {
-      inherit port domain;
+    services.grafana = {
       enable = true;
-      protocol = "http";
+      settings = {
+        server = {
+          inherit port domain;
+          protocol = "https";
+          http_addr = "0.0.0.0";
+        };
 
-      rootUrl = "${protocol}://${domain}/";
-      addr = "0.0.0.0";
+        security = {
+          admin_user = "admin";
+          admin_password = "$__file{${config.sops.secrets.grafana-adminpass.path}}";
+        };
 
-      security.adminUser = "admin";
-      security.admin_password = "$__file{${inputs.config.sops.secrets.grafana-adminpass.path}}";
-
-      database.user = "root";
-      database.password = "$__file{${inputs.config.sops.secrets.grafana-admindbpass.path}}";
+        database = {
+          user = "root";
+          password = "$__file{${config.sops.secrets.grafana-admindbpass.path}}";
+        };
+      };
 
       provision = {
         # TODO: conditional influx data source
-        datasources = [
-          {
-            name = "Loki";
-            type = "loki";
-            url = "http://localhost:3100";
-          }
-        ];
+        datasources.settings = {
+          datasources = [
+            {
+              name = "Loki";
+              type = "loki";
+              url = "http://localhost:3100";
+            }
+          ];
+        };
       };
     };
   };
