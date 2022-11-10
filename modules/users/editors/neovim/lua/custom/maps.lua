@@ -66,14 +66,14 @@ local leadern = {
     ["<C-l>"] = { "<cmd>cnext<cr>zz", "go to next entry in quickfix" },
     ["<C-c>"] = { "<cmd>cprev<cr>zz", "go to previous entry in quickfix" },
 
-    K = {
-        function()
-            local winid = require('ufo').peekFoldedLinesUnderCursor()
-            if not winid then
-                vim.lsp.buf.hover()
-            end
-        end
-    },
+    --K = {
+        --function()
+            --local winid = require('ufo').peekFoldedLinesUnderCursor()
+            --if not winid then
+                --vim.lsp.buf.hover()
+            --end
+        --end
+    --},
 
     ["<leader>"] = {
         ["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting" },

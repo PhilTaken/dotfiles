@@ -5,6 +5,8 @@
 ;; put path to aesthetic bar config files here ;;
 ;; (defvar eww "$HOME/.local/bin/eww -c $HOME/.config/eww/bar")
 
+;; link to correct binaries, replaced by nix at eval time
+;; toplevel variables blocked by https://github.com/elkowar/eww/issues/518
 (defvar amixer "@amixer@")
 (defvar eww "@eww@")
 (defvar brightnessctl "@brightnessctl@")
