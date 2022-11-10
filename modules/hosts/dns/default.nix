@@ -34,7 +34,10 @@ in
     #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
     networking.nameservers =
-      if same-server then [ "localhost" ] else [ "${iplot.${cfg.nameserver}}#dns.pherzog.xyz" ];
+      if same-server then [ "localhost" ] else [
+        "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"
+        "2a0e:dc0:6:23::2#dot-ch.blahdns.com"
+      ];
 
     services.resolved = {
       enable = ! same-server;
