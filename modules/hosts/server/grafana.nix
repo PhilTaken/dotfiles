@@ -89,10 +89,10 @@ in
       addr = "0.0.0.0";
 
       security.adminUser = "admin";
-      security.adminPasswordFile = inputs.config.sops.secrets.grafana-adminpass.path;
+      security.admin_password = "$__file{${inputs.config.sops.secrets.grafana-adminpass.path}}";
 
       database.user = "root";
-      database.passwordFile = inputs.config.sops.secrets.grafana-admindbpass.path;
+      database.password = "$__file{${inputs.config.sops.secrets.grafana-admindbpass.path}}";
 
       provision = {
         # TODO: conditional influx data source
