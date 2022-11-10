@@ -7,7 +7,6 @@ with lib;
 
 let
   cfg = config.phil.editors.neovim;
-  inherit (pkgs.neovimUtils) buildNeovimPluginFrom2Nix;
   inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
   inherit (pkgs) fetchFromGitHub;
 in
@@ -202,6 +201,16 @@ in
             repo = pname;
             rev = "master";
             sha256 = "sha256-cySG6PuwlRfhNePUFdXP0w6m5GrYIxgMRcdpgFvJ+VA=";
+          };
+        }
+        rec {
+          pname = "vim-terraform";
+          version = "master";
+          src = fetchFromGitHub {
+            owner = "hashivim";
+            repo = pname;
+            rev = "master";
+            sha256 = "sha256-atyMKr5WChLBRDyO1KznH2LQzv5P+K+RQpQ71aeJB0k=";
           };
         }
         rec {
