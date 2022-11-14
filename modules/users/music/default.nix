@@ -17,9 +17,47 @@ in
     };
 
     enableMpris = mkEnableOption "mpris";
+
+    spotifyd_devicename = mkOption {
+      description = "spotifyd device name";
+      type = types.str;
+      default = "maelstroem";
+    };
+
+    spotifyd_username = mkOption {
+      description = "spotifyd username";
+      type = types.str;
+      default = "wtfusername?";
+    };
   };
 
   config = (mkIf cfg.enable) {
+    xdg.configFile."spotifyd/credentials".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/spotify-password";
+
+    services.spotifyd = {
+      enable = true;
+      package = pkgs.spotifyd.override {
+        withKeyring = true;
+        withPulseAudio = true;
+        withMpris = true;
+      };
+      settings = {
+        global = {
+          username = "${cfg.spotifyd_username}";
+          password_cmd = "${pkgs.coreutils}/bin/cat ${config.xdg.configHome}/spotifyd/credentials";
+          backend = "pulseaudio";
+          #device = "default";
+          bitrate = 320;
+          volume_normalization = false;
+          device_type = "computer";
+          no_audio_cache = true;
+          cache_path = "/tmp/spotifyd";
+          autoplay = true;
+          use_mpris = true;
+          dbus_type = "system";
+        };
+      };
+    };
 
     systemd.user.services.mpris-proxy = mkIf cfg.enableMpris {
       Unit.Description = "Mpris proxy";
@@ -28,19 +66,9 @@ in
       Install.WantedBy = [ "default.target" ];
     };
 
-    #programs.spicetify = {
-    #enable = true;
-    #theme = "Onepunch";
-    ##colorScheme = "Nord-Dark";
-    ##enabledCustomApps = ["reddit"];
-    ##enabledExtensions = ["newRelease.js"];
-    #};
-
     programs.spicetify = {
       enable = true;
       theme = "catppuccin-mocha";
-      # OR
-      # theme = spicetify-nix.pkgSets.${pkgs.system}.themes.catppuccin-mocha;
       colorScheme = "flamingo";
 
       enabledExtensions = [

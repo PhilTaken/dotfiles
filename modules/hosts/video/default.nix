@@ -146,7 +146,7 @@ in
       WLR_NO_HARDWARE_CURSORS = "1";
       WLR_BACKEND = "vulkan";
       QT_QPA_PLATFORM = "wayland";
-      GDK_BACKEND = "wayland";
+      #GDK_BACKEND = "wayland";
     };
 
     xdg = {
