@@ -8,7 +8,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     spicetify.url = "github:the-argus/spicetify-nix";
 
-    vim-extra-plugins.url = "github:m15a/nixpkgs-vim-extra-plugins";
+    vim-extra-plugins.url = "github:m15a/nixpkgs-vim-extra-plugins?ref=3e08bbd37dc9bec38d9a4d8597a90d80372b47af";
 
     # NUR
     nur-src.url = "github:nix-community/NUR";
@@ -35,6 +35,7 @@
     # deploy remote setups
     deploy-rs = {
       url = "github:serokell/deploy-rs";
+      #url = "/home/maelstroem/Documents/syncthing/work/serokell/deploy-rs/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

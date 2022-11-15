@@ -1168,15 +1168,16 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1668349346,
-        "narHash": "sha256-cve73gcITO3z2Aq7RqMgWa4iUjO8hpBr565qLDrXCNk=",
+        "lastModified": 1667744525,
+        "narHash": "sha256-FBTCi3AchfOZ+M/SeIzJJYwBGXH0cEKG8s4wwWMNdtw=",
         "owner": "m15a",
         "repo": "nixpkgs-vim-extra-plugins",
-        "rev": "c24328fceca9f5b0af9879819bab397e472e60bf",
+        "rev": "3e08bbd37dc9bec38d9a4d8597a90d80372b47af",
         "type": "github"
       },
       "original": {
         "owner": "m15a",
+        "ref": "3e08bbd37dc9bec38d9a4d8597a90d80372b47af",
         "repo": "nixpkgs-vim-extra-plugins",
         "type": "github"
       }
