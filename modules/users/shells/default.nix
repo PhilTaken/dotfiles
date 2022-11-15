@@ -156,6 +156,8 @@ in
         enable = true;
         settings = {
           search_mode = "fuzzy";
+          update_check = false;
+          style = "compact";
         };
       };
 
