@@ -15,8 +15,6 @@ in
       type = types.bool;
       default = false;
     };
-
-    # more options
   };
 
   config = mkIf cfg.enable {
@@ -48,4 +46,3 @@ in
     };
   };
 }
-
