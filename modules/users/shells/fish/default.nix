@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.phil.shells.fish;
 in
-rec {
+{
   options.phil.shells.fish = {
     enable = mkEnableOption "fish";
   };
@@ -28,9 +28,9 @@ rec {
         magic_enter_cmd = ''
           set -l cmd
           if command git rev-parse --is-inside-work-tree &>/dev/null
-            set cmd "${pkgs.exa}/bin/exa && git status -sb"
+            set cmd " ${pkgs.exa}/bin/exa && git status -sb"
           else
-            set cmd "${pkgs.exa}/bin/exa"
+            set cmd " ${pkgs.exa}/bin/exa"
           end
           echo $cmd
         '';
@@ -41,7 +41,6 @@ rec {
             commandline -f execute
           else
             commandline -f execute
-            _atuin_unsuppress_tui
           end
         '';
       };
@@ -60,19 +59,18 @@ rec {
 
       interactiveShellInit = ''
         set -U fish_greeting
-
         set -gx ATUIN_NOBIND "true"
 
         bind \cr _atuin_search
-        bind \t 'commandline -f complete && _atuin_suppress_tui'
-        bind \e 'commandline -f cancel && _atuin_unsuppress_tui'
-        bind \r 'enter_ls && _atuin_unsuppress_tui'
-        bind \n 'enter_ls && _atuin_unsuppress_tui'
+        bind \t 'commandline -f complete'
+        bind \e 'commandline -f cancel'
+        bind \r 'enter_ls'
+        bind \n 'enter_ls'
 
         if bind -M insert >/dev/null 2>&1
           bind -M insert \cr _atuin_search
-          bind -M insert \t 'commandline -f complete && _atuin_suppress_tui'
-          bind -M insert \e 'commandline -f cancel && _atuin_unsuppress_tui'
+          bind -M insert \t 'commandline -f complete'
+          bind -M insert \e 'commandline -f cancel'
           bind -M insert \r 'enter_ls'
           bind -M insert \n 'enter_ls'
         end
