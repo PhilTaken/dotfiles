@@ -49,6 +49,8 @@ in
       _FASD_DATA = "${inputs.config.xdg.dataHome}/fasd/fasd.data";
       _Z_DATA = "${inputs.config.xdg.dataHome}/fasd/z.data";
       _ZO_ECHO = 1;
+      # silence direnv warnings for "long running commands"
+      DIRENV_WARN_TIMEOUT="24h";
     };
 
     home.shellAliases = rec {
