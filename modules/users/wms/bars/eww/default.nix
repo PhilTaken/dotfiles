@@ -77,6 +77,9 @@ in
           mkdir -p $out
           cp -r $src/* $out
 
+          substituteInPlace $out/eww.scss \
+            --replace '@launcher-image@' '${./nixos-image.png}'
+
           substituteInPlace $out/eww.yuck \
             --replace '@amixer@' '${pkgs.alsa-utils}/bin/amixer' \
             --replace '@jq@' '${pkgs.jq}/bin/jq' \

@@ -40,8 +40,7 @@
        :space-evenly "false"
        :spacing -15
        (button :class "launcher_icon"
-         :onclick "scripts/popup dashboard"
-         "❄")))
+         :onclick "scripts/popup dashboard")))
 
 ;; Workspaces Widgets ;;
 (deflisten workspace "scripts/workspace")
@@ -138,10 +137,10 @@
 
 (defwidget sysinfo []
   (box :class "sysinfo"
-       :orientation "v"
-    (box :class "sysinfo-inner-box"
-      :orientation "h"
-      (scale 
+       :orientation "h"
+    (box :class "sysinfo-ram"
+      :orientation "v"
+      (scale
         ;:class "usage-ram"
         :class "volbar"
         :active false
@@ -152,8 +151,10 @@
         :flipped true
         :round-digits 2
         :max 101
-        :min 0)
-      (scale 
+        :min 0))
+    (box :class "sysinfo-cpu"
+      :orientation "v"
+      (scale
         ;:class "usage-cpu"
         :class "bribar"
         :active false
