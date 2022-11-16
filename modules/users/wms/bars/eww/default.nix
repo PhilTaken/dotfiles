@@ -82,6 +82,7 @@ in
 
           substituteInPlace $out/eww.yuck \
             --replace '@amixer@' '${pkgs.alsa-utils}/bin/amixer' \
+            --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \
             --replace '@jq@' '${pkgs.jq}/bin/jq' \
             --replace '@mpstat@' '${pkgs.sysstat}/bin/mpstat' \
             --replace '@eww@' '${package}/bin/eww' \

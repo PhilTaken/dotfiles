@@ -19,20 +19,19 @@
 ;;                          Widget Section's                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Launcher Widgets ;;
-(defpoll current-volume :interval "1s" "@amixer@ sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
-(defpoll battery            :interval "1s"  "scripts/battery icon")
-(defpoll battery-cappacity  :interval "1s"  "scripts/battery percent")
-(defpoll wifi-icon :interval "1s" "scripts/wifi icon")
-(defpoll wifi-name :interval "1s" "scripts/wifi name")
+(defpoll current-volume :interval "2s" "@amixer@ sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll battery            :interval "5s"  "scripts/battery icon")
+(defpoll battery-cappacity  :interval "5s"  "scripts/battery percent")
+(defpoll wifi-icon :interval "5s" "scripts/wifi icon")
+(defpoll wifi-name :interval "5s" "scripts/wifi name")
 (defpoll current-brightness :interval "1s" "@brightnessctl@ -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
-(defpoll hour   :interval "1s"  "date '+%H'")
-(defpoll min    :interval "1s"  "date '+%M'")
+(defpoll hour   :interval "5s"  "date '+%H'")
+(defpoll min    :interval "5s"  "date '+%M'")
 (defpoll calendar_day :interval "10h" "date '+%d'")
 (defpoll calendar_month :interval "10h" "scripts/calendar")
 (defpoll calendar_year :interval "10h" "date '+%Y'")
 
-(defpoll current-cpu :interval "1s" "@mpstat@ -o JSON | @jq@ '100 - .sysstat.hosts[0].statistics[0].\"cpu-load\"[0].idle'")
-(defpoll current-ram :interval "1s" "@brightnessctl@ -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defpoll players :interval "2s" "@playerctl@ -l | @jq@ -R | jq -s")
 
 
 (defwidget launcher []
@@ -264,17 +263,28 @@
   :geometry (geometry
     :x "70px"
     :y "65%"
-    :width "270px"
-    :height "60px")
+    :width "100px"
+    :height "300px")
   (cal))
 
+(defvar playerctl-metadata "")
 (defwindow dashboard
   :monitor @main_monitor@
   :wm-ignore false
   :anchor "top left"
   :geometry (geometry
-    :x "20px"
-    :y "20px"
-    :width "100px"
-    :height "100px")
-  (box :class "eww_bar"))
+    :x "25px"
+    :y "25px"
+    :width "200px"
+    :height "300px")
+  (box :class "eww_bar"
+    :orientation "v"
+    (label :text "~ Music ~")
+    (for player in players
+      (box
+        (label :text " ${player} ")
+        (box
+          :orientation "h"
+            (button :onclick "playerctl -p ${player} previous" "<<")
+            (button :onclick "playerctl -p ${player} play-pause" "||")
+            (button :onclick "playerctl -p ${player} next" ">>"))))))
