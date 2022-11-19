@@ -31,6 +31,7 @@
 (defpoll calendar_month :interval "10h" "scripts/calendar")
 (defpoll calendar_year :interval "10h" "date '+%Y'")
 
+;; TODO: convert to dbus poll?
 (defpoll players :interval "2s" "@playerctl@ -l | @jq@ -R | jq -s")
 
 
@@ -282,9 +283,11 @@
     (label :text "~ Music ~")
     (for player in players
       (box
+        ;; TODO: read metadata for title
+        ;; `playerctl -l | xargs -I % playerctl -p % metadata xesam:title >/dev/null` for a list of titles
         (label :text " ${player} ")
         (box
           :orientation "h"
-            (button :onclick "playerctl -p ${player} previous" "<<")
-            (button :onclick "playerctl -p ${player} play-pause" "||")
-            (button :onclick "playerctl -p ${player} next" ">>"))))))
+            (button :onclick "@playerctl@ -p ${player} previous &" "<<")
+            (button :onclick "@playerctl@ -p ${player} play-pause &" "||")
+            (button :onclick "@playerctl@ -p ${player} next &" ">>"))))))
