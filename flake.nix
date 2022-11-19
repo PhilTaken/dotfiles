@@ -81,7 +81,7 @@
   outputs = { self, nixpkgs, ... }@inputs:
     let
       inherit (nixpkgs) lib;
-      libFor = system: import ./lib { inherit system inputs; };
+      libFor = system: import ./lib { inherit system inputs self; };
 
       system = "x86_64-linux";
       util = libFor system;
@@ -172,7 +172,10 @@
 
       devShells."${system}".default = util.shells.devShell;
 
-      overlays.default = import ./custom_pkgs;
+      overlays.default = final: prev:
+        (prev.lib.mapAttrs
+          (n: _: prev.callPackage (./. + "/custom_pkgs/${n}") {})
+          (prev.lib.filterAttrs (_: v: v == "directory") (builtins.readDir ./custom_pkgs)));
 
       nixosModules = lib.mapAttrs
         (n: _: import (./. + "/modules/hosts/${n}"))

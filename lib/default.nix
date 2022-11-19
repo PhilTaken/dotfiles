@@ -1,6 +1,7 @@
 { inputs
 , system
 , extraHMImports ? [ ]
+, self
 , ...
 }:
 
@@ -9,9 +10,6 @@ let
   inherit (nixpkgs) lib;
 
   overlays = [
-    (import ../custom_pkgs)
-    (import ../overlays/gopass-rofi.nix { inherit inputs; })
-    (import ../overlays/rofi-overlay.nix { inherit inputs; })
     inputs.nur-src.overlay
     inputs.devshell.overlay
     inputs.sops-nix-src.overlay
@@ -27,8 +25,8 @@ let
       makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
 
       webcord = inputs.webcord.packages.${prev.system}.default;
-
       hyprland = inputs.hyprland.packages.${prev.system}.default;
+      #inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) gopass iosevka;
 
       # devdocs.io
       devdocs-desktop = prev.writeShellApplication {
@@ -36,19 +34,16 @@ let
         text = "${prev.devdocs-desktop}/bin/devdocs-desktop --no-sandbox";
       };
 
-      #slack = prev.slack.overrideAttrs (old: {
-      #installPhase = old.installPhase + ''
-      #rm $out/bin/slack
+      # fix it on wayland
+      prismlauncher = prev.prismlauncher.overrideAttrs (old: {
+        postInstall = old.postInstall + ''
+          wrapProgram $out/bin/prismlauncher \
+            --prefix QT_QPA_PLATFORM : xcb
+        '';
+      });
 
-      #makeWrapper $out/lib/slack/slack $out/bin/slack \
-      #--prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
-      #--prefix PATH : ${lib.makeBinPath [prev.xdg-utils]} \
-      #--add-flags "--enable-features=WebRTCPipeWireCapturer %U"
-      #'';
-      #});
-
-      inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) gopass iosevka;
     })
+    self.overlays.default
   ];
 
   pkgs = import nixpkgs {
