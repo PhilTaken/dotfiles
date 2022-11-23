@@ -38,6 +38,7 @@ in
             font = wezterm.font("${cfg.default_font}"),
             font_size = 11.0,
             dpi = 192.0,
+            front_end = "WebGpu",
           }
         '';
       };

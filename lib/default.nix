@@ -1,9 +1,9 @@
 { inputs
-, system
 , extraHMImports ? [ ]
 , self
 , ...
 }:
+system:
 
 let
   inherit (inputs) home-manager nixpkgs;
@@ -42,8 +42,30 @@ let
         '';
       });
 
-    })
-    self.overlays.default
+      wezterm = prev.wezterm.overrideAttrs(old: rec {
+        inherit (old) pname;
+        version = "master";
+        doCheck = false;
+        src = prev.fetchFromGitHub {
+          owner = "wez";
+          repo = pname;
+          rev = "94f2225c82517daf049e558f898690d562f4afb9";
+          fetchSubmodules = true;
+          sha256 = "sha256-7M7tmIfY0GdXitmVLHCa3hVOvgQT1iIxEPQE8LneFCo=";
+        };
+
+        cargoDeps = old.cargoDeps.overrideAttrs (prev.lib.const {
+          name = "${pname}-vendor.tar.gz";
+          inherit src;
+          outputHash = "sha256-atlwDhZxvrjLiQPIuAn0peo3hMffx2BL4/sxkFXUwho=";
+        });
+      });
+
+    } // (prev.lib.mapAttrs
+      (n: _: prev.callPackage (../. + "/custom_pkgs/${n}") {})
+      (prev.lib.filterAttrs
+        (_: v: v == "directory")
+        (builtins.readDir ../custom_pkgs))))
   ];
 
   pkgs = import nixpkgs {
@@ -68,6 +90,7 @@ let
 in
 rec {
   inherit pkgs;
+  overlay = final: prev: prev.lib.foldl' lib.mergeAttrs { } (map (o: o final prev) overlays);
 
   user = import ./user.nix { inherit pkgs home-manager lib system overlays extraHMImports; };
   host = import ./host.nix { inherit system pkgs home-manager lib user extramodules nixpkgs inputs; };
