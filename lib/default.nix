@@ -17,7 +17,7 @@ let
     inputs.neovim-nightly.overlay
     inputs.arm-rs.overlays.default
     inputs.hyprland.overlays.default
-    inputs.zellij.overlays.default
+    #inputs.zellij.overlays.default
     inputs.eww-git.overlays.default
     inputs.nil-ls.overlays.default
     inputs.vim-extra-plugins.overlays.default
@@ -41,26 +41,6 @@ let
             --prefix QT_QPA_PLATFORM : xcb
         '';
       });
-
-      wezterm = prev.wezterm.overrideAttrs(old: rec {
-        inherit (old) pname;
-        version = "master";
-        doCheck = false;
-        src = prev.fetchFromGitHub {
-          owner = "wez";
-          repo = pname;
-          rev = "94f2225c82517daf049e558f898690d562f4afb9";
-          fetchSubmodules = true;
-          sha256 = "sha256-7M7tmIfY0GdXitmVLHCa3hVOvgQT1iIxEPQE8LneFCo=";
-        };
-
-        cargoDeps = old.cargoDeps.overrideAttrs (prev.lib.const {
-          name = "${pname}-vendor.tar.gz";
-          inherit src;
-          outputHash = "sha256-atlwDhZxvrjLiQPIuAn0peo3hMffx2BL4/sxkFXUwho=";
-        });
-      });
-
     } // (prev.lib.mapAttrs
       (n: _: prev.callPackage (../. + "/custom_pkgs/${n}") {})
       (prev.lib.filterAttrs

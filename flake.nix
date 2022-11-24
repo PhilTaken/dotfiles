@@ -62,10 +62,10 @@
       #inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zellij = {
-      url = "github:zellij-org/zellij";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #zellij = {
+      #url = "github:zellij-org/zellij";
+      #inputs.nixpkgs.follows = "nixpkgs";
+    #};
 
     arm-rs = {
       url = "github:PhilTaken/arm.rs";
