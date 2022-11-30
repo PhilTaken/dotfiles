@@ -43,13 +43,13 @@ let
       });
 
       # add webgpu backend dependencies for wezterm
-      wezterm = prev.wezterm.overrideAttrs (old: {
-        nativeBuildInputs = old.nativeBuildInputs ++ [ prev.makeWrapper ];
+      #wezterm = prev.wezterm.overrideAttrs (old: {
+        #nativeBuildInputs = old.nativeBuildInputs ++ [ prev.makeWrapper ];
 
-        postInstall = old.postInstall + ''
-          wrapProgram "$out/bin/wezterm" --prefix LD_LIBRARY_PATH : "${prev.lib.makeLibraryPath [ prev.vulkan-loader ]}"
-        '';
-      });
+        #postInstall = old.postInstall + ''
+          #wrapProgram "$out/bin/wezterm" --prefix LD_LIBRARY_PATH : "${prev.lib.makeLibraryPath [ prev.vulkan-loader ]}"
+        #'';
+      #});
 
     } // (prev.lib.mapAttrs
       (n: _: prev.callPackage (../. + "/custom_pkgs/${n}") {})
