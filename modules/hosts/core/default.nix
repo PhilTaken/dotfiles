@@ -40,6 +40,17 @@ in
         min-free = ${toString (100 * 1024 * 1024)}
         max-free = ${toString (1024 * 1024 * 1024)}
         tarball-ttl = ${toString (7 * 24 * 60 * 60)}
+
+        # Almost always set
+        connect-timeout = 5
+        log-lines = 25
+
+        # Set if understood
+        fallback = true
+        warn-dirty = false
+
+        # Set for developers
+        keep-outputs = true
       '';
 
       # TODO add my own registry
