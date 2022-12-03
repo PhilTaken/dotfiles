@@ -261,5 +261,7 @@ _G.which_key_r = function()
     wk.register(rn, {mode = "n", buffer = 0})
 end
 
+-- TODO: attempt to autostart netrep when detecting janet
+-- TODO: package spork/netrepl using nix, provide it via overlay
 vim.api.nvim_exec([[autocmd BufEnter *.fnl,*.rkt,*.hy,*.scm,*.janet :lua which_key_conjure()]], false)
 vim.api.nvim_exec([[autocmd BufEnter *.r,*.Rmd :lua which_key_r()]], false)
