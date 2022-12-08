@@ -17,9 +17,11 @@ icon() {
         icon=""
     elif [ "$per" -gt "10" ]; then
         icon=""
-        notify-send -u critical "Battery Low" "Connect Charger"
     else
         echo "" && exit
+    fi
+    if [ "$per" -le "10" ]; then
+        notify-send -u critical "Battery Low" "Connect Charger"
     fi
     echo "$icon"
 }
