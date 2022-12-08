@@ -74,7 +74,7 @@ in
     sops.secrets.wifi-passwords = { };
     networking.wireless = {
       enable = true;
-      #userControlled.enable = true;
+      userControlled.enable = true;
       interfaces = cfg.wirelessInterfaces;
       environmentFile = config.sops.secrets.wifi-passwords.path;
       networks = {
@@ -83,6 +83,9 @@ in
         };
         "TALKTALK9738BE" = {
           psk = "@PSK_JAID@";
+        };
+        "TALKTALKD69C48" = {
+          psk = "@PSK_VAC@";
         };
       };
     };
