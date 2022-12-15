@@ -4,6 +4,7 @@
 , system
 , overlays
 , extraHMImports
+, inputs
 , ...
 }:
 with builtins;
@@ -17,7 +18,13 @@ rec {
     }: {
       phil = userConfig;
       systemd.user.startServices = true;
+
+      _module.args = {
+        inherit inputs;
+      };
+
       home = {
+
         inherit username homeDirectory stateVersion;
 
         sessionVariables = {

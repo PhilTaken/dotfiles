@@ -17,6 +17,7 @@ let
     inputs.neovim-nightly.overlay
     inputs.arm-rs.overlays.default
     inputs.hyprland.overlays.default
+    inputs.parinfer-rust.overlays.default
     #inputs.zellij.overlays.default
     inputs.eww-git.overlays.default
     inputs.nil-ls.overlays.default
@@ -52,7 +53,7 @@ let
       #});
 
     } // (prev.lib.mapAttrs
-      (n: _: prev.callPackage (../. + "/custom_pkgs/${n}") {})
+      (n: _: prev.callPackage (../. + "/custom_pkgs/${n}") { inherit inputs; })
       (prev.lib.filterAttrs
         (_: v: v == "directory")
         (builtins.readDir ../custom_pkgs))))
@@ -82,7 +83,7 @@ rec {
   inherit pkgs;
   overlay = final: prev: prev.lib.foldl' lib.mergeAttrs { } (map (o: o final prev) overlays);
 
-  user = import ./user.nix { inherit pkgs home-manager lib system overlays extraHMImports; };
+  user = import ./user.nix { inherit pkgs home-manager lib system overlays extraHMImports inputs; };
   host = import ./host.nix { inherit system pkgs home-manager lib user extramodules nixpkgs inputs; };
   server = import ./server.nix { inherit pkgs host lib; };
   shells = import ./shells.nix { inherit pkgs lib; };
