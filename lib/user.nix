@@ -19,7 +19,7 @@ rec {
       phil = userConfig;
       systemd.user.startServices = true;
 
-      _module.args = {
+      extraSpecialArgs = {
         inherit inputs;
       };
 
