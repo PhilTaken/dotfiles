@@ -122,23 +122,3 @@ vim.cmd[[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]]
 vim.cmd[[let g:pandoc#spell#enabled = 0]]
 
 vim.notify = require("notify")
-
--- #####################################
-
-require('packer').startup{
-    compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua',
-    function(use)
-        use {
-            'eraserhd/parinfer-rust',
-            cmd = "ParinferOn",
-            run = "nix-shell --run \"cargo build --release\"",
-        }
-    end,
-    config = {
-        display = {
-            open_fn = function ()
-                return require('packer.util').float({border = 'single'})
-            end
-        }
-    }
-}

@@ -76,6 +76,8 @@
       url = "github:syl20bnr/spacemacs";
       flake = false;
     };
+
+    parinfer-rust.url = "github:PhilTaken/parinfer-rust";
   };
 
   outputs = { self, nixpkgs, ... }@inputs:

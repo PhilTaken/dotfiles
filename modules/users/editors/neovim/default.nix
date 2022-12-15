@@ -122,75 +122,74 @@ in
       # install treesitter with nix to prevent all kinds of libstdc++ so shenenigans
       plugins = (with pkgs.vimPlugins; [
         (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
-        impatient-nvim
-        vim-startuptime
-        lsp-colors-nvim
-        nvim-web-devicons
-        plenary-nvim
-        popup-nvim
-        telescope-nvim
-        telescope-symbols-nvim
-        catppuccin-nvim
         alpha-nvim
-        vim-gutentags
-        vim-rooter
-        nvim-colorizer-lua
-        indent-blankline-nvim
-        neoscroll-nvim
-        nerdcommenter
-        pear-tree
-        git-worktree-nvim
-        telescope-file-browser-nvim
-        telescope-zoxide
-        galaxyline-nvim
-        nvim-lspconfig
+        catppuccin-nvim
         echodoc-vim
         float-preview-nvim
+        friendly-snippets
+        galaxyline-nvim
+        git-worktree-nvim
+        impatient-nvim
+        indent-blankline-nvim
+        lsp-colors-nvim
         lsp_lines-nvim
+        lsp_signature-nvim
         lspkind-nvim
         luasnip
-        friendly-snippets
-        lsp_signature-nvim
+        neoscroll-nvim
+        nerdcommenter
+        nvim-colorizer-lua
+        nvim-lspconfig
+        nvim-web-devicons
+        pear-tree
+        plenary-nvim
+        popup-nvim
+        telescope-file-browser-nvim
+        telescope-nvim
+        telescope-symbols-nvim
+        telescope-zoxide
+        vim-gutentags
+        vim-rooter
+        vim-startuptime
 
-        nvim-cmp
-        cmp-nvim-lsp
-        cmp_luasnip
         cmp-buffer
-        cmp-path
+        cmp-nvim-lsp
         cmp-nvim-lua
-        cmp-under-comparator
+        cmp-path
         cmp-tmux
+        cmp-under-comparator
+        cmp_luasnip
+        nvim-cmp
 
-        direnv-vim
-        gitlinker-nvim
-        vim-nix
-        fennel-vim
+        Navigator-nvim
         conjure
+        diffview-nvim
+        direnv-vim
+        fennel-vim
+        gitlinker-nvim
+        gitsigns-nvim
+        hotpot-nvim
+        leap-nvim
+        nvim-navic
+        nvim-neoclip-lua
+        nvim-notify
+        nvim-tree-lua
+        sqlite-lua
+        stabilize-nvim
+        targets-vim
+        toggleterm-nvim
+        trouble-nvim
+        vim-nix
         vim-pandoc
         vim-pandoc-syntax
-        targets-vim
-        gitsigns-nvim
-        diffview-nvim
-        nvim-notify
-        vim-surround
         vim-repeat
+        vim-surround
         which-key-nvim
-        trouble-nvim
-        Navigator-nvim
-        toggleterm-nvim
-        nvim-tree-lua
-        stabilize-nvim
-        nvim-neoclip-lua
-        sqlite-lua
-        hotpot-nvim
-        nvim-navic
-        leap-nvim
 
-        # for parinfer
-        packer-nvim
+        parinfer-rust
       ]) ++ (with pkgs.vimExtraPlugins; [
-        nvim-ufo
         cybu-nvim
+        nvim-ufo
         vim-hy
       ]) ++ (map buildVimPluginFrom2Nix [
         rec {
