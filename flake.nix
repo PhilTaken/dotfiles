@@ -205,7 +205,7 @@
             }));
           in
           util.host.mkWorkstation rec {
-            users = [ "maelstroem" ]; # "jaid"
+            users = [ "maelstroem" "jaid" ];
             hmConfigs = mkHMUsers users;
             systemConfig = {
               server.services.openssh.enable = true;

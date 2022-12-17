@@ -19,9 +19,9 @@ rec {
       phil = userConfig;
       systemd.user.startServices = true;
 
-      extraSpecialArgs = {
-        inherit inputs;
-      };
+      #extraSpecialArgs = {
+        #inherit inputs;
+      #};
 
       home = {
 
@@ -104,7 +104,7 @@ rec {
 
   mkSystemUser =
     { name
-    , uid ? 1000
+    , uid ? null
     , shell ? pkgs.zsh
     , extraGroups ? [ "wheel" "docker" "dialout" "adbusers" "gpio" "fuse" ]
     , sshKeys ? [
@@ -118,7 +118,7 @@ rec {
     , ...
     }: mkUser { inherit uid name shell extraGroups sshKeys; };
 
-  mkGuestUser = { name, uid ? 1000, shell ? pkgs.zsh, extraGroups ? [ ] }@args: mkUser args;
+  mkGuestUser = { name, uid ? null, shell ? pkgs.zsh, extraGroups ? [ ] }: mkUser { inherit uid name shell extraGroups; };
 
   mkUser =
     { name
