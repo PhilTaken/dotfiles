@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, inputs
 , ...
 }:
 with lib;
@@ -66,15 +67,17 @@ in
       Install.WantedBy = [ "default.target" ];
     };
 
-    programs.spicetify = {
+    programs.spicetify = let
+      spicePkgs = inputs.spicetify.packages.${pkgs.system}.default;
+    in {
       enable = true;
-      theme = "catppuccin-mocha";
+      theme = spicePkgs.themes.catppuccin-mocha;
       colorScheme = "flamingo";
 
-      enabledExtensions = [
-        "fullAppDisplay.js"
-        "shuffle+.js"
-        "hidePodcasts.js"
+      enabledExtensions = with spicePkgs.extensions; [
+        fullAppDisplay
+        shuffle
+        hidePodcasts
       ];
     };
 

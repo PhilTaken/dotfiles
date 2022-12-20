@@ -19,12 +19,7 @@ rec {
       phil = userConfig;
       systemd.user.startServices = true;
 
-      #extraSpecialArgs = {
-        #inherit inputs;
-      #};
-
       home = {
-
         inherit username homeDirectory stateVersion;
 
         sessionVariables = {
@@ -100,6 +95,7 @@ rec {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.users.${config.username} = mkConfig config;
+    home-manager.extraSpecialArgs = { inherit inputs; };
   };
 
   mkSystemUser =
