@@ -137,8 +137,10 @@ local leadern = {
         };
 
         p = {
-            name = "+project",
-            p = { function() R('custom.tele').extensions.project.project{} end, "Browse projects" },
+            name = "+present",
+            --p = { function() R('custom.tele').extensions.project.project{} end, "Browse projects" },
+            p = { "<cmd>PresentEnable", "Start presenting" },
+            s = { "<cmd>PresentDisable", "Stop presenting" },
         },
         s = {
             name = "+shells",

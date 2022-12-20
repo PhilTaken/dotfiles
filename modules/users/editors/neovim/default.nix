@@ -191,6 +191,7 @@ in
         cybu-nvim
         nvim-ufo
         vim-hy
+        present-nvim
       ]) ++ (map buildVimPluginFrom2Nix [
         rec {
           pname = "janet.vim";

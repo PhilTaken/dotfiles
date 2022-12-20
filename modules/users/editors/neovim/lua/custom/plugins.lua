@@ -27,6 +27,10 @@ require('nvim-tree').setup { }
 require('neoclip').setup{ enable_persistent_history = true, }
 require("cybu").setup({ display_time = 350, })
 
+require('present').setup{
+    -- ... your config here
+}
+
 require("indent_blankline").setup {
     buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
     filetype_exclude = { "startify", "dashboard", "man" },
