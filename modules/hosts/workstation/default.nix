@@ -72,8 +72,8 @@ in
 
       in
       with pkgs; [
-        #vscodium-with-extensions
-        vscodium
+        vscodium-with-extensions
+        #vscodium
 
         beets
 
@@ -89,7 +89,7 @@ in
         audacity
         obs-studio
         handbrake
-        #makemkv
+        makemkv
 
         # games
         prismlauncher
