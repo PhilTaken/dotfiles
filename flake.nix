@@ -282,11 +282,11 @@
           profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.delta;
         };
 
-        epsilon = {
-          hostname = "192.168.0.130";
-          sshUser = "root";
-          profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.epsilon;
-        };
+        #epsilon = {
+          #hostname = "192.168.0.130";
+          #sshUser = "root";
+          #profiles.system.path = inputs.deploy-rs.lib."${system}".activate.nixos self.nixosConfigurations.epsilon;
+        #};
       };
 
       # filter darwin system checks
