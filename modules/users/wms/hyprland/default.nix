@@ -9,7 +9,7 @@ let
   cfg = config.phil.wms.hyprland;
 in {
   imports = [
-    inputs.hyprland.homeManagerModules.default
+    inputs.inputs.hyprland.homeManagerModules.default
   ];
 
   options.phil.wms.hyprland = {
