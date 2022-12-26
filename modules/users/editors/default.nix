@@ -3,7 +3,7 @@
 {
   imports = [
     ./neovim
-    ./spacemacs
+    ./emacs
     ./helix
   ];
 }
