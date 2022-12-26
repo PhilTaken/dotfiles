@@ -1,5 +1,4 @@
 { inputs
-, extraHMImports ? [ ]
 , self
 , ...
 }:
@@ -73,17 +72,12 @@ let
     "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
   ];
-
-  extraHMImports = [
-    inputs.spicetify.homeManagerModule
-    inputs.hyprland.homeManagerModules.default
-  ];
 in
 rec {
   inherit pkgs;
   overlay = final: prev: prev.lib.foldl' lib.mergeAttrs { } (map (o: o final prev) overlays);
 
-  user = import ./user.nix { inherit pkgs home-manager lib system overlays extraHMImports inputs; };
+  user = import ./user.nix { inherit pkgs home-manager lib system overlays inputs; };
   host = import ./host.nix { inherit system pkgs home-manager lib user extramodules nixpkgs inputs; };
   server = import ./server.nix { inherit pkgs host lib; };
   shells = import ./shells.nix { inherit pkgs lib; };

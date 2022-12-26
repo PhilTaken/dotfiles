@@ -10,6 +10,10 @@ let
   cfg = config.phil.music;
 in
 {
+  imports = [
+    inputs.spicetify.homeManagerModule
+  ];
+
   options.phil.music = {
     enable = mkOption {
       description = "Enable the music module";

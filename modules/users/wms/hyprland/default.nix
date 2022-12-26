@@ -7,8 +7,11 @@ with lib;
 
 let
   cfg = config.phil.wms.hyprland;
-in
-rec {
+in {
+  imports = [
+    inputs.hyprland.homeManagerModules.default
+  ];
+
   options.phil.wms.hyprland = {
     enable = mkEnableOption "hyprland";
 

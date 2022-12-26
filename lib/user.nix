@@ -3,7 +3,6 @@
 , lib
 , system
 , overlays
-, extraHMImports
 , inputs
 , ...
 }:
@@ -83,7 +82,7 @@ rec {
         cacheHome = "${homeDirectory}/.cache";
       };
 
-      imports = [ ../modules/users ] ++ extraHMImports;
+      imports = [ ../modules/users ];
     };
 
   mkHMUser = config: home-manager.lib.homeManagerConfiguration {

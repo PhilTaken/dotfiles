@@ -72,11 +72,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spacemacs-git = {
-      url = "github:syl20bnr/spacemacs";
-      flake = false;
-    };
-
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
   };
 
@@ -181,11 +177,13 @@
           (_: v: v == "directory")
           (builtins.readDir ./modules/hosts));
 
-      hmModules = lib.mapAttrs
-        (n: _: import (./. + "/modules/users/${n}"))
-        (lib.filterAttrs
-          (_: v: v == "directory")
-          (builtins.readDir ./modules/users));
+      hmModules = lib.recursiveUpdate
+        (lib.mapAttrs
+          (n: _: import (./. + "/modules/users/${n}"))
+            (lib.filterAttrs
+            (dir: type: type == "directory" && (builtins.elem "default.nix" (builtins.attrValues (builtins.readDir (./. + "/modules/users/${dir}")))))
+            (builtins.readDir ./modules/users)))
+        { all = import ./modules/users; };
 
       homeConfigurations = lib.mapAttrs
         (username: util.user.mkHMUser)
