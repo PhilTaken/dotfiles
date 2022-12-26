@@ -1,12 +1,3 @@
--- Install packer
---
--- Only required if you have packer in your `opt` pack
-vim.cmd [[packadd packer.nvim]]
-
-require("packer").init {
-	auto_reload_compiled = true
-}
-
 require('ufo').setup()
 require("hotpot").setup({ })
 require("stabilize").setup()
