@@ -61,10 +61,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.doom-emacs = {
-      enable = true;
-      doomPrivateDir = ./doom.d;
-      extraPackages = with pkgs; [
+    programs.doom-emacs = let
+      extraBins = with pkgs; [
         gcc11
         gcc-unwrapped
 
@@ -94,6 +92,17 @@ in
         #elixir_ls # elixir
         #clojure-lsp # clojure
       ]));
+    in {
+      enable = true;
+      doomPrivateDir = ./doom.d;
+      extraConfig = ''
+        (setq exec-path (append exec-path '( ${
+          concatMapStringsSep " " (x: ''"${x}/bin"'') extraBins
+        } )))
+        (setenv "PATH" (concat (getenv "PATH") ":${
+          concatMapStringsSep ":" (x: "${x}/bin") extraBins
+        }"))
+      '';
     };
 
     services.emacs.enable = true;
