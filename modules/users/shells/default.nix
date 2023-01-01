@@ -51,6 +51,8 @@ in
       _ZO_ECHO = 1;
       # silence direnv warnings for "long running commands"
       DIRENV_WARN_TIMEOUT="24h";
+      # silence direnv and provide information via starship
+      DIRENV_LOG_FORMAT="";
     };
 
     home.shellAliases = rec {
@@ -206,6 +208,12 @@ in
             deleted = "✘";
           };
           jobs.symbol = "+";
+
+          custom.direnv = {
+            format = "[\\[direnv\\]]($style) ";
+            style = "fg:yellow dimmed";
+            when = "env | grep -E '^DIRENV_FILE='";
+          };
         };
       };
     };
