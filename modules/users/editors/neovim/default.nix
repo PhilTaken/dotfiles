@@ -85,7 +85,7 @@ in
         bottom # custom floaterm
         lazygit # lazy git managment
 
-        neuron-notes # for zettelkasten note-taking
+        emanote # for zettelkasten note-taking
 
         sqlite # for sqlite.lua
         universal-ctags # ctags for anything
