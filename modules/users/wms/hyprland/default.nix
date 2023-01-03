@@ -87,7 +87,6 @@ in {
 
           general {
               sensitivity=1.0 # for mouse cursor
-              main_mod=SUPER
 
               gaps_in=5
               gaps_out=5
