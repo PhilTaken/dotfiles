@@ -199,7 +199,7 @@
             # screw nvidia
             mkHMUsers = map (user: util.user.mkNixosModule (lib.recursiveUpdate hmUsers.${user} {
               userConfig.wms.hyprland.terminal = "alacritty";
-              userConfig.wms.bars.eww.main_monitor = 1;
+              userConfig.wms.bars.eww.main_monitor = 0;
             }));
           in
           util.host.mkWorkstation rec {
