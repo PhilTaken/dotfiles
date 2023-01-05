@@ -1,27 +1,24 @@
-{ system
-, pkgs
-, lib
-, user
-, extramodules ? [ ]
-, nixpkgs
+{ user
 , inputs
-, ...
+, systemmodules
+, pkgsFor
 }:
-with builtins;
-
 let
-  net = import ../network.nix { };
-in
-rec {
+  inherit (inputs) nixpkgs;
+  inherit (nixpkgs) lib;
+in rec {
   # set up a vanilla host without any home-manager
   mkHost =
     { users
     , systemConfig
     , wireless_interfaces ? [ ]
+    , hmUsers ? {}
     , extraimports ? [ ]
-    , hmConfigs ? [ ]
-    , hardware-config ? (import ../machines/${systemConfig.core.hostName})
     , extraHostModules ? [ ]
+    , system ? "x86_64-linux"
+    , lib ? inputs.nixpkgs.lib
+    , pkgs ? pkgsFor system
+    , hardware-config ? (import ../machines/${systemConfig.core.hostName})
     }:
     let
       raw_users = lib.zipListsWith
@@ -59,21 +56,24 @@ rec {
           nixpkgs.overlays = [
             inputs.nixpkgs-wayland.overlay
           ];
+
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
         }
-      ] ++ extramodules ++ hmConfigs ++ extraHostModules;
+      ] ++ systemmodules ++ extraHostModules;
     };
 
-  mkWorkstation = inpargs:
+    mkWorkstation = inpargs:
     let
-      args = inpargs // {
-        systemConfig = lib.mergeAttrs
-          {
-            wireguard.enable = true;
-            nebula.enable = true;
-            mullvad.enable = true;
-            workstation.enable = true;
-          }
-          inpargs.systemConfig;
+      args = lib.recursiveUpdate inpargs {
+        systemConfig = {
+          wireguard.enable = true;
+          nebula.enable = true;
+          mullvad.enable = true;
+          workstation.enable = true;
+        };
         extraHostModules = (inpargs.extraHostModules or [ ]) ++ [
           ({ config, ... }: {
             sops.secrets.key.sopsFile = ../sops/nebula.yaml;

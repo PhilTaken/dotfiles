@@ -1,8 +1,4 @@
-{ pkgs
-, host
-, lib
-, ...
-}:
+{ host, inputs, ... }:
 
 with builtins;
 
@@ -33,8 +29,9 @@ let
 
   # allows value to overwrite enabled when specified explicitly
   defaultEnabled = builtins.mapAttrs (_: lib.mergeAttrs { enable = true; });
-in
-rec {
+
+  inherit (inputs.nixpkgs) lib;
+in {
   mkServer =
     { servername
     , services ? [ ]

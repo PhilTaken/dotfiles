@@ -1,19 +1,19 @@
-{ nixpkgs
-, pkgs
-, lib
-, system
-, ...
-}:
-
 {
   # TODO: add install script (+ binary cache?)
-  mkIso = hostName: lib.nixosSystem {
+  mkIso = {
+      nixpkgs
+    , system
+    , hostName
+    , lib ? nixpkgs.lib
+    , pkgs ? import nixpkgs { inherit system; }
+    , ... }:
+  lib.nixosSystem {
     inherit system pkgs;
 
     modules = [
       ../modules/hosts/server/openssh.nix
       "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
-      {
+      ({ pkgs, ...}: {
         phil.server.services.openssh.enable = true;
         networking = { inherit hostName; };
         time.timeZone = "Europe/Berlin";
@@ -38,7 +38,7 @@
           htop
           magic-wormhole
         ];
-      }
+      })
     ];
   };
 }

@@ -1,16 +1,8 @@
-{ pkgs
-, home-manager
-, lib
-, system
-, overlays
-, inputs
-, ...
-}:
+{ inputs, ... }:
 with builtins;
 rec {
-  mkConfig =
-    { username
-    , userConfig
+  mkConfig = pkgs: username:
+    { userConfig
     , extraPackages ? pkgs: [ ]
     , stateVersion ? "21.05"
     , homeDirectory ? "/home/${username}"
@@ -85,22 +77,14 @@ rec {
       imports = [ ../modules/users ];
     };
 
-  mkHMUser = config: home-manager.lib.homeManagerConfiguration {
-    inherit pkgs;
-    modules = [ (mkConfig config) ];
-  };
-
-  mkNixosModule = config: {
-    home-manager.useGlobalPkgs = true;
-    home-manager.useUserPackages = true;
-    home-manager.users.${config.username} = mkConfig config;
-    home-manager.extraSpecialArgs = { inherit inputs; };
-  };
+  #mkHMUser = pkgs: username: config: inputs.home-manager.lib.homeManagerConfiguration {
+    #inherit pkgs;
+    #modules = [ (mkConfig pkgs username config) ];
+  #};
 
   mkSystemUser =
     { name
     , uid ? null
-    , shell ? pkgs.zsh
     , extraGroups ? [ "wheel" "docker" "dialout" "adbusers" "gpio" "fuse" ]
     , sshKeys ? [
         # yubikey
@@ -111,27 +95,27 @@ rec {
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8KpkIxe5zytz/Vv2kcSivSQ2KALMVCihYDZTfUZP04wDYhn/Sg/lHiTo7n1IE39w9JtmEaK003/7MKX04s1qA6ZI9H9Buq6QlyqClwIizwnMJa7Qbfv6C+WCEtGdU6Mdoam/4jZY9wNol4d1vjfStafkPDJqGDJaN/8KuPl9sVniUaFwMvxblzBC2RaStCUnwZMkAMi9V7re86PyfL7am7S9DwtxinTuaEqXe63b0k5RHjhPSVPAMFuItgnQOJUNa9vuD5x2Ao6pBMSpt0FSgwv13JHTC8Is3NgUofV4Vrt5nqv50aK+9pwpFOnjnvP5+lK//uqjMNRwPUG5ObKjA+4SDxfWUZ+cjQZ78U9LOyrRoqDF0fLCcLSpdRw6gZw4nN4pgowW4L/D1lO9FnZKwFVfdLMg0Fq/Q1X5VO+Jd0aPdE4MzmrAg34MxwX/qcZbz9vpRojz3G8C3+/bIFVAq4SP/l6RfdMPiwSn69wgKnu3/1EMwhjQnO+VdLS42ZPM= maelstroem@epsilon"
       ]
     , ...
-    }: mkUser { inherit uid name shell extraGroups sshKeys; };
+    }: mkUser { inherit uid name extraGroups sshKeys; };
 
-  mkGuestUser = { name, uid ? null, shell ? pkgs.zsh, extraGroups ? [ ] }: mkUser { inherit uid name shell extraGroups; };
+  mkGuestUser = { name, uid ? null, extraGroups ? [ ] }: mkUser { inherit uid name extraGroups; };
 
   mkUser =
     { name
     , uid
-    , shell
     , extraGroups
     , sshKeys ? [ ]
-    }: {
+    }: ({pkgs, ... }: {
       users.users."${name}" =
         let
           defaultGroups = [ "video" "audio" "cdrom" "fuse" ];
         in
         {
-          inherit name uid shell;
+          inherit name uid;
+          shell = pkgs.zsh;
           extraGroups = extraGroups ++ defaultGroups;
           isNormalUser = true;
           isSystemUser = false;
           openssh.authorizedKeys.keys = sshKeys;
         };
-    };
+    });
 }
