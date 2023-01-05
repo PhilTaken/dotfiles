@@ -7,7 +7,8 @@ with lib;
 
 let
   cfg = config.phil.wms.hyprland;
-in {
+in
+{
   imports = [
     inputs.inputs.hyprland.homeManagerModules.default
   ];

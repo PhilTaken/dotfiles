@@ -78,8 +78,8 @@ rec {
     };
 
   #mkHMUser = pkgs: username: config: inputs.home-manager.lib.homeManagerConfiguration {
-    #inherit pkgs;
-    #modules = [ (mkConfig pkgs username config) ];
+  #inherit pkgs;
+  #modules = [ (mkConfig pkgs username config) ];
   #};
 
   mkSystemUser =
@@ -104,7 +104,7 @@ rec {
     , uid
     , extraGroups
     , sshKeys ? [ ]
-    }: ({pkgs, ... }: {
+    }: ({ pkgs, ... }: {
       users.users."${name}" =
         let
           defaultGroups = [ "video" "audio" "cdrom" "fuse" ];

@@ -6,12 +6,13 @@
 let
   inherit (inputs) nixpkgs;
   inherit (nixpkgs) lib;
-in rec {
+in
+rec {
   mkHost =
     { users
     , systemConfig
     , wireless_interfaces ? [ ]
-    , hmUsers ? {}
+    , hmUsers ? { }
     , extraimports ? [ ]
     , extraHostModules ? [ ]
     , system ? "x86_64-linux"
@@ -64,7 +65,7 @@ in rec {
       ] ++ (systemmodules.${system} or systemmodules.default) ++ extraHostModules;
     };
 
-    mkWorkstation = inpargs:
+  mkWorkstation = inpargs:
     let
       args = lib.recursiveUpdate inpargs {
         systemConfig = {

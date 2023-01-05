@@ -50,7 +50,8 @@ let
         (_: v: v == "directory")
         (builtins.readDir ../custom_pkgs))))
   ];
-in rec {
+in
+rec {
   pkgsFor = system: import inputs.nixpkgs {
     inherit overlays system;
     config.allowUnfree = true;

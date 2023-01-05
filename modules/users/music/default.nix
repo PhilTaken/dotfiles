@@ -71,19 +71,21 @@ in
       Install.WantedBy = [ "default.target" ];
     };
 
-    programs.spicetify = let
-      spicePkgs = inputs.spicetify.packages.${pkgs.system}.default;
-    in {
-      enable = true;
-      theme = spicePkgs.themes.catppuccin-mocha;
-      colorScheme = "flamingo";
+    programs.spicetify =
+      let
+        spicePkgs = inputs.spicetify.packages.${pkgs.system}.default;
+      in
+      {
+        enable = true;
+        theme = spicePkgs.themes.catppuccin-mocha;
+        colorScheme = "flamingo";
 
-      enabledExtensions = with spicePkgs.extensions; [
-        fullAppDisplay
-        shuffle
-        hidePodcasts
-      ];
-    };
+        enabledExtensions = with spicePkgs.extensions; [
+          fullAppDisplay
+          shuffle
+          hidePodcasts
+        ];
+      };
 
     services.easyeffects.enable = true;
 

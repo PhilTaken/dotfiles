@@ -1,6 +1,8 @@
-{ self, inputs, ...}: let
+{ self, inputs, ... }:
+let
   activateFor = system: inputs.deploy-rs.lib.${system}.activate.nixos;
-in {
+in
+{
   flake = {
     # deploy config
     deploy.nodes = {
@@ -20,9 +22,9 @@ in {
       };
 
       #epsilon = {
-        #hostname = "192.168.0.130";
-        #sshUser = "root";
-        #profiles.system.path = (activateFor "x86_64-linux")  self.nixosConfigurations.epsilon;
+      #hostname = "192.168.0.130";
+      #sshUser = "root";
+      #profiles.system.path = (activateFor "x86_64-linux")  self.nixosConfigurations.epsilon;
       #};
     };
   };

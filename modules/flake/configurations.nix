@@ -1,6 +1,8 @@
 { self
 , inputs
-, ...}: let
+, ...
+}:
+let
   inherit (inputs.nixpkgs) lib;
 
   util = import ../../lib { inherit inputs; };
@@ -82,7 +84,8 @@
         extraPackages = pkgs: [ ];
       };
     };
-in {
+in
+{
   flake = {
     nixosConfigurations = {
       # usb stick iso
@@ -96,13 +99,15 @@ in {
       gamma =
         let
           # screw nvidia
-          mkHMUsers = users: lib.listToAttrs (map (user: {
-            name = user;
-            value = lib.recursiveUpdate hmUsers.${user} {
-              userConfig.wms.hyprland.terminal = "alacritty";
-              userConfig.wms.bars.eww.main_monitor = 0;
-            };
-          }) users);
+          mkHMUsers = users: lib.listToAttrs (map
+            (user: {
+              name = user;
+              value = lib.recursiveUpdate hmUsers.${user} {
+                userConfig.wms.hyprland.terminal = "alacritty";
+                userConfig.wms.bars.eww.main_monitor = 0;
+              };
+            })
+            users);
         in
         util.host.mkWorkstation rec {
           users = [ "maelstroem" "jaid" ];
@@ -158,7 +163,7 @@ in {
     systems = builtins.mapAttrs (system: _: self.nixosConfigurations.${system}.config.system.build.toplevel) self.nixosConfigurations;
   };
 
-  perSystem = { system,  ... }: {
+  perSystem = { system, ... }: {
     #homeConfigurations = lib.mapAttrs (util.user.mkHMUser (util.pkgsFor system)) hmUsers;
     checks = (builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib).${system};
 

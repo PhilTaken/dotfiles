@@ -31,7 +31,8 @@ let
   defaultEnabled = builtins.mapAttrs (_: lib.mergeAttrs { enable = true; });
 
   inherit (inputs.nixpkgs) lib;
-in {
+in
+{
   mkServer =
     { servername
     , services ? [ ]

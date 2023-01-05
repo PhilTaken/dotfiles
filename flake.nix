@@ -77,8 +77,8 @@
     };
 
     #zellij = {
-      #url = "github:zellij-org/zellij";
-      #inputs.nixpkgs.follows = "nixpkgs";
+    #url = "github:zellij-org/zellij";
+    #inputs.nixpkgs.follows = "nixpkgs";
     #};
 
     arm-rs = {
@@ -92,16 +92,16 @@
   };
 
   outputs = { self, flake-parts, ... }@inputs:
-  flake-parts.lib.mkFlake { inherit inputs; } {
-    systems = [
-      "x86_64-linux"
-    ];
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+      ];
 
-    imports = [
-      ./modules/flake/configurations.nix
-      ./modules/flake/modules.nix
-      ./modules/flake/deploy.nix
-      ./modules/flake/shells.nix
-    ];
-  };
+      imports = [
+        ./modules/flake/configurations.nix
+        ./modules/flake/modules.nix
+        ./modules/flake/deploy.nix
+        ./modules/flake/shells.nix
+      ];
+    };
 }

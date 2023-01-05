@@ -19,24 +19,26 @@ in
 
   config = {
     programs = {
-      alacritty = let
-        colorscheme = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "alacritty";
-          rev = "406dcd431b1e8866533798d10613cdbab6568619";
-          sha256 = "sha256-RyxD54fqvs0JK0hmwJNIcW22mhApoNOgZkyhFCVG6FQ=";
+      alacritty =
+        let
+          colorscheme = pkgs.fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "alacritty";
+            rev = "406dcd431b1e8866533798d10613cdbab6568619";
+            sha256 = "sha256-RyxD54fqvs0JK0hmwJNIcW22mhApoNOgZkyhFCVG6FQ=";
+          };
+        in
+        {
+          enable = true;
+          settings = {
+            font.normal.family = cfg.default_font;
+            font.size = 13;
+            env.TERM = "xterm-256color";
+            import = [
+              "${colorscheme}/catppuccin-mocha.yml"
+            ];
+          };
         };
-      in {
-        enable = true;
-        settings = {
-          font.normal.family = cfg.default_font;
-          font.size = 13;
-          env.TERM = "xterm-256color";
-          import = [
-            "${colorscheme}/catppuccin-mocha.yml"
-          ];
-        };
-      };
 
       wezterm = {
         enable = true;
