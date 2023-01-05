@@ -1,21 +1,19 @@
 { inputs }:
 let
-  systemmodules = [
-    inputs.arm-rs.nixosModules.default
-    inputs.hyprland.nixosModules.default
-    inputs.sops-nix-src.nixosModules.sops
-    inputs.home-manager.nixosModules.home-manager
-  ];
-  #++ lib.optionals (system == "aarch64-linux") [
-    #"${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
-    #inputs.nixos-hardware.nixosModules.raspberry-pi-4
-  #];
+  systemmodules = rec {
+    default = [
+      inputs.arm-rs.nixosModules.default
+      inputs.hyprland.nixosModules.default
+      inputs.sops-nix-src.nixosModules.sops
+      inputs.home-manager.nixosModules.home-manager
+    ];
+    "aarch64-linux" = default ++ [
+      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
+      inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    ];
+  };
 
   overlays = [
-    #inputs.devshell.overlay
-    #inputs.sops-nix-src.overlay
-    #inputs.deploy-rs.overlay
-
     inputs.nur-src.overlay
     inputs.neovim-nightly.overlay
     inputs.arm-rs.overlays.default

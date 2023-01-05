@@ -62,7 +62,7 @@ in rec {
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
         }
-      ] ++ systemmodules ++ extraHostModules;
+      ] ++ (systemmodules.${system} or systemmodules.default) ++ extraHostModules;
     };
 
     mkWorkstation = inpargs:
