@@ -1,4 +1,6 @@
-{self, inputs, ...}: let
+{ self
+, inputs
+, ...}: let
   inherit (inputs.nixpkgs) lib;
 
   util = import ../../lib { inherit inputs; };
@@ -159,5 +161,9 @@ in {
   perSystem = { system,  ... }: {
     #homeConfigurations = lib.mapAttrs (util.user.mkHMUser (util.pkgsFor system)) hmUsers;
     checks = (builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib).${system};
+
+    packages = {
+      x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
+    };
   };
 }

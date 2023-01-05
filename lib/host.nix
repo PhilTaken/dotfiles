@@ -7,7 +7,6 @@ let
   inherit (inputs) nixpkgs;
   inherit (nixpkgs) lib;
 in rec {
-  # set up a vanilla host without any home-manager
   mkHost =
     { users
     , systemConfig
@@ -80,6 +79,7 @@ in rec {
             sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
 
             environment.systemPackages = [
+              # WIP
               #(pkgs.writeShellScriptBin "nebsign" ''
               #${pkgs.nebula}/bin/nebula-cert sign -ca-crt ${config.sops.secrets.ca.path} -ca-key ${config.sops.secrets.key.path} "$@"
               #cp ${config.sops.secrets.ca.path} ./ca.pem

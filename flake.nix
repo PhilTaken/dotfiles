@@ -80,21 +80,15 @@
 
   outputs = { self, flake-parts, ... }@inputs:
   flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = [
+      "x86_64-linux"
+    ];
+
     imports = [
       ./modules/flake/configurations.nix
       ./modules/flake/modules.nix
       ./modules/flake/deploy.nix
       ./modules/flake/shells.nix
     ];
-
-    systems = [
-      "x86_64-linux"
-    ];
-
-    perSystem = { ... }:  {
-      packages = {
-        x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
-      };
-    };
   };
 }
