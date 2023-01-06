@@ -47,6 +47,8 @@ let
 
           des.gnome.enable = true;
 
+          terminals.multiplexer = "zellij";
+
           wms.bars.eww.enable = true;
           #wms.bars.eww.enableWayland = false;
 

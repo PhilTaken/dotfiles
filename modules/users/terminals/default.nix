@@ -15,6 +15,11 @@ in
       type = types.str;
       default = "Iosevka Comfy";
     };
+
+    multiplexer = mkOption {
+      type = types.enum ["tmux" "zellij"];
+      default = "tmux";
+    };
   };
 
   config = {

@@ -9,8 +9,7 @@ with lib;
 let
   cfg = config.phil.shells.zsh;
   magic_enter_prompt = ./magic_enter.zsh;
-in
-rec {
+in {
   options.phil.shells.zsh = {
     enable = mkOption {
       type = types.bool;
@@ -115,7 +114,18 @@ rec {
             git worktree add main
             popd
           }
-        '') + (lib.optionalString inputs.config.phil.tmux.enable ''
+        '') + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
+          # dont run zellij in nvim shells, in tmux splits, in itself or when display isn't set
+          PPNAME="$(ps -o comm= -p $PPID)"
+          if [[ ! "$PPNAME" == "nvim" ]] && [[ $DISPLAY ]]; then
+            [[ $- != *i* ]] && return
+            if [[ -z "$TMUX" ]] && [[ -z "$ZELLIJ" ]]; then
+              ${pkgs.zellij}/bin/zellij attach --create main
+            fi
+          fi
+
+          export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+        '') + (lib.optionalString (config.phil.terminals.multiplexer == "tmux") ''
           # dont run tmux in nvim shells, in zellij splits or when display isn't set
           PPNAME="$(ps -o comm= -p $PPID)"
           if [[ ! "$PPNAME" == "nvim" ]] && [[ $DISPLAY ]]; then
