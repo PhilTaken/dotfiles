@@ -7,12 +7,6 @@ with lib;
 
 let
   cfg = config.phil.zellij;
-  configDir =
-    if pkgs.stdenv.isDarwin then
-      "Library/Application Support/org.Zellij-Contributors.Zellij"
-    else
-      "${config.xdg.configHome}/zellij";
-
   settings = import ./config.nix { inherit pkgs cfg; };
 in
 {
@@ -25,8 +19,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.file."${configDir}/config.kdl" = {
+    xdg.configFile."zellij/config.kdl" = {
       source = settings.configFile;
+    };
+
+    xdg.configFile."zellij/layouts" = {
+      source = ./layouts;
+      recursive = true;
     };
   };
 }

@@ -128,6 +128,7 @@ let
     in
     {
       default_shell = "${pkgs.${cfg.defaultShell}}/bin/${cfg.defaultShell}";
+      pane_frames = false;
       theme = "catppuccin";
       themes = {
         catppuccin = {
@@ -153,183 +154,137 @@ let
         "compact-bar" = { path = "compact-bar"; };
       };
 
-      keybinds = {
-        _properties.clear-defaults = true;
-        normal = [
-          { action = [{ SwitchToMode = "locked"; }]; key = [{ Ctrl = "g"; }]; }
-          { action = [{ SwitchToMode = "Pane"; }]; key = [{ Ctrl = "p"; }]; }
-          { action = [{ SwitchToMode = "Resize"; }]; key = [{ Ctrl = "n"; }]; }
-          { action = [{ SwitchToMode = "Tab"; }]; key = [{ Ctrl = "t"; }]; }
-          { action = [{ SwitchToMode = "Scroll"; }]; key = [{ Ctrl = "s"; }]; }
-          { action = [{ SwitchToMode = "Session"; }]; key = [{ Ctrl = "o"; }]; }
-          { action = [{ SwitchToMode = "Move"; }]; key = [{ Ctrl = "h"; }]; }
-          { action = [{ SwitchToMode = "Tmux"; }]; key = [{ Ctrl = "a"; }]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+      keybinds = let
+        modelist = map lib.toLower (builtins.attrNames config);
+        modes = lib.genAttrs modelist (n: n);
+        swToModes = lib.mapAttrs (n: _: { SwitchToMode = modes.${n}; }) modes;
 
-        locked = [{ action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "g"; }]; }];
+        swToModesBinds = modes: let
+          swToMode = action: lib.concatStrings (map (elem: elem.SwitchToMode or "") action);
 
-        resize = [
-          { action = [{ SwitchToMode = "Locked"; }]; key = [{ Ctrl = "g"; }]; }
-          { action = [{ SwitchToMode = "Move"; }]; key = [{ Ctrl = "h"; }]; }
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "n"; } "Esc"]; }
-          { action = [{ SwitchToMode = "Pane"; }]; key = [{ Ctrl = "p"; }]; }
-          { action = [{ SwitchToMode = "Scroll"; }]; key = [{ Ctrl = "s"; }]; }
-          { action = [{ SwitchToMode = "Session"; }]; key = [{ Ctrl = "o"; }]; }
-          { action = [{ SwitchToMode = "Tab"; }]; key = [{ Ctrl = "t"; }]; }
-          { action = [{ SwitchToMode = "Tmux"; }]; key = [{ Ctrl = "a"; }]; }
+          filter = elem: let
+            newMode = swToMode elem.action;
+          in if (builtins.typeOf modes == "list") then
+            builtins.elem newMode modes
+          else
+            modes == newMode;
+        in lib.filter filter [
+          { action = [ swToModes.normal ]; key = [{ Ctrl = "g"; } "Esc" ]; }
+          { action = [ swToModes.locked ]; key = [{ Ctrl = "g"; }]; }
+          { action = [ swToModes.pane ]; key = [{ Ctrl = "p"; }]; }
+          { action = [ swToModes.move ]; key = [{ Ctrl = "h"; }]; }
+          { action = [ swToModes.scroll ]; key = [{ Ctrl = "s"; }]; }
+          { action = [ swToModes.tab ]; key = [{ Ctrl = "t"; }]; }
+          { action = [ swToModes.tmux ]; key = [{ Ctrl = "a"; }]; }
+          { action = [ swToModes.resize ]; key = [{ Ctrl = "n"; }]; }
+          { action = [ swToModes.session ]; key = [{ Ctrl = "o"; }]; }
+        ];
 
-          { action = [{ Resize = "Increase"; }]; key = [ "=" ]; }
-          { action = [{ Resize = "Increase"; }]; key = [ "+" ]; }
-          { action = [{ Resize = "Decrease"; }]; key = [ "-" ]; }
-          { action = [{ Resize = "Left"; }]; key = [ left "Left" ]; }
-          { action = [{ Resize = "Down"; }]; key = [ down "Down" ]; }
-          { action = [{ Resize = "Up"; }]; key = [ up "Up" ]; }
-          { action = [{ Resize = "Right"; }]; key = [ right "Right" ]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+        config = {
+          _properties.clear-defaults = true;
+          locked = swToModesBinds (with modes; [ normal pane move resize scroll session tab ]) ++ defaultBinds ++ resizeBinds ++ focusBinds;
+          normal = swToModesBinds (with modes; [ locked tmux ]);
 
-        pane = [
-          { action = [{ SwitchToMode = "Locked"; }]; key = [{ Ctrl = "g"; }]; }
-          { action = [{ SwitchToMode = "Move"; }]; key = [{ Ctrl = "h"; }]; }
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "p"; } "Esc"]; }
-          { action = [{ SwitchToMode = "RenamePane"; } { PaneNameInput = 0; }]; key = [ "c" ]; }
-          { action = [{ SwitchToMode = "Resize"; }]; key = [{ Ctrl = "n"; }]; }
-          { action = [{ SwitchToMode = "Scroll"; }]; key = [{ Ctrl = "s"; }]; }
-          { action = [{ SwitchToMode = "Session"; }]; key = [{ Ctrl = "o"; }]; }
-          { action = [{ SwitchToMode = "Tab"; }]; key = [{ Ctrl = "t"; }]; }
-          { action = [{ SwitchToMode = "Tmux"; }]; key = [{ Ctrl = "a"; }]; }
+          resize = swToModesBinds (with modes; [ normal move scroll session tab pane ]) ++ [
+            { action = [{ Resize = "Increase"; }]; key = [ "=" ]; }
+            { action = [{ Resize = "Increase"; }]; key = [ "+" ]; }
+            { action = [{ Resize = "Decrease"; }]; key = [ "-" ]; }
+            { action = [{ Resize = "Left"; }]; key = [ left "Left" ]; }
+            { action = [{ Resize = "Down"; }]; key = [ down "Down" ]; }
+            { action = [{ Resize = "Up"; }]; key = [ up "Up" ]; }
+            { action = [{ Resize = "Right"; }]; key = [ right "Right" ]; }
+          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          { action = [ "SwitchFocus" ]; key = [ "p" ]; }
-          { action = [{ MoveFocus = "Down"; }]; key = [ down "Down" ]; }
-          { action = [{ MoveFocus = "Up"; }]; key = [ up "Up" ]; }
-          { action = [{ MoveFocus = "Left"; }]; key = [ left "Left" ]; }
-          { action = [{ MoveFocus = "Right"; }]; key = [ right "Right" ]; }
+          pane = swToModesBinds (with modes; [ normal move scroll session tab resize renamepane ]) ++ [
+            { action = [ "SwitchFocus" ]; key = [ "p" ]; }
+            { action = [{ MoveFocus = "Down"; }]; key = [ down "Down" ]; }
+            { action = [{ MoveFocus = "Up"; }]; key = [ up "Up" ]; }
+            { action = [{ MoveFocus = "Left"; }]; key = [ left "Left" ]; }
+            { action = [{ MoveFocus = "Right"; }]; key = [ right "Right" ]; }
 
-          { action = [{ NewPane = "Left"; } { SwitchToMode = "Normal"; }]; key = [ "n" ]; }
-          { action = [{ NewPane = "Down"; } { SwitchToMode = "Normal"; }]; key = [ "d" ]; }
-          { action = [{ NewPane = "Right"; } { SwitchToMode = "Normal"; }]; key = [ "r" ]; }
-          { action = [ "CloseFocus" { SwitchToMode = "Normal"; } ]; key = [ "x" ]; }
-          { action = [ "ToggleFocusFullscreen" { SwitchToMode = "Normal"; } ]; key = [ "f" ]; }
-          { action = [ "TogglePaneFrames" { SwitchToMode = "Normal"; } ]; key = [ "z" ]; }
-          { action = [ "ToggleFloatingPanes" { SwitchToMode = "Normal"; } ]; key = [ "w" ]; }
-          { action = [ "TogglePaneEmbedOrFloating" { SwitchToMode = "Normal"; } ]; key = [ "e" ]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            { action = [{ NewPane = "Left"; } swToModes.normal ]; key = [ "n" ]; }
+            { action = [{ NewPane = "Down"; } swToModes.normal ]; key = [ "d" ]; }
+            { action = [{ NewPane = "Right"; } swToModes.normal ]; key = [ "r" ]; }
+            { action = [ "CloseFocus" swToModes.normal ]; key = [ "x" ]; }
+            { action = [ "ToggleFocusFullscreen" swToModes.normal ]; key = [ "f" ]; }
+            { action = [ "TogglePaneFrames" swToModes.normal ]; key = [ "z" ]; }
+            { action = [ "ToggleFloatingPanes" swToModes.normal ]; key = [ "w" ]; }
+            { action = [ "TogglePaneEmbedOrFloating" swToModes.normal ]; key = [ "e" ]; }
+          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-        move = [
-          { action = [{ SwitchToMode = "Locked"; }]; key = [{ Ctrl = "g"; }]; }
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "h"; } "Esc"]; }
-          { action = [{ SwitchToMode = "Pane"; }]; key = [{ Ctrl = "p"; }]; }
-          { action = [{ SwitchToMode = "Resize"; }]; key = [{ Ctrl = "n"; }]; }
-          { action = [{ SwitchToMode = "Scroll"; }]; key = [{ Ctrl = "s"; }]; }
-          { action = [{ SwitchToMode = "Session"; }]; key = [{ Ctrl = "o"; }]; }
-          { action = [{ SwitchToMode = "Tab"; }]; key = [{ Ctrl = "t"; }]; }
+          move = swToModesBinds (with modes; [ normal pane resize scroll session tab ]) ++ [
+            { action = [{ MovePane = "Left"; }]; key = [ "n" ]; }
+            { action = [{ MovePane = "Left"; }]; key = [ left "Left" ]; }
+            { action = [{ MovePane = "Down"; }]; key = [ down "Down" ]; }
+            { action = [{ MovePane = "Up"; }]; key = [ up "Up" ]; }
+            { action = [{ MovePane = "Right"; }]; key = [ right "Right" ]; }
+          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          { action = [{ MovePane = "Left"; }]; key = [ "n" ]; }
-          { action = [{ MovePane = "Left"; }]; key = [ left "Left" ]; }
-          { action = [{ MovePane = "Down"; }]; key = [ down "Down" ]; }
-          { action = [{ MovePane = "Up"; }]; key = [ up "Up" ]; }
-          { action = [{ MovePane = "Right"; }]; key = [ right "Right" ]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+          tab = swToModesBinds (with modes; [ normal move pane resize scroll session renametab ]) ++ [
+            { action = [ "GoToPreviousTab" ]; key = [ left "Left" "Up" up ]; }
+            { action = [ "GoToNextTab" ]; key = [ right "Right" "Down" down ]; }
+            { action = [ "CloseTab" swToModes.normal  ]; key = [ "x" ]; }
+            { action = [ "ToggleActiveSyncTab" swToModes.normal  ]; key = [ "s" ]; }
 
-        tab = [
-          { action = [{ SwitchToMode = "Locked"; }]; key = [{ Ctrl = "g"; }]; }
-          { action = [{ SwitchToMode = "Move"; }]; key = [{ Ctrl = "h"; }]; }
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "t"; } "Esc"]; }
-          { action = [{ SwitchToMode = "Pane"; }]; key = [{ Ctrl = "p"; }]; }
-          { action = [{ SwitchToMode = "Resize"; }]; key = [{ Ctrl = "n"; }]; }
-          { action = [{ SwitchToMode = "Scroll"; }]; key = [{ Ctrl = "s"; }]; }
-          { action = [{ SwitchToMode = "Session"; }]; key = [{ Ctrl = "o"; }]; }
-          { action = [{ SwitchToMode = "Tmux"; }]; key = [{ Ctrl = "a"; }]; }
+            { action = [{ GoToTab = 1; } swToModes.normal]; key = [ "1" ]; }
+            { action = [{ GoToTab = 2; } swToModes.normal]; key = [ "2" ]; }
+            { action = [{ GoToTab = 3; } swToModes.normal]; key = [ "3" ]; }
+            { action = [{ GoToTab = 4; } swToModes.normal]; key = [ "4" ]; }
+            { action = [{ GoToTab = 5; } swToModes.normal]; key = [ "5" ]; }
+            { action = [{ GoToTab = 6; } swToModes.normal]; key = [ "6" ]; }
+            { action = [{ GoToTab = 7; } swToModes.normal]; key = [ "7" ]; }
+            { action = [{ GoToTab = 8; } swToModes.normal]; key = [ "8" ]; }
+            { action = [{ GoToTab = 9; } swToModes.normal]; key = [ "9" ]; }
+            { action = [{ NewTab = { }; } swToModes.normal]; key = [ "n" ]; }
+          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          { action = [ "GoToPreviousTab" ]; key = [ left "Left" "Up" up ]; }
-          { action = [ "GoToNextTab" ]; key = [ right "Right" "Down" down ]; }
-          { action = [ "CloseTab" { SwitchToMode = "Normal"; } ]; key = [ "x" ]; }
-          { action = [ "ToggleActiveSyncTab" { SwitchToMode = "Normal"; } ]; key = [ "s" ]; }
+          scroll = swToModesBinds (with modes; [ normal move pane resize session tab ]) ++ [
+            { action = [ "EditScrollback" swToModes.normal ]; key = [ "e" ]; }
+            { action = [ "ScrollToBottom" swToModes.normal ]; key = [{ Ctrl = "c"; }]; }
+            { action = [ "ScrollDown" ]; key = [ down "Down" ]; }
+            { action = [ "ScrollUp" ]; key = [ up "Up" ]; }
+            { action = [ "PageScrollDown" ]; key = [{ Ctrl = "f"; } "PageDown" "Right" right]; }
+            { action = [ "PageScrollUp" ]; key = [{ Ctrl = "b"; } "PageUp" "Left" left]; }
+            { action = [ "HalfPageScrollDown" ]; key = [ "d" ]; }
+            { action = [ "HalfPageScrollUp" ]; key = [ "u" ]; }
+          ] ++ defaultBinds;
 
-          { action = [{ GoToTab = 1; } { SwitchToMode = "Normal"; }]; key = [ "1" ]; }
-          { action = [{ GoToTab = 2; } { SwitchToMode = "Normal"; }]; key = [ "2" ]; }
-          { action = [{ GoToTab = 3; } { SwitchToMode = "Normal"; }]; key = [ "3" ]; }
-          { action = [{ GoToTab = 4; } { SwitchToMode = "Normal"; }]; key = [ "4" ]; }
-          { action = [{ GoToTab = 5; } { SwitchToMode = "Normal"; }]; key = [ "5" ]; }
-          { action = [{ GoToTab = 6; } { SwitchToMode = "Normal"; }]; key = [ "6" ]; }
-          { action = [{ GoToTab = 7; } { SwitchToMode = "Normal"; }]; key = [ "7" ]; }
-          { action = [{ GoToTab = 8; } { SwitchToMode = "Normal"; }]; key = [ "8" ]; }
-          { action = [{ GoToTab = 9; } { SwitchToMode = "Normal"; }]; key = [ "9" ]; }
+          renametab = swToModesBinds (with modes; [ normal ]) ++ [
+            { action = [{ TabNameInput = 27; } swToModes.tab]; key = [ "Esc" ]; }
+          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          { action = [{ SwitchToMode = "RenameTab"; } { TabNameInput = 0; }]; key = [ "r" ]; }
-          { action = [{ NewTab = { }; } { SwitchToMode = "Normal"; }]; key = [ "n" ]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+          renamepane = swToModesBinds (with modes; [ normal ]) ++ [
+            { action = [{ PaneNameInput = 27; } swToModes.pane ]; key = [ "Esc" ]; }
+          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-        scroll = [
-          { action = [{ SwitchToMode = "Locked"; }]; key = [{ Ctrl = "g"; }]; }
-          { action = [{ SwitchToMode = "Move"; }]; key = [{ Ctrl = "h"; }]; }
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "s"; } "Esc"]; }
-          { action = [{ SwitchToMode = "Pane"; }]; key = [{ Ctrl = "p"; }]; }
-          { action = [{ SwitchToMode = "Resize"; }]; key = [{ Ctrl = "n"; }]; }
-          { action = [{ SwitchToMode = "Session"; }]; key = [{ Ctrl = "o"; }]; }
-          { action = [{ SwitchToMode = "Tab"; }]; key = [{ Ctrl = "t"; }]; }
-          { action = [{ SwitchToMode = "Tmux"; }]; key = [{ Ctrl = "a"; }]; }
+          session = swToModesBinds (with modes; [ normal move pane resize scroll tab ]) ++ [
+            { action = [ "Detach" ]; key = [ "d" ]; }
+          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          { action = [ "EditScrollback" { SwitchToMode = "Normal"; } ]; key = [ "e" ]; }
-          { action = [ "ScrollToBottom" { SwitchToMode = "Normal"; } ]; key = [{ Ctrl = "c"; }]; }
-          { action = [ "ScrollDown" ]; key = [ down "Down" ]; }
-          { action = [ "ScrollUp" ]; key = [ up "Up" ]; }
-          { action = [ "PageScrollDown" ]; key = [{ Ctrl = "f"; } "PageDown" "Right" right]; }
-          { action = [ "PageScrollUp" ]; key = [{ Ctrl = "b"; } "PageUp" "Left" left]; }
-          { action = [ "HalfPageScrollDown" ]; key = [ "d" ]; }
-          { action = [ "HalfPageScrollUp" ]; key = [ "u" ]; }
-        ] ++ defaultBinds;
+          tmux = swToModesBinds (with modes; [ normal ]) ++ [
+            { action = [{ NewPane = "Down"; } swToModes.normal ]; key = [ "-" ]; }
+            { action = [{ NewPane = "Right"; } swToModes.normal ]; key = [ "|" ]; }
+            { action = [{ NewTab = { }; } swToModes.normal ]; key = [ "c" ]; }
+            { action = [{ Write = 1; } swToModes.normal ]; key = [{ Ctrl = "a"; }]; }
 
-        renametab = [
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "c"; } "Esc"]; }
-          { action = [{ TabNameInput = 27; } { SwitchToMode = "Tab"; }]; key = [ "Esc" ]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            { action = [ "ToggleFocusFullscreen" swToModes.normal  ]; key = [ "z" ]; }
+            { action = [ "EditScrollback" swToModes.normal ]; key = [ "s" ]; }
 
-        renamepane = [
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "c"; } "Esc"]; }
-          { action = [{ PaneNameInput = 27; } { SwitchToMode = "Pane"; }]; key = [ "Esc" ]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            { action = [ "GoToPreviousTab" swToModes.normal  ]; key = [{ Ctrl = "y"; }]; }
+            { action = [ "GoToNextTab" swToModes.normal  ]; key = [{ Ctrl = "o"; }]; }
 
-        session = [
-          { action = [{ SwitchToMode = "Locked"; }]; key = [{ Ctrl = "g"; }]; }
-          { action = [{ SwitchToMode = "Move"; }]; key = [{ Ctrl = "h"; }]; }
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "o"; } "Esc"]; }
-          { action = [{ SwitchToMode = "Pane"; }]; key = [{ Ctrl = "p"; }]; }
-          { action = [{ SwitchToMode = "Resize"; }]; key = [{ Ctrl = "n"; }]; }
-          { action = [{ SwitchToMode = "Scroll"; }]; key = [{ Ctrl = "s"; }]; }
-          { action = [{ SwitchToMode = "Tab"; }]; key = [{ Ctrl = "t"; }]; }
-          { action = [{ SwitchToMode = "Tmux"; }]; key = [{ Ctrl = "a"; }]; }
+            { action = [{ Resize = "Left"; }]; key = [ "Y" ]; }
+            { action = [{ Resize = "Right"; }]; key = [ "O" ]; }
 
-          { action = [ "Detach" ]; key = [ "d" ]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            { action = [{ MoveFocus = "Left"; } swToModes.normal ]; key = [ "Left" left ]; }
+            { action = [{ MoveFocus = "Right"; } swToModes.normal ]; key = [ "Right" right ]; }
+            { action = [{ MoveFocus = "Down"; } swToModes.normal ]; key = [ "Down" down ]; }
+            { action = [{ MoveFocus = "Up"; } swToModes.normal ]; key = [ "Up" up ]; }
 
-        tmux = [
-          { action = [{ SwitchToMode = "Locked"; }]; key = [{ Ctrl = "g"; }]; }
-          { action = [{ SwitchToMode = "Move"; }]; key = [{ Ctrl = "h"; }]; }
-          { action = [{ SwitchToMode = "Normal"; }]; key = [{ Ctrl = "o"; } "Esc"]; }
-          { action = [{ SwitchToMode = "Pane"; }]; key = [{ Ctrl = "p"; }]; }
-          { action = [{ SwitchToMode = "RenameTab"; } { TabNameInput = 0; }]; key = [ "," ]; }
-          { action = [{ SwitchToMode = "Resize"; }]; key = [{ Ctrl = "n"; }]; }
-          { action = [{ SwitchToMode = "Scroll"; }]; key = [{ Ctrl = "s"; }]; }
-          { action = [{ SwitchToMode = "Tab"; }]; key = [{ Ctrl = "t"; }]; }
-
-          { action = [{ NewPane = "Down"; } { SwitchToMode = "Normal"; }]; key = [ "-" ]; }
-          { action = [{ NewPane = "Right"; } { SwitchToMode = "Normal"; }]; key = [ "|" ]; }
-          { action = [{ NewTab = { }; } { SwitchToMode = "Normal"; }]; key = [ "c" ]; }
-          { action = [{ Write = 2; } { SwitchToMode = "Normal"; }]; key = [{ Ctrl = "a"; }]; }
-
-          { action = [ "ToggleFocusFullscreen" { SwitchToMode = "Normal"; } ]; key = [ "z" ]; }
-          { action = [ "GoToPreviousTab" { SwitchToMode = "Normal"; } ]; key = [ "p" ]; }
-          { action = [ "GoToNextTab" { SwitchToMode = "Normal"; } ]; key = [ "n" ]; }
-
-          { action = [{ MoveFocus = "Left"; } { SwitchToMode = "Normal"; }]; key = [ "Left" left ]; }
-          { action = [{ MoveFocus = "Right"; } { SwitchToMode = "Normal"; }]; key = [ "Right" right ]; }
-          { action = [{ MoveFocus = "Down"; } { SwitchToMode = "Normal"; }]; key = [ "Down" down ]; }
-          { action = [{ MoveFocus = "Up"; } { SwitchToMode = "Normal"; }]; key = [ "Up" up ]; }
-
-          { action = [ "FocusNextPane" ]; key = [ "o" ]; }
-          { action = [ "Detach" ]; key = [ "d" ]; }
-        ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            { action = [ "Detach" ]; key = [ "d" ]; }
+          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
       };
+      in config;
     };
 in
 {

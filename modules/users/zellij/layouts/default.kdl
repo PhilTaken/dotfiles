@@ -1,0 +1,20 @@
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    cwd "/home/maelstroem/Documents/syncthing"
+    tab cwd="dotfiles" split_direction="vertical" name="dots" {
+        pane edit="flake.nix"
+        pane
+    }
+    tab focus=true cwd="work/serokell" name="wrk" {
+        pane
+    }
+}
