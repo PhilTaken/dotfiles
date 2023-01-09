@@ -154,139 +154,145 @@ let
         "compact-bar" = { path = "compact-bar"; };
       };
 
-      keybinds = let
-        modelist = map lib.toLower (builtins.attrNames config);
-        modes = lib.genAttrs modelist (n: n);
-        swToModes = lib.mapAttrs (n: _: { SwitchToMode = modes.${n}; }) modes;
+      keybinds =
+        let
+          modelist = map lib.toLower (builtins.attrNames config);
+          modes = lib.genAttrs modelist (n: n);
+          swToModes = lib.mapAttrs (n: _: { SwitchToMode = modes.${n}; }) modes;
 
-        swToModesBinds = modes: let
-          swToMode = action: lib.concatStrings (map (elem: elem.SwitchToMode or "") action);
+          swToModesBinds = modes:
+            let
+              swToMode = action: lib.concatStrings (map (elem: elem.SwitchToMode or "") action);
 
-          filter = elem: let
-            newMode = swToMode elem.action;
-          in if (builtins.typeOf modes == "list") then
-            builtins.elem newMode modes
-          else
-            modes == newMode;
-        in lib.filter filter [
-          { action = [ swToModes.normal ]; key = [{ Ctrl = "g"; } "Esc" ]; }
-          { action = [ swToModes.locked ]; key = [{ Ctrl = "g"; }]; }
-          { action = [ swToModes.pane ]; key = [{ Ctrl = "p"; }]; }
-          { action = [ swToModes.move ]; key = [{ Ctrl = "h"; }]; }
-          { action = [ swToModes.scroll ]; key = [{ Ctrl = "s"; }]; }
-          { action = [ swToModes.tab ]; key = [{ Ctrl = "t"; }]; }
-          { action = [ swToModes.tmux ]; key = [{ Ctrl = "a"; }]; }
-          { action = [ swToModes.resize ]; key = [{ Ctrl = "n"; }]; }
-          { action = [ swToModes.session ]; key = [{ Ctrl = "o"; }]; }
-          { action = [ swToModes.renamepane ]; key = [ "," ]; }
-          { action = [ swToModes.renametab ]; key = [ "$" ]; }
-        ];
+              filter = elem:
+                let
+                  newMode = swToMode elem.action;
+                in
+                if (builtins.typeOf modes == "list") then
+                  builtins.elem newMode modes
+                else
+                  modes == newMode;
+            in
+            lib.filter filter [
+              { action = [ swToModes.normal ]; key = [{ Ctrl = "g"; } "Esc"]; }
+              { action = [ swToModes.locked ]; key = [{ Ctrl = "g"; }]; }
+              { action = [ swToModes.pane ]; key = [{ Ctrl = "p"; }]; }
+              { action = [ swToModes.move ]; key = [{ Ctrl = "h"; }]; }
+              { action = [ swToModes.scroll ]; key = [{ Ctrl = "s"; }]; }
+              { action = [ swToModes.tab ]; key = [{ Ctrl = "t"; }]; }
+              { action = [ swToModes.tmux ]; key = [{ Ctrl = "a"; }]; }
+              { action = [ swToModes.resize ]; key = [{ Ctrl = "n"; }]; }
+              { action = [ swToModes.session ]; key = [{ Ctrl = "o"; }]; }
+              { action = [ swToModes.renamepane ]; key = [ "," ]; }
+              { action = [ swToModes.renametab ]; key = [ "$" ]; }
+            ];
 
-        config = {
-          _properties.clear-defaults = true;
-          locked = swToModesBinds (with modes; [ normal pane move resize scroll session tab ]) ++ defaultBinds ++ resizeBinds ++ focusBinds;
-          normal = swToModesBinds (with modes; [ locked tmux ]);
+          config = {
+            _properties.clear-defaults = true;
+            locked = swToModesBinds (with modes; [ normal pane move resize scroll session tab ]) ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            normal = swToModesBinds (with modes; [ locked tmux ]);
 
-          resize = swToModesBinds (with modes; [ normal move scroll session tab pane ]) ++ [
-            { action = [{ Resize = "Increase"; }]; key = [ "=" ]; }
-            { action = [{ Resize = "Increase"; }]; key = [ "+" ]; }
-            { action = [{ Resize = "Decrease"; }]; key = [ "-" ]; }
-            { action = [{ Resize = "Left"; }]; key = [ left "Left" ]; }
-            { action = [{ Resize = "Down"; }]; key = [ down "Down" ]; }
-            { action = [{ Resize = "Up"; }]; key = [ up "Up" ]; }
-            { action = [{ Resize = "Right"; }]; key = [ right "Right" ]; }
-          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            resize = swToModesBinds (with modes; [ normal move scroll session tab pane ]) ++ [
+              { action = [{ Resize = "Increase"; }]; key = [ "=" ]; }
+              { action = [{ Resize = "Increase"; }]; key = [ "+" ]; }
+              { action = [{ Resize = "Decrease"; }]; key = [ "-" ]; }
+              { action = [{ Resize = "Left"; }]; key = [ left "Left" ]; }
+              { action = [{ Resize = "Down"; }]; key = [ down "Down" ]; }
+              { action = [{ Resize = "Up"; }]; key = [ up "Up" ]; }
+              { action = [{ Resize = "Right"; }]; key = [ right "Right" ]; }
+            ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          pane = swToModesBinds (with modes; [ normal move scroll session tab resize renamepane ]) ++ [
-            { action = [ "SwitchFocus" ]; key = [ "p" ]; }
-            { action = [{ MoveFocus = "Down"; }]; key = [ down "Down" ]; }
-            { action = [{ MoveFocus = "Up"; }]; key = [ up "Up" ]; }
-            { action = [{ MoveFocus = "Left"; }]; key = [ left "Left" ]; }
-            { action = [{ MoveFocus = "Right"; }]; key = [ right "Right" ]; }
+            pane = swToModesBinds (with modes; [ normal move scroll session tab resize renamepane ]) ++ [
+              { action = [ "SwitchFocus" ]; key = [ "p" ]; }
+              { action = [{ MoveFocus = "Down"; }]; key = [ down "Down" ]; }
+              { action = [{ MoveFocus = "Up"; }]; key = [ up "Up" ]; }
+              { action = [{ MoveFocus = "Left"; }]; key = [ left "Left" ]; }
+              { action = [{ MoveFocus = "Right"; }]; key = [ right "Right" ]; }
 
-            { action = [{ NewPane = "Left"; } swToModes.normal ]; key = [ "n" ]; }
-            { action = [{ NewPane = "Down"; } swToModes.normal ]; key = [ "d" ]; }
-            { action = [{ NewPane = "Right"; } swToModes.normal ]; key = [ "r" ]; }
-            { action = [ "CloseFocus" swToModes.normal ]; key = [ "x" ]; }
-            { action = [ "ToggleFocusFullscreen" swToModes.normal ]; key = [ "f" ]; }
-            { action = [ "TogglePaneFrames" swToModes.normal ]; key = [ "z" ]; }
-            { action = [ "ToggleFloatingPanes" swToModes.normal ]; key = [ "w" ]; }
-            { action = [ "TogglePaneEmbedOrFloating" swToModes.normal ]; key = [ "e" ]; }
-          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+              { action = [{ NewPane = "Left"; } swToModes.normal]; key = [ "n" ]; }
+              { action = [{ NewPane = "Down"; } swToModes.normal]; key = [ "d" ]; }
+              { action = [{ NewPane = "Right"; } swToModes.normal]; key = [ "r" ]; }
+              { action = [ "CloseFocus" swToModes.normal ]; key = [ "x" ]; }
+              { action = [ "ToggleFocusFullscreen" swToModes.normal ]; key = [ "f" ]; }
+              { action = [ "TogglePaneFrames" swToModes.normal ]; key = [ "z" ]; }
+              { action = [ "ToggleFloatingPanes" swToModes.normal ]; key = [ "w" ]; }
+              { action = [ "TogglePaneEmbedOrFloating" swToModes.normal ]; key = [ "e" ]; }
+            ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          move = swToModesBinds (with modes; [ normal pane resize scroll session tab ]) ++ [
-            { action = [{ MovePane = "Left"; }]; key = [ "n" ]; }
-            { action = [{ MovePane = "Left"; }]; key = [ left "Left" ]; }
-            { action = [{ MovePane = "Down"; }]; key = [ down "Down" ]; }
-            { action = [{ MovePane = "Up"; }]; key = [ up "Up" ]; }
-            { action = [{ MovePane = "Right"; }]; key = [ right "Right" ]; }
-          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            move = swToModesBinds (with modes; [ normal pane resize scroll session tab ]) ++ [
+              { action = [{ MovePane = "Left"; }]; key = [ "n" ]; }
+              { action = [{ MovePane = "Left"; }]; key = [ left "Left" ]; }
+              { action = [{ MovePane = "Down"; }]; key = [ down "Down" ]; }
+              { action = [{ MovePane = "Up"; }]; key = [ up "Up" ]; }
+              { action = [{ MovePane = "Right"; }]; key = [ right "Right" ]; }
+            ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          tab = swToModesBinds (with modes; [ normal move pane resize scroll session renametab ]) ++ [
-            { action = [ "GoToPreviousTab" ]; key = [ left "Left" "Up" up ]; }
-            { action = [ "GoToNextTab" ]; key = [ right "Right" "Down" down ]; }
-            { action = [ "CloseTab" swToModes.normal  ]; key = [ "x" ]; }
-            { action = [ "ToggleActiveSyncTab" swToModes.normal  ]; key = [ "s" ]; }
+            tab = swToModesBinds (with modes; [ normal move pane resize scroll session renametab ]) ++ [
+              { action = [ "GoToPreviousTab" ]; key = [ left "Left" "Up" up ]; }
+              { action = [ "GoToNextTab" ]; key = [ right "Right" "Down" down ]; }
+              { action = [ "CloseTab" swToModes.normal ]; key = [ "x" ]; }
+              { action = [ "ToggleActiveSyncTab" swToModes.normal ]; key = [ "s" ]; }
 
-            { action = [{ GoToTab = 1; } swToModes.normal]; key = [ "1" ]; }
-            { action = [{ GoToTab = 2; } swToModes.normal]; key = [ "2" ]; }
-            { action = [{ GoToTab = 3; } swToModes.normal]; key = [ "3" ]; }
-            { action = [{ GoToTab = 4; } swToModes.normal]; key = [ "4" ]; }
-            { action = [{ GoToTab = 5; } swToModes.normal]; key = [ "5" ]; }
-            { action = [{ GoToTab = 6; } swToModes.normal]; key = [ "6" ]; }
-            { action = [{ GoToTab = 7; } swToModes.normal]; key = [ "7" ]; }
-            { action = [{ GoToTab = 8; } swToModes.normal]; key = [ "8" ]; }
-            { action = [{ GoToTab = 9; } swToModes.normal]; key = [ "9" ]; }
-            { action = [{ NewTab = { }; } swToModes.normal]; key = [ "n" ]; }
-          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+              { action = [{ GoToTab = 1; } swToModes.normal]; key = [ "1" ]; }
+              { action = [{ GoToTab = 2; } swToModes.normal]; key = [ "2" ]; }
+              { action = [{ GoToTab = 3; } swToModes.normal]; key = [ "3" ]; }
+              { action = [{ GoToTab = 4; } swToModes.normal]; key = [ "4" ]; }
+              { action = [{ GoToTab = 5; } swToModes.normal]; key = [ "5" ]; }
+              { action = [{ GoToTab = 6; } swToModes.normal]; key = [ "6" ]; }
+              { action = [{ GoToTab = 7; } swToModes.normal]; key = [ "7" ]; }
+              { action = [{ GoToTab = 8; } swToModes.normal]; key = [ "8" ]; }
+              { action = [{ GoToTab = 9; } swToModes.normal]; key = [ "9" ]; }
+              { action = [{ NewTab = { }; } swToModes.normal]; key = [ "n" ]; }
+            ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          scroll = swToModesBinds (with modes; [ normal move pane resize session tab ]) ++ [
-            { action = [ "EditScrollback" swToModes.normal ]; key = [ "e" ]; }
-            { action = [ "ScrollToBottom" swToModes.normal ]; key = [{ Ctrl = "c"; }]; }
-            { action = [ "ScrollDown" ]; key = [ down "Down" ]; }
-            { action = [ "ScrollUp" ]; key = [ up "Up" ]; }
-            { action = [ "PageScrollDown" ]; key = [{ Ctrl = "f"; } "PageDown" "Right" right]; }
-            { action = [ "PageScrollUp" ]; key = [{ Ctrl = "b"; } "PageUp" "Left" left]; }
-            { action = [ "HalfPageScrollDown" ]; key = [ "d" ]; }
-            { action = [ "HalfPageScrollUp" ]; key = [ "u" ]; }
-          ] ++ defaultBinds;
+            scroll = swToModesBinds (with modes; [ normal move pane resize session tab ]) ++ [
+              { action = [ "EditScrollback" swToModes.normal ]; key = [ "e" ]; }
+              { action = [ "ScrollToBottom" swToModes.normal ]; key = [{ Ctrl = "c"; }]; }
+              { action = [ "ScrollDown" ]; key = [ down "Down" ]; }
+              { action = [ "ScrollUp" ]; key = [ up "Up" ]; }
+              { action = [ "PageScrollDown" ]; key = [{ Ctrl = "f"; } "PageDown" "Right" right]; }
+              { action = [ "PageScrollUp" ]; key = [{ Ctrl = "b"; } "PageUp" "Left" left]; }
+              { action = [ "HalfPageScrollDown" ]; key = [ "d" ]; }
+              { action = [ "HalfPageScrollUp" ]; key = [ "u" ]; }
+            ] ++ defaultBinds;
 
-          renametab = swToModesBinds (with modes; [ normal ]) ++ [
-            { action = [{ TabNameInput = 27; } swToModes.tab]; key = [ "Esc" ]; }
-          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            renametab = swToModesBinds (with modes; [ normal ]) ++ [
+              { action = [{ TabNameInput = 27; } swToModes.tab]; key = [ "Esc" ]; }
+            ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          renamepane = swToModesBinds (with modes; [ normal ]) ++ [
-            { action = [{ PaneNameInput = 27; } swToModes.pane ]; key = [ "Esc" ]; }
-          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            renamepane = swToModesBinds (with modes; [ normal ]) ++ [
+              { action = [{ PaneNameInput = 27; } swToModes.pane]; key = [ "Esc" ]; }
+            ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          session = swToModesBinds (with modes; [ normal move pane resize scroll tab ]) ++ [
-            { action = [ "Detach" ]; key = [ "d" ]; }
-          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+            session = swToModesBinds (with modes; [ normal move pane resize scroll tab ]) ++ [
+              { action = [ "Detach" ]; key = [ "d" ]; }
+            ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          tmux = swToModesBinds (with modes; [ normal renamepane renametab ]) ++ [
-            { action = [{ NewPane = "Down"; } swToModes.normal ]; key = [ "-" ]; }
-            { action = [{ NewPane = "Right"; } swToModes.normal ]; key = [ "|" ]; }
-            { action = [{ NewTab = { }; } swToModes.normal ]; key = [ "c" ]; }
-            { action = [{ Write = 1; } swToModes.normal ]; key = [{ Ctrl = "a"; }]; }
+            tmux = swToModesBinds (with modes; [ normal renamepane renametab ]) ++ [
+              { action = [{ NewPane = "Down"; } swToModes.normal]; key = [ "-" ]; }
+              { action = [{ NewPane = "Right"; } swToModes.normal]; key = [ "|" ]; }
+              { action = [{ NewTab = { }; } swToModes.normal]; key = [ "c" ]; }
+              { action = [{ Write = 1; } swToModes.normal]; key = [{ Ctrl = "a"; }]; }
 
-            { action = [ "ToggleFocusFullscreen" swToModes.normal  ]; key = [ "z" ]; }
-            { action = [ "EditScrollback" swToModes.normal ]; key = [ "s" ]; }
+              { action = [ "ToggleFocusFullscreen" swToModes.normal ]; key = [ "z" ]; }
+              { action = [ "EditScrollback" swToModes.normal ]; key = [ "s" ]; }
 
-            { action = [ "GoToPreviousTab" swToModes.normal  ]; key = [{ Ctrl = "y"; }]; }
-            { action = [ "GoToNextTab" swToModes.normal  ]; key = [{ Ctrl = "o"; }]; }
+              { action = [ "GoToPreviousTab" swToModes.normal ]; key = [{ Ctrl = "y"; }]; }
+              { action = [ "GoToNextTab" swToModes.normal ]; key = [{ Ctrl = "o"; }]; }
 
-            { action = [{ Resize = "Left"; }]; key = [ "Y" ]; }
-            { action = [{ Resize = "Right"; }]; key = [ "O" ]; }
+              { action = [{ Resize = "Left"; }]; key = [ "Y" ]; }
+              { action = [{ Resize = "Right"; }]; key = [ "O" ]; }
 
-            { action = [{ MoveFocus = "Left"; } swToModes.normal ]; key = [ "Left" left ]; }
-            { action = [{ MoveFocus = "Right"; } swToModes.normal ]; key = [ "Right" right ]; }
-            { action = [{ MoveFocus = "Down"; } swToModes.normal ]; key = [ "Down" down ]; }
-            { action = [{ MoveFocus = "Up"; } swToModes.normal ]; key = [ "Up" up ]; }
+              { action = [{ MoveFocus = "Left"; } swToModes.normal]; key = [ "Left" left ]; }
+              { action = [{ MoveFocus = "Right"; } swToModes.normal]; key = [ "Right" right ]; }
+              { action = [{ MoveFocus = "Down"; } swToModes.normal]; key = [ "Down" down ]; }
+              { action = [{ MoveFocus = "Up"; } swToModes.normal]; key = [ "Up" up ]; }
 
-            { action = [ "Detach" ]; key = [ "d" ]; }
-          ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
-      };
-      in config;
+              { action = [ "Detach" ]; key = [ "d" ]; }
+            ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
+          };
+        in
+        config;
     };
 in
 {

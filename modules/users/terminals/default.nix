@@ -17,7 +17,7 @@ in
     };
 
     multiplexer = mkOption {
-      type = types.enum ["tmux" "zellij"];
+      type = types.enum [ "tmux" "zellij" ];
       default = "tmux";
     };
   };

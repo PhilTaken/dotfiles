@@ -9,7 +9,8 @@ with lib;
 let
   cfg = config.phil.shells.zsh;
   magic_enter_prompt = ./magic_enter.zsh;
-in {
+in
+{
   options.phil.shells.zsh = {
     enable = mkOption {
       type = types.bool;
