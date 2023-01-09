@@ -7,12 +7,15 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "cryptd" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid"  ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
+
+  # Enable support for the YubiKey PBA
+  boot.initrd.luks.yubikeySupport = true;
 
   nixpkgs.overlays = [
     (self: super: {
@@ -30,10 +33,18 @@
       luksroot = {
         device = "/dev/disk/by-uuid/5172d21f-b40d-4dd7-8d31-c1521ed54e46";
         preLVM = true;
-        allowDiscards = true;
+        #allowDiscards = true;
+        yubikey = {
+          slot = 2;
+          twoFactor = false;
+          storage = {
+            device = "/dev/disk/by-uuid/FCA6-23E6";
+          };
+        };
       };
     };
   };
+
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
