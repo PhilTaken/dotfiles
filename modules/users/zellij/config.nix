@@ -178,6 +178,8 @@ let
           { action = [ swToModes.tmux ]; key = [{ Ctrl = "a"; }]; }
           { action = [ swToModes.resize ]; key = [{ Ctrl = "n"; }]; }
           { action = [ swToModes.session ]; key = [{ Ctrl = "o"; }]; }
+          { action = [ swToModes.renamepane ]; key = [ "," ]; }
+          { action = [ swToModes.renametab ]; key = [ "$" ]; }
         ];
 
         config = {
@@ -261,7 +263,7 @@ let
             { action = [ "Detach" ]; key = [ "d" ]; }
           ] ++ defaultBinds ++ resizeBinds ++ focusBinds;
 
-          tmux = swToModesBinds (with modes; [ normal ]) ++ [
+          tmux = swToModesBinds (with modes; [ normal renamepane renametab ]) ++ [
             { action = [{ NewPane = "Down"; } swToModes.normal ]; key = [ "-" ]; }
             { action = [{ NewPane = "Right"; } swToModes.normal ]; key = [ "|" ]; }
             { action = [{ NewTab = { }; } swToModes.normal ]; key = [ "c" ]; }
