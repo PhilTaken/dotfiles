@@ -46,6 +46,16 @@ in
 
     home.sessionVariables = {
       MOZ_ENABLE_WAYLAND = 1;
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
+      WLR_NO_HARDWARE_CURSORS = 1;
+      CLUTTER_BACKEND = "wayland";
+      XDG_SESSION_TYPE = "wayland";
+      WLR_BACKEND = "vulkan";
+      QT_QPA_PLATFORM = "wayland";
+      GDK_BACKEND = "wayland";
+      #LIBVA_DRIVER_NAME = "nvidia";
+      #GBM_BACKEND = "nvidia-drm";
+      #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
     };
 
     wayland.windowManager.hyprland =
