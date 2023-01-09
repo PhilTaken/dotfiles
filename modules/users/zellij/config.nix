@@ -127,7 +127,7 @@ let
       ];
     in
     {
-      default_shell = "${pkgs.${cfg.defaultShell}}/bin/${cfg.defaultShell}";
+      default_shell = if (cfg.defaultShell == null) then "$SHELL" else "${pkgs.${cfg.defaultShell}}/bin/${cfg.defaultShell}";
       pane_frames = false;
       theme = "catppuccin";
       themes = {

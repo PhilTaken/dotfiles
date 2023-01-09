@@ -61,18 +61,24 @@ in
         set -U fish_greeting
         set -gx ATUIN_NOBIND "true"
 
-        bind \cr _atuin_search
         bind \t 'commandline -f complete'
         bind \e 'commandline -f cancel'
         bind \r 'enter_ls'
         bind \n 'enter_ls'
 
         if bind -M insert >/dev/null 2>&1
-          bind -M insert \cr _atuin_search
           bind -M insert \t 'commandline -f complete'
           bind -M insert \e 'commandline -f cancel'
           bind -M insert \r 'enter_ls'
           bind -M insert \n 'enter_ls'
+        end
+
+        if status is-interactive
+        and not status --is-login
+        and not set -q TMUX
+        and not set -q NVIM
+        and set -q DISPLAY
+          eval (${pkgs.zellij}/bin/zellij setup --generate-auto-start fish | string collect)
         end
       '';
     };

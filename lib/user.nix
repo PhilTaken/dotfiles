@@ -111,7 +111,7 @@ rec {
         in
         {
           inherit name uid;
-          shell = pkgs.zsh;
+          shell = pkgs.fish;
           extraGroups = extraGroups ++ defaultGroups;
           isNormalUser = true;
           isSystemUser = false;

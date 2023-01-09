@@ -13,12 +13,16 @@ in
   options.phil.zellij = {
     enable = mkEnableOption "zellij";
     defaultShell = mkOption {
-      type = types.enum [ "fish" "zsh" ];
-      default = "zsh";
+      type = types.nullOr (types.enum [ "fish" "zsh" ]);
+      default = null;
     };
   };
 
   config = mkIf cfg.enable {
+    home.packages = [
+      pkgs.zellij
+    ];
+
     xdg.configFile."zellij/config.kdl" = {
       source = settings.configFile;
     };
