@@ -65,7 +65,7 @@ in
 
     programs.neovim = {
       enable = true;
-      package = pkgs.neovim;
+      #package = pkgs.neovim;
       viAlias = true;
       vimAlias = true;
       withPython3 = true;
