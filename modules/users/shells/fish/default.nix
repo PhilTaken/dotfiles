@@ -78,7 +78,8 @@ in
         and not set -q TMUX
         and not set -q NVIM
         and set -q DISPLAY
-          eval (${pkgs.zellij}/bin/zellij setup --generate-auto-start fish | string collect)
+        and not set -q ZELLIJ
+          zellij attach --create main
         end
       '';
     };
