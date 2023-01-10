@@ -44,7 +44,7 @@ in
       package = pkgs.spotifyd.override {
         withKeyring = true;
         withPulseAudio = true;
-        withMpris = true;
+        withMpris = cfg.enableMpris;
       };
       settings = {
         global = {
@@ -79,6 +79,7 @@ in
         enable = true;
         theme = spicePkgs.themes.catppuccin-mocha;
         colorScheme = "flamingo";
+        spotifyPackage = pkgs.spotifywm;
 
         enabledExtensions = with spicePkgs.extensions; [
           fullAppDisplay
