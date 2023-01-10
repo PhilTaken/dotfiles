@@ -47,6 +47,7 @@
     # single applications/services
 
     spicetify.url = "github:the-argus/spicetify-nix";
+    spicetify.inputs.nixpkgs.follows = "nixpkgs";
 
     # TODO: once my prs are merged revert to main repo
     #eww-git.url = "github:elkowar/eww?ref=7623e7e692042f4da8525bb1e4ef140831fcdb6a";
@@ -65,11 +66,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly = {
-      url = "github:neovim/neovim?dir=contrib";
-      #url = "github:andersevenrud/neovim?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    neovim-nightly.url = "github:neovim/neovim?dir=contrib";
 
     hyprland = {
       url = "github:vaxerski/Hyprland";

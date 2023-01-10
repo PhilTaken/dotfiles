@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, inputs
 , ...
 }:
 with lib;
@@ -65,7 +66,7 @@ in
 
     programs.neovim = {
       enable = true;
-      #package = pkgs.neovim;
+      package = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
       viAlias = true;
       vimAlias = true;
       withPython3 = true;
