@@ -2,13 +2,14 @@
 
 ## general
 
+- setup ci/flake update via hercules-ci on delta
+- upload-daemon to cache the world on delta
+
 - better ssh keys handling (public keys copied everywhere)
 - generate ssh targets from network file
 
 - hyprland config
-    - w/d for keybinds -> keycodes
-
-- improve zellij config
+    - w/d for keybinds on laptop -> keycodes?
 
 - eww config
     - bar styling
@@ -21,10 +22,9 @@
 - backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
 
 - set up modules:
-    - arm module (get rust running + spinning)
+    - navidrome music streaming
 
-    - torrenting container
-    - -arr services for metadata
+    - arm module (get rust running + spinning)
 
     - backup (important) syncthing folders locally and to b2
         - rclone / borg
@@ -36,10 +36,8 @@
     - photoview -> librephotos
         - images in syncthing / seafile
 
-    - hydra module
-        - ci/cd with hydra webhooks from gitea
-
-    - navidrome music streaming
+    - torrenting container
+    - -arr services for metadata
 
     - shiori
 
@@ -65,8 +63,9 @@
     - pleroma
     - shiori bookmark manager
 
-    - github actions + cachix
-    - build server for low-powered laptop
+    - hydra module
+        - ci/cd with hydra webhooks from gitea
+
 
 - change module
     - caddy acme -> services.acme
@@ -97,14 +96,10 @@
 - reload wip plugin files (plenary on special runtimepath match?)
 - window navigation
 - work with builtin `makeprg`
-- lsp implementation
 - diffviewopen telescope integration
 - marks workflow
 
 ### ideas
-
-- nvim heirline, other plugins (see tabstash)
-- nvim highlight for folds
 
 - zrythm
     - https://www.zrythm.org/en/index.html
@@ -139,10 +134,10 @@
 # for newer setups
 
 - basic install script for custom image (basic partitioning -> back up all non-store files)
-- declarative syncthing config
-- setup script
     - akin to https://github.com/cleverca22/nix-tests/blob/master/kexec/justdoit.nix
-- age-key script + master age-key backup
+    - disko
 
-- auto import gpg public key
-- ssh known hosts
+    - age-key script + master age-key backup
+
+    - auto import gpg public key
+    - ssh known hosts
