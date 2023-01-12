@@ -143,7 +143,7 @@ in
             {
               # TODO: rotate keys with sops, this script just generates new certs
               name = "signall";
-              help = "sign all confiurations";
+              help = "sign all configurations";
               command = lib.concatStrings (lib.mapAttrsToList
                 (name: ip:
                   let
