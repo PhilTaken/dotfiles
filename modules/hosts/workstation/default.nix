@@ -18,44 +18,15 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.steam.enable = true;
-    programs.gamemode = {
-      enable = true;
-      enableRenice = true;
-      settings = {
-        general = {
-          renice = 10;
-        };
-        custom = {
-          start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
-          end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
-        };
-      };
-    };
-
-    hardware.opengl.enable = true;
-
     # serokell binary cache secrets
     sops.secrets = {
       aws-credentials = {
         sopsFile = ../../../sops + "/serokell.yaml";
         #path = "/root/.aws/credentials";
         mode = "600";
-        owner = config.users.users."maelstroem".name;
+        owner = (config.users.users."maelstroem" or config.users.users."nixos").name;
       };
     };
-
-    # antivir daemon
-    #services.clamav = {
-    #daemon.enable = true;
-    #updater.enable = true;
-    #};
-
-    #virtualisation.waydroid.enable = true;
-    virtualisation.docker.enable = true;
-
-    # qmk rules for flashing keebs
-    services.udev.packages = with pkgs; [ qmk-udev-rules ];
 
     environment.systemPackages =
       let
@@ -75,8 +46,6 @@ in
         vscodium-with-extensions
         #vscodium
 
-        beets
-
         vlc
         calibre
         foliate
@@ -84,26 +53,6 @@ in
         xournalpp
         baobab
         xfce.thunar
-
-        # audio/video
-        audacity
-        obs-studio
-        handbrake
-        makemkv
-
-        # games
-        prismlauncher
-        #citra
-        #yuzu-ea
-        #osu-lazer
-
-        # downloads
-        #uget
-        #uget-integrator
-        #qbittorrent
-
-        #skrooge
-        #waydroid
 
         webcord
       ];

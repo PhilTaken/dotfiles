@@ -24,17 +24,21 @@ let
     {
       nixos = {
         userConfig = defaultConfig // {
+          work.enable = true;
+
+          # de/wm config
           wms.hyprland.enable = true;
-          #wms.sway.enable = true;
-          #wms.bars.waybar.enable = true;
+          #wms.i3.enable = true;
+
+          terminals.multiplexer = "zellij";
+          editors.emacs.enable = false;
 
           wms.bars.eww.enable = true;
-          #wms.bars.eww.autostart = false;
-        };
+          #wms.bars.eww.enableWayland = false;
 
-        extraPackages = pkgs: with pkgs; [
-          gnome.adwaita-icon-theme
-        ];
+          #wms.hyprland.enable = true;
+          #wms.bars.waybar.enable = true;
+        };
       };
 
       maelstroem = {
@@ -56,24 +60,7 @@ let
           #wms.bars.waybar.enable = true;
         };
 
-        extraPackages = pkgs: with pkgs; [
-          # e-guitar stuff
-          guitarix
-          qjackctl
-          jack2
-
-          # tiny media manager
-          (nur.repos.shados.tmm.overrideAttrs (old: rec {
-            version = "4.3.4";
-            src = builtins.fetchurl {
-              url = "https://release.tinymediamanager.org/v4/dist/tmm_${version}_linux-amd64.tar.gz";
-              sha256 = "sha256:1aj97m186lagaqqvcs2s7hmgk638l5mb98ril4gwgpjqaqj8s57n";
-            };
-          }))
-
-          # typey-typey
-          plover.dev
-        ];
+        extraPackages = pkgs: [ ];
       };
 
       jaid = {
@@ -120,12 +107,9 @@ in
             core.hostName = "gamma";
             core.enableBluetooth = true;
 
+            desktop.enable = true;
             nvidia.enable = true;
-
-            video = {
-              driver = "nvidia";
-              managers = [ "gnome" ];
-            };
+            video.managers = [ "gnome" ];
           };
 
           extraHostModules = with inputs.nixos-hardware.nixosModules; [
@@ -138,7 +122,7 @@ in
 
       # future laptop config
       epsilon = util.host.mkWorkstation rec {
-        users = [ "maelstroem" ];
+        users = [ "nixos" ];
         hmUsers = mkHMUsers users;
         systemConfig = {
           server.services.openssh.enable = true;

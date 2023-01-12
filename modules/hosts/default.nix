@@ -12,6 +12,7 @@
 
     ./workstation
     ./laptop
+    ./desktop
 
     ./server
 
