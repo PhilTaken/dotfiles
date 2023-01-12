@@ -9,7 +9,7 @@ layout {
         }
     }
 
-    cwd "/home/maelstroem/Documents/syncthing"
+    cwd "/home/@user@/Documents/syncthing"
     tab cwd="dotfiles" split_direction="vertical" name="dots" {
         pane edit="flake.nix"
         pane

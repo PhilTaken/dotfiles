@@ -28,7 +28,22 @@ in
     };
 
     xdg.configFile."zellij/layouts" = {
-      source = ./layouts;
+      source = pkgs.stdenv.mkDerivation {
+        pname = "zellij-layouts";
+        version = "0.1";
+        phases = [ "patchPhase" ];
+
+        src = ./layouts;
+
+        # TODO: replace commands with actual paths to binaries
+        patchPhase = ''
+          mkdir -p $out
+          cp -r $src/* $out
+
+          substituteInPlace $out/default.kdl \
+            --replace '@user@' '${config.home.username}'
+        '';
+      };
       recursive = true;
     };
   };
