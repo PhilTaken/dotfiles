@@ -54,6 +54,7 @@ in
         brightnessctl
         powertop
         acpi
+        wpa_supplicant_gui
       ];
       sessionVariables.LIBVA_DRIVER_NAME = "iHD";
     };
