@@ -1,5 +1,7 @@
 # TODO:
 
+- fix syncthing on epsilon
+
 ## general
 
 - setup ci/flake update via hercules-ci on delta

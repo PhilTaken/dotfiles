@@ -1,0 +1,13 @@
+layout {
+    cwd "/home/@user@/Documents/syncthing/personal/"
+    tab focus=true cwd="dokumente/vortrag" split_direction="vertical" {
+        pane edit="flake.nix"
+        pane
+    }
+    tab cwd="programming/rust/s4util" split_direction="vertical" {
+        pane
+    }
+    tab cwd="programming/python/vortrag-prog" {
+        pane
+    }
+}

@@ -42,6 +42,9 @@ in
 
           substituteInPlace $out/default.kdl \
             --replace '@user@' '${config.home.username}'
+
+          substituteInPlace $out/vortrag.kdl \
+            --replace '@user@' '${config.home.username}'
         '';
       };
       recursive = true;
