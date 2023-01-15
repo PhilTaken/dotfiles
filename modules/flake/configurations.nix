@@ -99,7 +99,7 @@ in
             users);
         in
         util.host.mkWorkstation rec {
-          users = [ "maelstroem" "jaid" ];
+          users = [ "maelstroem" "nixos" "jaid" ];
           hmUsers = mkHMUsers users;
           systemConfig = {
             server.services.openssh.enable = true;

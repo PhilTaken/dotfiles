@@ -8,11 +8,15 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "cryptd" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" "zfs" ];
+  boot.extraModulePackages = [ pkgs.zfs ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
+  boot.supportedFilesystems = [ "zfs" ];
+  networking.hostId = "9cdfd6d0";
+
+  #boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   # Enable support for the YubiKey PBA
   boot.initrd.luks.yubikeySupport = true;
