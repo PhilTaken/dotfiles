@@ -70,10 +70,10 @@ in
 
       # tiny media manager
       (nur.repos.shados.tmm.overrideAttrs (old: rec {
-        version = "4.3.4";
+        version = "4.3.8";
         src = builtins.fetchurl {
           url = "https://release.tinymediamanager.org/v4/dist/tmm_${version}_linux-amd64.tar.gz";
-          sha256 = "sha256:1aj97m186lagaqqvcs2s7hmgk638l5mb98ril4gwgpjqaqj8s57n";
+          sha256 = "187q3lz7mrvqasi9qn4rva6dfq04w360drqikwcr5i9rzir2mc0z";
         };
       }))
 
