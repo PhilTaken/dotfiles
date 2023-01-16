@@ -79,7 +79,6 @@ in
         enable = true;
         theme = spicePkgs.themes.catppuccin-mocha;
         colorScheme = "flamingo";
-        spotifyPackage = pkgs.spotifywm;
 
         enabledExtensions = with spicePkgs.extensions; [
           fullAppDisplay
