@@ -19,6 +19,7 @@ let
           defaultShell = "fish";
         };
         zellij.enable = true;
+        music.enableMpris = true;
       };
     in
     {
@@ -54,6 +55,7 @@ let
           terminals.multiplexer = "zellij";
 
           wms.bars.eww.enable = true;
+
           #wms.bars.eww.enableWayland = false;
 
           #wms.hyprland.enable = true;
