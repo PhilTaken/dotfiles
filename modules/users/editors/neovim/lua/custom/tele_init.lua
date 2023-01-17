@@ -2,6 +2,11 @@ local actions = require('telescope.actions')
 local sorters = require('telescope.sorters')
 
 require('telescope').setup {
+    pickers = {
+      find_files = {
+        find_command = {"rg", "--files", "--hidden", "--ignore", "-u", "--glob=!**/.git/*", "--glob=!**/node_modules/*", "--glob=!**/.next/*"},
+      }
+    },
     defaults = {
         prompt_prefix = '❯ ',
         selection_caret = '❯ ',

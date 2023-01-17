@@ -83,7 +83,7 @@ local leadern = {
             name = "+find",
             s = { function() R('custom.tele').treesitter() end, "Treesitter Symbols" },
             g = { function() R('custom.tele').live_grep() end, "Live Grep in current dir" },
-            f = { function() R('custom.tele').find_files({no_ignore = false, hidden = false}) end, "Find Files in current dir" },
+            f = { function() R('custom.tele').find_files() end, "Find Files in current dir" },
             d = { function() R('custom.tele').find_dotfiles{} end, "Search in dotfiles" },
             t = { function() R('custom.tele').tags() end, "Browse workspace tags" },
             y = { function() R('custom.tele').extensions.neoclip.default() end, "Manage yank register" },
