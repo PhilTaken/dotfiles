@@ -1,10 +1,18 @@
 local actions = require('telescope.actions')
-local sorters = require('telescope.sorters')
 
 require('telescope').setup {
     pickers = {
       find_files = {
-        find_command = {"rg", "--files", "--hidden", "--ignore", "-u", "--glob=!**/.git/*", "--glob=!**/node_modules/*", "--glob=!**/.next/*"},
+        find_command = {
+            "rg",
+            "--files",
+            "--hidden",
+			"--ignore",
+			"-u",
+			"--glob=!**/.git/*",
+			"--glob=!**/node_modules/*",
+			"--glob=!**/.next/*",
+		},
       }
     },
     defaults = {
@@ -42,6 +50,22 @@ require('telescope').setup {
         },
 
         borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
+
+        vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--hidden",
+            "--ignore",
+            "-u",
+            "--glob=!**/.git/*",
+            "--glob=!**/node_modules/*",
+            "--glob=!**/.next/*",
+        }
 
         --file_sorter = sorters.get_fzy_sorter,
 
