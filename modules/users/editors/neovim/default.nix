@@ -187,6 +187,8 @@ in
         vim-surround
         which-key-nvim
 
+        firenvim
+
         parinfer-rust
       ]) ++ (with pkgs.vimExtraPlugins; [
         cybu-nvim
