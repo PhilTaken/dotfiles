@@ -98,6 +98,7 @@ in
       pamixer
       pavucontrol
       mpv
+      downonspot
     ];
   };
 }

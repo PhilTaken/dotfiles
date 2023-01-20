@@ -44,6 +44,25 @@ let
             --prefix QT_QPA_PLATFORM : xcb
         '';
       });
+
+      downonspot = prev.downonspot.overrideAttrs(oldAttrs: {
+        version = "unstable-2023-01-19";
+        src = prev.fetchFromGitHub {
+          owner = "oSumAtrIX";
+          repo = "DownOnSpot";
+          rev = "e0595feae8ee54c47fec82cf513e29f1abacfbfe";
+          sha256 = "sha256-eYrb3fI9rbXi0+RoC2ZrUPHtFkIF85Jp5NkzdXh6GwU=";
+        };
+
+        postPatch = ''
+          cp ${./downonspot.cargo.lock} Cargo.lock
+          cp ${./downonspot.cargo.toml} Cargo.toml
+        '';
+
+        cargoDeps = prev.rustPlatform.importCargoLock {
+          lockFile = ./downonspot.cargo.lock;
+        };
+      });
     } // (prev.lib.mapAttrs
       (n: _: prev.callPackage (../. + "/custom_pkgs/${n}") { inherit inputs; })
       (prev.lib.filterAttrs
