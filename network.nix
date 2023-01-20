@@ -60,7 +60,7 @@ _:
 
       "nix-serve"
 
-      #"navidrome"
+      "navidrome"
     ];
   };
 }

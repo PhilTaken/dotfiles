@@ -23,7 +23,7 @@ in
 
     music_folder = mkOption {
       type = types.str;
-      default = "/media/music";
+      default = "/media/Music";
     };
 
     data_folder = mkOption {
@@ -41,6 +41,8 @@ in
         DataFolder = cfg.data_folder;
       };
     };
+
+    phil.server.services.caddy.proxy."${cfg.host}" = cfg.port;
   };
 }
 
