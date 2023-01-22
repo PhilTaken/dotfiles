@@ -25,11 +25,6 @@ in
       type = types.str;
       default = "/media/Music";
     };
-
-    data_folder = mkOption {
-      type = types.str;
-      default = "/media/navidrome";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -38,7 +33,6 @@ in
       settings = {
         Port = cfg.port;
         MusicFolder = cfg.music_folder;
-        DataFolder = cfg.data_folder;
       };
     };
 
