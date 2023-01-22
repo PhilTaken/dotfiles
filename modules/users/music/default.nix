@@ -106,7 +106,6 @@ in
       settings = {
         plugins = [
           "fetchart"
-          "embedart"
           "convert"
           "scrub"
           "replaygain"
