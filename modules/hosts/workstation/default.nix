@@ -55,6 +55,7 @@ in
         xfce.thunar
 
         webcord
+        obsidian
       ];
   };
 }
