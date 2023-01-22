@@ -100,5 +100,53 @@ in
       mpv
       downonspot
     ];
+
+    programs.beets = {
+      enable = true;
+      settings = {
+        plugins = [
+          "fetchart"
+          "embedart"
+          "convert"
+          "scrub"
+          "replaygain"
+          "lastgenre"
+          "chroma"
+          "web"
+          "spotify"
+          "lastimport"
+        ];
+
+        art_filename = "albumart";
+        threaded = true;
+        original_date = false;
+        per_disc_numbering = false;
+        convert.auto = false;
+        directory = "~/Music";
+
+        import = {
+          write = true;
+          copy = false;
+          move = true;
+          resume = "ask";
+          incremental = true;
+          quiet_fallback = "skip";
+          timid = false;
+        };
+
+        fetchart = {
+          cautious = true;
+          cover_names = "front back";
+          sources = [
+            "filesystem"
+            { coverart = "release"; }
+            "itunes"
+            { coverart = "releasegroup"; }
+            "lastfm"
+            "*"
+          ];
+        };
+      };
+    };
   };
 }
