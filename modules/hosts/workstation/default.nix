@@ -28,24 +28,18 @@ in
       };
     };
 
-    environment.systemPackages =
-      let
-      in
-      with pkgs; [
-        vscodium-with-extensions
-        #vscodium
+    environment.systemPackages = with pkgs; [
+      vlc
+      calibre
+      foliate
+      pdfsam-basic
+      xournalpp
+      baobab
+      xfce.thunar
 
-        vlc
-        calibre
-        foliate
-        pdfsam-basic
-        xournalpp
-        baobab
-        xfce.thunar
-
-        webcord
-        obsidian
-      ];
+      webcord
+      obsidian
+    ];
   };
 }
 
