@@ -122,7 +122,9 @@ in
         original_date = false;
         per_disc_numbering = false;
         convert.auto = false;
-        directory = "/mnt/media/Music";
+
+        # https://beets.readthedocs.io/en/v1.6.0/faq.html#point-beets-at-a-new-music-directory
+        directory = "/media/delta/Music";
 
         import = {
           write = true;
