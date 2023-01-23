@@ -114,6 +114,8 @@ in
           "web"
           "spotify"
           "lastimport"
+          "acousticbrainz"
+          "badfiles"
         ];
 
         art_filename = "albumart";
@@ -144,6 +146,10 @@ in
             "lastfm"
             "*"
           ];
+        };
+
+        badfiles = {
+          check_on_import = true;
         };
       };
     };
