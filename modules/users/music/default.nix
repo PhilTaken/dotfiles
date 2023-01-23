@@ -115,7 +115,6 @@ in
           "spotify"
           "lastimport"
           "acousticbrainz"
-          "badfiles"
         ];
 
         art_filename = "albumart";
@@ -150,10 +149,6 @@ in
 
         replaygain = {
           command = "${pkgs.aacgain}/bin/aacgain";
-        };
-
-        badfiles = {
-          check_on_import = true;
         };
       };
     };
