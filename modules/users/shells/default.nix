@@ -6,8 +6,6 @@
 with lib;
 
 let
-  cfg = config.phil.shells;
-
   # Automatically download the latest index from Mic92's nix-index-database.
   nix-locate = pkgs.writeShellScriptBin "nix-locate" ''
     set -euo pipefail
@@ -41,8 +39,6 @@ in
     ./zsh
     ./fish
   ];
-
-  options.phil.shells = { };
 
   config = {
     home.sessionVariables = {
@@ -177,6 +173,15 @@ in
           io_graph_combined = true;
         };
       };
+
+      rbw = {
+        enable = true;
+        settings = {
+          email = "philipp.herzog@protonmail.com";
+          lock_timeout = 300;
+        };
+      };
+
       bat.enable = true;
       noti.enable = true;
 
