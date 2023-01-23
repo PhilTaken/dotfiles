@@ -38,9 +38,35 @@ in
         nyxt
         firefox
         google-chrome
-        #chromium
-        ungoogled-chromium
       ];
+
+      programs.chromium = {
+        enable = true;
+        package = pkgs.ungoogled-chromium;
+        commandLineArgs = [
+          "--no-default-browser-check"
+          "--no-first-run"
+        ];
+        extensions = [
+          { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
+          { id = "fnaicdffflnofjppbagibeoednhnbjhg"; } # floccus
+          { id = "nngceckbapebfimnlniiiahkandclblb"; } # bitwarden
+          { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # dark reader
+          { id = "egpjdkipkomnmjhjmdamaniclmdlobbo"; } # firenvim
+          { id = "lckanjgmijmafbedllaakclkaicjfmnk"; } # clear urls
+          { id = "fihnjjcciajhdojfnbdddfaoknhalnja"; } # i don't care about cookies
+          { id = "fhcgjolkccmbidfldomjliifgaodjagh"; } # cookie auto delete
+          { id = "ajopnjidmegmdimjlfnijceegpefgped"; } # better ttv
+          { id = "kbmfpngjjgdllneeigpgjifpgocmfgmb"; } # reddit reddit enhancement suite
+          { id = "ikhahkidgnljlniknmendeflkdlfhonj"; } # no pdf download
+          { id = "oocalimimngaihdkbihfgmpkcpnmlaoa"; } # teleparty
+          { id = "bkkmolkhemgaeaeggcmfbghljjjoofoh"; } # catppuccin mocha theme
+          {
+            id = "dcpihecpambacapedldabdbpakmachpb";
+            updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
+          }
+        ];
+      };
 
       programs.firefox = {
         enable = true;
@@ -59,7 +85,6 @@ in
           no-pdf-download
           privacy-badger
           reddit-enhancement-suite
-          stylus
           terms-of-service-didnt-read
           ublock-origin
         ];
@@ -79,9 +104,9 @@ in
 
               "network.cookieBehaviour" = 5;
               "network.cookie.lifetimePolicy" = 2;
-              "network.dns.disablePrefetch" = true;
-              "network.predictor.enabled" = false;
-              "network.prefetch-next" = false;
+              "network.dns.disablePrefetch" = false;
+              "network.predictor.enabled" = true;
+              "network.prefetch-next" = true;
 
               "privacy.trackingprotection.enabled" = true;
               "privacy.trackingprotection.socialtracking.enabled" = true;
