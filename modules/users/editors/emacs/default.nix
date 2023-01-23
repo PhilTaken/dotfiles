@@ -25,7 +25,7 @@ in
       python = mkOption {
         description = "enable the python integration";
         type = types.bool;
-        default = true;
+        default = false;
       };
 
       ts = mkOption {
