@@ -52,11 +52,16 @@ in
     environment = {
       systemPackages = with pkgs; [
         brightnessctl
-        powertop
         acpi
         wpa_supplicant_gui
       ];
       sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+    };
+
+    powerManagement = {
+      enable = true;
+      cpuFreqGovernor = "powersave";
+      powertop.enable = true;
     };
 
     programs.light.enable = true;
