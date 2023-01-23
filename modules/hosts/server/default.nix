@@ -11,6 +11,7 @@ let
 in
 {
   imports = [
+    ./homer.nix
     ./adguardhome.nix
     ./caddy
     ./calibre-web.nix
