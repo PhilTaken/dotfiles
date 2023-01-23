@@ -9,14 +9,35 @@ let cfg = config.phil.browsers;
 in
 {
   options.phil.browsers = {
-    enable = mkOption {
+    enableAll = mkOption {
       description = "Enable browsers";
       type = types.bool;
       default = true;
     };
 
+    chromium = {
+      enable = mkOption {
+        description = "enable chromium";
+        type = types.bool;
+        default = cfg.enableAll;
+      };
+    };
+
+    qutebrowser = {
+      enable = mkOption {
+        description = "enable qutebrowser";
+        type = types.bool;
+        default = cfg.enableAll;
+      };
+    };
 
     firefox = {
+      enable = mkOption {
+        description = "enable firefox";
+        type = types.bool;
+        default = cfg.enableAll;
+      };
+
       wayland = mkOption {
         description = "Force wayland for firefox";
         type = types.bool;
@@ -35,16 +56,14 @@ in
     let
       pkg = if cfg.firefox.librewolf then pkgs.librewolf else pkgs.firefox;
       waylandpkg = if cfg.firefox.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
-    in
-    (mkIf cfg.enable) {
-      home.packages = with pkgs; [
+    in {
+      home.packages = with pkgs; lib.optionals cfg.enableAll [
         nyxt
-        firefox
         google-chrome
       ];
 
       programs.chromium = {
-        enable = true;
+        inherit (cfg.chromium) enable;
         package = pkgs.ungoogled-chromium;
         commandLineArgs = [
           "--no-default-browser-check"
@@ -72,7 +91,7 @@ in
       };
 
       programs.firefox = {
-        enable = true;
+        inherit (cfg.firefox) enable;
 
         package = if cfg.firefox.wayland then waylandpkg else pkg;
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -117,6 +136,24 @@ in
               "signon.rememberSignons" = false;
             };
           };
+        };
+      };
+
+      programs.qutebrowser = {
+        inherit (cfg.qutebrowser) enable;
+
+        enableDefaultBindings = true;
+
+        quickmarks = {
+          nixpkgs = "https://github.com/NixOS/nixpkgs";
+          home-manager = "https://github.com/nix-community/home-manager";
+        };
+
+        searchEngines = {
+          w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
+          aw = "https://wiki.archlinux.org/?search={}";
+          nw = "https://nixos.wiki/index.php?search={}";
+          g = "https://www.google.com/search?hl=en&q={}";
         };
       };
     };
