@@ -121,7 +121,7 @@ in
         original_date = false;
         per_disc_numbering = false;
         convert.auto = false;
-        directory = "~/Music";
+        directory = "/mnt/media/Music";
 
         import = {
           write = true;
