@@ -14,7 +14,7 @@
 
     ./mail
     ./music
-    ./firefox
+    ./browsers
 
     ./wms
     ./des

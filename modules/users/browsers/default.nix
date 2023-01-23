@@ -5,33 +5,36 @@
 }@inputs:
 with lib;
 
-let cfg = config.phil.firefox;
+let cfg = config.phil.browsers;
 in
 {
-  options.phil.firefox = {
+  options.phil.browsers = {
     enable = mkOption {
-      description = "Enable firefox";
+      description = "Enable browsers";
       type = types.bool;
       default = true;
     };
 
-    wayland = mkOption {
-      description = "Force wayland";
-      type = types.bool;
-      default = !inputs.config.xsession.enable;
-    };
 
-    librewolf = mkOption {
-      description = "use librewolf instead";
-      type = types.bool;
-      default = true;
+    firefox = {
+      wayland = mkOption {
+        description = "Force wayland for firefox";
+        type = types.bool;
+        default = !inputs.config.xsession.enable;
+      };
+
+      librewolf = mkOption {
+        description = "use librewolf instead";
+        type = types.bool;
+        default = true;
+      };
     };
   };
 
   config =
     let
-      pkg = if cfg.librewolf then pkgs.librewolf else pkgs.firefox;
-      waylandpkg = if cfg.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
+      pkg = if cfg.firefox.librewolf then pkgs.librewolf else pkgs.firefox;
+      waylandpkg = if cfg.firefox.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
     in
     (mkIf cfg.enable) {
       home.packages = with pkgs; [
@@ -71,7 +74,7 @@ in
       programs.firefox = {
         enable = true;
 
-        package = if cfg.wayland then waylandpkg else pkg;
+        package = if cfg.firefox.wayland then waylandpkg else pkg;
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           betterttv
           bitwarden

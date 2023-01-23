@@ -69,7 +69,7 @@ let
         userConfig = {
           shells.zsh.enable = true;
           des.gnome.enable = true;
-          firefox.wayland = false;
+          browsers.firefox.wayland = false;
         };
 
         extraPackages = pkgs: [ ];
