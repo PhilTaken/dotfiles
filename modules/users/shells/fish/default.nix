@@ -19,6 +19,7 @@ in
       enable = true;
 
       functions = {
+        ":wa" = "${pkgs.sl}/bin/sl";
         gitignore = "curl -sL https://www.gitignore.io/api/$argv";
         license = "curl -sL https://choosealicense.com/licenses/$argv | ${pkgs.pup}/bin/pup -p pre#license-text text{}";
         su = "command su --shell=${pkgs.fish}/bin/fish $argv";
