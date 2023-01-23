@@ -1,6 +1,11 @@
 {
   inputs = {
     # -----------------------
+    # ci/cd
+
+    hercules-ci-effects.url = "github:hercules-ci/hercules-ci-effects";
+
+    # -----------------------
     # package repositories
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -99,6 +104,15 @@
         ./modules/flake/modules.nix
         ./modules/flake/deploy.nix
         ./modules/flake/shells.nix
+        inputs.hercules-ci-effects.flakeModule
       ];
+
+      #hercules-ci.flake-update = {
+        #enable = true;
+        #when = {
+          #hour = [ 23 ];
+          #dayOfWeek = ["Sun" "Wed"];
+        #};
+      #};
     };
 }
