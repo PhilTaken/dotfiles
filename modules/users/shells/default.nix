@@ -131,6 +131,52 @@ in
 
     programs = {
       htop.enable = true;
+      btop = {
+        enable = true;
+        settings = {
+          # general
+          background_update = false;
+          vim_keys = true;
+          force_tty = false;
+          show_uptime = true;
+
+          # theme / layout
+          color_theme = "TTY";
+          theme_background = false;
+          truecolor = true;
+          rounded_corners = true;
+          presets = "cpu:1:default,proc:0:default cpu:0:default,mem:0:default,net:0:default cpu:0:block,net:0:tty";
+          temp_scale = "celsius";
+          clock_format = "%X /user@/host";
+
+          # procs
+          proc_left = true;
+          proc_colors = true;
+          proc_gradient = true;
+          proc_mem_bytes = true;
+          proc_cpu_graphs = true;
+          proc_per_core = false;
+          proc_filter_kernel = false;
+
+          # cpu
+          cpu_graph_upper = "total";
+          cpu_graph_lower = "user";
+          cpu_invert_lower = true;
+          show_cpu_freq = true;
+
+          # mem / disks
+          mem_graphs = true;
+          mem_below_net = false;
+          zfs_arc_cached = true;
+          show_disks = true;
+          zfs_hide_datasets = false;
+
+          # io
+          show_io_stat = true;
+          io_mode = false;
+          io_graph_combined = true;
+        };
+      };
       bat.enable = true;
       noti.enable = true;
 
