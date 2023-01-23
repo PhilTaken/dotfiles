@@ -67,7 +67,7 @@
       fsType = "vfat";
     };
 
-  fileSystems."/platte" =
+  fileSystems."/media/platte" =
     {
       device = "/dev/disk/by-uuid/1AEA5B14EA5AEC0F";
       fsType = "ntfs-3g";
@@ -83,7 +83,7 @@
 
   phil.fileshare.mount.binds = [{
     host = "delta";
-    dirs = [ "/media" ];
+    dirs = [{ remote = "/media"; local = "/media/delta"; }];
   }];
 
   system.stateVersion = "21.05";

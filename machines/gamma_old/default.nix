@@ -23,7 +23,7 @@
       fsType = "vfat";
     };
 
-  fileSystems."/platte" =
+  fileSystems."/media/platte" =
     {
       device = "/dev/disk/by-uuid/1AEA5B14EA5AEC0F";
       fsType = "ntfs-3g";

@@ -19,14 +19,14 @@ let
 
   mkMountsForBinds = binds: builtins.listToAttrs (builtins.concatLists (builtins.map
     (bind: builtins.map
-      (dir: {
-        name = "/mnt/${dir}";
+      (bindcfg: {
+        name = bindcfg.local;
         value =
           let
             ip = if bind.host == null then bind.ip else net.networks.default.${bind.host};
           in
           {
-            device = "${ip}:${dir}";
+            device = "${ip}:${bindcfg.remote}";
             fsType = "nfs4";
             # mount on first access instead of boot, unmount after 10 mins
             options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
@@ -83,8 +83,11 @@ in
             };
             dirs = mkOption {
               description = "shares to mount";
-              type = types.listOf types.str;
-              default = [ ];
+              type = types.listOf (types.submodule { options = {
+                local = mkOption { type = types.str; };
+                remote = mkOption { type = types.str; };
+              }; });
+              default = { };
             };
           };
         });
