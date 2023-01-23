@@ -47,6 +47,6 @@ in
       appName = "Oroboros";
     };
 
-    phil.server.services.caddy.proxy."gitea" = cfg.port;
+    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
   };
 }

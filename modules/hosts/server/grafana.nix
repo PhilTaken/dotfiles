@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.phil.server.services.grafana;
   domain = "grafana.pherzog.xyz";
-  port = 3010;
+  port = 3100;
   net = import ../../../network.nix { };
 in
 {
@@ -20,6 +20,15 @@ in
         default = false;
       };
     };
+    host = mkOption {
+      type = types.str;
+      default = "grafana";
+    };
+
+    port = mkOption {
+      type = types.port;
+      default = port;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -30,11 +39,11 @@ in
       owner = config.systemd.services.grafana.serviceConfig.User;
     };
 
-    phil.server.services.caddy.proxy."grafana" = port;
+    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
 
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [ 3100 ];
-      allowedTCPPorts = [ 3100 ];
+      allowedUDPPorts = [ cfg.port ];
+      allowedTCPPorts = [ cfg.port ];
     };
 
     services.loki = {
@@ -44,7 +53,7 @@ in
         analytics.reporting_enabled = false;
 
         server = {
-          http_listen_port = 3100;
+          http_listen_port = cfg.port;
           grpc_listen_port = 9060;
         };
 
@@ -83,7 +92,8 @@ in
       enable = true;
       settings = {
         server = {
-          inherit port domain;
+          inherit (cfg) port;
+          inherit domain;
           protocol = "https";
           http_addr = "0.0.0.0";
         };
@@ -106,7 +116,7 @@ in
             {
               name = "Loki";
               type = "loki";
-              url = "http://localhost:3100";
+              url = "http://localhost:${builtins.toString cfg.port}";
             }
           ];
         };

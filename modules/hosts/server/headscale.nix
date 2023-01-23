@@ -6,27 +6,27 @@
 with lib;
 
 let
-  cfg = config.phil.server.services.influxdb2;
+  cfg = config.phil.server.services.headscale;
   net = import ../../../network.nix { };
 in
 {
-  options.phil.server.services.influxdb2 = {
-    enable = mkEnableOption "influxdb2 - time series database";
+  options.phil.server.services.headscale = {
+    enable = mkEnableOption "headscale - time series database";
     url = mkOption {
-      description = "influxdb url (webinterface)";
+      description = "headscale url (webinterface)";
       type = types.str;
       default = "";
     };
 
     port = mkOption {
-      description = "influxdb port (webinterface)";
+      description = "headscale port (webinterface)";
       type = types.port;
       default = 8086;
     };
 
     host = mkOption {
       type = types.str;
-      default = "influx";
+      default = "headscale";
     };
   };
 
@@ -35,15 +35,18 @@ in
       allowedUDPPorts = [ cfg.port ];
       allowedTCPPorts = [ cfg.port ];
     };
-    services.influxdb2 = {
+    services.headscale = {
       enable = true;
+      # limit to external ip on alpha?
+      address = "0.0.0.0";
+
+      serverUrl = "https://headscale.pherzog.xyz:443";
       settings = {
         reporting-disable = true;
         http-bind-address = "${cfg.url}:${builtins.toString cfg.port}";
         #vault-addr = "10.100.0.1:8200";
       };
     };
-
     phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
   };
 }

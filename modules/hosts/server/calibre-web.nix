@@ -105,6 +105,6 @@ in
         };
       };
 
-    phil.server.services.caddy.proxy."${cfg.listen.host}" = cfg.listen.port;
+    phil.server.services.caddy.proxy."${cfg.listen.host}" = { inherit (cfg.listen) port; };
   };
 }

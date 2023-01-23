@@ -13,7 +13,7 @@ let
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
   mkDnsBindsFromServices = services: builtins.mapAttrs
-    # TODO: sensible handling for identical services on multiple hosts
+    # TODO: sensible handling of identical services on multiple hosts
     (_: builtins.head)
     (lib.zipAttrs
       (builtins.map
@@ -24,8 +24,8 @@ let
               value = host;
             in
             { inherit name value; })
-          # TODO: negate filter
-          #(builtins.filter (lib.flip builtins.elem [ "unbound" "caddy" ]) services.${host})))
+          # TODO: filter unbound?
+          #(builtins.filter (elem: elem != "unbound") services.${host})))
           services.${host}))
         (builtins.attrNames services)));
 in
@@ -55,7 +55,7 @@ in
       allowedTCPPorts = [ 53 853 ];
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = 853;
+    phil.server.services.caddy.proxy."${cfg.host}" = { port = 853; };
 
     services.unbound =
       let
@@ -70,9 +70,9 @@ in
         settings = {
           server = {
             access-control = [
-              "127.0.0.0/8 allow" # localhost
-              "10.100.0.1/24 allow" # yggdrasil
-              "10.200.0.1/24 allow" # milkyway
+              "127.0.0.0/8 allow"    # localhost
+              "10.100.0.1/24 allow"  # yggdrasil
+              "10.200.0.1/24 allow"  # milkyway
               "192.168.0.1/24 allow" # local net
             ];
 

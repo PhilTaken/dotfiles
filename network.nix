@@ -1,6 +1,7 @@
 _:
 
 {
+  tld = "pherzog.xyz";
 
   networks = rec {
     endpoints = {
@@ -51,6 +52,7 @@ _:
     # mini nas @ home
     delta = [
       "unbound"
+      "homer"
 
       "gitea"
       "jellyfin"

@@ -898,22 +898,6 @@
         "type": "github"
       }
     },
-    "homer-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1671567578,
-        "narHash": "sha256-GcQERShT5iZE3I50ampZakjr0tAXndZUz8DhsfZURdQ=",
-        "owner": "bastienwirtz",
-        "repo": "homer",
-        "rev": "b7cd8f9482e6836a96b354b11595b03b9c3d67cd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "bastienwirtz",
-        "repo": "homer",
-        "type": "github"
-      }
-    },
     "hyprland": {
       "inputs": {
         "hyprland-protocols": "hyprland-protocols",
@@ -1797,7 +1781,6 @@
         "flake-parts": "flake-parts",
         "hercules-ci-effects": "hercules-ci-effects",
         "home-manager": "home-manager",
-        "homer-src": "homer-src",
         "hyprland": "hyprland",
         "nc-bookmarks": "nc-bookmarks",
         "nc-calendar": "nc-calendar",

@@ -40,7 +40,7 @@ in
         externalInterface = "enp1s0";
       };
 
-      phil.server.services.caddy.proxy."nextcloud" = { ip = localAddress; inherit port; };
+      phil.server.services.caddy.proxy."${cfg.host}" = { inherit port; ip = localAddress; };
 
       containers.nextcloud =
         let

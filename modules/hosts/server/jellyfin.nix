@@ -28,6 +28,6 @@ in
       openFirewall = true;
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = cfg.port;
+    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
   };
 }
