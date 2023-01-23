@@ -26,7 +26,7 @@ in
       enableRenice = true;
       settings = {
         general = {
-          renice = 10;
+          renice = 15;
         };
         custom = {
           start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
@@ -44,10 +44,10 @@ in
 
     environment.systemPackages = with pkgs; [
       # audio/video
-      audacity
-      obs-studio
-      handbrake
-      makemkv
+      #audacity
+      #obs-studio
+      #handbrake
+      #makemkv
 
       # games
       prismlauncher
@@ -59,6 +59,7 @@ in
       #uget
       #uget-integrator
       #qbittorrent
+      nicotine-plus
 
       #skrooge
       #waydroid
