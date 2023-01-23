@@ -5,5 +5,6 @@
     ./neovim
     ./emacs
     ./helix
+    ./vscode
   ];
 }

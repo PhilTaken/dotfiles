@@ -30,17 +30,6 @@ in
 
     environment.systemPackages =
       let
-        extensions = with pkgs.vscode-extensions; [
-          bbenoist.nix
-          #ms-python.python
-          ms-toolsai.jupyter
-        ];
-
-        vscodium-with-extensions = pkgs.vscode-with-extensions.override {
-          vscode = pkgs.vscodium;
-          vscodeExtensions = extensions;
-        };
-
       in
       with pkgs; [
         vscodium-with-extensions
