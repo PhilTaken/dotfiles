@@ -148,6 +148,10 @@ in
           ];
         };
 
+        replaygain = {
+          command = "${pkgs.aacgain}/bin/aacgain";
+        };
+
         badfiles = {
           check_on_import = true;
         };
