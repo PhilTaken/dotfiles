@@ -91,6 +91,71 @@
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
 
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
+
+    # -----------------------
+    # non-flake sources
+
+    tmm-src = {
+      url = "https://release.tinymediamanager.org/v4/dist/tmm_4.3.8.1_linux-amd64.tar.gz";
+      flake = false;
+    };
+
+    down_on_spot-src = {
+      url = "github:oSumAtrIX/DownOnSpot?ref=e0595feae8ee54c47fec82cf513e29f1abacfbfe";
+      flake = false;
+    };
+
+    tmux-nvr-src = {
+      url = "github:carlocab/tmux-nvr";
+      flake = false;
+    };
+
+    homer-src = {
+      url = "github:bastienwirtz/homer";
+      flake = false;
+    };
+
+    fish-pisces-src = {
+      url = "github:laughedelic/pisces";
+      flake = false;
+    };
+
+    alacritty-catppuccin = {
+      url = "github:catppuccin/alacritty";
+      flake = false;
+    };
+
+    # nextcloud apps
+    nc-calendar = {
+      url = "https://github.com/nextcloud/calendar/archive/refs/tags/v3.3.2.tar.gz";
+      flake = false;
+    };
+
+    nc-news = {
+      url = "https://github.com/nextcloud/news/releases/download/20.0.0/news.tar.gz";
+      flake = false;
+    };
+
+    nc-bookmarks = {
+      url = "https://github.com/nextcloud/bookmarks/releases/download/v12.0.0/bookmarks-12.0.0.tar.gz";
+      flake = false;
+    };
+
+    # extra vim plugins
+    vim-janet-src = {
+      url = "github:bakpakin/janet.vim";
+      flake = false;
+    };
+
+    vim-terraform-src = {
+      url = "github:hashivim/vim-terraform";
+      flake = false;
+    };
+
+    vim-yuck-src = {
+      url = "github:elkowar/yuck.vim";
+      flake = false;
+    };
   };
 
   outputs = { self, flake-parts, ... }@inputs:

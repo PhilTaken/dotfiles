@@ -38,6 +38,7 @@ rec {
 
       modules = [
         {
+          _module.args = { inherit inputs; };
           imports = [
             hardware-config
             ../modules/hosts
@@ -47,20 +48,22 @@ rec {
           phil = systemConfig;
 
           nix.registry.nixpkgs.flake = nixpkgs;
+          nixpkgs.overlays = [
+            inputs.nixpkgs-wayland.overlay
+          ];
 
           sops.defaultSopsFile = ../sops/sops.yaml;
           sops.age.keyFile = "/var/lib/sops-nix/key.txt";
           sops.age.generateKey = true;
 
           system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
-          nixpkgs.overlays = [
-            inputs.nixpkgs-wayland.overlay
-          ];
 
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = { inherit inputs; };
+            users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
+          };
         }
       ] ++ (systemmodules.${system} or systemmodules.default) ++ extraHostModules;
     };

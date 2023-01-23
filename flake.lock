@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "alacritty-catppuccin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1664239314,
+        "narHash": "sha256-w9XVtEe7TqzxxGUCDUR9BFkzLZjG8XrplXJ3lX6f+x0=",
+        "owner": "catppuccin",
+        "repo": "alacritty",
+        "rev": "3c808cbb4f9c87be43ba5241bc57373c793d2f17",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "alacritty",
+        "type": "github"
+      }
+    },
     "alejandra": {
       "inputs": {
         "fenix": "fenix_2",
@@ -169,6 +185,23 @@
       "original": {
         "owner": "doomemacs",
         "repo": "snippets",
+        "type": "github"
+      }
+    },
+    "down_on_spot-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1662024048,
+        "narHash": "sha256-eYrb3fI9rbXi0+RoC2ZrUPHtFkIF85Jp5NkzdXh6GwU=",
+        "owner": "oSumAtrIX",
+        "repo": "DownOnSpot",
+        "rev": "e0595feae8ee54c47fec82cf513e29f1abacfbfe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oSumAtrIX",
+        "ref": "e0595feae8ee54c47fec82cf513e29f1abacfbfe",
+        "repo": "DownOnSpot",
         "type": "github"
       }
     },
@@ -378,6 +411,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "fenix",
+        "type": "github"
+      }
+    },
+    "fish-pisces-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1606703175,
+        "narHash": "sha256-Oou2IeNNAqR00ZT3bss/DbhrJjGeMsn9dBBYhgdafBw=",
+        "owner": "laughedelic",
+        "repo": "pisces",
+        "rev": "e45e0869855d089ba1e628b6248434b2dfa709c4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "laughedelic",
+        "repo": "pisces",
         "type": "github"
       }
     },
@@ -849,6 +898,22 @@
         "type": "github"
       }
     },
+    "homer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1671567578,
+        "narHash": "sha256-GcQERShT5iZE3I50ampZakjr0tAXndZUz8DhsfZURdQ=",
+        "owner": "bastienwirtz",
+        "repo": "homer",
+        "rev": "b7cd8f9482e6836a96b354b11595b03b9c3d67cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bastienwirtz",
+        "repo": "homer",
+        "type": "github"
+      }
+    },
     "hyprland": {
       "inputs": {
         "hyprland-protocols": "hyprland-protocols",
@@ -941,6 +1006,42 @@
         "owner": "nix-community",
         "repo": "naersk",
         "type": "github"
+      }
+    },
+    "nc-bookmarks": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-vQvatq162L/tOI0yoCkWGVv/T1N6oIB19Xlav5ySbjY=",
+        "type": "tarball",
+        "url": "https://github.com/nextcloud/bookmarks/releases/download/v12.0.0/bookmarks-12.0.0.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/nextcloud/bookmarks/releases/download/v12.0.0/bookmarks-12.0.0.tar.gz"
+      }
+    },
+    "nc-calendar": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-I39pTEwotYj52BAdMZfP+o6zxPxBtxsIL82FNoR9fOQ=",
+        "type": "tarball",
+        "url": "https://github.com/nextcloud/calendar/archive/refs/tags/v3.3.2.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/nextcloud/calendar/archive/refs/tags/v3.3.2.tar.gz"
+      }
+    },
+    "nc-news": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-p3Ft3sQ/2HPXCFE03dm8pBL39b7bWCi2iAxHkbOK2V4=",
+        "type": "tarball",
+        "url": "https://github.com/nextcloud/news/releases/download/20.0.0/news.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/nextcloud/news/releases/download/20.0.0/news.tar.gz"
       }
     },
     "neovim-nightly": {
@@ -1686,14 +1787,21 @@
     },
     "root": {
       "inputs": {
+        "alacritty-catppuccin": "alacritty-catppuccin",
         "arm-rs": "arm-rs",
         "deploy-rs": "deploy-rs",
         "devshell": "devshell",
+        "down_on_spot-src": "down_on_spot-src",
         "eww-git": "eww-git",
+        "fish-pisces-src": "fish-pisces-src",
         "flake-parts": "flake-parts",
         "hercules-ci-effects": "hercules-ci-effects",
         "home-manager": "home-manager",
+        "homer-src": "homer-src",
         "hyprland": "hyprland",
+        "nc-bookmarks": "nc-bookmarks",
+        "nc-calendar": "nc-calendar",
+        "nc-news": "nc-news",
         "neovim-nightly": "neovim-nightly",
         "nil-ls": "nil-ls",
         "nix-doom-emacs": "nix-doom-emacs",
@@ -1705,7 +1813,12 @@
         "parinfer-rust": "parinfer-rust",
         "sops-nix-src": "sops-nix-src",
         "spicetify": "spicetify",
+        "tmm-src": "tmm-src",
+        "tmux-nvr-src": "tmux-nvr-src",
         "vim-extra-plugins": "vim-extra-plugins",
+        "vim-janet-src": "vim-janet-src",
+        "vim-terraform-src": "vim-terraform-src",
+        "vim-yuck-src": "vim-yuck-src",
         "webcord": "webcord"
       }
     },
@@ -1863,6 +1976,34 @@
         "type": "github"
       }
     },
+    "tmm-src": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-iGSRJGEWy5CVgBOA5/8Ra7fKOJ1oJNSjfLSGcNyw0n0=",
+        "type": "tarball",
+        "url": "https://release.tinymediamanager.org/v4/dist/tmm_4.3.8.1_linux-amd64.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://release.tinymediamanager.org/v4/dist/tmm_4.3.8.1_linux-amd64.tar.gz"
+      }
+    },
+    "tmux-nvr-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1654081780,
+        "narHash": "sha256-EkblSK2wZyg9tBOE/UEhu/0vgZBsxP5ASiPGtxN2KP4=",
+        "owner": "carlocab",
+        "repo": "tmux-nvr",
+        "rev": "60546fc8e32a10ba3e94ff0e8b4ff0d41a3323cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "carlocab",
+        "repo": "tmux-nvr",
+        "type": "github"
+      }
+    },
     "ts-fold": {
       "flake": false,
       "locked": {
@@ -1927,6 +2068,54 @@
         "owner": "m15a",
         "ref": "3e08bbd37dc9bec38d9a4d8597a90d80372b47af",
         "repo": "nixpkgs-vim-extra-plugins",
+        "type": "github"
+      }
+    },
+    "vim-janet-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1666134538,
+        "narHash": "sha256-cySG6PuwlRfhNePUFdXP0w6m5GrYIxgMRcdpgFvJ+VA=",
+        "owner": "bakpakin",
+        "repo": "janet.vim",
+        "rev": "7a926154ad53ede31df87eeb1c439cff6ecaabc7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bakpakin",
+        "repo": "janet.vim",
+        "type": "github"
+      }
+    },
+    "vim-terraform-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1673467979,
+        "narHash": "sha256-j622k1z/PdlgMchSTlFPH9YQ1qgNqS9rxdb5y8T2CO4=",
+        "owner": "hashivim",
+        "repo": "vim-terraform",
+        "rev": "d00503de9bed3a1da7206090cb148c6a1acce870",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hashivim",
+        "repo": "vim-terraform",
+        "type": "github"
+      }
+    },
+    "vim-yuck-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1667045807,
+        "narHash": "sha256-F7aS8d6jJQQoIGkG2o4KNnDZAIrq0c+otIHvjdoGbtY=",
+        "owner": "elkowar",
+        "repo": "yuck.vim",
+        "rev": "9b5e0370f70cc30383e1dabd6c215475915fe5c3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elkowar",
+        "repo": "yuck.vim",
         "type": "github"
       }
     },

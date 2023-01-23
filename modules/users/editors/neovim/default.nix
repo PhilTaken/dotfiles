@@ -9,7 +9,7 @@ with lib;
 let
   cfg = config.phil.editors.neovim;
   inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
-  inherit (pkgs) fetchFromGitHub;
+  buildPlugin = attrset: buildVimPluginFrom2Nix (attrset // { version = "master"; });
 in
 {
   options.phil.editors.neovim = {
@@ -195,37 +195,10 @@ in
         nvim-ufo
         vim-hy
         present-nvim
-      ]) ++ (map buildVimPluginFrom2Nix [
-        rec {
-          pname = "janet.vim";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "bakpakin";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-cySG6PuwlRfhNePUFdXP0w6m5GrYIxgMRcdpgFvJ+VA=";
-          };
-        }
-        rec {
-          pname = "vim-terraform";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "hashivim";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-atyMKr5WChLBRDyO1KznH2LQzv5P+K+RQpQ71aeJB0k=";
-          };
-        }
-        rec {
-          pname = "yuck.vim";
-          version = "master";
-          src = fetchFromGitHub {
-            owner = "elkowar";
-            repo = pname;
-            rev = "master";
-            sha256 = "sha256-lp7qJWkvelVfoLCyI0aAiajTC+0W1BzDhmtta7tnICE=";
-          };
-        }
+      ]) ++ (map buildPlugin [
+        { pname = "janet.vim"; src = inputs.vim-janet-src; }
+        { pname = "vim-terraform"; src = inputs.vim-terraform-src; }
+        { pname = "yuck.vim"; src = inputs.vim-yuck-src; }
       ]);
     };
 

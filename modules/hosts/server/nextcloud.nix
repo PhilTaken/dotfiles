@@ -1,5 +1,6 @@
 { pkgs
 , config
+, inputs
 , lib
 , ...
 }:
@@ -88,22 +89,9 @@ in
               https = true;
 
               extraApps = {
-                calendar = pkgs.fetchzip {
-                  url = "https://github.com/nextcloud/calendar/archive/refs/tags/v3.3.2.tar.gz";
-                  sha256 = "sha256-I39pTEwotYj52BAdMZfP+o6zxPxBtxsIL82FNoR9fOQ=";
-                };
-                news = pkgs.fetchNextcloudApp {
-                  url = "https://github.com/nextcloud/news/releases/download/20.0.0/news.tar.gz";
-                  sha256 = "sha256-p3Ft3sQ/2HPXCFE03dm8pBL39b7bWCi2iAxHkbOK2V4=";
-                };
-                deck = pkgs.fetchNextcloudApp {
-                  url = "https://github.com/nextcloud/deck/releases/download/v1.8.3/deck.tar.gz";
-                  sha256 = "sha256-5dW5sZzz+Ff129ZxgbmVQBGFIUNE7vTStNwULP7KaA8=";
-                };
-                bookmarks = pkgs.fetchNextcloudApp {
-                  url = "https://github.com/nextcloud/bookmarks/releases/download/v12.0.0/bookmarks-12.0.0.tar.gz";
-                  sha256 = "sha256-vQvatq162L/tOI0yoCkWGVv/T1N6oIB19Xlav5ySbjY=";
-                };
+                calendar = inputs.nc-calendar;
+                news = inputs.nc-news;
+                bookmarks = inputs.nc-bookmarks;
               };
 
               caching.redis = true;

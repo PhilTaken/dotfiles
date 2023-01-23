@@ -1,6 +1,4 @@
 { lib
-, fetchFromGitHub
-
 , buildGoModule
 
 , caddy
@@ -15,7 +13,6 @@ let
   gogets = flip concatMapStrings plugins ({ name, version }: "go get \"${name}@${version}\"");
 
   pname = "caddy";
-  version = "2.5.2";
   main = ''
     package main
 

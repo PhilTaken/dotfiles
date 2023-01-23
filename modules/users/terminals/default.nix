@@ -1,5 +1,6 @@
 { pkgs
 , config
+, inputs
 , lib
 , ...
 }:
@@ -26,12 +27,7 @@ in
     programs = {
       alacritty =
         let
-          colorscheme = pkgs.fetchFromGitHub {
-            owner = "catppuccin";
-            repo = "alacritty";
-            rev = "406dcd431b1e8866533798d10613cdbab6568619";
-            sha256 = "sha256-RyxD54fqvs0JK0hmwJNIcW22mhApoNOgZkyhFCVG6FQ=";
-          };
+          colorscheme = inputs.alacritty-catppuccin;
         in
         {
           enable = true;

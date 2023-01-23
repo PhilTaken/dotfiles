@@ -1,14 +1,14 @@
 { pkgs
 , config
+, inputs
 , lib
 , ...
-}@inputs:
+}:
 with lib;
 
 let
   cfg = config.phil.tmux;
-in
-rec {
+in {
   options.phil.tmux = {
     enable = mkEnableOption "tmux";
     defaultShell = mkOption {
@@ -20,10 +20,7 @@ rec {
   config = mkIf cfg.enable {
     programs.tmux =
       let
-        #airline_conf = ./tmux_airline.conf;
-        #colorscheme_conf = ./catppuccino_dark.conf;
         catppuccin_tmux_conf = ./catppuccin.conf;
-        #colorscheme_conf = "${inputs.inputs.tmux-colorscheme}/catppuccin.conf";
       in
       {
         # TODO: tmuxp configs
@@ -119,13 +116,8 @@ rec {
           }
           (mkTmuxPlugin rec {
             pluginName = "nvr";
-            version = "unstable-2021-07-07";
-            src = pkgs.fetchFromGitHub {
-              owner = "carlocab";
-              repo = "tmux-nvr";
-              rev = "96a6dae2733cf651ac954306b03263b60d05f26e";
-              sha256 = "sha256-lkZZ9xV7m/iTpQpv/YewltyZ+97P2UeSysNdGcCgpAw=";
-            };
+            version = "latest";
+            src = inputs.tmux-nvr-src;
           })
         ];
       };

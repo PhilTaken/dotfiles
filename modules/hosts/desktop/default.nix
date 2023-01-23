@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, inputs
 , ...
 }:
 with lib;
@@ -70,12 +71,9 @@ in
       jack2
 
       # tiny media manager
-      (nur.repos.shados.tmm.overrideAttrs (old: rec {
-        version = "4.3.8";
-        src = builtins.fetchurl {
-          url = "https://release.tinymediamanager.org/v4/dist/tmm_${version}_linux-amd64.tar.gz";
-          sha256 = "187q3lz7mrvqasi9qn4rva6dfq04w360drqikwcr5i9rzir2mc0z";
-        };
+      (nur.repos.shados.tmm.overrideAttrs (old: {
+        version = "latest";
+        src = inputs.tmm-src;
       }))
 
       # typey-typey
