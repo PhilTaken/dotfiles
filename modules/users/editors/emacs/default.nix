@@ -4,9 +4,9 @@
 , inputs
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types concatMapStringsSep optionals;
   cfg = config.phil.editors.emacs;
 in
 {

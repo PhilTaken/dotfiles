@@ -3,9 +3,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption types mkIf;
   cfg = config.phil.des.gnome;
 in
 {

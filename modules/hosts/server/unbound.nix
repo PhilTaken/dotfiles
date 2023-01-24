@@ -4,10 +4,9 @@
 , net
 , ...
 }:
-with lib;
 # TODO: dns over tls
-
 let
+  inherit (lib) mkEnableOption mkIf mkOption types;
 
   cfg = config.phil.server.services.unbound;
   iplot = net.networks.default;

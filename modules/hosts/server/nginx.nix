@@ -4,9 +4,9 @@
 , net
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption types concatStrings;
   cfg = config.phil.server.services.nginx;
 
   iplot = net.networks.default;

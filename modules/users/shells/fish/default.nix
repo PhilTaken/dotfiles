@@ -4,10 +4,10 @@
 , inputs
 , ...
 }:
-with lib;
 
 let
   cfg = config.phil.shells.fish;
+  inherit (lib) mkIf mkEnableOption;
 in
 {
   options.phil.shells.fish = {

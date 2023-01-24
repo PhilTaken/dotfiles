@@ -3,9 +3,10 @@
 , lib
 , ...
 }:
-with lib;
 
-let cfg = config.phil.git;
+let
+  cfg = config.phil.git;
+  inherit (lib) mkOption mkIf types;
 in
 {
   options.phil.git = {

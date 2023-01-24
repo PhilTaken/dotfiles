@@ -3,10 +3,10 @@
 , lib
 , ...
 }@inputs:
-with lib;
 
 let
   cfg = config.phil.wms.hyprland;
+  inherit (lib) mkOption mkIf types mkEnableOption;
 in
 {
   imports = [

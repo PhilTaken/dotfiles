@@ -28,11 +28,11 @@ appimageTools.wrapType2 rec {
     substituteInPlace $out/share/applications/Zettlr.desktop --replace 'Exec=AppRun' 'Exec=${pname}'
   '';
 
-  meta = with lib; {
+  meta = {
     description = "A markdown editor for writing academic texts and taking notes";
     homepage = "https://www.zettlr.com";
     platforms = [ "x86_64-linux" ];
-    license = licenses.gpl3;
-    maintainers = with maintainers; [ tfmoraes ];
+    license = lib.licenses.gpl3;
+    maintainers = with lib.maintainers; [ tfmoraes ];
   };
 }

@@ -4,9 +4,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.tmux;
 in {
   options.phil.tmux = {

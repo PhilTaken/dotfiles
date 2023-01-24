@@ -3,9 +3,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types mkForce;
   cfg = config.phil.video;
 
   session_map = {

@@ -3,9 +3,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.nvidia;
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1

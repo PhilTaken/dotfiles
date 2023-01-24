@@ -3,11 +3,11 @@
 , lib
 , ...
 }:
-with lib;
 
 let
   cfg = config.phil.zellij;
   settings = import ./config.nix { inherit pkgs cfg; };
+  inherit (lib) mkOption mkIf types mkEnableOption;
 in
 {
   options.phil.zellij = {

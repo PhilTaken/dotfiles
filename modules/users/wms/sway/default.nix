@@ -3,10 +3,10 @@
 , lib
 , ...
 }@inputs:
-with lib;
 
 let
   cfg = config.phil.wms.sway;
+  inherit (lib) mkOption mkIf types;
 in
 rec {
   options.phil.wms.sway = {

@@ -3,9 +3,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.server.services.vector;
   loki_url = "10.200.0.1:3100";
 in

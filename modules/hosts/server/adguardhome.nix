@@ -3,9 +3,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.adguardhome;
 in
 {

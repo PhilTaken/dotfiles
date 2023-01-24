@@ -3,9 +3,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.phil.server.services.fail2ban;
 in
 {

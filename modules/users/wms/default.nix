@@ -1,5 +1,4 @@
 { pkgs, config, lib, ... }:
-with lib;
 
 let
   cfg = config.phil.wms;

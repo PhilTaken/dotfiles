@@ -4,11 +4,10 @@
 , inputs
 , ...
 }:
-with lib;
-
 let
   cfg = config.phil.editors.neovim;
   inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
+  inherit (lib) mkOption mkIf types optionals;
   buildPlugin = attrset: buildVimPluginFrom2Nix (attrset // { version = "master"; });
 in
 {

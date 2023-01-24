@@ -3,9 +3,9 @@
 , lib
 , ...
 }@inputs:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.wms.bars.eww;
   package = if cfg.enableWayland then pkgs.eww-wayland else pkgs.eww;
 in

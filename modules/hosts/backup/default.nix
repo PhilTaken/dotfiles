@@ -3,9 +3,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.backup;
 in
 {
@@ -56,7 +56,7 @@ in
           compression = "zstd,1";
           startAt = "daily";
           user = "danbst";
-          exclude = map (x: paths + "/" + x) common-excludes;
+          #exclude = map (x: paths + "/" + x) common-excludes;
         };
       in
       {

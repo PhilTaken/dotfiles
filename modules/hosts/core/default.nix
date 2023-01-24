@@ -4,9 +4,9 @@
 , net
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.core;
 in
 {

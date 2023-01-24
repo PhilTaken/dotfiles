@@ -4,9 +4,9 @@
 , net
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types mkDefault;
   networkName = "yggdrasil";
   postSetup = "${pkgs.inetutils}/bin/ifconfig ${networkName} mtu 1280 up";
 

@@ -3,9 +3,9 @@
 , lib
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.mullvad;
 in
 {

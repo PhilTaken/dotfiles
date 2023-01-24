@@ -3,9 +3,9 @@
 , lib
 , ...
 }@inputs:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.wms.i3;
   inherit (inputs.config.phil.wms.bars) barcommand;
 in

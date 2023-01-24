@@ -2,9 +2,8 @@
 , net
 , lib
 }:
-with lib;
-
 let
+  inherit (lib) mergeAttrs mapAttrs;
   iplot = net.networks.yggdrasil;
   hostnames = builtins.attrNames iplot;
 

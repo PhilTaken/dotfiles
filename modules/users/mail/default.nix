@@ -3,10 +3,9 @@
 , lib
 , ...
 }:
-with lib;
-
 let
   cfg = config.phil.mail;
+  inherit (lib) mkOption types mkIf;
 in
 {
 

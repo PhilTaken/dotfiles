@@ -4,9 +4,9 @@
 , net
 , ...
 }:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.server.services.keycloak;
 in
 {

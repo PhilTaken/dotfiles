@@ -4,9 +4,9 @@
 , lib
 , ...
 }@inputs:
-with lib;
 
 let
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.shells.zsh;
   magic_enter_prompt = ./magic_enter.zsh;
 in

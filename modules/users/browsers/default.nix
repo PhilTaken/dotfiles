@@ -3,9 +3,10 @@
 , lib
 , ...
 }@inputs:
-with lib;
 
-let cfg = config.phil.browsers;
+let
+  cfg = config.phil.browsers;
+  inherit (lib) mkOption mkIf types;
 in
 {
   options.phil.browsers = {

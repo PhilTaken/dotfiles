@@ -6,9 +6,9 @@
 , vendorSha256 ? lib.fakeSha256
 }:
 
-with lib;
 
 let
+  inherit (lib) concatMapStrings flip;
   imports = flip concatMapStrings plugins ({ name, version }: "\t_ \"${name}\"\n");
   gogets = flip concatMapStrings plugins ({ name, version }: "go get \"${name}@${version}\"");
 

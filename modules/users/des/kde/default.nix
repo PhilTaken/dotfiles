@@ -3,9 +3,10 @@
 , lib
 , ...
 }:
-with lib;
 
-let cfg = config.phil.des.kde;
+let
+  cfg = config.phil.des.kde;
+  inherit (lib) mkOption types mkIf;
 in
 {
   options.phil.des.kde = {
