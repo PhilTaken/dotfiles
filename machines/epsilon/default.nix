@@ -52,7 +52,7 @@
       text = ''
         rfkill unblock wifi
       '';
-      deps = [];
+      deps = [ ];
     };
   };
 

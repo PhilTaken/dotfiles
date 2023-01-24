@@ -57,7 +57,8 @@ in
     let
       pkg = if cfg.firefox.librewolf then pkgs.librewolf else pkgs.firefox;
       waylandpkg = if cfg.firefox.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
-    in {
+    in
+    {
       home.packages = with pkgs; lib.optionals cfg.enableAll [
         nyxt
         google-chrome

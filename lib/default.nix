@@ -45,7 +45,7 @@ let
         '';
       });
 
-      downonspot = prev.downonspot.overrideAttrs(oldAttrs: {
+      downonspot = prev.downonspot.overrideAttrs (oldAttrs: {
         version = "latest";
         src = inputs.down_on_spot-src;
 

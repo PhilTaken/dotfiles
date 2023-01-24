@@ -8,7 +8,8 @@
 let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.tmux;
-in {
+in
+{
   options.phil.tmux = {
     enable = mkEnableOption "tmux";
     defaultShell = mkOption {

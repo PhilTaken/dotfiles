@@ -83,10 +83,12 @@ in
             };
             dirs = mkOption {
               description = "shares to mount";
-              type = types.listOf (types.submodule { options = {
-                local = mkOption { type = types.str; };
-                remote = mkOption { type = types.str; };
-              }; });
+              type = types.listOf (types.submodule {
+                options = {
+                  local = mkOption { type = types.str; };
+                  remote = mkOption { type = types.str; };
+                };
+              });
               default = { };
             };
           };

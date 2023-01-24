@@ -280,9 +280,9 @@ let
               { action = [ "GoToPreviousTab" swToModes.normal ]; key = [{ Ctrl = "y"; }]; }
               { action = [ "GoToNextTab" swToModes.normal ]; key = [{ Ctrl = "o"; }]; }
 
-              { action = [{ Resize = "Left"; }];  key = [ "Y" ]; }
-              { action = [{ Resize = "Down"; }];  key = [ "N" ]; }
-              { action = [{ Resize = "Up"; }];    key = [ "E" ]; }
+              { action = [{ Resize = "Left"; }]; key = [ "Y" ]; }
+              { action = [{ Resize = "Down"; }]; key = [ "N" ]; }
+              { action = [{ Resize = "Up"; }]; key = [ "E" ]; }
               { action = [{ Resize = "Right"; }]; key = [ "O" ]; }
 
               { action = [{ MoveFocus = "Left"; } swToModes.normal]; key = [ "Left" left ]; }

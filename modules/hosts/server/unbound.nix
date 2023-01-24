@@ -69,9 +69,9 @@ in
         settings = {
           server = {
             access-control = [
-              "127.0.0.0/8 allow"    # localhost
-              "10.100.0.1/24 allow"  # yggdrasil
-              "10.200.0.1/24 allow"  # milkyway
+              "127.0.0.0/8 allow" # localhost
+              "10.100.0.1/24 allow" # yggdrasil
+              "10.200.0.1/24 allow" # milkyway
               "192.168.0.1/24 allow" # local net
             ];
 

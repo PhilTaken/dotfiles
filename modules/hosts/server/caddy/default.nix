@@ -48,7 +48,7 @@ in
 
     services.caddy =
       let
-        genconfig = subdomain: {port, ip, proxycfg}: ''
+        genconfig = subdomain: { port, ip, proxycfg }: ''
           ${subdomain}.${net.tld} {
             ${proxycfg}
             tls {
