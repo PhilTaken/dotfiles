@@ -2,6 +2,7 @@
 , inputs
 , systemmodules
 , pkgsFor
+, flake
 }:
 let
   inherit (inputs) nixpkgs;
@@ -39,7 +40,7 @@ rec {
 
       modules = [
         {
-          _module.args = { inherit inputs net; };
+          _module.args = { inherit inputs net flake; };
           imports = [
             hardware-config
             ../modules/hosts

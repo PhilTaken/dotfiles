@@ -1,6 +1,6 @@
 _:
 
-{
+rec {
   tld = "pherzog.xyz";
 
   networks = rec {
@@ -39,6 +39,7 @@ _:
     };
   };
 
+  servers = builtins.attrNames services;
   services = {
     # vm on a hetzner server, debian host
     alpha = [

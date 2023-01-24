@@ -53,6 +53,7 @@ in
           subtitle = "TSDB";
           tag = "app";
           keywords = "selfhosted data";
+          logo = "https://gitlab.com/uploads/-/system/project/avatar/18447221/255-2551990_influxdb-logo-png-transparent-png.png";
         };
       };
     };

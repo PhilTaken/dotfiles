@@ -1,4 +1,4 @@
-{ inputs }:
+{ self, inputs }:
 let
   systemmodules = rec {
     default = [
@@ -73,6 +73,6 @@ rec {
 
   iso = import ./iso.nix;
   user = import ./user.nix { inherit inputs; };
-  host = import ./host.nix { inherit user inputs pkgsFor systemmodules; };
+  host = import ./host.nix { inherit user inputs pkgsFor systemmodules; flake = self; };
   server = import ./server.nix { inherit host inputs; };
 }

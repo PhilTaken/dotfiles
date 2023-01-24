@@ -48,6 +48,7 @@ in
           subtitle = "Observability Service";
           tag = "app";
           keywords = "selfhosted data";
+          logo = "https://grafana.com/static/img/about/grafana_logo_swirl_fullcolor.jpg";
         };
       };
     };

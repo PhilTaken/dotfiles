@@ -5,7 +5,7 @@
 let
   inherit (inputs.nixpkgs) lib;
 
-  util = import ../../lib { inherit inputs; };
+  util = import ../../lib { inherit inputs self; };
   net = import ../../network.nix { };
 
   mkHMUsers = users: lib.listToAttrs (map (user: lib.nameValuePair user hmUsers.${user}) users);

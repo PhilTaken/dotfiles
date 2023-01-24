@@ -7,16 +7,23 @@
 , inputs
 , lib
 , net
+, flake
 , ...
 }:
 let
-  inherit (lib) mkOption types mkIf mkEnableOption mapAttrsToList;
+  inherit (lib) mkOption types mkIf mkEnableOption mapAttrsToList flip;
+  inherit (builtins) attrNames elem;
 
   cfg = config.phil.server.services.homer;
 
   yaml = pkgs.formats.yaml {};
 
-  homerConfig = yaml.generate "config.yml" {
+  homerConfig = let
+    settingsFor = apps: map (el: el.settings) (builtins.attrValues (lib.filterAttrs (_: v: v.show) apps));
+    filterNull = lib.filterAttrs (_: v: v != null);
+    mkItems = apps: map filterNull (settingsFor apps);
+    getAppsFor = system: flake.nixosConfigurations.${system}.config.phil.server.services.homer.apps;
+  in yaml.generate "config.yml" {
     title = "Dashboard";
     subtitle = "Homer";
     header = true;
@@ -28,20 +35,17 @@ let
         icon = "fab fa-github";
         url = "https://github.com/nixos/nixpkgs";
       };
+      "dotfiles" = {
+        icon = "fas fa-code-branch";
+        url = "https://gitea.pherzog.xyz/phil/dotfiles";
+      };
     };
 
     services = [
       {
         name = "selfhosted";
         icon = "fas fa-code-branch";
-        items = map
-          (lib.filterAttrs (_: v: v != null))
-          (map
-            (el: el.settings)
-            (builtins.attrValues
-              (lib.filterAttrs
-                (_: v: v.show)
-                cfg.apps)));
+        items = builtins.concatMap mkItems (map getAppsFor net.servers);
       }
     ];
   };
@@ -77,7 +81,10 @@ in {
     apps = mkOption {
       type = types.attrsOf (types.submodule ({name, ...}: {
         options = let
-          mkStrOpt = default: if default == "" then mkOption { type = types.nullOr types.str; default = null; } else mkOption { type = types.str; inherit default; };
+          mkStrOpt = default: if default == "" then
+            mkOption { type = types.nullOr types.str; default = null; }
+          else
+            mkOption { type = types.str; inherit default; };
         in {
           settings = mkOption {
             type = types.submodule ({ config, ... }: {
@@ -100,8 +107,6 @@ in {
           show = mkEnableOption "show";
         };
       }));
-
-      default = {};
     };
   };
 
