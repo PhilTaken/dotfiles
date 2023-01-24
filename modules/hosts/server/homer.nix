@@ -1,6 +1,5 @@
 # TODO:
 # - https://github.com/mrpbennett/catppucin-homer
-# - also link to services on other nodes
 
 { pkgs
 , config
