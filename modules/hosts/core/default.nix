@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -74,7 +75,7 @@ in
           "https://cache.nixos.org"
           "https://philtaken.cachix.org"
           "https://arm-rs.cachix.org"
-          "https://nix-store.pherzog.xyz"
+          "https://nix-store.${net.tld}"
 
           #"s3://serokell-private-nix-cache?endpoint=s3.us-west-000.backblazeb2.com&profile=serokell-private-nix-cache"
           "s3://serokell-private-cache?endpoint=s3.eu-central-1.wasabisys.com&profile=serokell-private-cache"

@@ -1,13 +1,13 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
 
 let
   cfg = config.phil.server.services.headscale;
-  net = import ../../../network.nix { };
 in
 {
   options.phil.server.services.headscale = {
@@ -40,7 +40,7 @@ in
       # limit to external ip on alpha?
       address = "0.0.0.0";
 
-      serverUrl = "https://headscale.pherzog.xyz:443";
+      serverUrl = "https://headscale.${net.tld}:443";
       settings = {
         reporting-disable = true;
         http-bind-address = "${cfg.url}:${builtins.toString cfg.port}";

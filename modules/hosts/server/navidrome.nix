@@ -36,7 +36,19 @@ in
       };
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+    phil.server.services = {
+      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      homer.apps."${cfg.host}" = {
+        show = true;
+        settings = {
+          name = "Navidrome";
+          subtitle = "Music Server";
+          tag = "app";
+          keywords = "selfhosted music";
+          logo = "https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png";
+        };
+      };
+    };
   };
 }
 

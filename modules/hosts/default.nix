@@ -2,7 +2,7 @@
 
 {
   imports = [
-    (import ./core { inherit pkgs config lib nixpkgs; })
+    ./core
 
     ./yubikey
 

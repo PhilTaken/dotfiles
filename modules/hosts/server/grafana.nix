@@ -1,15 +1,15 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
 
 let
   cfg = config.phil.server.services.grafana;
-  domain = "grafana.pherzog.xyz";
+  domain = "grafana.${net.tld}";
   port = 3100;
-  net = import ../../../network.nix { };
 in
 {
   options.phil.server.services.grafana = {
@@ -39,7 +39,18 @@ in
       owner = config.systemd.services.grafana.serviceConfig.User;
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+    phil.server.services = {
+      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      homer.apps."${cfg.host}" = {
+        show = true;
+        settings = {
+          name = "Grafana";
+          subtitle = "Observability Service";
+          tag = "app";
+          keywords = "selfhosted data";
+        };
+      };
+    };
 
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
       allowedUDPPorts = [ cfg.port ];

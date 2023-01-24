@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -12,7 +13,7 @@ let
   cfg = config.phil.wireguard;
   hostname = config.networking.hostName;
 
-  peers = import ./wireguard-peers.nix { inherit pkgs; };
+  peers = import ./wireguard-peers.nix { inherit pkgs lib net; };
   mkPeer = { publicKey, ownIPs, allowedIPs ? ownIPs, endpoint ? null, port ? 51821, persistentKeepalive ? 25, presharedKey ? null, ... }: {
     inherit publicKey allowedIPs persistentKeepalive presharedKey;
     endpoint =

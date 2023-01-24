@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -8,7 +9,6 @@ with lib;
 let
   cfg = config.phil.dns;
 
-  net = import ../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
   default_nameserver = builtins.head
@@ -35,7 +35,7 @@ in
 
     networking.nameservers =
       if same-server then [ "localhost" ] else [
-        "${iplot.${cfg.nameserver}}#dns.pherzog.xyz"
+        "${iplot.${cfg.nameserver}}#dns.${net.tld}"
         "2a0e:dc0:6:23::2#dot-ch.blahdns.com"
       ];
 

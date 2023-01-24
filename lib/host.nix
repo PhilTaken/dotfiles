@@ -32,13 +32,14 @@ rec {
 
       part = builtins.partition (raw_user: builtins.elem raw_user.name [ "nixos" "maelstroem" ]) raw_users;
       sys_users = (map user.mkSystemUser part.right) ++ (map user.mkGuestUser part.wrong);
+      net = import ../network.nix {};
     in
     lib.nixosSystem {
       inherit system pkgs;
 
       modules = [
         {
-          _module.args = { inherit inputs; };
+          _module.args = { inherit inputs net; };
           imports = [
             hardware-config
             ../modules/hosts
@@ -61,7 +62,7 @@ rec {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = { inherit inputs; };
+            extraSpecialArgs = { inherit inputs net; };
             users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
           };
         }

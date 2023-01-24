@@ -1,15 +1,18 @@
+# TODO:
+# - https://github.com/mrpbennett/catppucin-homer
+# - also link to services on other nodes
+
 { pkgs
 , config
 , inputs
 , lib
+, net
 , ...
 }:
 let
   inherit (lib) mkOption types mkIf mkEnableOption mapAttrsToList;
 
   cfg = config.phil.server.services.homer;
-
-  net = import ../../../network.nix {};
 
   yaml = pkgs.formats.yaml {};
 
@@ -18,6 +21,7 @@ let
     subtitle = "Homer";
     header = true;
     connectivityCheck = true;
+    defaults.layout = "list";
 
     links = mapAttrsToList (name: value: value // { inherit name; target = "_blank"; }) {
       "nixpkgs" = {
@@ -30,12 +34,14 @@ let
       {
         name = "selfhosted";
         icon = "fas fa-code-branch";
-        items = map (app: {
-          name = app;
-          icon = "icon";
-          url = "https://${app}.${net.tld}";
-          target = "_blank";
-        }) (builtins.attrNames config.phil.server.services.unbound.apps);
+        items = map
+          (lib.filterAttrs (_: v: v != null))
+          (map
+            (el: el.settings)
+            (builtins.attrValues
+              (lib.filterAttrs
+                (_: v: v.show)
+                cfg.apps)));
       }
     ];
   };
@@ -66,6 +72,36 @@ in {
     host = mkOption {
       type = types.str;
       default = "homer";
+    };
+
+    apps = mkOption {
+      type = types.attrsOf (types.submodule ({name, ...}: {
+        options = let
+          mkStrOpt = default: if default == "" then mkOption { type = types.nullOr types.str; default = null; } else mkOption { type = types.str; inherit default; };
+        in {
+          settings = mkOption {
+            type = types.submodule ({ config, ... }: {
+              options = {
+                name = mkOption { type = types.str; default = name; };
+                subtitle = mkStrOpt "";
+                logo = mkStrOpt "";
+                icon = mkStrOpt "";
+                tag = mkStrOpt "";
+                tagstyle = mkStrOpt "";
+                keywords = mkStrOpt "";
+                url = mkStrOpt "https://${name}.${net.tld}";
+                target = mkStrOpt "_blank";
+              };
+            });
+
+            default = {};
+          };
+
+          show = mkEnableOption "show";
+        };
+      }));
+
+      default = {};
     };
   };
 

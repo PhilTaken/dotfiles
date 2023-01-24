@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -19,7 +20,7 @@ in
     url = mkOption {
       description = "webinterface url";
       type = types.str;
-      default = "keycloak.pherzog.xyz";
+      default = "keycloak.${net.tld}";
     };
 
     # more options

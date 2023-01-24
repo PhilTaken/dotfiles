@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -14,7 +15,7 @@ in
     enable = mkEnableOption "gitea";
     url = mkOption {
       description = "gitea url (webinterface)";
-      default = "https://gitea.pherzog.xyz";
+      default = "https://gitea.${net.tld}";
       type = types.str;
     };
     port = mkOption {
@@ -37,8 +38,8 @@ in
     services.gitea = {
       inherit (cfg) stateDir enable;
 
-      domain = "${cfg.host}.pherzog.xyz";
-      rootUrl = "https://${cfg.host}.pherzog.xyz/";
+      domain = "${cfg.host}.${net.tld}";
+      rootUrl = "https://${cfg.host}.${net.tld}/";
 
       httpPort = cfg.port;
       #ssh.enable = true;
@@ -47,6 +48,18 @@ in
       appName = "Oroboros";
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+    phil.server.services = {
+      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      homer.apps."${cfg.host}" = {
+        show = true;
+        settings = {
+          name = "Gitea";
+          subtitle = "Git Server";
+          tag = "app";
+          keywords = "selfhosted git";
+          logo = "https://gitea.io/images/gitea.png";
+        };
+      };
+    };
   };
 }

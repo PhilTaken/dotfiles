@@ -1,5 +1,9 @@
 # TODO:
 
+centralize config more:
+    - move subdomain to network.nix
+    - move gpg keys to some .nix file
+
 ## general
 
 - setup ci/flake update via hercules-ci on delta

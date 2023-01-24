@@ -3,13 +3,9 @@
 , lib
 , ...
 }:
-with lib;
-
 let
   cfg = config.phil.ssh;
-  net = import ../../../network.nix;
-
-  extraHosts = net.networks.default;
+  inherit (lib) mkOption types mkIf;
 in
 {
 
@@ -24,7 +20,7 @@ in
   config = mkIf cfg.enable {
     programs.ssh = {
       enable = true;
-      matchBlocks = rec {
+      matchBlocks = {
         # work
         "*.*.serokell.team" = {
           extraOptions."AddressFamily" = "inet";

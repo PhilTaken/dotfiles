@@ -2,6 +2,7 @@
 , config
 , inputs
 , lib
+, net
 , ...
 }:
 with lib;
@@ -40,7 +41,19 @@ in
         externalInterface = "enp1s0";
       };
 
-      phil.server.services.caddy.proxy."${cfg.host}" = { inherit port; ip = localAddress; };
+      phil.server.services = {
+        caddy.proxy."${cfg.host}" = { inherit port; ip = localAddress; };
+        homer.apps."${cfg.host}" = {
+          show = true;
+          settings = {
+            name = "Nextcloud";
+            subtitle = "Documents and Bookmarks Cloud";
+            tag = "app";
+            keywords = "selfhosted cloud";
+            logo = "https://nextcloud.com/wp-content/uploads/2021/12/logo.png";
+          };
+        };
+      };
 
       containers.nextcloud =
         let
@@ -85,7 +98,7 @@ in
               package = pkgs.nextcloud25;
 
               inherit home datadir;
-              hostName = "${cfg.host}.pherzog.xyz";
+              hostName = "${cfg.host}.${net.tld}";
               https = true;
 
               extraApps = {

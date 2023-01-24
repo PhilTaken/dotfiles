@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -9,7 +10,6 @@ let
   cfg = config.phil.nebula;
   networkName = "milkyway";
 
-  net = import ../../../network.nix { };
   iplot = net.networks."${networkName}";
   hostnames = builtins.attrNames iplot;
   hostname = config.networking.hostName;

@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -8,7 +9,6 @@ with lib;
 let
   cfg = config.phil.server.services.nginx;
 
-  net = import ../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
 in
@@ -31,7 +31,7 @@ in
         genconfig = subdomain: port: ''
           server {
             listen 80;
-            server_name ${subdomain}.pherzog.xyz;
+            server_name ${subdomain}.${net.tld};
             location / {
               proxy_pass http://$server_addr:${toString port};
             }

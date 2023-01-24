@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -33,7 +34,7 @@ in
           url = "https://www.github.com/nixos/nixpkgs";
           ms-between-poll = 20000;
         };
-        dotfiles.url = "https://gitea.pherzog.xyz/phil/dotfiles";
+        dotfiles.url = "https://gitea.${net.tld}/phil/dotfiles";
       };
     };
 

@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -9,7 +10,6 @@ with lib;
 let
 
   cfg = config.phil.server.services.unbound;
-  net = import ../../../network.nix { };
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
   mkDnsBindsFromServices = services: builtins.mapAttrs
@@ -85,8 +85,8 @@ in
 
             # tls upstream
             tls-upstream = "yes";
-            tls-service-key = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.pherzog.xyz/dns.pherzog.xyz.key"; # -> .key
-            tls-service-pem = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.pherzog.xyz/dns.pherzog.xyz.crt"; # -> .crt
+            tls-service-key = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.${net.tld}/dns.${net.tld}.key"; # -> .key
+            tls-service-pem = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.${net.tld}/dns.${net.tld}.crt"; # -> .crt
 
             # tls downstream
             tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
@@ -131,7 +131,7 @@ in
               "\"ads.youtube.com\" redirect"
               "\"adserver.yahoo.com\" redirect"
 
-              "\"pherzog.xyz.\" static"
+              "\"${net.tld}.\" static"
             ];
 
             local-data = [
@@ -141,9 +141,9 @@ in
               "\"google-analytics.com A 127.0.0.1\""
               "\"ads.youtube.com A 127.0.0.1\""
               "\"adserver.yahoo.com A 127.0.0.1\""
-            ] ++ (lib.mapAttrsToList (name: value: "\"${name}.pherzog.xyz. IN A ${value.ip}\"") subdomains);
+            ] ++ (lib.mapAttrsToList (name: value: "\"${name}.${net.tld}. IN A ${value.ip}\"") subdomains);
 
-            local-data-ptr = lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.pherzog.xyz\"") subdomains;
+            local-data-ptr = lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.${net.tld}\"") subdomains;
           };
 
           # downstream dns resolver

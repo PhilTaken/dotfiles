@@ -2,11 +2,11 @@
 , config
 , inputs
 , lib
+, net
 , ...
 }@inattrs:
 let
   cfg = config.phil.server.services.caddy;
-  net = import ../../../../network.nix { };
 
   inherit (lib) mkOption types mkIf concatStrings;
 

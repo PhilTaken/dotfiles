@@ -1,13 +1,13 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
 
 let
   cfg = config.phil.server;
-  net = import ../../../network.nix { };
 in
 {
   imports = [

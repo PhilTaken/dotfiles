@@ -1,13 +1,13 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
 
 let
   cfg = config.phil.server.services.influxdb2;
-  net = import ../../../network.nix { };
 in
 {
   options.phil.server.services.influxdb2 = {
@@ -44,6 +44,17 @@ in
       };
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+    phil.server.services = {
+      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      homer.apps."${cfg.host}" = {
+        show = true;
+        settings = {
+          name = "InfluxDB 2";
+          subtitle = "TSDB";
+          tag = "app";
+          keywords = "selfhosted data";
+        };
+      };
+    };
   };
 }

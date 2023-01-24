@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 with lib;
@@ -14,7 +15,7 @@ in
     enable = mkEnableOption "tiny tiny rss";
     url = mkOption {
       description = "ttrss url (webinterface)";
-      default = "rss.pherzog.xyz";
+      default = "rss.${net.tld}";
       type = types.str;
     };
   };

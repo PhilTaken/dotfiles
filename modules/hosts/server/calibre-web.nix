@@ -105,6 +105,18 @@ in
         };
       };
 
-    phil.server.services.caddy.proxy."${cfg.listen.host}" = { inherit (cfg.listen) port; };
+    phil.server.services = {
+      caddy.proxy."${cfg.listen.host}" = { inherit (cfg.listen) port; };
+      homer.apps."${cfg.listen.host}" = {
+        show = true;
+        settings = {
+          name = "Calibre";
+          subtitle = "Ebooks";
+          tag = "app";
+          keywords = "selfhosted books";
+          logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Calibre_logo_3.png/120px-Calibre_logo_3.png";
+        };
+      };
+    };
   };
 }

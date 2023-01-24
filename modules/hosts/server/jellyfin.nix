@@ -28,6 +28,18 @@ in
       openFirewall = true;
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+    phil.server.services = {
+      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      homer.apps."${cfg.host}" = {
+        show = true;
+        settings = {
+          name = "Jellyfin";
+          subtitle = "Multi-Media Platform";
+          tag = "app";
+          keywords = "selfhosted movies series";
+          logo = "https://jellyfin.org/images/logo.svg";
+        };
+      };
+    };
   };
 }

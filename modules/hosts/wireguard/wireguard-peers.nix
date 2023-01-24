@@ -1,9 +1,10 @@
 { pkgs
+, net
+, lib
 }:
-with pkgs.lib;
+with lib;
 
 let
-  net = import ../../../network.nix { };
   iplot = net.networks.yggdrasil;
   hostnames = builtins.attrNames iplot;
 
