@@ -76,16 +76,20 @@ in
           { id = "fnaicdffflnofjppbagibeoednhnbjhg"; } # floccus
           { id = "nngceckbapebfimnlniiiahkandclblb"; } # bitwarden
           { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # dark reader
-          { id = "egpjdkipkomnmjhjmdamaniclmdlobbo"; } # firenvim
           { id = "lckanjgmijmafbedllaakclkaicjfmnk"; } # clear urls
           { id = "fihnjjcciajhdojfnbdddfaoknhalnja"; } # i don't care about cookies
+
+          { id = "igeehkedfibbnhbfponhjjplpkeomghi"; } # tabli tab manager (using bookmarks)
+
+          { id = "bkkmolkhemgaeaeggcmfbghljjjoofoh"; } # catppuccin mocha theme
+          { id = "mmjbdbjnoablegbkcklggeknkfcjkjia"; } # new tab page
           { id = "fhcgjolkccmbidfldomjliifgaodjagh"; } # cookie auto delete
+          { id = "ikhahkidgnljlniknmendeflkdlfhonj"; } # no pdf download
+
+          { id = "egpjdkipkomnmjhjmdamaniclmdlobbo"; } # firenvim
           { id = "ajopnjidmegmdimjlfnijceegpefgped"; } # better ttv
           { id = "kbmfpngjjgdllneeigpgjifpgocmfgmb"; } # reddit reddit enhancement suite
-          { id = "ikhahkidgnljlniknmendeflkdlfhonj"; } # no pdf download
           { id = "oocalimimngaihdkbihfgmpkcpnmlaoa"; } # teleparty
-          { id = "bkkmolkhemgaeaeggcmfbghljjjoofoh"; } # catppuccin mocha theme
-          { id = "igeehkedfibbnhbfponhjjplpkeomghi"; } # tabli tab manager (using bookmarks)
           {
             id = "dcpihecpambacapedldabdbpakmachpb";
             updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
