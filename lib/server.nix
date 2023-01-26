@@ -19,7 +19,6 @@ let
       "audio"
       "docker"
       "dialout"
-      "adbusers"
       "gpio"
       # only temporary for testing makemkv
       "cdrom"
