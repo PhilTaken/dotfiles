@@ -69,7 +69,7 @@ in
 
           vendorSha256 = "sha256-2GsdT76Kvey69mLuUlePzHb6TLlTPZepOtcUlVuphxc=";
         };
-        extraConfig = (concatStrings (lib.mapAttrsToList genconfig cfg.proxy));
+        extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };
 
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
