@@ -110,6 +110,7 @@ in
             core.enableBluetooth = true;
 
             desktop.enable = true;
+            development.enable = true;
             nvidia.enable = true;
             video.managers = [ "gnome" ];
           };

@@ -21,7 +21,7 @@ let
     let
       toplevel = depth == 0;
 
-      concatAttrList = args: lib.concatStrings (lib.intersperse "\n" (map (item: tabstr depth item) args));
+      concatAttrList = args: lib.concatStrings (lib.intersperse "\n" (map (tabstr depth) args));
       concatList = lib.concatStringsSep " ";
 
       attrList = v: (lib.attrsets.mapAttrsToList

@@ -6,7 +6,7 @@
 
 let
   cfg = config.phil.browsers;
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkOption types;
 in
 {
   options.phil.browsers = {
@@ -20,7 +20,7 @@ in
       enable = mkOption {
         description = "enable chromium";
         type = types.bool;
-        default = cfg.enableAll;
+        default = true;
       };
     };
 
@@ -28,7 +28,7 @@ in
       enable = mkOption {
         description = "enable qutebrowser";
         type = types.bool;
-        default = cfg.enableAll;
+        default = true;
       };
     };
 
@@ -36,7 +36,7 @@ in
       enable = mkOption {
         description = "enable firefox";
         type = types.bool;
-        default = cfg.enableAll;
+        default = true;
       };
 
       wayland = mkOption {
@@ -48,7 +48,7 @@ in
       librewolf = mkOption {
         description = "use librewolf instead";
         type = types.bool;
-        default = true;
+        default = false;
       };
     };
   };
@@ -59,17 +59,17 @@ in
       waylandpkg = if cfg.firefox.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
     in
     {
-      home.packages = with pkgs; lib.optionals cfg.enableAll [
+      home.packages = with pkgs; [
         nyxt
         google-chrome
       ];
 
       programs.chromium = {
-        inherit (cfg.chromium) enable;
-        package = pkgs.ungoogled-chromium;
+        enable = true;
+        #package = pkgs.ungoogled-chromium;
         commandLineArgs = [
           "--no-default-browser-check"
-          "--no-first-run"
+          #"--no-first-run"
         ];
         extensions = [
           { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
@@ -93,9 +93,9 @@ in
       };
 
       programs.firefox = {
-        inherit (cfg.firefox) enable;
+        enable = true;
 
-        package = if cfg.firefox.wayland then waylandpkg else pkg;
+        #package = if cfg.firefox.wayland then waylandpkg else pkg;
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           betterttv
           bitwarden
@@ -142,7 +142,7 @@ in
       };
 
       programs.qutebrowser = {
-        inherit (cfg.qutebrowser) enable;
+        enable = true;
 
         enableDefaultBindings = true;
 

@@ -23,6 +23,10 @@ in
     programs = {
       adb.enable = cfg.adb.enable;
     };
+
+    environment.systemPackages = with pkgs; [
+      android-tools
+    ];
   };
 }
 

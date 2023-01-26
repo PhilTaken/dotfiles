@@ -7,8 +7,8 @@
 
 let
   inherit (lib) mkOption mkIf types;
+  inherit (config.phil.server.services.influxdb2) port;
   cfg = config.phil.server.services.telegraf;
-  port = config.phil.server.services.influxdb2.port;
   outputUrl = "http://influx.${net.tld}:${builtins.toString port}";
 in
 {
