@@ -114,7 +114,7 @@ in
           "web"
           "spotify"
           "lastimport"
-          "acousticbrainz"
+          "badfiles"
         ];
 
         art_filename = "albumart";
@@ -147,6 +147,11 @@ in
             "lastfm"
             "*"
           ];
+        };
+
+        badfiles.commands = {
+          ogg = "${pkgs.liboggz}/bin/oggz-validate";
+          flac = "${pkgs.flac}/bin/flac --test --warnings-as-errors --silent";
         };
 
         replaygain = {
