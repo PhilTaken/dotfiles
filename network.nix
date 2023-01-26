@@ -55,6 +55,8 @@ rec {
       "unbound"
       "homer"
 
+      "hound"
+
       "gitea"
       "jellyfin"
       "syncthing"

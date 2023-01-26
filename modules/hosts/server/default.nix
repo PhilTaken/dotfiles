@@ -11,7 +11,6 @@ let
 in
 {
   imports = [
-    ./homer.nix
     ./adguardhome.nix
     ./caddy
     ./calibre-web.nix
@@ -19,6 +18,8 @@ in
     ./gitea.nix
     ./grafana.nix
     ./grafana.nix
+    ./homer.nix
+    ./hound.nix
     ./influxdb2.nix
     ./iperf.nix
     ./jellyfin.nix
@@ -26,6 +27,7 @@ in
     ./navidrome.nix
     ./nextcloud.nix
     ./nginx.nix
+    ./nix-serve.nix
     ./openssh.nix
     ./seafile.nix
     ./syncthing.nix
@@ -33,7 +35,6 @@ in
     ./ttrss.nix
     ./unbound.nix
     ./vector.nix
-    ./nix-serve.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";

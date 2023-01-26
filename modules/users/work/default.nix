@@ -22,22 +22,6 @@ in
     # add config here
     home.file.".aws/credentials".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/aws-credentials";
 
-    # TODO: maybe move parts of this to delta?
-    services.hound = {
-      enable = true;
-      repositories = {
-        serokell-nix = {
-          url = "https://www.github.com/serokell/serokell.nix";
-          ms-between-poll = 20000;
-        };
-        nixpgks = {
-          url = "https://www.github.com/nixos/nixpkgs";
-          ms-between-poll = 20000;
-        };
-        dotfiles.url = "https://gitea.${net.tld}/phil/dotfiles";
-      };
-    };
-
     home.packages = with pkgs; [
       slack
       fractal
