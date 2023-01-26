@@ -1,7 +1,7 @@
 # TODO:
 
 centralize config more:
-    - move subdomain to network.nix
+    - better ssh keys handling (public keys copied everywhere)
     - move gpg keys to some .nix file
 
 ## general
@@ -9,7 +9,6 @@ centralize config more:
 - setup ci/flake update via hercules-ci on delta
 - upload-daemon to cache the world on delta
 
-- better ssh keys handling (public keys copied everywhere)
 - generate ssh targets from network file
 
 - hyprland config
@@ -26,16 +25,10 @@ centralize config more:
 - backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
 
 - set up modules:
-    - navidrome music streaming
-
     - arm module (get rust running + spinning)
 
     - backup (important) syncthing folders locally and to b2
         - rclone / borg
-
-    - dashboard (homer)
-        - https://github.com/pborzenkov/nix-config/blob/master/nixos/machines/rock/dashboard.nix
-        - https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md
 
     - photoview -> librephotos
         - images in syncthing / seafile
@@ -43,10 +36,7 @@ centralize config more:
     - torrenting container
     - -arr services for metadata
 
-    - shiori
-
     - xmonad (wip)
-    - xbrowsersync
     - grocy
 
     - matrix-conduit
@@ -58,16 +48,13 @@ centralize config more:
     - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
 
     - ttrss
-    - iris/mopidy (https://github.com/mopidy/mopidy-spotify/issues/110)
 
     - bspwm/awesomewm/river
     - hedgedoc
     - bookstack
     - snapcast server/clients
-    - pleroma
-    - shiori bookmark manager
 
-    - hydra module
+    - woodpecker module
         - ci/cd with hydra webhooks from gitea
 
 
@@ -81,7 +68,6 @@ centralize config more:
         - todo: provisions
     - extend vector to replace telegraf
         - geoip mapping ip adresses -> store in influxdb, visualize in grafana
-
 
 - nebula
     - implement proper tagging
