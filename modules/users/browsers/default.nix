@@ -80,6 +80,7 @@ in
           { id = "fihnjjcciajhdojfnbdddfaoknhalnja"; } # i don't care about cookies
 
           { id = "igeehkedfibbnhbfponhjjplpkeomghi"; } # tabli tab manager (using bookmarks)
+          { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # tab session manager
 
           { id = "bkkmolkhemgaeaeggcmfbghljjjoofoh"; } # catppuccin mocha theme
           { id = "mmjbdbjnoablegbkcklggeknkfcjkjia"; } # new tab page
