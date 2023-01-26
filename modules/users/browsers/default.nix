@@ -100,7 +100,7 @@ in
       programs.firefox = {
         enable = true;
 
-        #package = if cfg.firefox.wayland then waylandpkg else pkg;
+        package = if cfg.firefox.wayland then waylandpkg else pkg;
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           betterttv
           bitwarden
