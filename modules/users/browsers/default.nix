@@ -85,6 +85,7 @@ in
           { id = "ikhahkidgnljlniknmendeflkdlfhonj"; } # no pdf download
           { id = "oocalimimngaihdkbihfgmpkcpnmlaoa"; } # teleparty
           { id = "bkkmolkhemgaeaeggcmfbghljjjoofoh"; } # catppuccin mocha theme
+          { id = "igeehkedfibbnhbfponhjjplpkeomghi"; } # tabli tab manager (using bookmarks)
           {
             id = "dcpihecpambacapedldabdbpakmachpb";
             updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
