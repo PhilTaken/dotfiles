@@ -129,8 +129,16 @@ in
       };
 
 
+    # https://github.com/NixOS/nixpkgs/issues/163107#issuecomment-1100569484
     environment.systemPackages = with pkgs; [
       slurp
+      pkgs.gnome.adwaita-icon-theme
+      pkgs.shared-mime-info
+    ];
+
+    environment.pathsToLink = [
+      "/share/icons"
+      "/share/mime"
     ];
 
     # https://wiki.hyprland.org/Nvidia/#how-to-get-hyprland-to-possibly-work-on-nvidia

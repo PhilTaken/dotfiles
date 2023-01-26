@@ -20,12 +20,14 @@ let
     inputs.hyprland.overlays.default
     inputs.parinfer-rust.overlays.default
     #inputs.zellij.overlays.default
-    inputs.eww-git.overlays.default
+    #inputs.eww-git.overlays.default
     inputs.nil-ls.overlays.default
     inputs.vim-extra-plugins.overlays.default
 
     (final: prev: {
       makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
+
+      inherit (inputs.eww-git.packages.${prev.system}) eww eww-wayland;
 
       webcord = inputs.webcord.packages.${prev.system}.default;
       hyprland = inputs.hyprland.packages.${prev.system}.default;

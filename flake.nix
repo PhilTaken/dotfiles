@@ -56,7 +56,8 @@
 
     # TODO: once my prs are merged revert to main repo
     #eww-git.url = "github:elkowar/eww?ref=7623e7e692042f4da8525bb1e4ef140831fcdb6a";
-    eww-git.url = "github:PhilTaken/eww?ref=7837576ee0d2b5ba93b7c9bace0a66338897f5ef";
+    #eww-git.url = "github:PhilTaken/eww?ref=7837576ee0d2b5ba93b7c9bace0a66338897f5ef";
+    eww-git.url = "github:ralismark/eww?ref=68471c9b23e55ad3c8b31a99473552e16594a44f";
 
     # better discord clone/fork
     webcord.url = "github:fufexan/webcord-flake";

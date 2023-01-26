@@ -1,9 +1,6 @@
 ;; Created   by https://github.com/rxyhn
 ;; Designed  by https://github.com/rxyhn
-;; Maintaned by https://github.com/rxyhn
-
-;; put path to aesthetic bar config files here ;;
-;; (defvar eww "$HOME/.local/bin/eww -c $HOME/.config/eww/bar")
+;; Maintaned by https://github.com/PhilTaken
 
 ;; link to correct binaries, replaced by nix at eval time
 ;; toplevel variables blocked by https://github.com/elkowar/eww/issues/518
@@ -39,8 +36,9 @@
   (box :orientation "v"
        :space-evenly "false"
        :spacing -15
-       (button :class "launcher_icon"
-         :onclick "scripts/popup dashboard")))
+       :class "launcher"
+       :style 'background-image: url("@launcher-image@")'
+       (button :onclick "scripts/popup dashboard")))
 
 ;; Workspaces Widgets ;;
 (deflisten workspace "scripts/workspace")
@@ -225,6 +223,7 @@
        :valign "end"
        :spacing 5
     (control)
+    (system-tray :active-only false)
     (sysinfo)
     (bottom)))
 
