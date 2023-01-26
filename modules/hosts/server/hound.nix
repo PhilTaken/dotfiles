@@ -28,16 +28,14 @@ in
       enable = true;
       listen = ":${toString cfg.port}";
       config = builtins.toJSON {
-        repos = {
-          serokell-nix = {
-            url = "https://www.github.com/serokell/serokell.nix";
-            ms-between-poll = 20000;
+        dbpath = "${config.services.hound.home}/data";
+        repos = lib.mapAttrs (n: v: v // { detect-ref = true; }) {
+          serokell-nix.url = "https://www.github.com/serokell/serokell.nix";
+          nixpgks.url = "https://www.github.com/nixos/nixpkgs";
+          dotfiles = {
+            url = "https://gitea.${net.tld}/phil/dotfiles";
+            ref = "main";
           };
-          nixpgks = {
-            url = "https://www.github.com/nixos/nixpkgs";
-            ms-between-poll = 20000;
-          };
-          dotfiles.url = "https://gitea.${net.tld}/phil/dotfiles";
         };
       };
     };
