@@ -34,11 +34,16 @@
 
 (defwidget launcher []
   (box :orientation "v"
+       :spacing 30
+       :valign "center"
+       :halign "center"
        :space-evenly "false"
-       :spacing -15
-       :class "launcher"
-       :style 'background-image: url("@launcher-image@")'
-       (button :onclick "scripts/popup dashboard")))
+       :vexpand "false"
+       :hexpand "false"
+       ;:class "launcher"
+       (button :onclick "scripts/popup dashboard"
+               :class "genicon"
+               :style "background-image: url('./images/launcher.png')")))
 
 ;; Workspaces Widgets ;;
 (deflisten workspace "scripts/workspace")
@@ -222,8 +227,8 @@
        :space-evenly "false"
        :valign "end"
        :spacing 5
+    (system-tray :active-only false :orientation "v")
     (control)
-    (system-tray :active-only false)
     (sysinfo)
     (bottom)))
 

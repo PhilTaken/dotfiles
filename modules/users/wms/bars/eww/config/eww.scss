@@ -23,13 +23,12 @@ $white: $foreground;
     padding: .3rem;
 }
 
-// Launcher
-.launcher_icon{
-    color: $cyan;
-    font-family: "Font Awesome 6 Pro";
-    font-size: 1.7em;
-    padding: 1rem 0 1rem 0;
-    background-image: url("@launcher-image@");
+// icons
+.genicon {
+    background-repeat: no-repeat;
+	background-size: 30px;
+	min-height: 30px;
+	min-width: 30px;
 }
 
 // Workspaces

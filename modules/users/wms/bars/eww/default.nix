@@ -77,8 +77,9 @@ in
           mkdir -p $out
           cp -r $src/* $out
 
-          substituteInPlace $out/eww.scss \
-            --replace '@launcher-image@' '${./nixos-image.png}'
+          mkdir -p $out/images
+
+          cp ${./nixos-image.png} $out/images/launcher.png
 
           substituteInPlace $out/eww.yuck \
             --replace '@amixer@' '${pkgs.alsa-utils}/bin/amixer' \
@@ -90,7 +91,7 @@ in
             --replace '@reload_wm@' '${cfg.reload_cmd}' \
             --replace '@quit_wm@' '${cfg.quit_cmd}' \
             --replace '@lock_wm@' '${cfg.lock_cmd}' \
-            --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
+            --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}' \
 
           substituteInPlace $out/scripts/popup \
             --replace '@rofi@' '${pkgs.rofi-wayland}/bin/rofi' \
