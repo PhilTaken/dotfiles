@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# vi: set ft=sh
+
+if [[ $1 == "status" ]]; then
+  if [[ $(amixer get Capture | grep '\[off\]') = '' ]]; then
+    echo yes
+  else
+    echo no
+  fi
+fi
+
+if [[ $1 == "toggle" ]]; then
+  amixer set Capture toggle  
+fi

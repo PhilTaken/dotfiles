@@ -9,7 +9,7 @@ active_monitor=0
 
 workspaces() {
     command="@hyprctl@ dispatch workspace"
-    raw_box="(box :class \"works\" :orientation \"v\" :halign \"center\" :valign \"start\" :space-evenly \"false\" :spacing \"10\""
+    raw_box="(box :class \"works\" :orientation \"v\" :halign \"center\" :valign \"start\" :space-evenly \"false\" :spacing \"2\""
     workspaces=$(@hyprctl@ workspaces -j)
 
     focused () {

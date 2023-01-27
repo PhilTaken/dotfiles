@@ -2,7 +2,7 @@
 , config
 , lib
 , ...
-}@inputs:
+}:
 
 let
   inherit (lib) mkOption mkIf types;
@@ -68,22 +68,17 @@ in
       configDir = pkgs.stdenv.mkDerivation {
         pname = "eww-configfolder";
         version = "0.1";
-        phases = [ "patchPhase" ];
+        phases = [ "installPhase" ];
 
         src = ./config;
 
         # TODO: replace commands with actual paths to binaries
-        patchPhase = ''
+        installPhase = ''
           mkdir -p $out
           cp -r $src/* $out
 
-          mkdir -p $out/images
-
-          cp ${./nixos-image.png} $out/images/launcher.png
-
-          substituteInPlace $out/eww.yuck \
+          substituteInPlace $out/vars.yuck \
             --replace '@amixer@' '${pkgs.alsa-utils}/bin/amixer' \
-            --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \
             --replace '@jq@' '${pkgs.jq}/bin/jq' \
             --replace '@mpstat@' '${pkgs.sysstat}/bin/mpstat' \
             --replace '@eww@' '${package}/bin/eww' \
@@ -91,7 +86,11 @@ in
             --replace '@reload_wm@' '${cfg.reload_cmd}' \
             --replace '@quit_wm@' '${cfg.quit_cmd}' \
             --replace '@lock_wm@' '${cfg.lock_cmd}' \
-            --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}' \
+            --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \
+
+          substituteInPlace $out/actions/actions.yuck \
+            --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \
+            --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
 
           substituteInPlace $out/scripts/popup \
             --replace '@rofi@' '${pkgs.rofi-wayland}/bin/rofi' \

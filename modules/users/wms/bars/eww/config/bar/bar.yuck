@@ -1,0 +1,104 @@
+(defwidget launcher []
+  (box
+       (button :onclick "${eww} open --toggle actions"
+               :class "launcher"
+               :halign "center"
+               :style "background-image: url('images/nixos-image.png')")))
+
+;; Workspaces Widgets ;;
+(defwidget workspaces [] (literal :content workspace))
+
+;; Battery Widgets ;;
+(defwidget bat []
+  (box    :orientation "v"
+          :space-evenly "false"
+    (label  :class "bat-icon genicon"
+            :text battery
+            :tooltip "Battery: ${battery-cappacity}%")))
+
+;; Wifi Widgets ;;
+(defwidget wifi []
+  (box        :orientation "v"
+              :tooltip wifi-name
+    (button   :class "wifi-icon genicon" wifi-icon)))
+
+;; Clock Widgets ;;
+(defwidget time []
+  (box    :orientation "v"
+          :class "time"
+          :space-evenly false
+          :style "border: 2px #fff;"
+          :valign "end"
+    (button :onclick "${eww} open --toggle calendar"
+            :class "time-hour" hour)
+    (button :onclick "${eww} open --toggle calendar"
+            :class "time-min"  min)))
+
+;; Calendar Widgets ;;
+(defwidget cal []
+  (box :class "cal-box"
+       :orientation "v"
+    (box :class "cal-inner-box"
+      (calendar :class "cal"
+                :day calendar_day
+                :month calendar_month
+                :year calendar_year))))
+
+;; Control Panel Widgets ;;
+(defwidget control []
+  (box :orientation "v"
+       :space-evenly false
+       :vexpand false
+       :valign "start"
+       :class "control"
+    (bat)
+    (wifi)))
+
+(defwidget top []
+  (box :orientation "v"
+       :space-evenly false
+       :vexpand false
+       :valign "start"
+    (control)
+    (workspaces)))
+
+(defwidget center []
+  (box :orientation "v"
+    (launcher)
+    (time)))
+
+;; Bar Widgets ;;
+(defwidget bar []
+  (box :class "eww_bar"
+       :orientation "v"
+    (top)
+    (center)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                          Window Sections                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Bar Windows ;;
+(defwindow bar
+  :geometry (geometry :x "0"
+                      :y "0"
+                      :height "100%"
+                      :anchor "left center"
+                      :width "47px")
+  :monitor 0
+  :reserve (struts :distance "35px" :side "left")
+  :wm-ignore false
+  :exclusive true
+  :space-evenly: false
+  :stacking "fg"
+  :windowType "dock"
+  (bar))
+
+;; Calendar Windows ;;
+(defwindow calendar
+  :monitor 0
+  :wm-ignore false
+  :exclusive true
+  :stacking "fg"
+  :windowType "dock"
+  :geometry (geometry :y "20px" :x "20px" :anchor "bottom left")
+  (cal))

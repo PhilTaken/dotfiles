@@ -1,0 +1,230 @@
+(defwidget launcher []
+  (box
+       (button :onclick "${eww} open --toggle actions"
+               :class "launcher"
+               :halign "center"
+               :style "background-image: url('images/nixos-image.png')")))
+
+;; Workspaces Widgets ;;
+(defwidget workspaces []
+  (literal :content workspace))
+
+;; Battery Widgets ;;
+(defwidget bat []
+  (box    :orientation "v"
+          :space-evenly "false"
+    (label  :class "bat-icon genicon"
+            :text battery
+            :tooltip "Battery: ${battery-cappacity}%")))
+
+;; Wifi Widgets ;;
+(defwidget wifi []
+  (box        :orientation "v"
+              :tooltip wifi-name
+    (button   :class "wifi-icon genicon" wifi-icon)))
+
+;; Brightness Widgets ;;
+(defwidget bright []
+  (eventbox :onhover "${eww} update bright=true"
+            :onhoverlost "${eww} update bright=false"
+    (box    :orientation "v"
+            :space-evenly "false"
+            :spacing 2
+      (revealer :transition "slideup"
+                :reveal bright
+                :duration "550ms"
+        (scale :class "bribar"
+               :value current-brightness
+               :tooltip "Brightness: ${current-brightness}%"
+               :onchange "${brightnessctl} set {}%"
+               :orientation "v"
+               :flipped true
+               :max 101
+               :min 0))
+      (label :class "brightness-icon genicon"
+             :text ""))))
+(defvar bright false)
+
+;; Volume Widgets ;;
+(defwidget volum []
+  (eventbox :onhover "${eww} update volum=true"
+            :onhoverlost "${eww} update volum=false"
+    (box      :orientation "v"
+              :space-evenly "false"
+              :spacing "2"
+      (revealer :transition "slideup"
+                :reveal volum
+                :duration "550ms"
+        (scale    :class "volbar"
+                  :value current-volume
+                  :orientation "v"
+                  :flipped true
+                  :tooltip "Volume: ${current-volume}%"
+                  :max 101
+                  :min 0
+                  :onchange "${amixer} sset Master {}%"))
+      (button   :onclick "scripts/popup audio"   :class "volume-icon genicon" ""))))
+(defvar volum false)
+
+;; Control Panel Widgets ;;
+(defwidget control []
+  (box :orientation "v"
+       :space-evenly false
+       :class "control"
+    (bat)
+    (wifi)
+    (bright)
+    (volum)))
+
+;; Clock Widgets ;;
+(defwidget time []
+  (box    :orientation "v"
+          :class "time"
+          :valign "end"
+    (button :onclick "scripts/popup calendar"
+            :class "time-hour" hour)
+    (button :onclick "scripts/popup calendar"
+            :class "time-min"  min)))
+
+;; Calendar Widgets ;;
+(defwidget cal []
+  (box :class "cal-box"
+       :orientation "v"
+    (box :class "cal-inner-box"
+      (calendar :class "cal"
+                :day calendar_day
+                :month calendar_month
+                :year calendar_year))))
+
+(defwidget sysinfo []
+  (box :class "sysinfo"
+       :orientation "h"
+    (box :class "sysinfo-ram"
+      :orientation "v"
+      (scale
+        ;:class "usage-ram"
+        :class "volbar"
+        :active false
+        :visible true
+        :value '${EWW_RAM.used_mem_perc}'
+        :tooltip "RAM usage ${EWW_RAM.used_mem_perc}%"
+        :orientation "v"
+        :flipped true
+        :round-digits 2
+        :max 101
+        :min 0))
+    (box :class "sysinfo-cpu"
+      :orientation "v"
+      (scale
+        ;:class "usage-cpu"
+        :class "bribar"
+        :active false
+        :visible true
+        :value '${EWW_CPU.avg}'
+        :tooltip "CPU usage ${EWW_CPU.avg}%"
+        :orientation "v"
+        :flipped true
+        :round-digits 2
+        :max 101
+        :min 0))))
+
+;; Powermenu Widgets ;;
+(defwidget power []
+  (eventbox   :onhover "${eww} update power=true"
+              :onhoverlost "${eww} update power=false"
+    (box        :orientation "v"
+                :space-evenly "false"
+                :class "powermenu"
+      (revealer   :transition "slideup"
+                  :reveal power
+                  :duration "550ms"
+        (box        :orientation "v"
+                    :space-evenly "false"
+          (button     :class "button-bspres"
+                      :tooltip "Restart WM"
+                      :onclick reload-wm "勒")
+
+          (button     :class "button-reb"
+                      :tooltip "Reboot"
+                      :onclick "reboot"   "ﰇ")
+
+          (button     :class "button-quit"
+                      :tooltip "Logout"
+                      :onclick quit-wm "")
+
+          (button     :class "button-lock"
+                      :tooltip "Lock Screen"
+                      :onclick "${eww} update power=false && ${lock-wm}" "")))
+
+      (button     :class "button-off"
+                  :tooltip "Shutdown"
+                  :onclick "shutdown now" ""))))
+
+(defvar power false)
+
+;; Top Widgets ;;
+(defwidget top []
+  (box    :orientation "v"
+          :space-evenly "false"
+          :valign "start"
+    (launcher)
+    (workspaces)))
+
+;; Bottom Widgets ;;
+(defwidget bottom []
+  (box    :orientation "v"
+          :space-evenly false
+    (time)
+    (power)))
+
+;; End Widgets ;;
+(defwidget end []
+  (box :orientation "v"
+       :space-evenly "false"
+       :valign "end"
+       :spacing 5
+    (system-tray :active-only false :orientation "v")
+    (control)
+    (sysinfo)
+    (bottom)))
+
+;; Bar Widgets ;;
+(defwidget bar []
+  (box :class "eww_bar"
+       :orientation "v"
+       :vexpand "false"
+       :hexpand "false"
+    (top)
+    (end)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                          Window Sections                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Bar Windows ;;
+(defwindow bar
+  :geometry (geometry :x "0"
+                      :y "0"
+                      :height "100%"
+                      :anchor "left center"
+                      :width "47px")
+  :monitor 0
+  :reserve (struts :distance "35px" :side "left")
+  :wm-ignore false
+  :exclusive true
+  :hexpand false
+  :vexpand false
+  :space-evenly: false
+  :focusable true
+  :stacking "bg"
+  :windowType "dock"
+  (bar))
+
+;; Calendar Windows ;;
+(defwindow calendar
+  :monitor 0
+  :wm-ignore false
+  :geometry (geometry :x "70px"
+                      :y "65%"
+                      :width "100px"
+                      :height "300px")
+  (cal))

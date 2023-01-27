@@ -1,0 +1,185 @@
+.actions {
+  border-radius: 35px;
+  background-color: $bg;
+  color: $fg;
+  font-family: Product Sans;
+  padding: 10px;
+}
+
+.controlsbox {
+  border-radius: 24px;
+  background-color: $bg;
+  padding: 20px 14px 20px 18px;
+}
+
+.slider {
+  .label{
+    font-family: 'JetBrainsMono Nerd Font';
+    color: $fg;
+    font-size: 18px;
+    padding-right: 20px;
+  }
+  .scale-label{
+    min-width: 40px;
+    color: $fg;
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 20px;
+  }
+  trough {
+    background-color: $bg;
+    min-height: 6px;
+    border-radius: 100px;
+
+    highlight {
+      background-color: $accent;
+      border-radius: 100px;
+    }
+  }
+}
+
+.active {
+  trough {
+    slider {
+      background: $accent;
+      border-radius: 100%;
+      margin: -8px;
+    }
+  }
+}
+
+.userinfobox {
+  .info {
+    .username {
+      margin-left: 8px;
+      font-weight: 500;
+    }
+  }
+  .useractions {
+    .logout, .reboot, .lock,
+    .quit, .off {
+      background-color: $bg;
+      font-family: 'JetBrainsMono Nerd Font';
+      font-size: 18px;
+      padding: 2px 11px 2px 8px;
+      border-radius: 10px;
+      transition: all ease .2s;
+      &:hover { background-color: $bg; }
+      &:active { background-color: $bg; }
+    }
+
+    .off{
+        margin-bottom: .5rem;
+        color: $red;
+    }
+
+    .logout {
+        color: $green;
+    }
+
+    .reboot {
+        color: $yellow
+    }
+
+    .quit{
+        color: $magenta;
+    }
+
+    .lock{
+        color: $blue;
+    }
+  }
+}
+
+.sysbuttonsbox {
+  .block-container {
+    .block {
+      background-color: $bg; 
+      padding: 18px 0px 18px 6px;
+      min-width: 170px;
+      border-radius: 25px;
+      transition: all ease .2s;
+      color: $fg;
+      &:hover { background-color: $bgSecondary; }
+      &:active { 
+        background-color: $contrastbg; 
+        color: $fg;
+      }
+      &.active {
+        color: $bgSecondary;
+        background-color: $accent;
+        &:hover { background-color: $bg; }
+        &:active {
+        background-color: $bg;
+        }
+      }
+      .iconbox .icon {
+        font-size: 18px;
+        font-family: 'JetBrainsMono Nerd Font';
+        padding: 0px 17px 0px 12px;
+      }
+      .chevronbox {
+        margin-right: 14px;
+        font-family: 'JetBrainsMono Nerd Font';
+      }
+    }
+    .labelbox {
+      margin-right: 10px;
+    }
+    .label {
+      font-family: "Product Sans";
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .label__status {
+      font-size: 14px;
+    }
+  }
+}
+
+
+.musicbox {
+  color: #fff;
+  border-radius: 26px;
+  padding: 11px 16px;
+  transition: background 250ms;
+  .musicbox__top {
+    font-size: 23px; 
+    font-family: 'JetBrainsMono Nerd Font';
+  }
+}
+
+.musicbox__center--metadata {
+  .title{
+    font-weight: 500;
+    transition: text 250ms;
+  }
+  .artist{
+    font-weight: 400;
+    font-size: 15px;
+    transition: text 250ms;
+  }
+}
+
+.pausebutton {
+  transition: background 250ms;
+  padding: 14px 16px;
+}
+
+.playing {
+  transition: all ease .2s;
+  border-radius: 15px;
+}
+
+.paused {
+  border-radius: 26px;  
+  transition: all ease .2s;
+  padding: 14px 14px 14px 18px;
+}
+
+
+.musicbox__bottom {
+ font-size: 23px;
+}
+
+

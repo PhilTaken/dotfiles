@@ -1,0 +1,162 @@
+// EWW BAR
+.eww_bar {
+    background-color: rgba($color: $background; $alpha: 0.1);
+    padding: .3rem;
+}
+
+// icons
+.launcher {
+    background-repeat: no-repeat;
+	background-size: 40px;
+	min-height: 40px;
+	min-width: 40px;
+	margin: 8px 0px 8px 0px;
+}
+
+// Workspaces
+.works {
+    font-family: "Iosevka Comfy 12";
+    min-width: 35px;
+    padding: .5rem 0px .5rem 0px;
+    margin-top: 20px;
+    background-color: $black;
+    border-radius: 10px;
+}
+
+
+/* # workspaces */
+.ws-0 , .ws-1 { 
+    border-radius: 10px;
+    margin: 0px;
+    padding: .3rem .4rem .3rem .4rem;
+}
+/* ## not focused */
+.ws-0 { color: $gray; }
+/* ## focused */
+.ws-1 { color: $foreground; }
+
+// Control Panel
+.control {
+    padding: .5rem;
+    font-family: Material Icons;
+    font-size: 1.6em;
+    background-color: $black;
+    border-radius: 10px;
+    margin-top: 10px;
+    min-width: 30px;
+}
+
+.genicon {
+    font-size: 1em;
+}
+
+.bat-icon {
+    color: $blue;
+}
+.wifi-icon{
+    color: $magenta;
+}
+.brightness-icon{
+    color: $yellow;
+}
+.volume-icon{
+    color: $green;
+}
+
+scale trough {
+    all: unset;
+    background-color: $background;
+    border-radius: 16px;
+    min-height: 70px;
+    min-width: 10px;
+    margin: .3rem 0 .3rem 0;
+}
+
+.bribar trough highlight {
+    background-color: $yellow;
+    border-radius: 5px;
+}
+.volbar trough highlight {
+    background-color: $green;
+    border-radius: 5px;
+}
+
+// Clock
+.time {
+    font-family: Comic Mono;
+    font-weight: bold;
+    font-size: 1.3em;
+    background-color: $black;
+    color: $white;
+    border-radius: 5px;
+    padding: .7rem 0 .5rem 0;
+    margin: .5rem 0 .5rem 0;
+}
+
+// Powermenu
+.powermenu {
+    font-family: feather;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.button-bspres, .button-reb, .button-lock,
+.button-quit, .button-off {
+    padding: .5rem .2rem .3rem .2rem;
+}
+
+.button-off{
+    margin-bottom: .5rem;
+    color: $red;
+}
+
+.button-bspres{
+    color: $green;
+}
+
+.button-reb{
+    color: $yellow
+}
+
+.button-quit{
+    color: $magenta;
+}
+
+.button-lock{
+    color: $blue;
+}
+
+// calendar
+.cal-box {
+  background-color: $background;
+  border-radius: 8px;
+  padding: 1rem 1rem .2rem;
+
+  .cal {
+    padding: .8rem .25rem 0rem;
+    margin-left: 10px;
+    
+    &.highlight {
+      padding: 10rem;
+    }
+  }
+}
+
+calendar:selected {
+  color: $accent;
+}
+
+calendar.header {
+  color: $cyan;
+  font-weight: bold;
+}
+
+calendar.button {
+  color: $cyan;
+}
+
+calendar.highlight {
+  background: none;
+  color: $accent;
+  font-weight: bold;
+}
