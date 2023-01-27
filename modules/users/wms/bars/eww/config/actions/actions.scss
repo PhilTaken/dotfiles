@@ -2,7 +2,7 @@
   border-radius: 35px;
   background-color: $bg;
   color: $fg;
-  font-family: Product Sans;
+  font-family: Iosevka Comfy;
   padding: 10px;
 }
 
@@ -14,7 +14,8 @@
 
 .slider {
   .label{
-    font-family: 'JetBrainsMono Nerd Font';
+    font-family: 'Iosevka Comfy';
+    font-weight: bold;
     color: $fg;
     font-size: 18px;
     padding-right: 20px;
@@ -51,16 +52,18 @@
 .userinfobox {
   .info {
     .username {
+      font-weight: bold;
+      font-style: italic;
       margin-left: 8px;
-      font-weight: 500;
     }
   }
   .useractions {
     .logout, .reboot, .lock,
-    .quit, .off {
+    .quit, .poweroff {
       background-color: $bg;
-      font-family: 'JetBrainsMono Nerd Font';
+      font-family: 'Iosevka Comfy';
       font-size: 18px;
+      font-weight: bold;
       padding: 2px 11px 2px 8px;
       border-radius: 10px;
       transition: all ease .2s;
@@ -68,8 +71,7 @@
       &:active { background-color: $bg; }
     }
 
-    .off{
-        margin-bottom: .5rem;
+    .poweroff{
         color: $red;
     }
 
@@ -94,44 +96,53 @@
 .sysbuttonsbox {
   .block-container {
     .block {
-      background-color: $bg; 
+      background-color: $bg;
+      color: $foreground;
       padding: 18px 0px 18px 6px;
       min-width: 170px;
       border-radius: 25px;
       transition: all ease .2s;
-      color: $fg;
-      &:hover { background-color: $bgSecondary; }
-      &:active { 
-        background-color: $contrastbg; 
+      &:hover {
+        background-color: $fg;
+        color: $bg;
+      }
+      &:active {
+        background-color: $contrastbg;
         color: $fg;
       }
       &.active {
         color: $bgSecondary;
         background-color: $accent;
-        &:hover { background-color: $bg; }
+        &:hover {
+            background-color: $bg;
+            color: $fg;
+        }
         &:active {
-        background-color: $bg;
+            background-color: $bg;
         }
       }
       .iconbox .icon {
         font-size: 18px;
-        font-family: 'JetBrainsMono Nerd Font';
+        font-family: 'Iosevka Comfy';
+        font-weight: bold;
         padding: 0px 17px 0px 12px;
       }
       .chevronbox {
         margin-right: 14px;
-        font-family: 'JetBrainsMono Nerd Font';
+        font-weight: bold;
+        font-family: 'Iosevka Comfy';
       }
     }
     .labelbox {
       margin-right: 10px;
     }
     .label {
-      font-family: "Product Sans";
-      font-weight: 500;
+      font-family: "Iosevka Comfy";
+      font-weight: bold;
       font-size: 14px;
     }
     .label__status {
+      font-weight: normal;
       font-size: 14px;
     }
   }
@@ -145,7 +156,7 @@
   transition: background 250ms;
   .musicbox__top {
     font-size: 23px; 
-    font-family: 'JetBrainsMono Nerd Font';
+    font-family: 'Iosevka Comfy';
   }
 }
 
@@ -181,5 +192,3 @@
 .musicbox__bottom {
  font-size: 23px;
 }
-
-

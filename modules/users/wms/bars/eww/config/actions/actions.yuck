@@ -1,230 +1,236 @@
-(defwidget launcher []
-  (box
-       (button :onclick "${eww} open --toggle actions"
-               :class "launcher"
-               :halign "center"
-               :style "background-image: url('images/nixos-image.png')")))
-
-;; Workspaces Widgets ;;
-(defwidget workspaces []
-  (literal :content workspace))
-
-;; Battery Widgets ;;
-(defwidget bat []
-  (box    :orientation "v"
-          :space-evenly "false"
-    (label  :class "bat-icon genicon"
-            :text battery
-            :tooltip "Battery: ${battery-cappacity}%")))
-
-;; Wifi Widgets ;;
-(defwidget wifi []
-  (box        :orientation "v"
-              :tooltip wifi-name
-    (button   :class "wifi-icon genicon" wifi-icon)))
-
-;; Brightness Widgets ;;
-(defwidget bright []
-  (eventbox :onhover "${eww} update bright=true"
-            :onhoverlost "${eww} update bright=false"
-    (box    :orientation "v"
-            :space-evenly "false"
-            :spacing 2
-      (revealer :transition "slideup"
-                :reveal bright
-                :duration "550ms"
-        (scale :class "bribar"
-               :value current-brightness
-               :tooltip "Brightness: ${current-brightness}%"
-               :onchange "${brightnessctl} set {}%"
-               :orientation "v"
-               :flipped true
-               :max 101
-               :min 0))
-      (label :class "brightness-icon genicon"
-             :text ""))))
-(defvar bright false)
-
-;; Volume Widgets ;;
-(defwidget volum []
-  (eventbox :onhover "${eww} update volum=true"
-            :onhoverlost "${eww} update volum=false"
-    (box      :orientation "v"
-              :space-evenly "false"
-              :spacing "2"
-      (revealer :transition "slideup"
-                :reveal volum
-                :duration "550ms"
-        (scale    :class "volbar"
-                  :value current-volume
-                  :orientation "v"
-                  :flipped true
-                  :tooltip "Volume: ${current-volume}%"
-                  :max 101
-                  :min 0
-                  :onchange "${amixer} sset Master {}%"))
-      (button   :onclick "scripts/popup audio"   :class "volume-icon genicon" ""))))
-(defvar volum false)
-
-;; Control Panel Widgets ;;
-(defwidget control []
-  (box :orientation "v"
-       :space-evenly false
-       :class "control"
-    (bat)
-    (wifi)
-    (bright)
-    (volum)))
-
-;; Clock Widgets ;;
-(defwidget time []
-  (box    :orientation "v"
-          :class "time"
-          :valign "end"
-    (button :onclick "scripts/popup calendar"
-            :class "time-hour" hour)
-    (button :onclick "scripts/popup calendar"
-            :class "time-min"  min)))
-
-;; Calendar Widgets ;;
-(defwidget cal []
-  (box :class "cal-box"
-       :orientation "v"
-    (box :class "cal-inner-box"
-      (calendar :class "cal"
-                :day calendar_day
-                :month calendar_month
-                :year calendar_year))))
-
-(defwidget sysinfo []
-  (box :class "sysinfo"
+(defwidget user []
+  (box :class "userinfobox"
        :orientation "h"
-    (box :class "sysinfo-ram"
-      :orientation "v"
-      (scale
-        ;:class "usage-ram"
-        :class "volbar"
-        :active false
-        :visible true
-        :value '${EWW_RAM.used_mem_perc}'
-        :tooltip "RAM usage ${EWW_RAM.used_mem_perc}%"
-        :orientation "v"
-        :flipped true
-        :round-digits 2
-        :max 101
-        :min 0))
-    (box :class "sysinfo-cpu"
-      :orientation "v"
-      (scale
-        ;:class "usage-cpu"
-        :class "bribar"
-        :active false
-        :visible true
-        :value '${EWW_CPU.avg}'
-        :tooltip "CPU usage ${EWW_CPU.avg}%"
-        :orientation "v"
-        :flipped true
-        :round-digits 2
-        :max 101
-        :min 0))))
+       :space-evenly true
+    (box :class "info"
+         :space-evenly false
+         :orientation "h"
+         :halign "start"
+         :valign "center"
+         :spacing 10
+      (label :text "${username}" :class "username"))
+    
+    (box :class "useractions"
+         :space-evenly false
+         :orientation "h"
+         :halign "end"
+         :valign "center"
+      (button     :class "poweroff" :onclick "poweroff" "")
+      (button     :class "reboot"
+                  :tooltip "Reboot"
+                  :onclick "reboot"   "ﰇ")
+      (button     :class "lock"
+                  :tooltip "Lock Screen"
+                  :onclick "${eww} update power=false && ${lock-wm}" "")
+      (button     :class "logout"
+                  :tooltip "Logout"
+                  :onclick quit-wm ""))))
 
-;; Powermenu Widgets ;;
-(defwidget power []
-  (eventbox   :onhover "${eww} update power=true"
-              :onhoverlost "${eww} update power=false"
-    (box        :orientation "v"
-                :space-evenly "false"
-                :class "powermenu"
-      (revealer   :transition "slideup"
-                  :reveal power
-                  :duration "550ms"
-        (box        :orientation "v"
-                    :space-evenly "false"
-          (button     :class "button-bspres"
-                      :tooltip "Restart WM"
-                      :onclick reload-wm "勒")
 
-          (button     :class "button-reb"
-                      :tooltip "Reboot"
-                      :onclick "reboot"   "ﰇ")
-
-          (button     :class "button-quit"
-                      :tooltip "Logout"
-                      :onclick quit-wm "")
-
-          (button     :class "button-lock"
-                      :tooltip "Lock Screen"
-                      :onclick "${eww} update power=false && ${lock-wm}" "")))
-
-      (button     :class "button-off"
-                  :tooltip "Shutdown"
-                  :onclick "shutdown now" ""))))
-
-(defvar power false)
-
-;; Top Widgets ;;
-(defwidget top []
-  (box    :orientation "v"
-          :space-evenly "false"
-          :valign "start"
-    (launcher)
-    (workspaces)))
-
-;; Bottom Widgets ;;
-(defwidget bottom []
-  (box    :orientation "v"
-          :space-evenly false
-    (time)
-    (power)))
-
-;; End Widgets ;;
-(defwidget end []
-  (box :orientation "v"
-       :space-evenly "false"
-       :valign "end"
-       :spacing 5
-    (system-tray :active-only false :orientation "v")
-    (control)
-    (sysinfo)
-    (bottom)))
-
-;; Bar Widgets ;;
-(defwidget bar []
-  (box :class "eww_bar"
+(defwidget sysbuttons []
+  (box :class "sysbuttonsbox"
        :orientation "v"
-       :vexpand "false"
-       :hexpand "false"
-    (top)
-    (end)))
+       :space-evenly false
+       :spacing 8
+    (box :class "firstrow"
+         :orientation "h"
+         :space-evenly true
+         :spacing 8
+      (box :halign "start"
+           :orientation "h"
+           :space-evenly true
+        (sysblock 
+         :icon "${network_icon}"
+         :onclick "networkmanager_dmenu"
+         :active "${network_status == 'Connected' ? true : false}"
+         :label "${network_ssid}"))
+        
+      
+      (box :halign "end"
+           :orientation "h"
+           :space-evenly true
+        (sysblock :icon "${bluetooth_state == 'on' ? '' : ''}"
+                  :onclick "scripts/bluetooth toggle"
+                  :active "${bluetooth_state == 'on' ? true : false}"
+                  :label "Bluetooth")))
+      
+    
+    (box :class "lastrow"
+         :orientation "h"
+         :space-evenly true
+      (box :halign "start"
+           :orientation "h"
+           :space-evenly true
+        (sysblock :icon "${redshift_state == 'on' ? '' : ''}"
+                  :onclick "scripts/redshift toggle"
+                  :active "${redshift_state == 'on' ? true : false}"
+                  :label "Night Light"))
+      
+      (box :halign "end"
+           :orientation "h"
+           :space-evenly true
+        (sysblock :icon "${mic_status == 'yes' ? '' : ''}"
+                  :label "Micro"
+                  :onclick "scripts/mic toggle"
+                  :active "${mic_status == 'yes' ? true : false}")))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                          Window Sections                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Bar Windows ;;
-(defwindow bar
-  :geometry (geometry :x "0"
-                      :y "0"
-                      :height "100%"
-                      :anchor "left center"
-                      :width "47px")
-  :monitor 0
-  :reserve (struts :distance "35px" :side "left")
-  :wm-ignore false
-  :exclusive true
-  :hexpand false
-  :vexpand false
-  :space-evenly: false
-  :focusable true
-  :stacking "bg"
-  :windowType "dock"
-  (bar))
+(defwidget sysblock [icon onclick active label]
+  (box :class "block-container"
+       :orientation "h"
+       :space-evenly true
+       :spacing 1
+    (button :class "block ${active ? 'active' : ''}" :onclick "${onclick}"
+      (box :orientation "h"
+            :spacing 1
+           :valign "start"
+           :space-evenly false
+            (box :class "iconbox"
+                 :halign "start"
+                 :valign "center"
+                 :space-evenly true
+                 :orientation "h"
+              (label :text "${icon}" :class "icon"))
+            
+            (box :class "labelbox"
+                 :halign "start"
+                 :valign "start"
+                 :orientation "v"
+              (label :halign "center" :text "${label}" :class "label")
+              (label :halign "start" :text "${active ? 'On' : 'Off'}" :class "label__status"))
+           
+        (box :class "chevronbox"
+             :halign "end"
+             :hexpand true
+             :valign "center"
+             :space-evenly false
+             :orientation "h"
+          (label :halign "end" :text ""))))))
 
-;; Calendar Windows ;;
-(defwindow calendar
+(defwidget music [title artist cover player]
+  (box :class "musicbox"
+       :orientation "v"
+       :style "background: radial-gradient(circle, rgba(0, 0, 0, 0.4) 30%, ${pctl_sub['image_accent']}), url(\"${pctl_sub['mpris:artUrl']}\"); background-size: cover; background-position: center;"
+   (box :class "musicbox__top"
+        :halign "start"
+        :valign "start"
+        :style "color: ${pctl_sub['button_accent']};"
+        "${player == 'spotify' ? '' : '爵' }")
+   (box :class "musicbox__center"
+        :orientation "h"
+        :space-evenly false
+        (box :class "musicbox__center--metadata"
+             :orientation "v"
+             :halign "start"
+             :valign "center"
+             :hexpand true
+             (label :limit-width 25 :halign "start" :text title :class "title")
+             (label :limit-width 25 :halign "start" :text artist :class "artist"))
+        (button :class "pausebutton ${music_status == 'Playing' ? 'playing' : 'paused'}"
+                :halign "end"
+                :style "background-color: ${pctl_sub['button_accent']}; color: ${pctl_sub['button_text']};"
+                :onclick "scripts/music/control.sh play-pause"
+                "${music_status == 'Playing' ? '' : ''}"))
+       
+   (box :class "musicbox__bottom"
+                :style "color: ${pctl_sub['button_accent']};"
+        (button :valign "end"
+                :halign "start"
+                :onclick "scripts/music/control.sh prev & scripts/music/songart.sh get"
+                :class "previousbutton"
+                "玲")
+       
+        (button :valign "end"
+                :halign "end"
+                :onclick "scripts/music/control.sh next & scripts/music/songart.sh get"
+                :class "nextbutton"
+                "怜"))))
+
+(defwidget controls []
+  (box :class "controlsbox"
+       :orientation "v"
+       :space-evenly false
+       :spacing 16
+    (box :orientation "h"
+         :space-evenly "false"
+         :class "slider active"
+      (box :class "label"
+            volume_icon)
+      
+      (scale :value volume_value
+             :hexpand true
+             :onchange "scripts/volume.sh set {}"
+             :min 0
+             :max 101)
+      (box :class "scale-label"
+           "${volume_value}%"))
+    
+    (box :orientation "h"
+         :space-evenly "false"
+         :class "slider active"
+      (box :class "label"
+            br_icon)
+      
+      (scale 
+             :hexpand true
+             :value br
+             :onchange "brightnessctl set {}%"
+             :min 0
+             :max 101)
+      (box :class "scale-label"
+             :halign "start"
+           "${br}%"))
+    
+    (box :class "slider"
+         :orientation "h"
+         :space-evenly "false"
+      (box :class "label"
+            "")
+      (scale :value ram
+             :hexpand true
+             :active false
+             :min 0
+             :max 101)
+      (box :class "scale-label "
+           "${ram}%"))
+           
+    
+    (box :class "slider"
+         :orientation "h"
+         :space-evenly "false"
+      (box :class "label"
+           "")
+      (scale :value cpu
+             :hexpand true
+             :active false
+             :min 0
+             :max 101)
+      (box :class "scale-label"
+           "${cpu}%"))))
+    
+
+(defwidget actions []
+  (box :class "actions"
+       :orientation "v"
+       :space-evenly false
+       :spacing 10
+    (user)
+    (sysbuttons)
+    (music :album {pctl_sub["xesam:album"]}
+           :title {pctl_sub["xesam:title"]}
+           :image_accent {pctl_sub["image_accent"]}
+           :button_accent {pctl_sub["button_accent"]}
+           :button_text {pctl_sub["button_text"]}
+           :cover {pctl_sub["mpris:artUrl"]}
+           :artist {pctl_sub["xesam:artist"]}
+           :player "${pctl_sub.player}")
+    (controls)))
+
+
+
+(defwindow actions
+  :geometry (geometry :x "20px"
+                      :anchor "left center")
   :monitor 0
-  :wm-ignore false
-  :geometry (geometry :x "70px"
-                      :y "65%"
-                      :width "100px"
-                      :height "300px")
-  (cal))
+  :type "dock"
+  :wm-ignore true
+  (actions))

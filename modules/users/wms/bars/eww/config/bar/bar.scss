@@ -1,26 +1,33 @@
 // EWW BAR
 .eww_bar {
-    background-color: rgba($color: $background; $alpha: 0.1);
+    background-color: rgba($color: $background, $alpha: 0);
     padding: .3rem;
 }
 
 // icons
 .launcher {
+    background-color: $black;
+    padding: 25px 2px 25px 2px;
     background-repeat: no-repeat;
-	background-size: 40px;
+    background-position: center;
+	background-size: 38px;
 	min-height: 40px;
 	min-width: 40px;
+    border-radius: 20px;
 	margin: 8px 0px 8px 0px;
+	box-shadow: 2px 2px #000;
 }
 
 // Workspaces
 .works {
-    font-family: "Iosevka Comfy 12";
-    min-width: 35px;
-    padding: .5rem 0px .5rem 0px;
+    font-family: "Iosevka Comfy 15";
+    font-weight: bold;
+    min-width: 40px;
+    padding: .5rem 5px .5rem 5px;
     margin-top: 20px;
     background-color: $black;
     border-radius: 10px;
+	box-shadow: 2px 2px #000;
 }
 
 
@@ -43,7 +50,8 @@
     background-color: $black;
     border-radius: 10px;
     margin-top: 10px;
-    min-width: 30px;
+    //min-width: 30px;
+	box-shadow: 2px 2px #000;
 }
 
 .genicon {
@@ -81,6 +89,14 @@ scale trough {
     border-radius: 5px;
 }
 
+.stray-box {
+	box-shadow: 2px 2px #000;
+	border-radius: 10px;
+	padding: 0px 14px 10px 14px;
+	margin-bottom: 5px;
+	background-color: $black;
+}
+
 // Clock
 .time {
     font-family: Comic Mono;
@@ -88,9 +104,10 @@ scale trough {
     font-size: 1.3em;
     background-color: $black;
     color: $white;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: .7rem 0 .5rem 0;
     margin: .5rem 0 .5rem 0;
+	box-shadow: 2px 2px #000;
 }
 
 // Powermenu

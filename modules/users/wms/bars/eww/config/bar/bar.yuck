@@ -27,7 +27,6 @@
   (box    :orientation "v"
           :class "time"
           :space-evenly false
-          :style "border: 2px #fff;"
           :valign "end"
     (button :onclick "${eww} open --toggle calendar"
             :class "time-hour" hour)
@@ -64,7 +63,18 @@
 
 (defwidget center []
   (box :orientation "v"
-    (launcher)
+    :valign "center"
+    (launcher)))
+
+(defwidget bottom []
+  (box
+    :orientation "v"
+    :vexpand false
+    :valign "end"
+    (box 
+      :halign "center"
+      :class "stray-box"
+      (system-tray :active-only false :pack-direction "up"))
     (time)))
 
 ;; Bar Widgets ;;
@@ -72,7 +82,8 @@
   (box :class "eww_bar"
        :orientation "v"
     (top)
-    (center)))
+    (center)
+    (bottom)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                          Window Sections                             ;;

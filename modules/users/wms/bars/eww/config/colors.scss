@@ -2,10 +2,7 @@
 
 $background: #1A1B26;
 $foreground: #A9B1D6;
-$accent: $foreground;
-
-$bg: rgba($color: $background, $alpha: 0.7);
-$fg: $foreground;
+$accent: #8991B6;
 
 $black: #24283B;
 $red: #F7768E;
@@ -18,4 +15,8 @@ $gray: #565F89;
 $white: $foreground;
 
 $contrastbg: #0a0a09;
-$bgSecondary: $gray;
+
+// aliases
+$bgSecondary: #000;
+$bg: $background;
+$fg: $foreground;
