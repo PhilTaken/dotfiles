@@ -44,6 +44,10 @@ rec {
 
   config = mkIf cfg.enable rec {
     phil.wms.tools.udiskie.enable = true;
+    phil.wms.tools.rofi = {
+      enable = true;
+      package = pkgs.rofi-wayland;
+    };
 
     home.sessionVariables = {
       #XDG_CURRENT_DESKTOP = "sway";
@@ -55,7 +59,7 @@ rec {
         std_opacity = "0.96";
         lock = "swaylock -c 000000";
         screen_recorder = ./record_screen.sh;
-        menu = "${pkgs.rofi}/bin/rofi -show run";
+        menu = "rofi -show drun";
       in
       {
         enable = true;
@@ -243,10 +247,6 @@ rec {
         defaultTimeout = 5000;
         borderSize = 2;
         borderRadius = 4;
-      };
-      rofi = {
-        enable = true;
-        #package = pkgs.rofi-wayland;
       };
     };
 

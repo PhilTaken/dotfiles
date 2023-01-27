@@ -54,8 +54,10 @@ rec {
     };
   };
 
-  config = mkIf cfg.enable rec {
+  config = mkIf cfg.enable {
     phil.wms.tools.udiskie.enable = true;
+    phil.wms.tools.rofi.enable = true;
+
     services.kdeconnect = {
       enable = true;
       indicator = true;
@@ -105,7 +107,7 @@ rec {
           {
             "${modifier}+Return" = "exec ${terminal}";
             "${modifier}+d" = "kill";
-            "${modifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show run";
+            "${modifier}+space" = "exec rofi -show drun";
             "${modifier}+l" = "exec ${pkgs.i3lock-pixeled}/bin/i3lock-pixeled";
             "${modifier}+q" = "exec ${pkgs.flameshot}/bin/flameshot gui";
             "${modifier}+p" = "exec ${pkgs.rofi-pass}/bin/rofi-pass";
@@ -151,13 +153,6 @@ rec {
         modifier = "Mod4";
         window.border = 0;
         window.titlebar = false;
-      };
-    };
-
-    programs = {
-      rofi = {
-        enable = true;
-        package = pkgs.rofi;
       };
     };
 

@@ -43,6 +43,10 @@ in
 
   config = mkIf cfg.enable {
     phil.wms.tools.udiskie.enable = true;
+    phil.wms.tools.rofi = {
+      enable = true;
+      package = pkgs.rofi-wayland;
+    };
 
     home.sessionVariables = {
       MOZ_ENABLE_WAYLAND = 1;
@@ -131,12 +135,13 @@ in
               pseudotile=0 # enable pseudotiling on dwindle
           }
 
-
           windowrule=float,Pinentry
           windowrule=float,Media viewer
           windowrule=float,pavucontrol
+          windowrule=float,title:Bluetooth Devices
           windowrule=float,title:Picture-in-Picture
           windowrule=float,title:Firefox — Sharing Indicator
+          windowrule=float,float
 
           # example window rules
           # for windows named/classed as abc and xyz
@@ -219,11 +224,6 @@ in
         defaultTimeout = 5000;
         borderSize = 2;
         borderRadius = 4;
-      };
-
-      rofi = {
-        enable = true;
-        package = pkgs.rofi-wayland;
       };
     };
 
