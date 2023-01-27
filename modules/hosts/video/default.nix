@@ -1,4 +1,5 @@
 { pkgs
+, inputs
 , config
 , lib
 , ...
@@ -177,6 +178,38 @@ in
           xdg-desktop-portal-wlr
           #xdg-desktop-portal-gtk
         ];
+      };
+    };
+
+    stylix = {
+      image = ../../../images/cat-sound.png;
+      base16Scheme = "${inputs.catppuccin-base16}/base16/mocha.yaml";
+
+      targets.vim.enable = false;
+      targets.fish.enable = false;
+
+      fonts = {
+        serif = {
+          package = pkgs.dejavu_fonts;
+          name = "DejaVu Serif";
+        };
+
+        sansSerif = {
+          package = pkgs.dejavu_fonts;
+          name = "DejaVu Sans";
+        };
+
+        monospace = {
+          #package = pkgs.dejavu_fonts;
+          #name = "DejaVu Sans Mono";
+          package = pkgs.iosevka-comfy.comfy-duo;
+          name = "Iosevka Comfy";
+        };
+
+        emoji = {
+          package = pkgs.noto-fonts-emoji;
+          name = "Noto Color Emoji";
+        };
       };
     };
   };

@@ -66,7 +66,7 @@ in
         screenshot = "${pkgs.grim}/bin/grim -t jpeg -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/jpeg";
 
         lock = "swaylock -c 000000";
-        menu = "${pkgs.rofi-wayland}/bin/rofi -show run";
+        menu = "rofi -show drun";
 
         inherit (inputs.config.phil.wms.bars) barcommand;
         left = "y";
@@ -217,17 +217,13 @@ in
         enable = true;
         maxVisible = 5;
         defaultTimeout = 5000;
-        font = cfg.default_font;
-        backgroundColor = "#FFFFFF";
-        textColor = "#000000";
-        borderColor = "#000000";
         borderSize = 2;
         borderRadius = 4;
       };
 
       rofi = {
         enable = true;
-        #package = pkgs.rofi-wayland;
+        package = pkgs.rofi-wayland;
       };
     };
 

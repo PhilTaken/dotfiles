@@ -6,6 +6,7 @@ let
       inputs.hyprland.nixosModules.default
       inputs.sops-nix-src.nixosModules.sops
       inputs.home-manager.nixosModules.home-manager
+      inputs.stylix.nixosModules.stylix
     ];
     "aarch64-linux" = default ++ [
       "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"

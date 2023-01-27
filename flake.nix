@@ -34,6 +34,8 @@
     # -----------------------
     # nixos modules
 
+    stylix.url = "github:danth/stylix";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # local user package managment
@@ -157,6 +159,11 @@
 
     vim-yuck-src = {
       url = "github:elkowar/yuck.vim";
+      flake = false;
+    };
+
+    catppuccin-base16 = {
+      url = "github:catppuccin/base16";
       flake = false;
     };
   };

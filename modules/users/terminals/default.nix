@@ -32,7 +32,6 @@ in
         {
           enable = true;
           settings = {
-            font.normal.family = cfg.default_font;
             font.size = 13;
             env.TERM = "xterm-256color";
             import = [
