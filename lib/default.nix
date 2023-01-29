@@ -24,6 +24,7 @@ let
     #inputs.eww-git.overlays.default
     inputs.nil-ls.overlays.default
     inputs.vim-extra-plugins.overlays.default
+    inputs.xdg-desktop-hyprland.overlays.default
 
     (final: prev: {
       makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });

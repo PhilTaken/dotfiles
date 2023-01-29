@@ -81,10 +81,7 @@
       #inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #zellij = {
-    #url = "github:zellij-org/zellij";
-    #inputs.nixpkgs.follows = "nixpkgs";
-    #};
+    xdg-desktop-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
 
     arm-rs = {
       url = "github:PhilTaken/arm.rs";

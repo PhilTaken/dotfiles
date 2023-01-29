@@ -170,11 +170,13 @@ in
               #max_fps = 30;
               chooser_type = "simple";
               chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+              #chooser_cmd = "${pkgs.hyprland-share-picker}/bin/hyprland-share-picker";
             };
           };
         };
         #gtkUsePortal = true;
         extraPortals = with pkgs; [
+          #xdg-desktop-portal-hyprland
           xdg-desktop-portal-wlr
           #xdg-desktop-portal-gtk
         ];
