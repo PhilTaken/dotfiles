@@ -25,20 +25,13 @@ in
 
   config = {
     programs = {
-      alacritty =
-        let
-          colorscheme = inputs.alacritty-catppuccin;
-        in
-        {
-          enable = true;
-          settings = {
-            font.size = 13;
-            env.TERM = "xterm-256color";
-            import = [
-              "${colorscheme}/catppuccin-mocha.yml"
-            ];
-          };
+      alacritty = {
+        enable = true;
+        settings = {
+          window.opacity = 0.8;
+          font.size = 13;
         };
+      };
 
       wezterm = {
         enable = true;

@@ -62,7 +62,7 @@ require'lspkind'.init()
 -- colorscheme ^-^
 local catppuccin = require('catppuccin')
 catppuccin.setup{
-    transparent_background = false,
+    transparent_background = true,
     term_colors = true,
     compile = {
         enable = true,

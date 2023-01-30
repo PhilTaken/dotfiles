@@ -108,19 +108,28 @@ in
               border_size=1
               # col.active_border=0x66ee1111
               col.active_border=0x66883333
-              col.inactive_border=0x66333333
+              col.inactive_border=0xffffffff
 
               apply_sens_to_raw=0 # whether to apply the sensitivity to raw input (e.g. used by games where you aim using your mouse)
           }
 
           decoration {
               rounding=5
-              blur=1
-              blur_size=3 # minimum 1
-              blur_passes=1 # minimum 1, more passes = more resource intensive.
+
               # Your blur "amount" is blur_size * blur_passes, but high blur_size (over around 5-ish) will produce artifacts.
               # if you want heavy blur, you need to up the blur_passes.
               # the more passes, the more you can up the blur_size without noticing artifacts.
+              blur=1
+              blur_size=6 # minimum 1
+              blur_passes=7 # minimum 1, more passes = more resource intensive.
+
+              dim_inactive = true
+              dim_strength = 0.1
+
+              drop_shadow = yes
+              shadow_range = 4
+              shadow_render_power = 3
+              col.shadow = rgba(1a1a1aee)
           }
 
           animations {
@@ -135,22 +144,20 @@ in
               pseudotile=0 # enable pseudotiling on dwindle
           }
 
+          # make pinentry fancy
           windowrule=float,Pinentry
+          windowrule=noborder,Pinentry
+          windowrule=dimaround,Pinentry
+
+          # opaque terminals
+          windowrule=opacity 0.95 override,Alacritty
+
           windowrule=float,Media viewer
           windowrule=float,pavucontrol
           windowrule=float,title:Bluetooth Devices
           windowrule=float,title:Picture-in-Picture
           windowrule=float,title:Firefox — Sharing Indicator
           windowrule=float,float
-
-          # example window rules
-          # for windows named/classed as abc and xyz
-          #windowrule=move 69 420,abc
-          #windowrule=size 420 69,abc
-          #windowrule=tile,xyz
-          #windowrule=float,abc
-          #windowrule=pseudo,abc
-          #windowrule=monitor 0,xyz
 
           # mouse binds
           bindm=SUPER,mouse:272,movewindow
