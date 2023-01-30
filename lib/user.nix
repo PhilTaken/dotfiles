@@ -37,11 +37,11 @@ rec {
           youtube-dl
 
           #obsidian
-          #anki
+          anki
           element-desktop
           #gimp
           #keepassxc
-          libreoffice
+          #libreoffice
           signal-desktop
           tdesktop
           #zoom-us
