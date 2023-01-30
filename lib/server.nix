@@ -42,10 +42,16 @@ in
     host.mkHost {
       inherit users;
 
-      extraimports = extraimports ++ [{
-        documentation.enable = false;
-        environment.noXlibs = true;
-      }];
+      extraimports = extraimports ++ [
+        {
+          documentation.enable = false;
+          environment.noXlibs = true;
+          stylix = {
+            autoEnable = false;
+            image = ../images/placeholder-image.jpg;
+          };
+        }
+      ];
 
       systemConfig = {
         inherit fileshare;

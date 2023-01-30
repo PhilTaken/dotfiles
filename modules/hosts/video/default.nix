@@ -187,8 +187,10 @@ in
       image = ../../../images/cat-sound.png;
       base16Scheme = "${inputs.catppuccin-base16}/base16/mocha.yaml";
 
-      targets.vim.enable = false;
-      targets.fish.enable = false;
+      targets = {
+        vim.enable = false;
+        fish.enable = false;
+      };
 
       fonts = {
         serif = {

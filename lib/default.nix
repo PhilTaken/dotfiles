@@ -3,10 +3,10 @@ let
   systemmodules = rec {
     default = [
       inputs.arm-rs.nixosModules.default
-      inputs.hyprland.nixosModules.default
       inputs.sops-nix-src.nixosModules.sops
       inputs.home-manager.nixosModules.home-manager
       inputs.stylix.nixosModules.stylix
+      inputs.hyprland.nixosModules.default
     ];
     "aarch64-linux" = default ++ [
       "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
