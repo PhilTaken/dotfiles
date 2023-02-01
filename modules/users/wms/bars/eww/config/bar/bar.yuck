@@ -1,6 +1,6 @@
 (defwidget launcher []
   (box
-       (button :onclick "${eww} open --toggle actions"
+       (button :onclick "${eww} open --toggle actions-closer && ${eww} open --toggle actions"
                :class "launcher"
                :halign "center"
                :style "background-image: url('images/nixos-image.png')")))
@@ -64,6 +64,7 @@
 (defwidget center []
   (box :orientation "v"
     :valign "center"
+    :space-evenly false
     (launcher)))
 
 (defwidget bottom []

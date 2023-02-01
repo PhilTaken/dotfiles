@@ -15,13 +15,15 @@
          :orientation "h"
          :halign "end"
          :valign "center"
-      (button     :class "poweroff" :onclick "poweroff" "")
+      (button     :class "poweroff"
+                  :tooltip "Power Off"
+                  :onclick "poweroff" "")
       (button     :class "reboot"
                   :tooltip "Reboot"
-                  :onclick "reboot"   "ﰇ")
+                  :onclick "reboot" "ﰇ")
       (button     :class "lock"
                   :tooltip "Lock Screen"
-                  :onclick "${eww} update power=false && ${lock-wm}" "")
+                  :onclick lock-wm "")
       (button     :class "logout"
                   :tooltip "Logout"
                   :onclick quit-wm ""))))
@@ -50,7 +52,7 @@
            :orientation "h"
            :space-evenly true
         (sysblock :icon "${bluetooth_state == 'on' ? '' : ''}"
-                  :onclick "scripts/bluetooth toggle"
+                  :onclick "scripts/bluetooth.sh toggle"
                   :active "${bluetooth_state == 'on' ? true : false}"
                   :label "Bluetooth")))
       
@@ -61,6 +63,7 @@
       (box :halign "start"
            :orientation "h"
            :space-evenly true
+        ;; TODO: replace with vpn / do not disturb / camera
         (sysblock :icon "${redshift_state == 'on' ? '' : ''}"
                   :onclick "scripts/redshift toggle"
                   :active "${redshift_state == 'on' ? true : false}"
@@ -114,6 +117,7 @@
         :halign "start"
         :valign "start"
         :style "color: ${pctl_sub['button_accent']};"
+        :tooltip "${player}"
         "${player == 'spotify' ? '' : '爵' }")
    (box :class "musicbox__center"
         :orientation "h"
@@ -123,25 +127,25 @@
              :halign "start"
              :valign "center"
              :hexpand true
-             (label :limit-width 25 :halign "start" :text title :class "title")
-             (label :limit-width 25 :halign "start" :text artist :class "artist"))
+             (label :limit-width 25 :halign "start" :text title :class "title" :tooltip title)
+             (label :limit-width 25 :halign "start" :text artist :class "artist" :tooltip artist))
         (button :class "pausebutton ${music_status == 'Playing' ? 'playing' : 'paused'}"
                 :halign "end"
                 :style "background-color: ${pctl_sub['button_accent']}; color: ${pctl_sub['button_text']};"
-                :onclick "scripts/music/control.sh play-pause"
+                :onclick "playerctl play-pause"
                 "${music_status == 'Playing' ? '' : ''}"))
        
    (box :class "musicbox__bottom"
                 :style "color: ${pctl_sub['button_accent']};"
         (button :valign "end"
                 :halign "start"
-                :onclick "scripts/music/control.sh prev & scripts/music/songart.sh get"
+                :onclick "playerctl prev"
                 :class "previousbutton"
                 "玲")
        
         (button :valign "end"
                 :halign "end"
-                :onclick "scripts/music/control.sh next & scripts/music/songart.sh get"
+                :onclick "playerctl next"
                 :class "nextbutton"
                 "怜"))))
 
@@ -167,6 +171,7 @@
     (box :orientation "h"
          :space-evenly "false"
          :class "slider active"
+         :visible br-enabled
       (box :class "label"
             br_icon)
       
@@ -185,13 +190,13 @@
          :space-evenly "false"
       (box :class "label"
             "")
-      (scale :value ram
+      (scale :value '${EWW_RAM.used_mem_perc}'
              :hexpand true
              :active false
              :min 0
              :max 101)
       (box :class "scale-label "
-           "${ram}%"))
+           "${EWW_RAM.used_mem_perc}%"))
            
     
     (box :class "slider"
@@ -199,13 +204,13 @@
          :space-evenly "false"
       (box :class "label"
            "")
-      (scale :value cpu
+      (scale :value '${EWW_CPU.avg}'
              :hexpand true
              :active false
              :min 0
              :max 101)
       (box :class "scale-label"
-           "${cpu}%"))))
+           "${EWW_CPU.avg}%"))))
     
 
 (defwidget actions []
@@ -231,6 +236,18 @@
   :geometry (geometry :x "20px"
                       :anchor "left center")
   :monitor 0
-  :type "dock"
-  :wm-ignore true
+  :stacking "fg"
+  ;:type "dock"
+  ;:wm-ignore true
   (actions))
+
+
+(defwidget closer [window]
+  (eventbox :onclick "eww close ${window} && eww close ${window}-closer"))
+ 
+(defwindow actions-closer
+  :geometry (geometry :width "100%" :height "100%")
+  :monitor 0
+  :stacking "fg"
+  :focusable false
+  (closer :window "actions"))

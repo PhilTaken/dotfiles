@@ -8,6 +8,64 @@ let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.wms.bars.eww;
   package = if cfg.enableWayland then pkgs.eww-wayland else pkgs.eww;
+
+  pylayerctl = pkgs.stdenv.mkDerivation rec {
+    name = "pylayerctl";
+
+    nativeBuildInputs = [
+      pkgs.wrapGAppsHook
+      pkgs.gobject-introspection
+      pkgs.playerctl
+    ];
+
+    buildInputs = [
+      pkgs.gobject-introspection
+      pkgs.playerctl
+    ];
+
+    src = pkgs.writers.writePython3 "playerctl" {
+      libraries = [
+        pkgs.python3Packages.pygobject3
+        pkgs.python3Packages.requests
+        (pkgs.python3Packages.buildPythonPackage rec {
+          pname = "material-color-utilities-python";
+          version = "0.1.5";
+
+          propagatedBuildInputs = with pkgs.python3Packages; [ regex pillow ];
+
+          src = pkgs.fetchPypi {
+            inherit pname version;
+            sha256 = "sha256-PG8C585wWViFRHve83z3b9NijHyV+iGY2BdMJpyVH64=";
+          };
+
+          doCheck = false;
+        })
+      ];
+      flakeIgnore = [
+        "E116"
+        "E222"
+        "E226"
+        "E231"
+        "E261"
+        "E402"
+        "E501"
+        "F401"
+        "F403"
+        "F405"
+        "F841"
+        "W503"
+      ];
+    } (builtins.readFile ./playerctl.py);
+    dontUnpack = true;
+
+    buildPhase = ''
+      mkdir -p $out/bin
+    '';
+
+    installPhase = ''
+      cp -r $src $out/bin/${name}
+    '';
+  };
 in
 {
   options.phil.wms.bars.eww = {
@@ -87,6 +145,7 @@ in
             --replace '@quit_wm@' '${cfg.quit_cmd}' \
             --replace '@lock_wm@' '${cfg.lock_cmd}' \
             --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \
+            --replace '@playerctl-py@' '${pylayerctl}/bin/pylayerctl'
 
           substituteInPlace $out/actions/actions.yuck \
             --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \

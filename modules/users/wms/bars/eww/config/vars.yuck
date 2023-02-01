@@ -7,113 +7,59 @@
 (defvar quit-wm "@quit_wm@")
 (defvar lock-wm "@lock_wm@ &")
 
-(defvar playerctl-metadata "")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                          Widget's Sections                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Launcher Widgets ;;
 (defpoll current-volume :interval "2s" "@amixer@ sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+
 (defpoll battery            :interval "5s"  "scripts/battery icon")
 (defpoll battery-cappacity  :interval "5s"  "scripts/battery percent")
+
 (defpoll wifi-icon :interval "5s" "scripts/wifi icon")
 (defpoll wifi-name :interval "5s" "scripts/wifi name")
+
 (defpoll current-brightness :interval "1s" "@brightnessctl@ -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+
 (defpoll hour   :interval "5s"  "date '+%H'")
 (defpoll min    :interval "5s"  "date '+%M'")
 (defpoll calendar_day :interval "10h" "date '+%d'")
 (defpoll calendar_month :interval "10h" "scripts/calendar")
 (defpoll calendar_year :interval "10h" "date '+%Y'")
 
-;; TODO: convert to dbus poll?
-(defpoll players :interval "2s" "@playerctl@ -l | @jq@ -R | jq -s")
-
+(deflisten pctl_sub "@playerctl-py@")
 (deflisten workspace "./scripts/workspace")
 
 ;; new
 
 (defpoll username :interval "1s" "scripts/user.sh")
 
-(defpoll ram_class :interval "5s" "scripts/getRam class")
-(defpoll ram :interval "5s" "scripts/getRam ram")
-
-(defpoll cpu :interval "5s" "scripts/getCpu cpu")
-
 (defpoll network_status :interval "1s" "~/.config/eww/scripts/network.sh status")
 (defpoll network_radio :interval "1s" "~/.config/eww/scripts/network.sh radio-status")
 (defpoll network_ssid :interval "1s" "~/.config/eww/scripts/network.sh ssid")
 
-(defpoll date :interval "1s" "date '+%d %b, %I:%M %p'")
-(defpoll completeday :interval "1h" "date '+%A, %d %B'")
-
-(defpoll lithour :interval "30m" "date +%H")
-(defpoll litmin :interval "30s" "date +%M")
+(defpoll bluetooth_state :interval "1s" "scripts/bluetooth.sh state")
+(defpoll mic_status :interval "1s" "scripts/mic status")
 
 (defpoll music_title :interval "1s" "scripts/music/songdata.sh title")
 (defpoll music_artist :interval "1s" "scripts/music/songdata.sh artist")
 (defpoll music_status :interval "1s" "scripts/music/songdata.sh status")
 
+(defpoll network_icon :interval "3s" "scripts/network.sh icon")
+(defpoll network_class :interval "3s" "scripts/network.sh class")
+(defpoll network_name :interval "3s" "scripts/network.sh name")
 
-(defpoll bluetooth_state :interval "1s" "scripts/bluetooth.sh state")
-(defpoll mic_status :interval "1s" "scripts/mic status")
+(defpoll volume_value :initial "100." :interval "1s" "scripts/volume.sh vol")
+(defpoll volume_class :interval "1s" "scripts/volume.sh class")
+(defpoll volume_icon :interval "1s" "scripts/volume.sh icon")
 
+(defpoll br_icon :initial "x" :run-while br-enabled :interval "1s" "scripts/brightness.sh icon")
+(defpoll br :initial "100." :run-while br-enabled :interval "1s" "scripts/brightness.sh br")
+(defpoll br-enabled :initial "false" :interval "1s" "scripts/brightness.sh enabled")
 
 ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;;
 ;; temp replacements (TODO fit to my config) ;;
 ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;;
 
-
-(defvar network_icon "")
-(defvar network_class "connected")
-(defvar network_name "Disconnected")
-;(defpoll network_icon :interval "3s" "./scripts/network.sh icon")
-;(defpoll network_class :interval "3s" "./scripts/network.sh class")
-;(defpoll network_name :interval "3s" "./scripts/network.sh name")
-
-
-(defvar volume_class "blue")
-(defvar volume "scripts/getVolume percentage")
-(defvar vol "100%")
-(defvar volume_icon "")
-;(defpoll volume_class :interval "1s" "scripts/getVolume class")
-;(defpoll volume :interval "1s" "scripts/getVolume percentage")
-;(defpoll vol :interval "1s" "scripts/getVolume vol")
-;(defpoll volume_icon :interval "1s" "scripts/getVolume icon")
-
-
-;(defvar battery_icon "")
-;(defvar battery "20")
-;(defpoll battery_icon :interval "1s" "scripts/getBattery icon")
-;(defpoll battery :interval "1s" "scripts/getBattery percent")
-
-
-(defvar br_icon "")
-(defvar br "100")
-;(defpoll br_icon :interval "1s" "scripts/getBrightness icon")
-;(defpoll br :interval "1s" "scripts/getBrightness br")
-
-
-(defvar volume_value "100")
-(defvar is_muted "false")
-;(defpoll volume_value :interval "1s" "~/.config/eww/scripts/volume.sh vol")
-;(defpoll is_muted :interval "1s" "~/.config/eww/scripts/volume.sh muted")
-
-
 (defvar redshift_state "off")
 ; (defpoll redshift_state :interval "1s" "scripts/redshift state")
-
-
-(defvar pctl_sub "")
-; (deflisten pctl_sub "~/.config/eww/scripts/playerctl.py")
-
-;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;;
-;; not needed? not used .......              ;;
-;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;;
-
-; (defpoll music_button_accent :interval "1s" "~/.config/eww/scripts/music/songart.sh button_accent")
-; (defpoll music_button_text :interval "1s" "~/.config/eww/scripts/music/songart.sh button_text")
-; (defpoll music_background :interval "1500ms" "~/.config/eww/scripts/music/songart.sh accent_solid")
-; (defpoll music_url :interval "2s" "~/.config/eww/scripts/music/songart.sh echo")
-; (defpoll music_pic :interval "500ms" "~/.config/eww/scripts/music/songart.sh get")
-
-; (defpoll pfp :interval "1s" "~/.config/eww/scripts/pfp.sh")
