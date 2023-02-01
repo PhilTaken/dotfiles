@@ -6,7 +6,7 @@
 
 let
   cfg = config.phil.wms.hyprland;
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit (lib) mkOption mkIf types mkEnableOption mkDefault;
 in
 {
   imports = [
@@ -47,6 +47,8 @@ in
       enable = true;
       package = pkgs.rofi-wayland;
     };
+
+    services.kanshi.systemdTarget = "hyprland-session.target";
 
     home.sessionVariables = {
       MOZ_ENABLE_WAYLAND = 1;

@@ -4,6 +4,8 @@
                :class "launcher"
                :halign "center"
                :style "background-image: url('images/nixos-image.png')")))
+               ;; https://github.com/TilCreator/NixOwO
+               ;:style "background-image: url('images/NixOwO_plain.png')")))
 
 ;; Workspaces Widgets ;;
 (defwidget workspaces [] (literal :content workspace))
@@ -96,7 +98,7 @@
                       :height "100%"
                       :anchor "left center"
                       :width "47px")
-  :monitor 0
+  :monitor @main_monitor@
   :reserve (struts :distance "35px" :side "left")
   :wm-ignore false
   :exclusive true
@@ -107,7 +109,7 @@
 
 ;; Calendar Windows ;;
 (defwindow calendar
-  :monitor 0
+  :monitor @main_monitor@
   :wm-ignore false
   :exclusive true
   :stacking "fg"

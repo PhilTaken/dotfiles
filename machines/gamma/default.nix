@@ -85,4 +85,26 @@
   }];
 
   system.stateVersion = "23.05";
+
+  home-manager.sharedModules = [{
+    phil.wms.bars.eww.main_monitor = 1;
+    services.kanshi = {
+      profiles = {
+        dual-monitor = {
+          outputs = [
+            {
+              criteria = "Philips Consumer Electronics Company PHL 245E1 0x000072DC";
+              mode = "2560x1440@74.968002";
+              position = "0,1080";
+            }
+            {
+              criteria = "WOR TERRA 2455W W507LSD00315";
+              mode = "1920x1080@60.000000";
+              position = "0,0";
+            }
+          ];
+        };
+      };
+    };
+  }];
 }

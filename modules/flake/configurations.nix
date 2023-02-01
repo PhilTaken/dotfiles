@@ -95,7 +95,6 @@ in
               name = user;
               value = lib.recursiveUpdate hmUsers.${user} {
                 userConfig.wms.hyprland.terminal = "alacritty";
-                userConfig.wms.bars.eww.main_monitor = 0;
               };
             })
             users);

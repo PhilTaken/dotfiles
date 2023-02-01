@@ -137,18 +137,19 @@ in
 
           substituteInPlace $out/vars.yuck \
             --replace '@amixer@' '${pkgs.alsa-utils}/bin/amixer' \
-            --replace '@jq@' '${pkgs.jq}/bin/jq' \
-            --replace '@mpstat@' '${pkgs.sysstat}/bin/mpstat' \
             --replace '@eww@' '${package}/bin/eww' \
             --replace '@brightnessctl@' '${pkgs.brightnessctl}/bin/brightnessctl' \
             --replace '@reload_wm@' '${cfg.reload_cmd}' \
             --replace '@quit_wm@' '${cfg.quit_cmd}' \
             --replace '@lock_wm@' '${cfg.lock_cmd}' \
-            --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \
-            --replace '@playerctl-py@' '${pylayerctl}/bin/pylayerctl'
+            --replace '@playerctl-py@' '${pylayerctl}/bin/pylayerctl' \
+            --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
 
           substituteInPlace $out/actions/actions.yuck \
             --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \
+            --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
+
+          substituteInPlace $out/bar/bar.yuck \
             --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
 
           substituteInPlace $out/scripts/popup \
