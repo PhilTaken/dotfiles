@@ -11,7 +11,7 @@ creation_rules:
     key_groups:
     - pgp:
       - *yubi
-    - age:
+      age:
       - *alpha
       - *beta
       - *gamma
