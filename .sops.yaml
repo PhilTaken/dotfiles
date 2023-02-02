@@ -1,4 +1,5 @@
 keys:
+  - &yubi 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
   - &alpha age1skfvmh8ff3fghxucv5smeceavpsh354k0z3y42sau64v6h6x6d7sj8e3c9
   - &beta age18y20unz0zx00g6h2c64tt0l0a3h47ukaun4rn4ukggcretarppysprxuxv
   - &gamma age16wkq74zjg520vfp4rlq50yffp9p4tht6jtdyz5smzlkpdvg609pqnjshkg
@@ -8,6 +9,8 @@ keys:
 creation_rules:
   - path_regex: sops/[^/]+\.yaml$
     key_groups:
+    - pgp:
+      - *yubi
     - age:
       - *alpha
       - *beta

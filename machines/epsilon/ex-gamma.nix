@@ -67,24 +67,8 @@
       fsType = "vfat";
     };
 
-  fileSystems."/media/platte" =
-    {
-      device = "/dev/disk/by-uuid/1AEA5B14EA5AEC0F";
-      fsType = "ntfs-3g";
-      options = [ "defaults" "user" "rw" "utf8" "umask=000" "uid=1000" "gid=100" "exec" ];
-    };
-
-
   swapDevices =
     [{ device = "/dev/disk/by-uuid/3e5936d8-03a3-48be-b03d-a9b5495fccdf"; }];
-
-  # high-resolution display
-  hardware.video.hidpi.enable = lib.mkDefault true;
-
-  phil.fileshare.mount.binds = [{
-    host = "delta";
-    dirs = [{ remote = "/media"; local = "/media/delta"; }];
-  }];
 
   system.stateVersion = "21.05";
 }
