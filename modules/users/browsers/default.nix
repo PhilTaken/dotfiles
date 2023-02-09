@@ -102,26 +102,27 @@ in
         enable = true;
 
         package = if cfg.firefox.wayland then waylandpkg else pkg;
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          betterttv
-          bitwarden
-          canvasblocker
-          clearurls
-          cookie-autodelete
-          floccus
-          i-dont-care-about-cookies
-          matte-black-red
-          netflix-1080p
-          no-pdf-download
-          privacy-badger
-          reddit-enhancement-suite
-          terms-of-service-didnt-read
-          ublock-origin
-        ];
-
         profiles = {
           home = {
             id = 0;
+
+            extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+              betterttv
+              bitwarden
+              canvasblocker
+              clearurls
+              cookie-autodelete
+              floccus
+              i-dont-care-about-cookies
+              matte-black-red
+              netflix-1080p
+              no-pdf-download
+              privacy-badger
+              reddit-enhancement-suite
+              terms-of-service-didnt-read
+              ublock-origin
+            ];
+
             search = {
               default = "DuckDuckGo";
               engines = {
