@@ -184,7 +184,7 @@ in
     };
 
     stylix = {
-      image = ../../../images/cat-sound.png;
+      image = ../../../images/vortex.png;
       base16Scheme = "${inputs.catppuccin-base16}/base16/mocha.yaml";
 
       targets = {
