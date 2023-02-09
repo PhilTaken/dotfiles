@@ -46,7 +46,7 @@ let
         {
           name = "Nix resources";
           icon = "fas fa-snowflake-o";
-          items =  mkLinks {
+          items = mkLinks {
             "Nixpkgs" = {
               url = "https://github.com/nixos/nixpkgs";
               subtitle = "the world!";
