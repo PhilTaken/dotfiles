@@ -81,8 +81,8 @@ rec {
         };
         extraHostModules = (inpargs.extraHostModules or [ ]) ++ [
           ({ config, ... }: {
-            sops.secrets.key.sopsFile = ../sops/nebula.yaml;
-            sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
+            #sops.secrets.key.sopsFile = ../sops/nebula.yaml;
+            #sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
 
             environment.systemPackages = [
               # WIP

@@ -11,7 +11,6 @@ let
   networkName = "milkyway";
 
   iplot = net.networks."${networkName}";
-  hostnames = builtins.attrNames iplot;
   hostname = config.networking.hostName;
   port = 4242;
 
@@ -28,7 +27,7 @@ let
 
   sopsConfig = {
     owner = config.systemd.services."nebula@${networkName}".serviceConfig.User or "root";
-    sopsFile = ../../../sops/nebula.yaml;
+    sopsFile = ../../../sops/machines + "/${config.networking.hostName}.yaml";
   };
 
   # TODO: rework this
@@ -37,17 +36,20 @@ in
 {
   options.phil.nebula.enable = mkEnableOption "nebula";
   config = mkIf cfg.enable {
-    sops.secrets.ca = sopsConfig;
-    sops.secrets."${hostname}-key" = sopsConfig;
-    sops.secrets."${hostname}-crt" = sopsConfig;
+    sops.secrets.ca = {
+      inherit (sopsConfig) owner;
+      sopsFile = ../../../sops/nebula.yaml;
+    };
+    sops.secrets."nebula-key" = sopsConfig;
+    sops.secrets."nebula-crt" = sopsConfig;
 
     services.nebula.networks."${networkName}" = {
       inherit (cfg) enable;
       inherit lighthouses isLighthouse;
 
       ca = config.sops.secrets.ca.path;
-      key = config.sops.secrets."${hostname}-key".path;
-      cert = config.sops.secrets."${hostname}-crt".path;
+      key = config.sops.secrets."nebula-key".path;
+      cert = config.sops.secrets."nebula-crt".path;
 
       tun.device = networkName;
       staticHostMap = hostMap;

@@ -7,8 +7,7 @@ keys:
   - &delta age1p98um9682a6tppcxn602f0cfmgc4rkjclyuuqlu7gf578g9fz97suqp7wj
   - &gamma-new age17c3fvjye072zy06wy5azaqtupest47xu8gztdrvlg5erwwndp4ls4ss65v
 creation_rules:
-  - path_regex: sops/[^/]+\.yaml$
-    key_groups:
+  - key_groups:
     - pgp:
       - *yubi
       age:

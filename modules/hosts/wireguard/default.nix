@@ -53,7 +53,7 @@ in
   config = mkIf cfg.enable {
     sops.secrets = {
       wireguard-key = {
-        sopsFile = ../../../sops + "/${hostname}-wireguard.yaml";
+        sopsFile = ../../../sops/machines + "/${hostname}.yaml";
       };
     };
 
