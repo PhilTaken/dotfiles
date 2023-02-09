@@ -183,8 +183,8 @@ in
           bindm = SUPER,mouse:273,resizewindow
 
           # Scroll through existing workspaces with mainMod + scroll
-          bind = SUPER, mouse_down, workspace, e+1
-          bind = SUPER, mouse_up, workspace, e-1
+          bind = SUPER, mouse_down, workspace, e-1
+          bind = SUPER, mouse_up, workspace, e+1
 
           # keyboard binds
           bind = SUPER,P,pseudo,
