@@ -116,34 +116,51 @@ in
           }
 
           decoration {
-              rounding=5
+          }
+
+          decoration {
+              rounding=10
 
               # Your blur "amount" is blur_size * blur_passes, but high blur_size (over around 5-ish) will produce artifacts.
               # if you want heavy blur, you need to up the blur_passes.
               # the more passes, the more you can up the blur_size without noticing artifacts.
-              blur=1
+              blur = yes
               blur_size=6 # minimum 1
               blur_passes=7 # minimum 1, more passes = more resource intensive.
+              blur_new_optimizations = on
 
               dim_inactive = true
               dim_strength = 0.1
 
               drop_shadow = yes
-              shadow_range = 4
+              shadow_range = 6
               shadow_render_power = 3
               col.shadow = rgba(1a1a1aee)
           }
 
           animations {
-              enabled=1
-              animation=windows,1,7,default
-              animation=border,1,10,default
-              animation=fade,1,10,default
-              animation=workspaces,1,6,default
+              enabled = yes
+
+              bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+              bezier = windowOpen, 0.01, 0.97, 0.5, 1.0
+              bezier = workspaceSwitch, 0.11, 0.76, 0.04, 1
+
+              animation = windows, 1, 4, windowOpen
+              animation = windowsOut, 1, 7, default, popin 70%
+              animation = border, 1, 10, default
+              animation = fade, 1, 7, default
+              animation = workspaces, 1, 5, workspaceSwitch
           }
 
           dwindle {
               pseudotile=0 # enable pseudotiling on dwindle
+              preserve_split = yes
+          }
+
+          master {
+              # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+              new_is_master = true
+              no_gaps_when_only = true
           }
 
           # make pinentry fancy
@@ -164,6 +181,10 @@ in
           # mouse binds
           bindm=SUPER,mouse:272,movewindow
           bindm=SUPER,mouse:273,resizewindow
+
+          # Scroll through existing workspaces with mainMod + scroll
+          bind = SUPER, mouse_down, workspace, e+1
+          bind = SUPER, mouse_up, workspace, e-1
 
           # keyboard binds
           bind=SUPER,P,pseudo,

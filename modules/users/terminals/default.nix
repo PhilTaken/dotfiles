@@ -28,7 +28,12 @@ in
       alacritty = {
         enable = true;
         settings = {
-          window.opacity = 0.8;
+          decorations = "none";
+          padding = {
+            x = 15;
+            y = 15;
+          };
+          window.opacity = 0.55;
           font.size = 13;
         };
       };
