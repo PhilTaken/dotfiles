@@ -50,8 +50,14 @@
   (box :orientation "v"
        :space-evenly false
        :vexpand false
-       :valign "start"
+       :valign "end"
        :class "control"
+    (box
+      :halign "center"
+      :style "margin-botton: 10px;"
+      (system-tray
+        :active-only false
+        :pack-direction "up"))
     (bat)
     (wifi)))
 
@@ -60,7 +66,6 @@
        :space-evenly false
        :vexpand false
        :valign "start"
-    (control)
     (workspaces)))
 
 (defwidget center []
@@ -74,10 +79,7 @@
     :orientation "v"
     :vexpand false
     :valign "end"
-    (box 
-      :halign "center"
-      :class "stray-box"
-      (system-tray :active-only false :pack-direction "up"))
+    (control)
     (time)))
 
 ;; Bar Widgets ;;
