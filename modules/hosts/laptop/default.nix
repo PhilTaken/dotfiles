@@ -58,6 +58,33 @@ in
       sessionVariables.LIBVA_DRIVER_NAME = "iHD";
     };
 
+    services.tlp = {
+      enable = true;
+      settings = {
+        SATA_LINKPWR_ON_AC = "max_performance";
+        SATA_LINKPWR_ON_BAT = "med_power_with_dipm";
+
+        TLP_DEFAULT_MODE = "BAT";
+
+        WIFI_PWR_ON_AC = "off";
+        WIFI_PWR_ON_BAT = "on";
+
+        PLATFORM_PROFILE_ON_AC = "performance";
+        PLATFORM_PROFILE_ON_BAT = "low-power";
+
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+        CPU_BOOST_ON_AC = 1;
+        CPU_BOOST_ON_BAT = 0;
+
+        SCHED_POWERSAVE_ON_AC = 0;
+        SCHED_POWERSAVE_ON_BAT = 1;
+
+        DEVICES_TO_ENABLE_ON_STARTUP = "wifi";
+      };
+    };
+
     powerManagement = {
       enable = true;
       cpuFreqGovernor = "powersave";
@@ -67,36 +94,11 @@ in
     programs.light.enable = true;
     services.xserver.libinput.touchpad.accelProfile = "flat";
 
-    services.udev.packages = with pkgs; [ qmk-udev-rules ];
-
-    #services.connman = {
-      #enable = true;
-      #enableVPN = false;
-      #wifi.backend = "wpa_supplicant";
-    #};
-
-    services.tlp.enable = true;
-
-    sops.secrets.wifi-passwords = { };
-    networking = {
-      networkmanager.enable = true;
-      wireless = {
-        enable = true;
-        userControlled.enable = true;
-        interfaces = cfg.wirelessInterfaces;
-        environmentFile = config.sops.secrets.wifi-passwords.path;
-        networks = {
-          "BBC TV truck #20" = {
-            psk = "@PSK_HOME@";
-          };
-          "TALKTALK9738BE" = {
-            psk = "@PSK_JAID@";
-          };
-          "TALKTALKD69C48" = {
-            psk = "@PSK_VAC@";
-          };
-        };
-      };
+    services.udev.packages = builtins.attrValues {
+      inherit (pkgs) qmk-udev-rules;
     };
+
+    #sops.secrets.wifi-passwords = { };
+    networking.networkmanager.enable = true;
   };
 }
