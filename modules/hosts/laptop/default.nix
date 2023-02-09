@@ -69,29 +69,32 @@ in
 
     services.udev.packages = with pkgs; [ qmk-udev-rules ];
 
-    services.connman = {
-      enable = true;
-      enableVPN = false;
-      wifi.backend = "wpa_supplicant";
-    };
+    #services.connman = {
+      #enable = true;
+      #enableVPN = false;
+      #wifi.backend = "wpa_supplicant";
+    #};
 
     services.tlp.enable = true;
 
     sops.secrets.wifi-passwords = { };
-    networking.wireless = {
-      enable = true;
-      userControlled.enable = true;
-      interfaces = cfg.wirelessInterfaces;
-      environmentFile = config.sops.secrets.wifi-passwords.path;
-      networks = {
-        "BBC TV truck #20" = {
-          psk = "@PSK_HOME@";
-        };
-        "TALKTALK9738BE" = {
-          psk = "@PSK_JAID@";
-        };
-        "TALKTALKD69C48" = {
-          psk = "@PSK_VAC@";
+    networking = {
+      networkmanager.enable = true;
+      wireless = {
+        enable = true;
+        userControlled.enable = true;
+        interfaces = cfg.wirelessInterfaces;
+        environmentFile = config.sops.secrets.wifi-passwords.path;
+        networks = {
+          "BBC TV truck #20" = {
+            psk = "@PSK_HOME@";
+          };
+          "TALKTALK9738BE" = {
+            psk = "@PSK_JAID@";
+          };
+          "TALKTALKD69C48" = {
+            psk = "@PSK_VAC@";
+          };
         };
       };
     };
