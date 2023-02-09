@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, nixosConfig
 , ...
 }@inputs:
 
@@ -32,7 +33,7 @@ rec {
     bg = mkOption {
       description = "Main background";
       type = types.path;
-      default = ../../../../images/cat-sound.png;
+      default = nixosConfig.stylix.image;
     };
 
     terminal_font = mkOption {

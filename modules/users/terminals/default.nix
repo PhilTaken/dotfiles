@@ -28,12 +28,14 @@ in
       alacritty = {
         enable = true;
         settings = {
-          decorations = "none";
-          padding = {
-            x = 15;
-            y = 15;
+          window = {
+            opacity = 0.55;
+            padding = {
+              x = 5;
+              y = 5;
+            };
+            decorations = "none";
           };
-          window.opacity = 0.55;
           font.size = 13;
         };
       };
