@@ -115,7 +115,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    phil.wms.bars.barcommand = mkIf cfg.autostart "${package}/bin/eww open bar";
+    phil.wms.bars.barcommand = mkIf cfg.autostart "pkill eww; ${package}/bin/eww open bar";
 
     home.packages = with pkgs; [
       kde-gtk-config
