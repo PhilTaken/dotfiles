@@ -2,8 +2,9 @@
 , config
 , lib
 , nixosConfig
+, inputs
 , ...
-}@inputs:
+}:
 
 let
   cfg = config.phil.wms.hyprland;
@@ -11,7 +12,7 @@ let
 in
 {
   imports = [
-    inputs.inputs.hyprland.homeManagerModules.default
+    inputs.hyprland.homeManagerModules.default
   ];
 
   options.phil.wms.hyprland = {
@@ -43,10 +44,18 @@ in
   };
 
   config = mkIf cfg.enable {
-    phil.wms.tools.udiskie.enable = true;
-    phil.wms.tools.rofi = {
-      enable = true;
-      package = pkgs.rofi-wayland;
+    phil.wms = {
+      tools = {
+        udiskie.enable = true;
+        rofi = {
+          enable = true;
+          package = pkgs.rofi-wayland;
+        };
+      };
+      wms.serviceCommands = {
+        wallpaper = "${pkgs.swaybg}/bin/swaybg -i ${cfg.background_image}";
+        eww-bar = config.phil.wms.bars.barcommand;
+      };
     };
 
     services.kanshi.systemdTarget = "hyprland-session.target";
@@ -75,7 +84,6 @@ in
         lock = "swaylock -c 000000";
         menu = "rofi -show drun";
 
-        inherit (inputs.config.phil.wms.bars) barcommand;
         left = "y";
         down = "n";
         up = "e";
@@ -84,11 +92,6 @@ in
       {
         enable = true;
         extraConfig = ''
-          # This is an example Hyprland config file.
-          # Syntax is the same as in Hypr, but settings might differ.
-          #
-          # Refer to the wiki for more information.
-
           monitor = DP-1,2560x1440@75,0x1080,1
           monitor = DVI-D-1,1920x1080@60,0x0,1
           #workspace = DP-1,1
@@ -104,7 +107,8 @@ in
           }
 
           general {
-              sensitivity = 1.0 # for mouse cursor
+              # for mouse cursor
+              sensitivity = 1.0
 
               gaps_in = 5
               gaps_out = 5
@@ -236,11 +240,8 @@ in
           bind = ,XF86AudioPlay,exec,${pkgs.playerctl}/bin/playerctl play-pause
 
           exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-          exec-once = ${pkgs.swaybg}/bin/swaybg -i ${cfg.background_image}
-          exec-once = ${barcommand}
         '';
       };
-
 
     # TODO: move someplace else
     programs = {

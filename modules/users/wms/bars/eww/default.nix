@@ -23,39 +23,41 @@ let
       pkgs.playerctl
     ];
 
-    src = pkgs.writers.writePython3 "playerctl" {
-      libraries = [
-        pkgs.python3Packages.pygobject3
-        pkgs.python3Packages.requests
-        (pkgs.python3Packages.buildPythonPackage rec {
-          pname = "material-color-utilities-python";
-          version = "0.1.5";
+    src = pkgs.writers.writePython3 "playerctl"
+      {
+        libraries = [
+          pkgs.python3Packages.pygobject3
+          pkgs.python3Packages.requests
+          (pkgs.python3Packages.buildPythonPackage rec {
+            pname = "material-color-utilities-python";
+            version = "0.1.5";
 
-          propagatedBuildInputs = with pkgs.python3Packages; [ regex pillow ];
+            propagatedBuildInputs = with pkgs.python3Packages; [ regex pillow ];
 
-          src = pkgs.fetchPypi {
-            inherit pname version;
-            sha256 = "sha256-PG8C585wWViFRHve83z3b9NijHyV+iGY2BdMJpyVH64=";
-          };
+            src = pkgs.fetchPypi {
+              inherit pname version;
+              sha256 = "sha256-PG8C585wWViFRHve83z3b9NijHyV+iGY2BdMJpyVH64=";
+            };
 
-          doCheck = false;
-        })
-      ];
-      flakeIgnore = [
-        "E116"
-        "E222"
-        "E226"
-        "E231"
-        "E261"
-        "E402"
-        "E501"
-        "F401"
-        "F403"
-        "F405"
-        "F841"
-        "W503"
-      ];
-    } (builtins.readFile ./playerctl.py);
+            doCheck = false;
+          })
+        ];
+        flakeIgnore = [
+          "E116"
+          "E222"
+          "E226"
+          "E231"
+          "E261"
+          "E402"
+          "E501"
+          "F401"
+          "F403"
+          "F405"
+          "F841"
+          "W503"
+        ];
+      }
+      (builtins.readFile ./playerctl.py);
     dontUnpack = true;
 
     buildPhase = ''

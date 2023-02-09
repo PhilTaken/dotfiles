@@ -1,0 +1,7 @@
+{
+  "player": {
+    "mpd_cache": "$XDG_CACHE_HOME/eww/mpd",
+    "pctl_cache": "$XDG_CACHE_HOME/eww/pctl",
+    "default_art": "$XDG_CONFIG_HOME/eww/assets/cover.png"
+  }
+}
