@@ -13,7 +13,7 @@ in
     enable = mkOption {
       description = "Enable the vscode module";
       type = types.bool;
-      default = true;
+      default = false;
     };
   };
 
