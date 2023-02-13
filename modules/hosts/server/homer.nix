@@ -75,6 +75,13 @@ let
               tag = "webapp";
               keywords = "nix search library";
             };
+            "Language Toolkit Reference" = {
+              url = "https://ryantm.github.io/nixpkgs/";
+              subtitle = "Toolkit References";
+              icon = "fas fa-book";
+              tag = "webapp";
+              keywords = "nix search library reference";
+            };
           };
         }
       ];
