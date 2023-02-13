@@ -9,6 +9,10 @@ let
   cfg = config.phil.sound;
 in
 {
+  imports = [
+    ./gmedia-extension.nix
+  ];
+
   options.phil.sound = {
     enable = mkOption {
       description = "enable the sound module";
@@ -27,8 +31,22 @@ in
     # Enable sound.
     sound.enable = true;
     sound.mediaKeys.enable = true;
-    hardware.pulseaudio.enable = false;
+    hardware.pulseaudio = {
+      enable = false;
+      extraModules = builtins.attrValues {
+        inherit (pkgs) pulseaudio-dlna;
+      };
+    };
 
+    services.gmediarender = {
+      enable = false;
+      uuid = "95a939fc-6330-434d-977d-97c4c46118e8";
+      friendlyName = "render on ${config.networking.hostName}";
+      #audioSink = "alsasink";
+      #audioDevice = "default";
+    };
+
+    security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -36,6 +54,5 @@ in
       pulse.enable = true;
       jack.enable = true;
     };
-
   };
 }
