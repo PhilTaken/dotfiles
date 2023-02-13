@@ -12,6 +12,16 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
+
+  # https://nixos.wiki/wiki/OSX-KVM
+  boot.extraModprobeConfig = ''
+    options kvm_intel nested=1
+    options kvm_intel emulate_invalid_guest_state=0
+    options kvm ignore_msrs=1
+  '';
+
+  virtualisation.libvirtd.enable = true;
+
   #boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
