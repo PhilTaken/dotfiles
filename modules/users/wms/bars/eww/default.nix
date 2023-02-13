@@ -115,12 +115,18 @@ in
   };
 
   config = mkIf cfg.enable {
-    phil.wms.bars.barcommand = mkIf cfg.autostart "pkill eww; ${package}/bin/eww open bar";
+    phil.wms = {
+      bars.barcommand = mkIf cfg.autostart "${package}/bin/eww --restart --no-daemonize open bar";
+      serviceCommands = {
+        eww-daemon = "";
+        eww-bar = "${config.phil.wms.bars.barcommand}";
+      };
+    };
 
-    home.packages = with pkgs; [
-      kde-gtk-config
-      package
-    ];
+    home.packages = builtins.attrValues {
+      inherit (pkgs) kde-gtk-config;
+      inherit package;
+    };
 
     programs.eww = {
       enable = true;

@@ -54,7 +54,6 @@ in
       };
       serviceCommands = {
         wallpaper = "${pkgs.swaybg}/bin/swaybg -i ${cfg.background_image}";
-        eww-bar = config.phil.wms.bars.barcommand;
       };
     };
 

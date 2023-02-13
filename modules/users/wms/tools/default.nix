@@ -10,7 +10,6 @@ let
 
   mkService = name: ExecStart: {
     Unit = {
-      Description = "Unit for setting the background";
       After = "graphical-session-pre.target";
       PartOf = "graphical-session.target";
     };
