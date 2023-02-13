@@ -2,6 +2,7 @@
 , config
 , lib
 , net
+, inputs
 , ...
 }:
 
@@ -56,6 +57,7 @@ in
 
       # TODO add my own registry
       registry = {
+        nixpkgs.flake = inputs.nixpkgs;
         flake-templates = {
           from = {
             id = "custom";
@@ -105,6 +107,9 @@ in
     };
 
     hardware.enableRedistributableFirmware = true;
+
+    environment.etc."nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
+    nix.nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
 
     # link to cachix token env file
     sops.secrets.cachix-token = { };
