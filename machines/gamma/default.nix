@@ -44,6 +44,7 @@
     };
   };
 
+  boot.plymouth.enable = true;
 
   fileSystems = {
     "/" = {
