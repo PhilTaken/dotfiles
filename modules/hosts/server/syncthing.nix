@@ -45,13 +45,13 @@ in
       key = config.sops.secrets.syncthing-key.path;
       cert = config.sops.secrets.syncthing-cert.path;
 
-      devices = {
-      };
+      #devices = {
+      #};
 
-      folders = {
-        "" = {
-        };
-      };
+      #folders = {
+        #"" = {
+        #};
+      #};
 
       overrideFolders = cfg.override;
       overrideDevices = cfg.override;
