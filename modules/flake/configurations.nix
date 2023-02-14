@@ -92,13 +92,17 @@ in
 
         extraHostModules = [
           "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
-          ({...}: {
-            # WIP: decrypt secrets with yubikey
-            #sops.gnupg = {
-              #home = "/run/gpghome";
-              #sshKeyPaths = [];
-            #};
-          })
+          {
+            sops.age = lib.mkForce {
+              keyFile = null;
+              generateKey = false;
+            };
+
+            sops.gnupg = {
+              home = "/run/gpghome";
+              sshKeyPaths = [];
+            };
+          }
         ];
 
         systemConfig = {
