@@ -29,7 +29,7 @@ in
         enable = true;
         settings = {
           window = {
-            opacity = 0.55;
+            opacity = 0.65;
             padding = {
               x = 5;
               y = 5;
