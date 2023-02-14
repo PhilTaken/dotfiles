@@ -12,6 +12,7 @@ in
 {
   imports = [
     inputs.spicetify.homeManagerModule
+    ./autoeq-easyeffects.nix
   ];
 
   options.phil.music = {
@@ -87,7 +88,12 @@ in
         ];
       };
 
-    services.easyeffects.enable = true;
+    services.easyeffects = {
+      enable = true;
+      presets = [
+        "TFZ Queen"
+      ];
+    };
 
     home.packages = with pkgs; [
       #spotify-unwrapped
