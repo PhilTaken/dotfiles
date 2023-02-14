@@ -97,6 +97,8 @@ in
         systemConfig = {
           server.services.openssh.enable = true;
 
+          dns.nameserver = null;
+
           sops.gnupg = {
             home = "/run/gpghome";
             sshKeyPaths = [];
