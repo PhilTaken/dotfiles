@@ -86,6 +86,29 @@ in
         system = "x86_64-linux";
       };
 
+      x86-iso2 = util.host.mkHost rec {
+        users = [ "nixos" ];
+        hmUsers = mkHMUsers users;
+
+        extraHostModules = [
+          "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
+        ];
+
+        systemConfig = {
+          server.services.openssh.enable = true;
+
+          sops.gnupg = {
+            home = "/run/gpghome";
+            sshKeyPaths = [];
+          };
+
+          wireguard.enable = false;
+          core.hostName = "iso";
+        };
+
+        hardware-config = {};
+      };
+
       # desktop @ home
       gamma =
         let
@@ -157,6 +180,7 @@ in
 
     packages = {
       x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
+      x86-iso2 = self.nixosConfigurations.x86-iso2.config.system.build.isoImage;
     };
   };
 }

@@ -13,6 +13,7 @@
 
       modules = [
         ../modules/hosts/server/openssh.nix
+
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
         ({ pkgs, ... }: {
           phil.server.services.openssh.enable = true;

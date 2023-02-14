@@ -4,6 +4,8 @@ centralize config more:
     - better ssh keys handling (public keys copied everywhere)
     - move gpg keys to some .nix file
 
+- set up root gnupg home to use sops with yubikey on iso (x86-iso2)
+
 ## general
 
 - setup ci/flake update via hercules-ci on delta

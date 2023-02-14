@@ -32,6 +32,13 @@ in
     programs.gpg = {
       enable = true;
       settings.default-key = mkIf (cfg.gpgKey != null) cfg.gpgKey;
+      homedir = "${config.xdg.dataHome}/gnupg";
+      publicKeys = [
+        {
+          source = ./pubkey.txt;
+          trust = 5;
+        }
+      ];
     };
 
     services.gpg-agent = mkIf (cfg.sshKeys != [ ]) {
