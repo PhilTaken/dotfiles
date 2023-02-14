@@ -15,6 +15,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    stylix.targets.fish.enable = false;
+
     programs.fish = {
       enable = true;
 

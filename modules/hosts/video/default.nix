@@ -187,11 +187,6 @@ in
       image = ../../../images/vortex.png;
       base16Scheme = "${inputs.catppuccin-base16}/base16/mocha.yaml";
 
-      targets = {
-        vim.enable = false;
-        fish.enable = false;
-      };
-
       fonts = {
         serif = {
           package = pkgs.dejavu_fonts;
