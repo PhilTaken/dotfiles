@@ -1972,6 +1972,7 @@
         "stylix": "stylix",
         "tmm-src": "tmm-src",
         "tmux-nvr-src": "tmux-nvr-src",
+        "vim-async-src": "vim-async-src",
         "vim-extra-plugins": "vim-extra-plugins",
         "vim-janet-src": "vim-janet-src",
         "vim-terraform-src": "vim-terraform-src",
@@ -2256,6 +2257,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "vim-async-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1675246102,
+        "narHash": "sha256-ozjg+CkuypwEV3uErDszADpnfM1YujfapUS6dFahp4k=",
+        "owner": "kevinhwang91",
+        "repo": "promise-async",
+        "rev": "7fa127fa80e7d4d447e0e2c78e99af4355f4247b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kevinhwang91",
+        "repo": "promise-async",
         "type": "github"
       }
     },

@@ -169,6 +169,12 @@
       flake = false;
     };
 
+    vim-async-src = {
+      url = "github:kevinhwang91/promise-async";
+      flake = false;
+    };
+
+    # colorscheme
     catppuccin-base16 = {
       url = "github:catppuccin/base16";
       flake = false;

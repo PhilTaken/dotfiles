@@ -200,6 +200,7 @@ in
         { pname = "janet.vim"; src = inputs.vim-janet-src; }
         { pname = "vim-terraform"; src = inputs.vim-terraform-src; }
         { pname = "yuck.vim"; src = inputs.vim-yuck-src; }
+        { pname = "promise-async"; src = inputs.vim-async-src; }
       ]);
     };
 
