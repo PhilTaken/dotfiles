@@ -2,6 +2,7 @@
 , lib
 , modulesPath
 , pkgs
+#, inputs
 , ...
 }:
 
@@ -9,7 +10,12 @@
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
+#      inputs.disko.nixosModules.disko
     ];
+
+  disko.devices = import ./disko-config.nix {
+    disks = ["/dev/sda"];
+  };
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
@@ -26,34 +32,11 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/dd7e63f1-7c6a-4928-b556-2497c62bd764";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/4BD0-8F85";
-      fsType = "vfat";
-    };
-
-  swapDevices = [ ];
-
   # -----------------------------------------------------------------------------------------------------
   # TODO move to keyboard ( qmk ?) module
 
   services.udev = {
     extraRules = builtins.readFile ./50-qmk.rules;
-  };
-
-  system.activationScripts = {
-    rfkillUnblockWlan = {
-      text = ''
-        rfkill unblock wifi
-      '';
-      deps = [ ];
-    };
   };
 
   # This value determines the NixOS release from which the default

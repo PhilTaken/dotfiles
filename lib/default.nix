@@ -4,8 +4,8 @@ let
     default = [
       inputs.arm-rs.nixosModules.default
       inputs.sops-nix-src.nixosModules.sops
-      inputs.home-manager.nixosModules.home-manager
       inputs.stylix.nixosModules.stylix
+      inputs.home-manager.nixosModules.home-manager
       inputs.hyprland.nixosModules.default
       inputs.disko.nixosModules.disko
     ];
