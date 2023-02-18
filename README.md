@@ -50,3 +50,11 @@ Secrets are provisioned by [sops-nix](https://github.com/Mic92/sops-nix) using [
 **early WIP**
 
 I have implemented some basic [telegraf](https://www.influxdata.com/time-series-platform/telegraf/) to [influxdb2](https://www.influxdata.com/) monitoring for basic metrics such as temperature and cpu utilisation as well as [vector](https://vector.dev/) to send the system's syslog to [grafana](https://grafana.com/).
+
+# Installing (wip section)
+
+1. partition disk using disko (nix build .#\$HOST-disko-setup, run the script)
+2. generate age keys, stick em into /var/lib/sops-nix
+3. copy generated age-keys to sops config, update the keys
+4. `nixos-install --root ... --flake .#$HOST`
+5. reboot
