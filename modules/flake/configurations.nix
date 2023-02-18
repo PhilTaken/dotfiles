@@ -99,10 +99,10 @@ in
 
           dns.nameserver = null;
 
-          sops.gnupg = {
-            home = "/run/gpghome";
-            sshKeyPaths = [];
-          };
+          #sops.gnupg = {
+            #home = "/run/gpghome";
+            #sshKeyPaths = [];
+          #};
 
           wireguard.enable = false;
           core.hostName = "iso";
@@ -180,9 +180,14 @@ in
     #homeConfigurations = lib.mapAttrs (util.user.mkHMUser (util.pkgsFor system)) hmUsers;
     checks = (builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib).${system};
 
-    packages = {
-      x86-iso = self.nixosConfigurations.x86-iso.config.system.build.isoImage;
-      x86-iso2 = self.nixosConfigurations.x86-iso2.config.system.build.isoImage;
-    };
+    # requires ifd :/
+    packages = (lib.mapAttrs' (n: v: {
+      name = "${n}-iso";
+      value = v.config.system.build.isoImage;
+    }) (lib.filterAttrs (n: v: v.config.system.build ? isoImage) self.nixosConfigurations))
+    // (lib.mapAttrs' (n: v: {
+      name = "${n}-disko-setup";
+      value = v.config.system.build.disko;
+    }) (lib.filterAttrs (n: v: v.config.system.build ? disko) self.nixosConfigurations));
   };
 }
