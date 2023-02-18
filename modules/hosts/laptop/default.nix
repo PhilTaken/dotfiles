@@ -29,7 +29,7 @@ in
   config = mkIf cfg.enable {
     sops.secrets.nix-remote-sshkey = { };
 
-    programs.steam.enable = lib.mkDefault true;
+    programs.steam.enable = lib.mkDefault false;
     phil.core.enableBluetooth = lib.mkDefault true;
     hardware.acpilight.enable = true;
 
@@ -98,7 +98,6 @@ in
       inherit (pkgs) qmk-udev-rules;
     };
 
-    #sops.secrets.wifi-passwords = { };
     networking.networkmanager.enable = true;
   };
 }
