@@ -108,7 +108,7 @@ in
               name = "cbuild";
               help = "Build and compare a NixOS Configuration (local)";
               command = mkSystemScript ''
-                nixos-rebuild --use-remote-sudo --flake ".#$1" build ''${@:2}
+                nixos-rebuild --use-remote-sudo --flake ".#$1" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
                 ${pkgs.nvd}/bin/nvd diff /run/current-system result
               '';
               category = "system";
@@ -118,7 +118,7 @@ in
               name = "cswitch";
               help = "Switch to a NixOS Configuration (local)";
               command = mkSystemScript ''
-                nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2}
+                nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
               '';
               category = "system";
             }
