@@ -116,9 +116,8 @@ in
 
   config = mkIf cfg.enable {
     phil.wms = {
-      bars.barcommand = mkIf cfg.autostart "${package}/bin/eww --restart --no-daemonize open bar";
+      bars.barcommand = mkIf cfg.autostart "${package}/bin/eww --restart open bar";
       serviceCommands = {
-        eww-daemon = "";
         eww-bar = "${config.phil.wms.bars.barcommand}";
       };
     };
