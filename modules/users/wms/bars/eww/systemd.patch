@@ -1,0 +1,13 @@
+diff --git a/crates/eww/src/server.rs b/crates/eww/src/server.rs
+index 93a03ba..43c3b86 100644
+--- a/crates/eww/src/server.rs
++++ b/crates/eww/src/server.rs
+@@ -54,7 +54,7 @@ pub fn initialize_server(paths: EwwPaths, action: Option<DaemonCommand>, should_
+         log::info!("Shutting down eww daemon...");
+         if let Err(e) = crate::application_lifecycle::send_exit() {
+             log::error!("Failed to send application shutdown event to workers: {:?}", e);
+-            std::process::exit(1);
++            //std::process::exit(1);
+         }
+     });
+ 

@@ -7,7 +7,11 @@
 let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.wms.bars.eww;
-  package = if cfg.enableWayland then pkgs.eww-wayland else pkgs.eww;
+  package = (if cfg.enableWayland then pkgs.eww-wayland else pkgs.eww).overrideAttrs(old: {
+    patches = (old.patches or []) ++ [
+      ./systemd.patch
+    ];
+  });
 
   pylayerctl = pkgs.stdenv.mkDerivation rec {
     name = "pylayerctl";
@@ -116,7 +120,7 @@ in
 
   config = mkIf cfg.enable {
     phil.wms = {
-      bars.barcommand = mkIf cfg.autostart "${package}/bin/eww --restart open bar";
+      bars.barcommand = mkIf cfg.autostart "${package}/bin/eww --debug open bar";
       serviceCommands = {
         eww-bar = "${config.phil.wms.bars.barcommand}";
       };
