@@ -92,18 +92,19 @@ in
 
         extraHostModules = [
           "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
+          ({...}: {
+            # wifi, ethernet, etc
+            networking.networkmanager.enable = true;
+            #sops.gnupg = {
+              #home = "/run/gpghome";
+              #sshKeyPaths = [];
+            #};
+          })
         ];
 
         systemConfig = {
           server.services.openssh.enable = true;
-
           dns.nameserver = null;
-
-          #sops.gnupg = {
-            #home = "/run/gpghome";
-            #sshKeyPaths = [];
-          #};
-
           wireguard.enable = false;
           core.hostName = "iso";
         };
