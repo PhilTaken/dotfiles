@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # vi: ft=sh
 
 bat=/sys/class/power_supply/BAT0/

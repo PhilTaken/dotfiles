@@ -1,8 +1,5 @@
 ;; link to correct binaries, replaced by nix at eval time
 ;; toplevel variables blocked by https://github.com/elkowar/eww/issues/518
-(defvar amixer "@amixer@")
-(defvar eww "@eww@")
-(defvar brightnessctl "@brightnessctl@")
 (defvar reload-wm '@reload_wm@')
 (defvar quit-wm "@quit_wm@")
 (defvar lock-wm "@lock_wm@ &")
@@ -11,7 +8,7 @@
 ;;                          Widget's Sections                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Launcher Widgets ;;
-(defpoll current-volume :interval "2s" "@amixer@ sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll current-volume :interval "2s" "amixer sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
 
 (defpoll battery            :interval "5s"  "scripts/battery icon")
 (defpoll battery-cappacity  :interval "5s"  "scripts/battery percent")
@@ -19,7 +16,7 @@
 (defpoll wifi-icon :interval "5s" "scripts/wifi icon")
 (defpoll wifi-name :interval "5s" "scripts/wifi name")
 
-(defpoll current-brightness :interval "1s" "@brightnessctl@ -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defpoll current-brightness :interval "1s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
 
 (defpoll hour   :interval "5s"  "date '+%H'")
 (defpoll min    :interval "5s"  "date '+%M'")
@@ -27,16 +24,16 @@
 (defpoll calendar_month :interval "10h" "scripts/calendar")
 (defpoll calendar_year :interval "10h" "date '+%Y'")
 
-(deflisten pctl_sub "@playerctl-py@")
-(deflisten workspace "./scripts/workspace")
+(deflisten pctl_sub "playerctl-py")
+(deflisten workspace "scripts/workspace")
 
 ;; new
 
 (defpoll username :interval "1s" "scripts/user.sh")
 
-(defpoll network_status :interval "1s" "~/.config/eww/scripts/network.sh status")
-(defpoll network_radio :interval "1s" "~/.config/eww/scripts/network.sh radio-status")
-(defpoll network_ssid :interval "1s" "~/.config/eww/scripts/network.sh ssid")
+(defpoll network_status :interval "1s" "scripts/network.sh status")
+(defpoll network_radio :interval "1s" "scripts/network.sh radio-status")
+(defpoll network_ssid :interval "1s" "scripts/network.sh ssid")
 
 (defpoll bluetooth_state :interval "1s" "scripts/bluetooth.sh state")
 (defpoll mic_status :interval "1s" "scripts/mic status")

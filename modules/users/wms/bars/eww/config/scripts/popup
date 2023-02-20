@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # vi: ft=sh
 
 dashboard() {
@@ -30,7 +30,7 @@ calendar() {
 if [ "$1" = "dashboard" ]; then
     dashboard &
 elif [ "$1" = "audio" ]; then
-    @pavucontrol@ &
+    pavucontrol &
 elif [ "$1" = "calendar" ]; then
     calendar &
 fi

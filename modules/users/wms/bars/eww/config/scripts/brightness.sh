@@ -35,7 +35,7 @@ get_icon () {
 }
 
 if [[ $1 == "enabled" ]]; then
-    if $(command -v brightnessctl); then
+    if $(command -v brightnessctl >/dev/null 2>&1); then
         echo "true"
     else
         echo "false"

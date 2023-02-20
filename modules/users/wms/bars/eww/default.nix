@@ -14,7 +14,7 @@ let
   });
 
   pylayerctl = pkgs.stdenv.mkDerivation rec {
-    name = "pylayerctl";
+    name = "playerctl-py";
 
     nativeBuildInputs = [
       pkgs.wrapGAppsHook
@@ -27,7 +27,7 @@ let
       pkgs.playerctl
     ];
 
-    src = pkgs.writers.writePython3 "playerctl"
+    src = pkgs.writers.writePython3 "playerctl-py"
       {
         libraries = [
           pkgs.python3Packages.pygobject3
@@ -120,15 +120,28 @@ in
 
   config = mkIf cfg.enable {
     phil.wms = {
-      bars.barcommand = mkIf cfg.autostart "${package}/bin/eww --debug open bar";
+      bars.barcommand = mkIf cfg.autostart "${package}/bin/eww --no-daemonize open bar";
       serviceCommands = {
-        eww-bar = "${config.phil.wms.bars.barcommand}";
+        eww-daemon = {
+          Service.ExecStart = "${package}/bin/eww daemon --no-daemonize --debug";
+          Service.Environment = "PATH=/run/wrappers/bin:${lib.makeBinPath (builtins.attrValues {
+            inherit (pkgs)
+              alsa-utils brightnessctl rofi-wayland
+              kitty pavucontrol socat hyprland jq
+              gnugrep gawk gnused coreutils
+              bash playerctl bluez networkmanager;
+            inherit package pylayerctl;
+          })}";
+        };
+        #eww-bar = {
+          #Service.ExecStart = "${config.phil.wms.bars.barcommand}";
+          #Unit.After = "eww-daemon.service";
+        #};
       };
     };
 
     home.packages = builtins.attrValues {
       inherit (pkgs) kde-gtk-config;
-      inherit package;
     };
 
     programs.eww = {
@@ -141,37 +154,22 @@ in
 
         src = ./config;
 
-        # TODO: replace commands with actual paths to binaries
+        # TODO: inject remaining substitutes via env variables for faster eww config iteration
         installPhase = ''
           mkdir -p $out
           cp -r $src/* $out
 
           substituteInPlace $out/vars.yuck \
-            --replace '@amixer@' '${pkgs.alsa-utils}/bin/amixer' \
-            --replace '@eww@' '${package}/bin/eww' \
-            --replace '@brightnessctl@' '${pkgs.brightnessctl}/bin/brightnessctl' \
             --replace '@reload_wm@' '${cfg.reload_cmd}' \
             --replace '@quit_wm@' '${cfg.quit_cmd}' \
             --replace '@lock_wm@' '${cfg.lock_cmd}' \
-            --replace '@playerctl-py@' '${pylayerctl}/bin/pylayerctl' \
             --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
 
           substituteInPlace $out/actions/actions.yuck \
-            --replace '@playerctl@' '${pkgs.playerctl}/bin/playerctl' \
             --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
 
           substituteInPlace $out/bar/bar.yuck \
             --replace '@main_monitor@' '${builtins.toString cfg.main_monitor}'
-
-          substituteInPlace $out/scripts/popup \
-            --replace '@rofi@' '${pkgs.rofi-wayland}/bin/rofi' \
-            --replace '@terminal@' '${pkgs.kitty}/bin/kitty' \
-            --replace '@pavucontrol@' '${pkgs.pavucontrol}/bin/pavucontrol'
-
-          substituteInPlace $out/scripts/workspace \
-            --replace '@socat@' '${pkgs.socat}/bin/socat' \
-            --replace '@hyprctl@' '${pkgs.hyprland}/bin/hyprctl' \
-            --replace '@jq@' '${pkgs.jq}/bin/jq'
         '';
       };
     };

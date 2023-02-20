@@ -8,27 +8,24 @@ let
 
   cfg = config.phil.wms;
 
-  mkService = name: ExecStart: {
-    Unit = {
-      After = "graphical-session-pre.target";
-      PartOf = "graphical-session.target";
-    };
+  mkService = name: value: let
+    extraAttrs = if builtins.typeOf value == "string" then {} else value;
+    ExecStart = if builtins.typeOf value == "string" then value else extraAttrs.Service.ExecStart;
+  in lib.recursiveUpdate {
+    Unit.PartOf = "graphical-session.target";
+    Install.WantedBy = [ "graphical-session.target" ];
 
     Service = {
       inherit ExecStart;
       Restart = "on-abort";
     };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
+  } extraAttrs;
 in
 {
   options.phil.wms = {
     serviceCommands = mkOption {
       description = "extra commands to wrap as systemd services";
-      type = types.attrsOf types.str;
+      type = types.attrsOf (types.either types.str (types.attrsOf types.anything));
       default = {};
     };
   };

@@ -245,8 +245,7 @@ def get_material_you_colors(image_path: str) -> dict:
 
 
 if __name__ == "__main__":
-    os.makedirs(os.path.expandvars("$XDG_DATA_HOME/eww"), exist_ok=True)
-    with open(os.path.expandvars("$XDG_DATA_HOME/eww/ewwrc"), encoding="utf8") as file:
+    with open(os.path.expandvars("$XDG_CONFIG_HOME/eww/ewwrc"), encoding="utf8") as file:
         config: dict = json.loads(file.read())["player"]
         default_cover = os.path.expandvars(config["default_art"])
         pctl_cache = os.path.expandvars(config["pctl_cache"])
@@ -270,6 +269,3 @@ if __name__ == "__main__":
         loop.run()
     except (KeyboardInterrupt, Exception) as excep:
         loop.quit()
-
-
-# vim:filetype=python

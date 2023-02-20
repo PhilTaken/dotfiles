@@ -1,6 +1,6 @@
 (defwidget launcher []
   (box
-       (button :onclick "${eww} open --toggle actions-closer && ${eww} open --toggle actions"
+       (button :onclick "eww open --toggle actions-closer && eww open --toggle actions"
                :class "launcher"
                :halign "center"
                :style "background-image: url('images/nixos-image.png')")))
@@ -30,9 +30,9 @@
           :class "time"
           :space-evenly false
           :valign "end"
-    (button :onclick "${eww} open --toggle calendar"
+    (button :onclick "eww open --toggle calendar"
             :class "time-hour" hour)
-    (button :onclick "${eww} open --toggle calendar"
+    (button :onclick "eww open --toggle calendar"
             :class "time-min"  min)))
 
 ;; Calendar Widgets ;;
@@ -54,7 +54,7 @@
        :class "control"
     (box
       :halign "center"
-      :style "margin-botton: 10px;"
+      :style "margin-bottom: 10px;"
       (system-tray
         :active-only false
         :pack-direction "up"))

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # vi: ft=sh
 
-# @requires: amixer
-
 percentage () {
   local val=$(echo $1 | tr '%' ' ' | awk '{print $1}')
   local icon1=$2
@@ -26,10 +24,10 @@ is_muted () {
 
 get_percentage () {
   local muted=$(is_muted)
-  if [[ $muted == 'yes' ]]; then
+  if [[ "$muted" == 'yes' ]]; then
     echo "muted"
   else
-    amixer get Master | grep % |awk '{print $5}'| sed -e 's/\[//' -e 's/\]//' | head -n 1
+    amixer get Master | grep "%" | awk '{print $5}'| sed -e 's/\[//' -e 's/\]//' | head -n 1
   fi
 }
 

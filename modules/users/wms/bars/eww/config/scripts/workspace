@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # vi: ft=sh
 #
 # TODO: make more compositor-agnostic
@@ -8,9 +8,9 @@ active_monitor=0
 
 
 workspaces() {
-    command="@hyprctl@ dispatch workspace"
+    command="hyprctl dispatch workspace"
     raw_box="(box :class \"works\" :orientation \"v\" :halign \"center\" :valign \"start\" :space-evenly \"false\" :spacing \"2\""
-    workspaces=$(@hyprctl@ workspaces -j)
+    workspaces=$(hyprctl workspaces -j)
 
     focused () {
         if [[ "$1" == "$active_workspace" ]]; then
@@ -20,8 +20,8 @@ workspaces() {
         fi
     }
 
-    for wsid in $(echo $workspaces | @jq@ '.[].id' | sort -h); do
-        name=$(echo $workspaces | @jq@ '[.[] | if .id == '$wsid' then .name else "" end] | join("")')
+    for wsid in $(echo $workspaces | jq '.[].id' | sort -h); do
+        name=$(echo $workspaces | jq '[.[] | if .id == '$wsid' then .name else "" end] | join("")')
         foc=$(focused $wsid)
 
         raw_box="$raw_box (button :onclick \"$command $wsid\" :class \"ws-$foc\" $name)"
@@ -51,6 +51,6 @@ function handle {
 
 
 workspaces
-@socat@ -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r event; do
+socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r event; do
     handle "$event"
 done
