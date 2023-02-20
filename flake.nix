@@ -115,10 +115,10 @@
       flake = false;
     };
 
-    autoeq = {
-      url = "github:jaakkopasanen/AutoEq";
-      flake = false;
-    };
+    #autoeq = {
+      #url = "github:jaakkopasanen/AutoEq";
+      #flake = false;
+    #};
 
     # error: "unexpected number of top-level files"
     # I just want to use it here for the sha256 :/

@@ -80,22 +80,6 @@
         "type": "github"
       }
     },
-    "autoeq": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1672995723,
-        "narHash": "sha256-tcbeV+FQjL2CcwzFkQi464tuCLex1/CvSBafqpIsDOw=",
-        "owner": "jaakkopasanen",
-        "repo": "AutoEq",
-        "rev": "75ef88f072dc39a8241d2c7a05aa6afecde59357",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jaakkopasanen",
-        "repo": "AutoEq",
-        "type": "github"
-      }
-    },
     "base16": {
       "inputs": {
         "nixpkgs": [
@@ -1943,7 +1927,6 @@
       "inputs": {
         "alacritty-catppuccin": "alacritty-catppuccin",
         "arm-rs": "arm-rs",
-        "autoeq": "autoeq",
         "catppuccin-base16": "catppuccin-base16",
         "deploy-rs": "deploy-rs",
         "devshell": "devshell",
