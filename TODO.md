@@ -1,8 +1,16 @@
-# TODO:
+# current TODOs:
 
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
 
+- backup (important) syncthing folders locally and to b2
+    - rclone / borg
+
+- media container
+    - -arr services for metadata
+
 ## general
+
+- atuin sync server (backed up)
 
 - setup ci/flake update via hercules-ci on delta
 - upload-daemon to cache the world on delta
@@ -15,14 +23,8 @@
 - backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
 
 - set up modules:
-    - backup (important) syncthing folders locally and to b2
-        - rclone / borg
-
     - photoview -> librephotos
         - images in syncthing / seafile
-
-    - torrenting container
-    - -arr services for metadata
 
     - xmonad (wip)
     - grocy
