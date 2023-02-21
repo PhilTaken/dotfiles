@@ -132,7 +132,7 @@
         (button :class "pausebutton ${music_status == 'Playing' ? 'playing' : 'paused'}"
                 :halign "end"
                 :style "background-color: ${pctl_sub['button_accent']}; color: ${pctl_sub['button_text']};"
-                :onclick "playerctl play-pause"
+                :onclick "playerctl play-pause &"
                 "${music_status == 'Playing' ? '' : ''}"))
        
    (box :class "musicbox__bottom"

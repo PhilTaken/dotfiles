@@ -52,15 +52,16 @@ in
           username = "${cfg.spotifyd_username}";
           password_cmd = "${pkgs.coreutils}/bin/cat ${config.xdg.configHome}/spotifyd/credentials";
           backend = "pulseaudio";
-          #device = "default";
-          bitrate = 320;
+          bitrate = 160;
           volume_normalization = false;
           device_type = "computer";
-          no_audio_cache = true;
+          no_audio_cache = false;
           cache_path = "/tmp/spotifyd";
+
           autoplay = true;
           use_mpris = true;
-          dbus_type = "system";
+          #device = "default";
+          #dbus_type = "system";
         };
       };
     };

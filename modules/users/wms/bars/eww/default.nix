@@ -133,6 +133,7 @@ in
             inherit package pylayerctl;
           })}";
         };
+
         eww-bar = {
           Service.ExecStart = "${config.phil.wms.bars.barcommand}";
           Unit.After = "eww-daemon.service";
