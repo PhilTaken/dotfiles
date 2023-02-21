@@ -54,7 +54,7 @@ in
       pulse.enable = true;
       jack.enable = true;
 
-      lowLatency.enable = true;
+      #lowLatency.enable = true;
     };
   };
 }
