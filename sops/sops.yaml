@@ -1,7 +1,6 @@
 spotify-username: ENC[AES256_GCM,data:arlWnuOzJg24emt8,iv:t2Vj8DIf3OyshRYLYzY6/rYGX2YB3j+YMcJxIM617Cw=,tag:q+t91iqdBoCp2QVBoVBD+w==,type:str]
 spotify-password: ENC[AES256_GCM,data:AxjFQT2sHkQtY8MHmEWwjbU4M0hnEerS,iv:9tLdoCyuGN3OGST3Ji/03RCcSNdvW/YFm0Qp3L9z5Y4=,tag:UE7FTjDp/Fz9cZv0xQDIhw==,type:str]
-mullvad-privateKey: ENC[AES256_GCM,data:So+2CkhVERxTBnVW3gaZJ2mTbwH7LDMdNJ4STwrwDJz3DbIllQUnWF2pro0=,iv:ridGjiPx4vpMFxc/zVVPmkQDcEavE8l6+wkLcAbnD24=,tag:PrBE+SF6hQK1nLbgjQRN3g==,type:str]
-mullvad-privateKey-new: ENC[AES256_GCM,data:zXkxn2fuFz1ei5ESNHV2KTssJ4SPlhjC+zEdRW+9RZylLRSO70M5CZPiPSY=,iv:/77g88xzS9JCNfbnSSQnHtSDG5KfX1OnCyZfJhU9RSo=,tag:3RnPVlDEv4PdCfnxCCJP/Q==,type:str]
+mullvad-privateKey: ENC[AES256_GCM,data:XAjz/NUJ6/A8gThOO1KWmhRD6h/GqxivOU6iOA54fZvgd+S+M5nc7Ri+ZwA=,iv:hrMGLTPCOWul/7l5BKUWg1ypn8LdBrh37h8B7MWFI88=,tag:UFNYD/jF9J5iHuJZg0SJMA==,type:str]
 nixos-ykchal: ENC[AES256_GCM,data:oSeAhkQkM93eytErTQDQBHyJVCcSGXA58m2qGhynooY24mt5V4Sv5yR/ZhPePY+3wcuo7QXrkFVltR+7pilquwJulXhmNVYbJTb/i0nPopHrlCHNwrDRkZjZh9QKGF8fmUqPj9jAAjSPwZa2KlZLHnWw0CRr5HFLgGbIJB4cIQOfu3p5VKpGtisycIbfau378r0RI3C4lnMica302qONyVy9HeXsPEDOJQWV8p9W1+ZVRgQ7FitE56SXHpz2I+OQtH5MShqiNuKoDQBnQCMk9+MOLhs8Zqmp9y6VGhA/W/MS6oEMu+f9MLZxiDe2lAZWvuXJ,iv:ZYOwHYl2qIFufUTztb02vz2V34Ay2E9gzZRInocsGdI=,tag:PlBllWBBCv/LhKcQCM6m+g==,type:str]
 maelstroem-ykchal: ENC[AES256_GCM,data:L8adyxqxp5gQCJCUOWBUU4wq2eyXpWVls0ta6dC8Kf+fe6rSjQoA8adS2nencPM99L4CGzATiv28jC/02ruW0yI5bvFg32UruxxwR77gp+1uK8AJhJkHYdzaNQJcc8KDhNdDLVmQ2GJeeQa3CBfy4JIVhq+44SxfAH5qw18Q9wHbugPsRYwomZ7U2T+l+GbFppO5yvzI93OcyoUM2UKRNfHDUkeZjQmUub33xhyDj6KRn3tjm/z/0TL3e3NdZZPUwAKJCQitDIjNTG4Kx6Hc5GKdfmZGLh6CVhV2FrNsvCaSHhq9FjCF3HG9YQhTc4vttrCD,iv:6rilrDuL6CCAwOc6Cn0xY1bYx0MGReOP13ABrjGw6Ds=,tag:C5999bNab+IQAvfwVkWpSA==,type:str]
 cachix-token: ENC[AES256_GCM,data:LxOfavico/ExzXBb0vs/IqOcTh3WX7JzZeyC6QRrR2A8At6UlgrgIIdv0CosxmOHZx2n1CZmRofb5b6V4R8a+7scDApfWJ2n95EDh87jodyXDi/BsUzUI8QNWDuZRdZ8e2Nwz3jvUAHNSSjGzV5LZX6Amp6bmceYFUZL1yRVnVKz5kXJeLsYWHzIw5smL3yGsHxLFzxzntXfBgxaO8Ks2sDPN6E3,iv:uLf2Cwf6H/LqOtee20J32D+0+UuYbMLVv275c09OiLk=,tag:5pEoA4A12Dt1sToBffA+6A==,type:str]
@@ -77,8 +76,8 @@ sops:
             TzM3UGdUYkVpRW1mYUZlSEU0KzRuL2MKhdDcgh3loZkAwjgSkuRXvulw/mbEBIrR
             fDSUlIJ0ZRLqTRuc7FaTrSmq8lU2KDFZAEBZ3GWGZpGWjeQkzzQPVA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-02-09T14:43:50Z"
-    mac: ENC[AES256_GCM,data:iiu3TKjLxLneX+T86gSY9JGZf4hNL2soxzebDRNpHDDIY9P4z6BB5+nDiGVKfxd7p5vRWafwOyW2XK55Z71X1jGc/D0BQ0+REgAY7lRnVWRxvGaiTo95GdIhhuI5VSIh0W7E86hGWykp90IdTZOTiMMB3lA6EVOx+yR1asFMNzM=,iv:A0VXnGtzUDgCYuNAtpv7IePEllvZhHrbZeFkuEUIpz0=,tag:39+WlhvsF0x4uwcZ++hlFg==,type:str]
+    lastmodified: "2023-02-20T23:06:42Z"
+    mac: ENC[AES256_GCM,data:O0U9nhaPdMHg/7SxpLDMVvBLzUCwHLnnabk9N79skq4EHwzw6GG/QJwZ6FeP28OqHPdaOG6XHuHbs2hXxHfO/7zpCwfKo0hXszp6kgJ3beGVARkkSdTyzMcKKCpnChM+w9FkLLlKaOLM6ZwcXU5KaRCl7my0KyvDQJtm/g63FSY=,iv:LObdBPimWaSkGu6ACRJUe/Ymv2ErqopFyZf9OmTlk68=,tag:PpsFRBIFjT1no0Jeo6LriA==,type:str]
     pgp:
         - created_at: "2023-02-16T15:30:20Z"
           enc: |-

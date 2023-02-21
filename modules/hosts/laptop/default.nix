@@ -16,13 +16,6 @@ in
       default = false;
     };
 
-    # "wlp0s20f3" for nixos-laptop
-    wirelessInterfaces = mkOption {
-      description = "list of wireless interfaces";
-      type = types.listOf types.str;
-      default = [ ];
-    };
-
     low_power = mkEnableOption "low powered laptop";
   };
 

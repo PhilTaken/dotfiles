@@ -12,7 +12,6 @@ rec {
   mkHost =
     { users
     , systemConfig
-    , wireless_interfaces ? [ ]
     , hmUsers ? { }
     , extraimports ? [ ]
     , extraHostModules ? [ ]

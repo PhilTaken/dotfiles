@@ -93,8 +93,7 @@ in
         extraHostModules = [
           "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
           ({...}: {
-            # wifi, ethernet, etc
-            networking.networkmanager.enable = true;
+            # WIP: decrypt secrets with yubikey
             #sops.gnupg = {
               #home = "/run/gpghome";
               #sshKeyPaths = [];
@@ -157,7 +156,6 @@ in
           core.hostName = "epsilon";
 
           laptop.enable = true;
-          laptop.wirelessInterfaces = [ "wlp3s0" ];
           laptop.low_power = true;
         };
 
