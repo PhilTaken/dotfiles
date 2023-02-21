@@ -81,7 +81,7 @@ in
         enable = cfg.managers != [ ];
       in
       {
-        inherit enable;
+        enable = true;
         layout = "us";
         xkbVariant = "intl,workman-intl";
         xkbOptions = "caps:escape,grp:shifts_toggle";
@@ -91,7 +91,7 @@ in
         displayManager = {
           #sddm.enable = enable;
           gdm.enable = true;
-          defaultSession = session_map.${builtins.head cfg.managers};
+          defaultSession = mkIf (cfg.managers != []) session_map.${builtins.head cfg.managers};
         };
 
         screenSection = mkIf (cfg.driver == "nvidia") ''
@@ -106,7 +106,7 @@ in
           plasma5.enable = enabled "kde";
           xfce.enable = enabled "xfce";
           gnome.enable = enabled "gnome";
-          xterm.enable = true;
+          #xterm.enable = true;
         };
       };
 
