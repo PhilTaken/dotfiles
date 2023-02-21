@@ -28,6 +28,8 @@
     efi.canTouchEfiVariables = true;
   };
 
+  boot.plymouth.enable = true;
+
   #nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -38,6 +40,8 @@
   services.udev = {
     extraRules = builtins.readFile ./50-qmk.rules;
   };
+
+  services.fstrim.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
