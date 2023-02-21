@@ -83,6 +83,7 @@ in
     });
 
     home.packages = with pkgs; [
+      bandwhich
       cmake
       comma
       dig
@@ -92,22 +93,29 @@ in
       fd
       file
       fortune
+      glances
       gopass
       gping
       hexyl
       hyperfine
+      joshuto
+      jq
       lolcat
       lshw
       lsof
       magic-wormhole
       neofetch
+      nix-output-monitor
       nmap
       procs
       psmisc
+      pup
       ranger
       ripgrep
       rsync
+      sd
       sshfs
+      tealdeer
       tokei
       tree
       unrar
@@ -115,14 +123,6 @@ in
       usbutils
       wget
       yt-dlp
-      glances
-
-      tealdeer
-      jq
-      bandwhich
-      sd
-      pup
-      joshuto
     ];
 
     programs = {

@@ -120,13 +120,6 @@
       #flake = false;
     #};
 
-    # error: "unexpected number of top-level files"
-    # I just want to use it here for the sha256 :/
-    #homer-src = {
-      #url = "https://github.com/bastienwirtz/homer/releases/download/v22.11.2/homer.zip";
-      #flake = false;
-    #};
-
     fish-pisces-src = {
       url = "github:laughedelic/pisces";
       flake = false;
