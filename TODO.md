@@ -1,9 +1,5 @@
 # TODO:
 
-centralize config more:
-    - better ssh keys handling (public keys copied everywhere)
-    - move gpg keys to some .nix file
-
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
 
 ## general
@@ -11,24 +7,14 @@ centralize config more:
 - setup ci/flake update via hercules-ci on delta
 - upload-daemon to cache the world on delta
 
-- generate ssh targets from network file
-
 - hyprland config
     - w/d for keybinds on laptop -> keycodes?
-
-- eww config
-    - bar styling
-    - bar modules
-    - music popup?
-    - bluetooth/wifi/airplane mode
 
 - declarative syncthing/mutagen config
 
 - backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
 
 - set up modules:
-    - arm module (get rust running + spinning)
-
     - backup (important) syncthing folders locally and to b2
         - rclone / borg
 
@@ -133,3 +119,11 @@ centralize config more:
 
     - auto import gpg public key
     - ssh known hosts
+
+## on hold
+
+- centralize config more:
+    - better ssh keys handling (public keys copied everywhere)
+    - move gpg keys to some .nix file
+
+- arm module (get rust running + spinning)
