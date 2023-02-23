@@ -35,6 +35,6 @@ in
       sidebar-mode = true;
       run-shell-command = "{terminal} --class float -e {cmd}";
     };
-    theme = ./catppuccin-mocha.rasi;
+    theme = lib.mkForce ./catppuccin-mocha.rasi;
   };
 }
