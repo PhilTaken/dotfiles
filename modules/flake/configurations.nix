@@ -86,33 +86,9 @@ in
         system = "x86_64-linux";
       };
 
-      x86-iso2 = util.host.mkHost rec {
+      x86-iso2 = util.host.mkIso rec {
         users = [ "nixos" ];
         hmUsers = mkHMUsers users;
-
-        extraHostModules = [
-          "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
-          {
-            sops.age = lib.mkForce {
-              keyFile = null;
-              generateKey = false;
-            };
-
-            sops.gnupg = {
-              home = "/run/gpghome";
-              sshKeyPaths = [];
-            };
-          }
-        ];
-
-        systemConfig = {
-          server.services.openssh.enable = true;
-          dns.nameserver = null;
-          wireguard.enable = false;
-          core.hostName = "iso";
-        };
-
-        hardware-config = {};
       };
 
       # desktop @ home

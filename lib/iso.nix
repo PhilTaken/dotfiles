@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   # TODO: add install script (+ binary cache?)
   mkIso =

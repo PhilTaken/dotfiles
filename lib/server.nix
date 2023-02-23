@@ -46,12 +46,16 @@ in
         {
           documentation.enable = false;
           environment.noXlibs = true;
-          stylix = {
-            autoEnable = false;
-            image = ../images/placeholder-image.jpg;
-          };
         }
       ];
+
+      extraHostModules = [{
+        options.stylix = lib.mkOption {
+          description = "placeholder module";
+          type = lib.types.anything;
+          default = null;
+        };
+      }];
 
       systemConfig = {
         inherit fileshare;

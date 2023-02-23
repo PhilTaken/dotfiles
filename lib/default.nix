@@ -4,7 +4,6 @@ let
     default = [
       inputs.arm-rs.nixosModules.default
       inputs.sops-nix-src.nixosModules.sops
-      inputs.stylix.nixosModules.stylix
       inputs.home-manager.nixosModules.home-manager
       inputs.hyprland.nixosModules.default
       inputs.disko.nixosModules.disko
@@ -34,7 +33,9 @@ let
 
       webcord = inputs.webcord.packages.${prev.system}.default;
       hyprland = inputs.hyprland.packages.${prev.system}.default;
-      #inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) gopass iosevka;
+
+      # https://github.com/NixOS/nixpkgs/issues/216961
+      inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) zellij;
 
       # devdocs.io
       devdocs-desktop = prev.writeShellApplication {
@@ -76,7 +77,7 @@ rec {
     config.allowUnfree = true;
   };
 
-  iso = import ./iso.nix;
+  iso = import ./iso.nix { inherit inputs; };
   user = import ./user.nix { inherit inputs; };
   host = import ./host.nix { inherit user inputs pkgsFor systemmodules; flake = self; };
   server = import ./server.nix { inherit host inputs; };

@@ -30,7 +30,7 @@ in
     };
   };
 
-  config = mkIf (cfg.nameserver != null) {
+  config = mkIf (cfg.nameserver != null && config.phil.nebula.enable) {
     #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
     networking.nameservers =

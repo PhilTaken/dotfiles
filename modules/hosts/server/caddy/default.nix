@@ -67,7 +67,7 @@ in
             version = "91cf700356a1cd0127bcc4e784dd50ed85794af5";
           }];
 
-          vendorSha256 = "sha256-2GsdT76Kvey69mLuUlePzHb6TLlTPZepOtcUlVuphxc=";
+          vendorHash = "sha256-dN53GyT5gZTrobkuwtd0Tr0ZSR/jS1kAy26Hmk04y08=";
         };
         extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
       };

@@ -3,7 +3,7 @@
 
 , caddy
 , plugins ? [ ]
-, vendorSha256 ? lib.fakeSha256
+, vendorHash ? lib.fakeSha256
 }:
 
 
@@ -36,7 +36,7 @@ else
   caddy.override {
     buildGoModule = args:
       buildGoModule (args // {
-        inherit vendorSha256;
+        inherit vendorHash;
 
         passthru.plugins = plugins;
 

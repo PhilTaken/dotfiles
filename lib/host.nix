@@ -36,10 +36,10 @@ rec {
     in
     lib.nixosSystem {
       inherit system pkgs;
+      specialArgs = { inherit inputs net flake; };
 
       modules = [
         {
-          _module.args = { inherit inputs net flake; };
           imports = [
             hardware-config
             ../modules/hosts
@@ -73,16 +73,46 @@ rec {
       ] ++ (systemmodules.${system} or systemmodules.default) ++ extraHostModules;
     };
 
+  mkIso = inpargs: let
+    args = lib.recursiveUpdate {
+      systemConfig = {
+        wireguard.enable = false;
+        server.services.openssh.enable = true;
+        core.hostName = "iso";
+      };
+
+      hardware-config = {};
+      extraHostModules = [
+        inputs.stylix.nixosModules.stylix
+        "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
+        {
+          sops.age = lib.mkForce {
+            keyFile = null;
+            generateKey = false;
+          };
+
+          sops.gnupg = {
+            home = "/run/gpghome";
+            sshKeyPaths = [];
+          };
+        }
+      ];
+    } inpargs;
+  in
+  mkHost args;
+
   mkWorkstation = inpargs:
     let
-      args = lib.recursiveUpdate inpargs {
+      args = (lib.recursiveUpdate {
         systemConfig = {
           wireguard.enable = true;
           nebula.enable = true;
           mullvad.enable = true;
           workstation.enable = true;
         };
+      } inpargs) // {
         extraHostModules = (inpargs.extraHostModules or [ ]) ++ [
+          inputs.stylix.nixosModules.stylix
           ({ config, ... }: {
             #sops.secrets.key.sopsFile = ../sops/nebula.yaml;
             #sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
