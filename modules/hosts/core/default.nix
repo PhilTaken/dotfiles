@@ -53,6 +53,9 @@ in
 
         # Set for developers
         keep-outputs = true
+
+        # free $HOME
+        #use-xdg-base-directories = true
       '';
 
       # TODO add my own registry
@@ -76,23 +79,25 @@ in
         substituters = [
           "https://cache.nixos.org"
           "https://philtaken.cachix.org"
-          "https://arm-rs.cachix.org"
-          "https://nix-store.${net.tld}"
 
+          #"https://arm-rs.cachix.org"
           #"s3://serokell-private-nix-cache?endpoint=s3.us-west-000.backblazeb2.com&profile=serokell-private-nix-cache"
-          "s3://serokell-private-cache?endpoint=s3.eu-central-1.wasabisys.com&profile=serokell-private-cache"
+          #"s3://serokell-private-cache?endpoint=s3.eu-central-1.wasabisys.com&profile=serokell-private-cache"
+
           "https://nixpkgs-wayland.cachix.org"
 
           "https://cache.iog.io"
           "https://hyprland.cachix.org"
+        ] ++ lib.optionals config.phil.nebula.enable [
+          "https://nix-store.${net.tld}"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
           "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
-          "arm-rs.cachix.org-1:bgjtu4We0K2fhd7n2E5Dv136XeLk2yXZcrTrCguWsls="
+          #"arm-rs.cachix.org-1:bgjtu4We0K2fhd7n2E5Dv136XeLk2yXZcrTrCguWsls="
           "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-          "serokell-1:aIojg2Vxgv7MkzPJoftOO/I8HKX622sT+c0fjnZBLj0="
+          #"serokell-1:aIojg2Vxgv7MkzPJoftOO/I8HKX622sT+c0fjnZBLj0="
           "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
           "nix-store-01:fxqZS/VJggrfBpFFOT/iULWYRaz5NvpY0daV+knaCCA="
