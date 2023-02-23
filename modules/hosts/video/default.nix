@@ -76,6 +76,8 @@ in
     # https://wiki.hyprland.org/Nix/#modules-mixnmatch
     #programs.hyprland.package = null;
 
+
+    boot.plymouth.enable = true;
     services.xserver =
       let
         enable = cfg.managers != [ ];
