@@ -11,7 +11,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs?ref=d917136f550a8c36efb1724390c7245105f79023";
 
     # NUR
     nur-src.url = "github:nix-community/NUR";
