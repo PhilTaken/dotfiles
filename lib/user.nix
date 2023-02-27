@@ -41,10 +41,10 @@ rec {
           element-desktop
           #gimp
           #keepassxc
-          #libreoffice
-          signal-desktop
+
+          libreoffice
+          #signal-desktop
           tdesktop
-          #zoom-us
         ] ++ (extraPackages pkgs) ++
         # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
 
