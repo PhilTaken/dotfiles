@@ -11,7 +11,12 @@ let
 in
 {
   options.phil.zellij = {
-    enable = mkEnableOption "zellij";
+    enable = mkOption {
+      description = "zellij";
+      type = lib.types.bool;
+      default = config.phil.terminals.multiplexer == "zellij";
+    };
+
     defaultShell = mkOption {
       type = types.nullOr (types.enum [ "fish" "zsh" ]);
       default = null;

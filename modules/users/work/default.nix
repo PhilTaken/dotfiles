@@ -6,24 +6,17 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.work;
 in
 {
   options.phil.work = {
-    enable = mkOption {
-      description = "enable work module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "work";
   };
 
+  # wip
   config = mkIf cfg.enable {
-    # add config here
-    home.file.".aws/credentials".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/aws-credentials";
-
     home.packages = with pkgs; [
-      slack
       fractal
       devdocs-desktop
       mutagen
@@ -31,7 +24,7 @@ in
 
     programs = {
       sioyek = {
-        enable = true;
+        enable = false;
       };
     };
 

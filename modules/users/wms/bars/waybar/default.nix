@@ -5,16 +5,12 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.wms.bars.waybar;
 in
 {
   options.phil.wms.bars.waybar = {
-    enable = mkOption {
-      description = "enable waybar module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "waybar";
   };
 
   config = mkIf cfg.enable {

@@ -5,21 +5,17 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.wms.xmonad;
 in
 {
   options.phil.wms.xmonad = {
-    enable = mkOption {
-      description = "enable xmonad module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "xmonad";
   };
 
   config = mkIf cfg.enable {
     xsession.enable = true;
-    xsession.windowManager.xmonad = rec {
+    xsession.windowManager.xmonad = {
       enable = true;
       extraPackages = hPkgs: with hPkgs; [
         containers

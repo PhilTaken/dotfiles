@@ -7,11 +7,15 @@
 
 let
   cfg = config.phil.shells.fish;
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkOption;
 in
 {
   options.phil.shells.fish = {
-    enable = mkEnableOption "fish";
+    enable = mkOption {
+      description = "fish";
+      default = config.phil.terminals.defaultShell == "fish";
+      type = lib.types.bool;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -29,6 +33,7 @@ in
           git diff --summary | grep --color 'mode change 100755 => 100644' | cut -d' ' -f7- | xargs -d'\n' chmod +x 2>/dev/null
           git diff --summary | grep --color 'mode change 100644 => 100755' | cut -d' ' -f7- | xargs -d'\n' chmod -x 2>/dev/null
         '';
+        # TODO: dont add to history?
         magic_enter_cmd = ''
           set -l cmd
           if command git rev-parse --is-inside-work-tree &>/dev/null
@@ -68,7 +73,7 @@ in
           bind -M insert \r 'enter_ls'
           bind -M insert \n 'enter_ls'
         end
-
+    '' + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
         if status is-interactive
         and not status --is-login
         and not set -q TMUX
@@ -77,7 +82,7 @@ in
         and not set -q ZELLIJ
           zellij attach --create main
         end
-      '';
+      '');
     };
   };
 }

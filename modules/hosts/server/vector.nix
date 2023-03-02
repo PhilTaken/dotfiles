@@ -5,17 +5,13 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.server.services.vector;
   loki_url = "10.200.0.1:3100";
 in
 {
   options.phil.server.services.vector = {
-    enable = mkOption {
-      description = "enable the vector module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "vector";
   };
 
   config = mkIf cfg.enable {

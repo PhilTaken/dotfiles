@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.nvidia;
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -17,11 +17,7 @@ let
 in
 {
   options.phil.nvidia = {
-    enable = mkOption {
-      description = "enable nvidia module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "nvidia";
   };
 
   config = mkIf cfg.enable {

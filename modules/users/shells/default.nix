@@ -207,6 +207,7 @@ in
       #enable = true;
       #};
 
+      # TODO: set up sync
       atuin = {
         enable = true;
         settings = {

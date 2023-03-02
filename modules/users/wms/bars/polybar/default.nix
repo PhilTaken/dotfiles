@@ -7,16 +7,12 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.wms.bars.polybar;
 in
 {
   options.phil.wms.bars.polybar = {
-    enable = mkOption {
-      description = "enable polybar module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "polybar";
   };
 
   config = mkIf cfg.enable {

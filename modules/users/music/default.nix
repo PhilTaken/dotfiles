@@ -16,12 +16,7 @@ in
   ];
 
   options.phil.music = {
-    enable = mkOption {
-      description = "Enable the music module";
-      type = types.bool;
-      default = true;
-    };
-
+    enable = mkEnableOption "music";
     enableMpris = mkEnableOption "mpris";
 
     spotifyd_devicename = mkOption {
@@ -38,6 +33,7 @@ in
   };
 
   config = (mkIf cfg.enable) {
+    # TODO: sops-nix home-manager module
     xdg.configFile."spotifyd/credentials".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/spotify-password";
 
     services.spotifyd = {

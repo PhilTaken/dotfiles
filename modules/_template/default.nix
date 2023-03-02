@@ -5,16 +5,12 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf types;
   cfg = config.phil.template;
 in
 {
   options.phil.template = {
-    enable = mkOption {
-      description = "enable template module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "template";
 
     # more options
   };

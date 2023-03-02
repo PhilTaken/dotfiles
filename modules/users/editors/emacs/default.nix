@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types concatMapStringsSep optionals;
+  inherit (lib) mkEnableOption mkOption mkIf types concatMapStringsSep optionals;
   cfg = config.phil.editors.emacs;
 in
 {
@@ -15,11 +15,7 @@ in
   ];
 
   options.phil.editors.emacs = {
-    enable = mkOption {
-      description = "enable emacs module";
-      type = types.bool;
-      default = true;
-    };
+    enable = mkEnableOption "emacs";
 
     langs = {
       python = mkOption {

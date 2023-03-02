@@ -5,16 +5,12 @@
 }:
 
 let
-  inherit (lib) mkOption types mkIf;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.des.gnome;
 in
 {
   options.phil.des.gnome = {
-    enable = mkOption {
-      description = "enable gnome module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "gnome";
   };
 
   config = mkIf cfg.enable {

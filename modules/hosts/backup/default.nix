@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkOption mkEnableOption mkIf types;
   cfg = config.phil.backup;
   mkRepo = name: "${cfg.repo}/${name}";
   mkJob = name: paths: {
@@ -32,12 +32,7 @@ let
 in
 {
   options.phil.backup = {
-    enable = mkOption {
-      description = "enable backup module";
-      type = types.bool;
-      default = false;
-    };
-
+    enable = mkEnableOption "backup";
     jobs = mkOption {
       description = "paths to backup";
       type = types.attrsOf types.str;

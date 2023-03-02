@@ -5,16 +5,12 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.editors.helix;
 in
 {
   options.phil.editors.helix = {
-    enable = mkOption {
-      description = "Enable the helix module";
-      type = types.bool;
-      default = true;
-    };
+    enable = mkEnableOption "helix";
   };
 
   config = mkIf cfg.enable {

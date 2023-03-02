@@ -5,29 +5,18 @@
 }:
 let
   cfg = config.phil.ssh;
-  inherit (lib) mkOption types mkIf;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
 
   options.phil.ssh = {
-    enable = mkOption {
-      description = "Enable the ssh module";
-      type = types.bool;
-      default = true;
-    };
+    enable = mkEnableOption "ssh";
   };
 
   config = mkIf cfg.enable {
     programs.ssh = {
       enable = true;
       matchBlocks = {
-        # work
-        "*.*.serokell.team" = {
-          extraOptions."AddressFamily" = "inet";
-          user = "maelstroem";
-          port = 17788;
-        };
-
         # home
         "router" = {
           hostname = "router.lan";

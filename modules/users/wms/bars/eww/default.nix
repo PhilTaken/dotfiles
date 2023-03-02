@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkOption mkIf types;
   cfg = config.phil.wms.bars.eww;
   package = (if cfg.enableWayland then pkgs.eww-wayland else pkgs.eww).overrideAttrs(old: {
     patches = (old.patches or []) ++ [
@@ -75,11 +75,7 @@ let
 in
 {
   options.phil.wms.bars.eww = {
-    enable = mkOption {
-      description = "enable eww module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "eww";
 
     enableWayland = mkOption {
       description = "build wayland package";

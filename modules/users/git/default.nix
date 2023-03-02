@@ -35,7 +35,6 @@ in
     };
   };
 
-
   config = mkIf cfg.enable {
     programs.lazygit = {
       enable = true;

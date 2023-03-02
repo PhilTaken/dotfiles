@@ -6,15 +6,11 @@
 
 let
   cfg = config.phil.des.kde;
-  inherit (lib) mkOption types mkIf;
+  inherit (lib) mkEnableOption mkOption types mkIf;
 in
 {
   options.phil.des.kde = {
-    enable = mkOption {
-      description = "Enable the kde window manager (plasma 5)";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "kde";
 
     default_font = mkOption {
       description = "default font";

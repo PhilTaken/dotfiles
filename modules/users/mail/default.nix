@@ -5,16 +5,12 @@
 }:
 let
   cfg = config.phil.mail;
-  inherit (lib) mkOption types mkIf;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
 
   options.phil.mail = {
-    enable = mkOption {
-      description = "Enable the mail module";
-      type = types.bool;
-      default = true;
-    };
+    enable = mkEnableOption "mail";
   };
 
 

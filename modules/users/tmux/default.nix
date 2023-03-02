@@ -6,15 +6,15 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.tmux;
 in
 {
   options.phil.tmux = {
-    enable = mkEnableOption "tmux";
-    defaultShell = mkOption {
-      type = types.enum [ "fish" "zsh" ];
-      default = "zsh";
+    enable = mkOption {
+      description = "tmux";
+      type = lib.types.bool;
+      default = config.phil.terminals.multiplexer == "tmux";
     };
   };
 
@@ -24,15 +24,13 @@ in
         catppuccin_tmux_conf = ./catppuccin.conf;
       in
       {
-        # TODO: tmuxp configs
-        tmuxp.enable = true;
         enable = true;
         baseIndex = 1;
         escapeTime = 1;
         keyMode = "vi";
         secureSocket = true;
         shortcut = "a";
-        shell = "${pkgs.${cfg.defaultShell}}/bin/${cfg.defaultShell}";
+        shell = "${pkgs.${config.phil.terminals.defaultShell}}/bin/${config.phil.terminals.defaultShell}";
         terminal = "xterm-256color";
         extraConfig = ''
           set-option -ga terminal-overrides ",xterm-256color:Tc"

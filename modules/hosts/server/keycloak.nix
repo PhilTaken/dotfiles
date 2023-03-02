@@ -6,16 +6,12 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkOption mkIf types;
   cfg = config.phil.server.services.keycloak;
 in
 {
   options.phil.server.services.keycloak = {
-    enable = mkOption {
-      description = "enable keycloak module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "keycloak";
 
     url = mkOption {
       description = "webinterface url";

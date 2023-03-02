@@ -13,12 +13,11 @@ let
   hmUsers =
     let
       defaultConfig = {
-        shells.fish.enable = true;
-        tmux = {
-          enable = true;
-          defaultShell = "fish";
-        };
-        zellij.enable = true;
+        terminals.defaultShell = "fish";
+        terminals.multiplexer = "zellij";
+        ssh.enable = true;
+        tmux.enable = true;
+        music.enable = true;
         music.enableMpris = true;
       };
     in

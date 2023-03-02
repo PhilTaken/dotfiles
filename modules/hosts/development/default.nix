@@ -5,17 +5,12 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.development;
 in
 {
   options.phil.development = {
-    enable = mkOption {
-      description = "enable development module";
-      type = types.bool;
-      default = false;
-    };
-
+    enable = mkEnableOption "dev";
     adb.enable = mkEnableOption "android adb";
   };
 

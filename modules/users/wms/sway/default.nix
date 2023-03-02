@@ -6,15 +6,10 @@
 
 let
   cfg = config.phil.wms.sway;
-  inherit (lib) mkOption mkIf types;
-in
-rec {
+  inherit (lib) mkEnableOption mkOption mkIf types;
+in {
   options.phil.wms.sway = {
-    enable = mkOption {
-      description = "Enable the sway module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "sway";
 
     lock_bg = mkOption {
       description = "Locking background";

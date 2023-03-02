@@ -14,7 +14,7 @@ in
   options.phil.shells.zsh = {
     enable = mkOption {
       type = types.bool;
-      default = true;
+      default = config.phil.terminals.defaultShell == "zsh";
     };
   };
 

@@ -5,17 +5,12 @@
 , ...
 }:
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.desktop;
 in
 {
   options.phil.desktop = {
-    enable = mkOption {
-      description = "enable desktop module";
-      type = types.bool;
-      default = false;
-    };
-
+    enable = mkEnableOption "desktop";
     # more options
   };
 

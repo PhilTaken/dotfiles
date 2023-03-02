@@ -5,16 +5,12 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.editors.vscode;
 in
 {
   options.phil.editors.vscode = {
-    enable = mkOption {
-      description = "Enable the vscode module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "vscode";
   };
 
   config = mkIf cfg.enable {

@@ -6,17 +6,12 @@
 }@inputs:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkOption mkEnableOption mkIf types;
   cfg = config.phil.wms.i3;
   inherit (inputs.config.phil.wms.bars) barcommand;
-in
-rec {
+in {
   options.phil.wms.i3 = {
-    enable = mkOption {
-      description = "Enable i3";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "i3";
 
     package = mkOption {
       description = "i3 package to use";

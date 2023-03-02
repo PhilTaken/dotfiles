@@ -21,6 +21,11 @@ in
       type = types.enum [ "tmux" "zellij" ];
       default = "tmux";
     };
+
+    defaultShell = mkOption {
+      type = types.enum [ "fish" "zsh" ];
+      default = "zsh";
+    };
   };
 
   config = {

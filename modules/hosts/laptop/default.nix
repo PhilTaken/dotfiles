@@ -5,17 +5,12 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.laptop;
 in
 {
   options.phil.laptop = {
-    enable = mkOption {
-      description = "enable laptop module";
-      type = types.bool;
-      default = false;
-    };
-
+    enable = mkEnableOption "laptop";
     low_power = mkEnableOption "low powered laptop";
   };
 

@@ -5,29 +5,15 @@
 }:
 
 let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkEnableOption mkIf types;
   cfg = config.phil.workstation;
 in
 {
   options.phil.workstation = {
-    enable = mkOption {
-      description = "enable workstation module";
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption "workstation";
   };
 
   config = mkIf cfg.enable {
-    # serokell binary cache secrets
-    sops.secrets = {
-      aws-credentials = {
-        sopsFile = ../../../sops + "/serokell.yaml";
-        #path = "/root/.aws/credentials";
-        mode = "600";
-        owner = (config.users.users."maelstroem" or config.users.users."nixos").name;
-      };
-    };
-
     environment.systemPackages = with pkgs; [
       #vlc
       #calibre
@@ -35,7 +21,7 @@ in
       #pdfsam-basic
       #xournalpp
       #baobab
-      #xfce.thunar
+      xfce.thunar
 
       webcord
       #obsidian
