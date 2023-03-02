@@ -1,5 +1,7 @@
 # current TODOs:
 
+- set up time machine backup on delta
+
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
 
 - backup (important) syncthing folders locally and to b2
@@ -8,18 +10,19 @@
 - media container
     - -arr services for metadata
 
+- slim down flake
+    - stop abusing inputs (500+ MB just inputs)
+    - try to prevent ifd modules
+
 ## general
 
 - atuin sync server (backed up)
-
-- setup ci/flake update via hercules-ci on delta
-- upload-daemon to cache the world on delta
+- utilize upload-daemon to cache the world on delta
 
 - hyprland config
     - w/d for keybinds on laptop -> keycodes?
 
 - declarative syncthing/mutagen config
-
 - backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
 
 - set up modules:
@@ -62,6 +65,7 @@
 - nebula
     - implement proper tagging
     - signing script with sops secrets
+    - mobile device integration?
 
 - caddy acme -> services.acme
     - removes need to compile caddy with cloudflare
@@ -73,8 +77,6 @@
 
 ### todo
 
-- reload wip plugin files (plenary on special runtimepath match?)
-- window navigation
 - work with builtin `makeprg`
 - diffviewopen telescope integration
 - marks workflow
@@ -110,17 +112,6 @@
 
 - selfhosted
 - skrooge?
-
-# for newer setups
-
-- basic install script for custom image (basic partitioning -> back up all non-store files)
-    - akin to https://github.com/cleverca22/nix-tests/blob/master/kexec/justdoit.nix
-    - disko
-
-    - age-key script + master age-key backup
-
-    - auto import gpg public key
-    - ssh known hosts
 
 ## on hold
 
