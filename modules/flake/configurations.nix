@@ -19,58 +19,36 @@ let
         music.enable = true;
         music.enableMpris = true;
       };
+      mkConfig = lib.recursiveUpdate defaultConfig;
     in
     {
       nixos = {
-        userConfig = defaultConfig // {
+        userConfig = mkConfig {
           work.enable = true;
 
           # de/wm config
           wms.hyprland.enable = true;
-          #wms.i3.enable = true;
-
-          terminals.multiplexer = "zellij";
-          editors.emacs.enable = false;
-
           wms.bars.eww.enable = true;
-          #wms.bars.eww.enableWayland = false;
-
-          #wms.hyprland.enable = true;
-          #wms.bars.waybar.enable = true;
         };
       };
 
       maelstroem = {
-        userConfig = defaultConfig // {
+        userConfig = mkConfig {
           work.enable = true;
 
           # de/wm config
           wms.hyprland.enable = true;
-          #wms.i3.enable = true;
-
-          des.gnome.enable = true;
-
-          terminals.multiplexer = "zellij";
-
           wms.bars.eww.enable = true;
 
-          #wms.bars.eww.enableWayland = false;
-
-          #wms.hyprland.enable = true;
-          #wms.bars.waybar.enable = true;
+          des.gnome.enable = true;
         };
-
-        extraPackages = pkgs: [ ];
       };
 
       jaid = {
-        userConfig = {
-          shells.zsh.enable = true;
+        userConfig = mkConfig {
+          terminals.defaultShell = "zsh";
           des.gnome.enable = true;
-          browsers.firefox.wayland = false;
         };
-
-        extraPackages = pkgs: [ ];
       };
     };
 in
