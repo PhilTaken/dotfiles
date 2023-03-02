@@ -16,7 +16,6 @@ let
         terminals.defaultShell = "fish";
         terminals.multiplexer = "zellij";
         ssh.enable = true;
-        tmux.enable = true;
         music.enable = true;
         music.enableMpris = true;
       };
