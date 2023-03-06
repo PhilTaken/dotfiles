@@ -26,6 +26,19 @@ in
       type = types.enum [ "fish" "zsh" ];
       default = "zsh";
     };
+
+    alacritty = {
+      decorations = mkOption {
+        type = types.enum [ "none" "full" ];
+        default = "full";
+      };
+
+      opacity = mkOption {
+        # TODO: limit to values between 0 and 1
+        type = types.float;
+        default = 0.92;
+      };
+    };
   };
 
   config = {
@@ -34,12 +47,11 @@ in
         enable = true;
         settings = {
           window = {
-            opacity = 0.65;
             padding = {
               x = 5;
               y = 5;
             };
-            decorations = "none";
+            inherit (cfg.alacritty) decorations opacity;
           };
           font.size = 13;
         };
@@ -60,9 +72,9 @@ in
         '';
       };
 
-      foot = {
-        enable = true;
-        server.enable = true;
+      foot = rec {
+        enable = (! lib.hasInfix "darwin" pkgs.system);
+        server = { inherit enable; };
 
         settings = {
           main = {

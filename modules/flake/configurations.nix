@@ -15,6 +15,9 @@ let
       defaultConfig = {
         terminals.defaultShell = "fish";
         terminals.multiplexer = "zellij";
+        terminals.alacritty.decorations = "none";
+        terminals.alacritty.opacity = 0.65;
+        browsers.enable = true;
         ssh.enable = true;
         music.enable = true;
         music.enableMpris = true;

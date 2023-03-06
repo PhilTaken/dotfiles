@@ -28,7 +28,7 @@ lsp_extra_config['fortls'] = {
     root_dir = lsp.util.root_pattern('.git'),
 }
 
-lsp_extra_config['sumneko_lua'] = {
+lsp_extra_config['lua_ls'] = {
     settings = {
         Lua = {
             runtime = {
@@ -103,7 +103,7 @@ local enabled_lsps = {
     'hls',
     'elixirls',
     'fortls',
-    'sumneko_lua',
+    'lua_ls',
     'rust_analyzer',
     'pylsp'
 }

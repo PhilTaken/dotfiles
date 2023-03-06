@@ -6,15 +6,11 @@
 
 let
   cfg = config.phil.browsers;
-  inherit (lib) mkOption types;
+  inherit (lib) mkEnableOption mkOption types mkIf;
 in
 {
   options.phil.browsers = {
-    enableAll = mkOption {
-      description = "Enable browsers";
-      type = types.bool;
-      default = true;
-    };
+    enable = mkEnableOption "browsers";
 
     chromium = {
       enable = mkOption {
@@ -57,15 +53,14 @@ in
     let
       pkg = if cfg.firefox.librewolf then pkgs.librewolf else pkgs.firefox;
       waylandpkg = if cfg.firefox.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
-    in
-    {
+    in mkIf cfg.enable {
       home.packages = with pkgs; [
         nyxt
         google-chrome
       ];
 
       programs.chromium = {
-        enable = true;
+        inherit (cfg.chromium) enable;
         #package = pkgs.ungoogled-chromium;
         commandLineArgs = [
           "--no-default-browser-check"
@@ -99,7 +94,7 @@ in
       };
 
       programs.firefox = {
-        enable = true;
+        inherit (cfg.firefox) enable;
 
         package = if cfg.firefox.wayland then waylandpkg else pkg;
         profiles = {
@@ -181,8 +176,7 @@ in
       };
 
       programs.qutebrowser = {
-        enable = true;
-
+        inherit (cfg.qutebrowser) enable;
         enableDefaultBindings = true;
 
         quickmarks = {

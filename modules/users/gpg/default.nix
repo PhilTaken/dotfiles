@@ -4,16 +4,12 @@
 , ...
 }:
 let
-  inherit (lib) mkOption types mkIf;
+  inherit (lib) mkEnableOption mkOption types mkIf;
   cfg = config.phil.gpg;
 in
 {
   options.phil.gpg = {
-    enable = mkOption {
-      description = "enable gpg module";
-      type = types.bool;
-      default = true;
-    };
+    enable = mkEnableOption "gpg";
 
     gpgKey = mkOption {
       description = "default gpg key";

@@ -209,7 +209,8 @@ in
 
       # TODO: set up sync
       atuin = {
-        enable = true;
+        # TODO: fix for darwin via override to disable checks?
+        enable = (! lib.hasInfix "darwin" pkgs.system);
         settings = {
           search_mode = "fuzzy";
           update_check = false;

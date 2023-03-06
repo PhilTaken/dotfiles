@@ -22,6 +22,11 @@ require('present').setup{
     -- ... your config here
 }
 
+-- set up notifications
+local notify = require("notify")
+notify.setup({ background_colour = "#000000" })
+vim.notify = notify
+
 require("indent_blankline").setup {
     buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
     filetype_exclude = { "startify", "dashboard", "man" },
@@ -116,4 +121,3 @@ vim.cmd[[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]]
 
 vim.cmd[[let g:pandoc#spell#enabled = 0]]
 
-vim.notify = require("notify")
