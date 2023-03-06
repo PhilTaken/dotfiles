@@ -2,6 +2,8 @@
 
 - set up time machine backup on delta
 
+- change background in nvim with telescope open (it sets a background color, does not respect transparency)
+
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
 
 - backup (important) syncthing folders locally and to b2
