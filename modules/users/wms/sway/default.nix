@@ -49,6 +49,10 @@ in {
       MOZ_ENABLE_WAYLAND = 1;
     };
 
+    home.shellAliases = {
+      sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
+    };
+
     wayland.windowManager.sway =
       let
         std_opacity = "0.96";
