@@ -115,7 +115,7 @@ in
         sqlite_basename = if (lib.hasInfix "darwin" pkgs.system) then "libsqlite3.dylib" else "libsqlite3.so";
         sqlite_path =  "${pkgs.sqlite.out}/lib/${sqlite_basename}";
       in ''
-        let g:sqlite_clib_path = ${sqlite_path}
+        let g:sqlite_clib_path = "${sqlite_path}"
 
         " write to undofile in undodir
         set undodir=${config.xdg.dataHome}

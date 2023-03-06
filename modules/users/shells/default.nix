@@ -65,9 +65,7 @@ in
       exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
       ntop = "sudo ntop -u nobody";
       dmesg = "dmesg -H";
-    } // (lib.optionalAttrs inputs.config.wayland.windowManager.sway.enable {
-      sockfix = "export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock";
-    });
+    };
 
     home.packages = with pkgs; [
       bandwhich
