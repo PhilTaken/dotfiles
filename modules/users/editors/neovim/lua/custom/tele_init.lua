@@ -9,9 +9,11 @@ require('telescope').setup {
             "--hidden",
 			"--ignore",
 			"-u",
-			"--glob=!**/.git/*",
 			"--glob=!**/node_modules/*",
+			"--glob=!**/.git/*",
 			"--glob=!**/.next/*",
+			"--glob=!**/.appenv/*",
+			"--glob=!**/.batou/*",
 		},
       }
     },
