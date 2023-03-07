@@ -75,7 +75,6 @@
     # deploy remote setups
     deploy-rs = {
       url = "github:serokell/deploy-rs";
-      #url = "/home/maelstroem/Documents/syncthing/work/serokell/deploy-rs/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

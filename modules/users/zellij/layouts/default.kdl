@@ -5,13 +5,4 @@ layout {
         }
         children
     }
-
-    cwd "/home/@user@/Documents/syncthing"
-    tab cwd="dotfiles" split_direction="vertical" name="dots" {
-        pane edit="flake.nix"
-        pane
-    }
-    tab focus=true cwd="work/serokell" name="wrk" {
-        pane
-    }
 }
