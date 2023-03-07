@@ -183,8 +183,8 @@ let
               { action = [ swToModes.tmux ]; key = [{ Ctrl = "a"; }]; }
               { action = [ swToModes.resize ]; key = [{ Ctrl = "n"; }]; }
               { action = [ swToModes.session ]; key = [{ Ctrl = "o"; }]; }
-              { action = [ swToModes.renamepane ]; key = [ "," ]; }
-              { action = [ swToModes.renametab ]; key = [ "$" ]; }
+              { action = [ swToModes.renametab ]; key = [ "," ]; }
+              { action = [ swToModes.renamepane ]; key = [ "$" ]; }
             ];
 
           config = {
