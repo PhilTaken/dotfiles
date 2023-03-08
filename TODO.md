@@ -2,7 +2,11 @@
 
 - set up time machine backup on delta
 
-- change background in nvim with telescope open (it sets a background color, does not respect transparency)
+- vim
+    - disable ctags, don't use the tags much anyways (telscope grep usually does the trick)
+    - mapping from the last comment in https://github.com/sindrets/diffview.nvim/issues/196 
+    - fugitive plugin
+    - change background with telescope open (it sets a background color, does not respect transparency)
 
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
 
