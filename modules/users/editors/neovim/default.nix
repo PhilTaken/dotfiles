@@ -153,6 +153,7 @@ in
         telescope-nvim
         telescope-symbols-nvim
         telescope-zoxide
+        vim-fugitive
         vim-gutentags
         vim-rooter
         vim-startuptime
