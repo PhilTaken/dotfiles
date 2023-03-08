@@ -13,11 +13,14 @@ let
   hmUsers =
     let
       defaultConfig = {
-        terminals.defaultShell = "fish";
-        terminals.multiplexer = "zellij";
-        terminals.alacritty.decorations = "none";
-        terminals.alacritty.opacity = 0.65;
+        terminals = {
+          defaultShell = "fish";
+          multiplexer = "zellij";
+          alacritty.decorations = "none";
+          alacritty.opacity = 0.65;
+        };
         browsers.enable = true;
+        gpg.enable = true;
         ssh.enable = true;
         music.enable = true;
         music.enableMpris = true;
@@ -137,9 +140,11 @@ in
   perSystem = { system, ... }: {
     #homeConfigurations = lib.mapAttrs (util.user.mkHMUser (util.pkgsFor system)) hmUsers;
     checks = (builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib).${system};
+  };
 
+  flake = {
     # requires ifd :/
-    packages = (lib.mapAttrs' (n: v: {
+    setup_packages = (lib.mapAttrs' (n: v: {
       name = "${n}-iso";
       value = v.config.system.build.isoImage;
     }) (lib.filterAttrs (n: v: v.config.system.build ? isoImage) self.nixosConfigurations))
