@@ -17,7 +17,6 @@ in
   # wip
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      fractal
       devdocs-desktop
       mutagen
     ];

@@ -243,7 +243,7 @@ in
       };
 
     # TODO: move someplace else
-    programs = {
+    services = {
       mako = {
         enable = true;
         maxVisible = 5;

@@ -21,8 +21,8 @@ in
       pkgs = import inputs.nixpkgs {
         inherit system;
         overlays = [
-          inputs.devshell.overlay
-          inputs.sops-nix-src.overlay
+          inputs.devshell.overlays.default
+          inputs.sops-nix-src.overlays.default
           inputs.deploy-rs.overlay
         ];
       };

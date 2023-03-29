@@ -53,7 +53,6 @@ in
             };
             inherit (cfg.alacritty) decorations opacity;
           };
-          font.size = 13;
         };
       };
 
@@ -77,11 +76,7 @@ in
         server = { inherit enable; };
 
         settings = {
-          main = {
-            font = "${cfg.default_font}:size=13";
-            bold-text-in-bright = "yes";
-            dpi-aware = "yes";
-          };
+          main.bold-text-in-bright = "yes";
           url = {
             launch = "firefox \${url}";
             osc8-underline = "always";

@@ -195,16 +195,25 @@ in
         firenvim
 
         parinfer-rust
+        neorg
       ]) ++ (with pkgs.vimExtraPlugins; [
         cybu-nvim
         nvim-ufo
         vim-hy
         present-nvim
       ]) ++ (map buildPlugin [
+        # TODO: don't abuse nix flake inputs for these
         { pname = "janet.vim"; src = inputs.vim-janet-src; }
         { pname = "vim-terraform"; src = inputs.vim-terraform-src; }
         { pname = "yuck.vim"; src = inputs.vim-yuck-src; }
         { pname = "promise-async"; src = inputs.vim-async-src; }
+        {
+          pname = "neorg-telescope";
+          src = builtins.fetchGit {
+            url = "https://github.com/nvim-neorg/neorg-telescope";
+            rev = "197c59a572e4423642b5c5fb727ecefadffe9000";
+          };
+        }
       ]);
     };
 

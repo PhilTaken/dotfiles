@@ -100,7 +100,7 @@
     # non-flake sources
 
     tmm-src = {
-      url = "https://release.tinymediamanager.org/v4/dist/tmm_4.3.8.1_linux-amd64.tar.gz";
+      url = "https://release.tinymediamanager.org/v4/dist/tmm_4.3.9.1_linux-amd64.tar.gz";
       flake = false;
     };
 

@@ -39,16 +39,16 @@ in
 
     environment.systemPackages = with pkgs; [
       # audio/video
-      #audacity
-      #obs-studio
-      #handbrake
-      #makemkv
+      audacity
+      obs-studio
+      handbrake
+      makemkv
 
       # games
       prismlauncher
-      citra
-      yuzu-ea
-      osu-lazer
+      #citra
+      #sergviceyuzu-ea
+      #osu-lazer
 
       # downloads
       #uget

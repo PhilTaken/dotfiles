@@ -239,7 +239,7 @@ in {
         };
       };
 
-    programs = {
+    services = {
       mako = {
         enable = true;
         maxVisible = 5;

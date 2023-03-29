@@ -63,6 +63,8 @@ rec {
 
           system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
 
+          programs.fish.enable = true;
+
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;

@@ -110,7 +110,6 @@ in
               floccus
               i-dont-care-about-cookies
               matte-black-red
-              netflix-1080p
               no-pdf-download
               privacy-badger
               reddit-enhancement-suite

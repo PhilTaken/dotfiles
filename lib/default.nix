@@ -45,7 +45,7 @@ let
 
       # fix it on wayland
       prismlauncher = prev.prismlauncher.overrideAttrs (old: {
-        postInstall = old.postInstall + ''
+        postInstall = (old.postInstall or "") + ''
           wrapProgram $out/bin/prismlauncher \
             --prefix QT_QPA_PLATFORM : xcb
         '';
