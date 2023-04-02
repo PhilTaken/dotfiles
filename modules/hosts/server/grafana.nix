@@ -106,7 +106,7 @@ in
         server = {
           http_port = cfg.port;
           inherit domain;
-          protocol = "https";
+          protocol = "http";
           http_addr = "0.0.0.0";
         };
 
