@@ -43,7 +43,7 @@ rec {
   services = {
     # vm on a hetzner server, debian host
     alpha = [
-      "influxdb2"
+      #"influxdb2"
       "grafana"
     ];
 
