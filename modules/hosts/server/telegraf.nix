@@ -16,7 +16,7 @@ in
     enable = mkOption {
       description = "enable telegraf";
       type = types.bool;
-      default = true;
+      default = false;
     };
 
     inputs = {
