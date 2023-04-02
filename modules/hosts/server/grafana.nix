@@ -135,12 +135,12 @@ in
             {
               name = "Prometheus";
               type = "prometheus";
-              url = "http://localhost:${builtins.toString cfg.prometheus-port}";
+              url = "https://prometheus.${net.tld}/";
             }
             {
               name = "Loki";
               type = "loki";
-              url = "http://localhost:${builtins.toString cfg.loki-port}";
+              url = "http://loki.${net.tld}/";
             }
           ];
         };
@@ -148,7 +148,10 @@ in
     };
 
     phil.server.services = {
-      caddy.proxy."${cfg.host}".port = cfg.grafana-port;
+      caddy.proxy.grafana.port = cfg.grafana-port;
+      caddy.proxy.loki.port = cfg.grafana-port;
+      caddy.proxy.prometheus.port = cfg.prometheus-port;
+
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {

@@ -1,17 +1,19 @@
-{ pkgs
-, config
+{ config
 , lib
+, net
 , ...
 }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkOption mkIf types;
   cfg = config.phil.server.services.vector;
-  loki_url = "10.200.0.1:3100";
 in
 {
   options.phil.server.services.vector = {
-    enable = mkEnableOption "vector";
+    enable = mkOption {
+      type = types.bool;
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -40,7 +42,7 @@ in
             acknowledgements.enabled = false;
             type = "loki";
             inputs = [ "journald" ];
-            endpoint = "http://${loki_url}/";
+            endpoint = "https://loki.${net.tld}/";
             compression = "none";
             remove_timestamp = true;
             remove_label_fields = true;
@@ -52,16 +54,6 @@ in
 
             encoding.codec = "logfmt";
           };
-
-          #out = {
-          #inputs = [
-          #"journald"
-          #];
-          #encoding.codec = "text";
-
-          #type = "file";
-          #path = "/var/lib/vector/test.log";
-          #};
         };
       };
     };
