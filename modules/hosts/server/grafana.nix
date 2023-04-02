@@ -149,7 +149,7 @@ in
     phil.server.services = {
       caddy.proxy = {
         grafana.port = cfg.grafana-port;
-        loki.port = cfg.grafana-port;
+        loki.port = cfg.loki-port;
         prometheus.port = cfg.prometheus-port;
       };
 
