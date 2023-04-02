@@ -133,6 +133,11 @@ in
         datasources.settings = {
           datasources = [
             {
+              name = "Prometheus";
+              type = "prometheus";
+              url = "http://localhost:${builtins.toString cfg.prometheus-port}";
+            }
+            {
               name = "Loki";
               type = "loki";
               url = "http://localhost:${builtins.toString cfg.loki-port}";

@@ -18,16 +18,21 @@ in
 
     port = mkOption {
       type = types.port;
-      default = 3103;
+      default = 9002;
     };
   };
 
   config = mkIf cfg.enable {
+    networking.firewall = {
+      allowedTCPPorts = [ cfg.port ];
+      allowedUDPPorts = [ cfg.port ];
+    };
+
     services.prometheus.exporters = {
       node = {
         enable = true;
         enabledCollectors = [ "systemd" ];
-        port = 9002;
+        inherit (cfg) port;
       };
     };
   };
