@@ -2,6 +2,7 @@
 , config
 , lib
 , net
+, flake
 , ...
 }:
 # TODO: dns over tls
@@ -38,7 +39,11 @@ in
       example = {
         "jellyfin" = "beta";
       };
-      default = mkDnsBindsFromServices net.services;
+      default = let
+        getProxiesFromHost = _: v: (builtins.attrNames v.config.phil.server.services.caddy.proxy);
+        validHosts = lib.filterAttrs (_: v: lib.hasAttrByPath [ "config" "phil" "server" "services" "caddy" "proxy" ] v) flake.nixosConfigurations;
+        allProxies = lib.mapAttrs getProxiesFromHost validHosts;
+      in mkDnsBindsFromServices allProxies;
     };
 
     host = mkOption {

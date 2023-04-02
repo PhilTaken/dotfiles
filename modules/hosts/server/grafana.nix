@@ -129,7 +129,6 @@ in
       };
 
       provision = {
-        # TODO: conditional influx data source
         datasources.settings = {
           datasources = [
             {
@@ -140,7 +139,7 @@ in
             {
               name = "Loki";
               type = "loki";
-              url = "http://loki.${net.tld}/";
+              url = "https://loki.${net.tld}/";
             }
           ];
         };
@@ -148,9 +147,11 @@ in
     };
 
     phil.server.services = {
-      caddy.proxy.grafana.port = cfg.grafana-port;
-      caddy.proxy.loki.port = cfg.grafana-port;
-      caddy.proxy.prometheus.port = cfg.prometheus-port;
+      caddy.proxy = {
+        grafana.port = cfg.grafana-port;
+        loki.port = cfg.grafana-port;
+        prometheus.port = cfg.prometheus-port;
+      };
 
       homer.apps."${cfg.host}" = {
         show = true;
