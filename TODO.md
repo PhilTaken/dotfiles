@@ -65,8 +65,6 @@
 - logging
     - grafana config
         - todo: provisions
-    - extend vector to replace telegraf
-        - geoip mapping ip adresses -> store in influxdb, visualize in grafana
 
 - nebula
     - implement proper tagging

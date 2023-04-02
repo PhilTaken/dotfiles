@@ -47,9 +47,7 @@ Secrets are provisioned by [sops-nix](https://github.com/Mic92/sops-nix) using [
 
 ## Monitoring
 
-**early WIP**
-
-I have implemented some basic [telegraf](https://www.influxdata.com/time-series-platform/telegraf/) to [influxdb2](https://www.influxdata.com/) monitoring for basic metrics such as temperature and cpu utilisation as well as [vector](https://vector.dev/) to send the system's syslog to [grafana](https://grafana.com/).
+I have implemented a basic ~~[vector.dev](https://vector.dev/)~~ [Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) configuration to send the system's syslog to [Grafana](https://grafana.com/) and pull system stats to [Prometheus](https://prometheus.io/).
 
 # Installing (wip section)
 
