@@ -2,6 +2,7 @@
 , config
 , lib
 , net
+, flake
 , ...
 }:
 
@@ -12,26 +13,26 @@ in
 {
   options.phil.server.services.grafana = {
     enable = mkEnableOption "grafana";
-    inputs = {
-      default = mkOption {
-        type = types.bool;
-        default = false;
-      };
-    };
 
     host = mkOption {
       type = types.str;
       default = "grafana";
     };
 
-    port = mkOption {
-      type = types.port;
-      default = 8100;
-    };
 
     loki-port = mkOption {
       type = types.port;
       default = 3100;
+    };
+
+    prometheus-port = mkOption {
+      type = types.port;
+      default = 3101;
+    };
+
+    grafana-port = mkOption {
+      type = types.port;
+      default = 3102;
     };
   };
 
@@ -44,23 +45,9 @@ in
       owner = config.systemd.services.grafana.serviceConfig.User;
     };
 
-    phil.server.services = {
-      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
-      homer.apps."${cfg.host}" = {
-        show = true;
-        settings = {
-          name = "Grafana";
-          subtitle = "Observability Service";
-          tag = "app";
-          keywords = "selfhosted data";
-          logo = "https://grafana.com/static/img/about/grafana_logo_swirl_fullcolor.jpg";
-        };
-      };
-    };
-
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [ cfg.port cfg.loki-port ];
-      allowedTCPPorts = [ cfg.port cfg.loki-port ];
+      allowedUDPPorts = [ cfg.grafana-port cfg.loki-port cfg.prometheus-port ];
+      allowedTCPPorts = [ cfg.grafana-port cfg.loki-port cfg.prometheus-port ];
     };
 
     services.loki = {
@@ -105,11 +92,26 @@ in
       };
     };
 
+    services.prometheus = {
+      enable = true;
+      port = cfg.prometheus-port;
+
+      scrapeConfigs = builtins.attrValues (lib.mapAttrs (n: v: {
+        job_name = n;
+        static_configs = [{
+          targets = [
+            "${net.networks.default.${n}}:${builtins.toString v.config.services.prometheus.exporters.node.port}"
+          ];
+        }];
+      })
+      (lib.filterAttrs (n: v: (builtins.hasAttr n net.networks.default) && (v.config.services.prometheus.exporters.node.enable)) flake.nixosConfigurations));
+    };
+
     services.grafana = {
       enable = true;
       settings = {
         server = {
-          http_port = cfg.port;
+          http_port = cfg.grafana-port;
           domain = "${cfg.host}.${net.tld}";
           protocol = "http";
           http_addr = "0.0.0.0";
@@ -136,6 +138,20 @@ in
               url = "http://localhost:${builtins.toString cfg.loki-port}";
             }
           ];
+        };
+      };
+    };
+
+    phil.server.services = {
+      caddy.proxy."${cfg.host}".port = cfg.grafana-port;
+      homer.apps."${cfg.host}" = {
+        show = true;
+        settings = {
+          name = "Grafana";
+          subtitle = "Observability Service";
+          tag = "app";
+          keywords = "selfhosted data";
+          logo = "https://grafana.com/static/img/about/grafana_logo_swirl_fullcolor.jpg";
         };
       };
     };
