@@ -169,7 +169,7 @@ in
 
         Navigator-nvim
         conjure
-        diffview-nvim
+        #diffview-nvim
         direnv-vim
         fennel-vim
         gitlinker-nvim

@@ -17,7 +17,7 @@ vim.cmd[[map gf :e <cfile><CR>]]
 -- terminals
 local toggleterm = require('toggleterm')
 local terms = require('custom.terminals')
-local diffview = require('diffview')
+local diffview = {} -- require('diffview')
 
 local function visual_selection_range()
   -- https://github.com/neovim/neovim/pull/13896#issuecomment-774680224

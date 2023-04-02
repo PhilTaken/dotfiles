@@ -10,7 +10,7 @@ require('colorizer').setup()
 require('neoscroll').setup({ hide_cursor = false })
 require("gitlinker").setup{ mappings = nil }
 require('gitsigns').setup {}
-require("diffview").setup{}
+--require("diffview").setup{}
 require('which-key').setup{}
 require('trouble').setup{}
 require("Navigator").setup({ auto_save = 'all', disable_on_zoom = true, })
