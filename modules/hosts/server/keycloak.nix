@@ -13,13 +13,20 @@ in
   options.phil.server.services.keycloak = {
     enable = mkEnableOption "keycloak";
 
-    url = mkOption {
-      description = "webinterface url";
-      type = types.str;
-      default = "keycloak.${net.tld}";
+    https-port = mkOption {
+      type = types.port;
+      default = 8090;
     };
 
-    # more options
+    http-port = mkOption {
+      type = types.port;
+      default = 8091;
+    };
+
+    host = mkOption {
+      type = types.str;
+      default = "keycloak";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -31,9 +38,25 @@ in
         passwordFile = config.sops.secrets.keycloak-dbpass.path;
       };
       settings = {
-        hostname = cfg.url;
+        hostname = "${cfg.host}.${net.tld}";
+        proxy = "edge";
+        inherit (cfg) http-port https-port;
+      };
+      initialAdminPassword = "unsafe-password";
+    };
+
+    phil.server.services = {
+      caddy.proxy."${cfg.host}".port = cfg.http-port;
+      homer.apps."${cfg.host}" = {
+        show = true;
+        settings = {
+          name = "Keycloak";
+          subtitle = "Authentication";
+          tag = "app";
+          keywords = "selfhosted security";
+          logo = "https://pbs.twimg.com/profile_images/702119821979344897/oAC05cEB_400x400.png";
+        };
       };
     };
   };
 }
-

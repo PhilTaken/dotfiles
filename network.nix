@@ -61,7 +61,9 @@ rec {
       "jellyfin"
       "syncthing"
       "nextcloud"
-      "calibre"
+      #"calibre"
+
+      "keycloak"
 
       "nix-serve"
 
