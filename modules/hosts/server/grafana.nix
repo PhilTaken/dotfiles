@@ -8,8 +8,6 @@
 let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.grafana;
-  domain = "grafana.${net.tld}";
-  port = 3100;
 in
 {
   options.phil.server.services.grafana = {
@@ -20,6 +18,7 @@ in
         default = false;
       };
     };
+
     host = mkOption {
       type = types.str;
       default = "grafana";
@@ -27,7 +26,12 @@ in
 
     port = mkOption {
       type = types.port;
-      default = port;
+      default = 8100;
+    };
+
+    loki-port = mkOption {
+      type = types.port;
+      default = 3100;
     };
   };
 
@@ -35,6 +39,7 @@ in
     sops.secrets.grafana-adminpass = {
       owner = config.systemd.services.grafana.serviceConfig.User;
     };
+
     sops.secrets.grafana-admindbpass = {
       owner = config.systemd.services.grafana.serviceConfig.User;
     };
@@ -54,8 +59,8 @@ in
     };
 
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [ cfg.port ];
-      allowedTCPPorts = [ cfg.port ];
+      allowedUDPPorts = [ cfg.port cfg.loki-port ];
+      allowedTCPPorts = [ cfg.port cfg.loki-port ];
     };
 
     services.loki = {
@@ -65,7 +70,7 @@ in
         analytics.reporting_enabled = false;
 
         server = {
-          http_listen_port = cfg.port;
+          http_listen_port = cfg.loki-port;
           grpc_listen_port = 9060;
         };
 
@@ -105,7 +110,7 @@ in
       settings = {
         server = {
           http_port = cfg.port;
-          inherit domain;
+          domain = "${cfg.host}.${net.tld}";
           protocol = "http";
           http_addr = "0.0.0.0";
         };
@@ -128,7 +133,7 @@ in
             {
               name = "Loki";
               type = "loki";
-              url = "http://localhost:${builtins.toString cfg.port}";
+              url = "http://localhost:${builtins.toString cfg.loki-port}";
             }
           ];
         };
