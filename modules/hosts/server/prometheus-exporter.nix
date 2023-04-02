@@ -5,9 +5,8 @@
 }:
 
 let
-  inherit (lib) mkEnableOption mkIf types mkOption;
+  inherit (lib) mkIf types mkOption;
   cfg = config.phil.server.services.promexp;
-  loki_url = "10.200.0.1:3100";
 in
 {
   options.phil.server.services.promexp = {
