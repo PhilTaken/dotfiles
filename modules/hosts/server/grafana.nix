@@ -104,7 +104,7 @@ in
       enable = true;
       settings = {
         server = {
-          inherit (cfg) port;
+          http_port = cfg.port;
           inherit domain;
           protocol = "https";
           http_addr = "0.0.0.0";
