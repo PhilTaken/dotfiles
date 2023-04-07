@@ -3,6 +3,7 @@
 , inputs
 , lib
 , net
+, flake
 , ...
 }@inattrs:
 let
@@ -26,6 +27,12 @@ let
         type = types.str;
         default = "reverse_proxy http://${config.ip}:${toString config.port}";
       };
+
+      public = mkOption {
+        type = types.bool;
+        default = false;
+        description = "allow public access to this proxy";
+      };
     };
   });
 in
@@ -48,8 +55,12 @@ in
 
     services.caddy =
       let
-        genconfig = subdomain: { port, ip, proxycfg }: ''
+        genconfig = subdomain: { proxycfg, public, ... }: ''
           ${subdomain}.${net.tld} {
+            ${lib.optionalString (!public) ''
+            @denied not remote_ip private_ranges
+            abort @denied
+            ''}
             ${proxycfg}
             tls {
               import ${inattrs.config.sops.secrets.caddy_dns_cf.path}
@@ -69,10 +80,37 @@ in
 
           vendorHash = "sha256-dN53GyT5gZTrobkuwtd0Tr0ZSR/jS1kAy26Hmk04y08=";
         };
-        extraConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
+        extraConfig = let
+          isEndpoint = n: (builtins.elem n (builtins.attrNames net.networks.endpoints));
+          hiddenHosts = builtins.attrNames (lib.filterAttrs (n: _: ! builtins.elem n (builtins.attrNames net.networks.endpoints)) flake.nixosConfigurations);
+          hiddenHostProxies = let
+            hosts = lib.filterAttrs
+              (n: v: builtins.elem n hiddenHosts && lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v)
+              flake.nixosConfigurations;
+          in lib.mapAttrs (n: v: v.config.phil.server.services.caddy.proxy) hosts;
+
+          updateConfigWithHost = host: proxy: config: lib.recursiveUpdate config {
+            proxycfg = ''
+              reverse_proxy https://${net.networks.default.${host}}:443 {
+                transport http {
+                  tls_server_name ${proxy}.${net.tld}
+                }
+              }
+              '';
+          };
+
+          updatedProxies = lib.mapAttrs (host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies) hiddenHostProxies;
+          otherProxies = lib.foldl' lib.recursiveUpdate {} (lib.attrValues updatedProxies);
+        in concatStrings
+          (lib.mapAttrsToList genconfig
+            (lib.recursiveUpdate
+              cfg.proxy
+              (lib.optionalAttrs
+                (isEndpoint config.networking.hostName)
+                otherProxies)));
       };
 
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
+    networking.firewall = {
       allowedUDPPorts = [ 80 443 ];
       allowedTCPPorts = [ 80 443 ];
     };

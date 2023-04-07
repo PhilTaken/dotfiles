@@ -46,7 +46,10 @@ in
     };
 
     phil.server.services = {
-      caddy.proxy."${cfg.host}".port = cfg.http-port;
+      caddy.proxy."${cfg.host}" = {
+        port = cfg.http-port;
+        public = true;
+      };
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {

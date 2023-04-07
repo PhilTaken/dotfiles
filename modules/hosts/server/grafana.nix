@@ -155,7 +155,7 @@ in
           api_url = "${oid-uri}/userinfo";
           role_attribute_path = "contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
           allow_assign_grafana_admin = true;
-          #signout_redirect_url = "https://${oid-uri}/logout?redirect_uri=https%3A%2F%2Fgrafana.pherzog.xyz%2Flogin";
+          signout_redirect_url = "${oid-uri}/logout";
         };
       };
 
@@ -179,7 +179,10 @@ in
 
     phil.server.services = {
       caddy.proxy = {
-        grafana.port = cfg.grafana-port;
+        grafana = {
+          port = cfg.grafana-port;
+          public = true;
+        };
         loki.port = cfg.loki-port;
         prometheus.port = cfg.prometheus-port;
       };
