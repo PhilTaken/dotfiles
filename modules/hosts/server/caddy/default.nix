@@ -92,6 +92,7 @@ in
           updateConfigWithHost = host: proxy: config: lib.recursiveUpdate config {
             proxycfg = ''
               reverse_proxy https://${net.networks.default.${host}}:443 {
+                header_up X-Real-IP {remote}
                 transport http {
                   tls_server_name ${proxy}.${net.tld}
                 }
