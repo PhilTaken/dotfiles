@@ -1,6 +1,7 @@
 { pkgs
 , config
 , lib
+, net
 , ...
 }:
 
@@ -22,9 +23,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.firewall = {
-      allowedTCPPorts = [ cfg.port ];
+    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
       allowedUDPPorts = [ cfg.port ];
+      allowedTCPPorts = [ cfg.port ];
     };
 
     services.prometheus.exporters = {
