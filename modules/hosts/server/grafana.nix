@@ -9,6 +9,14 @@
 let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.grafana;
+
+  kc-nodes = builtins.attrNames (lib.filterAttrs
+    (_: v:
+      lib.hasAttrByPath ["config" "phil" "server" "services" "keycloak" "enable"] v &&
+      v.config.phil.server.services.keycloak.enable)
+    flake.nixosConfigurations);
+  kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
+  kc-enabled = builtins.length kc-nodes == 1;
 in
 {
   options.phil.server.services.grafana = {
@@ -18,7 +26,6 @@ in
       type = types.str;
       default = "grafana";
     };
-
 
     loki-port = mkOption {
       type = types.port;
@@ -37,13 +44,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.grafana-adminpass = {
+    sops.secrets = lib.genAttrs [
+      "grafana-adminpass"
+      "grafana-admindbpass"
+      "grafana-kc-client-secret"
+    ] (_: {
       owner = config.systemd.services.grafana.serviceConfig.User;
-    };
-
-    sops.secrets.grafana-admindbpass = {
-      owner = config.systemd.services.grafana.serviceConfig.User;
-    };
+    });
 
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
       allowedUDPPorts = [ cfg.grafana-port cfg.loki-port cfg.prometheus-port ];
@@ -113,8 +120,9 @@ in
         server = {
           http_port = cfg.grafana-port;
           domain = "${cfg.host}.${net.tld}";
-          protocol = "http";
+          root_url = "https://${cfg.host}.${net.tld}";
           http_addr = "0.0.0.0";
+          protocol = "http";
         };
 
         security = {
@@ -125,6 +133,29 @@ in
         database = {
           user = "root";
           password = "$__file{${config.sops.secrets.grafana-admindbpass.path}}";
+        };
+
+        "auth.generic_oauth" = let
+          enabled = kc-enabled;
+          realm_name = "services";
+          client_id = "grafana-oauth";
+          client_secret = "$__file{${config.sops.secrets.grafana-kc-client-secret.path}}";
+          url = "${if kc-enabled then kc-host else "grafana"}.${net.tld}";
+          oid-uri = "https://${url}/realms/${realm_name}/protocol/openid-connect";
+        in {
+          inherit enabled client_id client_secret;
+          name = "Keycloak-OAuth";
+          allow_sign_up = true;
+          scopes = lib.concatStringsSep " " [ "openid" "email" "profile"  "offline_access" "roles" ];
+          email_attribute_path = "email";
+          login_attribute_path = "username";
+          name_attribute_path = "full_name";
+          auth_url = "${oid-uri}/auth";
+          token_url = "${oid-uri}/token";
+          api_url = "${oid-uri}/userinfo";
+          role_attribute_path = "contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
+          allow_assign_grafana_admin = true;
+          #signout_redirect_url = "https://${oid-uri}/logout?redirect_uri=https%3A%2F%2Fgrafana.pherzog.xyz%2Flogin";
         };
       };
 
