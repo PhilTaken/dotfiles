@@ -9,11 +9,13 @@ require('telescope').setup {
             "--hidden",
 			"--ignore",
 			"-u",
-			"--glob=!**/node_modules/*",
 			"--glob=!**/.git/*",
+			"--glob=!**/node_modules/*",
 			"--glob=!**/.next/*",
 			"--glob=!**/.appenv/*",
 			"--glob=!**/.batou/*",
+			"--glob=!**/.direnv/*",
+			"--glob=!**/target/*",
 		},
       }
     },
@@ -67,6 +69,10 @@ require('telescope').setup {
             "--glob=!**/.git/*",
             "--glob=!**/node_modules/*",
             "--glob=!**/.next/*",
+			"--glob=!**/.appenv/*",
+			"--glob=!**/.batou/*",
+			"--glob=!**/.direnv/*",
+			"--glob=!**/target/*",
         }
 
         --file_sorter = sorters.get_fzy_sorter,
