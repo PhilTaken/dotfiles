@@ -103,15 +103,17 @@ in
       enable = true;
       port = cfg.prometheus-port;
 
-      scrapeConfigs = builtins.attrValues (lib.mapAttrs (n: v: {
-        job_name = n;
-        static_configs = [{
-          targets = [
-            "${net.networks.default.${n}}:${builtins.toString v.config.services.prometheus.exporters.node.port}"
-          ];
-        }];
-      })
-      (lib.filterAttrs (n: v: (builtins.hasAttr n net.networks.default) && (v.config.services.prometheus.exporters.node.enable)) flake.nixosConfigurations));
+      scrapeConfigs = builtins.attrValues
+        (lib.mapAttrs
+          (n: v: {
+              job_name = n;
+              static_configs = [{
+                targets = [
+                  "${net.networks.default.${n}}:${builtins.toString v.config.services.prometheus.exporters.node.port}"
+                ];
+              }];
+          })
+          (lib.filterAttrs (n: v: (builtins.hasAttr n net.networks.default) && (v.config.services.prometheus.exporters.node.enable)) flake.nixosConfigurations));
     };
 
     services.grafana = {
@@ -119,7 +121,7 @@ in
       settings = {
         server = {
           http_port = cfg.grafana-port;
-          domain = "${cfg.host}.${net.tld}";
+          domain = "https://${cfg.host}.${net.tld}";
           root_url = "https://${cfg.host}.${net.tld}";
           http_addr = "0.0.0.0";
           protocol = "http";
@@ -140,7 +142,7 @@ in
           realm_name = "services";
           client_id = "grafana-oauth";
           client_secret = "$__file{${config.sops.secrets.grafana-kc-client-secret.path}}";
-          url = "${if kc-enabled then kc-host else "grafana"}.${net.tld}";
+          url = "${if kc-enabled then kc-host else "keycloak"}.${net.tld}";
           oid-uri = "https://${url}/realms/${realm_name}/protocol/openid-connect";
         in {
           inherit enabled client_id client_secret;
@@ -155,7 +157,6 @@ in
           api_url = "${oid-uri}/userinfo";
           role_attribute_path = "contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
           allow_assign_grafana_admin = true;
-          signout_redirect_url = "${oid-uri}/logout";
         };
       };
 
@@ -165,12 +166,12 @@ in
             {
               name = "Prometheus";
               type = "prometheus";
-              url = "https://prometheus.${net.tld}/";
+              url = "http://localhost:${builtins.toString cfg.prometheus-port}";
             }
             {
               name = "Loki";
               type = "loki";
-              url = "https://loki.${net.tld}/";
+              url = "http://localhost:${builtins.toString cfg.loki-port}";
             }
           ];
         };
