@@ -42,10 +42,15 @@ in
       rootUrl = "https://${cfg.host}.${net.tld}/";
 
       httpPort = cfg.port;
-      #ssh.enable = true;
       lfs.enable = true;
-      settings.session.COOKIE_SECURE = true;
+
       appName = "Oroboros";
+
+      settings = {
+        service.DISABLE_REGISTRATION = true;
+        session.COOKIE_SECURE = true;
+        other.SHOW_FOOTER_VERSION = false;
+      };
     };
 
     phil.server.services = {
