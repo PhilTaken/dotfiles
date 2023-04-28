@@ -54,7 +54,11 @@ in
     };
 
     phil.server.services = {
-      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      caddy.proxy."${cfg.host}" = {
+        inherit (cfg) port;
+        public = true;
+      };
+
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {
