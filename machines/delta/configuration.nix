@@ -11,6 +11,8 @@
       ./hardware-configuration.nix
     ];
 
+  phil.server.services.promexp.extrasensors = true;
+
   # https://nixos.wiki/wiki/ZFS
   boot.kernelParams = [ "zfs.zfs_arc_max=12884901888" ];
 

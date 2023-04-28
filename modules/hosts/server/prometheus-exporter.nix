@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (lib) mkIf types mkOption;
+  inherit (lib) mkIf types mkOption mkEnableOption;
   cfg = config.phil.server.services.promexp;
 in
 {
@@ -20,6 +20,8 @@ in
       type = types.port;
       default = 9002;
     };
+
+    extrasensors = mkEnableOption "extra sensors";
   };
 
   config = mkIf cfg.enable {
@@ -33,6 +35,18 @@ in
         enable = true;
         enabledCollectors = [ "systemd" ];
         inherit (cfg) port;
+      };
+
+      script = {
+        enable = cfg.extrasensors;
+        settings.scripts = [
+          {
+            name = "room-sensors";
+            script = ''
+              cat /dev/serial/by-id/usb-Adafruit_QT2040_Trinkey_DF609C8067563726-if00 | grep -v "^\$"
+            '';
+          }
+        ];
       };
     };
   };
