@@ -103,17 +103,21 @@ in
       enable = true;
       port = cfg.prometheus-port;
 
-      scrapeConfigs = builtins.attrValues
-        (lib.mapAttrs
-          (n: v: {
-              job_name = n;
-              static_configs = [{
-                targets = [
-                  "${net.networks.default.${n}}:${builtins.toString v.config.services.prometheus.exporters.node.port}"
-                ];
-              }];
-          })
-          (lib.filterAttrs (n: v: (builtins.hasAttr n net.networks.default) && (v.config.services.prometheus.exporters.node.enable)) flake.nixosConfigurations));
+      scrapeConfigs = let
+        nodes = lib.filterAttrs (n: v: builtins.hasAttr n net.networks.default) flake.nixosConfigurations;
+        mkScrapeJob = n: v: let
+          mkTargets = nodename: node: let
+            ip = net.networks.default.${nodename};
+            mkTargetString = port: "${ip}:${builtins.toString port}";
+            ports = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: if builtins.typeOf c == "list" then false else c != null && c.enable) node.config.services.prometheus.exporters);
+          in builtins.map mkTargetString ports;
+        in {
+          job_name = n;
+          static_configs = [{
+            targets = mkTargets n v;
+          }];
+        };
+      in builtins.attrValues (lib.mapAttrs mkScrapeJob nodes);
     };
 
     services.grafana = {
