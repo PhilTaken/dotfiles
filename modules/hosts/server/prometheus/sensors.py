@@ -17,22 +17,22 @@ class PromMetrics(object):
     def __call__(self):
         data = json.loads(self.serial.readline())
 
-        temp = Gauge("temp", "Temperature", registry=self.registry)
+        temp = Gauge("sensor_temp", "Temperature", registry=self.registry)
         temp.set(data['temperature'])
 
-        prs = Gauge("prs", "Pressure", registry=self.registry)
+        prs = Gauge("sensor_prs", "Pressure", registry=self.registry)
         prs.set(data['pressure'])
 
-        gas = Gauge("gas", "Gas Content", registry=self.registry)
+        gas = Gauge("sensor_gas", "Gas Content", registry=self.registry)
         gas.set(data['gas'])
 
-        alt = Gauge("alt", "Altitude", registry=self.registry)
+        alt = Gauge("sensor_alt", "Altitude", registry=self.registry)
         alt.set(data['altitude'])
 
-        hum = Gauge("hum", "Humidity", registry=self.registry)
+        hum = Gauge("sensor_hum", "Humidity", registry=self.registry)
         hum.set(data['humidity'])
 
-        light = Gauge("light", "Light", registry=self.registry)
+        light = Gauge("sensor_light", "Light", registry=self.registry)
         light.set(data['light'])
 
         return Response(generate_latest(self.registry),
