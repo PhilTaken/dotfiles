@@ -35,7 +35,7 @@ in
     ./ttrss.nix
     ./unbound.nix
     ./vector.nix
-    ./prometheus-exporter.nix
+    ./prometheus/prometheus-exporter.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";
