@@ -68,6 +68,8 @@ rec {
       "nix-serve"
 
       "navidrome"
+
+      "arrs"
     ];
   };
 }

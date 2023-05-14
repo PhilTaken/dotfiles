@@ -13,28 +13,25 @@ in
     enable = mkEnableOption "enable the mullvad vpn";
     interfaceName = mkOption {
       type = types.str;
-      default = "mlvd";
+      default = "mlvd0";
     };
-
-    enableInterface = mkEnableOption "enable the mullvad vpn interface";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.mullvad-vpn ];
-    services.mullvad-vpn.enable = true;
-
     sops.secrets.mullvad-privateKey = {};
 
-    networking.wg-quick.interfaces = mkIf cfg.enableInterface {
+    networking.wireguard.interfaces = {
       ${cfg.interfaceName} = {
-        address = [ "10.64.52.43/32" "fc00:bbbb:bbbb:bb01::1:342a/128" ];
-        dns = [ "10.64.0.1" ];
+        ips = [ "10.68.36.230/32" "fc00:bbbb:bbbb:bb01::5:24e5/128" ];
+        #dns = [ "10.64.0.1" ];
         privateKeyFile = config.sops.secrets.mullvad-privateKey.path;
 
+        allowedIPsAsRoutes = false;
+
         peers = [{
-          publicKey = "W+iNU2J6P0LRdW7SkRZdj3atH0y7o/TgKvF8I/wRDHM=";
-          allowedIPs = [ ];
-          endpoint = "185.254.75.3:51820";
+          publicKey = "veGD6/aEY6sMfN3Ls7YWPmNgu3AheO7nQqsFT47YSws=";
+          allowedIPs = [ "0.0.0.0/0" "::0/0" ];
+          endpoint = "185.213.154.69:51820";
         }];
       };
     };

@@ -12,6 +12,7 @@ in
 {
   imports = [
     ./adguardhome.nix
+    ./arrs.nix
     ./caddy
     ./calibre-web.nix
     ./fail2ban.nix

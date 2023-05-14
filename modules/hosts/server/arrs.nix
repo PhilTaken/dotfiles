@@ -13,76 +13,79 @@ in
     enable = mkEnableOption "arrs";
     host = mkOption {
       type = types.str;
-      default = "arrs";
+      default = "sonarr";
     };
   };
 
   config = mkIf cfg.enable {
     phil.mullvad.enable = lib.mkForce true;
+    phil.mullvad.interfaceName = "mlvd1";
 
-    homer.apps = {
-      "sonarr" = {
-        show = true;
-        settings = {
-          name = "Sonarr";
-          subtitle = "multimedia pvr";
-          tag = "app";
-          keywords = "selfhosted";
-          logo = "https://sonarr.tv/img/logo.png";
+    phil.server.services = {
+      homer.apps = {
+        "sonarr" = {
+          show = true;
+          settings = {
+            name = "Sonarr";
+            subtitle = "multimedia pvr";
+            tag = "app";
+            keywords = "selfhosted";
+            logo = "https://sonarr.tv/img/logo.png";
+          };
+        };
+      };
+      caddy.proxy = {
+        "sonarr" = {
+          port = 555;
         };
       };
     };
 
-    phil.server.services = {
-      caddy.proxy = {
-        "${cfg.host}" = { inherit (cfg) port; };
-      };
+    containers.arrs = {
+      ephemeral = false;
+      autoStart = true;
 
-      containers.arrs = {
-        interfaces = [ "mlvd" "milkyway" ];
+      #interfaces = [ config.phil.mullvad.interfaceName ];
 
-        ephemeral = false;
-        autoStart = true;
+      privateNetwork = true;
+      hostAddress = "192.0.1.1";
+      localAddress = "192.0.1.2";
 
-        privateNetwork = true;
-        inherit localAddress hostAddress;
+      config = { config, pkgs, ... }: {
+        # https://github.com/NixOS/nixpkgs/issues/162686
+        #networking.nameservers = [ "1.1.1.1" ];
+        # WORKAROUND
+        #environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
+        #networking.firewall.enable = false;
+        #networking.interfaces = {
+          #mlvd = {
+            #ipv4.routes = [{ address = "0.0.0.0"; prefixLength = "0"; }];
+          #};
+        #};
 
-        config = { config, pkgs, ... }: {
-          # https://github.com/NixOS/nixpkgs/issues/162686
-          #networking.nameservers = [ "1.1.1.1" ];
-          # WORKAROUND
-          #environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
-          networking.firewall.enable = false;
-          networking.interfaces = {
-            mlvd = {
-              ipv4.routes = [{ address = "0.0.0.0"; prefixLength = "0"; }];
-            };
-          };
+        services = {
+          #sonarr = {
+            #enable = true;
+          #};
 
-          services = {
-            sonarr = {
-              enable = true;
-            };
+          #radarr = {
+            #enable = true;
+          #};
 
-            radarr = {
-              enable = true;
-            };
+          #prowlarr = {
+            #enable = true;
+          #};
 
-            prowlarr = {
-              enable = true;
-            };
+          #lidarr = {
+            #enable = true;
+          #};
 
-            lidarr = {
-              enable = true;
-            };
-
-            bazarr = {
-              enable = true;
-            };
-          };
-
-          system.stateVersion = "22.11";
+          #bazarr = {
+            #enable = true;
+          #};
         };
+
+        system.stateVersion = "22.11";
       };
     };
   };
