@@ -42,7 +42,11 @@ in
       };
 
       phil.server.services = {
-        caddy.proxy."${cfg.host}" = { inherit port; ip = localAddress; };
+        caddy.proxy."${cfg.host}" = {
+          inherit port;
+          ip = localAddress;
+          public = true;
+        };
         homer.apps."${cfg.host}" = {
           show = true;
           settings = {
