@@ -99,7 +99,7 @@ in
 
             services.nextcloud = {
               enable = true;
-              package = pkgs.nextcloud25;
+              package = pkgs.nextcloud26;
 
               inherit home datadir;
               hostName = "${cfg.host}.${net.tld}";
@@ -112,6 +112,7 @@ in
               };
 
               caching.redis = true;
+              caching.apcu = false;
               config = {
                 adminuser = "admin";
                 inherit adminpassFile;
@@ -121,6 +122,16 @@ in
                 dbuser = "nextcloud";
                 defaultPhoneRegion = "DE";
                 overwriteProtocol = "https";
+              };
+
+              extraOptions = {
+                redis = {
+                  host = "/run/redis-nextcloud/redis.sock";
+                  port = 0;
+                };
+                "memcache.local" = "\\OC\\Memcache\\Redis";
+                "memcache.distributed" = "\\OC\\Memcache\\Redis";
+                "memcache.locking" = "\\OC\\Memcache\\Redis";
               };
 
               #phpOptions = {
@@ -145,11 +156,11 @@ in
               ensureDatabases = [ "nextcloud" ];
             };
 
-            services.redis.servers.nextcloud.enable = true;
-            services.redis.servers.nextcloud.unixSocketPerm = 770;
-
-            users.users.nginx.extraGroups = [ "redis-nextcloud" ];
-            users.users.nextcloud.extraGroups = [ "redis-nextcloud" ];
+            services.redis.servers.nextcloud = {
+              enable = true;
+              user = "nextcloud";
+              port = 0;
+            };
 
             system.stateVersion = "22.11";
           };

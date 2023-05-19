@@ -1183,37 +1183,37 @@
     "nc-bookmarks": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-vQvatq162L/tOI0yoCkWGVv/T1N6oIB19Xlav5ySbjY=",
+        "narHash": "sha256-aflxesvTOdNjPtHRtSPtImdmh4JmzM4s8iF5+lYYo3c=",
         "type": "tarball",
-        "url": "https://github.com/nextcloud/bookmarks/releases/download/v12.0.0/bookmarks-12.0.0.tar.gz"
+        "url": "https://github.com/nextcloud/bookmarks/releases/download/v13.0.1/bookmarks-13.0.1.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/nextcloud/bookmarks/releases/download/v12.0.0/bookmarks-12.0.0.tar.gz"
+        "url": "https://github.com/nextcloud/bookmarks/releases/download/v13.0.1/bookmarks-13.0.1.tar.gz"
       }
     },
     "nc-calendar": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-I39pTEwotYj52BAdMZfP+o6zxPxBtxsIL82FNoR9fOQ=",
+        "narHash": "sha256-7/WR37HdajdSAIk0PpclO2j7C5QjUU+K3iwn0f19fsw=",
         "type": "tarball",
-        "url": "https://github.com/nextcloud/calendar/archive/refs/tags/v3.3.2.tar.gz"
+        "url": "https://github.com/nextcloud/calendar/archive/refs/tags/v4.3.4.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/nextcloud/calendar/archive/refs/tags/v3.3.2.tar.gz"
+        "url": "https://github.com/nextcloud/calendar/archive/refs/tags/v4.3.4.tar.gz"
       }
     },
     "nc-news": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-p3Ft3sQ/2HPXCFE03dm8pBL39b7bWCi2iAxHkbOK2V4=",
+        "narHash": "sha256-YAoLxRaK+D4vW8MpBW9Ng7Fy7d5eN3ayM7EiqogUJzs=",
         "type": "tarball",
-        "url": "https://github.com/nextcloud/news/releases/download/20.0.0/news.tar.gz"
+        "url": "https://github.com/nextcloud/news/releases/download/21.2.0/news.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/nextcloud/news/releases/download/20.0.0/news.tar.gz"
+        "url": "https://github.com/nextcloud/news/releases/download/21.2.0/news.tar.gz"
       }
     },
     "neovim-nightly": {
