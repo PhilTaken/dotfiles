@@ -1,6 +1,5 @@
 { pkgs
 , config
-, inputs
 , lib
 , net
 , flake
@@ -44,6 +43,12 @@ in
       type = types.attrsOf ipOptsType;
       default = { };
     };
+
+    adminport = mkOption {
+      description = "admin port for caddy";
+      type = types.port;
+      default = 2019;
+    };
   };
 
   config = mkIf (cfg.proxy != { }) {
@@ -80,6 +85,14 @@ in
 
           vendorHash = "sha256-dN53GyT5gZTrobkuwtd0Tr0ZSR/jS1kAy26Hmk04y08=";
         };
+
+        globalConfig = ''
+          admin ${net.networks.default.${config.networking.hostName}}:${builtins.toString cfg.adminport}
+          servers {
+            metrics
+          }
+        '';
+
         extraConfig = let
           isEndpoint = n: (builtins.elem n (builtins.attrNames net.networks.endpoints));
           hiddenHosts = builtins.attrNames (lib.filterAttrs (n: _: ! builtins.elem n (builtins.attrNames net.networks.endpoints)) flake.nixosConfigurations);
@@ -114,6 +127,11 @@ in
     networking.firewall = {
       allowedUDPPorts = [ 80 443 ];
       allowedTCPPorts = [ 80 443 ];
+    };
+
+    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
+      allowedTCPPorts = [ 2019 ];
+      allowedUDPPorts = [ 2019 ];
     };
   };
 }

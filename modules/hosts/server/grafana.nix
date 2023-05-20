@@ -110,7 +110,9 @@ in
             ip = net.networks.default.${nodename};
             mkTargetString = port: "${ip}:${builtins.toString port}";
             exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) node.config.services.prometheus.exporters);
-            ports = exporterPorts ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [ node.config.phil.server.services.promexp.prom-sensors-port ];
+            ports = exporterPorts
+            ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [ node.config.phil.server.services.promexp.prom-sensors-port ]
+            ++ lib.optionals node.config.services.caddy.enable [ node.config.phil.server.services.caddy.adminport ];
           in builtins.map mkTargetString ports;
         in {
           job_name = n;
