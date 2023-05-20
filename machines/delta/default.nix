@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [ ./configuration.nix ];
 
@@ -8,6 +8,7 @@
   phil.backup.jobs = {
     "syncthing" = "/media/syncthing";
     "music" = "/media/Music";
+    "nextcloud" = "/media/nextcloud";
   };
 
   phil.backup.repo = "/media_int/backups";
