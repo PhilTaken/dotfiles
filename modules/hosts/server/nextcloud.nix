@@ -106,13 +106,16 @@ in
               https = true;
 
               extraApps = {
-                calendar = inputs.nc-calendar;
-                news = inputs.nc-news;
-                bookmarks = inputs.nc-bookmarks;
+                inherit (pkgs.nextcloud26Packages.apps)
+                  calendar news bookmarks contacts deck
+                  groupfolders impersonate spreed unsplash
+                  twofactor_webauthn;
+                # "onlyoffice" "tasks"
               };
 
               caching.redis = true;
               caching.apcu = false;
+
               config = {
                 adminuser = "admin";
                 inherit adminpassFile;
@@ -133,13 +136,6 @@ in
                 "memcache.distributed" = "\\OC\\Memcache\\Redis";
                 "memcache.locking" = "\\OC\\Memcache\\Redis";
               };
-
-              #phpOptions = {
-              #redis.host = config.services.redis.servers.nextcloud.unixSocket;
-              #redis.port = "0";
-              #redis.dbindex = "0";
-              #redis.timeout = "1.5";
-              #};
             };
 
             services.postgresql = {

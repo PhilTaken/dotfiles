@@ -129,22 +129,6 @@
       flake = false;
     };
 
-    # nextcloud apps
-    nc-calendar = {
-      url = "https://github.com/nextcloud/calendar/archive/refs/tags/v4.3.4.tar.gz";
-      flake = false;
-    };
-
-    nc-news = {
-      url = "https://github.com/nextcloud/news/releases/download/21.2.0/news.tar.gz";
-      flake = false;
-    };
-
-    nc-bookmarks = {
-      url = "https://github.com/nextcloud/bookmarks/releases/download/v13.0.1/bookmarks-13.0.1.tar.gz";
-      flake = false;
-    };
-
     # extra vim plugins
     vim-janet-src = {
       url = "github:bakpakin/janet.vim";
