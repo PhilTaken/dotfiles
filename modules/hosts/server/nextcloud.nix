@@ -142,6 +142,12 @@ in
               };
             };
 
+            services.redis.servers.nextcloud = {
+              enable = true;
+              user = "nextcloud";
+              port = 0;
+            };
+
             services.postgresql = {
               enable = true;
               package = pkgs.postgresql_14;
@@ -156,10 +162,30 @@ in
               ensureDatabases = [ "nextcloud" ];
             };
 
-            services.redis.servers.nextcloud = {
-              enable = true;
-              user = "nextcloud";
-              port = 0;
+            systemd.services."nextcloud-setup" = {
+              requires = ["postgresql.service"];
+              after = ["postgresql.service"];
+            };
+
+            systemd.timers."nextcloud-preview-gen" = {
+              wantedBy = [ "timers.target" ];
+              after = [ "nextcloud-setup.service" ];
+              timerConfig = {
+                OnBootSec = "10m";
+                OnUnitActiveSec = "10m";
+                Unit = "nextcloud-preview-gen.service";
+              };
+            };
+
+            systemd.services."nextcloud-preview-gen" = {
+              script = ''
+                ${config.services.nextcloud.occ}/bin/nextcloud-occ preview:pre-generate
+              '';
+
+              serviceConfig = {
+                Type = "oneshot";
+                User = "root";
+              };
             };
 
             system.stateVersion = "22.11";
