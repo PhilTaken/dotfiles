@@ -109,7 +109,7 @@ in
                 inherit (pkgs.nextcloud26Packages.apps)
                   calendar news bookmarks contacts deck
                   groupfolders impersonate spreed unsplash
-                  twofactor_webauthn;
+                  twofactor_webauthn previewgenerator;
                 # "onlyoffice" "tasks"
               };
 
@@ -135,6 +135,10 @@ in
                 "memcache.local" = "\\OC\\Memcache\\Redis";
                 "memcache.distributed" = "\\OC\\Memcache\\Redis";
                 "memcache.locking" = "\\OC\\Memcache\\Redis";
+
+                preview_max_x = 2048;
+                preview_max_y = 2048;
+                jpeg_quality = 60;
               };
             };
 
