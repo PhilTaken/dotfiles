@@ -1,6 +1,7 @@
 {
   net,
   lib,
+  ...
 }: let
   inherit (lib) mergeAttrs mapAttrs;
   iplot = net.networks.yggdrasil;

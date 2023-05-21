@@ -18,10 +18,14 @@ in {
       type = types.str;
       default = "nextcloud";
     };
+
+    port = mkOption {
+      type = types.port;
+      default = 3200;
+    };
   };
 
   config = let
-    port = 80;
     hostAddress = "192.0.0.1";
     localAddress = "192.0.0.2";
   in
@@ -49,9 +53,18 @@ in {
 
       phil.server.services = {
         caddy.proxy."${cfg.host}" = {
-          inherit port;
-          ip = localAddress;
+          inherit (cfg) port;
           public = true;
+
+          proxycfg = ''
+            reverse_proxy http://${net.networks.default.${config.networking.hostName}}:${builtins.toString cfg.port}
+          '';
+
+          publicProxyConfig = ''
+            transport http {
+              keepalive off
+            }
+          '';
         };
         homer.apps."${cfg.host}" = {
           show = true;
@@ -69,13 +82,23 @@ in {
         adminpassFile = config.sops.secrets.nextcloud-adminpass.path;
         home = "/media/nextcloud";
         datadir = "/var/lib/nextcloud";
+        hostName = "${cfg.host}.${net.tld}";
       in
         mkIf cfg.enable {
           ephemeral = false;
           autoStart = true;
 
+          #privateNetwork = false;
           privateNetwork = true;
           inherit localAddress hostAddress;
+
+          forwardPorts = [
+            {
+              containerPort = 80;
+              hostPort = cfg.port;
+              protocol = "tcp";
+            }
+          ];
 
           bindMounts = {
             ${adminpassFile} = {
@@ -126,12 +149,18 @@ in {
               '')
             ];
 
+            #services.nginx.virtualHosts.${hostName}.listen = [
+            #{
+            #addr = localAddress;
+            #port = 80;
+            #}
+            #];
+
             services.nextcloud = {
               enable = true;
               package = pkgs.nextcloud26;
 
-              inherit home datadir;
-              hostName = "${cfg.host}.${net.tld}";
+              inherit home datadir hostName;
               https = true;
 
               extraApps = {
@@ -156,7 +185,7 @@ in {
               caching.apcu = false;
 
               config = {
-                adminuser = "admin";
+                adminuser = "nc-admin";
                 inherit adminpassFile;
                 dbtype = "pgsql";
                 dbhost = "/run/postgresql";
@@ -164,6 +193,10 @@ in {
                 dbuser = "nextcloud";
                 defaultPhoneRegion = "DE";
                 overwriteProtocol = "https";
+                trustedProxies = [
+                  "10.200.0.1"
+                  "10.200.0.5"
+                ];
               };
 
               extraOptions = {
@@ -230,5 +263,9 @@ in {
             system.stateVersion = "22.11";
           };
         };
+      networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
+        allowedUDPPorts = [cfg.port];
+        allowedTCPPorts = [cfg.port];
+      };
     };
 }

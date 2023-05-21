@@ -47,6 +47,11 @@ in {
       };
     };
 
+    networking.firewall.interfaces.${net.networks.yggdrasil.interfaceName} = {
+      allowedTCPPorts = [cfg.port];
+      allowedUDPPorts = [cfg.port];
+    };
+
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;

@@ -27,6 +27,11 @@
         default = "reverse_proxy http://${config.ip}:${toString config.port}";
       };
 
+      publicProxyConfig = mkOption {
+        type = types.lines;
+        default = "";
+      };
+
       public = mkOption {
         type = types.bool;
         default = false;
@@ -107,14 +112,11 @@ in {
         in
           lib.mapAttrs (_n: v: v.config.phil.server.services.caddy.proxy) hosts;
 
-        updateConfigWithHost = host: proxy: config:
+        updateConfigWithHost = host: _proxy: config:
           lib.recursiveUpdate config {
             proxycfg = ''
-              reverse_proxy https://${net.networks.default.${host}}:443 {
-                header_up X-Real-IP {remote}
-                transport http {
-                  tls_server_name ${proxy}.${net.tld}
-                }
+              reverse_proxy ${net.networks.yggdrasil.${host}}:${builtins.toString config.port} {
+                ${config.publicProxyConfig}
               }
             '';
           };

@@ -42,6 +42,11 @@ in {
       initialAdminPassword = "unsafe-password";
     };
 
+    networking.firewall.interfaces.${net.networks.yggdrasil.interfaceName} = {
+      allowedTCPPorts = [cfg.http-port];
+      allowedUDPPorts = [cfg.http-port];
+    };
+
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {
         port = cfg.http-port;
