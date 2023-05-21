@@ -1,9 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   cfg = config.phil.server.services.calibre;
-
-  inherit (lib) concatStringsSep mkEnableOption mkIf mkOption optional optionalString types;
+  inherit (lib) mkEnableOption mkIf mkOption types;
 in
 {
   options = {
@@ -32,7 +31,7 @@ in
 
       calibreLibrary = mkOption {
         type = types.nullOr types.str;
-        default = "/media/syncthing/data/calibre_folder";
+        default = "${cfg.phil.server.services.syncthing.dataDir}/calibre_folder";
         description = ''
           Path to Calibre library.
         '';

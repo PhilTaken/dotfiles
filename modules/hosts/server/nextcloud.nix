@@ -41,6 +41,17 @@ in
         externalInterface = "enp1s0";
       };
 
+      phil.backup.jobs."nextcloud" = {
+        paths = [ cfg.datadir ];
+        # TODO postgresql backup
+        preHook = ''
+          ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --on
+        '';
+        postHook = ''
+          ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --off
+        '';
+      };
+
       phil.server.services = {
         caddy.proxy."${cfg.host}" = {
           inherit port;

@@ -1,5 +1,7 @@
 # current TODOs:
 
+- backup postgres database of nextcloud instance
+
 - set up time machine backup on delta
 
 - vim
@@ -12,9 +14,6 @@
 
 - backup (important) syncthing folders locally and to b2
     - rclone / borg
-
-- media container
-    - -arr services for metadata
 
 - slim down flake
     - stop abusing inputs (500+ MB just inputs)

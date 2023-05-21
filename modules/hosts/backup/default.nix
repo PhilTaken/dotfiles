@@ -1,5 +1,4 @@
-{ pkgs
-, config
+{ config
 , lib
 , ...
 }:
@@ -7,9 +6,11 @@
 let
   inherit (lib) mkOption mkEnableOption mkIf types;
   cfg = config.phil.backup;
+
   mkRepo = name: "${cfg.repo}/${name}";
-  mkJob = name: paths: {
-    inherit paths;
+  mkJob = name: config: {
+    inherit (config) paths preHook postHook;
+
     repo = mkRepo name;
 
     exclude = [
@@ -34,14 +35,30 @@ in
   options.phil.backup = {
     enable = mkEnableOption "backup";
     jobs = mkOption {
-      description = "paths to backup";
-      type = types.attrsOf types.str;
+      description = "paths to back up or ";
+      type = types.attrsOf (types.submodule ({ ... }: {
+        options = {
+          paths = mkOption {
+            type = types.listOf types.str;
+          };
+
+          preHook = mkOption {
+            type = types.lines;
+            default = "";
+          };
+
+          postHook = mkOption {
+            type = types.lines;
+            default = "";
+          };
+        };
+      }));
       default = {};
     };
 
     repo = mkOption {
       type = types.str;
-      description = "repo to backup to";
+      description = "repo to back up to";
     };
   };
 

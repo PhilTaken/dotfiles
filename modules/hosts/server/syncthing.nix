@@ -17,15 +17,21 @@ in
 
   options.phil.server.services.syncthing = {
     enable = mkEnableOption "syncthing service";
+    baseDir = mkOption {
+      description = "syncthing base dir";
+      type = types.str;
+      default = "/media/syncthing";
+    };
+
     dataDir = mkOption {
       description = "folder for synced folders";
       type = types.str;
-      default = "/media/syncthing/data";
+      default = "${cfg.baseDir}/data";
     };
     configDir = mkOption {
       description = "folder for syncthing config";
       type = types.str;
-      default = "/media/syncthing/config";
+      default = "${cfg.baseDir}/config";
     };
 
     override = mkEnableOption "override folders and devices";
@@ -36,6 +42,10 @@ in
   config = mkIf cfg.enable {
     sops.secrets.syncthing-cert = sopsConfig;
     sops.secrets.syncthing-key = sopsConfig;
+
+    phil.backup.jobs."syncthing" = {
+      paths = [ cfg.baseDir ];
+    };
 
     services.syncthing = {
       inherit (cfg) openDefaultPorts enable configDir dataDir;
