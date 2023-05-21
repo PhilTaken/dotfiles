@@ -97,6 +97,26 @@ in
 
             networking.firewall.enable = false;
 
+            environment.systemPackages = [
+              (pkgs.writeShellScriptBin "fix-pics" ''
+                #!/bin/sh
+
+                albumdir=$1
+
+                echo "Changing modified date to shot date..."
+                ${pkgs.exiftool}/bin/exiftool "-filemodifydate<datetimeoriginal" -r "$albumdir"
+
+                echo "Renaming files to shot date..."
+                ${pkgs.exiftool}/bin/exiftool '-FileName<DateTimeOriginal' -r -d "%Y-%m-%d_%H.%M.%S%%-c.%%e" "$albumdir"
+
+                # uncomment the below command if running on the server
+                echo "Re-scanning your Nextcloud data directory..."
+                ${config.services.nextcloud.occ}/bin/nextcloud-occ files:scan --all
+
+                exit 0
+              '')
+            ];
+
             services.nextcloud = {
               enable = true;
               package = pkgs.nextcloud26;
