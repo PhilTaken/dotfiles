@@ -1,5 +1,4 @@
 {
-  pgks,
   config,
   lib,
   ...

@@ -125,7 +125,7 @@ in rec {
           (inpargs.extraHostModules or [])
           ++ [
             inputs.stylix.nixosModules.stylix
-            ({config, ...}: {
+            ({...}: {
               #sops.secrets.key.sopsFile = ../sops/nebula.yaml;
               #sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
 

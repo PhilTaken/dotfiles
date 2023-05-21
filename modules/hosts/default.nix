@@ -1,10 +1,4 @@
-{
-  pkgs,
-  config,
-  lib,
-  nixpkgs,
-  ...
-}: {
+{...}: {
   imports = [
     ./core
 

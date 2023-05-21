@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -49,11 +48,7 @@ in {
       hostAddress = "192.0.1.1";
       localAddress = "192.0.1.2";
 
-      config = {
-        config,
-        pkgs,
-        ...
-      }: {
+      config = {...}: {
         # https://github.com/NixOS/nixpkgs/issues/162686
         #networking.nameservers = [ "1.1.1.1" ];
         # WORKAROUND

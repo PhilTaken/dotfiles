@@ -1,8 +1,8 @@
-{inputs, ...}:
+{...}:
 with builtins; rec {
   mkConfig = pkgs: username: {
     userConfig,
-    extraPackages ? pkgs: [],
+    extraPackages ? _pkgs: [],
     stateVersion ? "21.05",
     homeDirectory ? "/home/${username}",
   }: {

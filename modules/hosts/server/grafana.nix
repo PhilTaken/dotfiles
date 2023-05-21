@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   net,
@@ -103,7 +102,7 @@ in {
       port = cfg.prometheus-port;
 
       scrapeConfigs = let
-        nodes = lib.filterAttrs (n: v: builtins.hasAttr n net.networks.default) flake.nixosConfigurations;
+        nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default) flake.nixosConfigurations;
         mkScrapeJob = n: v: let
           mkTargets = nodename: node: let
             ip = net.networks.default.${nodename};

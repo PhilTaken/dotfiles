@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   net,
@@ -63,7 +62,7 @@ in {
     phil.server.services.caddy.proxy."${cfg.host}" = {port = 853;};
 
     services.unbound = let
-      subdomains = builtins.mapAttrs (name: value: {ip = iplot."${value}";}) cfg.apps;
+      subdomains = builtins.mapAttrs (_name: value: {ip = iplot."${value}";}) cfg.apps;
     in {
       enable = true;
 

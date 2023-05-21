@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   net,
@@ -14,8 +13,6 @@
     ("/export\t" + (lib.concatMapStrings (ip: "${ip}(rw,fsid=0,no_subtree_check,crossmnt,fsid=0) ") ips))
     + "\n"
     + (lib.concatMapStrings (share: "/export${share}\t" + (lib.concatMapStrings (ip: "${ip}(rw,nohide,insecure,no_subtree_check) ") ips) + "\n") shares);
-
-  iplot = net.networks.default;
 
   mkMountsForBinds = binds:
     builtins.listToAttrs (builtins.concatLists (builtins.map

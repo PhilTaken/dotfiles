@@ -136,7 +136,7 @@ in {
 
   perSystem = {system, ...}: {
     #homeConfigurations = lib.mapAttrs (util.user.mkHMUser (util.pkgsFor system)) hmUsers;
-    checks = (builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib).${system};
+    checks = (builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib).${system};
   };
 
   flake = {
@@ -145,10 +145,10 @@ in {
       (lib.mapAttrs' (n: v: {
         name = "${n}-iso";
         value = v.config.system.build.isoImage;
-      }) (lib.filterAttrs (n: v: v.config.system.build ? isoImage) self.nixosConfigurations))
+      }) (lib.filterAttrs (_n: v: v.config.system.build ? isoImage) self.nixosConfigurations))
       // (lib.mapAttrs' (n: v: {
         name = "${n}-disko-setup";
         value = v.config.system.build.disko;
-      }) (lib.filterAttrs (n: v: v.config.system.build ? disko) self.nixosConfigurations));
+      }) (lib.filterAttrs (_n: v: v.config.system.build ? disko) self.nixosConfigurations));
   };
 }

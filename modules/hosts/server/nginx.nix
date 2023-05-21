@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   net,
@@ -7,9 +6,6 @@
 }: let
   inherit (lib) mkOption types concatStrings;
   cfg = config.phil.server.services.nginx;
-
-  iplot = net.networks.default;
-  hostnames = builtins.attrNames iplot;
 in {
   options.phil.server.services.nginx = {
     proxy = mkOption {

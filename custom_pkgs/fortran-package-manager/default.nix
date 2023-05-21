@@ -1,6 +1,5 @@
 {
   stdenv,
-  autoPatchelfHook,
   fetchurl,
   gfortran,
 }:

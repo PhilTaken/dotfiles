@@ -1,11 +1,9 @@
 {
-  pkgs,
   net,
   lib,
 }: let
   inherit (lib) mergeAttrs mapAttrs;
   iplot = net.networks.yggdrasil;
-  hostnames = builtins.attrNames iplot;
 
   mkOwnIPs = host: ["${iplot.${host}}/24"];
   mkAllowedIPs = host: ["${iplot.${host}}/32"];

@@ -105,7 +105,7 @@ in {
             (n: v: builtins.elem n hiddenHosts && lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v)
             flake.nixosConfigurations;
         in
-          lib.mapAttrs (n: v: v.config.phil.server.services.caddy.proxy) hosts;
+          lib.mapAttrs (_n: v: v.config.phil.server.services.caddy.proxy) hosts;
 
         updateConfigWithHost = host: proxy: config:
           lib.recursiveUpdate config {

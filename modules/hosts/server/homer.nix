@@ -3,7 +3,6 @@
 {
   pkgs,
   config,
-  inputs,
   lib,
   net,
   flake,
@@ -135,7 +134,7 @@ in {
               };
         in {
           settings = mkOption {
-            type = types.submodule ({config, ...}: {
+            type = types.submodule ({...}: {
               options = {
                 name = mkOption {
                   type = types.str;

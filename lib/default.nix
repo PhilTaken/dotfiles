@@ -30,7 +30,7 @@
     inputs.vim-extra-plugins.overlays.default
     inputs.xdg-desktop-hyprland.overlays.default
 
-    (final: prev:
+    (_final: prev:
       {
         makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});
 
@@ -58,7 +58,7 @@
             '';
         });
 
-        downonspot = prev.downonspot.overrideAttrs (oldAttrs: {
+        downonspot = prev.downonspot.overrideAttrs (_oldAttrs: {
           version = "latest";
           src = inputs.down_on_spot-src;
 

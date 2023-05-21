@@ -1,11 +1,10 @@
 {
   pkgs,
   config,
-  inputs,
   lib,
   ...
 }: let
-  inherit (lib) mkOption types mkIf;
+  inherit (lib) mkOption types;
   cfg = config.phil.terminals;
 in {
   options.phil.terminals = {

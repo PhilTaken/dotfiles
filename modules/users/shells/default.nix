@@ -4,7 +4,6 @@
   lib,
   ...
 } @ inputs: let
-  inherit (lib) mkOption mkIf types;
   # Automatically download the latest index from Mic92's nix-index-database.
   nix-locate = pkgs.writeShellScriptBin "nix-locate" ''
     set -euo pipefail

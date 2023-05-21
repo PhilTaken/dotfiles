@@ -6,7 +6,7 @@
 }: let
   cfg = config.phil.zellij;
   settings = import ./config.nix {inherit pkgs cfg;};
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit (lib) mkOption mkIf types;
 in {
   options.phil.zellij = {
     enable = mkOption {

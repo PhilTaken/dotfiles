@@ -31,14 +31,14 @@
   };
 
   hasEndpoint = (peers.${hostname}.endpoint or null) != null;
-  foreignPeers = lib.filterAttrs (name: value: name != hostname) peers;
-  foreignServerPeers = lib.filterAttrs (name: value: (value.endpoint or null) != null) foreignPeers;
+  foreignPeers = lib.filterAttrs (name: _value: name != hostname) peers;
+  foreignServerPeers = lib.filterAttrs (_name: value: (value.endpoint or null) != null) foreignPeers;
 
   # the vps knows all peers, the others only themselves + the vps => road-warrior setup
   peerlist =
     if hasEndpoint
-    then builtins.mapAttrs (name: mkPeer) foreignPeers
-    else builtins.mapAttrs (name: mkPeer) foreignServerPeers;
+    then builtins.mapAttrs (_name: mkPeer) foreignPeers
+    else builtins.mapAttrs (_name: mkPeer) foreignServerPeers;
 
   listenPort = peers.${hostname}.port or 51821;
 in {
@@ -94,7 +94,7 @@ in {
         interfaces = {
           "${networkName}" = {
             inherit postSetup;
-            peers = lib.mapAttrsToList (name: value: value) peerlist;
+            peers = lib.mapAttrsToList (_name: value: value) peerlist;
             ips = peers.${hostname}.ownIPs;
             inherit listenPort;
             privateKeyFile = config.sops.secrets.wireguard-key.path;

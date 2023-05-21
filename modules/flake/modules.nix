@@ -1,8 +1,4 @@
-{
-  self,
-  inputs,
-  ...
-}: let
+{inputs, ...}: let
   inherit (inputs.nixpkgs) lib;
   inherit (builtins) readDir elem attrValues;
 in {

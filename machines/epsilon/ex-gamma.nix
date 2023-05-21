@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   modulesPath,
   ...
@@ -25,7 +24,7 @@
   boot.initrd.luks.yubikeySupport = true;
 
   nixpkgs.overlays = [
-    (self: super: {
+    (_self: super: {
       vlc = super.vlc.override {
         libbluray = super.libbluray.override {
           withAACS = true;

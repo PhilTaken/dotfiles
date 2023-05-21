@@ -37,7 +37,6 @@ in {
   mkServer = {
     servername,
     services ? [],
-    defaultServices ? defaults,
     extraimports ? [],
     fileshare ? {},
   }:

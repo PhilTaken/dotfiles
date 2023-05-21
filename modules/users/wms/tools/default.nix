@@ -7,7 +7,7 @@
 
   cfg = config.phil.wms;
 
-  mkService = name: value: let
+  mkService = _name: value: let
     extraAttrs =
       if builtins.typeOf value == "string"
       then {}

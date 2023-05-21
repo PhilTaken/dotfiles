@@ -190,6 +190,7 @@
           projectRootFile = "flake.nix";
           programs.alejandra.enable = true;
           programs.stylua.enable = true;
+          programs.deadnix.enable = true;
         };
 
         formatter = config.treefmt.build.wrapper;

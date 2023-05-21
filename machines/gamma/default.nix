@@ -82,7 +82,7 @@
   networking.hostId = "f95453f6";
 
   nixpkgs.overlays = [
-    (self: super: {
+    (_self: super: {
       vlc = super.vlc.override {
         libbluray = super.libbluray.override {
           withAACS = true;

@@ -1,8 +1,4 @@
-{
-  pkgs,
-  cfg,
-  ...
-}: let
+{pkgs, ...}: let
   inherit (pkgs) lib;
 
   # -------------------------

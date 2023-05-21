@@ -55,7 +55,6 @@ in {
     wayland.windowManager.sway = let
       std_opacity = "0.96";
       lock = "swaylock -c 000000";
-      screen_recorder = ./record_screen.sh;
       menu = "rofi -show drun";
     in {
       enable = true;

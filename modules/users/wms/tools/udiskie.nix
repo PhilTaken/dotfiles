@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption mkIf types concatStringsSep mkEnableOption optional;
+  inherit (lib) mkIf concatStringsSep mkEnableOption optional;
   cfg = config.phil.wms.tools.udiskie;
   # udiskie
   commandArgs = concatStringsSep " " (map (opt: "-" + opt) [

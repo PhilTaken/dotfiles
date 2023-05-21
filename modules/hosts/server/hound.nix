@@ -1,5 +1,4 @@
 {
-  pkgs,
   net,
   config,
   lib,
@@ -27,7 +26,7 @@ in {
       listen = ":${toString cfg.port}";
       config = builtins.toJSON {
         dbpath = "${config.services.hound.home}/data";
-        repos = lib.mapAttrs (n: v: v // {detect-ref = true;}) {
+        repos = lib.mapAttrs (_n: v: v // {detect-ref = true;}) {
           nixpgks.url = "https://www.github.com/nixos/nixpkgs";
           dotfiles = {
             url = "https://gitea.${net.tld}/phil/dotfiles";

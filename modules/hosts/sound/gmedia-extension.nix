@@ -1,13 +1,11 @@
 {
-  pkgs,
   config,
   lib,
   ...
 }: let
-  cfg = config.services.gmediarender;
   l = builtins // lib;
   inherit (l.types) bool;
-  inherit (l) mkIf mkOption optionals;
+  inherit (l) mkOption;
 in {
   options = {
     services.gmediarender = {

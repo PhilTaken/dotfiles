@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   net,
@@ -14,7 +13,7 @@
     builtins.head
     (builtins.attrNames
       (lib.filterAttrs
-        (name: value: lib.hasInfix "unbound" (lib.concatStrings value))
+        (_name: value: lib.hasInfix "unbound" (lib.concatStrings value))
         net.services));
   same-server = config.networking.hostName == cfg.nameserver;
 in {

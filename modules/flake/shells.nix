@@ -15,7 +15,6 @@
   net = import ../../network.nix {};
 in {
   perSystem = {
-    inputs',
     system,
     config,
     ...

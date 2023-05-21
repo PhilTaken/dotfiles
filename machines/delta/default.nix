@@ -1,4 +1,4 @@
-{config, ...}: {
+{...}: {
   imports = [./configuration.nix];
 
   phil.fileshare.shares.dirs = ["/media"];
