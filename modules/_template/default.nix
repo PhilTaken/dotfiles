@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf types;
   cfg = config.phil.template;
-in
-{
+in {
   options.phil.template = {
     enable = mkEnableOption "template";
 
@@ -19,4 +17,3 @@ in
     # add config here
   };
 }
-

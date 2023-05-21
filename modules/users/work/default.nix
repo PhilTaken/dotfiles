@@ -1,15 +1,13 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.work;
-in
-{
+in {
   options.phil.work = {
     enable = mkEnableOption "work";
   };
@@ -40,7 +38,7 @@ in
       };
 
       Install = {
-        WantedBy = [ "graphical-session.target" ];
+        WantedBy = ["graphical-session.target"];
       };
     };
   };

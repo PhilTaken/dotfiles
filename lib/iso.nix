@@ -1,14 +1,13 @@
-{ inputs, ... }:
-{
+{inputs, ...}: {
   # TODO: add install script (+ binary cache?)
-  mkIso =
-    { nixpkgs
-    , system
-    , hostName
-    , lib ? nixpkgs.lib
-    , pkgs ? import nixpkgs { inherit system; }
-    , ...
-    }:
+  mkIso = {
+    nixpkgs,
+    system,
+    hostName,
+    lib ? nixpkgs.lib,
+    pkgs ? import nixpkgs {inherit system;},
+    ...
+  }:
     lib.nixosSystem {
       inherit system pkgs;
 
@@ -16,9 +15,9 @@
         ../modules/hosts/server/openssh.nix
 
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
-        ({ pkgs, ... }: {
+        ({pkgs, ...}: {
           phil.server.services.openssh.enable = true;
-          networking = { inherit hostName; };
+          networking = {inherit hostName;};
           time.timeZone = "Europe/Berlin";
 
           programs = {
@@ -28,7 +27,7 @@
 
           users.users.nixos = {
             name = "nixos";
-            extraGroups = [ "wheel" ];
+            extraGroups = ["wheel"];
             shell = pkgs.zsh;
           };
 

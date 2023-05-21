@@ -35,31 +35,29 @@
 --                WXOolO                       WXklclkXW
 --                  WX0X                         NOOXW
 
-
-
 -- default settings
-require('custom.settings')
+require("custom.settings")
 
 -- plugin configs
-require('custom.plugins')
+require("custom.plugins")
 
 -- utils
 require("custom.utils")
 
 -- lsp settings
-require('custom.lsp')
+require("custom.lsp")
 
 -- mappings
 require("custom.maps")
 
 -- statusline
-require('custom.statusline')
+require("custom.statusline")
 
 -- luasnip snippets
-require('custom.snippets')
+require("custom.snippets")
 
 -- cmp completion engine
-require('custom.cmp_init')
+require("custom.cmp_init")
 
 -- telscope init
-require('custom.tele_init')
+require("custom.tele_init")

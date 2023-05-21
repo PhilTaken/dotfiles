@@ -1,15 +1,13 @@
-{ pkgs
-, net
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  net,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.hound;
-in
-{
+in {
   options.phil.server.services.hound = {
     enable = mkEnableOption "hound";
     host = mkOption {
@@ -29,7 +27,7 @@ in
       listen = ":${toString cfg.port}";
       config = builtins.toJSON {
         dbpath = "${config.services.hound.home}/data";
-        repos = lib.mapAttrs (n: v: v // { detect-ref = true; }) {
+        repos = lib.mapAttrs (n: v: v // {detect-ref = true;}) {
           nixpgks.url = "https://www.github.com/nixos/nixpkgs";
           dotfiles = {
             url = "https://gitea.${net.tld}/phil/dotfiles";
@@ -40,7 +38,7 @@ in
     };
 
     phil.server.services = {
-      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {

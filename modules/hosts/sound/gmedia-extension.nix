@@ -1,15 +1,14 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   cfg = config.services.gmediarender;
   l = builtins // lib;
   inherit (l.types) bool;
   inherit (l) mkIf mkOption optionals;
-in
-{
+in {
   options = {
     services.gmediarender = {
       openFirewall = mkOption {
@@ -20,11 +19,12 @@ in
     };
   };
 
-  config = { # mkIf cfg.enable {
+  config = {
+    # mkIf cfg.enable {
     #networking.firewall.allowedTCPPorts = optionals cfg.openFirewall [ 49494 ];
     #networking.firewall.allowedUDPPorts = optionals cfg.openFirewall [ 1900 ];
 
-    networking.firewall.allowedUDPPorts = [ 1900 ];
-    networking.firewall.allowedTCPPorts = [ 32827 ];
+    networking.firewall.allowedUDPPorts = [1900];
+    networking.firewall.allowedTCPPorts = [32827];
   };
 }

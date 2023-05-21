@@ -1,16 +1,19 @@
-{ lib
-, buildGoModule
-
-, caddy
-, plugins ? [ ]
-, vendorHash ? lib.fakeSha256
-}:
-
-
-let
+{
+  lib,
+  buildGoModule,
+  caddy,
+  plugins ? [],
+  vendorHash ? lib.fakeSha256,
+}: let
   inherit (lib) concatMapStrings flip;
-  imports = flip concatMapStrings plugins ({ name, version }: "\t_ \"${name}\"\n");
-  gogets = flip concatMapStrings plugins ({ name, version }: "go get \"${name}@${version}\"");
+  imports = flip concatMapStrings plugins ({
+    name,
+    version,
+  }: "\t_ \"${name}\"\n");
+  gogets = flip concatMapStrings plugins ({
+    name,
+    version,
+  }: "go get \"${name}@${version}\"");
 
   pname = "caddy";
   main = ''
@@ -28,32 +31,32 @@ let
         caddycmd.Main()
     }
   '';
-
 in
-if plugins == [ ]
-then caddy
-else
-  caddy.override {
-    buildGoModule = args:
-      buildGoModule (args // {
-        inherit vendorHash;
+  if plugins == []
+  then caddy
+  else
+    caddy.override {
+      buildGoModule = args:
+        buildGoModule (args
+          // {
+            inherit vendorHash;
 
-        passthru.plugins = plugins;
+            passthru.plugins = plugins;
 
-        pname = "${pname}-with-plugins";
+            pname = "${pname}-with-plugins";
 
-        overrideModAttrs = _: {
-          preBuild = ''
-            echo '${main}' > cmd/caddy/main.go
-            ${gogets}
-          '';
-          postInstall = "cp go.sum go.mod $out/";
-        };
+            overrideModAttrs = _: {
+              preBuild = ''
+                echo '${main}' > cmd/caddy/main.go
+                ${gogets}
+              '';
+              postInstall = "cp go.sum go.mod $out/";
+            };
 
-        postPatch = ''
-          echo '${main}' > cmd/caddy/main.go
-        '';
+            postPatch = ''
+              echo '${main}' > cmd/caddy/main.go
+            '';
 
-        postConfigure = "cp vendor/go.sum vendor/go.mod .";
-      });
-  }
+            postConfigure = "cp vendor/go.sum vendor/go.mod .";
+          });
+    }

@@ -1,14 +1,13 @@
-{ pkgs
-, config
-, lib
-, inputs
-, ...
-}:
-let
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.desktop;
-in
-{
+in {
   options.phil.desktop = {
     enable = mkEnableOption "desktop";
     # more options
@@ -35,7 +34,7 @@ in
     virtualisation.docker.enable = true;
 
     # qmk rules for flashing keebs
-    services.udev.packages = with pkgs; [ qmk-udev-rules ];
+    services.udev.packages = with pkgs; [qmk-udev-rules];
 
     environment.systemPackages = with pkgs; [
       # audio/video
@@ -75,4 +74,3 @@ in
     ];
   };
 }
-

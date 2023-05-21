@@ -1,15 +1,13 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkEnableOption mkOption mkIf types;
   cfg = config.phil.server.services.keycloak;
-in
-{
+in {
   options.phil.server.services.keycloak = {
     enable = mkEnableOption "keycloak";
 
@@ -30,7 +28,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.keycloak-dbpass = { };
+    sops.secrets.keycloak-dbpass = {};
 
     services.keycloak = {
       inherit (cfg) enable;

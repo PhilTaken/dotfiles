@@ -1,24 +1,23 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.dns;
 
   iplot = net.networks.default;
   hostnames = builtins.attrNames iplot;
-  default_nameserver = builtins.head
+  default_nameserver =
+    builtins.head
     (builtins.attrNames
       (lib.filterAttrs
         (name: value: lib.hasInfix "unbound" (lib.concatStrings value))
         net.services));
   same-server = config.networking.hostName == cfg.nameserver;
-in
-{
+in {
   options.phil.dns = {
     enable = mkEnableOption "dns over tls";
     nameserver = mkOption {
@@ -34,7 +33,9 @@ in
     #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
     networking.nameservers =
-      if same-server then [ "localhost" ] else [
+      if same-server
+      then ["localhost"]
+      else [
         "${iplot.${cfg.nameserver}}#dns.${net.tld}"
         "2a0e:dc0:6:23::2#dot-ch.blahdns.com"
       ];
@@ -42,7 +43,7 @@ in
     services.resolved = {
       enable = ! same-server;
 
-      fallbackDns = [ "2a0e:dc0:6:23::2#dot-ch.blahdns.com" ];
+      fallbackDns = ["2a0e:dc0:6:23::2#dot-ch.blahdns.com"];
 
       extraConfig = ''
         DNSOverTLS=yes

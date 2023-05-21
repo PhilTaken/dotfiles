@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.editors.helix;
-in
-{
+in {
   options.phil.editors.helix = {
     enable = mkEnableOption "helix";
   };

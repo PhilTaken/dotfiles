@@ -1,16 +1,14 @@
-{ pkgs
-, config
-, lib
-, net
-, inputs
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  inputs,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.core;
-in
-{
+in {
   options.phil.core = {
     enable = mkOption {
       description = "Enable core module";
@@ -75,20 +73,22 @@ in
       };
 
       settings = {
-        trusted-users = [ "root" "@wheel" ];
-        substituters = [
-          "https://cache.nixos.org"
-          "https://philtaken.cachix.org"
+        trusted-users = ["root" "@wheel"];
+        substituters =
+          [
+            "https://cache.nixos.org"
+            "https://philtaken.cachix.org"
 
-          #"https://arm-rs.cachix.org"
+            #"https://arm-rs.cachix.org"
 
-          "https://nixpkgs-wayland.cachix.org"
+            "https://nixpkgs-wayland.cachix.org"
 
-          "https://cache.iog.io"
-          "https://hyprland.cachix.org"
-        ] ++ lib.optionals config.phil.nebula.enable [
-          "https://nix-store.${net.tld}"
-        ];
+            "https://cache.iog.io"
+            "https://hyprland.cachix.org"
+          ]
+          ++ lib.optionals config.phil.nebula.enable [
+            "https://nix-store.${net.tld}"
+          ];
         auto-optimise-store = true;
         trusted-public-keys = [
           "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
@@ -114,10 +114,10 @@ in
     nix.nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
 
     # link to cachix token env file
-    sops.secrets.cachix-token = { };
+    sops.secrets.cachix-token = {};
 
     # links /libexec from derivations to /run/current-system/sw
-    environment.pathsToLink = [ "/libexec" ];
+    environment.pathsToLink = ["/libexec"];
 
     networking.hostName = cfg.hostName;
     time.timeZone = cfg.timeZone;

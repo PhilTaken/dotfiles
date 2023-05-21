@@ -1,14 +1,12 @@
-{ config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.server.services.vector;
-in
-{
+in {
   options.phil.server.services.vector = {
     enable = mkOption {
       type = types.bool;
@@ -27,22 +25,26 @@ in
 
         positions.filename = "/tmp/positions.yaml";
 
-        clients = [{ url = "https://loki.${net.tld}/loki/api/v1/push"; }];
+        clients = [{url = "https://loki.${net.tld}/loki/api/v1/push";}];
 
-        scrape_configs = [{
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = config.networking.hostName;
+        scrape_configs = [
+          {
+            job_name = "journal";
+            journal = {
+              max_age = "12h";
+              labels = {
+                job = "systemd-journal";
+                host = config.networking.hostName;
+              };
             };
-          };
-          relabel_configs = [{
-            source_labels = ["__journal__systemd_unit"];
-            target_label = "unit";
-          }];
-        }];
+            relabel_configs = [
+              {
+                source_labels = ["__journal__systemd_unit"];
+                target_label = "unit";
+              }
+            ];
+          }
+        ];
       };
     };
 
@@ -57,20 +59,20 @@ in
           journald = {
             acknowledgements.enabled = true;
             type = "journald";
-            include_units = [ ];
+            include_units = [];
             current_boot_only = true;
-            exclude_matches.SYSLOG_IDENTIFIER = [ "xsession" ];
+            exclude_matches.SYSLOG_IDENTIFIER = ["xsession"];
             since_now = true;
           };
         };
 
-        transforms = { };
+        transforms = {};
 
         sinks = {
           loki = {
             acknowledgements.enabled = false;
             type = "loki";
-            inputs = [ "journald" ];
+            inputs = ["journald"];
             endpoint = "https://loki.${net.tld}/";
             compression = "none";
             remove_timestamp = true;

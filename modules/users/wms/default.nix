@@ -1,10 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.phil.wms;
-
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.phil.wms;
+in {
   imports = [
     ./xmonad
     ./sway

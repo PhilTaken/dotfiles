@@ -1,15 +1,13 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.influxdb2;
-in
-{
+in {
   options.phil.server.services.influxdb2 = {
     enable = mkEnableOption "influxdb2 - time series database";
     url = mkOption {
@@ -32,8 +30,8 @@ in
 
   config = mkIf cfg.enable {
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [ cfg.port ];
-      allowedTCPPorts = [ cfg.port ];
+      allowedUDPPorts = [cfg.port];
+      allowedTCPPorts = [cfg.port];
     };
     services.influxdb2 = {
       enable = true;
@@ -45,7 +43,7 @@ in
     };
 
     phil.server.services = {
-      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {

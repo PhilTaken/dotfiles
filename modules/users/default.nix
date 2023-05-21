@@ -1,9 +1,8 @@
-{ config
-, inputs
-, ...
-}:
-
 {
+  config,
+  inputs,
+  ...
+}: {
   imports = [
     ./terminals
     ./shells

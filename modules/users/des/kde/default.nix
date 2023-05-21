@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   cfg = config.phil.des.kde;
   inherit (lib) mkEnableOption mkOption types mkIf;
-in
-{
+in {
   options.phil.des.kde = {
     enable = mkEnableOption "kde";
 
@@ -45,10 +43,9 @@ in
       };
 
       Install = {
-        WantedBy = [ "graphical-session.target" ];
+        WantedBy = ["graphical-session.target"];
       };
     };
-
 
     home.packages = with pkgs; [
       flameshot

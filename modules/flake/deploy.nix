@@ -1,8 +1,10 @@
-{ self, inputs, ... }:
-let
-  activateFor = system: inputs.deploy-rs.lib.${system}.activate.nixos;
-in
 {
+  self,
+  inputs,
+  ...
+}: let
+  activateFor = system: inputs.deploy-rs.lib.${system}.activate.nixos;
+in {
   flake = {
     # deploy config
     deploy.nodes = {

@@ -1,134 +1,144 @@
-{ user
-, inputs
-, systemmodules
-, pkgsFor
-, flake
-}:
-let
+{
+  user,
+  inputs,
+  systemmodules,
+  pkgsFor,
+  flake,
+}: let
   inherit (inputs) nixpkgs;
   inherit (nixpkgs) lib;
-in
-rec {
-  mkHost =
-    { users
-    , systemConfig
-    , hmUsers ? { }
-    , extraimports ? [ ]
-    , extraHostModules ? [ ]
-    , system ? "x86_64-linux"
-    , lib ? inputs.nixpkgs.lib
-    , pkgs ? pkgsFor system
-    , hardware-config ? (import ../machines/${systemConfig.core.hostName})
-    }:
-    let
-      raw_users = lib.zipListsWith
-        (name: uid:
-          if builtins.isAttrs name then
-            (lib.mergeAttrs { inherit uid; } name)
-          else
-            { inherit name uid; })
-        users
-        (lib.range 1000 (builtins.length users + 1000));
+in rec {
+  mkHost = {
+    users,
+    systemConfig,
+    hmUsers ? {},
+    extraimports ? [],
+    extraHostModules ? [],
+    system ? "x86_64-linux",
+    lib ? inputs.nixpkgs.lib,
+    pkgs ? pkgsFor system,
+    hardware-config ? (import ../machines/${systemConfig.core.hostName}),
+  }: let
+    raw_users =
+      lib.zipListsWith
+      (name: uid:
+        if builtins.isAttrs name
+        then (lib.mergeAttrs {inherit uid;} name)
+        else {inherit name uid;})
+      users
+      (lib.range 1000 (builtins.length users + 1000));
 
-      part = builtins.partition (raw_user: builtins.elem raw_user.name [ "nixos" "maelstroem" ]) raw_users;
-      sys_users = (map user.mkSystemUser part.right) ++ (map user.mkGuestUser part.wrong);
-      net = import ../network.nix { };
-    in
+    part = builtins.partition (raw_user: builtins.elem raw_user.name ["nixos" "maelstroem"]) raw_users;
+    sys_users = (map user.mkSystemUser part.right) ++ (map user.mkGuestUser part.wrong);
+    net = import ../network.nix {};
+  in
     lib.nixosSystem {
       inherit system pkgs;
-      specialArgs = { inherit inputs net flake; };
+      specialArgs = {inherit inputs net flake;};
 
-      modules = [
-        {
-          imports = [
-            hardware-config
-            ../modules/hosts
-            { i18n.supportedLocales = lib.mkForce [ "en_US.UTF-8/UTF-8" "de_DE.UTF-8/UTF-8" ]; }
-          ] ++ sys_users ++ extraimports;
+      modules =
+        [
+          {
+            imports =
+              [
+                hardware-config
+                ../modules/hosts
+                {i18n.supportedLocales = lib.mkForce ["en_US.UTF-8/UTF-8" "de_DE.UTF-8/UTF-8"];}
+              ]
+              ++ sys_users
+              ++ extraimports;
 
-          phil = systemConfig;
+            phil = systemConfig;
 
-          nix.registry.nixpkgs.flake = nixpkgs;
-          nixpkgs.overlays = [
-            inputs.nixpkgs-wayland.overlay
-          ];
+            nix.registry.nixpkgs.flake = nixpkgs;
+            nixpkgs.overlays = [
+              inputs.nixpkgs-wayland.overlay
+            ];
 
-          sops = {
-            defaultSopsFile = ../sops/sops.yaml;
-            age = {
-              keyFile = "/var/lib/sops-nix/key.txt";
-              generateKey = true;
+            sops = {
+              defaultSopsFile = ../sops/sops.yaml;
+              age = {
+                keyFile = "/var/lib/sops-nix/key.txt";
+                generateKey = true;
+              };
             };
-          };
 
-          system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
+            system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
 
-          programs.fish.enable = true;
+            programs.fish.enable = true;
 
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = { inherit inputs net; };
-            users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
-          };
-        }
-      ] ++ (systemmodules.${system} or systemmodules.default) ++ extraHostModules;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = {inherit inputs net;};
+              users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
+            };
+          }
+        ]
+        ++ (systemmodules.${system} or systemmodules.default)
+        ++ extraHostModules;
     };
 
   mkIso = inpargs: let
-    args = lib.recursiveUpdate {
-      systemConfig = {
-        wireguard.enable = false;
-        server.services.openssh.enable = true;
-        core.hostName = "iso";
-      };
+    args =
+      lib.recursiveUpdate {
+        systemConfig = {
+          wireguard.enable = false;
+          server.services.openssh.enable = true;
+          core.hostName = "iso";
+        };
 
-      hardware-config = {};
-      extraHostModules = [
-        inputs.stylix.nixosModules.stylix
-        "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
-        {
-          sops.age = lib.mkForce {
-            keyFile = null;
-            generateKey = false;
-          };
+        hardware-config = {};
+        extraHostModules = [
+          inputs.stylix.nixosModules.stylix
+          "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
+          {
+            sops.age = lib.mkForce {
+              keyFile = null;
+              generateKey = false;
+            };
 
-          sops.gnupg = {
-            home = "/run/gpghome";
-            sshKeyPaths = [];
+            sops.gnupg = {
+              home = "/run/gpghome";
+              sshKeyPaths = [];
+            };
+          }
+        ];
+      }
+      inpargs;
+  in
+    mkHost args;
+
+  mkWorkstation = inpargs: let
+    args =
+      (lib.recursiveUpdate {
+          systemConfig = {
+            wireguard.enable = true;
+            nebula.enable = true;
+            #mullvad.enable = true;
+            workstation.enable = true;
           };
         }
-      ];
-    } inpargs;
-  in
-  mkHost args;
+        inpargs)
+      // {
+        extraHostModules =
+          (inpargs.extraHostModules or [])
+          ++ [
+            inputs.stylix.nixosModules.stylix
+            ({config, ...}: {
+              #sops.secrets.key.sopsFile = ../sops/nebula.yaml;
+              #sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
 
-  mkWorkstation = inpargs:
-    let
-      args = (lib.recursiveUpdate {
-        systemConfig = {
-          wireguard.enable = true;
-          nebula.enable = true;
-          #mullvad.enable = true;
-          workstation.enable = true;
-        };
-      } inpargs) // {
-        extraHostModules = (inpargs.extraHostModules or [ ]) ++ [
-          inputs.stylix.nixosModules.stylix
-          ({ config, ... }: {
-            #sops.secrets.key.sopsFile = ../sops/nebula.yaml;
-            #sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
-
-            environment.systemPackages = [
-              # WIP
-              #(pkgs.writeShellScriptBin "nebsign" ''
-              #${pkgs.nebula}/bin/nebula-cert sign -ca-crt ${config.sops.secrets.ca.path} -ca-key ${config.sops.secrets.key.path} "$@"
-              #cp ${config.sops.secrets.ca.path} ./ca.pem
-              #'')
-            ];
-          })
-        ];
+              environment.systemPackages = [
+                # WIP
+                #(pkgs.writeShellScriptBin "nebsign" ''
+                #${pkgs.nebula}/bin/nebula-cert sign -ca-crt ${config.sops.secrets.ca.path} -ca-key ${config.sops.secrets.key.path} "$@"
+                #cp ${config.sops.secrets.ca.path} ./ca.pem
+                #'')
+              ];
+            })
+          ];
       };
-    in
+  in
     mkHost args;
 }

@@ -1,16 +1,14 @@
 # TODO: polybar colors
 # TODO: polybar modules separation / icons
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.wms.bars.polybar;
-in
-{
+in {
   options.phil.wms.bars.polybar = {
     enable = mkEnableOption "polybar";
   };
@@ -86,7 +84,6 @@ in
           ramp-headphones-0 = " ";
         };
 
-
         "module/cpu" = {
           type = "internal/cpu";
           interval = "0.5";
@@ -118,4 +115,3 @@ in
     };
   };
 }
-

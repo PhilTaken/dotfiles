@@ -1,10 +1,9 @@
-{ pkgs
-, config
-, lib
-, ...
-}@inputs:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+} @ inputs: let
   inherit (lib) mkOption mkIf types;
   # Automatically download the latest index from Mic92's nix-index-database.
   nix-locate = pkgs.writeShellScriptBin "nix-locate" ''
@@ -25,16 +24,14 @@ let
 
   # Modified version of command-not-found.sh that uses our wrapped version of
   # nix-locate, makes the output a bit less noisy, and adds color!
-  command-not-found = pkgs.runCommandLocal "command-not-found.sh" { } ''
+  command-not-found = pkgs.runCommandLocal "command-not-found.sh" {} ''
     mkdir -p $out/etc/profile.d
     substitute ${./command-not-found.sh}                  \
       $out/etc/profile.d/command-not-found.sh             \
       --replace @nix-locate@ ${nix-locate}/bin/nix-locate \
       --replace @tput@ ${pkgs.ncurses}/bin/tput
   '';
-
-in
-{
+in {
   imports = [
     ./zsh
     ./fish
@@ -177,7 +174,7 @@ in
           # Don't provide 'bin/nix-index', since the index is updated automatically
           # and it is easy to forget that. It can always be run manually with
           # 'nix run nixpkgs#nix-index' if necessary.
-          paths = [ nix-locate command-not-found ];
+          paths = [nix-locate command-not-found];
         };
       };
 
@@ -195,7 +192,7 @@ in
       # TODO: set up sync
       atuin = {
         # TODO: fix for darwin via override to disable checks?
-        enable = (! lib.hasInfix "darwin" pkgs.system);
+        enable = ! lib.hasInfix "darwin" pkgs.system;
         settings = {
           search_mode = "fuzzy";
           update_check = false;

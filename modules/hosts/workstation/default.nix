@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf types;
   cfg = config.phil.workstation;
-in
-{
+in {
   options.phil.workstation = {
     enable = mkEnableOption "workstation";
   };
@@ -30,4 +28,3 @@ in
     ];
   };
 }
-

@@ -1,15 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.adguardhome;
-in
-{
-
+in {
   options.phil.server.services.adguardhome = {
     enable = mkEnableOption "adguard home dns ad blocker";
     url = mkOption {

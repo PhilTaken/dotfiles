@@ -1,25 +1,33 @@
-{ pkgs
-, net
-, lib
-}:
-let
+{
+  pkgs,
+  net,
+  lib,
+}: let
   inherit (lib) mergeAttrs mapAttrs;
   iplot = net.networks.yggdrasil;
   hostnames = builtins.attrNames iplot;
 
-  mkOwnIPs = host: [ "${iplot.${host}}/24" ];
-  mkAllowedIPs = host: [ "${iplot.${host}}/32" ];
+  mkOwnIPs = host: ["${iplot.${host}}/24"];
+  mkAllowedIPs = host: ["${iplot.${host}}/32"];
 
-  mkPeer = { host, publicKey }: mergeAttrs
+  mkPeer = {
+    host,
+    publicKey,
+  }:
+    mergeAttrs
     {
       inherit publicKey;
       ownIPs = mkOwnIPs host;
       allowedIPs = mkAllowedIPs host;
     }
-    (if builtins.hasAttr host net.networks.endpoints then {
-      allowedIPs = [ iplot.gateway ];
-      endpoint = net.networks.endpoints.${host};
-    } else { });
+    (
+      if builtins.hasAttr host net.networks.endpoints
+      then {
+        allowedIPs = [iplot.gateway];
+        endpoint = net.networks.endpoints.${host};
+      }
+      else {}
+    );
 
   pubkeys = {
     alpha = "LDOII0S7OWakg4oDrC1wUCoM/YXq3wXTEjYoqBbI2Sk=";
@@ -28,6 +36,5 @@ let
     delta = "598UtHyLn0L5ReObBtsT+UAJHtt7FtuFZiF5nRJ+nEg=";
     epsilon = "Xbi0ylobPYxxcxCvxaJ2mvC2WqGlODnMkeIYPG9tlVo=";
   };
-
 in
-mapAttrs (host: publicKey: mkPeer { inherit host publicKey; }) pubkeys
+  mapAttrs (host: publicKey: mkPeer {inherit host publicKey;}) pubkeys

@@ -1,6 +1,4 @@
-_:
-
-rec {
+_: rec {
   tld = "pherzog.xyz";
 
   networks = rec {

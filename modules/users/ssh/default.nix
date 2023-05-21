@@ -1,14 +1,12 @@
-{ pgks
-, config
-, lib
-, ...
-}:
-let
+{
+  pgks,
+  config,
+  lib,
+  ...
+}: let
   cfg = config.phil.ssh;
   inherit (lib) mkEnableOption mkIf;
-in
-{
-
+in {
   options.phil.ssh = {
     enable = mkEnableOption "ssh";
   };
@@ -49,7 +47,6 @@ in
           hostname = "10.200.0.4";
           user = "maelstroem";
         };
-
 
         # remote vps
         "vps2" = {

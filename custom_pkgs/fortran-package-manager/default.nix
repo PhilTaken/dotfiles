@@ -1,9 +1,9 @@
-{ stdenv
-, autoPatchelfHook
-, fetchurl
-, gfortran
+{
+  stdenv,
+  autoPatchelfHook,
+  fetchurl,
+  gfortran,
 }:
-
 stdenv.mkDerivation rec {
   pname = "fortran-fpm";
   version = "0.4.0";

@@ -1,24 +1,22 @@
-{ pkgs
-, config
-, lib
-, net
-, flake
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  flake,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.grafana;
 
   kc-nodes = builtins.attrNames (lib.filterAttrs
     (_: v:
-      lib.hasAttrByPath ["config" "phil" "server" "services" "keycloak" "enable"] v &&
-      v.config.phil.server.services.keycloak.enable)
+      lib.hasAttrByPath ["config" "phil" "server" "services" "keycloak" "enable"] v
+      && v.config.phil.server.services.keycloak.enable)
     flake.nixosConfigurations);
   kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
   kc-enabled = builtins.length kc-nodes == 1;
-in
-{
+in {
   options.phil.server.services.grafana = {
     enable = mkEnableOption "grafana";
 
@@ -44,17 +42,18 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets = lib.genAttrs [
-      "grafana-adminpass"
-      "grafana-admindbpass"
-      "grafana-kc-client-secret"
-    ] (_: {
-      owner = config.systemd.services.grafana.serviceConfig.User;
-    });
+    sops.secrets =
+      lib.genAttrs [
+        "grafana-adminpass"
+        "grafana-admindbpass"
+        "grafana-kc-client-secret"
+      ] (_: {
+        owner = config.systemd.services.grafana.serviceConfig.User;
+      });
 
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [ cfg.grafana-port cfg.loki-port cfg.prometheus-port ];
-      allowedTCPPorts = [ cfg.grafana-port cfg.loki-port cfg.prometheus-port ];
+      allowedUDPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port];
+      allowedTCPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port];
     };
 
     services.loki = {
@@ -110,17 +109,22 @@ in
             ip = net.networks.default.${nodename};
             mkTargetString = port: "${ip}:${builtins.toString port}";
             exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) node.config.services.prometheus.exporters);
-            ports = exporterPorts
-            ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [ node.config.phil.server.services.promexp.prom-sensors-port ]
-            ++ lib.optionals node.config.services.caddy.enable [ node.config.phil.server.services.caddy.adminport ];
-          in builtins.map mkTargetString ports;
+            ports =
+              exporterPorts
+              ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [node.config.phil.server.services.promexp.prom-sensors-port]
+              ++ lib.optionals node.config.services.caddy.enable [node.config.phil.server.services.caddy.adminport];
+          in
+            builtins.map mkTargetString ports;
         in {
           job_name = n;
-          static_configs = [{
-            targets = mkTargets n v;
-          }];
+          static_configs = [
+            {
+              targets = mkTargets n v;
+            }
+          ];
         };
-      in builtins.attrValues (lib.mapAttrs mkScrapeJob nodes);
+      in
+        builtins.attrValues (lib.mapAttrs mkScrapeJob nodes);
     };
 
     services.grafana = {
@@ -149,13 +153,17 @@ in
           realm_name = "services";
           client_id = "grafana-oauth";
           client_secret = "$__file{${config.sops.secrets.grafana-kc-client-secret.path}}";
-          url = "${if kc-enabled then kc-host else "keycloak"}.${net.tld}";
+          url = "${
+            if kc-enabled
+            then kc-host
+            else "keycloak"
+          }.${net.tld}";
           oid-uri = "https://${url}/realms/${realm_name}/protocol/openid-connect";
         in {
           inherit enabled client_id client_secret;
           name = "Keycloak-OAuth";
           allow_sign_up = true;
-          scopes = lib.concatStringsSep " " [ "openid" "email" "profile"  "offline_access" "roles" ];
+          scopes = lib.concatStringsSep " " ["openid" "email" "profile" "offline_access" "roles"];
           email_attribute_path = "email";
           login_attribute_path = "username";
           name_attribute_path = "full_name";

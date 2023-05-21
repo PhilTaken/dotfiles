@@ -1,17 +1,24 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkOption mkIf types;
   cfg = config.phil.wms.bars.eww;
-  package = (if cfg.enableWayland then pkgs.eww-wayland else pkgs.eww).overrideAttrs(old: {
-    patches = (old.patches or []) ++ [
-      ./systemd.patch
-    ];
-  });
+  package =
+    (
+      if cfg.enableWayland
+      then pkgs.eww-wayland
+      else pkgs.eww
+    )
+    .overrideAttrs (old: {
+      patches =
+        (old.patches or [])
+        ++ [
+          ./systemd.patch
+        ];
+    });
 
   pylayerctl = pkgs.stdenv.mkDerivation rec {
     name = "playerctl-py";
@@ -27,7 +34,8 @@ let
       pkgs.playerctl
     ];
 
-    src = pkgs.writers.writePython3 "playerctl-py"
+    src =
+      pkgs.writers.writePython3 "playerctl-py"
       {
         libraries = [
           pkgs.python3Packages.pygobject3
@@ -36,7 +44,7 @@ let
             pname = "material-color-utilities-python";
             version = "0.1.5";
 
-            propagatedBuildInputs = with pkgs.python3Packages; [ regex pillow ];
+            propagatedBuildInputs = with pkgs.python3Packages; [regex pillow];
 
             src = pkgs.fetchPypi {
               inherit pname version;
@@ -72,8 +80,7 @@ let
       cp -r $src $out/bin/${name}
     '';
   };
-in
-{
+in {
   options.phil.wms.bars.eww = {
     enable = mkEnableOption "eww";
 
@@ -121,11 +128,25 @@ in
         eww-daemon = {
           Service.ExecStart = "${package}/bin/eww daemon --no-daemonize --debug";
           Service.Environment = "PATH=/run/wrappers/bin:${lib.makeBinPath (builtins.attrValues {
-            inherit (pkgs)
-              alsa-utils brightnessctl rofi-wayland
-              kitty pavucontrol socat hyprland jq
-              gnugrep gawk gnused coreutils
-              bash playerctl bluez networkmanager;
+            inherit
+              (pkgs)
+              alsa-utils
+              brightnessctl
+              rofi-wayland
+              kitty
+              pavucontrol
+              socat
+              hyprland
+              jq
+              gnugrep
+              gawk
+              gnused
+              coreutils
+              bash
+              playerctl
+              bluez
+              networkmanager
+              ;
             inherit package pylayerctl;
           })}";
         };
@@ -147,7 +168,7 @@ in
       configDir = pkgs.stdenv.mkDerivation {
         pname = "eww-configfolder";
         version = "0.1";
-        phases = [ "installPhase" ];
+        phases = ["installPhase"];
 
         src = ./config;
 

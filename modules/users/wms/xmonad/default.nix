@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.wms.xmonad;
-in
-{
+in {
   options.phil.wms.xmonad = {
     enable = mkEnableOption "xmonad";
   };
@@ -17,13 +15,14 @@ in
     xsession.enable = true;
     xsession.windowManager.xmonad = {
       enable = true;
-      extraPackages = hPkgs: with hPkgs; [
-        containers
-        dbus
-        List
-        monad-logger
-        xmonad
-      ];
+      extraPackages = hPkgs:
+        with hPkgs; [
+          containers
+          dbus
+          List
+          monad-logger
+          xmonad
+        ];
       enableContribAndExtras = true;
       config = ./Main.hs;
 
@@ -47,4 +46,3 @@ in
     ];
   };
 }
-

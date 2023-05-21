@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.arrs;
-in
-{
+in {
   options.phil.server.services.arrs = {
     enable = mkEnableOption "arrs";
     host = mkOption {
@@ -51,37 +49,41 @@ in
       hostAddress = "192.0.1.1";
       localAddress = "192.0.1.2";
 
-      config = { config, pkgs, ... }: {
+      config = {
+        config,
+        pkgs,
+        ...
+      }: {
         # https://github.com/NixOS/nixpkgs/issues/162686
         #networking.nameservers = [ "1.1.1.1" ];
         # WORKAROUND
         #environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
         #networking.firewall.enable = false;
         #networking.interfaces = {
-          #mlvd = {
-            #ipv4.routes = [{ address = "0.0.0.0"; prefixLength = "0"; }];
-          #};
+        #mlvd = {
+        #ipv4.routes = [{ address = "0.0.0.0"; prefixLength = "0"; }];
+        #};
         #};
 
         services = {
           #sonarr = {
-            #enable = true;
+          #enable = true;
           #};
 
           #radarr = {
-            #enable = true;
+          #enable = true;
           #};
 
           #prowlarr = {
-            #enable = true;
+          #enable = true;
           #};
 
           #lidarr = {
-            #enable = true;
+          #enable = true;
           #};
 
           #bazarr = {
-            #enable = true;
+          #enable = true;
           #};
         };
 

@@ -1,24 +1,24 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   phil.server.services.promexp.extrasensors = true;
 
   # https://nixos.wiki/wiki/ZFS
-  boot.kernelParams = [ "zfs.zfs_arc_max=12884901888" ];
+  boot.kernelParams = ["zfs.zfs_arc_max=12884901888"];
 
   services.zfs.autoScrub.enable = true;
-  boot.initrd.supportedFilesystems = [ "zfs" ];
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.initrd.supportedFilesystems = ["zfs"];
+  boot.supportedFilesystems = ["zfs"];
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
@@ -56,4 +56,3 @@
 
   system.stateVersion = "22.05";
 }
-

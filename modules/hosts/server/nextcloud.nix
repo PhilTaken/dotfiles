@@ -1,16 +1,14 @@
-{ pkgs
-, config
-, inputs
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  inputs,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.nextcloud;
-in
-{
+in {
   options.phil.server.services.nextcloud = {
     enable = mkEnableOption "nextcloud";
     datadir = mkOption {
@@ -24,12 +22,11 @@ in
     };
   };
 
-  config =
-    let
-      port = 80;
-      hostAddress = "192.0.0.1";
-      localAddress = "192.0.0.2";
-    in
+  config = let
+    port = 80;
+    hostAddress = "192.0.0.1";
+    localAddress = "192.0.0.2";
+  in
     mkIf cfg.enable {
       sops.secrets.nextcloud-adminpass = {
         mode = "777";
@@ -37,12 +34,12 @@ in
 
       networking.nat = {
         enable = true;
-        internalInterfaces = [ "ve-+" ];
+        internalInterfaces = ["ve-+"];
         externalInterface = "enp1s0";
       };
 
       phil.backup.jobs."nextcloud" = {
-        paths = [ cfg.datadir ];
+        paths = [cfg.datadir];
         # TODO postgresql backup
         preHook = ''
           ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --on
@@ -70,12 +67,11 @@ in
         };
       };
 
-      containers.nextcloud =
-        let
-          adminpassFile = config.sops.secrets.nextcloud-adminpass.path;
-          home = "/media/nextcloud";
-          datadir = "/var/lib/nextcloud";
-        in
+      containers.nextcloud = let
+        adminpassFile = config.sops.secrets.nextcloud-adminpass.path;
+        home = "/media/nextcloud";
+        datadir = "/var/lib/nextcloud";
+      in
         mkIf cfg.enable {
           ephemeral = false;
           autoStart = true;
@@ -100,9 +96,13 @@ in
             };
           };
 
-          config = { config, pkgs, ... }: {
+          config = {
+            config,
+            pkgs,
+            ...
+          }: {
             # https://github.com/NixOS/nixpkgs/issues/162686
-            networking.nameservers = [ "1.1.1.1" ];
+            networking.nameservers = ["1.1.1.1"];
             # WORKAROUND
             environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
 
@@ -137,10 +137,20 @@ in
               https = true;
 
               extraApps = {
-                inherit (pkgs.nextcloud26Packages.apps)
-                  calendar news bookmarks contacts deck
-                  groupfolders impersonate spreed unsplash
-                  twofactor_webauthn previewgenerator;
+                inherit
+                  (pkgs.nextcloud26Packages.apps)
+                  calendar
+                  news
+                  bookmarks
+                  contacts
+                  deck
+                  groupfolders
+                  impersonate
+                  spreed
+                  unsplash
+                  twofactor_webauthn
+                  previewgenerator
+                  ;
                 # "onlyoffice" "tasks"
               };
 
@@ -190,7 +200,7 @@ in
                   };
                 }
               ];
-              ensureDatabases = [ "nextcloud" ];
+              ensureDatabases = ["nextcloud"];
             };
 
             systemd.services."nextcloud-setup" = {
@@ -199,8 +209,8 @@ in
             };
 
             systemd.timers."nextcloud-preview-gen" = {
-              wantedBy = [ "timers.target" ];
-              after = [ "nextcloud-setup.service" ];
+              wantedBy = ["timers.target"];
+              after = ["nextcloud-setup.service"];
               timerConfig = {
                 OnBootSec = "10m";
                 OnUnitActiveSec = "10m";

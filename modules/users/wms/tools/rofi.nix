@@ -1,14 +1,12 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
-
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkOption mkEnableOption types;
   cfg = config.phil.wms.tools.rofi;
-in
-{
+in {
   options.phil.wms.tools.rofi = {
     enable = mkEnableOption "rofi";
     package = mkOption {

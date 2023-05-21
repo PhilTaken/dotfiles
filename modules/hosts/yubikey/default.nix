@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.yubikey;
-in
-{
+in {
   options.phil.yubikey = {
     enable = mkOption {
       description = "enable yubikey module";
@@ -46,7 +44,7 @@ in
       path = "${cfg.chalRespPath}/maelstroem-14321676";
     };
 
-    services.udev.packages = with pkgs; [ yubikey-personalization ];
+    services.udev.packages = with pkgs; [yubikey-personalization];
 
     security.pam.yubico = {
       enable = true;

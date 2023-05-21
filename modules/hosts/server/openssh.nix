@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.openssh;
-in
-{
+in {
   options.phil.server.services.openssh = {
     enable = mkEnableOption "openssh daemon";
     sshKeys = mkOption {
@@ -28,7 +26,7 @@ in
         PasswordAuthentication = false;
         PermitRootLogin = "yes";
       };
-      authorizedKeysFiles = [ "/etc/nixos/authorized-keys" ];
+      authorizedKeysFiles = ["/etc/nixos/authorized-keys"];
     };
 
     # and set some ssh keys for root

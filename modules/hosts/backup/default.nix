@@ -1,9 +1,8 @@
-{ config
-, lib
-, ...
-}:
-
-let
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkEnableOption mkIf types;
   cfg = config.phil.backup;
 
@@ -30,13 +29,12 @@ let
     compression = "auto,zstd";
     startAt = "daily";
   };
-in
-{
+in {
   options.phil.backup = {
     enable = mkEnableOption "backup";
     jobs = mkOption {
       description = "paths to back up or ";
-      type = types.attrsOf (types.submodule ({ ... }: {
+      type = types.attrsOf (types.submodule ({...}: {
         options = {
           paths = mkOption {
             type = types.listOf types.str;

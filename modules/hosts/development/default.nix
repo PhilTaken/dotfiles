@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.development;
-in
-{
+in {
   options.phil.development = {
     enable = mkEnableOption "dev";
     adb.enable = mkEnableOption "android adb";
@@ -24,4 +22,3 @@ in
     ];
   };
 }
-

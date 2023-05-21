@@ -1,16 +1,13 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.seafile;
-in
-{
-
+in {
   options.phil.server.services.seafile = {
     enable = mkEnableOption "seafile";
     datadir = mkOption {

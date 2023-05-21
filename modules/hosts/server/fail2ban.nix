@@ -1,15 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.phil.server.services.fail2ban;
-in
-{
-
+in {
   options.phil.server.services.fail2ban = {
     enable = mkEnableOption "fail2ban ssh login blocker";
   };

@@ -1,16 +1,14 @@
 # vi: ft=nix
-{ pkgs
-, config
-, lib
-, ...
-}@inputs:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+} @ inputs: let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.shells.zsh;
   magic_enter_prompt = ./magic_enter.zsh;
-in
-{
+in {
   options.phil.shells.zsh = {
     enable = mkOption {
       type = types.bool;
@@ -19,45 +17,45 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.zsh =
-      {
-        enable = true;
-        enableAutosuggestions = true;
-        enableCompletion = true;
-        autocd = true;
-        defaultKeymap = "viins";
-        dotDir = ".config/zsh";
+    programs.zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      autocd = true;
+      defaultKeymap = "viins";
+      dotDir = ".config/zsh";
 
-        history = {
-          ignoreDups = true;
-          ignoreSpace = true;
-          share = true;
-          path = "${inputs.config.xdg.dataHome}/zsh/histfile";
-        };
+      history = {
+        ignoreDups = true;
+        ignoreSpace = true;
+        share = true;
+        path = "${inputs.config.xdg.dataHome}/zsh/histfile";
+      };
 
-        initExtraBeforeCompInit = ''
-          setopt prompt_subst
-          setopt prompt_sp
-          setopt always_to_end
-          setopt complete_in_word
-          setopt hist_verify
+      initExtraBeforeCompInit = ''
+        setopt prompt_subst
+        setopt prompt_sp
+        setopt always_to_end
+        setopt complete_in_word
+        setopt hist_verify
 
-          setopt extended_glob
-          setopt nomatch
+        setopt extended_glob
+        setopt nomatch
 
-          setopt complete_aliases
-          setopt mark_dirs
-          setopt bang_hist
-          setopt extended_history
+        setopt complete_aliases
+        setopt mark_dirs
+        setopt bang_hist
+        setopt extended_history
 
-          setopt interactive_comments
-          setopt auto_continue
-          setopt pipefail
+        setopt interactive_comments
+        setopt auto_continue
+        setopt pipefail
 
-          unsetopt beep notify clobber
-        '';
+        unsetopt beep notify clobber
+      '';
 
-        initExtra = ''
+      initExtra =
+        ''
           autoload -Uz zmv
           autoload -Uz zed
 
@@ -95,7 +93,8 @@ in
             fi
             ''${EDITOR:-vim} flake.nix
           }
-        '' + (lib.optionalString inputs.config.phil.git.enable ''
+        ''
+        + (lib.optionalString inputs.config.phil.git.enable ''
           cworktree() {
             remote=$1
             dir=$2
@@ -115,7 +114,8 @@ in
             git worktree add main
             popd
           }
-        '') + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
+        '')
+        + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
           # dont run zellij in nvim shells, in tmux splits, in itself or when display isn't set
           PPNAME="$(ps -o comm= -p $PPID)"
           if [[ ! "$PPNAME" == "nvim" ]] && [[ $DISPLAY ]]; then
@@ -126,7 +126,8 @@ in
           fi
 
           export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-        '') + (lib.optionalString (config.phil.terminals.multiplexer == "tmux") ''
+        '')
+        + (lib.optionalString (config.phil.terminals.multiplexer == "tmux") ''
           # dont run tmux in nvim shells, in zellij splits or when display isn't set
           PPNAME="$(ps -o comm= -p $PPID)"
           if [[ ! "$PPNAME" == "nvim" ]] && [[ $DISPLAY ]]; then
@@ -148,9 +149,9 @@ in
           fi
         '');
 
-        shellGlobalAliases = {
-          "%notif" = "&& notify-send 'done' || notify-send 'error'";
-        };
+      shellGlobalAliases = {
+        "%notif" = "&& notify-send 'done' || notify-send 'error'";
       };
+    };
   };
 }

@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.des.gnome;
-in
-{
+in {
   options.phil.des.gnome = {
     enable = mkEnableOption "gnome";
   };
@@ -30,4 +28,3 @@ in
     ];
   };
 }
-

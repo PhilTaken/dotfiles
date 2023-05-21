@@ -1,11 +1,8 @@
-{ pkgs, ... }:
-let
-  inherit (pkgs) lib;
+{...}: let
   ip4_eth0 = "148.251.102.93";
   gateway_ip = "148.251.69.141";
-in
-rec {
-  imports = [ ./hardware-configuration.nix ];
+in {
+  imports = [./hardware-configuration.nix];
 
   # networking
   networking = {
@@ -33,12 +30,11 @@ rec {
       interface = "eth0";
       address = gateway_ip;
     };
-    nameservers = [ "1.1.1.1" ];
+    nameservers = ["1.1.1.1"];
   };
 
   boot.loader = {
     grub.enable = true;
-    grub.version = 2;
     grub.device = "/dev/sda";
   };
 

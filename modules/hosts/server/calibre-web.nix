@@ -1,10 +1,11 @@
-{ config, lib, ... }:
-
-let
+{
+  config,
+  lib,
+  ...
+}: let
   cfg = config.phil.server.services.calibre;
   inherit (lib) mkEnableOption mkIf mkOption types;
-in
-{
+in {
   options = {
     phil.server.services.calibre = {
       enable = mkEnableOption "Calibre-Web";
@@ -54,7 +55,7 @@ in
     };
 
     phil.server.services = {
-      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {

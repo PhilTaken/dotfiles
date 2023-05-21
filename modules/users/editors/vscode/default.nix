@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.editors.vscode;
-in
-{
+in {
   options.phil.editors.vscode = {
     enable = mkEnableOption "vscode";
   };

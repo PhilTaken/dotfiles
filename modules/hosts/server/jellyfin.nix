@@ -1,15 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.jellyfin;
-in
-{
-
+in {
   options.phil.server.services.jellyfin = {
     enable = mkEnableOption "jellyfin media server";
     host = mkOption {
@@ -29,7 +26,7 @@ in
     };
 
     phil.server.services = {
-      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {

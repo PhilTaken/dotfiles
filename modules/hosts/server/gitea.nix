@@ -1,16 +1,13 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.gitea;
-in
-{
-
+in {
   options.phil.server.services.gitea = {
     enable = mkEnableOption "gitea";
     url = mkOption {
@@ -37,19 +34,17 @@ in
   config = mkIf cfg.enable {
     services.gitea = {
       inherit (cfg) stateDir enable;
-
-      domain = "${cfg.host}.${net.tld}";
-      rootUrl = "https://${cfg.host}.${net.tld}/";
-
-      httpPort = cfg.port;
       lfs.enable = true;
-
       appName = "Oroboros";
 
       settings = {
         service.DISABLE_REGISTRATION = true;
         session.COOKIE_SECURE = true;
         other.SHOW_FOOTER_VERSION = false;
+
+        server.DOMAIN = "${cfg.host}.${net.tld}";
+        server.ROOT_URL = "https://${cfg.host}.${net.tld}/";
+        server.HTTP_PORT = cfg.port;
       };
     };
 

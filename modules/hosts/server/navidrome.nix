@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.navidrome;
-in
-{
+in {
   options.phil.server.services.navidrome = {
     enable = mkEnableOption "navidrome";
     host = mkOption {
@@ -36,10 +34,10 @@ in
       };
     };
 
-    phil.backup.jobs."music".paths = [ cfg.music_folder ];
+    phil.backup.jobs."music".paths = [cfg.music_folder];
 
     phil.server.services = {
-      caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
+      caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {
@@ -53,4 +51,3 @@ in
     };
   };
 }
-

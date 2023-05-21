@@ -1,19 +1,22 @@
-{ config, pkgs, lib, ... }:
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
-      options = [ "noatime" ];
+      options = ["noatime"];
     };
 
     "/media" = {
       device = "/dev/disk/by-label/seagate";
       fsType = "ext4";
-      options = [ "defaults" "user" "rw" "exec" ];
+      options = ["defaults" "user" "rw" "exec"];
     };
   };
-
 
   # to fix the usb ssd adapter misbehaving due to poor uasp support >.>
   boot = {
@@ -37,17 +40,17 @@
     # ---------------------------------------------------------------
 
     # pwm timers
-    kernelModules = [ "pwm_bcm2835" "w1-gpio" ];
+    kernelModules = ["pwm_bcm2835" "w1-gpio"];
 
     tmpOnTmpfs = true;
-    initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
+    initrd.availableKernelModules = ["usbhid" "usb_storage"];
   };
 
   hardware.raspberry-pi."4".fkms-3d.enable = true;
   hardware.i2c.enable = true;
 
   # don't forget to add the user to the gpio group
-  users.groups.gpio = { };
+  users.groups.gpio = {};
 
   services.udev.extraRules = ''
     SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio",MODE="0660"

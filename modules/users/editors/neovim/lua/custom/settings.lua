@@ -4,14 +4,14 @@ local o = vim.o
 local opt = vim.opt
 
 -- leader, for mappings
-vim.g.mapleader = ' '
+vim.g.mapleader = " "
 vim.g.maplocalleader = ","
-vim.g.tex_flavor = 'latex'
+vim.g.tex_flavor = "latex"
 vim.g.loaded_perl_provider = 0
 
 -- ignore these in searches
 opt.wildignore = { "*.swp", "*.bak", "*.pyc", "*.class" }
-opt.wildmode = { 'list', 'longest' }
+opt.wildmode = { "list", "longest" }
 
 opt.langremap = true
 
@@ -56,7 +56,6 @@ opt.inccommand = "nosplit"
 opt.backup = false
 opt.swapfile = false
 opt.writebackup = false
-
 
 -- write to undofile in undodir
 --vim.cmd[[set undodir=$XDG_DATA_HOME/nvim/undodir]]
@@ -114,8 +113,8 @@ opt.signcolumn = "auto"
 opt.wrap = false
 
 vim.diagnostic.config({
-    underline = false,
-    virtual_test = true,
-    signs = true,
-    severity_sort = true,
+	underline = false,
+	virtual_test = true,
+	signs = true,
+	severity_sort = true,
 })

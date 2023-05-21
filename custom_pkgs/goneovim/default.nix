@@ -1,9 +1,9 @@
-{ stdenv
-, qt5
-, autoPatchelfHook
-, fetchzip
+{
+  stdenv,
+  qt5,
+  autoPatchelfHook,
+  fetchzip,
 }:
-
 stdenv.mkDerivation rec {
   pname = "goneovim";
   version = "0.4.11";
@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-WC07E5jck1Oe5bZpJKPjbJCN0Nz3Y1E31qvC2E8jjtg=";
   };
 
-  buildInputs = with qt5; [ full ];
-  nativeBuildInputs = [ autoPatchelfHook ];
+  buildInputs = with qt5; [full];
+  nativeBuildInputs = [autoPatchelfHook];
   dontBuild = true;
 
   installPhase = ''

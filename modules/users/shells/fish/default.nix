@@ -1,15 +1,13 @@
-{ pkgs
-, config
-, lib
-, inputs
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}: let
   cfg = config.phil.shells.fish;
   inherit (lib) mkIf mkOption;
-in
-{
+in {
   options.phil.shells.fish = {
     enable = mkOption {
       description = "fish";
@@ -55,34 +53,39 @@ in
       };
 
       plugins = [
-        { name = "pisces"; src = inputs.fish-pisces-src; }
+        {
+          name = "pisces";
+          src = inputs.fish-pisces-src;
+        }
       ];
 
-      interactiveShellInit = ''
-        set -U fish_greeting
-        set -gx ATUIN_NOBIND "true"
+      interactiveShellInit =
+        ''
+          set -U fish_greeting
+          set -gx ATUIN_NOBIND "true"
 
-        bind \t 'commandline -f complete'
-        bind \e 'commandline -f cancel'
-        bind \r 'enter_ls'
-        bind \n 'enter_ls'
+          bind \t 'commandline -f complete'
+          bind \e 'commandline -f cancel'
+          bind \r 'enter_ls'
+          bind \n 'enter_ls'
 
-        if bind -M insert >/dev/null 2>&1
-          bind -M insert \t 'commandline -f complete'
-          bind -M insert \e 'commandline -f cancel'
-          bind -M insert \r 'enter_ls'
-          bind -M insert \n 'enter_ls'
-        end
-    '' + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
-        if status is-interactive
-        and not status --is-login
-        and not set -q TMUX
-        and not set -q NVIM
-        and set -q DISPLAY
-        and not set -q ZELLIJ
-          zellij attach --create main
-        end
-      '');
+          if bind -M insert >/dev/null 2>&1
+            bind -M insert \t 'commandline -f complete'
+            bind -M insert \e 'commandline -f cancel'
+            bind -M insert \r 'enter_ls'
+            bind -M insert \n 'enter_ls'
+          end
+        ''
+        + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
+          if status is-interactive
+          and not status --is-login
+          and not set -q TMUX
+          and not set -q NVIM
+          and set -q DISPLAY
+          and not set -q ZELLIJ
+            zellij attach --create main
+          end
+        '');
     };
   };
 }

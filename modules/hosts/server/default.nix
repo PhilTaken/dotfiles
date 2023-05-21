@@ -1,15 +1,13 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.phil.server;
-in
-{
+in {
   imports = [
     ./adguardhome.nix
     ./arrs.nix

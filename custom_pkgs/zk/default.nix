@@ -1,9 +1,9 @@
-{ stdenv
-, autoPatchelfHook
-, fetchzip
-, icu63
+{
+  stdenv,
+  autoPatchelfHook,
+  fetchzip,
+  icu63,
 }:
-
 stdenv.mkDerivation rec {
   pname = "zk";
   version = "0.6.0";
@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-RnLCNVB2rOu1b6n/TzmiKW4Blzp6dkY0Pb1a8d5dYrI=";
   };
 
-  buildInputs = [ icu63 ];
-  nativeBuildInputs = [ autoPatchelfHook ];
+  buildInputs = [icu63];
+  nativeBuildInputs = [autoPatchelfHook];
   dontBuild = true;
 
   installPhase = ''

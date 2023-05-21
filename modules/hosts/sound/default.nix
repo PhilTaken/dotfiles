@@ -1,14 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.sound;
-in
-{
+in {
   imports = [
     ./gmedia-extension.nix
   ];
@@ -22,7 +20,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.spotify-username = { };
+    sops.secrets.spotify-username = {};
     sops.secrets.spotify-password = {
       group = "audio";
       mode = "0440";

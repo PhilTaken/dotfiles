@@ -1,15 +1,13 @@
-{ pkgs
-, config
-, inputs
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  inputs,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption types mkIf;
   cfg = config.phil.terminals;
-in
-{
+in {
   options.phil.terminals = {
     default_font = mkOption {
       description = "default font";
@@ -18,18 +16,18 @@ in
     };
 
     multiplexer = mkOption {
-      type = types.enum [ "tmux" "zellij" ];
+      type = types.enum ["tmux" "zellij"];
       default = "tmux";
     };
 
     defaultShell = mkOption {
-      type = types.enum [ "fish" "zsh" ];
+      type = types.enum ["fish" "zsh"];
       default = "zsh";
     };
 
     alacritty = {
       decorations = mkOption {
-        type = types.enum [ "none" "full" ];
+        type = types.enum ["none" "full"];
         default = "full";
       };
     };
@@ -66,8 +64,8 @@ in
       };
 
       foot = rec {
-        enable = (! lib.hasInfix "darwin" pkgs.system);
-        server = { inherit enable; };
+        enable = ! lib.hasInfix "darwin" pkgs.system;
+        server = {inherit enable;};
 
         settings = {
           main.bold-text-in-bright = "yes";

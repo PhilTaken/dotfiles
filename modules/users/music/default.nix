@@ -1,15 +1,13 @@
-{ pkgs
-, config
-, lib
-, inputs
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.music;
-in
-{
+in {
   imports = [
     inputs.spicetify.homeManagerModule
     #./autoeq-easyeffects.nix
@@ -64,31 +62,29 @@ in
 
     systemd.user.services.mpris-proxy = mkIf cfg.enableMpris {
       Unit.Description = "Mpris proxy";
-      Unit.After = [ "network.target" "sound.target" ];
+      Unit.After = ["network.target" "sound.target"];
       Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
-      Install.WantedBy = [ "default.target" ];
+      Install.WantedBy = ["default.target"];
     };
 
-    programs.spicetify =
-      let
-        spicePkgs = inputs.spicetify.packages.${pkgs.system}.default;
-      in
-      {
-        enable = true;
-        theme = spicePkgs.themes.catppuccin-mocha;
-        colorScheme = "flamingo";
+    programs.spicetify = let
+      spicePkgs = inputs.spicetify.packages.${pkgs.system}.default;
+    in {
+      enable = true;
+      theme = spicePkgs.themes.catppuccin-mocha;
+      colorScheme = "flamingo";
 
-        enabledExtensions = with spicePkgs.extensions; [
-          fullAppDisplay
-          shuffle
-          hidePodcasts
-        ];
-      };
+      enabledExtensions = with spicePkgs.extensions; [
+        fullAppDisplay
+        shuffle
+        hidePodcasts
+      ];
+    };
 
     services.easyeffects = {
       enable = true;
       #presets = [
-        #"TFZ Queen"
+      #"TFZ Queen"
       #];
     };
 
@@ -144,9 +140,9 @@ in
           cover_names = "front back";
           sources = [
             "filesystem"
-            { coverart = "release"; }
+            {coverart = "release";}
             "itunes"
-            { coverart = "releasegroup"; }
+            {coverart = "releasegroup";}
             "lastfm"
             "*"
           ];

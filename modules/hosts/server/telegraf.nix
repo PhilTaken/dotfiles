@@ -1,17 +1,15 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkOption mkIf types;
   inherit (config.phil.server.services.influxdb2) port;
   cfg = config.phil.server.services.telegraf;
   outputUrl = "http://influx.${net.tld}:${builtins.toString port}";
-in
-{
+in {
   options.phil.server.services.telegraf = {
     enable = mkOption {
       description = "enable telegraf";
@@ -38,7 +36,7 @@ in
       sopsFile = ../../../sops/telegraf.yaml;
     };
 
-    users.users.telegraf.extraGroups = [ "dialout" ];
+    users.users.telegraf.extraGroups = ["dialout"];
 
     services.telegraf = {
       enable = true;
@@ -69,54 +67,58 @@ in
         };
 
         outputs = {
-          influxdb_v2 = [
-            {
-              urls = [ outputUrl ];
+          influxdb_v2 =
+            [
+              {
+                urls = [outputUrl];
+                timeout = "10s";
+                token = "$INFLUX_TOKEN";
+                organization = "home";
+                bucket = "data";
+                namepass = ["cpu" "disk" "diskio" "mem" "net" "processes" "swap" "system" "sensors"];
+              }
+            ]
+            ++ (lib.optional cfg.inputs.extrasensors {
+              urls = [outputUrl];
               timeout = "10s";
               token = "$INFLUX_TOKEN";
               organization = "home";
-              bucket = "data";
-              namepass = [ "cpu" "disk" "diskio" "mem" "net" "processes" "swap" "system" "sensors" ];
-            }
-          ] ++ (lib.optional cfg.inputs.extrasensors {
-            urls = [ outputUrl ];
-            timeout = "10s";
-            token = "$INFLUX_TOKEN";
-            organization = "home";
-            bucket = "sensors";
-            namepass = [ "env_sensors" ];
-          });
+              bucket = "sensors";
+              namepass = ["env_sensors"];
+            });
         };
 
-        inputs = {
-          cpu = {
-            percpu = true;
-            totalcpu = true;
-            collect_cpu_time = false;
-            report_active = false;
-          };
+        inputs =
+          {
+            cpu = {
+              percpu = true;
+              totalcpu = true;
+              collect_cpu_time = false;
+              report_active = false;
+            };
 
-          disk = {
-            ignore_fs = [ "tmpfs" "devtmpfs" "devfs" "overlay" "aufs" "squashfs" ];
-          };
+            disk = {
+              ignore_fs = ["tmpfs" "devtmpfs" "devfs" "overlay" "aufs" "squashfs"];
+            };
 
-          diskio = { };
-          mem = { };
-          net = { };
-          processes = { };
-          swap = { };
-          system = { };
-          sensors = { };
-        } // (lib.optionalAttrs cfg.inputs.extrasensors {
-          tail = {
-            name_override = "env_sensors";
-            files = [ "/dev/serial/by-id/usb-Adafruit_QT2040_Trinkey_DF609C8067563726-if00" ];
-            precision = "100ms";
-            pipe = true;
-            data_format = "json";
-            json_strict = "true";
-          };
-        });
+            diskio = {};
+            mem = {};
+            net = {};
+            processes = {};
+            swap = {};
+            system = {};
+            sensors = {};
+          }
+          // (lib.optionalAttrs cfg.inputs.extrasensors {
+            tail = {
+              name_override = "env_sensors";
+              files = ["/dev/serial/by-id/usb-Adafruit_QT2040_Trinkey_DF609C8067563726-if00"];
+              precision = "100ms";
+              pipe = true;
+              data_format = "json";
+              json_strict = "true";
+            };
+          });
       };
     };
   };

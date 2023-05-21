@@ -1,10 +1,9 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.nvidia;
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
@@ -14,18 +13,17 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
   '';
-in
-{
+in {
   options.phil.nvidia = {
     enable = mkEnableOption "nvidia";
   };
 
   config = mkIf cfg.enable {
-    services.xserver.videoDrivers = lib.mkDefault [ "nvidia" ];
+    services.xserver.videoDrivers = lib.mkDefault ["nvidia"];
 
     phil.video.driver = lib.mkDefault "nvidia";
 
-    environment.systemPackages = [ nvidia-offload ];
+    environment.systemPackages = [nvidia-offload];
 
     hardware = {
       nvidia = {
@@ -34,7 +32,7 @@ in
         # nvidiaPersistenced = false;
       };
       opengl = {
-        extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+        extraPackages = with pkgs; [libvdpau-va-gl vaapiVdpau];
         #extraPackages32 = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
       };
     };
@@ -58,4 +56,3 @@ in
     # '';
   };
 }
-

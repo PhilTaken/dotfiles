@@ -1,15 +1,13 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
-  cfg = config.phil.zellij;
-  settings = import ./config.nix { inherit pkgs cfg; };
-  inherit (lib) mkOption mkIf types mkEnableOption;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.phil.zellij;
+  settings = import ./config.nix {inherit pkgs cfg;};
+  inherit (lib) mkOption mkIf types mkEnableOption;
+in {
   options.phil.zellij = {
     enable = mkOption {
       description = "zellij";
@@ -18,7 +16,7 @@ in
     };
 
     defaultShell = mkOption {
-      type = types.nullOr (types.enum [ "fish" "zsh" ]);
+      type = types.nullOr (types.enum ["fish" "zsh"]);
       default = null;
     };
   };
@@ -36,7 +34,7 @@ in
       source = pkgs.stdenv.mkDerivation {
         pname = "zellij-layouts";
         version = "0.1";
-        phases = [ "patchPhase" ];
+        phases = ["patchPhase"];
 
         src = ./layouts;
 

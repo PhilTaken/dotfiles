@@ -1,16 +1,13 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.ttrss;
-in
-{
-
+in {
   options.phil.server.services.ttrss = {
     enable = mkEnableOption "tiny tiny rss";
     url = mkOption {
@@ -29,7 +26,7 @@ in
       };
       registration.enable = false;
       selfUrlPath = "https://${cfg.url}";
-      themePackages = with pkgs; [ tt-rss-theme-feedly ];
+      themePackages = with pkgs; [tt-rss-theme-feedly];
     };
   };
 }

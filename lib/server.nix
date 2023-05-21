@@ -1,8 +1,9 @@
-{ host, inputs, ... }:
-
-with builtins;
-
-let
+{
+  host,
+  inputs,
+  ...
+}:
+with builtins; let
   defaults = [
     "openssh"
     "fail2ban"
@@ -11,51 +12,56 @@ let
     "iperf"
   ];
 
-  users = [{
-    name = "nixos";
-    extraGroups = [
-      "wheel"
-      "video"
-      "audio"
-      "docker"
-      "dialout"
-      "gpio"
-      # only temporary for testing makemkv
-      "cdrom"
-    ];
-    shell = pkgs.zsh;
-  }];
+  users = [
+    {
+      name = "nixos";
+      extraGroups = [
+        "wheel"
+        "video"
+        "audio"
+        "docker"
+        "dialout"
+        "gpio"
+        # only temporary for testing makemkv
+        "cdrom"
+      ];
+      shell = pkgs.zsh;
+    }
+  ];
 
   # allows value to overwrite enabled when specified explicitly
-  defaultEnabled = builtins.mapAttrs (_: lib.mergeAttrs { enable = true; });
+  defaultEnabled = builtins.mapAttrs (_: lib.mergeAttrs {enable = true;});
 
   inherit (inputs.nixpkgs) lib;
-in
-{
-  mkServer =
-    { servername
-    , services ? [ ]
-    , defaultServices ? defaults
-    , extraimports ? [ ]
-    , fileshare ? { }
-    }:
+in {
+  mkServer = {
+    servername,
+    services ? [],
+    defaultServices ? defaults,
+    extraimports ? [],
+    fileshare ? {},
+  }:
     host.mkHost {
       inherit users;
 
-      extraimports = extraimports ++ [
+      extraimports =
+        extraimports
+        ++ [
+          {
+            documentation.enable = false;
+            environment.noXlibs = true;
+          }
+        ];
+
+      extraHostModules = [
         {
-          documentation.enable = false;
-          environment.noXlibs = true;
+          options.stylix = lib.mkOption {
+            description = "placeholder module";
+            type = lib.types.anything;
+            default = null;
+          };
         }
       ];
-
-      extraHostModules = [{
-        options.stylix = lib.mkOption {
-          description = "placeholder module";
-          type = lib.types.anything;
-          default = null;
-        };
-      }];
 
       systemConfig = {
         inherit fileshare;
@@ -72,8 +78,11 @@ in
 
         server = {
           enable = true;
-          services = foldl' lib.mergeAttrs { } (map
-            (service: if builtins.isAttrs service then defaultEnabled service else { "${service}".enable = true; })
+          services = foldl' lib.mergeAttrs {} (map
+            (service:
+              if builtins.isAttrs service
+              then defaultEnabled service
+              else {"${service}".enable = true;})
             (defaults ++ services));
         };
       };

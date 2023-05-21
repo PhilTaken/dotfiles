@@ -1,5 +1,5 @@
 -- HELP: see :h luasnip
-local ls = require'luasnip'
+local ls = require("luasnip")
 
 -- some shorthands...
 local s = ls.snippet
@@ -31,23 +31,34 @@ ls.config.set_config({
 })
 
 ls.snippets = {
-    python = {
-        s("main", {
-            t({"def main():", "\t"}), i(0),
-            t({"", "", "", "if __name__ == '__main__':", "\tmain()"}),
-        }),
-    },
-    fortran = {
-        s("subroutine", {
-            t("subroutine "), i(1, "foo"),
-            t({"", "\t"}), i(0, "! code ~"),
-            t({"", "end subroutine "}), f(function(args) return args[1][1] end, {1})
-        }),
-        s("function", {
-            t("function "), i(1, "foo"),
-            t({"", "\t"}), i(0, "! code ~"),
-            t({"", "end function "}), f(function(args) return args[1][1] end, {1})
-        }),
-        s("pr", { t("print*, "), i(0) }),
-    },
+	python = {
+		s("main", {
+			t({ "def main():", "\t" }),
+			i(0),
+			t({ "", "", "", "if __name__ == '__main__':", "\tmain()" }),
+		}),
+	},
+	fortran = {
+		s("subroutine", {
+			t("subroutine "),
+			i(1, "foo"),
+			t({ "", "\t" }),
+			i(0, "! code ~"),
+			t({ "", "end subroutine " }),
+			f(function(args)
+				return args[1][1]
+			end, { 1 }),
+		}),
+		s("function", {
+			t("function "),
+			i(1, "foo"),
+			t({ "", "\t" }),
+			i(0, "! code ~"),
+			t({ "", "end function " }),
+			f(function(args)
+				return args[1][1]
+			end, { 1 }),
+		}),
+		s("pr", { t("print*, "), i(0) }),
+	},
 }

@@ -1,11 +1,10 @@
-{ pkgs
-, config
-, lib
-, net
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  net,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.phil.nebula;
   networkName = "milkyway";
@@ -14,16 +13,20 @@ let
   hostname = config.networking.hostName;
   port = 4242;
 
-  hostMap = builtins.listToAttrs
+  hostMap =
+    builtins.listToAttrs
     (map
       (endp: {
         name = iplot.${endp};
-        value = [ (net.networks.endpoints.${endp} + ":${toString port}") ];
+        value = [(net.networks.endpoints.${endp} + ":${toString port}")];
       })
       (builtins.attrNames net.networks.endpoints));
 
   isLighthouse = builtins.elem hostname (builtins.attrNames net.networks.endpoints);
-  lighthouses = if isLighthouse then [ ] else builtins.attrNames hostMap;
+  lighthouses =
+    if isLighthouse
+    then []
+    else builtins.attrNames hostMap;
 
   sopsConfig = {
     owner = config.systemd.services."nebula@${networkName}".serviceConfig.User or "root";
@@ -31,9 +34,12 @@ let
   };
 
   # TODO: rework this
-  any = { port = "any"; proto = "any"; host = "any"; };
-in
-{
+  any = {
+    port = "any";
+    proto = "any";
+    host = "any";
+  };
+in {
   options.phil.nebula.enable = mkEnableOption "nebula";
   config = mkIf cfg.enable {
     sops.secrets.ca = {
@@ -54,8 +60,8 @@ in
       tun.device = networkName;
       staticHostMap = hostMap;
 
-      firewall.inbound = [ any ];
-      firewall.outbound = [ any ];
+      firewall.inbound = [any];
+      firewall.outbound = [any];
 
       settings = {
         cipher = "aes";
@@ -68,4 +74,3 @@ in
     };
   };
 }
-

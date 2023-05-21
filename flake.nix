@@ -31,6 +31,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+
+    pre-commit-hooks-nix.url = "github:cachix/pre-commit-hooks.nix";
+
     # -----------------------
     # nixos modules
 
@@ -115,8 +119,8 @@
     };
 
     #autoeq = {
-      #url = "github:jaakkopasanen/AutoEq";
-      #flake = false;
+    #url = "github:jaakkopasanen/AutoEq";
+    #flake = false;
     #};
 
     fish-pisces-src = {
@@ -157,10 +161,11 @@
     };
   };
 
-  outputs = { self, flake-parts, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = {flake-parts, ...} @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
         "x86_64-linux"
+        "aarch64-linux"
       ];
 
       imports = [
@@ -169,14 +174,25 @@
         ./modules/flake/deploy.nix
         ./modules/flake/shells.nix
         inputs.hercules-ci-effects.flakeModule
+        inputs.treefmt-nix.flakeModule
+        inputs.pre-commit-hooks-nix.flakeModule
       ];
 
-      #hercules-ci.flake-update = {
-        #enable = true;
-        #when = {
-          #hour = [ 23 ];
-          #dayOfWeek = ["Sun" "Wed"];
-        #};
-      #};
+      perSystem = {config, ...}: {
+        pre-commit = {
+          settings.hooks = {
+            alejandra.enable = true;
+            #treefmt.enable = true;
+          };
+        };
+
+        treefmt = {
+          projectRootFile = "flake.nix";
+          programs.alejandra.enable = true;
+          programs.stylua.enable = true;
+        };
+
+        formatter = config.treefmt.build.wrapper;
+      };
     };
 }

@@ -1,15 +1,12 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.iperf;
-in
-{
-
+in {
   options.phil.server.services.iperf = {
     enable = mkEnableOption "iperf bandwith benchmark tool";
     port = mkOption {
@@ -25,8 +22,8 @@ in
     };
 
     networking.firewall = {
-      allowedTCPPorts = [ cfg.port ];
-      allowedUDPPorts = [ cfg.port ];
+      allowedTCPPorts = [cfg.port];
+      allowedUDPPorts = [cfg.port];
     };
   };
 }
