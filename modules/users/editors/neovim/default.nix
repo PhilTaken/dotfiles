@@ -90,8 +90,6 @@ in
         emanote # for zettelkasten note-taking
 
         sqlite # for sqlite.lua
-        universal-ctags # ctags for anything
-
         inetutils # remote editing
 
         sumneko-lua-language-server # lua
@@ -154,7 +152,6 @@ in
         telescope-symbols-nvim
         telescope-zoxide
         vim-fugitive
-        vim-gutentags
         vim-rooter
         vim-startuptime
 

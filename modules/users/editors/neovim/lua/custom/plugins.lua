@@ -110,8 +110,6 @@ catppuccin.setup{
 vim.g.catppuccin_flavour = "mocha"
 vim.cmd[[colorscheme catppuccin]]
 
-vim.g.gutentags_file_list_command = 'rg --files'
-
 vim.g.rooter_targets = '/,*'
 vim.g.rooter_patterns = { '.git/' }
 vim.g.rooter_resolve_links = 1
