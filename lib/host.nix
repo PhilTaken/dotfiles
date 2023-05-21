@@ -109,7 +109,7 @@ rec {
         systemConfig = {
           wireguard.enable = true;
           nebula.enable = true;
-          mullvad.enable = true;
+          #mullvad.enable = true;
           workstation.enable = true;
         };
       } inpargs) // {
