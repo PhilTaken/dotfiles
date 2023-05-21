@@ -32,12 +32,6 @@ in
         type = types.enum [ "none" "full" ];
         default = "full";
       };
-
-      opacity = mkOption {
-        # TODO: limit to values between 0 and 1
-        type = types.float;
-        default = 0.92;
-      };
     };
   };
 
@@ -51,7 +45,7 @@ in
               x = 5;
               y = 5;
             };
-            inherit (cfg.alacritty) decorations opacity;
+            inherit (cfg.alacritty) decorations;
           };
         };
       };

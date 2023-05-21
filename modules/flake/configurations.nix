@@ -17,7 +17,6 @@ let
           defaultShell = "fish";
           multiplexer = "zellij";
           alacritty.decorations = "none";
-          alacritty.opacity = 0.65;
         };
         browsers.enable = true;
         gpg.enable = true;

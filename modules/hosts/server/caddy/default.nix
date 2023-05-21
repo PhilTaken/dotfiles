@@ -87,7 +87,7 @@ in
         };
 
         globalConfig = ''
-          admin ${net.networks.default.${config.networking.hostName}}:${builtins.toString cfg.adminport}
+          admin 0.0.0.0:${builtins.toString cfg.adminport}
           servers {
             metrics
           }
