@@ -62,7 +62,7 @@ in {
       overrideFolders = cfg.override;
       overrideDevices = cfg.override;
 
-      settings = {
+      extraOptions = {
         gui.theme = "black";
       };
     };
