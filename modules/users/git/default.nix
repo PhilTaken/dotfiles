@@ -47,9 +47,11 @@ in {
     };
 
     home.shellAliases = {
+      gf = "${pkgs.git}/bin/git fetch -ap";
       ga = "${pkgs.git}/bin/git add";
       gc = "${pkgs.git}/bin/git commit";
       gd = "${pkgs.git}/bin/git diff";
+      gds = "${pkgs.git}/bin/git diff --staged";
       gr = "${pkgs.git}/bin/git reset";
       grv = "${pkgs.git}/bin/git remote -v";
       gl = "${pkgs.git}/bin/git pull";
