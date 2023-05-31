@@ -9,11 +9,11 @@ require("alpha").setup(require("alpha.themes.startify").opts)
 require("colorizer").setup()
 require("neoscroll").setup({ hide_cursor = false })
 require("gitlinker").setup({
-    mappings = nil,
-    callbacks = {
-        ["gitea.pherzog.xyz"] = require("gitlinker.hosts").get_gitea_type_url,
-        ["gitlab.flyingcircus.io"] = require("gitlinker.hosts").get_gitlab_type_url
-    },
+	mappings = nil,
+	callbacks = {
+		["gitea.pherzog.xyz"] = require("gitlinker.hosts").get_gitea_type_url,
+		["gitlab.flyingcircus.io"] = require("gitlinker.hosts").get_gitlab_type_url,
+	},
 })
 require("gitsigns").setup({})
 --require("diffview").setup{}
