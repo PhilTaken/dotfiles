@@ -16,6 +16,7 @@ in {
     home.packages = with pkgs; [
       devdocs-desktop
       mutagen
+      termscp
     ];
 
     programs = {
