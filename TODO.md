@@ -1,16 +1,7 @@
 # current TODOs:
 
 - backup postgres database of nextcloud instance
-
 - set up time machine backup on delta
-
-- vim
-    - disable ctags, don't use the tags much anyways (telscope grep usually does the trick)
-    - mapping from the last comment in https://github.com/sindrets/diffview.nvim/issues/196 
-    - fugitive plugin
-    - change background with telescope open (it sets a background color, does not respect transparency)
-
-- set up root gnupg home to use sops with yubikey on iso (x86-iso2)
 
 - backup (important) syncthing folders locally and to b2
     - rclone / borg
@@ -22,18 +13,13 @@
 ## general
 
 - atuin sync server (backed up)
-- utilize upload-daemon to cache the world on delta
 
 - hyprland config
     - w/d for keybinds on laptop -> keycodes?
 
-- declarative syncthing/mutagen config
 - backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
 
 - set up modules:
-    - photoview -> librephotos
-        - images in syncthing / seafile
-
     - xmonad (wip)
     - grocy
 
@@ -45,8 +31,6 @@
 
     - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
 
-    - ttrss
-
     - bspwm/awesomewm/river
     - hedgedoc
     - bookstack
@@ -55,24 +39,13 @@
     - woodpecker module
         - ci/cd with hydra webhooks from gitea
 
-
-- change module
-    - caddy acme -> services.acme
-        - removes need to compile caddy with cloudflare
-        - better access to certificates from other services (unbound etc)
-
-- logging
-    - grafana config
-        - todo: provisions
+- grafana config
+    - todo: provisions
 
 - nebula
     - implement proper tagging
     - signing script with sops secrets
     - mobile device integration?
-
-- caddy acme -> services.acme
-    - removes need to compile caddy with cloudflare
-    - better access to certificates from other services (unbound etc)
 
 - http://consul.io?
 
@@ -82,13 +55,11 @@
 
 - work with builtin `makeprg`
 - diffviewopen telescope integration
-- marks workflow
 
 ### ideas
 
 - zrythm
     - https://www.zrythm.org/en/index.html
-- sk(im) sorter for telescope?
 - plugins
     - symbol outlines (lsp)
         - https://github.com/simrat39/symbols-outline.nvim
@@ -123,3 +94,4 @@
     - move gpg keys to some .nix file
 
 - arm module (get rust running + spinning)
+- set up root gnupg home to use sops with yubikey on iso (x86-iso2)
