@@ -91,10 +91,10 @@
 
     xdg-desktop-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
 
-    arm-rs = {
-      url = "github:PhilTaken/arm.rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #arm-rs = {
+    #url = "github:PhilTaken/arm.rs";
+    #inputs.nixpkgs.follows = "nixpkgs";
+    #};
 
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
 

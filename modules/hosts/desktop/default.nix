@@ -41,7 +41,7 @@ in {
       audacity
       obs-studio
       handbrake
-      makemkv
+      #makemkv
 
       # games
       prismlauncher

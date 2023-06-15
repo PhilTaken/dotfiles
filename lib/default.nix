@@ -4,7 +4,7 @@
 }: let
   systemmodules = rec {
     default = [
-      inputs.arm-rs.nixosModules.default
+      #inputs.arm-rs.nixosModules.default
       inputs.sops-nix-src.nixosModules.sops
       inputs.home-manager.nixosModules.home-manager
       inputs.hyprland.nixosModules.default
@@ -21,7 +21,7 @@
   overlays = [
     inputs.nur-src.overlay
     #inputs.neovim-nightly.overlay
-    inputs.arm-rs.overlays.default
+    #inputs.arm-rs.overlays.default
     inputs.hyprland.overlays.default
     inputs.parinfer-rust.overlays.default
     #inputs.zellij.overlays.default
