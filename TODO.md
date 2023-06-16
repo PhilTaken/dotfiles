@@ -20,9 +20,6 @@
 - backup dns -> too tightly bound with delta -> no dns when not reachable (emergency)
 
 - set up modules:
-    - xmonad (wip)
-    - grocy
-
     - matrix-conduit
         - matrix bridges
 
@@ -31,7 +28,6 @@
 
     - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
 
-    - bspwm/awesomewm/river
     - hedgedoc
     - bookstack
     - snapcast server/clients
@@ -53,6 +49,7 @@
 
 ### todo
 
+- neorg keybinds
 - work with builtin `makeprg`
 - diffviewopen telescope integration
 
