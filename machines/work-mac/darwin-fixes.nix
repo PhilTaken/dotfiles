@@ -1,7 +1,6 @@
 {
   home-manager = {
     lib,
-    inputs,
     pkgs,
     config,
     ...
@@ -48,7 +47,7 @@
     };
   };
 
-  overlay = final: prev: let
+  overlay = _final: prev: let
     mkInvalidPkg = name: {
       inherit name;
       value = prev.writeShellScriptBin name "echo no ${name} for you";

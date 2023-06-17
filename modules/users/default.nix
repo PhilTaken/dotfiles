@@ -23,6 +23,7 @@
     ./des
 
     ./work
+    ./leisure
   ];
 
   config = {
@@ -35,28 +36,13 @@
       cacert
       coreutils
       hicolor-icon-theme
-      qt5.qtbase
       weather-icons
 
-      #magic-wormhole
       cachix
       gping
       hyperfine
-      #texlive.combined.scheme-medium
       tokei
-      #vpnc
       wget
-      youtube-dl
-
-      #obsidian
-      anki
-      element-desktop
-      #gimp
-      #keepassxc
-
-      libreoffice
-      #signal-desktop
-      tdesktop
     ];
   };
 }

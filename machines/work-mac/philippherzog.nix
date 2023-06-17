@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{...}: let
   darwin-fixes = import ./darwin-fixes.nix;
 in {
   home-manager.users.philippherzog = {

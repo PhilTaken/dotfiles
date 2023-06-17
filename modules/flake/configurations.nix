@@ -87,6 +87,8 @@ in {
             firefox.enable = false;
           };
 
+          work.enable = true;
+
           editors.neovim.langs = {
             haskell = false;
             cpp = false;

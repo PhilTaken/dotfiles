@@ -14,7 +14,6 @@ in {
   # wip
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      devdocs-desktop
       mutagen
       termscp
 

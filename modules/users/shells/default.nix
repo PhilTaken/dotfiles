@@ -101,10 +101,6 @@ in {
       unzip
       wget
       yt-dlp
-
-      #lshw
-      #psmisc
-      #usbutils
     ];
 
     programs = {
@@ -184,10 +180,6 @@ in {
       };
 
       skim.enable = true;
-
-      #watson = {
-      #enable = true;
-      #};
 
       # TODO: set up sync
       atuin = {
