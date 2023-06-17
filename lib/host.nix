@@ -110,11 +110,6 @@ in rec {
             ];
           };
 
-          nixpkgs.overlays = [
-            inputs.nixpkgs-wayland.overlay
-            inputs.neovim-nightly-overlay.overlay
-          ];
-
           nix = {
             registry.nixpkgs.flake = nixpkgs;
             settings.trusted-users = [username];
