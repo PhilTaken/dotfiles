@@ -58,11 +58,6 @@ in {
       else pkgs.firefox-wayland;
   in
     mkIf cfg.enable {
-      home.packages = with pkgs; [
-        nyxt
-        google-chrome
-      ];
-
       programs.chromium = {
         inherit (cfg.chromium) enable;
         #package = pkgs.ungoogled-chromium;

@@ -81,6 +81,12 @@ in {
           ];
 
         userConfig = {
+          browsers = {
+            # not compatible, needs to install seperately on mac :/
+            chromium.enable = false;
+            firefox.enable = false;
+          };
+
           editors.neovim.langs = {
             haskell = false;
             cpp = false;

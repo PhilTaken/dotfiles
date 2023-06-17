@@ -82,14 +82,12 @@ in {
       joshuto
       jq
       lolcat
-      lshw
       lsof
       magic-wormhole
       neofetch
       nix-output-monitor
       nmap
       procs
-      psmisc
       pup
       ranger
       ripgrep
@@ -101,9 +99,12 @@ in {
       tree
       unrar
       unzip
-      usbutils
       wget
       yt-dlp
+
+      #lshw
+      #psmisc
+      #usbutils
     ];
 
     programs = {
