@@ -193,12 +193,55 @@ in {
         inherit (cfg.qutebrowser) enable;
         enableDefaultBindings = true;
 
+        settings = {
+          auto_save.session = true;
+          session.lazy_restore = true;
+          content.fullscreen.window = true;
+          content.pdfjs = true;
+          downloads.location.suggestion = "both";
+          fileselect.folder.command = ["alacritty" "-e" "ranger" "--choosedir={}"];
+          fileselect.single_file.command = ["alacritty" "-e" "ranger" "--choosefile={}"];
+          fileselect.multiple_files.command = ["alacritty" "-e" "ranger" "--choosefiles={}"];
+          scrolling.smooth = true;
+          tabs.last_close = "close";
+          #tabs.padding = {
+          #"bottom" = 2;
+          #"left" = 2;
+          #"right" = 2;
+          #"top" = 2;
+          #};
+          tabs.select_on_remove = "last-used";
+          colors.webpage.preferred_color_scheme = "dark";
+        };
+
+        keyBindings = {
+          normal = {
+            "<Ctrl-v>" = "spawn mpv {url}";
+          };
+
+          prompt = {
+            "<Ctrl-y>" = "prompt-yes";
+          };
+        };
+
         quickmarks = {
           nixpkgs = "https://github.com/NixOS/nixpkgs";
+          awesome-nix = "https://github.com/nix-community/awesome-nix";
           home-manager = "https://github.com/nix-community/home-manager";
+          nix-package-versions = "https://lazamar.co.uk/nix-versions";
+          hackernews = "https://news.ycombinator.com";
+          noogle = "https://noogle.dev";
+          dotfiles = "https://gitea.pherzog.xyz/phil/dotfiles";
         };
 
         searchEngines = {
+          # nix related search engines
+          hmo = "https://mipmip.github.io/home-manager-option-search/?query={}";
+          nixp = "https://search.nixos.org/packages?channel=unstable&query={}";
+          nixo = "https://search.nixos.org/options?channel=unstable&query={}";
+          noogle = "https://noogle.dev/?term=%22{}%22";
+
+          # general search
           w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
           aw = "https://wiki.archlinux.org/?search={}";
           nw = "https://nixos.wiki/index.php?search={}";
