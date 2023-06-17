@@ -67,7 +67,7 @@ in {
     programs.neovim = {
       defaultEditor = true;
       enable = true;
-      package = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
+      package = pkgs.neovim-unwrapped;
       viAlias = true;
       vimAlias = true;
       withPython3 = true;

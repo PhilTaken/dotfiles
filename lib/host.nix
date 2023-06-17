@@ -51,8 +51,10 @@ in rec {
             phil = systemConfig;
 
             nix.registry.nixpkgs.flake = nixpkgs;
+
             nixpkgs.overlays = [
               inputs.nixpkgs-wayland.overlay
+              inputs.neovim-nightly-overlay.overlay
             ];
 
             sops = {
@@ -107,6 +109,11 @@ in rec {
               })
             ];
           };
+
+          nixpkgs.overlays = [
+            inputs.nixpkgs-wayland.overlay
+            inputs.neovim-nightly-overlay.overlay
+          ];
 
           nix = {
             registry.nixpkgs.flake = nixpkgs;

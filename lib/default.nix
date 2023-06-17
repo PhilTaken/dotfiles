@@ -20,7 +20,7 @@
 
   overlays = [
     inputs.nur-src.overlay
-    #inputs.neovim-nightly.overlay
+    inputs.neovim-nightly-overlay.overlay
     #inputs.arm-rs.overlays.default
     inputs.hyprland.overlays.default
     inputs.parinfer-rust.overlays.default

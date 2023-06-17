@@ -77,14 +77,14 @@ in {
         substituters =
           [
             "https://cache.nixos.org"
-            "https://philtaken.cachix.org"
 
-            #"https://arm-rs.cachix.org"
-
+            "https://nix-community.cachix.org"
             "https://nixpkgs-wayland.cachix.org"
-
-            "https://cache.iog.io"
             "https://hyprland.cachix.org"
+
+            "https://philtaken.cachix.org"
+            #"https://arm-rs.cachix.org"
+            #"https://cache.iog.io"
           ]
           ++ lib.optionals config.phil.nebula.enable [
             "https://nix-store.${net.tld}"
@@ -98,6 +98,7 @@ in {
           "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
           "nix-store-01:fxqZS/VJggrfBpFFOT/iULWYRaz5NvpY0daV+knaCCA="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         ];
       };
       # set up automatic garbage collection

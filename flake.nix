@@ -82,7 +82,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly.url = "github:neovim/neovim?dir=contrib";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     hyprland = {
       url = "github:vaxerski/Hyprland";
