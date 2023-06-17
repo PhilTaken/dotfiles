@@ -7,7 +7,6 @@ with builtins; rec {
     homeDirectory ? "/home/${username}",
   }: {
     phil = userConfig;
-    systemd.user.startServices = true;
 
     home = {
       inherit username homeDirectory stateVersion;
@@ -19,33 +18,7 @@ with builtins; rec {
       };
 
       packages = with pkgs;
-        [
-          cacert
-          coreutils
-          hicolor-icon-theme
-          qt5.qtbase
-          weather-icons
-
-          #magic-wormhole
-          cachix
-          gping
-          hyperfine
-          #texlive.combined.scheme-medium
-          tokei
-          #vpnc
-          wget
-          youtube-dl
-
-          #obsidian
-          anki
-          element-desktop
-          #gimp
-          #keepassxc
-
-          libreoffice
-          #signal-desktop
-          tdesktop
-        ]
+        []
         ++ (extraPackages pkgs)
         ++
         # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
@@ -69,8 +42,7 @@ with builtins; rec {
 
     programs.home-manager.enable = true;
     programs.zathura.enable = true;
-
-    services.syncthing.enable = true;
+    #services.syncthing.enable = true;
 
     xdg = {
       enable = true;

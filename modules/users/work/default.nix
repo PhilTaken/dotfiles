@@ -17,28 +17,45 @@ in {
       devdocs-desktop
       mutagen
       termscp
+
+      bottom
+      fd
+      file
+      exa
+      gnupg
+      iperf
+
+      pre-commit
+
+      rsync
+      wget
+      whois
+      fswatch
+
+      httpie
+      termscp
+
+      git
     ];
 
     programs = {
-      sioyek = {
-        enable = false;
-      };
-    };
+      sioyek.enable = false;
+      watson = {
+        enable = true;
+        settings = {
+          options = {
+            stop_on_start = true;
+            stop_on_restart = false;
+            date_format = "%Y-%m-%d";
+            time_format = "%H:%M:%S%z";
+            week_start = "monday";
+            pager = false;
+            reverse_log = true;
 
-    systemd.user.services.mutagen-daemon = {
-      Unit = {
-        Description = "Unit for the mutagen daemon";
-        After = "graphical-session-pre.target";
-        PartOf = "graphical-session.target";
-      };
-
-      Service = {
-        ExecStart = "${pkgs.mutagen}/bin/mutagen daemon start";
-        Restart = "on-abort";
-      };
-
-      Install = {
-        WantedBy = ["graphical-session.target"];
+            log_current = false;
+            report_current = false;
+          };
+        };
       };
     };
   };

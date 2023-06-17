@@ -38,9 +38,12 @@ in {
       enable = true;
       settings = {
         gui.sidePanelWidth = 0.2;
-        git.paging = {
-          colorArg = "always";
-          pager = "${pkgs.delta}/bin/delta -s --paging=never";
+        git = {
+          overrideGpg = true;
+          paging = {
+            colorArg = "always";
+            pager = "${pkgs.delta}/bin/delta -s --paging=never";
+          };
         };
         #os.editCommand = "${pkgs.neovim-remote}/bin/nvr -cc vsplit --remote-wait +'set bufhidden=wipe'";
       };
@@ -69,6 +72,7 @@ in {
         "tags"
         "result"
         ".direnv"
+        ".envrc"
       ];
       lfs.enable = true;
       difftastic = {

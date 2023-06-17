@@ -79,6 +79,52 @@ in rec {
         ++ extraHostModules;
     };
 
+  mkMac = {
+    name,
+    userConfig ? {},
+    extraPackages ? _: {},
+    username ? "philippherzog",
+    system ? "aarch64-darwin",
+    lib ? inputs.nixpkgs.lib,
+    pkgs ? pkgsFor system,
+  }:
+    inputs.darwin.lib.darwinSystem {
+      inherit system pkgs;
+      specialArgs = {inherit inputs flake;};
+
+      modules = [
+        inputs.home-manager.darwinModule
+        (../machines + "/${name}")
+        (../machines + "/${name}/${username}.nix")
+
+        {
+          home-manager.users.${username} = {
+            imports = [
+              (user.mkConfig pkgs username {
+                inherit userConfig extraPackages;
+                stateVersion = "22.05";
+                homeDirectory = "/Users/${username}";
+              })
+            ];
+          };
+
+          nix = {
+            registry.nixpkgs.flake = nixpkgs;
+            settings.trusted-users = [username];
+            extraOptions = ''
+              auto-optimise-store = true
+            '';
+          };
+
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = {inherit inputs;};
+          };
+        }
+      ];
+    };
+
   mkIso = inpargs: let
     args =
       lib.recursiveUpdate {

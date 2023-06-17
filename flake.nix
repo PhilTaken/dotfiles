@@ -101,7 +101,13 @@
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
 
     # -----------------------
+    # mac inputs
+    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    # -----------------------
     # non-flake sources
+    # TODO: manage them without flakes
 
     tmm-src = {
       url = "https://release.tinymediamanager.org/v4/dist/tmm_4.3.11.1_linux-amd64.tar.gz";
