@@ -197,7 +197,7 @@ in {
           firenvim
 
           parinfer-rust
-          neorg
+          #neorg
         ])
         ++ (with pkgs.vimExtraPlugins; [
           cybu-nvim
@@ -223,13 +223,13 @@ in {
             pname = "promise-async";
             src = inputs.vim-async-src;
           }
-          {
-            pname = "neorg-telescope";
-            src = builtins.fetchGit {
-              url = "https://github.com/nvim-neorg/neorg-telescope";
-              rev = "197c59a572e4423642b5c5fb727ecefadffe9000";
-            };
-          }
+          #{
+          #pname = "neorg-telescope";
+          #src = builtins.fetchGit {
+          #url = "https://github.com/nvim-neorg/neorg-telescope";
+          #rev = "197c59a572e4423642b5c5fb727ecefadffe9000";
+          #};
+          #}
         ]);
     };
 
