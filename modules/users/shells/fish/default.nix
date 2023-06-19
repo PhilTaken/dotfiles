@@ -61,6 +61,10 @@ in {
 
       interactiveShellInit =
         ''
+          if test (uname) = Darwin
+              fish_add_path --prepend --global /nix/var/nix/profiles/default/bin /run/current-system/sw/bin "/etc/profiles/per-user/$USER/bin"
+          end
+
           set -U fish_greeting
           set -gx ATUIN_NOBIND "true"
 
