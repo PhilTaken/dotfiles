@@ -34,6 +34,11 @@ in {
   };
 
   config = mkIf cfg.enable {
+    programs.gitui = {
+      enable = true;
+      # TODO: keybinds, theme?
+    };
+
     programs.lazygit = {
       enable = true;
       settings = {
