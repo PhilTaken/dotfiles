@@ -47,6 +47,10 @@ in {
         };
       };
 
+      kitty = {
+        enable = true;
+      };
+
       wezterm = {
         enable = true;
         extraConfig = ''
