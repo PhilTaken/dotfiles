@@ -39,6 +39,10 @@ in {
       # TODO: keybinds, theme?
     };
 
+    home.packages = [
+      pkgs.git-workspace
+    ];
+
     programs.lazygit = {
       enable = true;
       settings = {

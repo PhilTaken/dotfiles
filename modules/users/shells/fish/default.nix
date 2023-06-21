@@ -19,6 +19,10 @@ in {
   config = mkIf cfg.enable {
     stylix.targets.fish.enable = false;
 
+    home.sessionVariables = {
+      GIT_WORKSPACE = "$HOME/Documents/workspace";
+    };
+
     programs.fish = {
       enable = true;
 
@@ -48,6 +52,14 @@ in {
             commandline -f execute
           else
             commandline -f execute
+          end
+        '';
+        pri = ''
+          set filter "$argv"
+          set chosen_project (git workspace list | sk -q "$filter")
+          if string length -q -- $chosen_project
+            pushd $GIT_WORKSPACE/$chosen_project
+            $EDITOR $GIT_WORKSPACE/$chosen_project
           end
         '';
       };
