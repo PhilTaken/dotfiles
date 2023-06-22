@@ -59,7 +59,6 @@ in {
           set chosen_project (git workspace list | sk -q "$filter")
           if string length -q -- $chosen_project
             pushd $GIT_WORKSPACE/$chosen_project
-            $EDITOR $GIT_WORKSPACE/$chosen_project
           end
         '';
       };
