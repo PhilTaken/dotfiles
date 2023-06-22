@@ -40,7 +40,7 @@
         hyprland = inputs.hyprland.packages.${prev.system}.default;
 
         # https://github.com/NixOS/nixpkgs/issues/216961
-        inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) zellij;
+        #inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) zellij;
 
         # devdocs.io
         devdocs-desktop = prev.writeShellApplication {
