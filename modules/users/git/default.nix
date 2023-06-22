@@ -73,6 +73,7 @@ in {
       gcm = "${pkgs.git}/bin/git checkout main";
       lg = "${pkgs.lazygit}/bin/lazygit";
       flkup = "nix flake update --commit-lock-file";
+      gwf = "${pkgs.git}/bin/git workspace fetch";
     };
 
     programs.git = {
