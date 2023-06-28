@@ -76,7 +76,7 @@ local leadern = {
 
 	[";"] = {
 		function()
-			R("custom.tele").buffers()
+			require("custom.tele").buffers()
 		end,
 		"Buffers",
 	},
@@ -125,7 +125,7 @@ local leadern = {
 		r = { "<cmd>Rooter<cr>", "Root vim" },
 		z = {
 			function()
-				R("custom.tele").extensions.zoxide.list()
+				require("custom.tele").extensions.zoxide.list()
 			end,
 			"list zoxide dirs",
 		},
@@ -133,43 +133,43 @@ local leadern = {
 			name = "+find",
 			s = {
 				function()
-					R("custom.tele").treesitter()
+					require("custom.tele").treesitter()
 				end,
 				"Treesitter Symbols",
 			},
 			g = {
 				function()
-					R("custom.tele").live_grep()
+					require("custom.tele").live_grep()
 				end,
 				"Live Grep in current dir",
 			},
 			f = {
 				function()
-					R("custom.tele").find_files()
+					require("custom.tele").find_files()
 				end,
 				"Find Files in current dir",
 			},
 			d = {
 				function()
-					R("custom.tele").find_dotfiles({})
+					require("custom.tele").find_dotfiles({})
 				end,
 				"Search in dotfiles",
 			},
 			t = {
 				function()
-					R("custom.tele").tags()
+					require("custom.tele").tags()
 				end,
 				"Browse workspace tags",
 			},
 			y = {
 				function()
-					R("custom.tele").extensions.neoclip.default()
+					require("custom.tele").extensions.neoclip.default()
 				end,
 				"Manage yank register",
 			},
 			b = {
 				function()
-					R("custom.tele").extensions.file_browser.file_browser()
+					require("custom.tele").extensions.file_browser.file_browser()
 				end,
 				"Telescope file browser",
 			},
@@ -233,27 +233,27 @@ local leadern = {
 			name = "+git",
 			g = {
 				function()
-					R("custom.terminals")["lazygit"]:toggle()
+					require("custom.terminals")["lazygit"]:toggle()
 				end,
 				"Open LazyGit",
 			},
 			y = {
 				function()
-					R("gitlinker").get_buf_range_url("n")
+					require("gitlinker").get_buf_range_url("n")
 				end,
 				"copy link to file in remote to clipboard",
 			},
 			o = {
 				function()
-					R("gitlinker").get_buf_range_url("n", {
-						action_callback = R("gitlinker.actions").open_in_browser,
+					require("gitlinker").get_buf_range_url("n", {
+						action_callback = require("gitlinker.actions").open_in_browser,
 					})
 				end,
 				"open current buffer's remote in browser",
 			},
 			Y = {
 				function()
-					R("gitlinker").get_repo_url()
+					require("gitlinker").get_repo_url()
 				end,
 				"copy homepage url to clipboard",
 			},
@@ -261,13 +261,13 @@ local leadern = {
 				name = "+worktree",
 				s = {
 					function()
-						R("custom.tele").extensions.git_worktree.git_worktrees()
+						require("custom.tele").extensions.git_worktree.git_worktrees()
 					end,
 					"Switch worktree branch",
 				},
 				c = {
 					function()
-						R("custom.tele").extensions.git_worktree.create_git_worktree()
+						require("custom.tele").extensions.git_worktree.create_git_worktree()
 					end,
 					"create worktree branch",
 				},
@@ -303,7 +303,7 @@ local leadern = {
 
 		p = {
 			name = "+present",
-			--p = { function() R('custom.tele').extensions.project.project{} end, "Browse projects" },
+			--p = { function() require('custom.tele').extensions.project.project{} end, "Browse projects" },
 			p = { "<cmd>PresentEnable", "Start presenting" },
 			s = { "<cmd>PresentDisable", "Stop presenting" },
 		},
@@ -382,19 +382,19 @@ local leaderv = {
 
 -- terminal mode mappings
 local leadert = {
-	[";;"] = { R("custom.utils").t("<C-\\><C-n>"), "Escape from terminal mode" },
+	[";;"] = { require("custom.utils").t("<C-\\><C-n>"), "Escape from terminal mode" },
 }
 
 local leaderi = {
 	["<c-o>"] = {
 		function()
-			R("luasnip").jump(1)
+			require("luasnip").jump(1)
 		end,
 		"jump to next snippet placeholder",
 	},
 	["<c-z>"] = {
 		function()
-			R("luasnip").jump(-1)
+			require("luasnip").jump(-1)
 		end,
 		"jump to previous snippet placeholder",
 	},
@@ -403,20 +403,20 @@ local leaderi = {
 local leaders = {
 	["<c-o>"] = {
 		function()
-			R("luasnip").jump(1)
+			require("luasnip").jump(1)
 		end,
 		"jump to next snippet placeholder",
 	},
 	["<c-z>"] = {
 		function()
-			R("luasnip").jump(-1)
+			require("luasnip").jump(-1)
 		end,
 		"jump to previous snippet placeholder",
 	},
 }
 
 -- register all settings
-local wk = R("which-key")
+local wk = require("which-key")
 wk.register(leadern, { mode = "n" })
 wk.register(leaderv, { mode = "v" })
 wk.register(leadert, { mode = "t" })

@@ -1,15 +1,3 @@
-local should_reload = true
-
-local reloader = function()
-	if should_reload then
-		RELOAD("plenary")
-		RELOAD("popup")
-		RELOAD("telescope")
-	end
-end
-
-reloader()
-
 local M = {}
 
 function M.live_grep()
@@ -46,8 +34,6 @@ end
 
 return setmetatable({}, {
 	__index = function(_, k)
-		reloader()
-
 		if M[k] then
 			return M[k]
 		elseif require("telescope.builtin")[k] then
