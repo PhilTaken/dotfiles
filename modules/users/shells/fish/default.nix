@@ -49,10 +49,9 @@ in {
           set -l cmd (commandline)
           if test -z "$cmd"
             commandline -r (magic_enter_cmd)
-            commandline -f execute
-          else
-            commandline -f execute
+            commandline -f suppress-autosuggestion
           end
+          commandline -f execute
         '';
         pri = ''
           set filter "$argv"
@@ -60,6 +59,23 @@ in {
           if string length -q -- $chosen_project
             pushd $GIT_WORKSPACE/$chosen_project
           end
+        '';
+        prepend_command = ''
+          set -l prepend $argv[1]
+          if test -z "$prepend"
+            echo "prepend_command needs one argument."
+            return 1
+          end
+
+          set -l cmd (commandline)
+          if test -z "$cmd"
+            commandline -r $history[1]
+          end
+
+          set -l old_cursor (commandline -C)
+          commandline -C 0
+          commandline -i "$prepend "
+          commandline -C (math $old_cursor + (echo $prepend | wc -c))
         '';
       };
 
@@ -83,6 +99,7 @@ in {
           bind \e 'commandline -f cancel'
           bind \r 'enter_ls'
           bind \n 'enter_ls'
+          bind \cs 'prepend_command sudo'
 
           if bind -M insert >/dev/null 2>&1
             bind -M insert \t 'commandline -f complete'
