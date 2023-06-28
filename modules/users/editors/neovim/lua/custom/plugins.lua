@@ -16,7 +16,7 @@ require("gitlinker").setup({
 	},
 })
 require("gitsigns").setup({})
---require("diffview").setup{}
+require("diffview").setup{}
 require("which-key").setup({})
 require("trouble").setup({})
 require("Navigator").setup({ auto_save = "all", disable_on_zoom = true })
