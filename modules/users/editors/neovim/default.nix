@@ -137,7 +137,6 @@ in {
           friendly-snippets
           galaxyline-nvim
           git-worktree-nvim
-          impatient-nvim
           indent-blankline-nvim
           lsp-colors-nvim
           lsp_lines-nvim

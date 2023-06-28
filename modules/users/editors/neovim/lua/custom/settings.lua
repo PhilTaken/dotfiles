@@ -118,3 +118,5 @@ vim.diagnostic.config({
 	signs = true,
 	severity_sort = true,
 })
+
+vim.loader.enable()

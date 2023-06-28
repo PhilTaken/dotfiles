@@ -1,7 +1,6 @@
 require("ufo").setup()
 require("hotpot").setup({})
 require("stabilize").setup()
-require("impatient").enable_profile()
 require("telescope").load_extension("git_worktree")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("zoxide")
@@ -9,7 +8,7 @@ require("alpha").setup(require("alpha.themes.startify").opts)
 require("colorizer").setup()
 require("neoscroll").setup({ hide_cursor = false })
 require("gitlinker").setup({
-	mappings = nil,
+	mappings = false,
 	callbacks = {
 		["gitea.pherzog.xyz"] = require("gitlinker.hosts").get_gitea_type_url,
 		["gitlab.flyingcircus.io"] = require("gitlinker.hosts").get_gitlab_type_url,
