@@ -110,7 +110,11 @@ in {
           name = "cbuild";
           help = "Build and compare a NixOS Configuration (local)";
           command = mkSystemScript ''
-            nixos-rebuild --use-remote-sudo --flake ".#$1" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+            if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
+              sudo darwin-rebuild --flake ".#$1" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+            else
+              nixos-rebuild --use-remote-sudo --flake ".#$1" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+            fi
             ${pkgs.nvd}/bin/nvd diff /run/current-system result
           '';
           category = "system";
@@ -120,7 +124,11 @@ in {
           name = "cswitch";
           help = "Switch to a NixOS Configuration (local)";
           command = mkSystemScript ''
-            nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+            if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
+              sudo darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+            else
+              nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+            fi
           '';
           category = "system";
         }
@@ -162,7 +170,11 @@ in {
           name = "goback";
           help = "revert to previous config";
           command = ''
-            sudo nixos-rebuild switch --rollback --flake .
+            if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
+              sudo darwin-rebuild switch --rollback --flake .
+            else
+              sudo nixos-rebuild switch --rollback --flake .
+            fi
           '';
           category = "system";
         }
