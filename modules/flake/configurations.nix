@@ -57,7 +57,7 @@
 in {
   flake = {
     darwinConfigurations = {
-      mydon = util.host.mkMac {
+      work-mac = util.host.mkMac {
         name = "work-mac";
         extraPackages = ps:
           with ps; [

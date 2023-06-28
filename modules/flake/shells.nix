@@ -2,10 +2,16 @@
   mkSystemScript = commands: ''
     if [[ -z "$@" || "$1" == "help" ]]; then
       eval configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.nixosConfigurations)) ++ [")"]))')
+      eval darwin_configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.darwinConfigurations)) ++ [")"]))')
 
       echo -e "Available configs:"
+      echo -e "- nixos:"
       for i in ''${configurations[@]}; do
-        echo -e "  - $i"
+        echo -e "  - .#$i"
+      done
+      echo -e "- darwin:"
+      for i in ''${darwin_configurations[@]}; do
+        echo -e "  - .#$i"
       done
     else
       ${commands}
