@@ -5,13 +5,13 @@ require("telescope").load_extension("git_worktree")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("zoxide")
 require("alpha").setup(require("alpha.themes.startify").opts)
-require("colorizer").setup()
+require("colorizer").setup({})
 require("neoscroll").setup({ hide_cursor = false })
 require("gitlinker").setup({
 	mappings = false,
 	callbacks = {
-		["gitea.pherzog.xyz"] = require("gitlinker.hosts").get_gitea_type_url,
-		["gitlab.flyingcircus.io"] = require("gitlinker.hosts").get_gitlab_type_url,
+		["gitea%..*"] = require("gitlinker.hosts").get_gitea_type_url,
+		["gitlab%..*"] = require("gitlinker.hosts").get_gitlab_type_url,
 	},
 })
 require("gitsigns").setup({})
