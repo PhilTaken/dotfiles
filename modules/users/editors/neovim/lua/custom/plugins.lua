@@ -22,6 +22,11 @@ require("trouble").setup({})
 require("Navigator").setup({ auto_save = "all", disable_on_zoom = true })
 require("nvim-tree").setup({})
 require("neoclip").setup({ enable_persistent_history = true })
+require('neogit').setup({
+    integrations = {
+        diffview = true,
+    }
+})
 require("cybu").setup({ display_time = 350 })
 --require("neorg").setup({
 	--load = {

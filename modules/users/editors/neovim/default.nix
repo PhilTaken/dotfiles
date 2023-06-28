@@ -144,6 +144,7 @@ in {
           lsp_signature-nvim
           lspkind-nvim
           luasnip
+          neogit
           neoscroll-nvim
           nerdcommenter
           nvim-colorizer-lua
