@@ -177,18 +177,13 @@ local leadern = {
 		t = {
 			name = "+trouble",
 			t = { "<cmd>TroubleToggle<cr>", "Toggle trouble" },
-			a = { "<cmd>TodoTrouble<cr>", "Open TODOs in trouble" },
+			a = { "<cmd>TodoTelescope<cr>", "Open TODOs in Telescope" },
 			w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
 			d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document Diagnostics" },
 			q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix List" },
 			l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
 			r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences" },
 		},
-		m = {
-			name = "+make",
-			-- TODO: make keybinds
-		},
-		-- TODO: maybe move to autocommands down below (like fennel, python)
 		l = {
 			name = "+lsp",
 			n = {
@@ -233,9 +228,9 @@ local leadern = {
 			name = "+git",
 			g = {
 				function()
-					require("custom.terminals")["lazygit"]:toggle()
+                    require("neogit").open()
 				end,
-				"Open LazyGit",
+				"Open NeoGit",
 			},
 			y = {
 				function()
@@ -309,12 +304,6 @@ local leadern = {
 		},
 		s = {
 			name = "+shells",
-			g = {
-				function()
-					terms["lazygit"]:toggle()
-				end,
-				"Toggle lazygit interface",
-			}, -- git
 			t = {
 				function()
 					terms["bottom"]:toggle()
@@ -343,10 +332,10 @@ local leadern = {
 
 			l = {
 				function()
-					toggleterm.send_lines_to_terminal("single_line", true, terms["vterm"].id)
+					--toggleterm.send_lines_to_terminal("single_line", true, terms["vterm"].id)
 				end,
 				"Send current line",
-			}, -- send Line
+			},
 		},
 	},
 }
