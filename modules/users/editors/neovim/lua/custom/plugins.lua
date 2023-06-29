@@ -24,7 +24,8 @@ require("neoclip").setup({ enable_persistent_history = true })
 require('neogit').setup({
     integrations = {
         diffview = true,
-    }
+    },
+    disable_context_highlighting = true,
 })
 require("cybu").setup({ display_time = 350 })
 --require("neorg").setup({
