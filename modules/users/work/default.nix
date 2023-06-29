@@ -35,6 +35,7 @@ in {
       termscp
 
       git
+      copier
     ];
 
     programs = {
