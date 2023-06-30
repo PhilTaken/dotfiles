@@ -146,6 +146,7 @@ in {
           neogit
           neoscroll-nvim
           nerdcommenter
+          nvim-bqf
           nvim-colorizer-lua
           nvim-lspconfig
           nvim-web-devicons
