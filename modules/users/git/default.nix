@@ -134,6 +134,10 @@ in {
         push.default = "tracking";
         status.submoduleSummary = true;
         init.defaultBranch = "main";
+        diff.gpg = {
+          textconv = "gpg -q --no-tty --decrypt";
+          binary = true;
+        };
       };
     };
   };
