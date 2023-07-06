@@ -261,5 +261,10 @@ in {
       source = ./lua;
       recursive = true;
     };
+
+    xdg.configFile."nvim/syntax/" = {
+      source = ./syntax;
+      recursive = true;
+    };
   };
 }

@@ -141,3 +141,20 @@ vim.cmd([[let g:float_preview#docked = 1]])
 vim.cmd([[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]])
 
 vim.cmd([[let g:pandoc#spell#enabled = 0]])
+
+-- Adapt fzf's delimiter in nvim-bqf
+require('bqf').setup({
+    auto_resize_height = true,
+    preview = {
+        win_height = 12,
+        win_vheight = 12,
+        delay_syntax = 80,
+        border = {'┏', '━', '┓', '┃', '┛', '━', '┗', '┃'},
+        show_title = false,
+    },
+    filter = {
+        fzf = {
+            extra_opts = {'--bind', 'ctrl-o:toggle-all', '--delimiter', '│', '--prompt', '> ' }
+        }
+    }
+})
