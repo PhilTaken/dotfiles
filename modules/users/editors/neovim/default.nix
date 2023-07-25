@@ -75,9 +75,6 @@ in {
       extraPython3Packages = ps: with ps; [pynvim];
       extraPackages = with pkgs;
         [
-          gcc11
-          gcc-unwrapped
-
           tree-sitter
 
           git # version control
@@ -93,11 +90,11 @@ in {
           sqlite # for sqlite.lua
           inetutils # remote editing
 
-          sumneko-lua-language-server # lua
+          #sumneko-lua-language-server # lua
 
           nil # nix
         ]
-        ++ (optionals cfg.langs.python (with pkgs.python39Packages; [python-lsp-server hy]))
+        ++ (optionals cfg.langs.python (with pkgs.python3Packages; [python-lsp-server hy]))
         ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server])
         ++ (optionals cfg.langs.cpp [pkgs.ccls])
         ++ (optionals cfg.langs.rust [pkgs.rust-analyzer])
