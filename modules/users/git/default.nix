@@ -58,6 +58,10 @@ in {
       };
     };
 
+    home.sessionVariables = {
+      GIT_WORKSPACE = "$HOME/Documents/workspace";
+    };
+
     home.shellAliases = {
       gf = "${pkgs.git}/bin/git fetch -ap";
       ga = "${pkgs.git}/bin/git add";
@@ -103,6 +107,19 @@ in {
         key = cfg.signKey;
         signByDefault = true;
       };
+
+      includes = [
+        {
+          condition = "gitdir:${config.home.sessionVariables.GIT_WORKSPACE}";
+          contents = {
+            user = {
+              email = "ph@flyingcircus.io";
+              name = "Philipp Herzog";
+              signingKey = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
+            };
+          };
+        }
+      ];
 
       aliases = let
         git = "${pkgs.git}/bin/git";

@@ -19,10 +19,6 @@ in {
   config = mkIf cfg.enable {
     stylix.targets.fish.enable = false;
 
-    home.sessionVariables = {
-      GIT_WORKSPACE = "$HOME/Documents/workspace";
-    };
-
     programs.fish = {
       enable = true;
 
