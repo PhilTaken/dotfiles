@@ -2,3 +2,4 @@
 result
 tags
 .stfolder
+.pre-commit-config.yaml
