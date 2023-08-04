@@ -26,7 +26,7 @@ function M.buffers()
 	local theme = {
 		show_all_buffers = true,
 		path_display = {
-			"shorten",
+			"smart",
 			"absolute",
 		},
 	}
