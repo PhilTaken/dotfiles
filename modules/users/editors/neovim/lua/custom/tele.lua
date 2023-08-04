@@ -1,8 +1,16 @@
 local M = {}
 
+function M.find_files()
+	local theme = {
+		path_display = { "smart", "absolute" },
+		fzf_separator = "|>",
+	}
+	require("telescope.builtin").find_files(theme)
+end
+
 function M.live_grep()
 	local theme = {
-		path_display = { "shorten", "absolute" },
+		path_display = { "smart", "absolute" },
 		fzf_separator = "|>",
 	}
 	require("telescope.builtin").live_grep(theme)
@@ -23,13 +31,6 @@ function M.buffers()
 		},
 	}
 	require("telescope.builtin").buffers(theme)
-end
-
-function M.find_dotfiles()
-	require("telescope.builtin").git_files({
-		path_display = { "shorten" },
-		cwd = "~/Documents/gits/dotfiles-nix/",
-	})
 end
 
 return setmetatable({}, {
