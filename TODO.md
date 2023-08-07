@@ -1,5 +1,7 @@
 # current TODOs:
 
+- Telescope git (merge conflicts / modified + new files)
+
 - backup postgres database of nextcloud instance
 - set up time machine backup on delta
 
