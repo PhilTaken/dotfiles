@@ -36,6 +36,13 @@ in {
 
       git
       copier
+
+      (pkgs.writeShellScriptBin "fix-ssh-keys" ''
+        env=$(ls environments/ | sk)
+        tld=$(rg "host_domain" environments/$env/ -IN | cut -d " " -f 3)
+
+        ${pkgs.ripgrep}/bin/rg "\[host:" environments/$env/ -IN | cut -d ":" -f 2 | cut -d "]" -f 1 | xargs -I host ssh host.$tld exit
+      '')
     ];
 
     programs = {
