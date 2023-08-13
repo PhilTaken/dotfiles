@@ -72,10 +72,10 @@ in {
           universal-ctags # ctags for anything
           inetutils # remote editing
 
-          sumneko-lua-language-server # lua
+          #sumneko-lua-language-server # lua
           nil # nix
         ]
-        ++ (optionals cfg.langs.python (with pkgs.python39Packages; [python-lsp-server hy]))
+        ++ (optionals cfg.langs.python (with pkgs.python3Packages; [python-lsp-server hy]))
         ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server])
         ++ (optionals cfg.langs.cpp [pkgs.ccls])
         ++ (optionals cfg.langs.rust [pkgs.rust-analyzer])
@@ -83,6 +83,7 @@ in {
         ++ (optionals cfg.langs.extra (with pkgs; [
           fortls
           texlab
+          racket-langserver
           #erlang-ls # erlang
           #elixir_ls # elixir
           #clojure-lsp # clojure
@@ -100,6 +101,6 @@ in {
       '';
     };
 
-    services.emacs.enable = true;
+    services.emacs.enable = lib.hasInfix "linux" pkgs.system;
   };
 }

@@ -11,7 +11,7 @@
   mkHMUsers = users: lib.listToAttrs (map (user: lib.nameValuePair user hmUsers.${user}) users);
 
   hmUsers = let
-    defaultConfig = {
+    mkConfig = lib.recursiveUpdate {
       terminals = {
         defaultShell = "fish";
         multiplexer = "zellij";
@@ -23,7 +23,6 @@
       music.enable = true;
       music.enableMpris = true;
     };
-    mkConfig = lib.recursiveUpdate defaultConfig;
   in {
     nixos = {
       userConfig = mkConfig {
@@ -95,6 +94,8 @@ in {
             ts = false;
             python = true;
           };
+
+          editors.emacs.enable = true;
 
           terminals = {
             multiplexer = "zellij";
