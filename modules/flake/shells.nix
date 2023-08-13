@@ -1,4 +1,8 @@
-{inputs, ...}: let
+{
+  self,
+  inputs,
+  ...
+}: let
   mkSystemScript = commands: ''
     if [[ -z "$@" || "$1" == "help" ]]; then
       eval configurations=$(nix eval --raw --impure --expr '(builtins.concatStringsSep " " (["("] ++ (builtins.map builtins.toJSON (builtins.attrNames (builtins.getFlake "'$PWD'").outputs.nixosConfigurations)) ++ [")"]))')
@@ -31,6 +35,7 @@ in {
         inputs.devshell.overlays.default
         inputs.sops-nix-src.overlays.default
         inputs.deploy-rs.overlay
+        self.overlays.default
       ];
     };
     inherit (pkgs) lib;
@@ -48,6 +53,11 @@ in {
 
       jq
       cachix
+
+      nix-prefetch-git
+      npins
+
+      racket-langserver
     ];
   in {
     devShells.legacy = pkgs.mkShell {

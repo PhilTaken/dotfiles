@@ -167,13 +167,20 @@
     };
   };
 
-  outputs = {flake-parts, ...} @ inputs:
+  outputs = {flake-parts, ...} @ inputs: let
+    custom_pkgs_overlay = import ./custom_pkgs;
+  in
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
         "aarch64-darwin"
       ];
+
+      flake.overlays = {
+        inherit custom_pkgs_overlay;
+        default = custom_pkgs_overlay;
+      };
 
       imports = [
         ./modules/flake/configurations.nix
@@ -185,7 +192,11 @@
         inputs.pre-commit-hooks-nix.flakeModule
       ];
 
-      perSystem = {config, ...}: {
+      perSystem = {
+        config,
+        pkgs,
+        ...
+      }: {
         pre-commit = {
           settings.hooks = {
             alejandra.enable = true;
@@ -201,6 +212,8 @@
         };
 
         formatter = config.treefmt.build.wrapper;
+
+        packages = custom_pkgs_overlay pkgs pkgs;
       };
     };
 }

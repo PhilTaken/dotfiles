@@ -30,8 +30,10 @@
     inputs.vim-extra-plugins.overlays.default
     inputs.xdg-desktop-hyprland.overlays.default
 
-    (_final: prev:
-      {
+    self.overlays.default
+
+    (
+      _final: prev: {
         makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});
 
         inherit (inputs.eww-git.packages.${prev.system}) eww eww-wayland;
@@ -72,11 +74,7 @@
           };
         });
       }
-      // (prev.lib.mapAttrs
-        (n: _: prev.callPackage (../. + "/custom_pkgs/${n}") {inherit inputs;})
-        (prev.lib.filterAttrs
-          (_: v: v == "directory")
-          (builtins.readDir ../custom_pkgs))))
+    )
   ];
 in rec {
   pkgsFor = system:
