@@ -126,6 +126,7 @@ in {
         sort = "${pkgs.coreutils}/bin/sort";
         uniq = "${pkgs.coreutils}/bin/uniq";
       in {
+        mergetool = "!nvim -c DiffviewOpen";
         tree =
           "log --graph --pretty=format:'%Cred%h%Creset"
           + " —%Cblue%d%Creset %s %Cgreen(%cr)%Creset'"

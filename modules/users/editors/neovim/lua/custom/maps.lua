@@ -267,6 +267,10 @@ local leadern = {
 					"create worktree branch",
 				},
 			},
+            b = {
+                "<cmd>Git blame<cr>",
+                "Open git blame",
+            },
 		},
 		d = {
 			name = "+diffview",
@@ -298,7 +302,6 @@ local leadern = {
 
 		p = {
 			name = "+present",
-			--p = { function() require('custom.tele').extensions.project.project{} end, "Browse projects" },
 			p = { "<cmd>PresentEnable", "Start presenting" },
 			s = { "<cmd>PresentDisable", "Stop presenting" },
 		},
