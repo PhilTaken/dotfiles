@@ -58,9 +58,6 @@ in {
     programs.doom-emacs = let
       extraBins = with pkgs;
         [
-          gcc11
-          gcc-unwrapped
-
           tree-sitter
 
           git # version control
