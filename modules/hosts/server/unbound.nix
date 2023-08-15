@@ -76,6 +76,7 @@ in {
             "10.100.0.1/24 allow" # yggdrasil
             "10.200.0.1/24 allow" # milkyway
             "192.168.0.1/24 allow" # local net
+            "192.168.178.1/24 allow" # local net
           ];
 
           interface = [
