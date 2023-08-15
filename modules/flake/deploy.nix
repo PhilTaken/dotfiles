@@ -12,6 +12,7 @@ in {
         hostname = "148.251.102.93";
         #hostname = "10.200.0.1";
         sshUser = "root";
+        remoteBuild = true;
         profiles.system.path = (activateFor "x86_64-linux") self.nixosConfigurations.alpha;
       };
 
@@ -19,7 +20,7 @@ in {
         #hostname = "10.200.0.5";
         hostname = "192.168.178.26";
         sshUser = "root";
-        #remoteBuild = true;
+        remoteBuild = true;
         profiles.system.path = (activateFor "x86_64-linux") self.nixosConfigurations.delta;
       };
 

@@ -91,7 +91,7 @@ in {
           }
         ];
 
-        vendorHash = "sha256-dN53GyT5gZTrobkuwtd0Tr0ZSR/jS1kAy26Hmk04y08=";
+        vendorHash = "sha256-hHoFdo5k3sdYHTstaF657YSzumBiYKqds5ThRdd/TmA=";
       };
 
       globalConfig = ''
