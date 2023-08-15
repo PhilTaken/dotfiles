@@ -158,14 +158,14 @@ in {
 
             services.nextcloud = {
               enable = true;
-              package = pkgs.nextcloud26;
+              package = pkgs.nextcloud27;
 
               inherit home datadir hostName;
               https = true;
 
               extraApps = {
                 inherit
-                  (pkgs.nextcloud26Packages.apps)
+                  (pkgs.nextcloud27Packages.apps)
                   calendar
                   news
                   bookmarks
