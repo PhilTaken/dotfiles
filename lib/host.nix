@@ -114,7 +114,7 @@ in rec {
             registry.nixpkgs.flake = nixpkgs;
             settings.trusted-users = [username];
             extraOptions = ''
-              auto-optimise-store = true
+              auto-optimise-store = false
             '';
           };
 
