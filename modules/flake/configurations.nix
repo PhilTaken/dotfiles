@@ -52,6 +52,33 @@
         des.gnome.enable = true;
       };
     };
+
+    philippherzog = {
+      work.enable = true;
+
+      editors.neovim.langs = {
+        haskell = false;
+        cpp = false;
+        ts = false;
+        python = true;
+      };
+
+      editors.emacs.enable = true;
+
+      terminals = {
+        multiplexer = "zellij";
+        defaultShell = "fish";
+      };
+
+      gpg.enable = true;
+
+      git = {
+        enable = true;
+        userName = "Philipp Herzog";
+        userEmail = "ph@flyingcircus.io";
+        signKey = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
+      };
+    };
   };
 in {
   flake = {
@@ -79,36 +106,7 @@ in {
             python39Packages.virtualenv
           ];
 
-        userConfig = {
-          browsers = {
-            # not compatible, needs to install seperately on mac :/
-            chromium.enable = false;
-            firefox.enable = false;
-          };
-
-          work.enable = true;
-
-          editors.neovim.langs = {
-            haskell = false;
-            cpp = false;
-            ts = false;
-            python = true;
-          };
-
-          editors.emacs.enable = true;
-
-          terminals = {
-            multiplexer = "zellij";
-            defaultShell = "fish";
-          };
-
-          git = {
-            enable = true;
-            userName = "Philipp Herzog";
-            userEmail = "ph@flyingcircus.io";
-            signKey = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
-          };
-        };
+        userConfig = hmUsers.philippherzog;
       };
     };
 

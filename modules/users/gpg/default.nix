@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -35,7 +36,7 @@ in {
       ];
     };
 
-    services.gpg-agent = mkIf (cfg.sshKeys != []) {
+    services.gpg-agent = mkIf (cfg.sshKeys != [] && lib.hasInfix "linux" pkgs.system) {
       enable = true;
       enableSshSupport = true;
       inherit (cfg) sshKeys;

@@ -14,7 +14,7 @@ in {
       enable = mkOption {
         description = "enable chromium";
         type = types.bool;
-        default = true;
+        default = !lib.hasInfix "darwin" pkgs.system;
       };
     };
 
@@ -30,7 +30,7 @@ in {
       enable = mkOption {
         description = "enable firefox";
         type = types.bool;
-        default = true;
+        default = !lib.hasInfix "darwin" pkgs.system;
       };
 
       wayland = mkOption {
