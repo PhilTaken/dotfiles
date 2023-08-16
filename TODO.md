@@ -1,5 +1,10 @@
 # current TODOs:
 
+- alpha: dont use nix store cache from delta
+
+- package racket-langserver
+    - https://github.com/jeapostrophe/racket-langserver/blob/master/info.rkt
+
 - Telescope git (merge conflicts / modified + new files)
 
 - backup postgres database of nextcloud instance
@@ -11,6 +16,7 @@
 - slim down flake
     - stop abusing inputs (500+ MB just inputs)
     - try to prevent ifd modules
+    - npins: https://github.com/andir/npins
 
 ## general
 
@@ -94,3 +100,4 @@
 
 - arm module (get rust running + spinning)
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
+
