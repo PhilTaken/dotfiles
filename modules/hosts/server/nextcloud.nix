@@ -167,7 +167,8 @@ in {
                 inherit
                   (pkgs.nextcloud27Packages.apps)
                   calendar
-                  news
+                  #news -> TODO wait for news
+                  
                   bookmarks
                   contacts
                   deck
@@ -183,6 +184,11 @@ in {
 
               caching.redis = true;
               caching.apcu = false;
+
+              configureRedis = true;
+              notify_push = {
+                enable = true;
+              };
 
               config = {
                 adminuser = "nc-admin";
