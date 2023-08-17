@@ -140,7 +140,7 @@ in {
           lsp_signature-nvim
           lspkind-nvim
           luasnip
-          neogit
+          #neogit
           neoscroll-nvim
           nerdcommenter
           nvim-bqf
