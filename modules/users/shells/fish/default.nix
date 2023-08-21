@@ -118,6 +118,7 @@ in {
         '')
         + (lib.optionalString (config.phil.gpg.enable && lib.hasInfix "darwin" pkgs.system) ''
           set -Ux GPG_TTY (tty)
+          set -e SSH_AUTH_SOCK
           set -Ux SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
           gpgconf --launch gpg-agent
         '');
