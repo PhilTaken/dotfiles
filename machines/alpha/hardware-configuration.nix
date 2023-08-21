@@ -17,4 +17,7 @@
   };
 
   swapDevices = [{device = "/dev/disk/by-uuid/a91429e3-6db4-4dcf-a948-5c6dd07764eb";}];
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 0;
+  };
 }
