@@ -19,6 +19,8 @@ in {
   config = mkIf cfg.enable {
     stylix.targets.fish.enable = false;
 
+    home.packages = [pkgs.atuin];
+
     programs.fish = {
       enable = true;
 
@@ -85,11 +87,11 @@ in {
       interactiveShellInit =
         ''
           if test (uname) = Darwin
-              fish_add_path --prepend --global /nix/var/nix/profiles/default/bin /run/current-system/sw/bin "/etc/profiles/per-user/$USER/bin"
+            fish_add_path --prepend --global /nix/var/nix/profiles/default/bin /run/current-system/sw/bin "/etc/profiles/per-user/$USER/bin"
           end
 
           set -U fish_greeting
-          set -gx ATUIN_NOBIND "true"
+          atuin init fish --disable-up-arrow | source
 
           bind \t 'commandline -f complete'
           bind \e 'commandline -f cancel'
