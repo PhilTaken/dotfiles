@@ -23,7 +23,8 @@ in {
         keepassxc
         signal-desktop
 
-        libreoffice
+        #liberation fonts broken
+        #libreoffice
         youtube-dl
         tdesktop
         anki

@@ -35,7 +35,8 @@ in {
     xdg.configFile."spotifyd/credentials".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/spotify-password";
 
     services.spotifyd = {
-      enable = true;
+      # build breaks on arm currently
+      enable = lib.hasInfix pkgs.system "x86";
       package = pkgs.spotifyd.override {
         withKeyring = true;
         withPulseAudio = true;
