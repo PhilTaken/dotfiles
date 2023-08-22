@@ -15,7 +15,7 @@ require("gitlinker").setup({
 	},
 })
 require("gitsigns").setup({})
-require("diffview").setup{}
+require("diffview").setup({})
 require("which-key").setup({})
 require("trouble").setup({})
 require("Navigator").setup({ auto_save = "all", disable_on_zoom = true })
@@ -29,16 +29,16 @@ require("neoclip").setup({ enable_persistent_history = true })
 -- })
 require("cybu").setup({ display_time = 350 })
 --require("neorg").setup({
-	--load = {
-		--["core.defaults"] = {},
-		--["core.norg.concealer"] = {},
-		--["core.norg.completion"] = {
-			--config = {
-				--engine = "nvim-cmp",
-			--},
-		--},
-		--["core.integrations.telescope"] = {},
-	--},
+--load = {
+--["core.defaults"] = {},
+--["core.norg.concealer"] = {},
+--["core.norg.completion"] = {
+--config = {
+--engine = "nvim-cmp",
+--},
+--},
+--["core.integrations.telescope"] = {},
+--},
 --})
 
 require("present").setup({
@@ -143,18 +143,18 @@ vim.cmd([[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]])
 vim.cmd([[let g:pandoc#spell#enabled = 0]])
 
 -- Adapt fzf's delimiter in nvim-bqf
-require('bqf').setup({
-    auto_resize_height = true,
-    preview = {
-        win_height = 12,
-        win_vheight = 12,
-        delay_syntax = 80,
-        border = {'┏', '━', '┓', '┃', '┛', '━', '┗', '┃'},
-        show_title = false,
-    },
-    filter = {
-        fzf = {
-            extra_opts = {'--bind', 'ctrl-o:toggle-all', '--delimiter', '│', '--prompt', '> ' }
-        }
-    }
+require("bqf").setup({
+	auto_resize_height = true,
+	preview = {
+		win_height = 12,
+		win_vheight = 12,
+		delay_syntax = 80,
+		border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
+		show_title = false,
+	},
+	filter = {
+		fzf = {
+			extra_opts = { "--bind", "ctrl-o:toggle-all", "--delimiter", "│", "--prompt", "> " },
+		},
+	},
 })

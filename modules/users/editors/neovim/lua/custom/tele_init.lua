@@ -1,40 +1,40 @@
 local actions = require("telescope.actions")
 
 local extraglobs = {
-    "--glob=!**/.git/*",
-    "--glob=!**/node_modules/*",
-    "--glob=!**/.next/*",
-    "--glob=!**/.appenv/*",
-    "--glob=!**/.batou/*",
-    "--glob=!**/.jpm/*",
-    "--glob=!**/.direnv/*",
-    "--glob=!**/target/*",
+	"--glob=!**/.git/*",
+	"--glob=!**/node_modules/*",
+	"--glob=!**/.next/*",
+	"--glob=!**/.appenv/*",
+	"--glob=!**/.batou/*",
+	"--glob=!**/.jpm/*",
+	"--glob=!**/.direnv/*",
+	"--glob=!**/target/*",
 }
 
 local ff_command = {
-    "rg",
-    "--files",
-    "--hidden",
-    "--ignore",
-    "-u",
+	"rg",
+	"--files",
+	"--hidden",
+	"--ignore",
+	"-u",
 }
 
 local vg_command = {
-    "rg",
-    "--color=never",
-    "--no-heading",
-    "--with-filename",
-    "--line-number",
-    "--column",
-    "--smart-case",
-    "--hidden",
-    "--ignore",
-    "-u",
+	"rg",
+	"--color=never",
+	"--no-heading",
+	"--with-filename",
+	"--line-number",
+	"--column",
+	"--smart-case",
+	"--hidden",
+	"--ignore",
+	"-u",
 }
 
 for _, glob in ipairs(extraglobs) do
-    table.insert(ff_command, glob)
-    table.insert(vg_command, glob)
+	table.insert(ff_command, glob)
+	table.insert(vg_command, glob)
 end
 
 require("telescope").setup({

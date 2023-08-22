@@ -228,7 +228,7 @@ local leadern = {
 			name = "+git",
 			g = {
 				function()
-                    require("neogit").open()
+					require("neogit").open()
 				end,
 				"Open NeoGit",
 			},
@@ -267,10 +267,10 @@ local leadern = {
 					"create worktree branch",
 				},
 			},
-            b = {
-                "<cmd>Git blame<cr>",
-                "Open git blame",
-            },
+			b = {
+				"<cmd>Git blame<cr>",
+				"Open git blame",
+			},
 		},
 		d = {
 			name = "+diffview",
