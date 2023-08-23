@@ -213,7 +213,17 @@
 
         formatter = config.treefmt.build.wrapper;
 
-        packages = custom_pkgs_overlay pkgs pkgs;
+        # filter packages by compatibility
+        packages = let
+          inherit (pkgs) lib system;
+          l = builtins // lib;
+        in
+          pkgs.lib.filterAttrs
+          (_: package:
+            if l.hasAttrByPath ["meta" "platforms"] package
+            then l.elem system package.meta.platforms
+            else true)
+          (custom_pkgs_overlay pkgs pkgs);
       };
     };
 }
