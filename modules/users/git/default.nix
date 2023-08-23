@@ -89,17 +89,20 @@ in {
         ".envrc"
       ];
       lfs.enable = true;
+
       difftastic = {
-        enable = true;
+        #enable = true;
         background = "dark";
         display = "inline";
       };
-      #delta = {
-      #enable = true;
-      #options = {
-      #line-numbers = true;
-      #};
-      #};
+      delta = {
+        enable = true;
+        options = {
+          line-numbers = true;
+          side-by-side = true;
+          true-color = "always";
+        };
+      };
 
       inherit (cfg) userEmail;
       inherit (cfg) userName;
@@ -156,6 +159,7 @@ in {
           textconv = "gpg -q --no-tty --decrypt";
           binary = true;
         };
+        merge.conflictstyle = "diff3";
       };
     };
   };
