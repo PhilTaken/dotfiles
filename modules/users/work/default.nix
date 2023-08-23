@@ -38,7 +38,14 @@ in {
       copier
 
       (pkgs.writeShellScriptBin "essh" ''
-        cd $(git rev-parse --show-toplevel) || echo "not in a git repo: $PWD"
+        git_basedir=$(git rev-parse --show-toplevel 2>/dev/null)
+
+        if [ $? != 0 ]; then
+          echo "not in a deployment/git repo: $PWD"
+          exit 1
+        fi
+
+        cd $git_basedir
         test -d "deployment/" && cd "deployment/"
 
         tld=$(rg "host_domain" environments/ -IN | cut -d " " -f 3 | uniq)
