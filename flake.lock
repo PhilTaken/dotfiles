@@ -2463,13 +2463,13 @@
     "tmm-src": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-LC8ktmqbDJ//dj7K4iobchgVOqaWcrGl9Hns31ISP1M=",
+        "narHash": "sha256-IuoV4bIhSFA5fkwsYAZfUzKwuAhEiLB9hAbhwXuSAOg=",
         "type": "tarball",
-        "url": "https://release.tinymediamanager.org/v4/dist/tmm_4.3.12_linux-amd64.tar.gz"
+        "url": "https://release.tinymediamanager.org/v4/dist/tmm_4.3.13_linux-amd64.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://release.tinymediamanager.org/v4/dist/tmm_4.3.12_linux-amd64.tar.gz"
+        "url": "https://release.tinymediamanager.org/v4/dist/tmm_4.3.13_linux-amd64.tar.gz"
       }
     },
     "tmux-nvr-src": {
