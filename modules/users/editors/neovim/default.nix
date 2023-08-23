@@ -93,6 +93,7 @@ in {
           #sumneko-lua-language-server # lua
 
           nil # nix
+          nixd # nix
         ]
         ++ (optionals cfg.langs.python (with pkgs.python3Packages; [python-lsp-server hy]))
         ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server])
@@ -102,9 +103,9 @@ in {
         ++ (optionals cfg.langs.extra (with pkgs; [
           fortls
           texlab
+          nimlsp
           #erlang-ls # erlang
           #elixir_ls # elixir
-          #clojure-lsp # clojure
         ]));
 
       extraConfig = let
