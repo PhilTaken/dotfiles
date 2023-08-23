@@ -65,6 +65,16 @@ in {
       '')
 
       (pkgs.writeShellScriptBin "envssh" ''
+        git_basedir=$(git rev-parse --show-toplevel 2>/dev/null)
+
+        if [ $? != 0 ]; then
+          echo "not in a deployment/git repo: $PWD"
+          exit 1
+        fi
+
+        cd $git_basedir
+
+        test -d "deployment/" && cd "deployment/"
         env=$(ls environments/ | sk)
         tld=$(rg "host_domain" environments/$env/ -IN | cut -d " " -f 3)
 
@@ -72,7 +82,7 @@ in {
           ${pkgs.ripgrep}/bin/rg "\[host:" environments/$env/ -IN |\
             cut -d ":" -f 2 |\
             cut -d "]" -f 1 |\
-            xargs -I host ssh host.$tld $@
+            xargs -I % sh -c "echo \"connecting to %.$tld:\"; ssh %.$tld $@ | sed 's/^/%> /'"
         fi
       '')
 
