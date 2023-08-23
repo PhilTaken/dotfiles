@@ -38,6 +38,9 @@ in {
       copier
 
       (pkgs.writeShellScriptBin "essh" ''
+        cd $(git rev-parse --show-toplevel) || echo "not in a git repo: $PWD"
+        test -d "deployment/" && cd "deployment/"
+
         tld=$(rg "host_domain" environments/ -IN | cut -d " " -f 3 | uniq)
         if [ "$tld" != "fcio.net" ]; then
           echo "warning: tld != fcio.net: $tld"
