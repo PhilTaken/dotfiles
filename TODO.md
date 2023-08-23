@@ -1,5 +1,7 @@
 # current TODOs:
 
+- git fuzzy
+
 - alpha: dont use nix store cache from delta
 
 - package racket-langserver
