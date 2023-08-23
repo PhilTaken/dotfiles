@@ -37,12 +37,42 @@ in {
       git
       copier
 
-      (pkgs.writeShellScriptBin "fix-ssh-keys" ''
+      (pkgs.writeShellScriptBin "essh" ''
+        tld=$(rg "host_domain" environments/ -IN | cut -d " " -f 3 | uniq)
+        if [ "$tld" != "fcio.net" ]; then
+          echo "warning: tld != fcio.net: $tld"
+        fi
+
+        host=$(${pkgs.ripgrep}/bin/rg "\[host:" environments/ -IN |\
+          cut -d ":" -f 2 |\
+          cut -d "]" -f 1 |\
+          sk)
+
+        if [ ! -z "$host" ]; then
+          echo "connecting to $host.$tld ..."
+          ssh $host.$tld $@
+        fi
+      '')
+
+      (pkgs.writeShellScriptBin "envssh" ''
         env=$(ls environments/ | sk)
         tld=$(rg "host_domain" environments/$env/ -IN | cut -d " " -f 3)
 
-        ${pkgs.ripgrep}/bin/rg "\[host:" environments/$env/ -IN | cut -d ":" -f 2 | cut -d "]" -f 1 | xargs -I host ssh host.$tld exit
+        if [ ! -z "$env" ]; then
+          ${pkgs.ripgrep}/bin/rg "\[host:" environments/$env/ -IN |\
+            cut -d ":" -f 2 |\
+            cut -d "]" -f 1 |\
+            xargs -I host ssh host.$tld $@
+        fi
       '')
+
+      (pkgs.writeShellScriptBin "fix-ssh-keys" ''
+        envssh exit
+      '')
+
+      age
+
+      # _1password
     ];
 
     programs = {
