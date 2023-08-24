@@ -67,10 +67,10 @@ in {
       config = {
         default_config = {};
         http = {
+          use_x_forwarded_for = true;
+          trusted_proxies = map (endpoint: net.networks.yggdrasil.${endpoint}) (builtins.attrNames net.networks.endpoints);
           server_port = cfg.port;
-          server_host = [
-            "0.0.0.0"
-          ];
+          server_host = ["0.0.0.0"];
         };
 
         lovelace.mode = "yaml";
