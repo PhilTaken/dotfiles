@@ -1,9 +1,44 @@
-require("ufo").setup()
-require("hotpot").setup({})
-require("stabilize").setup()
+-- colorscheme ^-^
+local catppuccin = require("catppuccin")
+catppuccin.setup({
+	transparent_background = true,
+	term_colors = true,
+	compile = {
+		enable = true,
+	},
+	dim_inactive = {
+		enabled = true,
+		percentage = 0.05,
+	},
+	--colorscheme = "dark_catppuccino",
+	integrations = {
+		--lsp_saga = true,
+		markdown = true,
+		gitsigns = true,
+		telescope = true,
+		which_key = true,
+		nvimtree = true,
+		cmp = true,
+		treesitter = true,
+
+		indent_blankline = {
+			enabled = true,
+		},
+		native_lsp = {
+			enabled = true,
+		},
+	},
+})
+vim.g.catppuccin_flavour = "mocha"
+vim.cmd([[colorscheme catppuccin]])
+
 require("telescope").load_extension("git_worktree")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("zoxide")
+
+require("ufo").setup()
+require("stabilize").setup()
+
 require("alpha").setup(require("alpha.themes.startify").opts)
 require("colorizer").setup({})
 require("neoscroll").setup({ hide_cursor = false })
@@ -21,12 +56,6 @@ require("trouble").setup({})
 require("Navigator").setup({ auto_save = "all", disable_on_zoom = true })
 require("nvim-tree").setup({})
 require("neoclip").setup({ enable_persistent_history = true })
--- require('neogit').setup({
---     integrations = {
---         diffview = true,
---     },
---     disable_context_highlighting = true,
--- })
 require("cybu").setup({ display_time = 350 })
 --require("neorg").setup({
 --load = {
@@ -87,40 +116,6 @@ vim.diagnostic.config({
 
 require("lspkind").init()
 
--- colorscheme ^-^
-local catppuccin = require("catppuccin")
-catppuccin.setup({
-	transparent_background = true,
-	term_colors = true,
-	compile = {
-		enable = true,
-	},
-	dim_inactive = {
-		enabled = true,
-		percentage = 0.05,
-	},
-	--colorscheme = "dark_catppuccino",
-	integrations = {
-		--lsp_saga = true,
-		markdown = true,
-		gitsigns = true,
-		telescope = true,
-		which_key = true,
-		nvimtree = true,
-		cmp = true,
-		treesitter = true,
-
-		indent_blankline = {
-			enabled = true,
-		},
-		native_lsp = {
-			enabled = true,
-		},
-	},
-})
-vim.g.catppuccin_flavour = "mocha"
-vim.cmd([[colorscheme catppuccin]])
-
 vim.g.rooter_targets = "/,*"
 vim.g.rooter_patterns = { ".git/" }
 vim.g.rooter_resolve_links = 1
@@ -157,4 +152,10 @@ require("bqf").setup({
 			extra_opts = { "--bind", "ctrl-o:toggle-all", "--delimiter", "│", "--prompt", "> " },
 		},
 	},
+})
+
+require('neogit').setup({
+    integrations = {
+        diffview = true,
+    },
 })

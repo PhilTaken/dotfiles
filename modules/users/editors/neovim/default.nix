@@ -85,7 +85,7 @@ in {
           bottom # custom floaterm
           lazygit # lazy git managment
 
-          emanote # for zettelkasten note-taking
+          #emanote # for zettelkasten note-taking
 
           sqlite # for sqlite.lua
           inetutils # remote editing
@@ -141,7 +141,7 @@ in {
           lsp_signature-nvim
           lspkind-nvim
           luasnip
-          #neogit
+          neogit
           neoscroll-nvim
           nerdcommenter
           nvim-bqf
@@ -176,7 +176,6 @@ in {
           fennel-vim
           gitlinker-nvim
           gitsigns-nvim
-          hotpot-nvim
           leap-nvim
           nvim-navic
           nvim-neoclip-lua
