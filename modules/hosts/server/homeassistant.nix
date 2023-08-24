@@ -26,7 +26,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.home-asssistant = {
+    services.home-assistant = {
       inherit (cfg) enable;
       extraComponents = [
         "esphome"
