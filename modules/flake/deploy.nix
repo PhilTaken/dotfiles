@@ -18,7 +18,6 @@ in {
 
       delta = {
         hostname = "10.200.0.5";
-        #hostname = "192.168.178.26";
         sshUser = "root";
         sshOpts = ["-A" "-J" "nixos@148.251.102.93"];
         remoteBuild = true;
