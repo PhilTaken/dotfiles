@@ -34,7 +34,7 @@ in {
     ./unbound.nix
     ./vector.nix
     ./prometheus/prometheus-exporter.nix
-    ./homeassistant.nix
+    ./homeassistant
   ];
 
   options.phil.server.enable = mkEnableOption "server module";
