@@ -1,8 +1,9 @@
 # current TODOs:
 
-- git fuzzy
-
 - alpha: dont use nix store cache from delta
+- alpha: use delta as build server
+
+- git fuzzy
 
 - package racket-langserver
     - https://github.com/jeapostrophe/racket-langserver/blob/master/info.rkt
