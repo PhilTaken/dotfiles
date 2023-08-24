@@ -50,23 +50,22 @@ _: rec {
 
     # mini nas @ home
     delta = [
+      #
+      "nix-serve"
+      "syncthing"
       "unbound"
-      "homer"
-
-      "hound"
 
       "gitea"
+      "homeassistant"
+      "homer"
+      "hound"
       "jellyfin"
-      "syncthing"
+      "keycloak"
+      "navidrome"
       "nextcloud"
       #"calibre"
 
-      "keycloak"
-
-      "nix-serve"
-
-      "navidrome"
-
+      # wip
       "arrs"
     ];
   };
