@@ -154,8 +154,8 @@ require("bqf").setup({
 	},
 })
 
-require('neogit').setup({
-    integrations = {
-        diffview = true,
-    },
+require("neogit").setup({
+	integrations = {
+		diffview = true,
+	},
 })
