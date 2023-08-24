@@ -106,7 +106,7 @@ lsp_extra_config["pylsp"] = {
 
 local enabled_lsps = {
 	"ccls",
-	--"nil_ls",
+    "nil_ls",
 	"nixd",
 	"texlab",
 	"tsserver",
