@@ -1,3 +1,11 @@
+# Ideas
+# - power outlet voltage monitor for washing machine to detect if it's running
+# - window sensors
+# - door sensors
+# - overview panel in hallway
+# - expose items to prometheus?
+#   - https://www.home-assistant.io/integrations/prometheus/
+# - https://gist.github.com/ffenix113/9f58aee7697a1d0756125ac93b5a27e8
 {
   config,
   lib,
@@ -16,7 +24,7 @@ in {
 
     host = mkOption {
       type = types.str;
-      default = "homeassistant";
+      default = "home";
     };
 
     port = mkOption {
@@ -32,11 +40,51 @@ in {
         "esphome"
         "met"
         "radio_browser"
+        "hue"
+        "openweathermap"
+        "air_quality"
+        "fritzbox"
+        "bluetooth"
+        "bluetooth_le_tracker"
+        "caldav"
+        "calendar"
+        "command_line"
+        "cover"
+        "derivative"
+        "dwd_weather_warnings"
+        "device_tracker"
+        "feedreader"
+        "gtfs" # https://gtfs.de/en/feeds/de_full/
+        "geo_location"
+        "downloader"
+        "jellyfin"
+        "light"
+        "moon"
+        "shopping_list"
+        "waqi"
       ];
 
       config = {
         default_config = {};
-        http.server_port = cfg.port;
+        http = {
+          server_port = cfg.port;
+          server_host = [
+            "0.0.0.0"
+          ];
+        };
+
+        lovelace.mode = "yaml";
+
+        homeassistant = {
+          name = "Home";
+          # TODO set up secrets w/ age
+          #latitude = "!secret latitude";
+          #longitude = "!secret longitude";
+          #elevation = "!secret elevation";
+          unit_system = "metric";
+          temperature_unit = "C";
+          time_zone = "Europe/Amsterdam";
+        };
       };
     };
 
@@ -48,7 +96,7 @@ in {
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
-        #public = true;
+        public = true;
       };
 
       homer.apps."${cfg.host}" = {
