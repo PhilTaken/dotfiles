@@ -54,6 +54,8 @@ in {
           getmac
           fritzconnection
           accuweather
+          py-cpuinfo
+          python-kasa
         ];
 
       extraComponents = [
@@ -71,29 +73,21 @@ in {
         "moon"
         "radio_browser"
         "shopping_list"
+        "air_quality"
 
         # requires extra input on ui
-        "dwd_weather_warnings"
         "fritzbox"
         "hue"
-        "jellyfin"
         "met"
         "openweathermap"
         "here_travel_time"
-
-        # done in yaml config, maybe remove?
-        "caldav"
-        "waqi"
+        "jellyfin"
 
         # TODO
-        #"air_quality"
         #"command_line"
         #"device_tracker"
         #"feedreader"
         #"gtfs" # https://gtfs.de/en/feeds/de_full/
-
-        # maybe
-        #"downloader"
       ];
 
       config = {
@@ -166,6 +160,10 @@ in {
 
         sensor = [
           {
+            platform = "dwd_weather_warnings";
+            region_name = "!secret dwd_region_name";
+          }
+          {
             platform = "waqi";
             token = "!secret waqi_token";
             locations = "!secret waqi_locations";
@@ -178,15 +176,38 @@ in {
             platform = "caldav";
             username = "!secret caldav_username";
             password = "!secret caldav_password";
-            url = "https://nextcloud.pherzog.xyz/remote.php/dav";
+            url = "!secret caldav_url";
+            custom_calendars = [
+              {
+                name = "work";
+                calendar = "work";
+                search = ".*";
+              }
+              {
+                name = "Personal";
+                calendar = "Personal";
+                search = ".*";
+              }
+            ];
           }
+          # TODO: set up a cache
+          #{
+          #platform = "caldav";
+          #url = "!secret work_caldav_url";
+          #username = "!secret work_caldav_username";
+          #password = "!secret work_caldav_password";
+          #custom_calendars = [{
+          #name = "Work";
+          #calendar = "Arbeit";
+          #search = ".*";
+          #}];
+          #}
         ];
 
         lovelace.mode = "yaml";
 
         homeassistant = {
           name = "Home";
-          # TODO set up secrets w/ age
           latitude = "!secret latitude";
           longitude = "!secret longitude";
           elevation = "!secret elevation";
