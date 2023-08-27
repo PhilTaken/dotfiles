@@ -100,6 +100,8 @@
 
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
 
+    ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
+
     # -----------------------
     # mac inputs
     darwin.url = "github:lnl7/nix-darwin/master";

@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  inputs,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -89,6 +90,8 @@ in {
       (pkgs.writeShellScriptBin "fix-ssh-keys" ''
         envssh exit
       '')
+
+      inputs.ttrack.packages.${pkgs.system}.ttrack
 
       age
 
