@@ -54,16 +54,21 @@ lsp_extra_config["lua_ls"] = {
 lsp_extra_config["rust_analyzer"] = {
 	settings = {
 		["rust-analyzer"] = {
-			cargo = {
-				loadOutDirsFromCheck = true,
-			},
-			procMacro = {
-				enable = true,
-			},
+            imports = {
+                granularity = {
+                    group = "module",
+                },
+                prefix = "self",
+            },
+            cargo = {
+                buildScripts = {
+                    enable = true,
+                },
+            },
+            procMacro = {
+                enable = true
+            },
 		},
-	},
-	init_options = {
-		procMacro = { enable = true },
 	},
 }
 
