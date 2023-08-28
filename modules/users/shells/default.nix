@@ -55,7 +55,7 @@ in {
       du = "${pkgs.du-dust}/bin/dust";
       free = "${pkgs.procps}/bin/free -h";
       sudo = "sudo ";
-      df = "df -h";
+      df = "${pkgs.duf}/bin/duf";
       exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
       ll = exal;
       exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
