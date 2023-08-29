@@ -193,6 +193,7 @@ in {
           vim-surround
           which-key-nvim
 
+          fidget-nvim # lsp progress
           firenvim
 
           parinfer-rust

@@ -159,3 +159,9 @@ require("neogit").setup({
 		diffview = true,
 	},
 })
+
+require("fidget").setup {
+    text = {
+        spinner = "grow_vertical",
+    },
+}
