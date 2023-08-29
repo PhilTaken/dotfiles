@@ -52,8 +52,15 @@ lsp_extra_config["lua_ls"] = {
 }
 
 lsp_extra_config["rust_analyzer"] = {
+    flags = {
+        exit_timeout = 0,
+    },
 	settings = {
 		["rust-analyzer"] = {
+		    files = {
+		        excludeDirs = { ".direnv" },
+		        watcherExclude = { ".direnv" },
+		    },
             imports = {
                 granularity = {
                     group = "module",
