@@ -127,7 +127,7 @@ in {
       # install treesitter with nix to prevent all kinds of libstdc++ so shenenigans
       plugins =
         (with pkgs.vimPlugins; [
-          (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+          nvim-treesitter.withAllGrammars
           alpha-nvim
           catppuccin-nvim
           echodoc-vim
