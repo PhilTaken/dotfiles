@@ -9,6 +9,10 @@
   inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
   inherit (lib) mkOption mkIf types optionals;
   buildPlugin = attrset: buildVimPluginFrom2Nix (attrset // {version = "master";});
+  plugWithConfig = plugin: config: {
+    inherit plugin config;
+    type = "lua";
+  };
 in {
   options.phil.editors.neovim = {
     enable = mkOption {
@@ -127,39 +131,206 @@ in {
       # install treesitter with nix to prevent all kinds of libstdc++ so shenenigans
       plugins =
         (with pkgs.vimPlugins; [
-          nvim-treesitter.withAllGrammars
-          alpha-nvim
-          catppuccin-nvim
-          echodoc-vim
-          float-preview-nvim
-          friendly-snippets
-          galaxyline-nvim
-          git-worktree-nvim
-          indent-blankline-nvim
-          lsp-colors-nvim
-          lsp_lines-nvim
-          lsp_signature-nvim
-          lspkind-nvim
-          luasnip
-          neogit
-          neoscroll-nvim
-          nerdcommenter
-          nvim-bqf
-          nvim-colorizer-lua
-          nvim-lspconfig
-          nvim-web-devicons
-          pear-tree
-          plenary-nvim
-          popup-nvim
+          (plugWithConfig alpha-nvim ''
+            require('alpha').setup(require('alpha.themes.startify').opts)
+          '')
+          (plugWithConfig catppuccin-nvim ''
+            local catppuccin = require("catppuccin")
+            catppuccin.setup({
+                transparent_background = true,
+                term_colors = true,
+                compile = {
+                    enable = true,
+                },
+                dim_inactive = {
+                    enabled = true,
+                    percentage = 0.05,
+                },
+                --colorscheme = "dark_catppuccino",
+                integrations = {
+                    --lsp_saga = true,
+                    markdown = true,
+                    gitsigns = true,
+                    telescope = true,
+                    which_key = true,
+                    nvimtree = true,
+                    cmp = true,
+                    treesitter = true,
+
+                    indent_blankline = {
+                        enabled = true,
+                    },
+                    native_lsp = {
+                        enabled = true,
+                    },
+                },
+            })
+            vim.g.catppuccin_flavour = "mocha"
+            vim.cmd([[colorscheme catppuccin]])
+          '')
+
+          (plugWithConfig neoscroll-nvim ''
+            require("neoscroll").setup({ hide_cursor = false })
+          '')
+          (plugWithConfig nvim-colorizer-lua "require('colorizer').setup({})")
+
+          (plugWithConfig stabilize-nvim "require('stabilize').setup()")
+
+          (plugWithConfig echodoc-vim ''
+            vim.cmd([[let g:echodoc#enable_at_startup = 1]])
+            vim.cmd([[let g:echodoc#type = 'floating']])
+          '')
+
+          (plugWithConfig float-preview-nvim ''
+            vim.cmd([[let g:float_preview#docked = 1]])
+          '')
+
+          (plugWithConfig indent-blankline-nvim ''
+            require("indent_blankline").setup({
+                buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
+                filetype_exclude = { "startify", "dashboard", "man" },
+                show_current_context_start = true,
+                use_treesitter = true,
+            })
+          '')
+
+          (plugWithConfig lsp_lines-nvim ''
+            require("lsp_lines").setup()
+            vim.diagnostic.config({
+                virtual_text = false,
+                virtual_lines = {
+                    only_current_line = true,
+                },
+            })
+          '')
+
+          (plugWithConfig lsp_signature-nvim ''
+            -- https://github.com/kevinhwang91/nvim-ufo#customize-fold-text
+            require("lsp_signature").setup({
+                bind = true,
+                handler_opts = {
+                    border = "single",
+                },
+            })
+          '')
+
+          (plugWithConfig lspkind-nvim "require('lspkind').init()")
+
+          (plugWithConfig neogit ''
+            require("neogit").setup({
+                integrations = {
+                    diffview = true,
+                },
+            })
+          '')
+
+          (plugWithConfig nvim-bqf ''
+            -- Adapt fzf's delimiter in nvim-bqf
+            require("bqf").setup({
+                auto_resize_height = true,
+                preview = {
+                    win_height = 12,
+                    win_vheight = 12,
+                    delay_syntax = 80,
+                    border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
+                    show_title = false,
+                },
+                filter = {
+                    fzf = {
+                        extra_opts = { "--bind", "ctrl-o:toggle-all", "--delimiter", "│", "--prompt", "> " },
+                    },
+                },
+            })
+          '')
+
+          (plugWithConfig pear-tree ''
+            vim.g.pear_tree_smart_openers = 1
+            vim.g.pear_tree_smart_closers = 1
+            vim.g.pear_tree_smart_backspace = 1
+            vim.g.pear_tree_map_special_keys = 0
+            vim.g.pear_tree_ft_disabled = { "TelescopePrompt", "nofile", "terminal" }
+          '')
+
+          (plugWithConfig vim-rooter ''
+            vim.g.rooter_targets = "/,*"
+            vim.g.rooter_patterns = { ".git/" }
+            vim.g.rooter_resolve_links = 1
+          '')
+
+          (plugWithConfig conjure ''
+            vim.cmd([[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]])
+          '')
+
+          (plugWithConfig diffview-nvim "require('diffview').setup({})")
+          (plugWithConfig gitlinker-nvim ''
+            require("gitlinker").setup({
+                mappings = false,
+                callbacks = {
+                    ["gitea%..*"] = require("gitlinker.hosts").get_gitea_type_url,
+                    ["gitlab%..*"] = require("gitlinker.hosts").get_gitlab_type_url,
+                },
+            })
+          '')
+
+          (plugWithConfig gitsigns-nvim "require('gitsigns').setup({})")
+          (plugWithConfig nvim-neoclip-lua ''
+            require("neoclip").setup({ enable_persistent_history = true })
+          '')
+          (plugWithConfig nvim-notify ''
+            local notify = require("notify")
+            notify.setup({ background_colour = "#000000" })
+            vim.notify = notify
+          '')
+
+          (plugWithConfig nvim-tree-lua ''
+            require("nvim-tree").setup({})
+          '')
+
+          (plugWithConfig toggleterm-nvim ''
+            require("toggleterm").setup({
+                hide_numbers = true,
+                shell = vim.o.shell,
+                size = function(term)
+                    if term.direction == "horizontal" then
+                        return 15
+                    elseif term.direction == "vertical" then
+                        return vim.o.columns * 0.4
+                    end
+                end,
+            })
+          '')
+
+          (plugWithConfig trouble-nvim ''
+            require("trouble").setup({})
+          '')
+
+          (plugWithConfig vim-pandoc ''
+            vim.cmd([[let g:pandoc#spell#enabled = 0]])
+          '')
+          vim-pandoc-syntax
+
+          (plugWithConfig telescope-nvim ''
+            require("telescope").load_extension("git_worktree")
+            require("telescope").load_extension("file_browser")
+            require("telescope").load_extension("zoxide")
+          '')
           telescope-file-browser-nvim
-          telescope-nvim
           telescope-symbols-nvim
           telescope-zoxide
-          todo-comments-nvim
-          vim-fugitive
-          vim-rooter
-          vim-startuptime
 
+          (plugWithConfig which-key-nvim ''
+            require("which-key").setup({})
+          '')
+
+          (plugWithConfig fidget-nvim ''
+            require("fidget").setup {
+                text = {
+                    spinner = "grow_vertical",
+                },
+            }
+          '')
+
+          # completion
           cmp-buffer
           cmp-nvim-lsp
           cmp-nvim-lua
@@ -169,41 +340,38 @@ in {
           cmp_luasnip
           nvim-cmp
 
-          Navigator-nvim
-          conjure
-          diffview-nvim
-          direnv-vim
-          fennel-vim
-          gitlinker-nvim
-          gitsigns-nvim
+          nvim-treesitter.withAllGrammars
+          friendly-snippets
+          galaxyline-nvim
+          git-worktree-nvim
+          todo-comments-nvim
+          vim-fugitive
+          lsp-colors-nvim
           leap-nvim
           nvim-navic
-          nvim-neoclip-lua
-          nvim-notify
-          nvim-tree-lua
           sqlite-lua
-          stabilize-nvim
           targets-vim
-          toggleterm-nvim
-          trouble-nvim
           vim-nix
-          vim-pandoc
-          vim-pandoc-syntax
           vim-repeat
           vim-surround
-          which-key-nvim
-
-          fidget-nvim # lsp progress
           firenvim
-
           parinfer-rust
-          #neorg
+          vim-startuptime
+          plenary-nvim
+          popup-nvim
+          luasnip
+          nerdcommenter
+          nvim-lspconfig
+          nvim-web-devicons
+          direnv-vim
+          fennel-vim
         ])
         ++ (with pkgs.vimExtraPlugins; [
-          cybu-nvim
-          nvim-ufo
-          vim-hy
-          present-nvim
+          (plugWithConfig cybu-nvim ''
+            require("cybu").setup({ display_time = 350 })
+          '')
+          (plugWithConfig nvim-ufo "require('ufo').setup()")
+          (plugWithConfig vim-hy "vim.g.hy_enable_conceal = 1")
         ])
         ++ (map buildPlugin [
           # TODO: don't abuse nix flake inputs for these
@@ -223,13 +391,6 @@ in {
             pname = "promise-async";
             src = inputs.vim-async-src;
           }
-          #{
-          #pname = "neorg-telescope";
-          #src = builtins.fetchGit {
-          #url = "https://github.com/nvim-neorg/neorg-telescope";
-          #rev = "197c59a572e4423642b5c5fb727ecefadffe9000";
-          #};
-          #}
         ]);
     };
 

@@ -38,9 +38,6 @@
 -- default settings
 require("custom.settings")
 
--- plugin configs
-require("custom.plugins")
-
 -- utils
 require("custom.utils")
 

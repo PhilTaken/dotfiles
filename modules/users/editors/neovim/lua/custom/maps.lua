@@ -39,31 +39,6 @@ end
 -- normal mode mappings (global)
 local leadern = {
 	["<F2>"] = { "<cmd>NvimTreeToggle<cr>", "Toggle nvimtree" },
-	["<A-y>"] = {
-		function()
-			require("Navigator").left()
-		end,
-		"Go left",
-	},
-	["<A-n>"] = {
-		function()
-			require("Navigator").down()
-		end,
-		"Go down",
-	},
-	["<A-e>"] = {
-		function()
-			require("Navigator").up()
-		end,
-		"Go up",
-	},
-	["<A-o>"] = {
-		function()
-			require("Navigator").right()
-		end,
-		"Go right",
-	},
-
 	["<A-a>"] = { "<C-a>", "Increment Number" },
 	["<A-x>"] = { "<C-x>", "Decrement Number" },
 

@@ -166,10 +166,6 @@ let g:pear_tree_smart_openers = 1
 let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 
-" tmux
-let g:tmux_navigator_no_mappings = 1
-" Update changed buffer when switching to Tmux
-let g:tmux_navigator_save_on_switch = 1
 let g:tmuxline_preset = 'vim_powerline_1'
 let g:tmuxline_preset = {
       \'a'    : '#S',
