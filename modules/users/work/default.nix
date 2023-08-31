@@ -94,6 +94,7 @@ in {
       inputs.ttrack.packages.${pkgs.system}.ttrack
 
       age
+      lsyncd
 
       # _1password
     ];
