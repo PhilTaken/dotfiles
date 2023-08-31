@@ -15,7 +15,7 @@ vim.cmd([[au FileType c,cpp,python,rust,nix,lua,ruby,r autocmd BufWritePre <buff
 vim.cmd([[map gf :e <cfile><CR>]])
 
 -- terminals
-local toggleterm = require("toggleterm")
+--local toggleterm = require("toggleterm")
 local terms = require("custom.terminals")
 local diffview = {} -- require('diffview')
 
@@ -226,21 +226,6 @@ local leadern = {
 					require("gitlinker").get_repo_url()
 				end,
 				"copy homepage url to clipboard",
-			},
-			w = {
-				name = "+worktree",
-				s = {
-					function()
-						require("custom.tele").extensions.git_worktree.git_worktrees()
-					end,
-					"Switch worktree branch",
-				},
-				c = {
-					function()
-						require("custom.tele").extensions.git_worktree.create_git_worktree()
-					end,
-					"create worktree branch",
-				},
 			},
 			b = {
 				"<cmd>Git blame<cr>",

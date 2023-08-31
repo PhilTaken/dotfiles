@@ -25,6 +25,7 @@
     optional = true;
     type = "lua";
   };
+  mkLplug = plugin: (lplug plugin "");
 in {
   options.phil.editors.neovim = {
     enable = mkOption {
@@ -152,6 +153,9 @@ in {
       # install treesitter with nix to prevent all kinds of libstdc++ so shenenigans
       plugins =
         (with pkgs.vimPlugins; [
+          # ---------------------------------------
+          # these *need* to be loaded synchronously
+
           (plug alpha-nvim ''
             require('alpha').setup(require('alpha.themes.startify').opts)
           '')
@@ -167,9 +171,7 @@ in {
                     enabled = true,
                     percentage = 0.05,
                 },
-                --colorscheme = "dark_catppuccino",
                 integrations = {
-                    --lsp_saga = true,
                     markdown = true,
                     gitsigns = true,
                     telescope = true,
@@ -177,7 +179,6 @@ in {
                     nvimtree = true,
                     cmp = true,
                     treesitter = true,
-
                     indent_blankline = {
                         enabled = true,
                     },
@@ -188,6 +189,20 @@ in {
             })
             vim.g.catppuccin_flavour = "mocha"
             vim.cmd([[colorscheme catppuccin]])
+          '')
+
+          (plug vim-rooter ''
+            vim.g.rooter_targets = "/,*"
+            vim.g.rooter_patterns = { ".git/" }
+            vim.g.rooter_resolve_links = 1
+          '')
+
+          # -----------------------------------------------------
+
+          (lplug nvim-notify ''
+            local notify = require("notify")
+            notify.setup({ background_colour = "#000000" })
+            vim.notify = notify
           '')
 
           (lplug neoscroll-nvim ''
@@ -236,8 +251,6 @@ in {
             })
           '')
 
-          (plug lspkind-nvim "require('lspkind').init()")
-
           (lplug neogit ''
             require("neogit").setup({
                 integrations = {
@@ -273,12 +286,6 @@ in {
             vim.g.pear_tree_ft_disabled = { "TelescopePrompt", "nofile", "terminal" }
           '')
 
-          (plug vim-rooter ''
-            vim.g.rooter_targets = "/,*"
-            vim.g.rooter_patterns = { ".git/" }
-            vim.g.rooter_resolve_links = 1
-          '')
-
           (lplug conjure ''
             vim.cmd([[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]])
           '')
@@ -300,16 +307,37 @@ in {
             require("neoclip").setup({ enable_persistent_history = true })
           '')
 
-          (plug nvim-notify ''
-            local notify = require("notify")
-            notify.setup({ background_colour = "#000000" })
-            vim.notify = notify
-          '')
-
           (lplug nvim-tree-lua ''
             require("nvim-tree").setup({})
           '')
 
+          (lplug trouble-nvim ''
+            require("trouble").setup({})
+          '')
+
+          (lplug vim-pandoc ''
+            vim.cmd([[let g:pandoc#spell#enabled = 0]])
+          '')
+
+          (lplug fidget-nvim ''
+            require("fidget").setup {
+                text = {
+                    spinner = "grow_vertical",
+                },
+            }
+          '')
+
+          # TODO load extension asynchronously but before telescope-nvim
+          (lplug telescope-nvim ''
+            require("telescope").load_extension("file_browser")
+            require("telescope").load_extension("zoxide")
+          '')
+          telescope-file-browser-nvim
+          telescope-symbols-nvim
+          telescope-zoxide
+
+          # TODO load these asynchronously
+          (plug lspkind-nvim "require('lspkind').init()")
           (plug toggleterm-nvim ''
             require("toggleterm").setup({
                 hide_numbers = true,
@@ -324,34 +352,8 @@ in {
             })
           '')
 
-          (lplug trouble-nvim ''
-            require("trouble").setup({})
-          '')
-
-          (lplug vim-pandoc ''
-            vim.cmd([[let g:pandoc#spell#enabled = 0]])
-          '')
-          vim-pandoc-syntax
-
-          (lplug telescope-nvim ''
-            require("telescope").load_extension("git_worktree")
-            require("telescope").load_extension("file_browser")
-            require("telescope").load_extension("zoxide")
-          '')
-          telescope-file-browser-nvim
-          telescope-symbols-nvim
-          telescope-zoxide
-
           (plug which-key-nvim ''
             require("which-key").setup({})
-          '')
-
-          (plug fidget-nvim ''
-            require("fidget").setup {
-                text = {
-                    spinner = "grow_vertical",
-                },
-            }
           '')
 
           # completion
@@ -359,45 +361,47 @@ in {
           cmp-nvim-lsp
           cmp-nvim-lua
           cmp-path
-          cmp-tmux
           cmp-under-comparator
           cmp_luasnip
           nvim-cmp
 
-          nvim-treesitter.withAllGrammars
-          friendly-snippets
           galaxyline-nvim
-          git-worktree-nvim
-          todo-comments-nvim
-          vim-fugitive
-          lsp-colors-nvim
-          leap-nvim
-          nvim-navic
-          sqlite-lua
-          targets-vim
-          vim-nix
-          vim-repeat
-          vim-surround
-          firenvim
-          parinfer-rust
           vim-startuptime
           plenary-nvim
-          popup-nvim
-          luasnip
-          nerdcommenter
           nvim-lspconfig
           nvim-web-devicons
-          fennel-vim
-          direnv-vim
+          luasnip
+
+          parinfer-rust
+          nvim-navic
         ])
+        # plugins that aren't needed immediately for startup
+        ++ (with pkgs.vimPlugins;
+          map mkLplug [
+            lsp-colors-nvim
+            sqlite-lua
+            targets-vim
+            nvim-treesitter.withAllGrammars
+            direnv-vim
+            fennel-vim
+            firenvim
+            friendly-snippets
+            leap-nvim
+            nerdcommenter
+            popup-nvim
+            todo-comments-nvim
+            vim-fugitive
+            vim-nix
+            vim-pandoc-syntax
+            vim-repeat
+            vim-surround
+          ])
         ++ (with pkgs.vimExtraPlugins; [
-          (plug cybu-nvim ''
-            require("cybu").setup({ display_time = 350 })
-          '')
-          (plug nvim-ufo "require('ufo').setup()")
-          (plug vim-hy "vim.g.hy_enable_conceal = 1")
+          (lplug cybu-nvim "require('cybu').setup({ display_time = 350 })")
+          (lplug nvim-ufo "require('ufo').setup()")
+          (lplug vim-hy "vim.g.hy_enable_conceal = 1")
         ])
-        ++ (map buildPlugin [
+        ++ (map (p: mkLplug (buildPlugin p)) [
           # TODO: don't abuse nix flake inputs for these
           {
             pname = "janet.vim";
@@ -411,6 +415,8 @@ in {
             pname = "yuck.vim";
             src = inputs.vim-yuck-src;
           }
+        ])
+        ++ (map buildPlugin [
           {
             pname = "promise-async";
             src = inputs.vim-async-src;
