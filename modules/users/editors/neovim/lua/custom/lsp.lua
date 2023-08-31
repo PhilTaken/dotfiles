@@ -82,17 +82,11 @@ lsp_extra_config["rust_analyzer"] = {
 -- set pythonpath (set to nil if no python in current env)
 lsp_extra_config["pylsp"] = {
 	on_new_config = function(config)
-		local appenv = vim.fs.find("appenv", {
-			upward = true,
-			type = "file",
-			limit = 1,
-			stop = vim.loop.os_homedir(),
-			path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
-		})
+		local appenv = vim.fs.find("appenv", { type = "file", limit = 1 })
 
 		local pythonpath
 		if #appenv == 1 then
-			pythonpath = io.popen("./appenv python -c 'import sys; print(sys.executable)'"):read()
+			pythonpath = io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)'"):read()
 		else
 			pythonpath = io.popen("which python 2>/dev/null"):read()
 		end
