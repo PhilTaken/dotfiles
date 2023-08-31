@@ -9,8 +9,20 @@
   inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
   inherit (lib) mkOption mkIf types optionals;
   buildPlugin = attrset: buildVimPluginFrom2Nix (attrset // {version = "master";});
-  plugWithConfig = plugin: config: {
+
+  plug = plugin: config: {
     inherit plugin config;
+    type = "lua";
+  };
+  lplug = plugin: pconf: {
+    inherit plugin;
+    config = ''
+      vim.schedule(function()
+        packadd("${plugin.pname}")
+        ${pconf}
+      end)
+    '';
+    optional = true;
     type = "lua";
   };
 in {
@@ -128,13 +140,22 @@ in {
         luafile ~/.config/nvim/init_.lua
       '';
 
+      extraLuaConfig = ''
+        -- Source plugin and its configuration immediately
+        -- @param plugin String with name of plugin as subdirectory in 'pack'
+        local packadd = function(plugin)
+          local command = 'packadd'
+          vim.cmd(string.format([[%s %s]], command, plugin))
+        end
+      '';
+
       # install treesitter with nix to prevent all kinds of libstdc++ so shenenigans
       plugins =
         (with pkgs.vimPlugins; [
-          (plugWithConfig alpha-nvim ''
+          (plug alpha-nvim ''
             require('alpha').setup(require('alpha.themes.startify').opts)
           '')
-          (plugWithConfig catppuccin-nvim ''
+          (plug catppuccin-nvim ''
             local catppuccin = require("catppuccin")
             catppuccin.setup({
                 transparent_background = true,
@@ -169,23 +190,24 @@ in {
             vim.cmd([[colorscheme catppuccin]])
           '')
 
-          (plugWithConfig neoscroll-nvim ''
+          (lplug neoscroll-nvim ''
             require("neoscroll").setup({ hide_cursor = false })
           '')
-          (plugWithConfig nvim-colorizer-lua "require('colorizer').setup({})")
 
-          (plugWithConfig stabilize-nvim "require('stabilize').setup()")
+          (lplug nvim-colorizer-lua "require('colorizer').setup({})")
 
-          (plugWithConfig echodoc-vim ''
+          (lplug stabilize-nvim "require('stabilize').setup()")
+
+          (lplug echodoc-vim ''
             vim.cmd([[let g:echodoc#enable_at_startup = 1]])
             vim.cmd([[let g:echodoc#type = 'floating']])
           '')
 
-          (plugWithConfig float-preview-nvim ''
+          (lplug float-preview-nvim ''
             vim.cmd([[let g:float_preview#docked = 1]])
           '')
 
-          (plugWithConfig indent-blankline-nvim ''
+          (lplug indent-blankline-nvim ''
             require("indent_blankline").setup({
                 buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
                 filetype_exclude = { "startify", "dashboard", "man" },
@@ -194,7 +216,7 @@ in {
             })
           '')
 
-          (plugWithConfig lsp_lines-nvim ''
+          (lplug lsp_lines-nvim ''
             require("lsp_lines").setup()
             vim.diagnostic.config({
                 virtual_text = false,
@@ -204,7 +226,7 @@ in {
             })
           '')
 
-          (plugWithConfig lsp_signature-nvim ''
+          (lplug lsp_signature-nvim ''
             -- https://github.com/kevinhwang91/nvim-ufo#customize-fold-text
             require("lsp_signature").setup({
                 bind = true,
@@ -214,9 +236,9 @@ in {
             })
           '')
 
-          (plugWithConfig lspkind-nvim "require('lspkind').init()")
+          (plug lspkind-nvim "require('lspkind').init()")
 
-          (plugWithConfig neogit ''
+          (lplug neogit ''
             require("neogit").setup({
                 integrations = {
                     diffview = true,
@@ -224,7 +246,7 @@ in {
             })
           '')
 
-          (plugWithConfig nvim-bqf ''
+          (lplug nvim-bqf ''
             -- Adapt fzf's delimiter in nvim-bqf
             require("bqf").setup({
                 auto_resize_height = true,
@@ -243,7 +265,7 @@ in {
             })
           '')
 
-          (plugWithConfig pear-tree ''
+          (lplug pear-tree ''
             vim.g.pear_tree_smart_openers = 1
             vim.g.pear_tree_smart_closers = 1
             vim.g.pear_tree_smart_backspace = 1
@@ -251,18 +273,18 @@ in {
             vim.g.pear_tree_ft_disabled = { "TelescopePrompt", "nofile", "terminal" }
           '')
 
-          (plugWithConfig vim-rooter ''
+          (plug vim-rooter ''
             vim.g.rooter_targets = "/,*"
             vim.g.rooter_patterns = { ".git/" }
             vim.g.rooter_resolve_links = 1
           '')
 
-          (plugWithConfig conjure ''
+          (lplug conjure ''
             vim.cmd([[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]])
           '')
 
-          (plugWithConfig diffview-nvim "require('diffview').setup({})")
-          (plugWithConfig gitlinker-nvim ''
+          (lplug diffview-nvim "require('diffview').setup({})")
+          (lplug gitlinker-nvim ''
             require("gitlinker").setup({
                 mappings = false,
                 callbacks = {
@@ -272,21 +294,23 @@ in {
             })
           '')
 
-          (plugWithConfig gitsigns-nvim "require('gitsigns').setup({})")
-          (plugWithConfig nvim-neoclip-lua ''
+          (lplug gitsigns-nvim "require('gitsigns').setup({})")
+
+          (lplug nvim-neoclip-lua ''
             require("neoclip").setup({ enable_persistent_history = true })
           '')
-          (plugWithConfig nvim-notify ''
+
+          (plug nvim-notify ''
             local notify = require("notify")
             notify.setup({ background_colour = "#000000" })
             vim.notify = notify
           '')
 
-          (plugWithConfig nvim-tree-lua ''
+          (lplug nvim-tree-lua ''
             require("nvim-tree").setup({})
           '')
 
-          (plugWithConfig toggleterm-nvim ''
+          (plug toggleterm-nvim ''
             require("toggleterm").setup({
                 hide_numbers = true,
                 shell = vim.o.shell,
@@ -300,16 +324,16 @@ in {
             })
           '')
 
-          (plugWithConfig trouble-nvim ''
+          (lplug trouble-nvim ''
             require("trouble").setup({})
           '')
 
-          (plugWithConfig vim-pandoc ''
+          (lplug vim-pandoc ''
             vim.cmd([[let g:pandoc#spell#enabled = 0]])
           '')
           vim-pandoc-syntax
 
-          (plugWithConfig telescope-nvim ''
+          (lplug telescope-nvim ''
             require("telescope").load_extension("git_worktree")
             require("telescope").load_extension("file_browser")
             require("telescope").load_extension("zoxide")
@@ -318,11 +342,11 @@ in {
           telescope-symbols-nvim
           telescope-zoxide
 
-          (plugWithConfig which-key-nvim ''
+          (plug which-key-nvim ''
             require("which-key").setup({})
           '')
 
-          (plugWithConfig fidget-nvim ''
+          (plug fidget-nvim ''
             require("fidget").setup {
                 text = {
                     spinner = "grow_vertical",
@@ -363,15 +387,15 @@ in {
           nerdcommenter
           nvim-lspconfig
           nvim-web-devicons
-          direnv-vim
           fennel-vim
+          direnv-vim
         ])
         ++ (with pkgs.vimExtraPlugins; [
-          (plugWithConfig cybu-nvim ''
+          (plug cybu-nvim ''
             require("cybu").setup({ display_time = 350 })
           '')
-          (plugWithConfig nvim-ufo "require('ufo').setup()")
-          (plugWithConfig vim-hy "vim.g.hy_enable_conceal = 1")
+          (plug nvim-ufo "require('ufo').setup()")
+          (plug vim-hy "vim.g.hy_enable_conceal = 1")
         ])
         ++ (map buildPlugin [
           # TODO: don't abuse nix flake inputs for these
