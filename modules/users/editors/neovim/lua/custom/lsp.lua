@@ -86,11 +86,14 @@ lsp_extra_config["pylsp"] = {
 
 		local pythonpath
 		if #appenv == 1 then
-			pythonpath = io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)'"):read()
+		    vim.schedule(function()
+                pythonpath = io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)'"):read()
+                config.settings.pylsp.plugins.jedi.environment = pythonpath
+            end)
 		else
 			pythonpath = io.popen("which python 2>/dev/null"):read()
+            config.settings.pylsp.plugins.jedi.environment = pythonpath
 		end
-		config.settings.pylsp.plugins.jedi.environment = pythonpath
 	end,
 	settings = {
 		pylsp = {

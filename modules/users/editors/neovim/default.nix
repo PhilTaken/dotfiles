@@ -155,7 +155,7 @@ in {
         (with pkgs.vimPlugins; [
           # ---------------------------------------
           # these *need* to be loaded synchronously
-
+          nvim-treesitter.withAllGrammars
           (plug alpha-nvim ''
             require('alpha').setup(require('alpha.themes.startify').opts)
           '')
@@ -381,7 +381,6 @@ in {
             lsp-colors-nvim
             sqlite-lua
             targets-vim
-            nvim-treesitter.withAllGrammars
             direnv-vim
             fennel-vim
             firenvim
