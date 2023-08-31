@@ -57,7 +57,7 @@ in {
         host=$(${pkgs.ripgrep}/bin/rg "\[host:" environments/ -IN |\
           cut -d ":" -f 2 |\
           cut -d "]" -f 1 |\
-          sk)
+          sk --height 10% --no-clear-start)
 
         if [ ! -z "$host" ]; then
           echo "connecting to $host.$tld ..."
@@ -76,7 +76,7 @@ in {
         cd $git_basedir
 
         test -d "deployment/" && cd "deployment/"
-        env=$(ls environments/ | sk)
+        env=$(ls environments/ | sk --height 10% --no-clear-start)
         tld=$(rg "host_domain" environments/$env/ -IN | cut -d " " -f 3)
 
         if [ ! -z "$env" ]; then
