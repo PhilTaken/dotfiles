@@ -83,7 +83,7 @@ in {
       jq
       lolcat
       lsof
-      magic-wormhole
+      #magic-wormhole
       neofetch
       nix-output-monitor
       nmap
