@@ -199,6 +199,10 @@ in {
 
           # -----------------------------------------------------
 
+          (lplug vim-illuminate ''
+            require('illuminate').configure{}
+          '')
+
           (lplug nvim-notify ''
             local notify = require("notify")
             notify.setup({ background_colour = "#000000" })
