@@ -1,8 +1,25 @@
 layout {
     default_tab_template {
-        pane size=1 borderless=true {
-            plugin location="zellij:tab-bar"
-        }
         children
+        pane size=1 borderless=true {
+            plugin location="zellij:compact-bar"
+        }
+    }
+
+    swap_tiled_layout name="hsplit" {
+        tab {
+            pane split_direction="horizontal" {
+                pane
+                pane
+            }
+        }
+    }
+    swap_tiled_layout name="vsplit" {
+        tab {
+            pane split_direction="vertical" {
+                pane
+                pane
+            }
+        }
     }
 }

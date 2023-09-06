@@ -273,22 +273,24 @@
               action = [{Resize = "Decrease";}];
               key = ["-"];
             }
+            # ----------
             {
               action = [{Resize = "Left";}];
-              key = [left "Left"];
-            }
-            {
-              action = [{Resize = "Down";}];
-              key = [down "Down"];
-            }
-            {
-              action = [{Resize = "Up";}];
-              key = [up "Up"];
+              key = [left];
             }
             {
               action = [{Resize = "Right";}];
-              key = [right "Right"];
+              key = [right];
             }
+            {
+              action = [{Resize = "Up";}];
+              key = [up];
+            }
+            {
+              action = [{Resize = "Down";}];
+              key = [down];
+            }
+            # ----------
           ]
           ++ defaultBinds
           ++ resizeBinds
@@ -579,21 +581,42 @@
 
             {
               action = [{MoveFocus = "Left";} swToModes.normal];
-              key = ["Left" left];
+              key = [left];
             }
             {
               action = [{MoveFocus = "Right";} swToModes.normal];
-              key = ["Right" right];
+              key = [right];
             }
             {
               action = [{MoveFocus = "Down";} swToModes.normal];
-              key = ["Down" down];
+              key = [down];
             }
             {
               action = [{MoveFocus = "Up";} swToModes.normal];
-              key = ["Up" up];
+              key = [up];
+            }
+            # ---------------------
+            {
+              action = [{MovePane = "Left";} swToModes.normal];
+              key = ["Left"];
+            }
+            {
+              action = [{MovePane = "Right";} swToModes.normal];
+              key = ["Right"];
+            }
+            {
+              action = [{MovePane = "Up";} swToModes.normal];
+              key = ["Up"];
+            }
+            {
+              action = [{MovePane = "Down";} swToModes.normal];
+              key = ["Down"];
             }
 
+            {
+              action = ["NextSwapLayout" swToModes.normal];
+              key = ["l"];
+            }
             {
               action = ["Detach"];
               key = ["d"];
