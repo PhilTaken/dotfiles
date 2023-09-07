@@ -35,6 +35,7 @@ in {
     ./vector.nix
     ./prometheus/prometheus-exporter.nix
     ./homeassistant
+    ./ldap.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";

@@ -65,6 +65,8 @@ _: rec {
       "nextcloud"
       #"calibre"
 
+      "ldap"
+
       # wip
       "arrs"
     ];

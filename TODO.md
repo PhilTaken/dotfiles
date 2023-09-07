@@ -1,5 +1,12 @@
 # current TODOs:
 
+## URGENT -> this weekend
+
+move caddy certs to acme -> simplify caddy module building (no more custom caddy build) + caddy config
+required for ldaps (nixos modules needs cert via acme)
+
+-------
+
 - alpha: dont use nix store cache from delta
 - alpha: use delta as build server
 
