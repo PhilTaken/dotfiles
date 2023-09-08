@@ -13,7 +13,7 @@ function me_dirs {
 }
 
 function me_ls {
-    command exa -GFx --color=always
+    command eza -GFx --color=always
 }
 
 function me_git {

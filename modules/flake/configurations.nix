@@ -63,8 +63,6 @@
         python = true;
       };
 
-      editors.emacs.enable = true;
-
       terminals = {
         multiplexer = "zellij";
         defaultShell = "fish";

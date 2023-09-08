@@ -21,7 +21,7 @@ in {
       bottom
       fd
       file
-      exa
+      eza
       gnupg
       iperf
 

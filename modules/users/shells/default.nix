@@ -56,9 +56,9 @@ in {
       free = "${pkgs.procps}/bin/free -h";
       sudo = "sudo ";
       df = "${pkgs.duf}/bin/duf";
-      exal = "${pkgs.exa}/bin/exa -liaahmF --git --group-directories-first";
-      ll = exal;
-      exa = "${pkgs.exa}/bin/exa -Fx --group-directories-first";
+      ezal = "${pkgs.eza}/bin/eza -liaahmF --git --group-directories-first";
+      ll = ezal;
+      eza = "${pkgs.eza}/bin/eza -Fx --group-directories-first";
       ntop = "sudo ntop -u nobody";
       dmesg = "dmesg -H";
     };
@@ -69,7 +69,7 @@ in {
       comma
       dig
       dogdns
-      exa
+      eza
       fasd
       fd
       file
