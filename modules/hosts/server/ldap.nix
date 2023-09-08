@@ -32,7 +32,7 @@ in {
       inherit (cfg) enable;
       inherit domain;
       seedPath = config.sops.secrets.portunus-seed.path;
-      ldap.suffix = lib.concatStrings (builtins.map (part: "dc=${part}") (lib.splitString "." domain));
+      ldap.suffix = builtins.concatStringsSep "," (builtins.map (part: "dc=${part}") (lib.splitString "." domain));
       # TODO
       #ldap.tls = true;
     };

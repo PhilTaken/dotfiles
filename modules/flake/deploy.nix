@@ -17,7 +17,6 @@ in {
 
       delta = {
         hostname = "100.68.159.39";
-
         sshUser = "root";
         remoteBuild = true;
         profiles.system.path = (activateFor "x86_64-linux") self.nixosConfigurations.delta;
