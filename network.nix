@@ -35,6 +35,11 @@ _: rec {
       delta = "10.100.0.5";
       epsilon = "10.100.0.6";
     };
+
+    lan = {
+      interfaceName = "lan";
+      delta = "192.168.178.26";
+    };
   };
 
   servers = builtins.attrNames services;

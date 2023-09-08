@@ -28,6 +28,17 @@ let
             #(builtins.filter (elem: elem != "unbound") services.${host})))
             services.${host}))
         (builtins.attrNames services)));
+
+  # TODO better handling of the default value
+  ipForHost = network: host:
+    if builtins.hasAttr host net.networks.${network}
+    then net.networks.${network}.${host}
+    else net.networks.endpoints.alpha;
+
+  subdomains =
+    builtins.mapAttrs
+    (network: _: builtins.mapAttrs (_app: host: ipForHost network host) cfg.apps)
+    (lib.filterAttrs (n: _v: ! builtins.elem n ["default" "endpoints"]) net.networks);
 in {
   options.phil.server.services.unbound = {
     enable = mkEnableOption "enable the unbound server";
@@ -62,7 +73,8 @@ in {
     phil.server.services.caddy.proxy."${cfg.host}" = {port = 853;};
 
     services.unbound = let
-      subdomains = builtins.mapAttrs (_name: value: {ip = iplot."${value}";}) cfg.apps;
+      mkLocalData = lib.mapAttrsToList (name: value: "\"${name}.${net.tld}. IN A ${value}\"");
+      mkLocalDataPtr = lib.mapAttrsToList (host: ip: "\"${ip} ${host}.${net.tld}\"");
     in {
       enable = true;
 
@@ -75,8 +87,7 @@ in {
             "127.0.0.0/8 allow" # localhost
             "10.100.0.1/24 allow" # yggdrasil
             "10.200.0.1/24 allow" # milkyway
-            "192.168.0.1/24 allow" # local net
-            "192.168.178.1/24 allow" # local net
+            "192.168.0.1/16 allow" # local nets
           ];
 
           interface = [
@@ -146,10 +157,41 @@ in {
               "\"ads.youtube.com A 127.0.0.1\""
               "\"adserver.yahoo.com A 127.0.0.1\""
             ]
-            ++ (lib.mapAttrsToList (name: value: "\"${name}.${net.tld}. IN A ${value.ip}\"") subdomains);
+            ++ mkLocalData subdomains.lan;
 
-          local-data-ptr = lib.mapAttrsToList (name: value: "\"${value.ip} ${name}.${net.tld}\"") subdomains;
+          local-data-ptr = mkLocalDataPtr subdomains.lan;
+
+          # Specify custom local answers for each interface by using views:
+          access-control-view = [
+            "10.100.0.0/24 wg"
+            "10.200.0.0/24 nebula"
+            "192.168.0.0/16 lan"
+            "127.0.0.0/8 nebula"
+          ];
         };
+
+        view = [
+          {
+            name = "\"lan\"";
+            view-first = "yes";
+            local-data = mkLocalData subdomains.lan;
+            local-data-ptr = mkLocalDataPtr subdomains.lan;
+          }
+
+          {
+            name = "\"wg\"";
+            view-first = "yes";
+            local-data = mkLocalData subdomains.yggdrasil;
+            local-data-ptr = mkLocalDataPtr subdomains.yggdrasil;
+          }
+
+          {
+            name = "\"nebula\"";
+            view-first = "yes";
+            local-data = mkLocalData subdomains.milkyway;
+            local-data-ptr = mkLocalDataPtr subdomains.milkyway;
+          }
+        ];
 
         # downstream dns resolver
         forward-zone = [
@@ -163,19 +205,9 @@ in {
               "2a01:4f8:151:34aa::198@853#dnsforge.de"
               "2001:678:e68:f000::@853#dot.ffmuc.net"
               "2a05:fc84::42@853#dns.digitale-gesellschaft.ch"
-
-              #"1.1.1.1" # cloudflare
-              #"80.241.218.68" # dismail
-              #"194.242.2.2" # mullvad no adblock
-              #"194.242.2.3" # mullvad ablock
-              #"94.247.43.254" # open nic
             ];
           }
         ];
-
-        #remote-control = {
-        #control-enable = true;
-        #};
       };
     };
   };
