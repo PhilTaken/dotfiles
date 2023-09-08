@@ -16,6 +16,7 @@ in {
       type = types.str;
       default = "ldap";
     };
+
     port = mkOption {
       type = types.port;
       default = 8888;
@@ -33,8 +34,7 @@ in {
       inherit domain;
       seedPath = config.sops.secrets.portunus-seed.path;
       ldap.suffix = builtins.concatStringsSep "," (builtins.map (part: "dc=${part}") (lib.splitString "." domain));
-      # TODO
-      #ldap.tls = true;
+      ldap.tls = true;
     };
 
     networking.firewall.interfaces.${net.networks.yggdrasil.interfaceName} = {

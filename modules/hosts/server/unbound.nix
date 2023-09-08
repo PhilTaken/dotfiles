@@ -88,8 +88,8 @@ in {
 
           # tls upstream
           tls-upstream = "yes";
-          tls-service-key = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.${net.tld}/dns.${net.tld}.key"; # -> .key
-          tls-service-pem = "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/dns.${net.tld}/dns.${net.tld}.crt"; # -> .crt
+          tls-service-key = "${config.security.acme.certs."${cfg.host}.${net.tld}".directory}/key.pem"; # -> .key
+          tls-service-pem = "${config.security.acme.certs."${cfg.host}.${net.tld}".directory}/cert.pem"; # -> .crt
 
           # tls downstream
           tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
