@@ -10,16 +10,15 @@ in {
     deploy.nodes = {
       alpha = {
         hostname = "148.251.102.93";
-        #hostname = "10.200.0.1";
         sshUser = "root";
         remoteBuild = true;
         profiles.system.path = (activateFor "x86_64-linux") self.nixosConfigurations.alpha;
       };
 
       delta = {
-        hostname = "10.200.0.5";
+        hostname = "100.68.159.39";
+
         sshUser = "root";
-        sshOpts = ["-A" "-J" "nixos@148.251.102.93"];
         remoteBuild = true;
         profiles.system.path = (activateFor "x86_64-linux") self.nixosConfigurations.delta;
       };
