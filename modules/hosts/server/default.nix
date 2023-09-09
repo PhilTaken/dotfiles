@@ -36,6 +36,7 @@ in {
     ./prometheus/prometheus-exporter.nix
     ./homeassistant
     ./ldap.nix
+    ./grocy.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";

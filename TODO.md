@@ -4,6 +4,8 @@
 - network mask in network
 - dont filter for hosts
 
+- back up grocy
+
 - alpha: dont use nix store cache from delta
 - alpha: use delta as build server
 

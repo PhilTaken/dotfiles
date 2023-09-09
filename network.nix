@@ -71,6 +71,7 @@ _: rec {
       #"calibre"
 
       "ldap"
+      "grocy"
 
       # wip
       "arrs"
