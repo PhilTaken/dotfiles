@@ -31,8 +31,8 @@ let
 
   # TODO better handling of the default value
   ipForHost = network: host:
-    if builtins.hasAttr host net.networks.${network}
-    then net.networks.${network}.${host}
+    if builtins.hasAttr host net.networks.${network}.hosts
+    then net.networks.${network}.hosts.${host}
     else net.endpoints.alpha;
 
   subdomains =
