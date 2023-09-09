@@ -47,7 +47,7 @@
       (n: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v)
       flake.nixosConfigurations);
 
-  endpoints = builtins.attrNames net.networks.endpoints;
+  endpoints = builtins.attrNames net.endpoints;
   isEndpoint = n: (builtins.elem n endpoints);
   hiddenHostProxies = lib.filterAttrs (n: _: !(isEndpoint n)) allHostProxies;
 
@@ -125,7 +125,7 @@ in {
         updateConfigWithHost = host: _proxy: config:
           lib.recursiveUpdate config {
             proxycfg = ''
-              reverse_proxy ${net.networks.yggdrasil.${host}}:${builtins.toString config.port} {
+              reverse_proxy ${net.networks.yggdrasil.hosts.${host}}:${builtins.toString config.port} {
                 ${config.publicProxyConfig}
               }
             '';

@@ -24,7 +24,7 @@
             ip =
               if bind.host == null
               then bind.ip
-              else net.networks.default.${bind.host};
+              else net.networks.default.hosts.${bind.host};
           in {
             device = "${ip}:${bindcfg.remote}";
             fsType = "nfs4";

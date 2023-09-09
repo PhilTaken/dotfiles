@@ -7,7 +7,7 @@
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.dns;
 
-  iplot = net.networks.default;
+  iplot = net.networks.default.hosts;
   hostnames = builtins.attrNames iplot;
   default_nameserver =
     builtins.head

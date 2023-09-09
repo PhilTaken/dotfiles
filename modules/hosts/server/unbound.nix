@@ -10,7 +10,7 @@ let
   inherit (lib) mkEnableOption mkIf mkOption types;
 
   cfg = config.phil.server.services.unbound;
-  iplot = net.networks.default;
+  iplot = net.networks.default.hosts;
   hostnames = builtins.attrNames iplot;
   mkDnsBindsFromServices = services:
     builtins.mapAttrs
@@ -33,12 +33,12 @@ let
   ipForHost = network: host:
     if builtins.hasAttr host net.networks.${network}
     then net.networks.${network}.${host}
-    else net.networks.endpoints.alpha;
+    else net.endpoints.alpha;
 
   subdomains =
     builtins.mapAttrs
     (network: _: builtins.mapAttrs (_app: host: ipForHost network host) cfg.apps)
-    (lib.filterAttrs (n: _v: ! builtins.elem n ["default" "endpoints"]) net.networks);
+    (lib.filterAttrs (n: _v: ! builtins.elem n ["default"]) net.networks);
 in {
   options.phil.server.services.unbound = {
     enable = mkEnableOption "enable the unbound server";

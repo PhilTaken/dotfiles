@@ -84,7 +84,7 @@ in {
         public = true;
 
         proxycfg = ''
-          reverse_proxy http://${net.networks.default.${config.networking.hostName}}:${builtins.toString cfg.port}
+          reverse_proxy http://${net.networks.default.hosts.${config.networking.hostName}}:${builtins.toString cfg.port}
         '';
 
         publicProxyConfig = ''

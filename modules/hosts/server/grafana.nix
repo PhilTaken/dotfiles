@@ -105,7 +105,7 @@ in {
         nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default) flake.nixosConfigurations;
         mkScrapeJob = n: v: let
           mkTargets = nodename: node: let
-            ip = net.networks.default.${nodename};
+            ip = net.networks.default.hosts.${nodename};
             mkTargetString = port: "${ip}:${builtins.toString port}";
             exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) node.config.services.prometheus.exporters);
             ports =

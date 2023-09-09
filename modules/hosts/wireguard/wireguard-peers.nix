@@ -4,7 +4,9 @@
   ...
 }: let
   inherit (lib) mergeAttrs mapAttrs;
-  iplot = net.networks.yggdrasil;
+
+  network = net.networks.yggdrasil;
+  iplot = network.hosts;
 
   mkOwnIPs = host: ["${iplot.${host}}/24"];
   mkAllowedIPs = host: ["${iplot.${host}}/32"];
@@ -20,10 +22,10 @@
       allowedIPs = mkAllowedIPs host;
     }
     (
-      if builtins.hasAttr host net.networks.endpoints
+      if builtins.hasAttr host net.endpoints
       then {
-        allowedIPs = [iplot.gateway];
-        endpoint = net.networks.endpoints.${host};
+        allowedIPs = [network.netmask];
+        endpoint = net.endpoints.${host};
       }
       else {}
     );

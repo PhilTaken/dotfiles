@@ -8,7 +8,7 @@
   cfg = config.phil.nebula;
   networkName = "milkyway";
 
-  iplot = net.networks."${networkName}";
+  iplot = net.networks."${networkName}".hosts;
   hostname = config.networking.hostName;
   port = 4242;
 
@@ -17,11 +17,11 @@
     (map
       (endp: {
         name = iplot.${endp};
-        value = [(net.networks.endpoints.${endp} + ":${toString port}")];
+        value = [(net.endpoints.${endp} + ":${toString port}")];
       })
-      (builtins.attrNames net.networks.endpoints));
+      (builtins.attrNames net.endpoints));
 
-  isLighthouse = builtins.elem hostname (builtins.attrNames net.networks.endpoints);
+  isLighthouse = builtins.elem hostname (builtins.attrNames net.endpoints);
   lighthouses =
     if isLighthouse
     then []
