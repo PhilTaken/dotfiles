@@ -83,6 +83,7 @@ in {
       jq
       lolcat
       lsof
+      lsix
       #magic-wormhole
       neofetch
       nix-output-monitor

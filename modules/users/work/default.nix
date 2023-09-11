@@ -27,6 +27,8 @@ in {
 
       pre-commit
 
+      nebula
+
       rsync
       wget
       whois
