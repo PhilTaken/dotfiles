@@ -34,6 +34,7 @@ in {
   imports = [
     ./zsh
     ./fish
+    ./nushell
   ];
 
   config = {
@@ -102,6 +103,7 @@ in {
       unzip
       wget
       yt-dlp
+      ueberzugpp
     ];
 
     programs = {
@@ -243,6 +245,10 @@ in {
             when = "env | grep -E '^DIRENV_FILE='";
           };
         };
+      };
+
+      yazi = {
+        enable = true;
       };
     };
   };
