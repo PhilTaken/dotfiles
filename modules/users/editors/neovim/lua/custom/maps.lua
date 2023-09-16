@@ -323,8 +323,8 @@ local leaderv = {
 		},
 		s = {
 			name = "+terminal",
-			l = { "<cmd>ToggleTermSendVisualLines " .. terms["vterm"].id .. "<cr>", "Send Visual Lines" },
-			v = { "<cmd>ToggleTermSendVisualSelection " .. terms["vterm"].id .. "<cr>", "Send Visual Selection" },
+            -- l = { "<cmd>ToggleTermSendVisualLines " .. terms["vterm"].id .. "<cr>", "Send Visual Lines" },
+			-- v = { "<cmd>ToggleTermSendVisualSelection " .. terms["vterm"].id .. "<cr>", "Send Visual Selection" },
 			--l = { function() toggleterm.send_lines_to_terminal("visual_lines", true, terms['vterm'].id) end, "Send Visual Lines" },
 			--v = { function() toggleterm.send_lines_to_terminal("visual_selection", true, terms['vterm'].id) end, "Send Visual Selection" },
 		},
