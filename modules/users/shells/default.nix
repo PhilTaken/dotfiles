@@ -80,6 +80,7 @@ in {
       comma
       dig
       dogdns
+      dufs
       eza
       fasd
       fd
