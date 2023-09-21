@@ -114,7 +114,6 @@ in {
       unrar
       unzip
       wget
-      xplr
       yazi-ya
       yt-dlp
     ];
@@ -262,6 +261,35 @@ in {
 
       yazi = {
         enable = true;
+      };
+
+      xplr = let
+        zoxide = pkgs.fetchFromGitHub {
+          owner = "sayanarijit";
+          repo = "zoxide.xplr";
+          rev = "e50fd35db5c05e750a74c8f54761922464c1ad5f";
+          sha256 = "sha256-ZiOupn9Vq/czXI3JHvXUlAvAFdXrwoO3NqjjiCZXRnY=";
+        };
+        devicons = pkgs.fetchFromGitLab {
+          owner = "hartan";
+          repo = "web-devicons.xplr";
+          rev = "000be1dcc532d90b03cbe549083617376117d9fe";
+          sha256 = "sha256-SZo46ayww5Fs5Pf0j4LDjon+5dy+UyzKT1+vdMqrjzo=";
+        };
+      in {
+        enable = true;
+        extraConfig = ''
+          require('web-devicons.xplr').setup()
+          require("zoxide.xplr").setup({
+            bin = "zoxide",
+            mode = "default",
+            key = "Z",
+          })
+        '';
+        plugins = [
+          devicons
+          zoxide
+        ];
       };
     };
   };
