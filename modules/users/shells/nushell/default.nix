@@ -18,11 +18,7 @@ in {
   config = mkIf cfg.enable {
     programs.nushell = {
       enable = true;
-
-      #loginFile.text = ''
-      #mkdir ~/.local/share/atuin/
-      #atuin init nu --disable-up-arrow | save ~/.local/share/atuin/init.nu
-      #'';
+      shellAliases = config.home.shellAliases;
     };
   };
 }

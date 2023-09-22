@@ -89,8 +89,6 @@ in {
           end
 
           set -U fish_greeting
-          atuin init fish --disable-up-arrow | source
-
           bind \t 'commandline -f complete'
           bind \e 'commandline -f cancel'
           bind \r 'enter_ls'

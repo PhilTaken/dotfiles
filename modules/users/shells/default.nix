@@ -75,7 +75,6 @@ in {
     };
 
     home.packages = with pkgs; [
-      atuin
       bandwhich
       cmake
       comma
@@ -201,12 +200,13 @@ in {
       # TODO: set up sync
       atuin = {
         # TODO: fix for darwin via override to disable checks?
-        enable = ! lib.hasInfix "darwin" pkgs.system;
+        enable = true;
         settings = {
           search_mode = "fuzzy";
           update_check = false;
           style = "compact";
         };
+        flags = ["--disable-up-arrow"];
       };
 
       direnv = {
@@ -216,7 +216,7 @@ in {
 
       man = {
         enable = true;
-        generateCaches = false;
+        generateCaches = true;
       };
 
       zoxide.enable = true;
