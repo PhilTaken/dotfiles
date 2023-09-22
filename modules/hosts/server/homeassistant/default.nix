@@ -43,6 +43,8 @@ in {
       restartUnits = ["home-assistant.service"];
     };
 
+    systemd.tmpfiles.rules = ["L+ ${config.services.home-assistant.configDir}/python_scripts - - - - ${./python-scripts}"];
+
     services.home-assistant = {
       inherit (cfg) enable;
 
@@ -74,6 +76,7 @@ in {
         "radio_browser"
         "shopping_list"
         "air_quality"
+        "python_script"
 
         # requires extra input on ui
         "fritzbox"
@@ -90,52 +93,45 @@ in {
         #"gtfs" # https://gtfs.de/en/feeds/de_full/
       ];
 
-      config = {
+      config = let
+        home_zone_name = "home";
+        work_zone_name = "work";
+      in {
         default_config = {};
+
+        logger.default = "info";
 
         input_select = {
           here_destination_preset.options = [
-            "zone.home"
-            "zone.work"
+            "zone.${home_zone_name}"
+            "zone.${work_zone_name}"
           ];
           here_origin_preset.options = [
-            "zone.home"
-            "zone.work"
+            "zone.${home_zone_name}"
+            "zone.${work_zone_name}"
           ];
         };
 
         automation = [
           {
-            id = "update_morning_commute_sensor";
-            alias = "Commute - Update morning commute sensor";
+            id = "speaker_on_off_with_desktop";
+            alias = "Speakers - turn on and off with the desktop";
             initial_state = "on";
             trigger = [
               {
-                platform = "time_pattern";
-                minutes = "/5";
-              }
-            ];
-            condition = [
-              {
-                condition = "time";
-                after = "08:00:00";
-                before = "11:00:00";
-              }
-              {
-                condition = "time";
-                weekday = [
-                  "mon"
-                  "tue"
-                  "wed"
-                  "thu"
-                  "fri"
-                ];
+                platform = "state";
+                entity_id = "!secret desktop_device_id";
+                from = "";
               }
             ];
             action = [
               {
-                service = "homeassistant.update_entity";
-                target.entity_id = "sensor.morning_commute";
+                service = "python_script.desktop_speakers_sync";
+                data = {
+                  desktop_entity = "!secret desktop_device_id";
+                  speaker_entity = "!secret speaker_device_id";
+                  inherit home_zone_name;
+                };
               }
             ];
           }
@@ -143,7 +139,7 @@ in {
 
         zone = [
           {
-            name = "work";
+            name = work_zone_name;
             icon = "mdi:briefcase";
             latitude = "!secret work_latitude";
             longitude = "!secret work_longitude";
@@ -218,6 +214,8 @@ in {
           temperature_unit = "C";
           time_zone = "Europe/Amsterdam";
         };
+
+        python_script = {};
       };
     };
 
