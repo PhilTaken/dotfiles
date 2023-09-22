@@ -75,6 +75,7 @@ in {
     };
 
     home.packages = with pkgs; [
+      atuin
       bandwhich
       cmake
       comma
@@ -119,6 +120,7 @@ in {
     ];
 
     programs = {
+      carapace.enable = true;
       htop.enable = true;
       btop = {
         enable = true;

@@ -68,6 +68,8 @@
         defaultShell = "fish";
       };
 
+      shells.nushell.enable = true;
+
       gpg.enable = true;
 
       git = {
