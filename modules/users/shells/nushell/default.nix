@@ -18,7 +18,24 @@ in {
   config = mkIf cfg.enable {
     programs.nushell = {
       enable = true;
-      shellAliases = config.home.shellAliases;
+      inherit (config.home) shellAliases;
+      extraConfig = ''
+        $env.config = {
+          # ...other config...
+          edit_mode: vi
+          hooks: {
+            pre_execution: {
+              let cmd = (commandline | str trim)
+
+              if $cmd == "" {
+                run-external "eza"
+                run-external "command" "git" "-c" "color.status=always" "status" "-sb" "2>/dev/null"
+              }
+            }
+          }
+          keybindings: []
+        }
+      '';
     };
   };
 }

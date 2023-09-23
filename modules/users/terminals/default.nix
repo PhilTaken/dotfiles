@@ -20,8 +20,8 @@ in {
     };
 
     defaultShell = mkOption {
-      type = types.enum ["fish" "zsh"];
-      default = "zsh";
+      type = types.enum ["fish" "zsh" "nushell"];
+      default = "fish";
     };
 
     alacritty = {
