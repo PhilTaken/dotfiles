@@ -12,14 +12,19 @@
   programs.fish.enable = true;
   programs.zsh.enable = true;
 
+  environment.shells = [
+    "/run/current-system/sw/bin/nu"
+    pkgs.nushell
+  ];
+
+  environment.systemPackages = [pkgs.nushell];
+
   users.users.philippherzog = {
     name = "philippherzog";
     description = "Philipp Herzog";
     home = "/Users/philippherzog";
-    shell = pkgs.fish;
+    shell = pkgs.nushell;
   };
-
-  environment.shells = [pkgs.zsh pkgs.fish pkgs.nushell];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
