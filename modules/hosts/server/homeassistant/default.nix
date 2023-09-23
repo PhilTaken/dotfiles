@@ -121,7 +121,7 @@ in {
               {
                 platform = "state";
                 entity_id = "!secret desktop_device_id";
-                from = "";
+                from = null;
               }
             ];
             action = [
