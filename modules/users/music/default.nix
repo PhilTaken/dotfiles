@@ -15,7 +15,11 @@ in {
 
   options.phil.music = {
     enable = mkEnableOption "music";
-    enableMpris = mkEnableOption "mpris";
+    enableMpris = mkOption {
+      description = "mpris";
+      type = types.bool;
+      default = true;
+    };
 
     spotifyd_devicename = mkOption {
       description = "spotifyd device name";

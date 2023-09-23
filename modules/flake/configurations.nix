@@ -12,16 +12,8 @@
 
   hmUsers = let
     mkConfig = lib.recursiveUpdate {
-      terminals = {
-        defaultShell = "fish";
-        multiplexer = "zellij";
-        alacritty.decorations = "none";
-      };
-      browsers.enable = true;
-      gpg.enable = true;
       ssh.enable = true;
       music.enable = true;
-      music.enableMpris = true;
     };
   in {
     nixos = {
@@ -63,13 +55,7 @@
         python = true;
       };
 
-      terminals = {
-        multiplexer = "zellij";
-        defaultShell = "fish";
-      };
-
-      shells.nushell.enable = true;
-
+      shells.fish.enable = true;
       gpg.enable = true;
 
       git = {

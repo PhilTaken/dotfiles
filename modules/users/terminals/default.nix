@@ -16,18 +16,18 @@ in {
 
     multiplexer = mkOption {
       type = types.enum ["tmux" "zellij"];
-      default = "tmux";
+      default = "zellij";
     };
 
     defaultShell = mkOption {
       type = types.enum ["fish" "zsh" "nushell"];
-      default = "fish";
+      default = "nushell";
     };
 
     alacritty = {
       decorations = mkOption {
         type = types.enum ["none" "full"];
-        default = "full";
+        default = "none";
       };
     };
   };

@@ -19,7 +19,7 @@
     shell = pkgs.fish;
   };
 
-  environment.shells = [pkgs.zsh pkgs.fish];
+  environment.shells = [pkgs.zsh pkgs.fish pkgs.nushell];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
