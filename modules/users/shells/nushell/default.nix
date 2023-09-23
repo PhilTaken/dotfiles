@@ -65,8 +65,8 @@ in {
 
               if $cmd == "" {
                 run-external "eza"
-                if (git rev-parse --is-inside-work-tree) {
-                  run-external "command" "git" "-c" "color.status=always" "status" "-sb"
+                if (do { git rev-parse --is-inside-work-tree } | complete).exit_code == 0 {
+                  run-external "git" "status" "-sb"
                 }
               }
             }
