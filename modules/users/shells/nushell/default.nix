@@ -74,6 +74,16 @@ in {
           }
           keybindings: []
         }
+
+        # A git workspace selector
+        def-env pri [
+          ...filter: string # filter for the initial selection
+        ] {
+          let chosen_project = (git workspace list | sk -q (echo $filter | str join " "))
+          if (echo $chosen_project | str length) > 0 {
+            cd $"($env.GIT_WORKSPACE)/($chosen_project)"
+          }
+        }
       '';
       # TODO: autostart zellij in nushell
       #+ (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
