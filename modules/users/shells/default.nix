@@ -21,16 +21,6 @@
     exec ${pkgs.nix-index}/bin/nix-locate "$@"
   '';
 
-  # TODO: fix this
-  yazi-ya = pkgs.writeShellScriptBin "ya" ''
-     tmp="$(mktemp -t "yazi-cwd.XXXXX")"
-     ${pkgs.yazi}/bin/yazi --cwd-file="$tmp"
-     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-    cd -- "$cwd"
-     fi
-     rm -f -- "$tmp"
-  '';
-
   # Modified version of command-not-found.sh that uses our wrapped version of
   # nix-locate, makes the output a bit less noisy, and adds color!
   command-not-found = pkgs.runCommandLocal "command-not-found.sh" {} ''
@@ -114,7 +104,6 @@ in {
       unrar
       unzip
       wget
-      yazi-ya
       yt-dlp
     ];
 
