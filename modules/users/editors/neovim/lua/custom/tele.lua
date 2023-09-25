@@ -2,7 +2,7 @@ local M = {}
 
 function M.find_files()
 	local theme = {
-		path_display = { "smart", "absolute" },
+		path_display = { "truncate" },
 		fzf_separator = "|>",
 	}
 	require("telescope.builtin").find_files(theme)
@@ -10,7 +10,7 @@ end
 
 function M.live_grep()
 	local theme = {
-		path_display = { "smart", "absolute" },
+		path_display = { "truncate" },
 		fzf_separator = "|>",
 	}
 	require("telescope.builtin").live_grep(theme)
@@ -26,8 +26,7 @@ function M.buffers()
 	local theme = {
 		show_all_buffers = true,
 		path_display = {
-			"smart",
-			"absolute",
+			"truncate",
 		},
 	}
 	require("telescope.builtin").buffers(theme)
