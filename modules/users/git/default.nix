@@ -59,7 +59,7 @@ in {
     };
 
     home.sessionVariables = {
-      GIT_WORKSPACE = "$HOME/Documents/workspace";
+      GIT_WORKSPACE = "${config.home.homeDirectory}/Documents/workspace";
     };
 
     home.shellAliases = {

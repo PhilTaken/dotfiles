@@ -34,6 +34,7 @@ in {
               (lib.filterAttrs
                 (n: _:
                   builtins.elem n [
+                    "GIT_WORKSPACE"
                     "EDITOR"
                     "GNUPGHOME"
                     "DIRENV_WARN_TIMEOUT"
