@@ -254,6 +254,12 @@ in {
         enable = true;
       };
 
+      bacon = {
+        enable = true;
+        settings = {
+        };
+      };
+
       xplr = let
         zoxide = pkgs.fetchFromGitHub {
           owner = "sayanarijit";
