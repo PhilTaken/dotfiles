@@ -2,6 +2,7 @@
   config,
   lib,
   net,
+  pkgs,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -33,6 +34,7 @@ in {
   config = mkIf cfg.enable {
     services.gitea = {
       inherit (cfg) stateDir enable;
+      package = pkgs.forgejo;
       lfs.enable = true;
       appName = "Oroboros";
 
