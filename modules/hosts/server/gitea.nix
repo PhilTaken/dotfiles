@@ -46,6 +46,8 @@ in {
         server.DOMAIN = "${cfg.host}.${net.tld}";
         server.ROOT_URL = "https://${cfg.host}.${net.tld}/";
         server.HTTP_PORT = cfg.port;
+
+        actions.ENABLED = true;
       };
     };
 
