@@ -3,5 +3,5 @@ jobs:
   check:
     runs-on: nixos
     steps:
-      - run: ls -lasi
+      - uses: https://code.forgejo.org/actions/checkout@v4
       - run: nix flake check
