@@ -80,7 +80,6 @@ in {
         ++ (optionals cfg.langs.extra (with pkgs; [
           fortls
           texlab
-          racket-langserver
           #erlang-ls # erlang
           #elixir_ls # elixir
           #clojure-lsp # clojure

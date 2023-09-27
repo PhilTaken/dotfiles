@@ -224,7 +224,7 @@
           (_: package:
             if l.hasAttrByPath ["meta" "platforms"] package
             then l.elem system package.meta.platforms
-            else true)
+            else (lib.hasInfix "linux" pkgs.system))
           (custom_pkgs_overlay pkgs pkgs);
       };
     };

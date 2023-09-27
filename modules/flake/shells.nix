@@ -56,8 +56,6 @@ in {
 
       nix-prefetch-git
       npins
-
-      racket-langserver
     ];
   in {
     devShells.legacy = pkgs.mkShell {
