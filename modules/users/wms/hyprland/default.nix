@@ -10,7 +10,7 @@
   inherit (lib) mkOption mkIf types mkEnableOption;
 in {
   imports = [
-    inputs.hyprland.homeManagerModules.default
+    #inputs.hyprland.homeManagerModules.default
   ];
 
   options.phil.wms.hyprland = {
@@ -86,6 +86,7 @@ in {
       right = "o";
     in {
       enable = true;
+      # TODO rewrite in nix with https://nix-community.github.io/home-manager/options.html#opt-wayland.windowManager.hyprland.settings
       extraConfig = ''
         monitor = DP-1,2560x1440@75,0x1080,1
         monitor = DVI-D-1,1920x1080@60,0x0,1
