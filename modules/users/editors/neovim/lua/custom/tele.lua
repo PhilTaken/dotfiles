@@ -13,7 +13,8 @@ function M.live_grep()
 		path_display = { "truncate" },
 		fzf_separator = "|>",
 	}
-	require("telescope.builtin").live_grep(theme)
+	require "telescope".extensions.egrepify.egrepify(theme)
+	--require("telescope.builtin").live_grep(theme)
 end
 
 function M.project_search()

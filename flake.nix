@@ -162,6 +162,11 @@
       flake = false;
     };
 
+    vim-telescope-egrepify = {
+      url = "github:fdschmidt93/telescope-egrepify.nvim";
+      flake = false;
+    };
+
     # colorscheme
     catppuccin-base16 = {
       url = "github:catppuccin/base16";

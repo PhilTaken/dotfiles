@@ -2217,6 +2217,7 @@
         "vim-async-src": "vim-async-src",
         "vim-extra-plugins": "vim-extra-plugins",
         "vim-janet-src": "vim-janet-src",
+        "vim-telescope-egrepify": "vim-telescope-egrepify",
         "vim-terraform-src": "vim-terraform-src",
         "vim-yuck-src": "vim-yuck-src",
         "webcord": "webcord",
@@ -2686,6 +2687,22 @@
       "original": {
         "owner": "bakpakin",
         "repo": "janet.vim",
+        "type": "github"
+      }
+    },
+    "vim-telescope-egrepify": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1691174191,
+        "narHash": "sha256-6Ur2UbcnvNEt2/r3aUFvZyyFT4fkCAHN87jALJl37a0=",
+        "owner": "fdschmidt93",
+        "repo": "telescope-egrepify.nvim",
+        "rev": "19c80793cf24c8ae01864e150f0694ad8b308f3a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fdschmidt93",
+        "repo": "telescope-egrepify.nvim",
         "type": "github"
       }
     },

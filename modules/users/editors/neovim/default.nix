@@ -360,6 +360,13 @@ in {
             require("which-key").setup({})
           '')
 
+          (lplug (buildPlugin {
+              pname = "telescope-egrepify.nvim";
+              src = inputs.vim-telescope-egrepify;
+            }) ''
+              require "telescope".load_extension "egrepify"
+            '')
+
           # completion
           cmp-buffer
           cmp-nvim-lsp
