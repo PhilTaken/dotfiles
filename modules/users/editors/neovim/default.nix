@@ -227,11 +227,14 @@ in {
           '')
 
           (lplug indent-blankline-nvim ''
-            require("indent_blankline").setup({
-                buftype_exclude = { "help", "terminal", "nofile", "nowrite" },
-                filetype_exclude = { "startify", "dashboard", "man" },
-                show_current_context_start = true,
-                use_treesitter = true,
+            require("ibl").setup({
+              indent = { char = "│" },
+              whitespace = { highlight = { "Whitespace", "NonText" } },
+              exclude = {
+                buftypes = { "help", "terminal", "nofile", "nowrite" },
+                filetypes = { "startify", "dashboard", "man" },
+              },
+              scope = { show_start = false, show_end = false, }
             })
           '')
 
