@@ -59,7 +59,7 @@ in {
       mypy = pkgs.python39.withPackages (ps: [
         ps.pyramid
         ps.prometheus-client
-        ps.twisted
+        (ps.twisted.overrideAttrs (_: {doInstallCheck = false;}))
         ps.pyserial
       ]);
       writeMyPy = name: pkgs.writers.makePythonWriter mypy pkgs.python39Packages pkgs.buildPackages.python39Packages name {};

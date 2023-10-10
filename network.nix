@@ -80,6 +80,8 @@ _: rec {
       "ldap"
       "grocy"
 
+      "writefreely"
+
       # wip
       "arrs"
     ];
