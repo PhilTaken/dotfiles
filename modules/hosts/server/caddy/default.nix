@@ -92,6 +92,8 @@ in {
     };
 
     systemd.services.caddy.serviceConfig.AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+    systemd.services.caddy.after = map (d: "acme-finished-${d}.target") domains;
+    systemd.services.caddy.wants = map (d: "acme-finished-${d}.target") domains;
 
     services.caddy = let
       genconfig = subdomain: {
