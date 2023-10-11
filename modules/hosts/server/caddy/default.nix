@@ -137,9 +137,15 @@ in {
           };
 
         updatedProxies = lib.mapAttrs (host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies) hiddenHostProxies;
-        allProxies = lib.foldl' lib.recursiveUpdate {} (lib.attrValues updatedProxies);
+
+        myProxies = let
+          host = config.networking.hostName;
+        in
+          if isEndpoint host
+          then lib.foldl' lib.recursiveUpdate allHostProxies.${host} (lib.attrValues updatedProxies)
+          else allHostProxies.${host};
       in
-        lib.mapAttrs' genconfig allProxies;
+        lib.mapAttrs' genconfig myProxies;
     };
 
     networking.firewall = {

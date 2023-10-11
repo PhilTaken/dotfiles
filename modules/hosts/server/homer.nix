@@ -163,7 +163,7 @@ in {
   config = mkIf cfg.enable {
     phil.server.services.caddy.proxy."${cfg.host}" = {
       proxycfg = ''
-        docroot ${homer};
+        root ${homer};
       '';
     };
   };
