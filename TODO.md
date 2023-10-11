@@ -1,5 +1,8 @@
 # current TODOs:
 
+- one psql database (per host?) for services
+- rewrite ttrack in rust?
+
 - set up time machine backup (samba) on delta
 - back up grocy
 - backup postgres database of nextcloud instance
@@ -10,9 +13,6 @@
 - alpha: use delta as build server
 
 - git fuzzy
-
-- package racket-langserver
-    - https://github.com/jeapostrophe/racket-langserver/blob/master/info.rkt
 
 ## ideas
 
