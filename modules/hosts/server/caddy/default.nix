@@ -19,12 +19,12 @@
 
       port = mkOption {
         type = types.nullOr types.port;
-        default = null;
+        default = 80;
       };
 
       proxycfg = mkOption {
         type = types.str;
-        default = "reverse_proxy http://${config.ip}:${toString config.port}";
+        default = "proxy_pass http://${config.ip}:${toString config.port};";
       };
 
       publicProxyConfig = mkOption {
@@ -52,11 +52,7 @@
   hiddenHostProxies = lib.filterAttrs (n: _: !(isEndpoint n)) allHostProxies;
 
   domains = let
-    rdomains =
-      lib.optionals
-      true #(isEndpoint config.networking.hostName)
-      
-      (builtins.concatMap (x: x) (map builtins.attrNames (builtins.attrValues allHostProxies)));
+    rdomains = builtins.concatMap builtins.attrNames (builtins.attrValues allHostProxies);
   in
     map (domain: "${domain}.${net.tld}") rdomains;
 in {
@@ -77,73 +73,73 @@ in {
 
   config = mkIf (cfg.proxy != {}) {
     sops.secrets.acme_dns_cf = {
-      owner = config.systemd.services.caddy.serviceConfig.User;
+      #owner = config.systemd.services.caddy.serviceConfig.User;
+      owner = config.systemd.services.nginx.serviceConfig.User;
     };
 
     security.acme = {
       acceptTerms = true;
       defaults.email = "philipp.herzog@protonmail.com";
-      defaults.group = config.services.caddy.group;
+      defaults.group = config.services.nginx.group;
       defaults.dnsResolver = "1.1.1.1:53";
+      defaults.webroot = null;
       certs = lib.genAttrs domains (domain: {
         dnsProvider = "cloudflare";
         credentialsFile = config.sops.secrets.acme_dns_cf.path;
+        webroot = lib.mkForce null;
       });
     };
 
-    systemd.services.caddy.serviceConfig.AmbientCapabilities = "CAP_NET_BIND_SERVICE";
-    systemd.services.caddy.after = map (d: "acme-finished-${d}.target") domains;
-    systemd.services.caddy.wants = map (d: "acme-finished-${d}.target") domains;
+    #systemd.services.caddy.serviceConfig.AmbientCapabilities = "CAP_NET_BIND_SERVICE";
 
-    services.caddy = let
-      genconfig = subdomain: {
-        proxycfg,
-        public,
-        ...
-      }: let
-        dir = config.security.acme.certs."${subdomain}.${net.tld}".directory;
-        certfile = "${dir}/cert.pem";
-        keyfile = "${dir}/key.pem";
-      in ''
-        ${subdomain}.${net.tld} {
-          ${lib.optionalString (!public) ''
-          @denied not remote_ip private_ranges
-          abort @denied
-        ''}
-          ${proxycfg}
-          tls ${certfile} ${keyfile}
-        }
-      '';
-    in {
+    services.nginx = {
       enable = true;
-      globalConfig = ''
-        admin 0.0.0.0:${builtins.toString cfg.adminport}
-        servers {
-          metrics
-        }
-      '';
+      virtualHosts = let
+        inherit (config.security.acme) certs;
+        genconfig = subdomain: {
+          proxycfg,
+          public,
+          ...
+        }: let
+          fqdn = "${subdomain}.${net.tld}";
+        in {
+          name = fqdn;
+          value = {
+            forceSSL = true;
+            enableACME = true;
+            sslCertificate = "${certs.${fqdn}.directory}/fullchain.pem";
+            sslCertificateKey = "${certs.${fqdn}.directory}/key.pem";
+            sslTrustedCertificate = "${certs.${fqdn}.directory}/chain.pem";
+            extraConfig =
+              lib.optionalString (!public) ''
+                ${builtins.concatStringsSep "\n" (map (n: "allow ${n};") (builtins.catAttrs "netmask" (builtins.attrValues net.networks)))}
+                deny all;
+              ''
+              + ''
+                location / {
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "upgrade";
+                  proxy_http_version 1.1;
 
-      extraConfig = let
+                  ${proxycfg}
+                }
+              '';
+          };
+        };
         updateConfigWithHost = host: _proxy: config:
           lib.recursiveUpdate config {
             proxycfg = ''
-              reverse_proxy ${net.networks.yggdrasil.hosts.${host}}:${builtins.toString config.port} {
-                ${config.publicProxyConfig}
-              }
+              proxy_pass http://${net.networks.yggdrasil.hosts.${host}}:${builtins.toString config.port};
             '';
           };
 
         updatedProxies = lib.mapAttrs (host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies) hiddenHostProxies;
-        otherProxies = lib.foldl' lib.recursiveUpdate {} (lib.attrValues updatedProxies);
+        allProxies = lib.foldl' lib.recursiveUpdate {} (lib.attrValues updatedProxies);
       in
-        concatStrings
-        (lib.mapAttrsToList genconfig
-          (lib.recursiveUpdate
-            cfg.proxy
-            # add reverse proxy entries for all services on other non-endpoint (hidden) systems
-            (lib.optionalAttrs
-              (isEndpoint config.networking.hostName)
-              otherProxies)));
+        lib.mapAttrs' genconfig allProxies;
     };
 
     networking.firewall = {

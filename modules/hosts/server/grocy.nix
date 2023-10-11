@@ -84,13 +84,7 @@ in {
         public = true;
 
         proxycfg = ''
-          reverse_proxy http://${net.networks.default.hosts.${config.networking.hostName}}:${builtins.toString cfg.port}
-        '';
-
-        publicProxyConfig = ''
-          transport http {
-            keepalive off
-          }
+          proxy_pass http://${net.networks.default.hosts.${config.networking.hostName}}:${builtins.toString cfg.port};
         '';
       };
 

@@ -163,9 +163,7 @@ in {
   config = mkIf cfg.enable {
     phil.server.services.caddy.proxy."${cfg.host}" = {
       proxycfg = ''
-        root * ${homer}
-        encode gzip
-        file_server
+        docroot ${homer};
       '';
     };
   };

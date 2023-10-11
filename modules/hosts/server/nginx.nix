@@ -31,7 +31,7 @@ in {
         }
       '';
     in {
-      enable = cfg.proxy != {};
+      enable = lib.mkDefault cfg.proxy != {};
       httpConfig = concatStrings (lib.mapAttrsToList genconfig cfg.proxy);
     };
   };
