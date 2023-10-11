@@ -1,24 +1,23 @@
 {
-  pkgs,
   config,
   lib,
   net,
   flake,
   ...
-} @ inattrs: let
+}: let
   cfg = config.phil.server.services.caddy;
 
-  inherit (lib) mkOption types mkIf concatStrings;
+  inherit (lib) mkOption types mkIf;
 
   ipOptsType = types.submodule ({config, ...}: {
     options = {
       ip = mkOption {
         type = types.str;
-        default = "";
+        default = "127.0.0.1";
       };
 
       port = mkOption {
-        type = types.nullOr types.port;
+        type = types.port;
         default = 80;
       };
 
