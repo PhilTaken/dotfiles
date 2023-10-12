@@ -15,6 +15,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    users.users.promtail.extraGroups = ["nginx"];
+
     services.promtail = {
       enable = true;
       configuration = {
@@ -44,48 +46,53 @@ in {
               }
             ];
           }
+
+          {
+            job_name = "nginx_analytics";
+            static_configs = [
+              {
+                targets = ["localhost"];
+                labels = {
+                  job = "nginx_analytics";
+                  host = config.networking.hostName;
+                  __path__ = "/var/log/nginx/analytics*log";
+                };
+              }
+            ];
+            pipeline_stages = [
+              {
+                json.expressions = {
+                  http_user_agent = "http_user_agent";
+                  request_uri = "request_uri";
+                };
+              }
+              {
+                drop = {
+                  source = "http_user_agent";
+                  expression = "(bot|Bot|RSS|Producer|Expanse|spider|crawler|Crawler|Inspect|test)";
+                };
+              }
+              {
+                drop = {
+                  source = "request_uri";
+                  expression = "/(assets|img)/";
+                };
+              }
+              {
+                drop = {
+                  source = "request_uri";
+                  expression = "/(robots.txt|favicon.ico|index.php)";
+                };
+              }
+              {
+                drop = {
+                  source = "request_uri";
+                  expression = "(.php|.xml|.png)$";
+                };
+              }
+            ];
+          }
         ];
-      };
-    };
-
-    services.vector = {
-      enable = false;
-      journaldAccess = true;
-
-      settings = {
-        timezone = "local";
-
-        sources = {
-          journald = {
-            acknowledgements.enabled = true;
-            type = "journald";
-            include_units = [];
-            current_boot_only = true;
-            exclude_matches.SYSLOG_IDENTIFIER = ["xsession"];
-            since_now = true;
-          };
-        };
-
-        transforms = {};
-
-        sinks = {
-          loki = {
-            acknowledgements.enabled = false;
-            type = "loki";
-            inputs = ["journald"];
-            endpoint = "https://loki.${net.tld}/";
-            compression = "none";
-            remove_timestamp = true;
-            remove_label_fields = true;
-
-            labels = {
-              forwarder = "vector";
-              event = "{{ event_field }}";
-            };
-
-            encoding.codec = "logfmt";
-          };
-        };
       };
     };
   };

@@ -138,6 +138,54 @@ in {
           else allHostProxies.${host};
       in
         lib.mapAttrs' genconfig myProxies;
+
+      appendHttpConfig = ''
+        map $http_referer $httpReferer {
+          default "$http_referer";
+          ""      "(direct)";
+        }
+
+        map $http_user_agent $httpAgent {
+          default "$http_user_agent";
+          ""      "Unknown";
+        }
+
+        map $geoip_country_code $geoIP {
+          default "$geoip_country_code";
+          ""      "Unknown";
+        }
+
+        geoip_country ${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb;
+
+        log_format json_analytics escape=json '{'
+          '"time_local": "$time_local", '
+          '"remote_addr": "$remote_addr", '
+          '"request_uri": "$request_uri", '
+          '"status": "$status", '
+          '"http_referer": "$httpReferer", '
+          '"http_user_agent": "$httpAgent", '
+          '"server_name": "$server_name", '
+          '"request_time": "$request_time", '
+          '"geoip_country_code": "$geoIP"'
+          '}';
+        access_log /var/log/nginx/analytics.log json_analytics;
+      '';
+    };
+
+    sops.secrets.geoip-licensekey = {};
+
+    services.geoipupdate = {
+      enable = true;
+      settings = {
+        AccountID = 924802;
+        DatabaseDirectory = "/var/lib/GeoIP";
+        LicenseKey = config.sops.secrets.geoip-licensekey.path;
+        EditionIDs = [
+          "GeoLite2-ASN"
+          "GeoLite2-City"
+          "GeoLite2-Country"
+        ];
+      };
     };
 
     networking.firewall = {
