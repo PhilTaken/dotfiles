@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   net,
@@ -139,6 +140,7 @@ in {
       in
         lib.mapAttrs' genconfig myProxies;
 
+      additionalModules = [pkgs.nginxModules.geoip2];
       appendHttpConfig = ''
         map $http_referer $httpReferer {
           default "$http_referer";
@@ -150,12 +152,14 @@ in {
           ""      "Unknown";
         }
 
-        map $geoip_country_code $geoIP {
-          default "$geoip_country_code";
+        map $geoip2_country_code $geoIP {
+          default "$geoip2_country_code";
           ""      "Unknown";
         }
 
-        geoip_country ${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb;
+        geoip2 ${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb {
+          $geoip2_country_code country iso_code;
+        }
 
         log_format json_analytics escape=json '{'
           '"time_local": "$time_local", '
