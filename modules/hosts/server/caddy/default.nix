@@ -161,17 +161,48 @@ in {
           $geoip2_country_code country iso_code;
         }
 
+        # https://grafana.com/grafana/dashboards/12559-loki-nginx-service-mesh-json-version/
         log_format json_analytics escape=json '{'
-          '"time_local": "$time_local", '
-          '"remote_addr": "$remote_addr", '
-          '"request_uri": "$request_uri", '
-          '"status": "$status", '
-          '"http_referer": "$httpReferer", '
-          '"http_user_agent": "$httpAgent", '
-          '"server_name": "$server_name", '
-          '"request_time": "$request_time", '
+          '"args": "$args", ' # args
+          '"body_bytes_sent": "$body_bytes_sent", ' # the number of body bytes exclude headers sent to a client
+          '"bytes_sent": "$bytes_sent", ' # the number of bytes sent to a client
+          '"connection": "$connection", ' # connection serial number
+          '"connection_requests": "$connection_requests", ' # number of requests made in connection
           '"geoip_country_code": "$geoIP"'
-          '}';
+          '"gzip_ratio": "$gzip_ratio", '
+          '"http_cf_ray": "$http_cf_ray",'
+          '"http_host": "$http_host", ' # the request Host: header
+          '"http_referer": "$httpReferer", ' # HTTP referer
+          '"http_user_agent": "$httpAgent", ' # user agent
+          '"http_x_forwarded_for": "$http_x_forwarded_for", ' # http_x_forwarded_for
+          '"msec": "$msec", ' # request unixtime in seconds with a milliseconds resolution
+          '"pid": "$pid", ' # process pid
+          '"pipe": "$pipe", ' # "p" if request was pipelined, "." otherwise
+          '"remote_addr": "$remote_addr", ' # client IP
+          '"remote_port": "$remote_port", ' # client port
+          '"remote_user": "$remote_user", ' # client HTTP username
+          '"request": "$request", ' # full path no arguments if the request
+          '"request_id": "$request_id", ' # the unique request id
+          '"request_length": "$request_length", ' # request length (including headers and body)
+          '"request_method": "$request_method", ' # request method
+          '"request_time": "$request_time", ' # request processing time in seconds with msec resolution
+          '"request_uri": "$request_uri", ' # full path and arguments of the request
+          '"scheme": "$scheme", ' # http or https
+          '"server_name": "$server_name", ' # the name of the vhost serving the request
+          '"server_protocol": "$server_protocol", ' # request protocol, like HTTP/1.1 or HTTP/2.0
+          '"ssl_cipher": "$ssl_cipher", ' # TLS cipher
+          '"ssl_protocol": "$ssl_protocol", ' # TLS protocol
+          '"status": "$status", ' # response status code
+          '"time_iso8601": "$time_iso8601", ' # local time in the ISO 8601 standard format
+          '"time_local": "$time_local", '
+          '"upstream": "$upstream_addr", ' # upstream backend server for proxied requests
+          '"upstream_cache_status": "$upstream_cache_status", ' # cache HIT/MISS where applicable
+          '"upstream_connect_time": "$upstream_connect_time", ' # upstream handshake time incl. TLS
+          '"upstream_header_time": "$upstream_header_time", ' # time spent receiving upstream headers
+          '"upstream_response_length": "$upstream_response_length", ' # upstream response length
+          '"upstream_response_time": "$upstream_response_time", ' # time spend receiving upstream body
+        '}';
+
         access_log /var/log/nginx/analytics.log json_analytics;
       '';
     };
@@ -184,11 +215,7 @@ in {
         AccountID = 924802;
         DatabaseDirectory = "/var/lib/GeoIP";
         LicenseKey = config.sops.secrets.geoip-licensekey.path;
-        EditionIDs = [
-          "GeoLite2-ASN"
-          "GeoLite2-City"
-          "GeoLite2-Country"
-        ];
+        EditionIDs = ["GeoLite2-Country"];
       };
     };
 
