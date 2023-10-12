@@ -81,13 +81,19 @@ in {
               {
                 drop = {
                   source = "request_uri";
-                  expression = "/(robots.txt|favicon.ico|index.php)";
+                  expression = "/(robots.txt|favicon.ico|index.php|git-upload-pack)";
                 };
               }
               {
                 drop = {
                   source = "request_uri";
                   expression = "(.php|.xml|.png)$";
+                };
+              }
+              {
+                drop = {
+                  source = "request_uri";
+                  expression = "/(api/actions|loki/api/v1/push|api/webhook)/";
                 };
               }
             ];
