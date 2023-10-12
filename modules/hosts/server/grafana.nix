@@ -66,6 +66,14 @@ in {
           grpc_listen_port = 9060;
         };
 
+        limits_config = {
+          reject_old_samples = true;
+          reject_old_samples_max_age = "168h";
+          retention_period = "360h";
+          max_query_series = 100000;
+          max_query_parallelism = 1;
+        };
+
         common = {
           path_prefix = "/tmp/loki";
           storage.filesystem = {
