@@ -61,7 +61,17 @@ in {
             ];
             pipeline_stages = [
               {
-                json.expressions.request_uri = "request_uri";
+                json.expressions = {
+                  request_uri = "request_uri";
+                  http_referer = "http_referer";
+                  http_referer_base = "http_referer";
+                };
+              }
+              {
+                regex = {
+                  expression = "^(?P<http_referer_base>[^?]+)\\?.*";
+                  source = "http_referer";
+                };
               }
               {
                 drop = {
