@@ -150,7 +150,7 @@ in {
         http = {
           use_x_forwarded_for = true;
           trusted_proxies =
-            ["127.0.0.1" "10.100.0.5"]
+            ["127.0.0.1"]
             ++ (map (endpoint: net.networks.yggdrasil.hosts.${endpoint}) (builtins.attrNames net.endpoints))
             ++ lib.optional (builtins.hasAttr config.networking.hostName net.networks.lan) net.networks.lan.${config.networking.hostName};
           server_port = cfg.port;

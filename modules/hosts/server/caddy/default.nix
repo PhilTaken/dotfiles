@@ -117,6 +117,11 @@ in {
             sslTrustedCertificate = "${certs.${fqdn}.directory}/chain.pem";
             locations."/" = {
               inherit (proxycfg) root proxyPass;
+              extraConfig = ''
+                proxy_redirect http:// https://;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection $connection_upgrade;
+              '';
             };
             extraConfig = lib.optionalString (!public) ''
               ${builtins.concatStringsSep "\n" (map (n: "allow ${n};") (builtins.catAttrs "netmask" (builtins.attrValues net.networks)))}
