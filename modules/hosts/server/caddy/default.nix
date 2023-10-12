@@ -168,7 +168,7 @@ in {
           '"bytes_sent": "$bytes_sent", ' # the number of bytes sent to a client
           '"connection": "$connection", ' # connection serial number
           '"connection_requests": "$connection_requests", ' # number of requests made in connection
-          '"geoip_country_code": "$geoIP"'
+          '"geoip_country_code": "$geoIP", '
           '"gzip_ratio": "$gzip_ratio", '
           '"http_cf_ray": "$http_cf_ray",'
           '"http_host": "$http_host", ' # the request Host: header
@@ -200,7 +200,7 @@ in {
           '"upstream_connect_time": "$upstream_connect_time", ' # upstream handshake time incl. TLS
           '"upstream_header_time": "$upstream_header_time", ' # time spent receiving upstream headers
           '"upstream_response_length": "$upstream_response_length", ' # upstream response length
-          '"upstream_response_time": "$upstream_response_time", ' # time spend receiving upstream body
+          '"upstream_response_time": "$upstream_response_time"' # time spend receiving upstream body
         '}';
 
         access_log /var/log/nginx/analytics.log json_analytics;
