@@ -61,39 +61,36 @@ in {
             ];
             pipeline_stages = [
               {
-                json.expressions = {
-                  http_user_agent = "http_user_agent";
-                  request_uri = "request_uri";
-                };
+                json.expressions.request_uri = "request_uri";
               }
               {
                 drop = {
-                  source = "http_user_agent";
-                  expression = "(bot|Bot|RSS|Producer|Expanse|spider|crawler|Crawler|Inspect|test)";
+                  source = "request_uri";
+                  expression = ".*git-upload-pack$";
                 };
               }
               {
                 drop = {
                   source = "request_uri";
-                  expression = "/(assets|img)/";
+                  expression = "\\/(api|assests|img)\\/.*";
                 };
               }
               {
                 drop = {
                   source = "request_uri";
-                  expression = "/(robots.txt|favicon.ico|index.php|git-upload-pack)";
+                  expression = "\\/loki\\/api\\/v1\\/push";
                 };
               }
               {
                 drop = {
                   source = "request_uri";
-                  expression = "(.php|.xml|.png)$";
+                  expression = "\\/(lovelave|service_worker\\.js).*";
                 };
               }
               {
                 drop = {
                   source = "request_uri";
-                  expression = "/(api/actions|loki/api/v1/push|api/webhook)/";
+                  expression = "\\/(index|remote)\\.php.*";
                 };
               }
             ];
