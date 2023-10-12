@@ -21,9 +21,17 @@
         default = 80;
       };
 
-      proxycfg = mkOption {
-        type = types.str;
-        default = "proxy_pass http://${config.ip}:${toString config.port};";
+      proxyPass = mkOption {
+        type = types.nullOr types.str;
+        default =
+          if config.root == null
+          then "http://${config.ip}:${toString config.port}"
+          else null;
+      };
+
+      root = mkOption {
+        type = types.nullOr types.str;
+        default = null;
       };
 
       publicProxyConfig = mkOption {
@@ -93,13 +101,10 @@ in {
 
     services.nginx = {
       enable = true;
+      recommendedProxySettings = true;
       virtualHosts = let
         inherit (config.security.acme) certs;
-        genconfig = subdomain: {
-          proxycfg,
-          public,
-          ...
-        }: let
+        genconfig = subdomain: {public, ...} @ proxycfg: let
           fqdn = "${subdomain}.${net.tld}";
         in {
           name = fqdn;
@@ -109,30 +114,18 @@ in {
             sslCertificate = "${certs.${fqdn}.directory}/fullchain.pem";
             sslCertificateKey = "${certs.${fqdn}.directory}/key.pem";
             sslTrustedCertificate = "${certs.${fqdn}.directory}/chain.pem";
-            extraConfig =
-              lib.optionalString (!public) ''
-                ${builtins.concatStringsSep "\n" (map (n: "allow ${n};") (builtins.catAttrs "netmask" (builtins.attrValues net.networks)))}
-                deny all;
-              ''
-              + ''
-                location / {
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection "upgrade";
-                  proxy_http_version 1.1;
-
-                  ${proxycfg}
-                }
-              '';
+            locations."/" = {
+              inherit (proxycfg) root proxyPass;
+            };
+            extraConfig = lib.optionalString (!public) ''
+              ${builtins.concatStringsSep "\n" (map (n: "allow ${n};") (builtins.catAttrs "netmask" (builtins.attrValues net.networks)))}
+              deny all;
+            '';
           };
         };
         updateConfigWithHost = host: _proxy: config:
           lib.recursiveUpdate config {
-            proxycfg = ''
-              proxy_pass http://${net.networks.yggdrasil.hosts.${host}}:${builtins.toString config.port};
-            '';
+            proxyPass = "http://${net.networks.yggdrasil.hosts.${host}}:${builtins.toString config.port}";
           };
 
         updatedProxies = lib.mapAttrs (host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies) hiddenHostProxies;

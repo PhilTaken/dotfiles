@@ -82,10 +82,7 @@ in {
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
         public = true;
-
-        proxycfg = ''
-          proxy_pass http://${net.networks.default.hosts.${config.networking.hostName}}:${builtins.toString cfg.port};
-        '';
+        proxyPass = "http://${net.networks.default.hosts.${config.networking.hostName}}:${builtins.toString cfg.port}";
       };
 
       homer.apps."${cfg.host}" = {
