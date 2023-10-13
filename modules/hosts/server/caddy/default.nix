@@ -164,6 +164,11 @@ in {
             sslTrustedCertificate = "${certs.${net.tld}.directory}/chain.pem";
             globalRedirect = "gitea.pherzog.xyz";
           };
+
+          "external_ip" = lib.mkIf (builtins.hasAttr config.networking.hostName net.endpoints) {
+            serverName = net.endpoints.${config.networking.hostName};
+            globalRedirect = "pherzog.xyz";
+          };
         };
 
       additionalModules = [pkgs.nginxModules.geoip2];
