@@ -62,7 +62,7 @@
   domains = let
     rdomains = builtins.concatMap builtins.attrNames (builtins.attrValues allHostProxies);
   in
-    map (domain: "${domain}.${net.tld}") rdomains;
+    (map (domain: "${domain}.${net.tld}") rdomains) ++ ["pherzog.xyz" "www.pherzog.xyz"];
 in {
   options.phil.server.services.caddy = {
     # TODO: autogenerate from host/port in services
@@ -143,7 +143,28 @@ in {
           then lib.foldl' lib.recursiveUpdate allHostProxies.${host} (lib.attrValues updatedProxies)
           else allHostProxies.${host};
       in
-        lib.mapAttrs' genconfig myProxies;
+        (lib.mapAttrs' genconfig myProxies)
+        // {
+          "www.${net.tld}" = let
+            fqdn = "www.${net.tld}";
+          in {
+            forceSSL = true;
+            enableACME = true;
+            sslCertificate = "${certs.${fqdn}.directory}/fullchain.pem";
+            sslCertificateKey = "${certs.${fqdn}.directory}/key.pem";
+            sslTrustedCertificate = "${certs.${fqdn}.directory}/chain.pem";
+            globalRedirect = "pherzog.xyz";
+          };
+
+          ${net.tld} = {
+            forceSSL = true;
+            enableACME = true;
+            sslCertificate = "${certs.${net.tld}.directory}/fullchain.pem";
+            sslCertificateKey = "${certs.${net.tld}.directory}/key.pem";
+            sslTrustedCertificate = "${certs.${net.tld}.directory}/chain.pem";
+            globalRedirect = "gitea.pherzog.xyz";
+          };
+        };
 
       additionalModules = [pkgs.nginxModules.geoip2];
       appendHttpConfig = ''
