@@ -31,7 +31,7 @@ in {
 
       rsync
       wget
-      whois
+      #whois
       fswatch
 
       httpie
