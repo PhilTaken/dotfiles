@@ -16,7 +16,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       mutagen
-      termscp
+      #termscp
 
       bottom
       fd
@@ -35,7 +35,6 @@ in {
       fswatch
 
       httpie
-      termscp
 
       git
       copier
