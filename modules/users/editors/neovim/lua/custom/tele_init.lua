@@ -9,6 +9,7 @@ local extraglobs = {
 	"--glob=!**/.jpm/*",
 	"--glob=!**/.direnv/*",
 	"--glob=!**/target/*",
+	"--glob=!**/.ruff_cache/*",
 }
 
 local ff_command = {

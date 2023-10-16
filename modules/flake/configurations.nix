@@ -88,8 +88,8 @@ in {
             openssl
             openssl.dev
 
-            python39Full
-            python39Packages.virtualenv
+            python310Full
+            python310Packages.virtualenv
           ];
 
         userConfig = hmUsers.philippherzog;
