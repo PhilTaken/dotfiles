@@ -110,7 +110,7 @@ in {
       port = cfg.prometheus-port;
 
       scrapeConfigs = let
-        nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default) flake.nixosConfigurations;
+        nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default.hosts) flake.nixosConfigurations;
         mkScrapeJob = n: v: let
           mkTargets = nodename: node: let
             ip = net.networks.default.hosts.${nodename};
@@ -118,8 +118,7 @@ in {
             exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) node.config.services.prometheus.exporters);
             ports =
               exporterPorts
-              ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [node.config.phil.server.services.promexp.prom-sensors-port]
-              ++ lib.optionals node.config.services.caddy.enable [node.config.phil.server.services.caddy.adminport];
+              ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [node.config.phil.server.services.promexp.prom-sensors-port];
           in
             builtins.map mkTargetString ports;
         in {
