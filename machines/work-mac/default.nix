@@ -14,7 +14,9 @@
 
   environment.shells = [
     "/run/current-system/sw/bin/nu"
+    "/run/current-system/sw/bin/fish"
     pkgs.nushell
+    pkgs.zsh
   ];
 
   environment.systemPackages = [pkgs.nushell];
@@ -23,7 +25,7 @@
     name = "philippherzog";
     description = "Philipp Herzog";
     home = "/Users/philippherzog";
-    shell = pkgs.nushell;
+    shell = pkgs.fish;
   };
 
   # Used for backwards compatibility, please read the changelog before changing.
