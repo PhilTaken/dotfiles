@@ -36,6 +36,8 @@ in {
 
       httpie
 
+      hound
+
       git
       copier
 
