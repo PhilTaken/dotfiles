@@ -79,7 +79,7 @@ in {
       enable = true;
 
       # allow access to tls certs
-      user = "caddy";
+      user = "nginx";
 
       settings = {
         include = "${./unbound-adblock.conf}";

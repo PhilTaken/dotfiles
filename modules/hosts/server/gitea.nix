@@ -53,17 +53,6 @@ in {
       };
     };
 
-    services.gitea-actions-runner = {
-      package = pkgs.forgejo-actions-runner;
-      instances."${config.networking.hostName}" = {
-        enable = true;
-        name = config.networking.hostName;
-        url = "https://${cfg.host}.${net.tld}";
-        labels = ["nixos:docker://icewind1991/nix-runner"];
-        tokenFile = config.sops.secrets.forgejo-actions-token.path;
-      };
-    };
-
     networking.firewall.interfaces.${net.networks.yggdrasil.interfaceName} = {
       allowedTCPPorts = [cfg.port];
       allowedUDPPorts = [cfg.port];
