@@ -2149,7 +2149,6 @@
         "tmux-nvr-src": "tmux-nvr-src",
         "treefmt-nix": "treefmt-nix_2",
         "ttrack": "ttrack",
-        "unbound-adservers": "unbound-adservers",
         "vim-async-src": "vim-async-src",
         "vim-extra-plugins": "vim-extra-plugins",
         "vim-janet-src": "vim-janet-src",
@@ -2563,18 +2562,6 @@
       "original": {
         "type": "git",
         "url": "https://gitea.pherzog.xyz/phil/ttrack"
-      }
-    },
-    "unbound-adservers": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-4nOu7v0Lad7rNi1GNWFDsE42Bmj00+vSRE5IyMCeSdM=",
-        "type": "file",
-        "url": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=unbound&mimetype=plaintext&showintro=0"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=unbound&mimetype=plaintext&showintro=0"
       }
     },
     "utils": {

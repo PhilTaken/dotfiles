@@ -126,11 +126,6 @@
       flake = false;
     };
 
-    #autoeq = {
-    #url = "github:jaakkopasanen/AutoEq";
-    #flake = false;
-    #};
-
     fish-pisces-src = {
       url = "github:laughedelic/pisces";
       flake = false;
