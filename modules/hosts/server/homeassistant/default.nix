@@ -42,8 +42,29 @@ in {
       path = "/var/lib/hass/secrets.yaml";
       restartUnits = ["home-assistant.service"];
     };
+    sops.secrets.mqtt-password = {
+      owner = "mosquitto";
+      restartUnits = ["mosquitto.service"];
+    };
 
     systemd.tmpfiles.rules = ["L+ ${config.services.home-assistant.configDir}/python_scripts - - - - ${./python-scripts}"];
+
+    # ----------------
+    # mqtt
+    services.mosquitto = {
+      enable = true;
+      listeners = [
+        {
+          users.root = {
+            acl = ["readwrite #"];
+            passwordFile = config.sops.secrets.mqtt-password.path;
+          };
+        }
+      ];
+    };
+    networking.firewall.allowedTCPPorts = [1883];
+
+    # ----------------
 
     services.home-assistant = {
       inherit (cfg) enable;
@@ -77,6 +98,7 @@ in {
         "shopping_list"
         "air_quality"
         "python_script"
+        "mqtt"
 
         # requires extra input on ui
         "fritzbox"
@@ -225,6 +247,10 @@ in {
     };
 
     phil.server.services = {
+      caddy.proxy."mqtt" = {
+        inherit (cfg) port;
+      };
+
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
         public = true;

@@ -22,6 +22,7 @@ portunus-seed: ENC[AES256_GCM,data:pc/qxVmnbe+qgndSzDknZGAMA6czdWqwUmdaNiDx32T8F
 forgejo-actions-token: ENC[AES256_GCM,data:zP56juyQ+Q9eJhBVhLK6SBhuWr++a3aKf1dYMokRG0N+aUDcM3BR0L5s+BFJJQ==,iv:PBCfYRTT/W4wnbFAIyipfKjxyiMpGFiPKvtPX47wZvI=,tag:f3kbgqKPeoPG2ZnJux5OTg==,type:str]
 writefreely-adminpass: ENC[AES256_GCM,data:BGGhdDI54N2FLvvFCik=,iv:61TDzOV87cPc63bjoZhTzU+4ea08rRtFphGcJ0kE0vE=,tag:Nc8zLrWT5b5KDJfQFxlYAw==,type:str]
 geoip-licensekey: ENC[AES256_GCM,data:8H+poTkfK6tUZuwtVwX8OwdfQuZiDEX4G1N3GY2gEKjRpIvzXja/BQ==,iv:GKtSxnqT/xdgQ9hpupKrGadG65ske00LQpyxfHkF0Jk=,tag:6NB+Jaf5VqWzJst66gEtnA==,type:str]
+mqtt-password: ENC[AES256_GCM,data:dM2rnubupsKDBzMb6+zpRgxtRg03jWE=,iv:a/dq344+xHfsDClok7AeaLjJUgwgaRnPlrsUMwtZp3U=,tag:zaSXp6Y3Roj3/tqC2rNg7A==,type:str]
 sops:
     shamir_threshold: 1
     kms: []
@@ -83,8 +84,8 @@ sops:
             TzM3UGdUYkVpRW1mYUZlSEU0KzRuL2MKhdDcgh3loZkAwjgSkuRXvulw/mbEBIrR
             fDSUlIJ0ZRLqTRuc7FaTrSmq8lU2KDFZAEBZ3GWGZpGWjeQkzzQPVA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-10-12T11:48:15Z"
-    mac: ENC[AES256_GCM,data:ZtgkpO6Kqk7dtKpI/4ofIzPY27652BBXHSm2Q8oKGLaRcmr1yasAKHjUXwDm0DG12Xl5MTXRYgcViyInpwmd281wzgZSq5ILrkW1TfodZAVUNdg0/nOz+tp12n/1K7cOkiGzzKOpglJlj6zgmMLlFSRNmFlg9gbU57Snoud+NSg=,iv:CfJccKdVEhWp0TJpal37+zynPz/fQZvQUIBeDBvAcLo=,tag:UyRAXxeIRjBkuLt8fuvP1g==,type:str]
+    lastmodified: "2023-11-01T14:39:12Z"
+    mac: ENC[AES256_GCM,data:szTResoZrvdOjwO8xwi5wb1dZSyp1ztso1khR0osYnRorhk5HnQX9A1rHzQ4IGy3HRQBhaxSk2yqEoqQp3IsfKDYdxTvssGcDGZAzqeb4C3wzSmAcscTfmDVfJ2cVmq6CtUgSANfd+IRiFKzH4zk27T+0ShZOzMQNy0Yykhqs6Y=,iv:kvQznL4Yz1eTTcY7IeqdSiJkxOXYaePawoqp8zkEh7c=,tag:QYmdp05aq0Ydd81SsbVPqA==,type:str]
     pgp:
         - created_at: "2023-02-16T15:30:20Z"
           enc: |-
@@ -107,4 +108,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
     unencrypted_suffix: _unencrypted
-    version: 3.8.0
+    version: 3.8.1
