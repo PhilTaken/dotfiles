@@ -90,14 +90,19 @@ lsp_extra_config["pylsp"] = {
                 pythonpath = io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)'"):read()
                 config.settings.pylsp.plugins.jedi.environment = pythonpath
             end)
-		else
-			pythonpath = io.popen("which python 2>/dev/null"):read()
+        else
+            pythonpath = io.popen("which python 2>/dev/null"):read()
             config.settings.pylsp.plugins.jedi.environment = pythonpath
 		end
 	end,
 	settings = {
 		pylsp = {
 			plugins = {
+                flake8 = { enabled = true },
+                yapf = { enabled = true },
+                pydocstyle = { enabled = true },
+                mccabe = { enabled = false },
+                pyflakes = { enabled = false },
 				jedi = {
 					environment = nil,
 				},
@@ -106,11 +111,11 @@ lsp_extra_config["pylsp"] = {
 					fuzzy = true,
 				},
 				pycodestyle = {
-					maxLineLength = 150,
+				    enabled = false,
 				},
 			},
 		},
-	},
+	}
 }
 
 local enabled_lsps = {
@@ -135,6 +140,7 @@ local signature_setup = {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		navic.attach(client, bufnr)
+        which_key_lsp()
 	end,
 }
 

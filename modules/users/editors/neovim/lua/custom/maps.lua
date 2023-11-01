@@ -46,8 +46,6 @@ local leadern = {
 	["<c-s-tab>"] = { "<Plug>(CybuLastusedPrev)", "Previous Buffer" },
 	["<tab>"] = { "<Plug>(CybuNext)", "Next Buffer" },
 	["<s-tab>"] = { "<Plug>(CybuPrev)", "Previous Buffer" },
-	--["<tab>"] = { "<cmd>bn<cr>", "Next Buffer" },
-	--["<s-tab>"] = { "<cmd>bp<cr>", "Previous Buffer" },
 
 	[";"] = {
 		function()
@@ -85,15 +83,6 @@ local leadern = {
 
 	["<C-l>"] = { "<cmd>cnext<cr>zz", "go to next entry in quickfix" },
 	["<C-c>"] = { "<cmd>cprev<cr>zz", "go to previous entry in quickfix" },
-
-	--K = {
-	--function()
-	--local winid = require('ufo').peekFoldedLinesUnderCursor()
-	--if not winid then
-	--vim.lsp.buf.hover()
-	--end
-	--end
-	--},
 
 	["<leader>"] = {
 		["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting" },
@@ -158,46 +147,6 @@ local leadern = {
 			q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix List" },
 			l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
 			r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences" },
-		},
-		l = {
-			name = "+lsp",
-			n = {
-				function()
-					vim.lsp.buf.rename()
-				end,
-				"Rename Variable",
-			},
-			c = {
-				function()
-					vim.lsp.buf.code_action()
-				end,
-				"Code Action",
-			},
-			f = {
-				function()
-					vim.lsp.buf.formatting()
-				end,
-				"Formatting",
-			},
-			d = {
-				function()
-					vim.lsp.buf.definition()
-				end,
-				"Preview Definition",
-			},
-			e = {
-				function()
-					vim.diagnostic.open_float()
-				end,
-				"Diagnostics float",
-			},
-			k = {
-				function()
-					vim.lsp.buf.hover()
-				end,
-				"Show tooltips/docs",
-			},
-			-- symbols outline
 		},
 		g = {
 			name = "+git",
@@ -292,13 +241,6 @@ local leadern = {
 				end,
 				"Toggle side shell (vertical split)",
 			}, -- horizontal
-
-			l = {
-				function()
-					--toggleterm.send_lines_to_terminal("single_line", true, terms["vterm"].id)
-				end,
-				"Send current line",
-			},
 		},
 	},
 }
@@ -321,13 +263,6 @@ local leaderv = {
 			name = "+R",
 			s = { "<Plug>RSendSelection", "Send visual selection" },
 		},
-		s = {
-			name = "+terminal",
-            -- l = { "<cmd>ToggleTermSendVisualLines " .. terms["vterm"].id .. "<cr>", "Send Visual Lines" },
-			-- v = { "<cmd>ToggleTermSendVisualSelection " .. terms["vterm"].id .. "<cr>", "Send Visual Selection" },
-			--l = { function() toggleterm.send_lines_to_terminal("visual_lines", true, terms['vterm'].id) end, "Send Visual Lines" },
-			--v = { function() toggleterm.send_lines_to_terminal("visual_selection", true, terms['vterm'].id) end, "Send Visual Selection" },
-		},
 	},
 	["/"] = { 'y/<C-R>"<CR>', "Search using visual mode" },
 }
@@ -337,43 +272,11 @@ local leadert = {
 	[";;"] = { require("custom.utils").t("<C-\\><C-n>"), "Escape from terminal mode" },
 }
 
-local leaderi = {
-	["<c-o>"] = {
-		function()
-			require("luasnip").jump(1)
-		end,
-		"jump to next snippet placeholder",
-	},
-	["<c-z>"] = {
-		function()
-			require("luasnip").jump(-1)
-		end,
-		"jump to previous snippet placeholder",
-	},
-}
-
-local leaders = {
-	["<c-o>"] = {
-		function()
-			require("luasnip").jump(1)
-		end,
-		"jump to next snippet placeholder",
-	},
-	["<c-z>"] = {
-		function()
-			require("luasnip").jump(-1)
-		end,
-		"jump to previous snippet placeholder",
-	},
-}
-
 -- register all settings
 local wk = require("which-key")
 wk.register(leadern, { mode = "n" })
 wk.register(leaderv, { mode = "v" })
 wk.register(leadert, { mode = "t" })
-wk.register(leaderi, { mode = "i" })
-wk.register(leaders, { mode = "s" })
 
 -- filetype-specific mappings
 _G.which_key_conjure = function()
@@ -411,6 +314,83 @@ _G.which_key_conjure = function()
 
 	wk.register(fenneln, { mode = "n", buffer = 0 })
 	wk.register(fennelv, { mode = "v", buffer = 0 })
+end
+
+_G.which_key_lsp = function()
+    local rn = {
+		g = {
+			d = {
+				function()
+                    vim.lsp.buf.definition()
+				end,
+				"Go to definition",
+			},
+        },
+        K = {
+            function()
+                vim.lsp.buf.hover()
+            end,
+            "Show tooltips/docs",
+        },
+        ["["] = {
+            d = {
+                function()
+                    vim.diagnostic.goto_next()
+                end,
+                "Go to next diagnostic"
+            }
+        },
+        ["]"] = {
+            d = {
+                function()
+                    vim.diagnostic.goto_prev()
+                end,
+                "Go to previous diagnostic"
+            }
+        },
+        ["<leader>"] = {
+            v = {
+                w = {
+                    s = {
+                        function()
+                            vim.lsp.buf.workspace_symbol()
+                        end,
+                        "View Workspace Symbols"
+                    }
+                },
+                d = {
+                    function()
+                        vim.diagnostic.open_float()
+                    end,
+                    "Open float diagnostics"
+                },
+                c = {
+                    a = {
+                        function()
+                            vim.lsp.buf.code_action()
+                        end,
+                        "Open code actions"
+                    }
+                },
+                r = {
+                    r = {
+                        function()
+                            vim.lsp.buf.references()
+                        end,
+                        "Open references"
+                    },
+                    n = {
+                        function()
+                            vim.lsp.buf.rename()
+                        end,
+                        "Rename"
+                    }
+                }
+            }
+        },
+    }
+
+	wk.register(rn, { mode = "n", buffer = 0 })
 end
 
 _G.which_key_r = function()

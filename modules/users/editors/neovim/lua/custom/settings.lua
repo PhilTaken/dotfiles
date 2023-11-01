@@ -13,6 +13,11 @@ vim.g.loaded_perl_provider = 0
 opt.wildignore = { "*.swp", "*.bak", "*.pyc", "*.class" }
 opt.wildmode = { "list", "longest" }
 
+opt.isfname:append("@-@")
+
+-- scrolloff
+opt.scrolloff = 8
+
 opt.langremap = true
 
 o.cmdheight = 1

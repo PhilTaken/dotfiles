@@ -6,9 +6,9 @@
   ...
 }: let
   cfg = config.phil.editors.neovim;
-  inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
+  inherit (pkgs.vimUtils) buildVimPlugin;
   inherit (lib) mkOption mkIf types optionals;
-  buildPlugin = attrset: buildVimPluginFrom2Nix (attrset // {version = "master";});
+  buildPlugin = attrset: buildVimPlugin (attrset // {version = "master";});
 
   plug = plugin: config: {
     inherit plugin config;
@@ -107,7 +107,7 @@ in {
           sqlite # for sqlite.lua
           inetutils # remote editing
 
-          #sumneko-lua-language-server # lua
+          sumneko-lua-language-server # lua
 
           nil # nix
           nixd # nix
@@ -438,7 +438,7 @@ in {
     };
 
     home.packages = with pkgs; [
-      visidata
+      #visidata
       #neovim-remote
 
       # https://github.com/neovide/neovide/issues/1280
