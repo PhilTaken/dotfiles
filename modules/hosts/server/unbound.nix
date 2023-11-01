@@ -82,6 +82,7 @@ in {
       user = "caddy";
 
       settings = {
+        include = "${./unbound-adblock.conf}";
         server = {
           access-control = [
             "127.0.0.0/8 allow" # localhost
