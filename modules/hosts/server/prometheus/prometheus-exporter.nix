@@ -61,6 +61,7 @@ in {
         ps.prometheus-client
         (ps.twisted.overrideAttrs (_: {doInstallCheck = false;}))
         ps.pyserial
+        ps.setuptools
       ]);
       writeMyPy = name: pkgs.writers.makePythonWriter mypy pkgs.python39Packages pkgs.buildPackages.python39Packages name {};
       pyfile = writeMyPy "prom-sensors.py" ./sensors.py;
