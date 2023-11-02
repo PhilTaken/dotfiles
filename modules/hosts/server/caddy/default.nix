@@ -52,7 +52,7 @@
     lib.mapAttrs
     (_n: v: v.config.phil.server.services.caddy.proxy)
     (lib.filterAttrs
-      (n: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v)
+      (_n: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v)
       flake.nixosConfigurations);
 
   endpoints = builtins.attrNames net.endpoints;
@@ -91,7 +91,7 @@ in {
       defaults.group = config.services.nginx.group;
       defaults.dnsResolver = "1.1.1.1:53";
       defaults.webroot = null;
-      certs = lib.genAttrs domains (domain: {
+      certs = lib.genAttrs domains (_domain: {
         dnsProvider = "cloudflare";
         credentialsFile = config.sops.secrets.acme_dns_cf.path;
         webroot = lib.mkForce null;

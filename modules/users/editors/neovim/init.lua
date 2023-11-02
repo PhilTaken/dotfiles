@@ -42,8 +42,8 @@ require("custom.settings")
 --require("custom.utils")
 
 -- lsp settings
-vim.schedule(function ()
-    require("custom.lsp")
+vim.schedule(function()
+	require("custom.lsp")
 end)
 
 -- mappings
@@ -53,8 +53,8 @@ require("custom.maps")
 require("custom.statusline")
 
 -- luasnip snippets
-vim.schedule(function ()
-    require("custom.snippets")
+vim.schedule(function()
+	require("custom.snippets")
 end)
 
 -- cmp completion engine

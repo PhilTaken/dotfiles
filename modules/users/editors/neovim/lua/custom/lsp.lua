@@ -52,29 +52,29 @@ lsp_extra_config["lua_ls"] = {
 }
 
 lsp_extra_config["rust_analyzer"] = {
-    flags = {
-        exit_timeout = 0,
-    },
+	flags = {
+		exit_timeout = 0,
+	},
 	settings = {
 		["rust-analyzer"] = {
-		    files = {
-		        excludeDirs = { ".direnv" },
-		        watcherExclude = { ".direnv" },
-		    },
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true
-            },
+			files = {
+				excludeDirs = { ".direnv" },
+				watcherExclude = { ".direnv" },
+			},
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
+			},
+			cargo = {
+				buildScripts = {
+					enable = true,
+				},
+			},
+			procMacro = {
+				enable = true,
+			},
 		},
 	},
 }
@@ -86,23 +86,23 @@ lsp_extra_config["pylsp"] = {
 
 		local pythonpath
 		if #appenv == 1 then
-		    vim.schedule(function()
-                pythonpath = io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)'"):read()
-                config.settings.pylsp.plugins.jedi.environment = pythonpath
-            end)
-        else
-            pythonpath = io.popen("which python 2>/dev/null"):read()
-            config.settings.pylsp.plugins.jedi.environment = pythonpath
+			vim.schedule(function()
+				pythonpath = io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)'"):read()
+				config.settings.pylsp.plugins.jedi.environment = pythonpath
+			end)
+		else
+			pythonpath = io.popen("which python 2>/dev/null"):read()
+			config.settings.pylsp.plugins.jedi.environment = pythonpath
 		end
 	end,
 	settings = {
 		pylsp = {
 			plugins = {
-                flake8 = { enabled = true },
-                yapf = { enabled = true },
-                pydocstyle = { enabled = true },
-                mccabe = { enabled = false },
-                pyflakes = { enabled = false },
+				flake8 = { enabled = true },
+				yapf = { enabled = true },
+				pydocstyle = { enabled = true },
+				mccabe = { enabled = false },
+				pyflakes = { enabled = false },
 				jedi = {
 					environment = nil,
 				},
@@ -111,11 +111,11 @@ lsp_extra_config["pylsp"] = {
 					fuzzy = true,
 				},
 				pycodestyle = {
-				    enabled = false,
+					enabled = false,
 				},
 			},
 		},
-	}
+	},
 }
 
 local enabled_lsps = {
@@ -140,7 +140,7 @@ local signature_setup = {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		navic.attach(client, bufnr)
-        which_key_lsp()
+		which_key_lsp()
 	end,
 }
 

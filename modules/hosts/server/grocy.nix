@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   net,
@@ -54,11 +53,7 @@ in {
           };
         };
 
-        config = {
-          config,
-          pkgs,
-          ...
-        }: {
+        config = {...}: {
           # https://github.com/NixOS/nixpkgs/issues/162686
           networking.nameservers = ["1.1.1.1"];
           # WORKAROUND

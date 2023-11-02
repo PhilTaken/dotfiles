@@ -3,7 +3,6 @@
   config,
   lib,
   nixosConfig,
-  inputs,
   ...
 }: let
   cfg = config.phil.wms.hyprland;

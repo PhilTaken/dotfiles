@@ -317,78 +317,78 @@ _G.which_key_conjure = function()
 end
 
 _G.which_key_lsp = function()
-    local rn = {
+	local rn = {
 		g = {
 			d = {
 				function()
-                    vim.lsp.buf.definition()
+					vim.lsp.buf.definition()
 				end,
 				"Go to definition",
 			},
-        },
-        K = {
-            function()
-                vim.lsp.buf.hover()
-            end,
-            "Show tooltips/docs",
-        },
-        ["["] = {
-            d = {
-                function()
-                    vim.diagnostic.goto_next()
-                end,
-                "Go to next diagnostic"
-            }
-        },
-        ["]"] = {
-            d = {
-                function()
-                    vim.diagnostic.goto_prev()
-                end,
-                "Go to previous diagnostic"
-            }
-        },
-        ["<leader>"] = {
-            v = {
-                w = {
-                    s = {
-                        function()
-                            vim.lsp.buf.workspace_symbol()
-                        end,
-                        "View Workspace Symbols"
-                    }
-                },
-                d = {
-                    function()
-                        vim.diagnostic.open_float()
-                    end,
-                    "Open float diagnostics"
-                },
-                c = {
-                    a = {
-                        function()
-                            vim.lsp.buf.code_action()
-                        end,
-                        "Open code actions"
-                    }
-                },
-                r = {
-                    r = {
-                        function()
-                            vim.lsp.buf.references()
-                        end,
-                        "Open references"
-                    },
-                    n = {
-                        function()
-                            vim.lsp.buf.rename()
-                        end,
-                        "Rename"
-                    }
-                }
-            }
-        },
-    }
+		},
+		K = {
+			function()
+				vim.lsp.buf.hover()
+			end,
+			"Show tooltips/docs",
+		},
+		["["] = {
+			d = {
+				function()
+					vim.diagnostic.goto_next()
+				end,
+				"Go to next diagnostic",
+			},
+		},
+		["]"] = {
+			d = {
+				function()
+					vim.diagnostic.goto_prev()
+				end,
+				"Go to previous diagnostic",
+			},
+		},
+		["<leader>"] = {
+			v = {
+				w = {
+					s = {
+						function()
+							vim.lsp.buf.workspace_symbol()
+						end,
+						"View Workspace Symbols",
+					},
+				},
+				d = {
+					function()
+						vim.diagnostic.open_float()
+					end,
+					"Open float diagnostics",
+				},
+				c = {
+					a = {
+						function()
+							vim.lsp.buf.code_action()
+						end,
+						"Open code actions",
+					},
+				},
+				r = {
+					r = {
+						function()
+							vim.lsp.buf.references()
+						end,
+						"Open references",
+					},
+					n = {
+						function()
+							vim.lsp.buf.rename()
+						end,
+						"Rename",
+					},
+				},
+			},
+		},
+	}
 
 	wk.register(rn, { mode = "n", buffer = 0 })
 end

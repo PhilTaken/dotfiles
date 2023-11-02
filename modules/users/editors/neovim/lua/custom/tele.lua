@@ -13,7 +13,7 @@ function M.live_grep()
 		path_display = { "truncate" },
 		fzf_separator = "|>",
 	}
-	require "telescope".extensions.egrepify.egrepify(theme)
+	require("telescope").extensions.egrepify.egrepify(theme)
 	--require("telescope.builtin").live_grep(theme)
 end
 

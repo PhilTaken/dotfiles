@@ -15,7 +15,7 @@
       (lib.filterAttrs
         (_name: value: lib.hasInfix "unbound" (lib.concatStrings value))
         net.services));
-  same-server = config.networking.hostName == cfg.nameserver;
+  same-server = config.phil.server.services.unbound.enable;
 in {
   options.phil.dns = {
     enable = mkEnableOption "dns over tls";

@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  lib,
   ...
 } @ inputs: let
   # Automatically download the latest index from Mic92's nix-index-database.

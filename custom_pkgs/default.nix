@@ -1,4 +1,4 @@
-_final: prev: {
+_final: _prev: {
   #racket-langserver = prev.callPackage ./racket-langserver {};
 
   # qt5 insceure currently
