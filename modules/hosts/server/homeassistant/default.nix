@@ -79,6 +79,7 @@ in {
           accuweather
           py-cpuinfo
           python-kasa
+          hatasmota
         ];
 
       extraComponents = [
@@ -107,6 +108,7 @@ in {
         "openweathermap"
         "here_travel_time"
         "jellyfin"
+        "tasmota"
 
         # TODO
         #"command_line"
@@ -142,7 +144,7 @@ in {
             trigger = [
               {
                 platform = "state";
-                entity_id = "!secret desktop_device_id";
+                entity_id = "device_tracker.desktop_l9ck0qi";
                 from = null;
               }
             ];
@@ -150,10 +152,33 @@ in {
               {
                 service = "python_script.desktop_speakers_sync";
                 data = {
-                  desktop_entity = "!secret desktop_device_id";
-                  speaker_entity = "!secret speaker_device_id";
+                  desktop_entity = "device_tracker.desktop_l9ck0qi";
+                  speaker_entity = "switch.sound";
                   inherit home_zone_name;
                 };
+              }
+            ];
+          }
+
+          {
+            alias = "washing_machine_done_notification";
+            trigger = [
+              {
+                platform = "numeric_state";
+                entity_id = "sensor.washer_sensor_power";
+                below = 100;
+                for.minutes = 5;
+              }
+            ];
+
+            action = [
+              {
+                service = "notify.mobile_app_phil_op7";
+                data.message = "Washing machine is done!";
+              }
+              {
+                service = "notify.mobile_app_jaid_s_phone";
+                data.message = "Washing machine is done!";
               }
             ];
           }
@@ -192,6 +217,55 @@ in {
           }
         ];
 
+        mqtt =
+          [
+            {
+              sensor = {
+                name = "washer_sensors_status";
+                json_attributes_topic = "tele/pantrysocket/SENSOR";
+                json_attributes_template = "{{ value_json.ENERGY | tojson }}";
+
+                state_topic = "tele/pantrysocket/STATE";
+                value_template = "{{ value_json.POWER }}";
+              };
+            }
+
+            {
+              switch = {
+                name = "washer_switch";
+                command_topic = "cmnd/pantrysocket/Power";
+
+                state_topic = "tele/pantrysocket/STATE";
+                value_template = "{{ value_json.POWER }}";
+              };
+            }
+          ]
+          ++ (map (d: {
+              sensor = {
+                name = "washer_sensor_${d.name}";
+                state_topic = "tele/pantrysocket/SENSOR";
+                value_template = "{{ value_json.ENERGY.${d.name} }}";
+                unit_of_measurement = d.unit;
+              };
+            }) [
+              {
+                name = "Total";
+                unit = "kWh";
+              }
+              {
+                name = "Power";
+                unit = "W";
+              }
+              {
+                name = "Voltage";
+                unit = "V";
+              }
+              {
+                name = "Current";
+                unit = "A";
+              }
+            ]);
+
         calendar = [
           {
             platform = "caldav";
@@ -211,18 +285,6 @@ in {
               }
             ];
           }
-          # TODO: set up a cache
-          #{
-          #platform = "caldav";
-          #url = "!secret work_caldav_url";
-          #username = "!secret work_caldav_username";
-          #password = "!secret work_caldav_password";
-          #custom_calendars = [{
-          #name = "Work";
-          #calendar = "Arbeit";
-          #search = ".*";
-          #}];
-          #}
         ];
 
         lovelace.mode = "yaml";
@@ -236,8 +298,6 @@ in {
           temperature_unit = "C";
           time_zone = "Europe/Amsterdam";
         };
-
-        python_script = {};
       };
     };
 
@@ -247,9 +307,7 @@ in {
     };
 
     phil.server.services = {
-      caddy.proxy."mqtt" = {
-        inherit (cfg) port;
-      };
+      caddy.proxy."mqtt".port = 1883;
 
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
