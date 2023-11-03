@@ -298,6 +298,8 @@ in {
           temperature_unit = "C";
           time_zone = "Europe/Amsterdam";
         };
+
+        python_script = {};
       };
     };
 
