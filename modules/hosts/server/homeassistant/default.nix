@@ -166,7 +166,7 @@ in {
               {
                 platform = "numeric_state";
                 entity_id = "sensor.washer_sensor_power";
-                below = 100;
+                below = 10;
                 for.minutes = 5;
               }
             ];
