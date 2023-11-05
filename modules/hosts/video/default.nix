@@ -1,6 +1,6 @@
 {
   pkgs,
-  inputs,
+  npins,
   config,
   lib,
   ...
@@ -189,7 +189,7 @@ in {
 
     stylix = {
       image = ../../../images/vortex.png;
-      base16Scheme = "${inputs.catppuccin-base16}/base16/mocha.yaml";
+      base16Scheme = "${npins.catppuccin-base16}/base16/mocha.yaml";
 
       fonts = {
         serif = {

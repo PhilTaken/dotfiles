@@ -7,6 +7,7 @@
 }: let
   inherit (inputs) nixpkgs;
   inherit (nixpkgs) lib;
+  npins = import ../npins;
 in rec {
   mkHost = {
     users,
@@ -34,7 +35,7 @@ in rec {
   in
     lib.nixosSystem {
       inherit system pkgs;
-      specialArgs = {inherit inputs net flake;};
+      specialArgs = {inherit inputs net flake npins;};
 
       modules =
         [
@@ -121,7 +122,7 @@ in rec {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = {inherit inputs;};
+            extraSpecialArgs = {inherit inputs npins;};
           };
         }
       ];

@@ -3,12 +3,18 @@
   config,
   lib,
   inputs,
+  npins,
   ...
 }: let
   cfg = config.phil.editors.neovim;
   inherit (pkgs.vimUtils) buildVimPlugin;
   inherit (lib) mkOption mkIf types optionals;
-  buildPlugin = attrset: buildVimPlugin (attrset // {version = "master";});
+  buildPlugin = attrset:
+    buildVimPlugin ({
+        version = "master";
+        src = npins.${attrset.pname};
+      }
+      // attrset);
 
   plug = plugin: config: {
     inherit plugin config;
@@ -363,12 +369,9 @@ in {
             require("which-key").setup({})
           '')
 
-          (lplug (buildPlugin {
-              pname = "telescope-egrepify.nvim";
-              src = inputs.vim-telescope-egrepify;
-            }) ''
-              require "telescope".load_extension "egrepify"
-            '')
+          (lplug (buildPlugin {pname = "telescope-egrepify.nvim";}) ''
+            require "telescope".load_extension "egrepify"
+          '')
 
           # completion
           cmp-buffer
@@ -416,30 +419,18 @@ in {
         ])
         ++ (map (p: mkLplug (buildPlugin p)) [
           # TODO: don't abuse nix flake inputs for these
-          {
-            pname = "janet.vim";
-            src = inputs.vim-janet-src;
-          }
-          {
-            pname = "vim-terraform";
-            src = inputs.vim-terraform-src;
-          }
-          {
-            pname = "yuck.vim";
-            src = inputs.vim-yuck-src;
-          }
+          {pname = "janet.vim";}
+          {pname = "vim-terraform";}
+          {pname = "yuck.vim";}
         ])
         ++ (map buildPlugin [
-          {
-            pname = "promise-async";
-            src = inputs.vim-async-src;
-          }
+          {pname = "promise-async";}
         ]);
     };
 
     home.packages = with pkgs; [
       #visidata
-      #neovim-remote
+      neovim-remote
 
       # https://github.com/neovide/neovide/issues/1280
       # start neovide in xwayland for now

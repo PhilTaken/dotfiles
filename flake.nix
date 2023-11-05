@@ -1,24 +1,13 @@
 {
   inputs = {
     # -----------------------
-    # ci/cd
-
-    hercules-ci-effects.url = "github:hercules-ci/hercules-ci-effects";
-
-    # -----------------------
     # package repositories
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    nixpkgs-stable.url = "github:nixos/nixpkgs?ref=d917136f550a8c36efb1724390c7245105f79023";
-
-    # NUR
     nur-src.url = "github:nix-community/NUR";
-
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
-
-    vim-extra-plugins.url = "github:m15a/nixpkgs-vim-extra-plugins?ref=3e08bbd37dc9bec38d9a4d8597a90d80372b47af";
+    nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
 
     # -----------------------
     # flake utilities
@@ -32,14 +21,12 @@
     };
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
-
     pre-commit-hooks-nix.url = "github:cachix/pre-commit-hooks.nix";
 
     # -----------------------
     # nixos modules
 
     stylix.url = "github:danth/stylix";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # local user package managment
@@ -54,6 +41,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # partitioning
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,6 +49,12 @@
 
     # -----------------------
     # single applications/services
+
+    # deploy remote setups
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     spicetify.url = "github:the-argus/spicetify-nix";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
@@ -76,95 +70,29 @@
     # best nix language server
     nil-ls.url = "github:oxalica/nil";
 
-    # deploy remote setups
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     hyprland = {
       url = "github:vaxerski/Hyprland";
-      #inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     xdg-desktop-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
-
-    #arm-rs = {
-    #url = "github:PhilTaken/arm.rs";
-    #inputs.nixpkgs.follows = "nixpkgs";
-    #};
-
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
-
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
-
     ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
 
     # -----------------------
-    # mac inputs
+    # macos inputs (work laptop)
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # -----------------------
     # non-flake sources
-    # TODO: manage them without flakes
+    # TODO: manage without flakes
 
     tmm-src = {
       url = "https://release.tinymediamanager.org/v4/dist/tmm_4.3.13_linux-amd64.tar.gz";
-      flake = false;
-    };
-
-    down_on_spot-src = {
-      url = "github:oSumAtrIX/DownOnSpot?ref=e0595feae8ee54c47fec82cf513e29f1abacfbfe";
-      flake = false;
-    };
-
-    tmux-nvr-src = {
-      url = "github:carlocab/tmux-nvr";
-      flake = false;
-    };
-
-    fish-pisces-src = {
-      url = "github:laughedelic/pisces";
-      flake = false;
-    };
-
-    alacritty-catppuccin = {
-      url = "github:catppuccin/alacritty";
-      flake = false;
-    };
-
-    # extra vim plugins
-    vim-janet-src = {
-      url = "github:bakpakin/janet.vim";
-      flake = false;
-    };
-
-    vim-terraform-src = {
-      url = "github:hashivim/vim-terraform";
-      flake = false;
-    };
-
-    vim-yuck-src = {
-      url = "github:elkowar/yuck.vim";
-      flake = false;
-    };
-
-    vim-async-src = {
-      url = "github:kevinhwang91/promise-async";
-      flake = false;
-    };
-
-    vim-telescope-egrepify = {
-      url = "github:fdschmidt93/telescope-egrepify.nvim";
-      flake = false;
-    };
-
-    # colorscheme
-    catppuccin-base16 = {
-      url = "github:catppuccin/base16";
       flake = false;
     };
   };
@@ -189,9 +117,9 @@
         ./modules/flake/modules.nix
         ./modules/flake/deploy.nix
         ./modules/flake/shells.nix
-        inputs.hercules-ci-effects.flakeModule
         inputs.treefmt-nix.flakeModule
         inputs.pre-commit-hooks-nix.flakeModule
+        #      inputs.disko.nixosModules.disko
       ];
 
       perSystem = {

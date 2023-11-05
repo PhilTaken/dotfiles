@@ -27,7 +27,7 @@
     #inputs.zellij.overlays.default
     #inputs.eww-git.overlays.default
     inputs.nil-ls.overlays.default
-    inputs.vim-extra-plugins.overlays.default
+    inputs.nixneovimplugins.overlays.default
     inputs.xdg-desktop-hyprland.overlays.default
 
     self.overlays.default
@@ -40,9 +40,6 @@
 
         webcord = inputs.webcord.packages.${prev.system}.default;
         hyprland = inputs.hyprland.packages.${prev.system}.default;
-
-        # https://github.com/NixOS/nixpkgs/issues/216961
-        #inherit (inputs.nixpkgs-stable.outputs.legacyPackages.${prev.system}) zellij;
 
         # devdocs.io
         devdocs-desktop = prev.writeShellApplication {
@@ -62,7 +59,7 @@
 
         downonspot = prev.downonspot.overrideAttrs (_oldAttrs: {
           version = "latest";
-          src = inputs.down_on_spot-src;
+          src = (import ../npins).DownOnSpot;
 
           postPatch = ''
             cp ${./downonspot.cargo.lock} Cargo.lock

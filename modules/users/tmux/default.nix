@@ -1,7 +1,7 @@
 {
   pkgs,
   config,
-  inputs,
+  npins,
   lib,
   ...
 }: let
@@ -109,10 +109,10 @@ in {
             set -g @thumbs-unique enabled
           '';
         }
-        (mkTmuxPlugin rec {
+        (mkTmuxPlugin {
           pluginName = "nvr";
           version = "latest";
-          src = inputs.tmux-nvr-src;
+          src = npins.tmux-nvr;
         })
       ];
     };

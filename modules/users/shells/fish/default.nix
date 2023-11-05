@@ -2,7 +2,7 @@
   pkgs,
   config,
   lib,
-  inputs,
+  npins,
   ...
 }: let
   cfg = config.phil.shells.fish;
@@ -78,7 +78,7 @@ in {
       plugins = [
         {
           name = "pisces";
-          src = inputs.fish-pisces-src;
+          src = npins.pisces;
         }
       ];
 

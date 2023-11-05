@@ -1,0 +1,128 @@
+{
+  "pins": {
+    "DownOnSpot": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://github.com/oSumAtrIX/DownOnSpot"
+      },
+      "branch": "main",
+      "revision": "28035d9a2edcc21f2098f09a4304a2254ff9bc51",
+      "url": null,
+      "hash": "1l3yicv7frb9wxs16k3ka079s59d06r3lgclpqm0xz54cbasiapc"
+    },
+    "alacritty": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "catppuccin",
+        "repo": "alacritty"
+      },
+      "branch": "main",
+      "revision": "3c808cbb4f9c87be43ba5241bc57373c793d2f17",
+      "url": "https://github.com/catppuccin/alacritty/archive/3c808cbb4f9c87be43ba5241bc57373c793d2f17.tar.gz",
+      "hash": "07gvkxz9axvjjplpmwf6k0nk6n84gm20s0k5qkqsqkmv8ysdbmf3"
+    },
+    "base16": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "catppuccin",
+        "repo": "base16"
+      },
+      "branch": "main",
+      "revision": "ca74b4070d6ead4213e92da1273fcc1853de7af8",
+      "url": "https://github.com/catppuccin/base16/archive/ca74b4070d6ead4213e92da1273fcc1853de7af8.tar.gz",
+      "hash": "1h37bjmr2b96l239ckv5iq8cyvpm4bwnqgl21s4k65mikycfr43x"
+    },
+    "janet.vim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bakpakin",
+        "repo": "janet.vim"
+      },
+      "branch": "master",
+      "revision": "dc14b02f2820bc2aca777a1eeec48627ae6555bf",
+      "url": "https://github.com/bakpakin/janet.vim/archive/dc14b02f2820bc2aca777a1eeec48627ae6555bf.tar.gz",
+      "hash": "0l0yzw168av3dwg6f8qhw5x5v8a6w3higj4pccaixg5g9js1mg0m"
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixpkgs-unstable",
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-23.11pre543441.b644d97bda6d/nixexprs.tar.xz",
+      "hash": "1xq7rz2bcb115xkahpvslsqpliisv2587z93izz81lna77r4na1d"
+    },
+    "pisces": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "laughedelic",
+        "repo": "pisces"
+      },
+      "branch": "master",
+      "revision": "e45e0869855d089ba1e628b6248434b2dfa709c4",
+      "url": "https://github.com/laughedelic/pisces/archive/e45e0869855d089ba1e628b6248434b2dfa709c4.tar.gz",
+      "hash": "073wb83qcn0hfkywjcly64k6pf0d7z5nxxwls5sa80jdwchvd2rs"
+    },
+    "promise-async": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://github.com/kevinhwang91/promise-async"
+      },
+      "branch": "main",
+      "revision": "e94f35161b8c5d4a4ca3b6ff93dd073eb9214c0e",
+      "url": null,
+      "hash": "0cavxw5v3nhnrs26r7cqxirq2ydk5g1ymcd3m4gf4rjjw9n067sd"
+    },
+    "telescope-egrepify.nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "fdschmidt93",
+        "repo": "telescope-egrepify.nvim"
+      },
+      "branch": "master",
+      "revision": "4cefc4c204c8f89af3d82b2945de2e63a3bb9de6",
+      "url": "https://github.com/fdschmidt93/telescope-egrepify.nvim/archive/4cefc4c204c8f89af3d82b2945de2e63a3bb9de6.tar.gz",
+      "hash": "0dx82hslh5098fhggifi7vi2p2q5gq3mhx828gyhflgwqnhkab3a"
+    },
+    "tmux-nvr": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://github.com/carlocab/tmux-nvr"
+      },
+      "branch": "main",
+      "revision": "a283fc21e73df5bff01f997525b9d0dbf3eecac9",
+      "url": null,
+      "hash": "0cflgfk165fw8i7fv7pf1b5d693p9shxp6hl7rh4mhczx0j7s562"
+    },
+    "vim-terraform": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "hashivim",
+        "repo": "vim-terraform"
+      },
+      "branch": "master",
+      "revision": "d37ae7e7828aa167877e338dea5d4e1653ed3eb1",
+      "url": "https://github.com/hashivim/vim-terraform/archive/d37ae7e7828aa167877e338dea5d4e1653ed3eb1.tar.gz",
+      "hash": "0630s7jaadd6ndkkj49k3ivink2vkajh0cjx30dw1ip6md360sjh"
+    },
+    "yuck.vim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "elkowar",
+        "repo": "yuck.vim"
+      },
+      "branch": "master",
+      "revision": "9b5e0370f70cc30383e1dabd6c215475915fe5c3",
+      "url": "https://github.com/elkowar/yuck.vim/archive/9b5e0370f70cc30383e1dabd6c215475915fe5c3.tar.gz",
+      "hash": "1mkf0vd8vvw1njlczlgai80djw1n1a7dl1k940l089d3vvqr5dhp"
+    }
+  },
+  "version": 3
+}
