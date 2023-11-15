@@ -15,6 +15,8 @@ in {
         ProgramArguments = ["sudo" "${pkgs.nebula}/bin/nebula" "-config" "/etc/nebula/config.yaml"];
         RunAtLoad = true;
         KeepAlive.SuccessfulExit = false;
+        StandardErrorPath = "/tmp/nebula.job.err";
+        StandardOutPath = "/tmp/nebula.job.out";
       };
     };
   };
