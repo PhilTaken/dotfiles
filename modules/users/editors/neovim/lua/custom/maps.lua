@@ -122,12 +122,6 @@ local leadern = {
 				end,
 				"Find Files in current dir",
 			},
-			d = {
-				function()
-					require("custom.tele").find_dotfiles({})
-				end,
-				"Search in dotfiles",
-			},
 			t = {
 				function()
 					require("custom.tele").tags()
@@ -146,6 +140,13 @@ local leadern = {
 				end,
 				"Telescope file browser",
 			},
+            -- switch projects
+            p = {
+                function()
+                    require('custom.tele').git_workspace()
+                end,
+                "Telescope git workspace browser into find_files",
+            },
 		},
 		t = {
 			name = "+trouble",
@@ -218,11 +219,6 @@ local leadern = {
 			},
 		},
 
-		p = {
-			name = "+present",
-			p = { "<cmd>PresentEnable", "Start presenting" },
-			s = { "<cmd>PresentDisable", "Stop presenting" },
-		},
 		s = {
 			name = "+shells",
 			t = {
