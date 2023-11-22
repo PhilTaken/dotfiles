@@ -49,7 +49,7 @@ opt.pumblend = 20
 opt.mouse = "a"
 
 -- guifont for neovide
-opt.guifont = "Iosevka_comfy:h12"
+opt.guifont = "Hack Nerd Font,Iosevka Comfy:h19"
 
 -- no folds pls
 opt.foldenable = false

@@ -168,14 +168,14 @@ in {
           (plug catppuccin-nvim ''
             local catppuccin = require("catppuccin")
             catppuccin.setup({
-                transparent_background = true,
+                transparent_background = vim.g.neovide == nil,
                 term_colors = true,
                 compile = {
                     enable = true,
                 },
                 dim_inactive = {
                     enabled = true,
-                    percentage = 0.05,
+                    percentage = 0.02,
                 },
                 integrations = {
                     markdown = true,
@@ -431,18 +431,7 @@ in {
     home.packages = with pkgs; [
       #visidata
       neovim-remote
-
-      # https://github.com/neovide/neovide/issues/1280
-      # start neovide in xwayland for now
-      (pkgs.writeShellApplication {
-        name = "neovide";
-        text = "WINIT_UNIX_BACKEND=x11 ${pkgs.neovide}/bin/neovide --multigrid";
-      })
-      (pkgs.makeDesktopItem {
-        name = "Neovide";
-        exec = "neovide";
-        desktopName = "Neovide";
-      })
+      neovide
     ];
 
     xdg.configFile."nvim/init_.lua".source = ./init.lua;
@@ -459,5 +448,15 @@ in {
       source = ./syntax;
       recursive = true;
     };
+
+    xdg.configFile."neovide/config.toml".text = ''
+      wsl = false
+      no-multigrid = false
+      vsync = true
+      maximized = false
+      srgb = true
+      idle = true
+      frame = "Full"
+    '';
   };
 }
