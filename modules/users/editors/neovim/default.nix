@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  inputs,
   npins,
   ...
 }: let
