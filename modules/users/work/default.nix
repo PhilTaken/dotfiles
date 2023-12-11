@@ -24,6 +24,7 @@ in {
       eza
       gnupg
       iperf
+      duf
 
       pre-commit
 
