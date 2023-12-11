@@ -11,7 +11,8 @@ in {
     default_font = mkOption {
       description = "default font";
       type = types.str;
-      default = "Iosevka Comfy";
+      #default = "Iosevka Comfy";
+      default = "Victor Mono";
     };
 
     multiplexer = mkOption {

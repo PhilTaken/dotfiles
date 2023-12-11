@@ -59,11 +59,14 @@ in {
       font-awesome
       (nerdfonts.override {
         fonts = [
-          "SourceCodePro"
-          "Iosevka"
-          "FiraCode"
-          "FiraMono"
-          "Hack"
+          #"SourceCodePro"
+          #"Iosevka"
+          #"FiraCode"
+          #"FiraMono"
+          #"Hack"
+          #"VictorMono"
+          #"Inconsolata"
+          #"Monaspace"
         ];
       })
     ];
@@ -189,7 +192,7 @@ in {
 
     stylix = {
       image = ../../../images/vortex.png;
-      base16Scheme = "${npins.catppuccin-base16}/base16/mocha.yaml";
+      base16Scheme = "${npins.base16}/base16/mocha.yaml";
 
       fonts = {
         serif = {

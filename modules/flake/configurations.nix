@@ -75,13 +75,13 @@ in {
           with ps; [
             # fonts
             iosevka-comfy.comfy
-            (nerdfonts.override {
+            (inputs.my-nixpkgs.legacyPackages.aarch64-darwin.nerdfonts.override {
               fonts = [
-                "SourceCodePro"
-                "Iosevka"
-                "FiraCode"
-                "FiraMono"
-                "Hack"
+                # "SourceCodePro"
+                # "Iosevka"
+                # "FiraCode"
+                # "FiraMono"
+                # "Hack"
               ];
             })
 

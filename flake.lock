@@ -1205,6 +1205,22 @@
         "type": "indirect"
       }
     },
+    "my-nixpkgs": {
+      "locked": {
+        "lastModified": 1701262342,
+        "narHash": "sha256-3k4Xrj+COvePXPHeCsewYUa4XXwUlq4nxJ3eOJ0f2WM=",
+        "owner": "philtaken",
+        "repo": "nixpkgs",
+        "rev": "114455ce64d38229922e3914d5150d93080a5620",
+        "type": "github"
+      },
+      "original": {
+        "owner": "philtaken",
+        "ref": "phil/update-nerdfonts",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "neovim-flake": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -2055,6 +2071,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "my-nixpkgs": "my-nixpkgs",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nil-ls": "nil-ls",
         "nix-doom-emacs": "nix-doom-emacs",
