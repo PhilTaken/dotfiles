@@ -37,6 +37,8 @@ in {
 
       httpie
 
+      sad
+
       hound
 
       git

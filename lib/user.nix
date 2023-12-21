@@ -21,7 +21,7 @@ with builtins; rec {
     };
 
     programs.home-manager.enable = true;
-    programs.zathura.enable = true;
+    #programs.zathura.enable = true;
     #services.syncthing.enable = true;
 
     xdg = {
