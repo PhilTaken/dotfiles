@@ -32,7 +32,7 @@ in {
 
       calibreLibrary = mkOption {
         type = types.nullOr types.str;
-        default = "${cfg.phil.server.services.syncthing.dataDir}/calibre_folder";
+        default = "${config.phil.server.services.syncthing.dataDir}/calibre_folder";
         description = ''
           Path to Calibre library.
         '';

@@ -75,7 +75,7 @@ _: rec {
       "keycloak"
       "navidrome"
       "nextcloud"
-      #"calibre"
+      "calibre"
 
       "ldap"
       "grocy"
