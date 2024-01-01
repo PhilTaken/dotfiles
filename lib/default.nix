@@ -78,6 +78,10 @@ in rec {
     import inputs.nixpkgs {
       inherit overlays system;
       config.allowUnfree = true;
+      # https://github.com/NixOS/nixpkgs/issues/269713
+      config.permittedInsecurePackages = [
+        "openssl-1.1.1w"
+      ];
     };
 
   iso = import ./iso.nix {inherit inputs;};
