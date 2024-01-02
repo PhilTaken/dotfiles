@@ -42,17 +42,24 @@ in {
 
   config = mkIf cfg.enable {
     services.calibre-web = {
-      inherit (cfg) user enable;
+      inherit (cfg) enable;
+      user = "syncthing";
+      group = "syncthing";
       listen.port = cfg.port;
+      listen.ip = "0.0.0.0";
       options = {
         inherit (cfg) calibreLibrary;
         enableBookConversion = true;
         enableBookUploading = true;
+        enableKepubify = true;
         # TODO: keycloak auth header
         #reverseProxyAuth = true;
         #header = "";
       };
     };
+
+    networking.firewall.allowedUDPPorts = [cfg.port];
+    networking.firewall.allowedTCPPorts = [cfg.port];
 
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
