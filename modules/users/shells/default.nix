@@ -157,7 +157,8 @@ in {
       };
 
       rbw = {
-        enable = true;
+        # https://github.com/nix-community/home-manager/issues/4804
+        enable = false;
         settings = {
           email = "philipp.herzog@protonmail.com";
           lock_timeout = 300;
