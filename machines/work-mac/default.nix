@@ -19,7 +19,7 @@
     pkgs.zsh
   ];
 
-  environment.systemPackages = [pkgs.nushell];
+  environment.systemPackages = [pkgs.nushell pkgs.openssh];
 
   users.users.philippherzog = {
     name = "philippherzog";
