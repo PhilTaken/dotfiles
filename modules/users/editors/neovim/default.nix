@@ -340,7 +340,7 @@ in {
           '')
 
           # TODO load extension asynchronously but before telescope-nvim
-          (lplug telescope-nvim ''
+          (plug telescope-nvim ''
             require("telescope").load_extension("file_browser")
             require("telescope").load_extension("zoxide")
           '')
@@ -368,7 +368,7 @@ in {
             require("which-key").setup({})
           '')
 
-          (lplug (buildPlugin {pname = "telescope-egrepify.nvim";}) ''
+          (plug (buildPlugin {pname = "telescope-egrepify.nvim";}) ''
             require "telescope".load_extension "egrepify"
           '')
 
@@ -421,6 +421,7 @@ in {
           {pname = "janet.vim";}
           {pname = "vim-terraform";}
           {pname = "yuck.vim";}
+          {pname = "vim-varnish";}
         ])
         ++ (map buildPlugin [
           {pname = "promise-async";}

@@ -111,6 +111,20 @@
       "url": "https://github.com/hashivim/vim-terraform/archive/d37ae7e7828aa167877e338dea5d4e1653ed3eb1.tar.gz",
       "hash": "0630s7jaadd6ndkkj49k3ivink2vkajh0cjx30dw1ip6md360sjh"
     },
+    "vim-varnish": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "varnishcache-friends",
+        "repo": "vim-varnish"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "version": "v0.1.6",
+      "revision": "59ff3fa788a180bad44d7df979f3b08113884bfd",
+      "url": "https://api.github.com/repos/varnishcache-friends/vim-varnish/tarball/v0.1.6",
+      "hash": "00gd22dzz32xj0q2mm2chasm8sg3imq7hl3rdnk3qzp005qcs1g8"
+    },
     "yuck.vim": {
       "type": "Git",
       "repository": {
