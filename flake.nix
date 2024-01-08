@@ -81,7 +81,10 @@
     xdg-desktop-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
+
+    # time tracker
     ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
+    dimsum.url = "git+https://gitea.pherzog.xyz/mini-x/dimsum";
 
     # -----------------------
     # macos inputs (work laptop)

@@ -97,7 +97,9 @@ in {
         envssh exit
       '')
 
+      # time tracker
       inputs.ttrack.packages.${pkgs.system}.ttrack
+      inputs.dimsum.packages.${pkgs.system}.dimsum-release
 
       age
       lsyncd
