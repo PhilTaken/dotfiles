@@ -188,7 +188,6 @@ in {
 
       # TODO: set up sync
       atuin = {
-        # TODO: fix for darwin via override to disable checks?
         enable = true;
         settings = {
           search_mode = "fuzzy";
@@ -283,10 +282,9 @@ in {
             key = "Z",
           })
         '';
-        plugins = [
-          devicons
-          zoxide
-        ];
+        plugins = {
+          inherit zoxide devicons;
+        };
       };
     };
   };
