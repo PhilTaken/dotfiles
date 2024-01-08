@@ -59,14 +59,14 @@ in {
       font-awesome
       (nerdfonts.override {
         fonts = [
-          #"SourceCodePro"
-          #"Iosevka"
-          #"FiraCode"
-          #"FiraMono"
-          #"Hack"
-          #"VictorMono"
-          #"Inconsolata"
-          #"Monaspace"
+          "SourceCodePro"
+          "Iosevka"
+          "FiraCode"
+          "FiraMono"
+          "Hack"
+          "VictorMono"
+          "Inconsolata"
+          "Monaspace"
         ];
       })
     ];
