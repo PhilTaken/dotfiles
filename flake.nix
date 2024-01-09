@@ -85,6 +85,7 @@
     # time tracker
     ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
     dimsum.url = "git+https://gitea.pherzog.xyz/mini-x/dimsum";
+    fc-utils.url = "git+https://gitea.pherzog.xyz/phil/fc-utils";
 
     # -----------------------
     # macos inputs (work laptop)
