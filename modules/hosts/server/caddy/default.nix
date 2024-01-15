@@ -103,7 +103,7 @@ in {
     services.nginx = {
       enable = true;
       recommendedProxySettings = true;
-      client_max_body_size = "100M";
+      clientMaxBodySize = "100M";
       virtualHosts = let
         inherit (config.security.acme) certs;
         genconfig = subdomain: {public, ...} @ proxycfg: let
