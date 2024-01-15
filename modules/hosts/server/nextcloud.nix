@@ -188,15 +188,15 @@ in {
                 dbhost = "/run/postgresql";
                 dbname = "nextcloud";
                 dbuser = "nextcloud";
-                defaultPhoneRegion = "DE";
-                overwriteProtocol = "https";
-                trustedProxies = [
-                  "10.200.0.1"
-                  "10.200.0.5"
-                ];
               };
 
               extraOptions = {
+                default_phone_region = "DE";
+                overwriteprotocol = "https";
+                trusted_proxies = [
+                  "10.200.0.1"
+                  "10.200.0.5"
+                ];
                 redis = {
                   host = "/run/redis-nextcloud/redis.sock";
                   port = 0;
