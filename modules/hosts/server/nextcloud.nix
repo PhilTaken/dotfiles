@@ -158,7 +158,7 @@ in {
                 inherit
                   (pkgs.nextcloud27Packages.apps)
                   calendar
-                  #news -> TODO wait for news
+                  news # -> TODO wait for news
                   
                   bookmarks
                   contacts
