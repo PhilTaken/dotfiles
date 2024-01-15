@@ -100,12 +100,17 @@ in {
       # time tracker
       inputs.ttrack.packages.${pkgs.system}.ttrack
       inputs.dimsum.packages.${pkgs.system}.dimsum-release
+      inputs.fc-utils.packages.${pkgs.system}.default
 
       age
       lsyncd
 
       # _1password
     ];
+
+    home.shellAliases = {
+      b = "${inputs.fc-utils.packages.${pkgs.system}.default}/bin/fc-utils";
+    };
 
     programs = {
       sioyek.enable = false;
