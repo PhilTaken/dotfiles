@@ -105,7 +105,6 @@ in {
           gcc # for treesitter
 
           bottom # custom floaterm
-          lazygit # lazy git managment
 
           #emanote # for zettelkasten note-taking
 

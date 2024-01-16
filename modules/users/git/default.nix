@@ -43,21 +43,6 @@ in {
       pkgs.git-workspace
     ];
 
-    programs.lazygit = {
-      enable = true;
-      settings = {
-        gui.sidePanelWidth = 0.2;
-        git = {
-          overrideGpg = true;
-          paging = {
-            colorArg = "always";
-            pager = "${pkgs.delta}/bin/delta -s --paging=never";
-          };
-        };
-        #os.editCommand = "${pkgs.neovim-remote}/bin/nvr -cc vsplit --remote-wait +'set bufhidden=wipe'";
-      };
-    };
-
     home.sessionVariables = {
       GIT_WORKSPACE = "${config.home.homeDirectory}/Documents/workspace";
     };
@@ -75,7 +60,6 @@ in {
       glog = "${pkgs.git}/bin/git log";
       gco = "${pkgs.git}/bin/git checkout";
       gcm = "${pkgs.git}/bin/git checkout main";
-      lg = "${pkgs.lazygit}/bin/lazygit";
       flkup = "nix flake update --commit-lock-file";
       gwf = "${pkgs.git}/bin/git workspace fetch";
     };

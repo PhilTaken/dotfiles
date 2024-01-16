@@ -27,16 +27,6 @@ M.bgshell = Terminal:new({
 	close_on_exit = true,
 })
 
-M.lazygit = Terminal:new({
-	cmd = "lazygit",
-	direction = "float",
-	hidden = true,
-	float_opts = {
-		border = "double",
-	},
-	close_on_exit = true,
-})
-
 M.bottom = Terminal:new({
 	cmd = "btm",
 	direction = "float",
