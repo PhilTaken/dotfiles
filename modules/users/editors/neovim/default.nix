@@ -263,7 +263,7 @@ in {
             })
           '')
 
-          (lplug neogit ''
+          (plug neogit ''
             require("neogit").setup({
                 integrations = {
                     diffview = true,
