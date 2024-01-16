@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [./configuration.nix];
 
   virtualisation.docker.enable = true;
@@ -7,4 +7,8 @@
   phil.backup.enable = true;
 
   phil.backup.repo = "/media_int/backups";
+
+  environment.systemPackages = [
+    pkgs.beets
+  ];
 }
