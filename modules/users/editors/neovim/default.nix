@@ -428,6 +428,8 @@ in {
         ]);
     };
 
+    home.shellAliases.g = "vim +Neogit";
+
     home.packages = with pkgs; [
       #visidata
       neovim-remote
