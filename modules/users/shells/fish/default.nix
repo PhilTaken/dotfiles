@@ -73,6 +73,15 @@ in {
           commandline -i "$prepend "
           commandline -C (math $old_cursor + (echo $prepend | wc -c))
         '';
+
+        ya = ''
+          set tmp (mktemp -t "yazi-cwd.XXXXX")
+          ${pkgs.yazi}/bin/yazi $argv --cwd-file="$tmp"
+          if set cwd (cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+              cd -- "$cwd"
+          end
+          rm -f -- "$tmp"
+        '';
       };
 
       plugins = [
