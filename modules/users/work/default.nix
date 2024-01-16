@@ -42,7 +42,7 @@ in {
       hound
 
       git
-      copier
+      #copier
 
       (pkgs.writeShellScriptBin "essh" ''
         git_basedir=$(git rev-parse --show-toplevel 2>/dev/null)

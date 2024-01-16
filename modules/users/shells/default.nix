@@ -110,7 +110,7 @@ in {
       carapace.enable = true;
       htop.enable = true;
       btop = {
-        enable = true;
+        enable = false;
         settings = {
           # general
           background_update = false;
