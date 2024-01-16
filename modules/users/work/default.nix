@@ -110,6 +110,8 @@ in {
 
     home.shellAliases = {
       b = "${inputs.fc-utils.packages.${pkgs.system}.default}/bin/fc-utils";
+      # the ssh module should not be enabled on workstations
+      s = "ssh $(cat ~/.ssh/known_hosts | cut -d ' ' -f 1 | sort | uniq | ${pkgs.skim}/bin/sk)";
     };
 
     programs = {

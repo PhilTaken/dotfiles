@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.phil.ssh;
@@ -11,6 +12,10 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.shellAliases = {
+      s = "ssh $(cat ~/.ssh/known_hosts | cut -d ' ' -f 1 | sort | uniq | ${pkgs.skim}/bin/sk)";
+    };
+
     programs.ssh = {
       enable = true;
       matchBlocks = {
