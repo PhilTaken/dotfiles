@@ -7,7 +7,9 @@
     bash-prompt-prefix = (nix:$name)\040
     extra-nix-path = nixpkgs=flake:nixpkgs
     experimental-features = flakes nix-command
+    extra-platforms = x86_64-darwin aarch64-darwin
   '';
+  nix.linux-builder.enable = true;
 
   programs.fish.enable = true;
   programs.zsh.enable = true;
@@ -31,4 +33,13 @@
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
+
+  security.pam.enableSudoTouchIdAuth = true;
+
+  system.defaults = {
+    dock.mru-spaces = false;
+    finder.AppleShowAllExtensions = true;
+    finder.FXPreferredViewStyle = "clmv";
+    screencapture.location = "~/Pictures/screenshots";
+  };
 }
