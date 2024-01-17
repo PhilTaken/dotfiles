@@ -144,6 +144,7 @@ in {
           binary = true;
         };
         merge.conflictstyle = "diff3";
+        push.autoSetupRemote = true;
       };
     };
   };
