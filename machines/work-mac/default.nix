@@ -9,7 +9,6 @@
     experimental-features = flakes nix-command
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
-  nix.linux-builder.enable = true;
 
   programs.fish.enable = true;
   programs.zsh.enable = true;
