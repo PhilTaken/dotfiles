@@ -331,11 +331,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1706032052,
-        "narHash": "sha256-Hl+3Mgg0p8D9sbSN4FdrVtuYt0ATRfwfxgGUlybellk=",
+        "lastModified": 1706092874,
+        "narHash": "sha256-gB1AgEht+MTT5EhwwmUL7LCYIvelorymHtpZFIOdrQM=",
         "ref": "refs/heads/main",
-        "rev": "b204d716fdc8d89ae9f255523755cba80dccf410",
-        "revCount": 105,
+        "rev": "ed83224bee2cfba89f96b9b84ac8a55da7742103",
+        "revCount": 106,
         "type": "git",
         "url": "https://gitea.pherzog.xyz/mini-x/dimsum"
       },
@@ -1939,11 +1939,11 @@
         "nixpkgs": "nixpkgs_12"
       },
       "locked": {
-        "lastModified": 1706048140,
-        "narHash": "sha256-X2wsJgE6qn13RurxcvmA0iyw3nue8nC1PsF+5FUO9TY=",
+        "lastModified": 1706091468,
+        "narHash": "sha256-eYh0T8PnHgTYCJpST9JTO78ENfSixWXbSihomCFX1Os=",
         "owner": "nix-community",
         "repo": "nixpkgs-wayland",
-        "rev": "de3fbf26af51c766a138523ea185ef5ec296a84a",
+        "rev": "2b60d04e73ad82bd9528e2b3befb9db95cd00ffc",
         "type": "github"
       },
       "original": {
@@ -2257,11 +2257,11 @@
     },
     "nur-src": {
       "locked": {
-        "lastModified": 1706081334,
-        "narHash": "sha256-8cecWzpGQQI2mmjrFFcGU+hKs6iVRp6AOQTvjSEtB28=",
+        "lastModified": 1706089541,
+        "narHash": "sha256-hYvDAhzOXFCRV6a7JmLT0YFfCXFQNR5sEJCPtj1wgrk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "635b4eabf0b8e5e9ce8daea959db31053b1042ce",
+        "rev": "dd8575d44a907f816c799369432dc84cff6bf183",
         "type": "github"
       },
       "original": {
