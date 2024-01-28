@@ -75,15 +75,12 @@ in {
           with ps; [
             # fonts
             iosevka-comfy.comfy
-            (inputs.my-nixpkgs.legacyPackages.aarch64-darwin.nerdfonts.override {
-              fonts = [
-                # "SourceCodePro"
-                # "Iosevka"
-                # "FiraCode"
-                # "FiraMono"
-                # "Hack"
-              ];
+            (nerdfonts.override {
+              fonts = ["SourceCodePro" "Iosevka"];
             })
+
+            rclone
+            osxfuse
 
             openssl
             openssl.dev

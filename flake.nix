@@ -4,7 +4,6 @@
     # package repositories
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    my-nixpkgs.url = "github:philtaken/nixpkgs/phil/update-nerdfonts";
     #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nur-src.url = "github:nix-community/NUR";
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";

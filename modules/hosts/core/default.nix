@@ -148,6 +148,7 @@ in {
       cryptsetup
       hwinfo
       htop
+      rclone
       #magic-wormhole
     ];
   };

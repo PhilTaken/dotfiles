@@ -58,16 +58,7 @@ in {
       iosevka-comfy.comfy
       font-awesome
       (nerdfonts.override {
-        fonts = [
-          "SourceCodePro"
-          "Iosevka"
-          "FiraCode"
-          "FiraMono"
-          "Hack"
-          "VictorMono"
-          "Inconsolata"
-          "Monaspace"
-        ];
+        fonts = ["VictorMono"];
       })
     ];
 
