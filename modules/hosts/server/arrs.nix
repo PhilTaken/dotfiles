@@ -5,18 +5,19 @@
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.arrs;
+
+  sonarr_port = 8989;
+  radarr_port = 7878;
+  prowlarr_port = 9696;
+  lidarr_port = 8686;
+  bazarr_port = 6767;
 in {
   options.phil.server.services.arrs = {
     enable = mkEnableOption "arrs";
-    host = mkOption {
-      type = types.str;
-      default = "sonarr";
-    };
   };
 
   config = mkIf cfg.enable {
-    phil.mullvad.enable = lib.mkForce true;
-    phil.mullvad.interfaceName = "mlvd1";
+    users.groups.media = {};
 
     phil.server.services = {
       homer.apps = {
@@ -24,65 +25,96 @@ in {
           show = true;
           settings = {
             name = "Sonarr";
-            subtitle = "multimedia pvr";
+            subtitle = "Smart PVR for newsgroup and bittorrent users.";
             tag = "app";
-            keywords = "selfhosted";
+            keywords = "selfhosted media";
             logo = "https://sonarr.tv/img/logo.png";
+          };
+        };
+        "radarr" = {
+          show = true;
+          settings = {
+            name = "Radarr";
+            subtitle = "Movie organizer/manager for usenet and torrent users.";
+            tag = "app";
+            keywords = "selfhosted media";
+            logo = "https://radarr.video/img/logo.png";
+          };
+        };
+        "prowlarr" = {
+          show = true;
+          settings = {
+            name = "Prowlarr";
+            subtitle = "The Ultimate Indexer Manager";
+            tag = "app";
+            keywords = "selfhosted media";
+            logo = "https://prowlarr.com/logo/32.png";
+          };
+        };
+        "lidarr" = {
+          show = true;
+          settings = {
+            name = "Lidarr";
+            subtitle = "Looks and smells like Sonarr but made for music.";
+            tag = "app";
+            keywords = "selfhosted media";
+            logo = "https://lidarr.audio/img/logo.png";
+          };
+        };
+        "bazarr" = {
+          show = true;
+          settings = {
+            name = "Bazarr";
+            subtitle = "A companion application to Sonarr and Radarr";
+            tag = "app";
+            keywords = "selfhosted media";
+            logo = "https://www.bazarr.media/assets/img/logo.png";
           };
         };
       };
       caddy.proxy = {
         "sonarr" = {
-          port = 555;
+          port = sonarr_port;
+        };
+        "radarr" = {
+          port = radarr_port;
+        };
+        "prowlarr" = {
+          port = prowlarr_port;
+        };
+        "lidarr" = {
+          port = lidarr_port;
+        };
+        "bazarr" = {
+          port = bazarr_port;
         };
       };
     };
 
-    containers.arrs = {
-      ephemeral = false;
-      autoStart = true;
+    services = {
+      sonarr = {
+        enable = true;
+        group = "media";
+      };
 
-      #interfaces = [ config.phil.mullvad.interfaceName ];
+      radarr = {
+        enable = true;
+        group = "media";
+      };
 
-      privateNetwork = true;
-      hostAddress = "192.0.1.1";
-      localAddress = "192.0.1.2";
+      prowlarr = {
+        enable = true;
+        group = "media";
+      };
 
-      config = {...}: {
-        # https://github.com/NixOS/nixpkgs/issues/162686
-        #networking.nameservers = [ "1.1.1.1" ];
-        # WORKAROUND
-        #environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
-        #networking.firewall.enable = false;
-        #networking.interfaces = {
-        #mlvd = {
-        #ipv4.routes = [{ address = "0.0.0.0"; prefixLength = "0"; }];
-        #};
-        #};
+      lidarr = {
+        enable = true;
+        group = "media";
+      };
 
-        services = {
-          #sonarr = {
-          #enable = true;
-          #};
-
-          #radarr = {
-          #enable = true;
-          #};
-
-          #prowlarr = {
-          #enable = true;
-          #};
-
-          #lidarr = {
-          #enable = true;
-          #};
-
-          #bazarr = {
-          #enable = true;
-          #};
-        };
-
-        system.stateVersion = "22.11";
+      bazarr = {
+        enable = true;
+        group = "media";
       };
     };
   };
