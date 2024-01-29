@@ -60,7 +60,6 @@ in {
         ps.pyramid
         ps.prometheus-client
         ps.twisted
-        #(ps.twisted.overrideAttrs (_: {doInstallCheck = false;}))
         ps.pyserial
         ps.setuptools
       ]);

@@ -1,5 +1,7 @@
 # current TODOs:
 
+- fix twisted build failure, reenable extrasensors for delta
+
 - one psql database (per host?) for services
 - rewrite ttrack in rust?
 
