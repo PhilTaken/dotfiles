@@ -59,7 +59,8 @@ in {
       mypy = pkgs.python39.withPackages (ps: [
         ps.pyramid
         ps.prometheus-client
-        (ps.twisted.overrideAttrs (_: {doInstallCheck = false;}))
+        ps.twisted
+        #(ps.twisted.overrideAttrs (_: {doInstallCheck = false;}))
         ps.pyserial
         ps.setuptools
       ]);
