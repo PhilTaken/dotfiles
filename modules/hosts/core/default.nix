@@ -149,6 +149,7 @@ in {
       hwinfo
       htop
       rclone
+      duf
       #magic-wormhole
     ];
   };
