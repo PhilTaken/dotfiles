@@ -19,8 +19,10 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # TODO ensure the arrs are enabled aswell
     services.jellyfin = {
       enable = true;
+      group = "media";
       openFirewall = true;
     };
 

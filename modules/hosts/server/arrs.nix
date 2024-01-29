@@ -14,10 +14,19 @@
 in {
   options.phil.server.services.arrs = {
     enable = mkEnableOption "arrs";
+    media_folder = mkOption {
+      type = types.str;
+      default = "/media/Video";
+      description = "Root folder for media";
+    };
   };
 
   config = mkIf cfg.enable {
     users.groups.media = {};
+
+    systemd.tmpfiles.rules = [
+      "Z ${cfg.media_folder} 0770 - media -"
+    ];
 
     phil.server.services = {
       homer.apps = {
