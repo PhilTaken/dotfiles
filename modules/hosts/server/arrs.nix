@@ -8,7 +8,7 @@
 
   sonarr_port = 8989;
   radarr_port = 7878;
-  prowlarr_port = 9696;
+  #prowlarr_port = 9696;
   lidarr_port = 8686;
   bazarr_port = 6767;
 in {
@@ -41,16 +41,16 @@ in {
             logo = "https://radarr.video/img/logo.png";
           };
         };
-        "prowlarr" = {
-          show = true;
-          settings = {
-            name = "Prowlarr";
-            subtitle = "The Ultimate Indexer Manager";
-            tag = "app";
-            keywords = "selfhosted media";
-            logo = "https://prowlarr.com/logo/32.png";
-          };
-        };
+        #"prowlarr" = {
+        #show = true;
+        #settings = {
+        #name = "Prowlarr";
+        #subtitle = "The Ultimate Indexer Manager";
+        #tag = "app";
+        #keywords = "selfhosted media";
+        #logo = "https://prowlarr.com/logo/32.png";
+        #};
+        #};
         "lidarr" = {
           show = true;
           settings = {
@@ -79,9 +79,9 @@ in {
         "radarr" = {
           port = radarr_port;
         };
-        "prowlarr" = {
-          port = prowlarr_port;
-        };
+        #"prowlarr" = {
+        #port = prowlarr_port;
+        #};
         "lidarr" = {
           port = lidarr_port;
         };
@@ -102,10 +102,10 @@ in {
         group = "media";
       };
 
-      prowlarr = {
-        enable = true;
-        group = "media";
-      };
+      #prowlarr = {
+      #enable = true;
+      #group = "media";
+      #};
 
       lidarr = {
         enable = true;
