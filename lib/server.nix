@@ -24,6 +24,7 @@ with builtins; let
         "gpio"
         # only temporary for testing makemkv
         "cdrom"
+        "media"
       ];
       shell = pkgs.zsh;
     }
