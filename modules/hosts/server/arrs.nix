@@ -11,6 +11,7 @@
   #prowlarr_port = 9696;
   lidarr_port = 8686;
   bazarr_port = 6767;
+  jackett_port = 9117;
 in {
   options.phil.server.services.arrs = {
     enable = mkEnableOption "arrs";
@@ -82,6 +83,16 @@ in {
             logo = "https://www.bazarr.media/assets/img/logo.png";
           };
         };
+
+        "jackett" = {
+          show = true;
+          settings = {
+            name = "Jackett";
+            subtitle = "API Support for your favorite torrent trackers";
+            tag = "app";
+            keywords = "selfhosted media";
+          };
+        };
       };
       caddy.proxy = {
         "sonarr" = {
@@ -98,6 +109,9 @@ in {
         };
         "bazarr" = {
           port = bazarr_port;
+        };
+        "jackett" = {
+          port = jackett_port;
         };
       };
     };
@@ -119,6 +133,11 @@ in {
       #};
 
       lidarr = {
+        enable = true;
+        group = "media";
+      };
+
+      jackett = {
         enable = true;
         group = "media";
       };
