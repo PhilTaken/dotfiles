@@ -24,6 +24,8 @@ in {
   config = mkIf cfg.enable {
     users.groups.media = {};
 
+    programs.fuse.userAllowOther = true;
+
     systemd.tmpfiles.rules = [
       "Z ${cfg.media_folder} 0770 - media -"
     ];

@@ -49,6 +49,15 @@ in {
       htop
       bottom
       usbutils
+      iotop
+      tree
+      duf
+      jq
+      smartmontools
+      fd
+      fclones
     ];
+
+    programs.sysdig.enable = true;
   };
 }
