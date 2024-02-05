@@ -8,6 +8,7 @@
     nur-src.url = "github:nix-community/NUR";
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
+    devenv.url = "github:cachix/devenv";
 
     # -----------------------
     # flake utilities
