@@ -262,6 +262,12 @@ in {
             })
           '')
 
+          (lplug glow-nvim ''
+            require('glow').setup({
+              glow_path = "${pkgs.glow}/bin/glow",
+            })
+          '')
+
           (plug neogit ''
             require("neogit").setup({
                 integrations = {
