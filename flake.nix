@@ -82,6 +82,11 @@
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
 
+    zjstatus = {
+      url = "github:dj95/zjstatus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # time tracker
     ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
     dimsum.url = "git+https://gitea.pherzog.xyz/mini-x/dimsum";

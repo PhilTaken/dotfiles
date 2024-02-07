@@ -47,6 +47,8 @@
           text = "${prev.devdocs-desktop}/bin/devdocs-desktop --no-sandbox";
         };
 
+        zjstatus = inputs.zjstatus.packages.${prev.system}.default;
+
         # fix it on wayland
         prismlauncher = prev.prismlauncher.overrideAttrs (old: {
           postInstall =
