@@ -87,8 +87,6 @@ in {
 
             python310Full
             python310Packages.virtualenv
-
-            ollama
           ];
 
         userConfig = hmUsers.philippherzog;

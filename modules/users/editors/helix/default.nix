@@ -24,7 +24,6 @@ in {
         gcc # for treesitter
 
         nil # nix
-        nixd # nix
         python3Packages.python-lsp-server # python
         #rust-analyzer-unwrapped # rust
         sumneko-lua-language-server # lua

@@ -1,7 +1,11 @@
 -- nvim_lsp object
 local lsp = require("lspconfig")
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = vim.tbl_deep_extend("force",
+    vim.lsp.protocol.make_client_capabilities(),
+    require('cmp_nvim_lsp').default_capabilities()
+)
 local navic = require("nvim-navic")
+local configs = require("lspconfig/configs")
 
 capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
@@ -79,49 +83,57 @@ lsp_extra_config["rust_analyzer"] = {
 	},
 }
 
--- set pythonpath (set to nil if no python in current env)
+local function get_python_path(workspace)
+    local appenv = vim.fs.find("appenv", { type = "file", limit = 1, path = workspace})
+
+    if #appenv == 1 then
+        return io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)' 2>/dev/null | tail -1"):read()
+    else
+        return vim.fn.exepath("python")
+    end
+end
+
+
 lsp_extra_config["pylsp"] = {
 	on_new_config = function(config)
-		local appenv = vim.fs.find("appenv", { type = "file", limit = 1 })
-
-		local pythonpath
-		if #appenv == 1 then
-			vim.schedule(function()
-				pythonpath = io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)'"):read()
-				config.settings.pylsp.plugins.jedi.environment = pythonpath
-			end)
-		else
-			pythonpath = io.popen("which python 2>/dev/null"):read()
-			config.settings.pylsp.plugins.jedi.environment = pythonpath
-		end
+        config.settings.pylsp.plugins.jedi.environment = get_python_path(configs.root_dir)
 	end,
 	settings = {
 		pylsp = {
 			plugins = {
-				flake8 = { enabled = true },
-				yapf = { enabled = true },
-				pydocstyle = { enabled = true },
-				mccabe = { enabled = false },
+			    autopep8 = { enabled = false },
+				yapf = { enabled = false },
 				pyflakes = { enabled = false },
+				pydocstyle = { enabled = false },
 				jedi = {
-					environment = nil,
+                    environment = get_python_path(configs.root_dir),
 				},
 				jedi_completion = {
 					include_params = true,
 					fuzzy = true,
 				},
-				pycodestyle = {
-					enabled = false,
-				},
+                pylsp_mypy = {
+                    enabled = true,
+                    overrides = { "--python-executable", get_python_path(configs.root_dir), true },
+                    report_progress = true,
+                    live_mode = false,
+                },
+                ruff = {
+                    enabled = true,
+                    format = { "I" },
+                    unsafeFixes = false,
+                    extendIgnore = { "E501", "F401" },
+                    lineLength = 88,
+                },
 			},
 		},
 	},
 }
 
+
 local enabled_lsps = {
 	"ccls",
 	"nil_ls",
-	"nixd",
 	"texlab",
 	"tsserver",
 	"erlangls",

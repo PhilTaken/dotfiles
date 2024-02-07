@@ -7,7 +7,7 @@
 }: let
   cfg = config.phil.editors.neovim;
   inherit (pkgs.vimUtils) buildVimPlugin;
-  inherit (lib) mkOption mkIf types optionals;
+  inherit (lib) mkOption mkIf types optionals optional;
   buildPlugin = attrset:
     buildVimPlugin ({
         version = "master";
@@ -115,8 +115,18 @@ in {
 
           nil # nix
           nixd # nix
+
+          # extras for python
+          mypy
+          ruff
         ]
-        ++ (optionals cfg.langs.python (with pkgs.python3Packages; [python-lsp-server hy]))
+        ++ (optional cfg.langs.python (pkgs.python3.withPackages (ps:
+          with ps; [
+            python-lsp-server
+            pylsp-mypy
+            python-lsp-ruff
+            mypy
+          ])))
         ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server])
         ++ (optionals cfg.langs.cpp [pkgs.ccls])
         ++ (optionals cfg.langs.rust [pkgs.rust-analyzer-unwrapped])
@@ -337,11 +347,7 @@ in {
           '')
 
           (lplug fidget-nvim ''
-            require("fidget").setup {
-                text = {
-                    spinner = "grow_vertical",
-                },
-            }
+            require("fidget").setup{}
           '')
 
           # TODO load extension asynchronously but before telescope-nvim
