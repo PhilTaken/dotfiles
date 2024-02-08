@@ -34,34 +34,35 @@ in {
     xdg.configFile."zellij/layouts/default.kdl".text = ''
       layout {
           default_tab_template {
-              children
-              pane size=1 borderless=true {
+              pane size=2 borderless=true {
                   plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
-                      format_left  "{mode} #[fg=#89B4FA,bold]{session} {tabs}"
-                      format_right "{command_git_branch} {datetime}"
-                      format_space ""
+                      mode_normal  "#[bg=#1e1e2e,fg=#cad3f5]"
+                      mode_tmux    "#[bg=#1e1e2e,fg=#fab387]"
 
-                      border_enabled  "false"
+                      tab_normal   "#[fg=#1e1e2e,bg=#cad3f5]#[bg=#cad3f5,fg=#313244] {index}  {name} #[bg=#1e1e2e,fg=#cad3f5]"
+                      tab_active   "#[fg=#1e1e2e,bg=#89b4fa]#[bg=#89b4fa,fg=#313244]#[bold,italic,bg=#89b4fa,fg=#313244] {index}  {name} #[bg=#1e1e2e,fg=#89b4fa]"
+
+                      format_left  "{mode}{tabs}"
+
+                      format_right "#[fg=#1e1e2e,bg=#585b70]{datetime}"
+                      format_space "#[bg=#1e1e2e]"
+
+                      border_enabled  "true"
                       border_char     "─"
-                      border_format   "#[fg=#6C7086]{char}"
-                      border_position "top"
-
-                      mode_normal  "#[bg=blue] "
-                      mode_tmux    "#[bg=#ffc387] "
-
-                      tab_normal   "#[fg=#6C7086] {name} "
-                      tab_active   "#[fg=#9399B2,bold,italic] {name} "
+                      border_format   "#[fg=#181825]{char}"
+                      border_position "bottom"
 
                       command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
-                      command_git_branch_format      "#[fg=blue] {stdout} "
+                      command_git_branch_format      "#[fg=#fab387] {stdout} "
                       command_git_branch_interval    "10"
                       command_git_branch_rendermode  "static"
 
-                      datetime        "#[fg=#6C7086,bold] {format} "
+                      datetime        "#[bg=#585b70,fg=#cdd6f4,bold] {format} "
                       datetime_format "%A, %d %b %Y %H:%M"
                       datetime_timezone "Europe/Berlin"
                   }
               }
+              children
           }
 
           swap_tiled_layout name="hsplit" {
