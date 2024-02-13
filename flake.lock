@@ -373,11 +373,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1707841621,
-        "narHash": "sha256-zJMXh6lf1JEsCnhnMarlR4i6ao2nMutiT9pI7B46OLE=",
+        "lastModified": 1707861922,
+        "narHash": "sha256-oZOVEnZndUz61futgtG+9NVkzPVk7Q67gjb4GpWjZrY=",
         "ref": "refs/heads/main",
-        "rev": "a6bd6189aab7b8962d7195ac63ab164fffe58f39",
-        "revCount": 145,
+        "rev": "2c9670b4d1345666b96d66187f1b4d1edf32ab0d",
+        "revCount": 146,
         "type": "git",
         "url": "https://gitea.pherzog.xyz/mini-x/dimsum"
       },
@@ -1452,11 +1452,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1707768120,
-        "narHash": "sha256-PXOG58ckzgq65WLD7CStf/fmC0yH+Pgd/1c9sLyiQSU=",
+        "lastModified": 1707847639,
+        "narHash": "sha256-mBmt1lFImpIK8VwHkJIenzVS95wD67dsfH1oRk2RiEg=",
         "owner": "vaxerski",
         "repo": "Hyprland",
-        "rev": "890307532caa3369ea089b606b7786ccce4b8504",
+        "rev": "2a3429d4cfdc01794b9d6fc1b49be1da019b5606",
         "type": "github"
       },
       "original": {
@@ -2128,11 +2128,11 @@
         "nixpkgs": "nixpkgs_13"
       },
       "locked": {
-        "lastModified": 1707841178,
-        "narHash": "sha256-VA1F44E8VZXfU1WbkjayY5m36CIcMncGZytsLlVJ9cE=",
+        "lastModified": 1707855510,
+        "narHash": "sha256-+YcwqCYwTuH+IrAkH/td/X3WdFCYAjGE4ppF6qGYQoI=",
         "owner": "nix-community",
         "repo": "nixpkgs-wayland",
-        "rev": "706609a09d6bb1fd48cd2ae31d1c37e66677d35c",
+        "rev": "2d5858a77f53d63786cfe5de5adfc7df984d2d6c",
         "type": "github"
       },
       "original": {
@@ -2462,11 +2462,11 @@
     },
     "nur-src": {
       "locked": {
-        "lastModified": 1707842751,
-        "narHash": "sha256-MBXtmsWqkBiThMMASebc1l6JrqgZ8E8cx13FyOxNBUM=",
+        "lastModified": 1707853532,
+        "narHash": "sha256-ioduK+UsEs8YGYB/ZvVObvBXJHU5dgk1wEf5XPgxzsE=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "b41ad07abb6e0b062bbb12d14a5bf0b0d7ffb6c8",
+        "rev": "26ae54f21cacae653cf9561c9afe5ba9496e80b6",
         "type": "github"
       },
       "original": {
@@ -3590,11 +3590,11 @@
         "rust-overlay": "rust-overlay_5"
       },
       "locked": {
-        "lastModified": 1707060747,
-        "narHash": "sha256-1PnEEiSNWpEl5ssgJUPwzVNRcyByJV4t6q6raH2QqHI=",
+        "lastModified": 1707851524,
+        "narHash": "sha256-eJYm4wqwwewiqfMj9sURpxqPHN3LbUfbGCWYP262k3M=",
         "owner": "dj95",
         "repo": "zjstatus",
-        "rev": "2109f3fe43e356192279400ec365a127412d662f",
+        "rev": "b93abd23ee3660fb9117dfdc7c0b0e6da480dc8a",
         "type": "github"
       },
       "original": {
