@@ -85,8 +85,7 @@ in {
             openssl
             openssl.dev
 
-            python310Full
-            python310Packages.virtualenv
+            (python310.withPackages(ps: [ps.virtualenv]))
           ];
 
         userConfig = hmUsers.philippherzog;
