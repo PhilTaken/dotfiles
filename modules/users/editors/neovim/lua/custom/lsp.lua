@@ -97,6 +97,7 @@ end
 lsp_extra_config["pylsp"] = {
 	on_new_config = function(config)
         config.settings.pylsp.plugins.jedi.environment = get_python_path(configs.root_dir)
+        config.settings.pylsp.plugins.pylsp_mypy.overrides = { "--python-executable", get_python_path(configs.root_dir), true }
 	end,
 	settings = {
 		pylsp = {
@@ -106,7 +107,7 @@ lsp_extra_config["pylsp"] = {
 				pyflakes = { enabled = false },
 				pydocstyle = { enabled = false },
 				jedi = {
-                    environment = get_python_path(configs.root_dir),
+                    environment = nil,
 				},
 				jedi_completion = {
 					include_params = true,
@@ -114,7 +115,7 @@ lsp_extra_config["pylsp"] = {
 				},
                 pylsp_mypy = {
                     enabled = true,
-                    overrides = { "--python-executable", get_python_path(configs.root_dir), true },
+                    overrides = {},
                     report_progress = true,
                     live_mode = false,
                 },
