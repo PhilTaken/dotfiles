@@ -31,6 +31,7 @@ in {
       source = settings.configFile;
     };
 
+    # TODO add dimsum duration in bar
     xdg.configFile."zellij/layouts/default.kdl".text = ''
       layout {
           default_tab_template {
@@ -44,7 +45,7 @@ in {
 
                       format_left  "{mode}{tabs}"
 
-                      format_right "#[fg=#1e1e2e,bg=#585b70]{datetime}"
+                      format_right "{command_dimsum_note} #[fg=#1e1e2e,bg=#585b70]{datetime}"
                       format_space "#[bg=#1e1e2e]"
 
                       border_enabled  "true"
@@ -52,10 +53,10 @@ in {
                       border_format   "#[fg=#181825]{char}"
                       border_position "bottom"
 
-                      command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
-                      command_git_branch_format      "#[fg=#fab387] {stdout} "
-                      command_git_branch_interval    "10"
-                      command_git_branch_rendermode  "static"
+                      command_dimsum_note_command     "bash -c \"dimsum status --json | jq -r '.note' | grep -v null\""
+                      command_dimsum_note_format      "#[fg=#cdd6f4]{stdout}"
+                      command_dimsum_note_interval    "10"
+                      command_dimsum_note_rendermode  "static"
 
                       datetime        "#[bg=#585b70,fg=#cdd6f4,bold] {format} "
                       datetime_format "%A, %d %b %Y %H:%M"
