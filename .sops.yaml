@@ -6,6 +6,7 @@ keys:
   - &epsilon age1akax507dh5prm66uw3kufqxwxy5twuwqjv829jpy26aw2nt4g39s3g65fu
   - &delta age1p98um9682a6tppcxn602f0cfmgc4rkjclyuuqlu7gf578g9fz97suqp7wj
   - &gamma-new age17c3fvjye072zy06wy5azaqtupest47xu8gztdrvlg5erwwndp4ls4ss65v
+  - &zetta age1dnzlu2savx6fyw48wte42l3ard3jf32whqd3q3reukwk66mcvvkqecnar6
 creation_rules:
   - key_groups:
     - pgp:
@@ -17,3 +18,4 @@ creation_rules:
       - *epsilon
       - *delta
       - *gamma-new
+      - *zetta

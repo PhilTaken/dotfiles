@@ -10,12 +10,12 @@
       inputs.hyprland.nixosModules.default
       inputs.disko.nixosModules.disko
     ];
-    "aarch64-linux" =
-      default
-      ++ [
-        "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
-        inputs.nixos-hardware.nixosModules.raspberry-pi-4
-      ];
+    #"aarch64-linux" =
+    #default
+    #++ [
+    #"${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
+    #inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    #];
   };
 
   overlays = [

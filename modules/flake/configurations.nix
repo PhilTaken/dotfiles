@@ -16,6 +16,12 @@
       music.enable = true;
     };
   in {
+    alice = {
+      userConfig = {
+        leisure.enable = false;
+      };
+    };
+
     nixos = {
       userConfig = mkConfig {
         work.enable = true;
@@ -85,7 +91,7 @@ in {
             openssl
             openssl.dev
 
-            (python310.withPackages(ps: [ps.virtualenv]))
+            (python310.withPackages (ps: [ps.virtualenv]))
           ];
 
         userConfig = hmUsers.philippherzog;
@@ -160,6 +166,18 @@ in {
             common-cpu-intel-cpu-only
             common-cpu-intel-kaby-lake
           ];
+        };
+
+        zetta = util.host.mkWorkstation rec {
+          system = "aarch64-linux";
+          users = ["alice"];
+          hmUsers = mkHMUsers users;
+          systemConfig = {
+            wireguard.enable = false;
+            nebula.enable = false;
+            server.services.openssh.enable = true;
+            core.hostName = "zetta";
+          };
         };
       }
       // builtins.mapAttrs
