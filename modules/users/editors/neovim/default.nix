@@ -134,7 +134,6 @@ in {
         ++ (optionals cfg.langs.extra (with pkgs; [
           fortls
           texlab
-          nimlsp
           #erlang-ls # erlang
           #elixir_ls # elixir
         ]));

@@ -19,12 +19,12 @@ in {
       #pdfsam-basic
       #xournalpp
       #baobab
-      xfce.thunar
+      #xfce.thunar
 
-      webcord
+      #webcord
       #obsidian
 
-      tg
+      #tg
     ];
   };
 }
