@@ -50,7 +50,8 @@ in {
       };
 
       settings = {
-        theme = "catppuccin_mocha";
+        # stylix
+        #theme = "catppuccin_mocha";
 
         editor = {
           line-number = "relative";

@@ -35,7 +35,7 @@ in {
         psmisc
         usbutils
 
-        devdocs-desktop
+        #devdocs-desktop
       ]
       ++
       # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267

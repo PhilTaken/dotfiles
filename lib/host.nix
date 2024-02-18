@@ -73,7 +73,7 @@ in rec {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = {inherit inputs net;};
+              extraSpecialArgs = {inherit inputs net npins;};
               users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
             };
           }
