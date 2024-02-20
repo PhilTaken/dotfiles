@@ -74,9 +74,9 @@ in {
       enable = cfg.managers != [];
     in {
       enable = true;
-      layout = "us";
-      xkbVariant = "intl,workman-intl";
-      xkbOptions = "caps:escape,grp:shifts_toggle";
+      xkb.layout = "us";
+      xkb.variant = "intl,workman-intl";
+      xkb.options = "caps:escape,grp:shifts_toggle";
 
       videoDrivers =
         if (cfg.driver != null)

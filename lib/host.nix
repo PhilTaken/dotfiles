@@ -29,7 +29,8 @@ in rec {
       users
       (lib.range 1000 (builtins.length users + 1000));
 
-    part = builtins.partition (raw_user: builtins.elem raw_user.name ["nixos" "maelstroem"]) raw_users;
+    # TODO: pls pls pls improve this
+    part = builtins.partition (raw_user: builtins.elem raw_user.name ["nixos" "maelstroem" "alice"]) raw_users;
     sys_users = (map user.mkSystemUser part.right) ++ (map user.mkGuestUser part.wrong);
     net = import ../network.nix {};
   in
