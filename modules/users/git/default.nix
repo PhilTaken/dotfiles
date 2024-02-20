@@ -31,16 +31,18 @@ in {
       type = types.nullOr types.str;
       default = "BDCD0C4E9F252898";
     };
+
+    signFlavor = mkOption {
+      description = "Sign key flavor";
+      type = types.enum ["ssh" "gpg"];
+      default = "openpgp";
+    };
   };
 
   config = mkIf cfg.enable {
-    programs.gitui = {
-      enable = true;
-      # TODO: keybinds, theme?
-    };
-
     home.packages = [
       pkgs.git-workspace
+      pkgs.git-absorb
     ];
 
     home.sessionVariables = {
@@ -90,6 +92,7 @@ in {
 
       inherit (cfg) userEmail;
       inherit (cfg) userName;
+
       signing = mkIf (cfg.signKey != null) {
         key = cfg.signKey;
         signByDefault = true;
@@ -132,6 +135,7 @@ in {
         w = "status -sb";
         wdiff = "diff --color-words";
       };
+
       extraConfig = {
         pull.rebase = true;
         commit.gpgsign = cfg.signKey != null;
@@ -145,6 +149,8 @@ in {
         };
         merge.conflictstyle = "diff3";
         push.autoSetupRemote = true;
+
+        gpg.format = cfg.signFlavor;
       };
     };
   };

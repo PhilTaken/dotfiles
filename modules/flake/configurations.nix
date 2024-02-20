@@ -16,42 +16,43 @@
       music.enable = true;
     };
   in {
-    alice = {
-      userConfig = {
-        leisure.enable = false;
+    alice.userConfig = {
+      leisure.enable = false;
+
+      git = {
+        enable = true;
+        userName = "Philipp Herzog";
+        userEmail = "philipp.herzog@protonmail.com";
+        # TODO maybe include pubkey here?
+        signKey = "~/.ssh/git.pub";
+        signFlavor = "ssh";
       };
     };
 
-    nixos = {
-      userConfig = mkConfig {
-        work.enable = true;
+    nixos.userConfig = mkConfig {
+      work.enable = true;
 
-        # de/wm config
-        wms.hyprland.enable = true;
-        wms.bars.eww.enable = true;
-      };
+      # de/wm config
+      wms.hyprland.enable = true;
+      wms.bars.eww.enable = true;
     };
 
-    maelstroem = {
-      userConfig = mkConfig {
-        work.enable = true;
+    maelstroem.userConfig = mkConfig {
+      work.enable = true;
 
-        # de/wm config
-        wms.hyprland.enable = true;
-        wms.bars.eww.enable = true;
+      # de/wm config
+      wms.hyprland.enable = true;
+      wms.bars.eww.enable = true;
 
-        des.gnome.enable = true;
-      };
+      des.gnome.enable = true;
     };
 
-    jaid = {
-      userConfig = mkConfig {
-        terminals.defaultShell = "zsh";
-        des.gnome.enable = true;
-      };
+    jaid.userConfig = mkConfig {
+      terminals.defaultShell = "zsh";
+      des.gnome.enable = true;
     };
 
-    philippherzog = {
+    philippherzog.userConfig = {
       work.enable = true;
 
       editors.neovim.langs = {
@@ -94,7 +95,7 @@ in {
             (python310.withPackages (ps: [ps.virtualenv]))
           ];
 
-        userConfig = hmUsers.philippherzog;
+        inherit (hmUsers.philippherzog) userConfig;
       };
     };
 
