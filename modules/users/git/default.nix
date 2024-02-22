@@ -34,7 +34,7 @@ in {
 
     signFlavor = mkOption {
       description = "Sign key flavor";
-      type = types.enum ["ssh" "gpg"];
+      type = types.enum ["ssh" "openpgp"];
       default = "openpgp";
     };
   };
