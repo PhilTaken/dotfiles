@@ -27,6 +27,8 @@ in {
       pkgs.zellij
     ];
 
+    # TODO generate all of the below with nix
+    # TODO colors from stylix
     xdg.configFile."zellij/config.kdl" = {
       source = settings.configFile;
     };
@@ -45,7 +47,7 @@ in {
 
                       format_left  "{mode}{tabs}"
 
-                      format_right "{command_dimsum_note} #[fg=#1e1e2e,bg=#585b70]{datetime}"
+                      format_right "{command_dimsum_note}#[bg=#1e1e2e] #[fg=#1e1e2e,bg=#585b70]{datetime}"
                       format_space "#[bg=#1e1e2e]"
 
                       border_enabled  "true"
@@ -54,7 +56,7 @@ in {
                       border_position "bottom"
 
                       command_dimsum_note_command     "bash -c \"dimsum status --json | jq -r '.note' | grep -v null\""
-                      command_dimsum_note_format      "#[fg=#cdd6f4]{stdout}"
+                      command_dimsum_note_format      "#[fg=#cdd6f4,bg=#1e1e2e]{stdout}"
                       command_dimsum_note_interval    "10"
                       command_dimsum_note_rendermode  "static"
 
@@ -84,29 +86,5 @@ in {
           }
       }
     '';
-
-    # = {
-    #   source = pkgs.stdenv.mkDerivation {
-    #     pname = "zellij-layouts";
-    #     version = "0.1";
-    #     phases = ["patchPhase"];
-
-    #     src = ./layouts;
-
-    #     # TODO: replace commands with actual paths to binaries
-    #     patchPhase = ''
-    #       mkdir -p $out
-    #       cp -r $src/* $out
-
-    #       substituteInPlace $out/default.kdl \
-    #         --replace '@user@' '${config.home.username}' \
-    #         --replace '@barplugin@' '${barplugin}'
-
-    #       substituteInPlace $out/vortrag.kdl \
-    #         --replace '@user@' '${config.home.username}'
-    #     '';
-    #   };
-    #   recursive = true;
-    # };
   };
 }

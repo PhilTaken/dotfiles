@@ -54,13 +54,7 @@ in {
 
     console.useXkbConfig = true;
 
-    fonts.fonts = with pkgs; [
-      iosevka-comfy.comfy
-      font-awesome
-      (nerdfonts.override {
-        fonts = ["VictorMono"];
-      })
-    ];
+    fonts.packages = [pkgs.font-awesome];
 
     # https://github.com/nix-community/home-manager/issues/2017
     # https://github.com/NixOS/nixpkgs/issues/158025

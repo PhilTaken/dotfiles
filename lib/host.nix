@@ -98,10 +98,40 @@ in rec {
 
       modules = [
         inputs.home-manager.darwinModule
+        inputs.stylix.darwinModules.stylix
+
         (../machines + "/${name}")
         (../machines + "/${name}/${username}.nix")
 
         {
+          stylix = {
+            image = ../images/vortex.png;
+            base16Scheme = "${npins.base16}/base16/mocha.yaml";
+
+            fonts = {
+              serif = {
+                package = pkgs.dejavu_fonts;
+                name = "DejaVu Serif";
+              };
+
+              sansSerif = {
+                package = pkgs.dejavu_fonts;
+                name = "DejaVu Sans";
+              };
+
+              monospace = {
+                #package = pkgs.dejavu_fonts;
+                #name = "DejaVu Sans Mono";
+                package = pkgs.iosevka-comfy.comfy-duo;
+                name = "Iosevka Comfy";
+              };
+
+              emoji = {
+                package = pkgs.noto-fonts-emoji;
+                name = "Noto Color Emoji";
+              };
+            };
+          };
           home-manager.users.${username} = {
             imports = [
               (user.mkConfig pkgs username {
