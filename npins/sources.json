@@ -7,9 +7,9 @@
         "url": "https://github.com/oSumAtrIX/DownOnSpot"
       },
       "branch": "main",
-      "revision": "28035d9a2edcc21f2098f09a4304a2254ff9bc51",
+      "revision": "92cf74bdeda7632b367fb8561e5b01d2ffce1ebe",
       "url": null,
-      "hash": "1l3yicv7frb9wxs16k3ka079s59d06r3lgclpqm0xz54cbasiapc"
+      "hash": "0bmqdsjf6s4rsw9nfxv4l74xffy8z0vjdhgcvrk06xvqc40h643d"
     },
     "alacritty": {
       "type": "Git",
@@ -19,9 +19,9 @@
         "repo": "alacritty"
       },
       "branch": "main",
-      "revision": "3c808cbb4f9c87be43ba5241bc57373c793d2f17",
-      "url": "https://github.com/catppuccin/alacritty/archive/3c808cbb4f9c87be43ba5241bc57373c793d2f17.tar.gz",
-      "hash": "07gvkxz9axvjjplpmwf6k0nk6n84gm20s0k5qkqsqkmv8ysdbmf3"
+      "revision": "f2da554ee63690712274971dd9ce0217895f5ee0",
+      "url": "https://github.com/catppuccin/alacritty/archive/f2da554ee63690712274971dd9ce0217895f5ee0.tar.gz",
+      "hash": "1g3qzy2fy1qf5lk07f4af98yaa85y7j16p43x6z8z303bg31m5na"
     },
     "base16": {
       "type": "Git",
@@ -43,15 +43,15 @@
         "repo": "janet.vim"
       },
       "branch": "master",
-      "revision": "dc14b02f2820bc2aca777a1eeec48627ae6555bf",
-      "url": "https://github.com/bakpakin/janet.vim/archive/dc14b02f2820bc2aca777a1eeec48627ae6555bf.tar.gz",
-      "hash": "0l0yzw168av3dwg6f8qhw5x5v8a6w3higj4pccaixg5g9js1mg0m"
+      "revision": "e5899fdf8049b4d92c3cd4e95710248f7b48c24b",
+      "url": "https://github.com/bakpakin/janet.vim/archive/e5899fdf8049b4d92c3cd4e95710248f7b48c24b.tar.gz",
+      "hash": "0630mf7b20fx18ahnycbbswa67vrnglzdpksd72ycnj43ysnig35"
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-23.11pre543441.b644d97bda6d/nixexprs.tar.xz",
-      "hash": "1xq7rz2bcb115xkahpvslsqpliisv2587z93izz81lna77r4na1d"
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-24.05pre586734.98b00b6947a9/nixexprs.tar.xz",
+      "hash": "17n0arljd3zp0dbldsg0v0gv1zkbqhx0gvx28fq9jc304jm5idvr"
     },
     "pisces": {
       "type": "Git",
@@ -72,9 +72,9 @@
         "url": "https://github.com/kevinhwang91/promise-async"
       },
       "branch": "main",
-      "revision": "e94f35161b8c5d4a4ca3b6ff93dd073eb9214c0e",
+      "revision": "94f6f03c6c1e2aab551aacdf0c1e597a7269abb6",
       "url": null,
-      "hash": "0cavxw5v3nhnrs26r7cqxirq2ydk5g1ymcd3m4gf4rjjw9n067sd"
+      "hash": "0davvjhc5pxa8j3l7njqk9dqc7m9f4hg037xcz0nr23ihhs2ja96"
     },
     "telescope-egrepify.nvim": {
       "type": "Git",
@@ -84,9 +84,9 @@
         "repo": "telescope-egrepify.nvim"
       },
       "branch": "master",
-      "revision": "4cefc4c204c8f89af3d82b2945de2e63a3bb9de6",
-      "url": "https://github.com/fdschmidt93/telescope-egrepify.nvim/archive/4cefc4c204c8f89af3d82b2945de2e63a3bb9de6.tar.gz",
-      "hash": "0dx82hslh5098fhggifi7vi2p2q5gq3mhx828gyhflgwqnhkab3a"
+      "revision": "728dc1b7f31297876c3a3254fc6108108b6a9e9d",
+      "url": "https://github.com/fdschmidt93/telescope-egrepify.nvim/archive/728dc1b7f31297876c3a3254fc6108108b6a9e9d.tar.gz",
+      "hash": "15wl3rsf8qiifkh7ibbbz04zk1m60dzd0y2r0m6q81fp5f2nsag8"
     },
     "tmux-nvr": {
       "type": "Git",
@@ -107,9 +107,9 @@
         "repo": "vim-terraform"
       },
       "branch": "master",
-      "revision": "d37ae7e7828aa167877e338dea5d4e1653ed3eb1",
-      "url": "https://github.com/hashivim/vim-terraform/archive/d37ae7e7828aa167877e338dea5d4e1653ed3eb1.tar.gz",
-      "hash": "0630s7jaadd6ndkkj49k3ivink2vkajh0cjx30dw1ip6md360sjh"
+      "revision": "21f756b933cd11ac5990a6046fdc7c4e2a6c0aee",
+      "url": "https://github.com/hashivim/vim-terraform/archive/21f756b933cd11ac5990a6046fdc7c4e2a6c0aee.tar.gz",
+      "hash": "1bp6nqsdn9h3ihy5y2na7n40nmjr1vqsjj845ks4kfrzfcsvmxms"
     },
     "vim-varnish": {
       "type": "GitRelease",
@@ -120,10 +120,10 @@
       },
       "pre_releases": false,
       "version_upper_bound": null,
-      "version": "v0.1.6",
-      "revision": "59ff3fa788a180bad44d7df979f3b08113884bfd",
-      "url": "https://api.github.com/repos/varnishcache-friends/vim-varnish/tarball/v0.1.6",
-      "hash": "00gd22dzz32xj0q2mm2chasm8sg3imq7hl3rdnk3qzp005qcs1g8"
+      "version": "v0.1.7",
+      "revision": "01458458f20831d43045423344bcb70a40d04b0f",
+      "url": "https://api.github.com/repos/varnishcache-friends/vim-varnish/tarball/v0.1.7",
+      "hash": "1qv8ilq3wgvdnqixdhnpxf29ikvzvpl1wvp1ynpqh7iar23j9l5d"
     },
     "yuck.vim": {
       "type": "Git",
