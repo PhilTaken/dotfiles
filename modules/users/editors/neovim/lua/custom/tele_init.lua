@@ -10,6 +10,7 @@ local extraglobs = {
 	"--glob=!**/.direnv/*",
 	"--glob=!**/target/*",
 	"--glob=!**/.ruff_cache/*",
+	"--glob=!**/.mypy_cache/*",
 }
 
 local ff_command = {
