@@ -94,7 +94,7 @@ in {
       vimAlias = true;
       withPython3 = true;
       withNodeJs = true;
-      extraPython3Packages = ps: with ps; [pynvim];
+      extraPython3Packages = ps: [ps.pynvim];
       extraPackages = with pkgs;
         [
           tree-sitter
