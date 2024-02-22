@@ -54,17 +54,27 @@ in {
 
       wezterm = {
         enable = true;
+        # TODO make color_scheme configurable
         extraConfig = ''
-          return {
+          local config = {
             window_padding = { left = 5, right = 5, top = 5, bottom = 5 },
             hide_tab_bar_if_only_one_tab = true,
-            color_scheme = "Catppuccin Mocha",
-            font = wezterm.font("${cfg.default_font}"),
             font_size = 11.0,
             dpi = 192.0,
             adjust_window_size_when_changing_font_size = false,
-            -- front_end = "WebGpu",
+            window_background_opacity = 0.95,
+            macos_window_background_blur = 20,
+            warn_about_missing_glyphs = false,
           }
+
+          config.hyperlink_rules = wezterm.default_hyperlink_rules()
+
+          table.insert(config.hyperlink_rules, {
+            regex = [[\b(FC-\d+)\b]],
+            format = 'https://yt.flyingcircus.io/issue/$1',
+          })
+
+          return config
         '';
       };
 

@@ -92,7 +92,7 @@ in {
             openssl
             openssl.dev
 
-            (python310.withPackages (ps: [ps.virtualenv]))
+            (python310.withPackages (ps: [ps.virtualenv ps.packaging]))
           ];
 
         inherit (hmUsers.philippherzog) userConfig;
