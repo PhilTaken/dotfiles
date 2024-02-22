@@ -50,9 +50,6 @@ in {
       };
 
       settings = {
-        # stylix
-        #theme = "catppuccin_mocha";
-
         editor = {
           line-number = "relative";
           mouse = true;

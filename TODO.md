@@ -2,6 +2,8 @@
 
 - fix twisted build failure, reenable extrasensors for delta
 
+- generate zellij config in nix
+
 - one psql database (per host?) for services
 - backup postgres database of nextcloud instance
 - backup (important) syncthing folders locally and to b2

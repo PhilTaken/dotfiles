@@ -17,9 +17,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.tmux = let
-      catppuccin_tmux_conf = ./catppuccin.conf;
-    in {
+    programs.tmux = {
       enable = true;
       baseIndex = 1;
       escapeTime = 1;
@@ -91,10 +89,6 @@ in {
         bind -r N resize-pane -D 5
         bind -r E resize-pane -U 5
         bind -r O resize-pane -R 5
-
-        # --------------------------
-
-        source ${catppuccin_tmux_conf}
       '';
       # source {airline_conf}
       # source {colorscheme_conf}

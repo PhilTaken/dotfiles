@@ -180,10 +180,6 @@ in {
                 compile = {
                     enable = true,
                 },
-                dim_inactive = {
-                    enabled = true,
-                    percentage = 0.02,
-                },
                 integrations = {
                     markdown = true,
                     gitsigns = true,
