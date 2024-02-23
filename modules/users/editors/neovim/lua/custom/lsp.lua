@@ -78,6 +78,13 @@ lsp_extra_config["rust_analyzer"] = {
 			},
 			procMacro = {
 				enable = true,
+				ignored = {
+                    leptos_macro = {
+                        -- optional: --
+                        -- "component",
+                        "server",
+                    },
+                },
 			},
 		},
 	},

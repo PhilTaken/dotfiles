@@ -19,6 +19,9 @@
     alice.userConfig = {
       leisure.enable = false;
 
+      wms.hyprland.enable = true;
+      #wms.bars.eww.enable = true;
+
       git = {
         enable = true;
         userName = "Philipp Herzog";
@@ -178,6 +181,8 @@ in {
             nebula.enable = false;
             server.services.openssh.enable = true;
             core.hostName = "zetta";
+            video.driver = "qxl";
+            video.managers = ["gnome"];
           };
         };
       }

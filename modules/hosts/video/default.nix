@@ -26,7 +26,7 @@ in {
 
     driver = mkOption {
       description = "video driver";
-      type = types.nullOr (types.enum ["noveau" "nvidia" "amd"]);
+      type = types.nullOr (types.enum ["noveau" "nvidia" "amd" "qxl"]);
       default = null;
     };
 

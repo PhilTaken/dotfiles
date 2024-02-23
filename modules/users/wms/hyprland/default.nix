@@ -87,18 +87,10 @@ in {
       enable = true;
       # TODO rewrite in nix with https://nix-community.github.io/home-manager/options.html#opt-wayland.windowManager.hyprland.settings
       extraConfig = ''
-        monitor = DP-1,2560x1440@75,0x1080,1
-        monitor = DVI-D-1,1920x1080@60,0x0,1
-        #workspace = DP-1,1
-
-        device:AT Translated Set 2 keyboard {
-          kb_layout = us(workman-intl),us(intl),
-          kb_options = caps:escape,grp:shifts_toggle,
-        }
+        monitor=,preferred,auto,auto
 
         input {
-            kb_layout = us,
-            kb_options = caps:escape,
+            kb_options = caps:escape,grp:shifts_toggle,
         }
 
         general {
@@ -111,27 +103,13 @@ in {
             # col.active_border = 0x66ee1111
             col.active_border = 0x66883333
             col.inactive_border = 0xffffffff
-
-            apply_sens_to_raw = 0 # whether to apply the sensitivity to raw input (e.g. used by games where you aim using your mouse)
         }
 
         decoration {
             rounding = 10
 
-            # Your blur "amount" is blur_size * blur_passes, but high blur_size (over around 5-ish) will produce artifacts.
-            # if you want heavy blur, you need to up the blur_passes.
-            # the more passes, the more you can up the blur_size without noticing artifacts.
-
-            blur = yes
-            blur_size = 2 # minimum 1
-            blur_passes = 5 # minimum 1, more passes = more resource intensive.
-            blur_new_optimizations = on
-
-            dim_inactive = true
-            dim_strength = 0.1
-
             drop_shadow = yes
-            shadow_range = 10
+            shadow_range = 4
             shadow_render_power = 5
             col.shadow = rgba(1a1a1aee)
         }
@@ -151,8 +129,8 @@ in {
         }
 
         dwindle {
-            pseudotile = 0 # enable pseudotiling on dwindle
-            preserve_split = yes
+            pseudotile = true # enable pseudotiling on dwindle
+            preserve_split = true
         }
 
         master {
