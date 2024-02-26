@@ -659,11 +659,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1708619605,
-        "narHash": "sha256-L7k3PNxsReJ0PzZ7iN62mc3cnpWVxMN1S5Ze6P2Jy8Q=",
+        "lastModified": 1708936074,
+        "narHash": "sha256-qo46xkx7GAoSWIfeZy626BDjEgeimY0A9nQoTZBVVEw=",
         "ref": "refs/heads/main",
-        "rev": "729eaab3dba4de76a55c4179d70deb261b9f6faa",
-        "revCount": 25,
+        "rev": "b708404314b7bf73a01daa3f5c79f71d7d251e91",
+        "revCount": 26,
         "type": "git",
         "url": "https://gitea.pherzog.xyz/phil/fc-utils"
       },
@@ -2653,11 +2653,11 @@
     },
     "nur-src": {
       "locked": {
-        "lastModified": 1708932525,
-        "narHash": "sha256-eMwNrfYhALhWuvdkctLv65bRS/2kB8qnlONW++RZsTE=",
+        "lastModified": 1708935806,
+        "narHash": "sha256-gboyUpnICFCIJ7rfijoAjJguezMj2rikstb5n4LDKIM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "67f124575c14b4aa0d565d5f248d82350625209c",
+        "rev": "cdb259ad397fa9e087bbe75c180b11972504b508",
         "type": "github"
       },
       "original": {
