@@ -238,7 +238,6 @@ in {
 
       swayidle
       wl-clipboard
-      imv
       feh
       wev
       wf-recorder

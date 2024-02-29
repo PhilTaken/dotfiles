@@ -19,9 +19,6 @@
     alice.userConfig = {
       leisure.enable = false;
 
-      wms.hyprland.enable = true;
-      #wms.bars.eww.enable = true;
-
       git = {
         enable = true;
         userName = "Philipp Herzog";
@@ -181,9 +178,43 @@ in {
             nebula.enable = false;
             server.services.openssh.enable = true;
             core.hostName = "zetta";
-            video.driver = "qxl";
-            video.managers = ["gnome"];
+            video.enable = false;
           };
+
+          extraHostModules = [
+            ({
+              pkgs,
+              npins,
+              ...
+            }: {
+              stylix = {
+                image = ../../images/cat-sound.png;
+                base16Scheme = "${npins.base16}/base16/mocha.yaml";
+
+                fonts = {
+                  serif = {
+                    package = pkgs.dejavu_fonts;
+                    name = "DejaVu Serif";
+                  };
+
+                  sansSerif = {
+                    package = pkgs.dejavu_fonts;
+                    name = "DejaVu Sans";
+                  };
+
+                  monospace = {
+                    package = pkgs.iosevka-comfy.comfy-duo;
+                    name = "Iosevka Comfy";
+                  };
+
+                  emoji = {
+                    package = pkgs.noto-fonts-emoji;
+                    name = "Noto Color Emoji";
+                  };
+                };
+              };
+            })
+          ];
         };
       }
       // builtins.mapAttrs
