@@ -36,6 +36,7 @@ in {
       fswatch
 
       httpie
+      hurl
 
       sad
 
