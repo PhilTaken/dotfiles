@@ -1,8 +1,8 @@
 -- nvim_lsp object
 local lsp = require("lspconfig")
 local capabilities = vim.tbl_deep_extend("force",
-    vim.lsp.protocol.make_client_capabilities(),
-    require('cmp_nvim_lsp').default_capabilities()
+	vim.lsp.protocol.make_client_capabilities(),
+	require('cmp_nvim_lsp').default_capabilities()
 )
 local navic = require("nvim-navic")
 local configs = require("lspconfig/configs")
@@ -20,7 +20,8 @@ lsp_extra_config["elixirls"] = {
 
 lsp_extra_config["hls"] = {
 	on_new_config = function(config, new_root)
-		local cabalfiles = require("plenary.scandir").scan_dir(new_root, { depth = 1, search_pattern = ".*.cabal" })
+		local cabalfiles = require("plenary.scandir").scan_dir(new_root,
+			{ depth = 1, search_pattern = ".*.cabal" })
 		if #cabalfiles > 0 then
 			config.cmd = { "haskell-language-server", "--lsp" }
 		end
@@ -79,60 +80,62 @@ lsp_extra_config["rust_analyzer"] = {
 			procMacro = {
 				enable = true,
 				ignored = {
-                    leptos_macro = {
-                        -- optional: --
-                        -- "component",
-                        "server",
-                    },
-                },
+					leptos_macro = {
+						-- optional: --
+						-- "component",
+						"server",
+					},
+				},
 			},
 		},
 	},
 }
 
 local function get_python_path(workspace)
-    local appenv = vim.fs.find("appenv", { type = "file", limit = 1, path = workspace})
+	local appenv = vim.fs.find("appenv", { type = "file", limit = 1, path = workspace })
 
-    if #appenv == 1 then
-        return io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)' 2>/dev/null | tail -1"):read()
-    else
-        return vim.fn.exepath("python")
-    end
+	if #appenv == 1 then
+		return io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)' 2>/dev/null | tail -1")
+		    :read()
+	else
+		return vim.fn.exepath("python")
+	end
 end
 
 
 lsp_extra_config["pylsp"] = {
 	on_new_config = function(config)
-        config.settings.pylsp.plugins.jedi.environment = get_python_path(configs.root_dir)
-        config.settings.pylsp.plugins.pylsp_mypy.overrides = { "--python-executable", get_python_path(configs.root_dir), true }
+		config.settings.pylsp.plugins.jedi.environment = get_python_path(configs.root_dir)
+		config.settings.pylsp.plugins.pylsp_mypy.overrides = { "--python-executable", get_python_path(configs
+			.root_dir), true }
 	end,
 	settings = {
 		pylsp = {
 			plugins = {
-			    autopep8 = { enabled = false },
+				autopep8 = { enabled = false },
 				yapf = { enabled = false },
 				pyflakes = { enabled = false },
 				pydocstyle = { enabled = false },
 				jedi = {
-                    environment = nil,
+					environment = nil,
 				},
 				jedi_completion = {
 					include_params = true,
 					fuzzy = true,
 				},
-                pylsp_mypy = {
-                    enabled = true,
-                    overrides = {},
-                    report_progress = true,
-                    live_mode = false,
-                },
-                ruff = {
-                    enabled = true,
-                    format = { "I" },
-                    unsafeFixes = false,
-                    extendIgnore = { "E501", "F401" },
-                    lineLength = 88,
-                },
+				pylsp_mypy = {
+					enabled = true,
+					overrides = {},
+					report_progress = true,
+					live_mode = false,
+				},
+				ruff = {
+					enabled = true,
+					format = { "I" },
+					unsafeFixes = false,
+					extendIgnore = { "E501", "F401" },
+					lineLength = 88,
+				},
 			},
 		},
 	},

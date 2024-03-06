@@ -131,6 +131,10 @@ in {
           # extras for python
           mypy
           ruff
+
+          # formatting for hurl
+          jq
+          nodePackages.prettier
         ]
         ++ (optional cfg.langs.python (pkgs.python3.withPackages (ps:
           with ps; [
@@ -405,6 +409,22 @@ in {
 
           (plug (buildPlugin {pname = "telescope-egrepify.nvim";}) ''
             require "telescope".load_extension "egrepify"
+          '')
+
+          (plug nui-nvim "")
+
+          (plug (buildPlugin {pname = "hurl-nvim";}) ''
+            require("hurl").setup({
+              mode = "split",
+              formatters = {
+                json = { 'jq' },
+                html = {
+                  'prettier',
+                  '--parser',
+                  'html',
+                },
+              },
+            })
           '')
 
           # completion

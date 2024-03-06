@@ -35,6 +35,19 @@
       "url": "https://github.com/catppuccin/base16/archive/ca74b4070d6ead4213e92da1273fcc1853de7af8.tar.gz",
       "hash": "1h37bjmr2b96l239ckv5iq8cyvpm4bwnqgl21s4k65mikycfr43x"
     },
+    "hurl-nvim": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "Git",
+        "url": "https://github.com/jellydn/hurl.nvim"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "version": "v1.0.1",
+      "revision": "5993e168b6c3945e695b859c234c31c5bbcc4e23",
+      "url": null,
+      "hash": "10g9rinl3gqnm68vmpfph1zv2qpqgjrn26jxypg3hskk2y5374p5"
+    },
     "janet.vim": {
       "type": "Git",
       "repository": {

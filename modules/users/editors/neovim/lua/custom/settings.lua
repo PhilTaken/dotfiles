@@ -182,3 +182,10 @@ function _G.qftf(info)
 end
 
 vim.o.qftf = "{info -> v:lua._G.qftf(info)}"
+
+
+vim.filetype.add({
+	extension = {
+		hurl = "hurl",
+	}
+})
