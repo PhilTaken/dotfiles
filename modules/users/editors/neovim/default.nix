@@ -125,6 +125,8 @@ in {
 
           sumneko-lua-language-server # lua
 
+          yaml-language-server # yaml
+
           nil # nix
           nixd # nix
 

@@ -156,6 +156,7 @@ local enabled_lsps = {
 	"lua_ls",
 	"rust_analyzer",
 	"pylsp",
+	"yamlls"
 }
 
 -- signature help
