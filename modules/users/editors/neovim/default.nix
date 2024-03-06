@@ -19,6 +19,18 @@
     inherit plugin config;
     type = "lua";
   };
+  lplug1 = plugin: pconf: preconf: {
+    inherit plugin;
+    config = ''
+      vim.schedule(function()
+        ${preconf}
+        packadd("${plugin.pname}")
+        ${pconf}
+      end)
+    '';
+    optional = true;
+    type = "lua";
+  };
   lplug = plugin: pconf: {
     inherit plugin;
     config = ''
@@ -168,7 +180,12 @@ in {
         (with pkgs.vimPlugins; [
           # ---------------------------------------
           # these *need* to be loaded synchronously
-          nvim-treesitter.withAllGrammars
+          (plug nvim-treesitter.withAllGrammars ''
+            require('nvim-treesitter.configs').setup {
+              highlight = { enable = true },
+              indent = { enable = true },
+            }
+          '')
           (plug alpha-nvim ''
             require('alpha').setup(require('alpha.themes.startify').opts)
           '')
@@ -212,6 +229,15 @@ in {
             require('illuminate').configure{}
           '')
 
+          (lplug conform-nvim ''
+            require('conform').setup{
+              format_on_save = {
+                timeout_ms = 500,
+                lsp_fallback = true,
+              },
+            }
+          '')
+
           (lplug nvim-notify ''
             local notify = require("notify")
             notify.setup({ background_colour = "#000000" })
@@ -226,13 +252,13 @@ in {
 
           (lplug stabilize-nvim "require('stabilize').setup()")
 
-          (lplug echodoc-vim ''
-            vim.cmd([[let g:echodoc#enable_at_startup = 1]])
-            vim.cmd([[let g:echodoc#type = 'floating']])
+          (lplug1 echodoc-vim "" ''
+            vim.g["echodoc#enable_at_startup"] = 1
+            vim.g["echodoc#type"] = 'floating'
           '')
 
-          (lplug float-preview-nvim ''
-            vim.cmd([[let g:float_preview#docked = 1]])
+          (lplug1 float-preview-nvim "" ''
+            vim.g["float_preview#docked"] = 1
           '')
 
           (lplug indent-blankline-nvim ''
@@ -300,7 +326,7 @@ in {
             })
           '')
 
-          (lplug pear-tree ''
+          (lplug1 pear-tree "" ''
             vim.g.pear_tree_smart_openers = 1
             vim.g.pear_tree_smart_closers = 1
             vim.g.pear_tree_smart_backspace = 1
@@ -308,8 +334,9 @@ in {
             vim.g.pear_tree_ft_disabled = { "TelescopePrompt", "nofile", "terminal" }
           '')
 
-          (lplug conjure ''
-            vim.cmd([[let g:conjure#filetype#fennel = "conjure.client.fennel.stdio"]])
+          (lplug1 conjure "" ''
+            vim.g["conjure#filetype#fennel"] = "conjure.client.fennel.stdio"
+            vim.g["conjure#filetypes"] = { "clojure", "fennel", "janet", "hy", "julia", "racket", "scheme", "lisp" }
           '')
 
           (lplug diffview-nvim "require('diffview').setup({})")
@@ -338,7 +365,7 @@ in {
           '')
 
           (lplug vim-pandoc ''
-            vim.cmd([[let g:pandoc#spell#enabled = 0]])
+            vim.g["pandoc#spell#enabled"] = 0
           '')
 
           (lplug fidget-nvim ''
@@ -349,10 +376,12 @@ in {
           (plug telescope-nvim ''
             require("telescope").load_extension("file_browser")
             require("telescope").load_extension("zoxide")
+            require("telescope").load_extension("ui-select")
           '')
           telescope-file-browser-nvim
           telescope-symbols-nvim
           telescope-zoxide
+          telescope-ui-select-nvim
 
           # TODO load these asynchronously
           (plug lspkind-nvim "require('lspkind').init()")
@@ -393,6 +422,7 @@ in {
           nvim-lspconfig
           nvim-web-devicons
           luasnip
+          vim-sleuth
 
           parinfer-rust
           nvim-navic

@@ -28,6 +28,9 @@ o.laststatus = 3
 -- dont show the mode in the last line, have a status line for that
 o.showmode = false
 
+o.clipboard = 'unnamedplus'
+o.breakindent = true
+
 -- show path to file above buffer
 --o.winbar = "%f"
 o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
@@ -55,7 +58,9 @@ opt.guifont = "Hack Nerd Font,Iosevka Comfy:h19"
 opt.foldenable = false
 
 -- show changes incrementally
-opt.inccommand = "nosplit"
+opt.inccommand = "split"
+
+opt.cursorline = true
 
 -- no backup/swapfiles
 opt.backup = false
@@ -76,7 +81,8 @@ opt.completeopt = { "menuone", "noinsert", "noselect" }
 opt.shortmess = "filnxtToOFc"
 
 -- timeout for cursorhold  autocommand event
---o.updatetime = 300
+o.updatetime = 250
+o.timeoutlen = 300
 
 -- do not save when switching buffers
 opt.hidden = true
@@ -90,17 +96,12 @@ opt.smartindent = true
 opt.hlsearch = false
 opt.incsearch = true
 opt.list = true
+opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- backspace on start of line
 opt.backspace = { "indent", "eol", "start" }
 
 opt.shiftround = true
---o.timeoutlen = 300
---o.ttimeout = true
---o.ttimeoutlen = 0
-
---o.laststatus = 2
---opt.formatoptions = "tcqj"
 
 -- tab width, expand to spaces
 opt.tabstop = 4

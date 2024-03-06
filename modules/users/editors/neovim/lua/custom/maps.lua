@@ -83,6 +83,33 @@ local leadern = {
 		"Buffers",
 	},
 
+    g = {
+        r = {
+            function ()
+                require("telescope.builtin").lsp_references()
+            end,
+            'go to references'
+        },
+        d = {
+            function ()
+                require("telescope.builtin").lsp_definitions()
+            end,
+            'go to definition'
+        },
+        I = {
+            function ()
+                require("telescope.builtin").lsp_implementations()
+            end,
+            'go to implementations'
+        },
+        D = {
+            function ()
+                vim.lsp.buf.declaration()
+            end,
+            "go to declaration"
+        },
+    },
+
 	z = {
 		R = {
 			function()
