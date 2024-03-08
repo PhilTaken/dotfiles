@@ -11,6 +11,7 @@ local extraglobs = {
 	"--glob=!**/target/*",
 	"--glob=!**/.ruff_cache/*",
 	"--glob=!**/.mypy_cache/*",
+	"--glob=!**/.venv/*",
 }
 
 local ff_command = {
@@ -47,10 +48,10 @@ require("telescope").setup({
 	},
 
 	extensions = {
-        ['ui-select'] = {
-            require('telescope.themes').get_dropdown(),
-        },
-    },
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown(),
+		},
+	},
 
 	defaults = {
 		prompt_prefix = "❯ ",

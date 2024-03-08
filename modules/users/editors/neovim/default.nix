@@ -91,11 +91,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.sessionVariables = {
-      EDITOR = "nvim";
-      #PAGER = "${pkgs.nvimpager}/bin/nvimpager";
-    };
-
+    home.sessionVariables.EDITOR = "nvim";
     stylix.targets.vim.enable = false;
 
     programs.neovim = {
@@ -118,36 +114,38 @@ in {
 
           bottom # custom floaterm
 
-          #emanote # for zettelkasten note-taking
-
           sqlite # for sqlite.lua
           inetutils # remote editing
 
-          sumneko-lua-language-server # lua
+          sumneko-lua-language-server
+          stylua
 
-          yaml-language-server # yaml
+          yaml-language-server
 
-          nil # nix
-          nixd # nix
+          # nix
+          nil
+          nixd
+          alejandra
 
-          # extras for python
-          mypy
-          ruff
-
-          # formatting for hurl
+          # formatting for hurl-nvim
           jq
           nodePackages.prettier
 
           # formatters for conform-nvim
-          stylua
         ]
-        ++ (optional cfg.langs.python (pkgs.python3.withPackages (ps:
-          with ps; [
-            python-lsp-server
-            pylsp-mypy
-            python-lsp-ruff
-            mypy
-          ])))
+        ++ (optionals cfg.langs.python [
+          (pkgs.python3.withPackages (ps:
+            with ps; [
+              python-lsp-server
+              pylsp-mypy
+              python-lsp-ruff
+              mypy
+            ]))
+          pkgs.mypy
+          pkgs.ruff
+          pkgs.isort
+          pkgs.black
+        ])
         ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server])
         ++ (optionals cfg.langs.cpp [pkgs.ccls])
         ++ (optionals cfg.langs.rust [pkgs.rust-analyzer-unwrapped])
@@ -184,7 +182,7 @@ in {
         end
       '';
 
-      # install treesitter with nix to prevent all kinds of libstdc++ so shenenigans
+      # install treesitter with nix to prevent all kinds of libstdc++.so shenenigans
       plugins =
         (with pkgs.vimPlugins; [
           # ---------------------------------------
@@ -243,6 +241,14 @@ in {
               formatters_by_ft = {
                 lua = { "stylua" },
                 rust = { "rustfmt" },
+                python = { "isort", "black" },
+                nix = { "alejandra" },
+              },
+              formatters = {
+                rustfmt = {
+                  command = "rustfmt",
+                  args = { "-q", "--emit=stdout", "--unstable-features", "--skip-children", "--edition=2021", "$FILENAME" },
+                },
               },
               format_on_save = {
                 timeout_ms = 500,
