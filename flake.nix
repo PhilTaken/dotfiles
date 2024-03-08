@@ -102,7 +102,7 @@
     # TODO: manage without flakes
 
     tmm-src = {
-      url = "https://release.tinymediamanager.org/v4/dist/tmm_4.3.14_linux-amd64.tar.gz";
+      url = "https://release.tinymediamanager.org/v5/dist/tinyMediaManager-5.0.3-linux-amd64.tar.xz";
       flake = false;
     };
   };
