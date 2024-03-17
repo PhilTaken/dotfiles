@@ -138,6 +138,11 @@ in {
           name = "cswitch";
           help = "Switch to a NixOS Configuration (local)";
           command = mkSystemScript ''
+            cbuild $@
+
+            # TODO ask for confirmation?
+            # RIIR when
+
             if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
               sudo darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             else
