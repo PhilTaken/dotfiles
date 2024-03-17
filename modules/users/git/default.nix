@@ -50,7 +50,7 @@ in {
     };
 
     home.shellAliases = {
-      gf = "${pkgs.git}/bin/git fetch -ap";
+      gf = "${pkgs.git}/bin/git fetch -ap --all";
       ga = "${pkgs.git}/bin/git add";
       gc = "${pkgs.git}/bin/git commit";
       gd = "${pkgs.git}/bin/git diff";

@@ -1,8 +1,15 @@
 # current TODOs:
 
+## delta
+
+- monitor zpool status 
+- smart status
+- backups of important data
 - fix twisted build failure, reenable extrasensors for delta
 
-- generate zellij config in nix
+- atuin sync server (backed up)
+- vaultwarden selfhosted (backed up, rendundancy?)
+- properly generate zellij config in nix (home manager)
 
 - one psql database (per host?) for services
 - backup postgres database of nextcloud instance
@@ -17,7 +24,6 @@
 
 - udev script encrypted backup bitwarden to usb stick (bitwarden-cli)
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
-- atuin sync server (backed up)
 
 ## other
 

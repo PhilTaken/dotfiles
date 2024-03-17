@@ -53,7 +53,6 @@ _: rec {
   services = {
     # vm on a hetzner server, debian host
     alpha = [
-      #"influxdb2"
       "grafana"
     ];
 
@@ -62,28 +61,23 @@ _: rec {
 
     # mini nas @ home
     delta = [
-      #
-      "nix-serve"
-      "syncthing"
-      "unbound"
+      # "syncthing"
+      # "keycloak"
+      # "grocy"
+      # "writefreely"
+      # "ldap"
+      # "hound"
 
+      "arrs"
+      "calibre"
       "gitea"
       "homeassistant"
       "homer"
-      "hound"
       "jellyfin"
-      "keycloak"
       "navidrome"
       "nextcloud"
-      "calibre"
-
-      "ldap"
-      "grocy"
-
-      "writefreely"
-
-      # wip
-      "arrs"
+      "nix-serve"
+      "unbound"
     ];
   };
 }

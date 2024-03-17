@@ -1,8 +1,9 @@
 -- nvim_lsp object
 local lsp = require("lspconfig")
-local capabilities = vim.tbl_deep_extend("force",
+local capabilities = vim.tbl_deep_extend(
+	"force",
 	vim.lsp.protocol.make_client_capabilities(),
-	require('cmp_nvim_lsp').default_capabilities()
+	require("cmp_nvim_lsp").default_capabilities()
 )
 local navic = require("nvim-navic")
 local configs = require("lspconfig/configs")
@@ -20,8 +21,7 @@ lsp_extra_config["elixirls"] = {
 
 lsp_extra_config["hls"] = {
 	on_new_config = function(config, new_root)
-		local cabalfiles = require("plenary.scandir").scan_dir(new_root,
-			{ depth = 1, search_pattern = ".*.cabal" })
+		local cabalfiles = require("plenary.scandir").scan_dir(new_root, { depth = 1, search_pattern = ".*.cabal" })
 		if #cabalfiles > 0 then
 			config.cmd = { "haskell-language-server", "--lsp" }
 		end
@@ -95,19 +95,17 @@ local function get_python_path(workspace)
 	local appenv = vim.fs.find("appenv", { type = "file", limit = 1, path = workspace })
 
 	if #appenv == 1 then
-		return io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)' 2>/dev/null | tail -1")
-		    :read()
+		return io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)' 2>/dev/null | tail -1"):read()
 	else
 		return vim.fn.exepath("python")
 	end
 end
 
-
 lsp_extra_config["pylsp"] = {
 	on_new_config = function(config)
 		config.settings.pylsp.plugins.jedi.environment = get_python_path(configs.root_dir)
-		config.settings.pylsp.plugins.pylsp_mypy.overrides = { "--python-executable", get_python_path(configs
-			.root_dir), true }
+		config.settings.pylsp.plugins.pylsp_mypy.overrides =
+			{ "--python-executable", get_python_path(configs.root_dir), true }
 	end,
 	settings = {
 		pylsp = {
@@ -141,7 +139,6 @@ lsp_extra_config["pylsp"] = {
 	},
 }
 
-
 local enabled_lsps = {
 	"ccls",
 	"nil_ls",
@@ -156,7 +153,7 @@ local enabled_lsps = {
 	"lua_ls",
 	"rust_analyzer",
 	"pylsp",
-	"yamlls"
+	"yamlls",
 }
 
 -- signature help

@@ -124,7 +124,6 @@ in {
 
           # nix
           nil
-          nixd
           alejandra
 
           # formatting for hurl-nvim
