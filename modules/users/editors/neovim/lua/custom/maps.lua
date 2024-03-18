@@ -17,7 +17,7 @@ vim.cmd([[map gf :e <cfile><CR>]])
 -- terminals
 --local toggleterm = require("toggleterm")
 local terms = require("custom.terminals")
-local diffview = {} -- require('diffview')
+local diffview = require("diffview")
 
 local function visual_selection_range()
 	-- https://github.com/neovim/neovim/pull/13896#issuecomment-774680224
@@ -83,32 +83,32 @@ local leadern = {
 		"Buffers",
 	},
 
-    g = {
-        r = {
-            function ()
-                require("telescope.builtin").lsp_references()
-            end,
-            'go to references'
-        },
-        d = {
-            function ()
-                require("telescope.builtin").lsp_definitions()
-            end,
-            'go to definition'
-        },
-        I = {
-            function ()
-                require("telescope.builtin").lsp_implementations()
-            end,
-            'go to implementations'
-        },
-        D = {
-            function ()
-                vim.lsp.buf.declaration()
-            end,
-            "go to declaration"
-        },
-    },
+	g = {
+		r = {
+			function()
+				require("telescope.builtin").lsp_references()
+			end,
+			"go to references",
+		},
+		d = {
+			function()
+				require("telescope.builtin").lsp_definitions()
+			end,
+			"go to definition",
+		},
+		I = {
+			function()
+				require("telescope.builtin").lsp_implementations()
+			end,
+			"go to implementations",
+		},
+		D = {
+			function()
+				vim.lsp.buf.declaration()
+			end,
+			"go to declaration",
+		},
+	},
 
 	z = {
 		R = {

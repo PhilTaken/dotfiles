@@ -1,4 +1,4 @@
-{...}: {
+{config, ...}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -13,6 +13,10 @@
   services.spice-webdavd.enable = true;
 
   networking.firewall.enable = false;
+
+  environment.systemPackages = [
+    config.boot.kernelPackages.perf
+  ];
 
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
