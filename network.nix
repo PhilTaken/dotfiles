@@ -67,9 +67,9 @@ _: rec {
       # "writefreely"
       # "ldap"
       # "hound"
+      # "calibre"
 
       "arrs"
-      "calibre"
       "gitea"
       "homeassistant"
       "homer"
