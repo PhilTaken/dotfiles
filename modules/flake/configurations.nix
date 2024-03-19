@@ -82,9 +82,7 @@ in {
           with ps; [
             # fonts
             iosevka-comfy.comfy
-            (nerdfonts.override {
-              fonts = ["SourceCodePro" "Iosevka"];
-            })
+            (nerdfonts.override {fonts = ["SourceCodePro" "Iosevka"];})
 
             rclone
             osxfuse
@@ -92,7 +90,8 @@ in {
             openssl
             openssl.dev
 
-            (python310.withPackages (ps: [ps.virtualenv ps.packaging]))
+            uv
+            python311
           ];
 
         inherit (hmUsers.philippherzog) userConfig;

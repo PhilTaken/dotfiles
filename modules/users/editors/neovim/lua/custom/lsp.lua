@@ -92,13 +92,7 @@ lsp_extra_config["rust_analyzer"] = {
 }
 
 local function get_python_path(workspace)
-	local appenv = vim.fs.find("appenv", { type = "file", limit = 1, path = workspace })
-
-	if #appenv == 1 then
-		return io.popen(appenv[1] .. " python -c 'import sys; print(sys.executable)' 2>/dev/null | tail -1"):read()
-	else
-		return vim.fn.exepath("python")
-	end
+	return vim.fn.exepath("python")
 end
 
 lsp_extra_config["pylsp"] = {
