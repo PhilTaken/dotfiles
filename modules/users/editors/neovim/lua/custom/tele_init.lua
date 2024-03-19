@@ -1,25 +1,9 @@
 local actions = require("telescope.actions")
 
-local extraglobs = {
-	"--glob=!**/.git/*",
-	"--glob=!**/node_modules/*",
-	"--glob=!**/.next/*",
-	"--glob=!**/.appenv/*",
-	"--glob=!**/.batou/*",
-	"--glob=!**/.jpm/*",
-	"--glob=!**/.direnv/*",
-	"--glob=!**/target/*",
-	"--glob=!**/.ruff_cache/*",
-	"--glob=!**/.mypy_cache/*",
-	"--glob=!**/.venv/*",
-}
-
 local ff_command = {
 	"rg",
 	"--files",
-	"--hidden",
 	"--ignore",
-	"-u",
 }
 
 local vg_command = {
@@ -30,15 +14,8 @@ local vg_command = {
 	"--line-number",
 	"--column",
 	"--smart-case",
-	"--hidden",
 	"--ignore",
-	"-u",
 }
-
-for _, glob in ipairs(extraglobs) do
-	table.insert(ff_command, glob)
-	table.insert(vg_command, glob)
-end
 
 require("telescope").setup({
 	pickers = {
