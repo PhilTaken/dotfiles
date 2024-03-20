@@ -6,6 +6,11 @@
 }: let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.server.services.vector;
+
+  promtail_client = builtins.head (builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "grafana" v) net.services));
+  pm_client_ip = net.networks.default.hosts.${promtail_client};
+  # TODO: consul?
+  pm_client_port = 3100;
 in {
   options.phil.server.services.vector = {
     enable = mkOption {
@@ -27,7 +32,7 @@ in {
 
         positions.filename = "/tmp/positions.yaml";
 
-        clients = [{url = "https://loki.${net.tld}/loki/api/v1/push";}];
+        clients = [{url = "http://${pm_client_ip}:${builtins.toString pm_client_port}/loki/api/v1/push";}];
 
         scrape_configs = [
           {
