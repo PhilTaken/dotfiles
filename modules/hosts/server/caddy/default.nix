@@ -118,16 +118,18 @@ in {
             sslTrustedCertificate = "${certs.${fqdn}.directory}/chain.pem";
             locations."/" = {
               inherit (proxycfg) root proxyPass;
-              extraConfig = ''
-                proxy_redirect http:// https://;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection $connection_upgrade;
-              '';
+              extraConfig =
+                ''
+                  proxy_redirect http:// https://;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection $connection_upgrade;
+                ''
+                + lib.optionalString (!public) ''
+                  if ($allowed_traffic = 'false') {
+                    return 418;
+                  }
+                '';
             };
-            extraConfig = lib.optionalString (!public) ''
-              ${builtins.concatStringsSep "\n" (map (n: "allow ${n};") (builtins.catAttrs "netmask" (builtins.attrValues net.networks)))}
-              deny all;
-            '';
           };
         };
         updateConfigWithHost = host: _proxy: config:
@@ -174,6 +176,11 @@ in {
 
       additionalModules = [pkgs.nginxModules.geoip2];
       appendHttpConfig = ''
+        geo $remote_addr $allowed_traffic {
+            default false;
+            ${builtins.concatStringsSep "\n" (map (n: "${n} true;") (builtins.catAttrs "netmask" (builtins.attrValues net.networks)))}
+        }
+
         map $http_referer $httpReferer {
           default "$http_referer";
           ""      "(direct)";
