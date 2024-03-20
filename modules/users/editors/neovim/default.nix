@@ -256,24 +256,23 @@ in {
                   args = { "-q", "--emit=stdout", "--unstable-features", "--skip-children", "--edition=2021" },
                 },
               },
-              format_on_save = {
-                timeout_ms = 500,
-                lsp_fallback = true,
-              },
             }
 
             vim.api.nvim_create_user_command("FormatDisable", function(args)
               if args.bang then
                 -- FormatDisable! will disable formatting globally
                 vim.g.disable_autoformat = true
+                vim.notify("autoformat-on-save disabled globally", "info", { title = "conform.nvim" })
               else
                 vim.b.disable_autoformat = true
+                vim.notify("autoformat-on-save disabled in this buffer", "info", { title = "conform.nvim" })
               end
             end, {
               desc = "Disable autoformat-on-save",
               bang = true,
             })
             vim.api.nvim_create_user_command("FormatEnable", function()
+              vim.notify("autoformat-on-save enabled", "info", { title = "conform.nvim" })
               vim.b.disable_autoformat = false
               vim.g.disable_autoformat = false
             end, {
