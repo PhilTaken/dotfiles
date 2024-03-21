@@ -484,6 +484,9 @@ in {
 
           parinfer-rust
           nvim-navic
+
+          # json/yaml schemas for lsp
+          SchemaStore-nvim
         ])
         # plugins that aren't needed immediately for startup
         ++ (with pkgs.vimPlugins;
