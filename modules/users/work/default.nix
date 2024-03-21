@@ -107,6 +107,8 @@ in {
       age
       lsyncd
 
+      glab
+
       # _1password
     ];
 
