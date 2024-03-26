@@ -344,6 +344,7 @@ in {
           (plug neogit ''
             require("neogit").setup({
                 integrations = {
+                    telescope = true,
                     diffview = true,
                 },
             })
