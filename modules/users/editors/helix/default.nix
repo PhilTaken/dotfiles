@@ -11,7 +11,7 @@ in {
     enable = mkOption {
       description = "enable helix";
       type = lib.types.bool;
-      default = true;
+      default = false;
     };
   };
 
