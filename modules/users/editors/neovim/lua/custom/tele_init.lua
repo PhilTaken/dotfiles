@@ -1,9 +1,10 @@
 local actions = require("telescope.actions")
 
 local ff_command = {
-	"rg",
-	"--files",
-	"--ignore",
+	"fd",
+	"--hidden",
+	"-t",
+	"f",
 }
 
 local vg_command = {
