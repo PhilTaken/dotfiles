@@ -347,6 +347,7 @@ in {
                     telescope = true,
                     diffview = true,
                 },
+                graph_style = "unicode",
             })
           '')
 
