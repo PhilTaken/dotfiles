@@ -62,15 +62,6 @@
         downonspot = prev.downonspot.overrideAttrs (_oldAttrs: {
           version = "latest";
           src = (import ../npins).DownOnSpot;
-
-          postPatch = ''
-            cp ${./downonspot.cargo.lock} Cargo.lock
-            cp ${./downonspot.cargo.toml} Cargo.toml
-          '';
-
-          cargoDeps = prev.rustPlatform.importCargoLock {
-            lockFile = ./downonspot.cargo.lock;
-          };
         });
       }
     )

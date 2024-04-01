@@ -7,9 +7,9 @@
         "url": "https://github.com/oSumAtrIX/DownOnSpot"
       },
       "branch": "main",
-      "revision": "92cf74bdeda7632b367fb8561e5b01d2ffce1ebe",
+      "revision": "c55c35ca779fbf1bc11a388434abcf93cdfb8993",
       "url": null,
-      "hash": "0bmqdsjf6s4rsw9nfxv4l74xffy8z0vjdhgcvrk06xvqc40h643d"
+      "hash": "0g5mgv8b6yvkmksnj1garvn85hhfd2g8bg7azi78jcqrvp0j2qjv"
     },
     "alacritty": {
       "type": "Git",
@@ -19,9 +19,9 @@
         "repo": "alacritty"
       },
       "branch": "main",
-      "revision": "f2da554ee63690712274971dd9ce0217895f5ee0",
-      "url": "https://github.com/catppuccin/alacritty/archive/f2da554ee63690712274971dd9ce0217895f5ee0.tar.gz",
-      "hash": "1g3qzy2fy1qf5lk07f4af98yaa85y7j16p43x6z8z303bg31m5na"
+      "revision": "071d73effddac392d5b9b8cd5b4b527a6cf289f9",
+      "url": "https://github.com/catppuccin/alacritty/archive/071d73effddac392d5b9b8cd5b4b527a6cf289f9.tar.gz",
+      "hash": "03smi7hgvpf0hjl8pwabxh0id7sy4zxvqh6hjzdr4zv2772ih8hy"
     },
     "base16": {
       "type": "Git",
@@ -43,10 +43,10 @@
       },
       "pre_releases": false,
       "version_upper_bound": null,
-      "version": "v1.0.1",
-      "revision": "5993e168b6c3945e695b859c234c31c5bbcc4e23",
+      "version": "v1.2.1",
+      "revision": "60a038c4356aff77c289b8c8096eff5037fc1ca4",
       "url": null,
-      "hash": "10g9rinl3gqnm68vmpfph1zv2qpqgjrn26jxypg3hskk2y5374p5"
+      "hash": "17cdp6j6p7hvsjl0jz1mlhgk6f0q1xk13pks5vr5mp61wq1ddp36"
     },
     "janet.vim": {
       "type": "Git",
@@ -63,8 +63,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-24.05pre586734.98b00b6947a9/nixexprs.tar.xz",
-      "hash": "17n0arljd3zp0dbldsg0v0gv1zkbqhx0gvx28fq9jc304jm5idvr"
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-24.05pre603928.bb2b73df7bcf/nixexprs.tar.xz",
+      "hash": "1m7n4xz2fnl1589kjhrmpb6748arljf0j1kxwz8dqry3bb76pdh2"
     },
     "pisces": {
       "type": "Git",
@@ -85,9 +85,9 @@
         "url": "https://github.com/kevinhwang91/promise-async"
       },
       "branch": "main",
-      "revision": "94f6f03c6c1e2aab551aacdf0c1e597a7269abb6",
+      "revision": "93540c168c5ed2b030ec3e6c40ab8bbb85e36355",
       "url": null,
-      "hash": "0davvjhc5pxa8j3l7njqk9dqc7m9f4hg037xcz0nr23ihhs2ja96"
+      "hash": "059icgs1hi7sl1mjgrg468mz2p21ahag5j0wpwmc9by7sf99da5z"
     },
     "telescope-egrepify.nvim": {
       "type": "Git",
