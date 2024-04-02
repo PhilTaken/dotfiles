@@ -22,9 +22,11 @@ in {
       extraEnv =
         ''
           if (uname) == "Darwin" {
-            $env.PATH = ($env.PATH | split row (char esep) | prepend '/nix/var/nix/profiles/default/bin')
-            $env.PATH = ($env.PATH | split row (char esep) | prepend '/run/current-system/sw/bin')
-            $env.PATH = ($env.PATH | split row (char esep) | prepend $'/etc/profiles/per-user/($env.USER)/bin')
+            $env.PATH = $env.PATH | split row (char esep)
+              | prepend /run/current-system/sw/bin
+              | prepend $'/etc/profiles/per-user/($env.USER)/bin'
+              | append /nix/var/nix/profiles/default/bin
+              | uniq
           }
         ''
         + (builtins.concatStringsSep "\n"
