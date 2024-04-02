@@ -11,8 +11,12 @@
     devenv.url = "github:cachix/devenv";
 
     # -----------------------
-    # flake utilities
+    # macos inputs (work laptop)
+    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    # -----------------------
+    # flake utilities
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     # devshell for some nice menu + easy command adding capabilities
@@ -23,6 +27,7 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     pre-commit-hooks-nix.url = "github:cachix/pre-commit-hooks.nix";
+    pre-commit-hooks-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # -----------------------
     # nixos modules
@@ -72,6 +77,7 @@
     nil-ls.url = "github:oxalica/nil";
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland = {
       url = "github:vaxerski/Hyprland";
@@ -88,14 +94,9 @@
     };
 
     # time tracker
-    ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
+    #ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
     dimsum.url = "git+https://gitea.pherzog.xyz/mini-x/dimsum";
     fc-utils.url = "git+https://gitea.pherzog.xyz/phil/fc-utils";
-
-    # -----------------------
-    # macos inputs (work laptop)
-    darwin.url = "github:lnl7/nix-darwin/master";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # -----------------------
     # non-flake sources
