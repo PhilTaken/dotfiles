@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
+  nix.package = pkgs.nixVersions.unstable;
   nix.extraOptions = ''
     build-users-group = nixbld
     bash-prompt-prefix = (nix:$name)\040
