@@ -102,7 +102,7 @@ in {
       #inputs.ttrack.packages.${pkgs.system}.ttrack
       inputs.dimsum.packages.${pkgs.system}.dimsum-release
       inputs.fc-utils.packages.${pkgs.system}.default
-      inputs.devenv.packages.${pkgs.system}.default
+      #inputs.devenv.packages.${pkgs.system}.default
 
       age
       lsyncd

@@ -8,7 +8,10 @@
     nur-src.url = "github:nix-community/NUR";
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
-    devenv.url = "github:cachix/devenv";
+
+    #why is this building llvm-16.0.6?
+    #devenv.url = "github:cachix/devenv";
+    #devenv.inputs.nixpkgs.follows = "nixpkgs";
 
     # -----------------------
     # macos inputs (work laptop)
