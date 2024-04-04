@@ -40,10 +40,27 @@ in {
 
       sad
 
-      hound
-
       git
       #copier
+
+      # TODO RIIR (the entire thing, using tantivy)
+      (pkgs.writeShellScriptBin "houndd" ''
+        mkdir -p $XDG_CACHE_HOME/houndd && cd $XDG_CACHE_HOME/houndd
+
+        echo "regenerating config file!"
+
+        for repo in $(git workspace list --full); do
+            pushd $repo >/dev/null;
+            remote=$(git remote -v | head -1 | awk '{print $2}');
+            popd >/dev/null;
+            echo "$repo $remote"
+        done > repos.txt
+        REPOFILE=$PWD/repos.txt nix eval -f ${./gen_houndd_config.nix} --json | jq > config.json
+
+        echo "done, starting houndd!"
+
+        exec ${pkgs.hound}/bin/houndd $@
+      '')
 
       (pkgs.writeShellScriptBin "essh" ''
         git_basedir=$(git rev-parse --show-toplevel 2>/dev/null)
