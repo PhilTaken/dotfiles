@@ -348,11 +348,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1708618280,
-        "narHash": "sha256-HwQT0NJwiouzQmECYiZ1GNSK00wPSoQVnScRpDeah48=",
+        "lastModified": 1712301957,
+        "narHash": "sha256-ZIkjFMJhnftdgvC8Txr/w1pvvPrxT/gOQMMi8WDmvmU=",
         "ref": "refs/heads/main",
-        "rev": "c9ae2de7e0849684f782d4841208b272f70249f5",
-        "revCount": 162,
+        "rev": "a6c030a90cd62da123879df734113a7396efbeac",
+        "revCount": 163,
         "type": "git",
         "url": "https://gitea.pherzog.xyz/mini-x/dimsum"
       },
