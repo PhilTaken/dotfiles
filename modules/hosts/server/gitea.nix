@@ -34,13 +34,13 @@ in {
   config = mkIf cfg.enable {
     sops.secrets.forgejo-actions-token = {};
 
-    services.gitea = {
+    services.forgejo = {
       inherit (cfg) stateDir enable;
-      package = pkgs.forgejo;
       lfs.enable = true;
-      appName = "Oroboros";
 
       settings = {
+        DEFAULT.APP_NAME = "Oroboros";
+
         service.DISABLE_REGISTRATION = true;
         session.COOKIE_SECURE = true;
         other.SHOW_FOOTER_VERSION = false;
