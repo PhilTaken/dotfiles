@@ -147,29 +147,35 @@ in {
             #}
             #];
 
-            services.nextcloud = {
+            services.nextcloud = let
+              news = pkgs.fetchNextcloudApp {
+                appName = "news";
+                appVersion = "25.0.0-alpha5";
+                url = "https://github.com/nextcloud/news/releases/download/25.0.0-alpha5/news.tar.gz";
+                sha256 = "sha256-BbGzrOBDshZfiDhKUMiTXGnI7767hpCGsujMbPqmJyg=";
+                license = "agpl3Plus";
+              };
+            in {
               enable = true;
-              package = pkgs.nextcloud27;
+              package = pkgs.nextcloud28;
 
               inherit home datadir hostName;
               https = true;
 
               extraApps = {
                 inherit
-                  (pkgs.nextcloud27Packages.apps)
+                  (pkgs.nextcloud28Packages.apps)
                   calendar
-                  news # -> TODO wait for news
-                  
                   bookmarks
                   contacts
                   deck
                   groupfolders
                   impersonate
                   spreed
-                  unsplash
                   twofactor_webauthn
                   previewgenerator
                   ;
+                inherit news;
                 # "onlyoffice" "tasks"
               };
 
@@ -190,7 +196,7 @@ in {
                 dbuser = "nextcloud";
               };
 
-              extraOptions = {
+              settings = {
                 default_phone_region = "DE";
                 overwriteprotocol = "https";
                 trusted_proxies = [
