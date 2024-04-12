@@ -58,6 +58,7 @@ in {
       fclones
     ];
 
-    programs.sysdig.enable = true;
+    # not available on aarch64-linux
+    #programs.sysdig.enable = true;
   };
 }
