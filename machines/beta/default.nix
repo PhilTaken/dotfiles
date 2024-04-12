@@ -1,8 +1,13 @@
-{...}: let
+{
+  modulesPath,
+  lib,
+  ...
+}: let
   ip4_eth0 = "195.201.93.72/32";
   gateway_ip = "172.31.1.1";
 in {
   imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
     ./disko-config.nix
   ];
 
@@ -24,6 +29,7 @@ in {
 
   networking.useNetworkd = true;
 
+  boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "sr_mod"];
   boot.initrd.kernelModules = ["virtio_gpu"];
   boot.kernelParams = ["console=tty"];
 
@@ -33,4 +39,6 @@ in {
   };
 
   system.stateVersion = "23.11";
+
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
