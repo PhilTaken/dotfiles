@@ -56,6 +56,9 @@ _: rec {
       "grafana"
     ];
 
+    # new hetzner vps
+    beta = [];
+
     # raspberry pi @ home
     #beta = [ ];
 
