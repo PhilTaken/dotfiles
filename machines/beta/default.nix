@@ -22,6 +22,8 @@ in {
     ];
   };
 
+  networking.useNetworkd = true;
+
   boot.initrd.kernelModules = ["virtio_gpu"];
   boot.kernelParams = ["console=tty"];
 
