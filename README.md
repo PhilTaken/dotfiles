@@ -6,13 +6,49 @@
 
 ## Introduction / Foreword
 
-These dotfiles, as they are laid out here, are the culmination of over two years of work, tinkering and experimentation.  
+These dotfiles, as they are laid out here, are the culmination of over three years of work, tinkering and experimentation.  
 Going back and forth, trying out different strategies, failing and succeeding.
 
-This current state, too, is just a snapshot in time - the still picture of a colibri flapping it's wings, a snowflake, frozen in time.  
-Stateless and stateful all at once.
+This current state, too, is just a snapshot in time - a snowflake, frozen in time. Stateless and stateful all at once.
 
-Observe, for this is my canvas.
+# How to Install
+
+if you are *rebooted into nixos iso image via web console / ssh* and have *set up the configuration for a new host*, then follow these instructions:
+
+## set up the drive
+
+```
+$ nix --extra-experimental-features "nix-command flakes" build github:philtaken/dotfiles#nixosConfigurations.beta.config.system.build.diskoScript
+$ sudo ./result
+```
+
+## generate a new age key
+
+```
+$ sudo mkdir -p /mnt/var/lib/sops-nix/
+$ nix shell nixpkgs#age --command "sudo age-keygen -o /mnt/var/lib/sops-nix/key.txt"
+```
+
+update sops secrets with new public key, make sure all secrets are generated, for example
+
+- nebula key
+- wireguard key
+
+maybe double-check your hardware config on the vm with a quick
+```
+nixos-generate-config --root /mnt --no-disks --directory .
+cat hardware-configuration.nix
+```
+
+mistakes have been made before (not speaking from personal experience)...
+
+## finish up the installation
+
+```
+$ sudo nixos-install --root /mnt --flake github:philtaken/dotfiles#beta
+```
+
+# Details
 
 ## Basic Structure
 
@@ -43,16 +79,8 @@ DNS is set up with [Unbound](https://www.nlnetlabs.nl/projects/unbound/about/) a
 ## Deployment & Secrets
 
 Deployment is handled by serokell's fantastic [deploy-rs](https://github.com/serokell/deploy-rs).
-Secrets are provisioned by [sops-nix](https://github.com/Mic92/sops-nix) using [age](https://github.com/FiloSottile/age)-keys.
+Secrets are provisioned via [sops-nix](https://github.com/Mic92/sops-nix) using [age](https://github.com/FiloSottile/age)-keys.
 
 ## Monitoring
 
 I have implemented a basic ~~[vector.dev](https://vector.dev/)~~ [Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) configuration to send the system's syslog to [Grafana](https://grafana.com/) and pull system stats to [Prometheus](https://prometheus.io/).
-
-# Installing (wip section)
-
-1. partition disk using disko (nix build .#\$HOST-disko-setup, run the script)
-2. generate age keys, stick em into /var/lib/sops-nix
-3. copy generated age-keys to sops config, update the keys
-4. `nixos-install --root ... --flake .#$HOST`
-5. reboot
