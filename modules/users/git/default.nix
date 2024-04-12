@@ -137,20 +137,58 @@ in {
       };
 
       extraConfig = {
-        pull.rebase = true;
-        commit.gpgsign = cfg.signKey != null;
-        commit.verbose = true;
-        push.default = "tracking";
-        status.submoduleSummary = true;
         init.defaultBranch = "main";
-        diff.gpg = {
-          textconv = "gpg -q --no-tty --decrypt";
-          binary = true;
-        };
-        merge.conflictstyle = "diff3";
-        push.autoSetupRemote = true;
-
+        status.submoduleSummary = true;
+        rerere.enabled = true;
+        help.autocorrect = 10;
         gpg.format = cfg.signFlavor;
+        log.date = "iso";
+
+        # un-fsck data corruption
+        transfer.fsckobjects = true;
+        fetch.fsckobjects = true;
+        receive.fsckObjects = true;
+
+        fetch.prune = true;
+        fetch.prunetags = true;
+        branch.sort = "-committerdate";
+        tag.sort = "taggerdate";
+
+        diff = {
+          colorMovedWS = "allow-indentation-change";
+          colorMoved = "default";
+          algorithm = "histogram";
+          gpg = {
+            textconv = "gpg -q --no-tty --decrypt";
+            binary = true;
+          };
+        };
+
+        merge = {
+          keepbackup = false;
+          conflictstyle = "zdiff3";
+          tool = "nvim";
+        };
+
+        commit = {
+          gpgsign = cfg.signKey != null;
+          verbose = true;
+          cleanup = "scissors";
+        };
+
+        push = {
+          default = "current";
+          autoSetupRemote = true;
+          followtags = true;
+        };
+
+        pull.rebase = true;
+
+        rebase = {
+          updateRefs = true;
+          autosquash = true;
+          autostash = true;
+        };
       };
     };
   };
