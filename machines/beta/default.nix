@@ -28,8 +28,8 @@ in {
   boot.kernelParams = ["console=tty"];
 
   boot.loader = {
-    grub.enable = true;
-    grub.device = "/dev/sda";
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
   };
 
   system.stateVersion = "23.11";
