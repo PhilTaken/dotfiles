@@ -217,7 +217,11 @@ in {
         };
       }
       // builtins.mapAttrs
-      (servername: services: util.server.mkServer {inherit servername services;})
+      (servername: services:
+        util.server.mkServer {
+          inherit servername services;
+          system = net.systems.${servername} or "x86_64-linux";
+        })
       net.services;
 
     # shortcut for building with `nix build`

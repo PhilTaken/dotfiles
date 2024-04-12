@@ -49,6 +49,7 @@ _: rec {
   };
 
   servers = builtins.attrNames services;
+  systems.beta = "aarch64-linux";
 
   services = {
     # vm on a hetzner server, debian host
@@ -58,9 +59,6 @@ _: rec {
 
     # new hetzner vps
     beta = [];
-
-    # raspberry pi @ home
-    #beta = [ ];
 
     # mini nas @ home
     delta = [

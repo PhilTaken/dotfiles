@@ -40,9 +40,10 @@ in {
     services ? [],
     extraimports ? [],
     fileshare ? {},
+    system ? "x86_64-linux",
   }:
     host.mkHost {
-      inherit users;
+      inherit users system;
 
       extraimports =
         extraimports
