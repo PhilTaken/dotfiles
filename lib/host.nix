@@ -63,7 +63,7 @@ in rec {
               defaultSopsFile = ../sops/sops.yaml;
               age = {
                 keyFile = "/var/lib/sops-nix/key.txt";
-                generateKey = true;
+                generateKey = false;
               };
             };
 
