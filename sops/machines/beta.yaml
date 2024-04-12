@@ -1,6 +1,6 @@
 wireguard-key: ENC[AES256_GCM,data:qIqiwXaZxA9qNhSJyb29ErRV/qJF2h6gDnocq/aB5ZN7v00Nmo+fYmgVYoU=,iv:D4I731heYqSu0ehzsJUizgqqlG6hNn5xlTjUQ151O0w=,tag:qAyidOTof8hcQEMGpDmoUw==,type:str]
-beta-key: ENC[AES256_GCM,data:7S+1Ok+/9qn4Yf/gkLmsScfZ0LN+jynEly85ocUuXU8JzvMyTMI5/NKhWIaZ6aVWtpOL5GNtplZk4kAr4XRXVlg3nsCB4sZW5+q+6fo+smnHLxKk6MjlW4kiFvS+YHweEBsqTOSiAT1bnzPruALe5JiCauZpS9MvnPGtpQnwjQ==,iv:rQESy6kE7GtWTbOI2xWmLLGGP6gB0fKcEuvRJYEcB78=,tag:5YCl1ANnXGkCdtzEqo/D8Q==,type:str]
-beta-crt: ENC[AES256_GCM,data:8k2o5cEH2GGHbbxSuVWxRn1MezdQ869F2oLB1WGy43/gZRNkoXVN7cBeLbUtFxDDa+8CPHUJ92JnEUbnuK/cZL0WJojBcQLc1S/cGBwKSfJmv1RG+h0NDMbPONM0Vfb2PTrfqMkYW6/6GcgSLy9XuX/TC/C7zgD2Yc6QtBZWRge6LcbaUASGn0JLSkXv8l7QZd50ALnzmHnw+h1zJgaXubg9TG3CS11R+5aEii7D+jfwqM+C5sE0mW/9apxysK+V1GtSlutBfAsX8B6nbg3FpYC7MruQIeM/Fk+c1gfoVKZAmJKhECZtXHtikBKlTn8hTEecJIDwgAFcOs3kvO5bszxgP04kKzpje15cQyyFUdRNOgkjKIfFhKIFDTAsY80jRJgHeA==,iv:xEQu/6BP+WVMMWvFGaFpzwawKEkWLdu327aVuv3fed8=,tag:pMNkbUkP5OKwRHqmdjl3VA==,type:str]
+nebula-key: ENC[AES256_GCM,data:Ds4LWm11qwXRZ9oRshrW/0rei1XfQfC0cwVXlSl2Y+cBzYBA8OZcWAs6oWGDnhhuRXBrpcrETYaO8WoJ791iyfH6joN+tHuq/9m1/Z6zYCdA5NFjSRGxuYLmLuQtlTxrf42+E1FOHtnFRLz4H7jW+V/524R5shX9NetVAKq5Zw==,iv:O1M0NC4o2UhMx8BjpMtkAdy4Filo22mNlifwFVxJSWQ=,tag:8O0MFZr2J9Y8jkKkz5qXbQ==,type:str]
+nebula-crt: ENC[AES256_GCM,data:WF3YHm1KSyQbr8CMHxGdq3vfL2bR9kR1mq7HMdEUQsct6LsZTrINL+uGeYs1gAyaYP3FEdt37E15u8mkWOABQhlfPeWtRA255hhQZbBGGnDI5rHZwOa9Cs1iUpWinWTuZZcOymOgcbPWjjZ4ZI5HfXL4uZJO7enumhNaEKhfNsF+3CutYHRnpiJz1aTwSqhtpwoSyByGab2irJ1FV/xRymVbZMVWCsORGOiTejVxcVjoPkQhhjLLQicYRHv9/BIR7r/TqZ+7pwFJvf93U3mJbWg5ZKof6nuhqOvG1izPRd3puK3mpTzP5lVLTWbJilw0d7jmwhII2g32+tGVFYgcoe+fF2Hcw8qHbXtINOfpjt/OyLx62+ZtCLypGe01x6vyF3cP3g==,iv:CE0nlNZyjCEQHB6yx7xjP1/3UwZw2zUKyIUjbOjEr/4=,tag:tvrSA7arzbg+qKZlBJ3rxw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -70,8 +70,8 @@ sops:
             Ky9tam56a1FFMm5PZEVYSFNoVDRvbUEKQ4nhuVEBkHEJB/9rs/4ObSMIGAVUHOwi
             yzYtlzuOOoRdNMrY3MJhb8D0MNLxMDVVu4+jrihz1Uc46rl5oZVkOQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-02-09T14:47:54Z"
-    mac: ENC[AES256_GCM,data:X6uZtTpr25irc5vXl6XvIpksc61Y8PcFIQSpAeqDw/F5Tn0tDqfagn+0hkjy9GdYxcYskRoM7hpPR7eCJBt8NbPKp2TtyY5drdagUB3hFwLCbKF7gMkXgy8pc3dfZzMLwfyXO0LvlEFmvVeSAUx4iWnIek9BIdwl9lB6Z+Jwr5o=,iv:8BagHM6HShJKz2myLNUwJdxtMUUYHZ2Tjep9MFvSWr8=,tag:ASOIGJcGqLqwLhhMvL2jZw==,type:str]
+    lastmodified: "2024-04-12T15:29:16Z"
+    mac: ENC[AES256_GCM,data:wq3PxKZTYWRBw78pT8LiaBtL77ZMQZjKeEf7ZAJoGShUNKwXuL0CCiSO5SfR3GDoijBr+DGkM8AhGCVG2LkCChRSbc2wmdSofHLEeWBQ5LDAgvxOyX5gFiR8fLYI2AIK5ENat7ZSbXdkT4GBxMlWU5K4TvWIjgfGPe3r2SU/9JU=,iv:ruF/k+iEf+SMC0TVyVd67Hdq2O7OCqIUFBMmxu+RicA=,tag:SKldqNWQdFPSj84gx10b4w==,type:str]
     pgp:
         - created_at: "2024-04-12T15:17:14Z"
           enc: |-
@@ -94,4 +94,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
     unencrypted_suffix: _unencrypted
-    version: 3.7.3
+    version: 3.8.1
