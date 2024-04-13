@@ -118,6 +118,7 @@ in {
     };
 
     apps = mkOption {
+      default = {};
       type = types.attrsOf (types.submodule ({name, ...}: {
         options = let
           mkStrOpt = default:
