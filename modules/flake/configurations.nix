@@ -76,7 +76,7 @@
 in {
   flake = {
     darwinConfigurations = {
-      work-mac = util.host.mkMac {
+      work-mac = util.host.mkDarwin {
         name = "work-mac";
         extraPackages = ps:
           with ps; [
@@ -100,128 +100,120 @@ in {
 
     nixosConfigurations =
       {
-        # usb stick iso
-        x86-iso = util.iso.mkIso {
-          inherit (inputs) nixpkgs;
-          hostName = "isoInstall";
-          system = "x86_64-linux";
-        };
-
-        x86-iso2 = util.host.mkIso rec {
-          users = ["nixos"];
-          hmUsers = mkHMUsers users;
-        };
-
         # desktop @ home
         gamma = let
-          # screw nvidia
-          mkHMUsers = users:
-            lib.listToAttrs (map
-              (user: {
-                name = user;
-                value = lib.recursiveUpdate hmUsers.${user} {
-                  userConfig.wms.hyprland.terminal = "alacritty";
-                };
-              })
-              users);
+          users = ["maelstroem" "nixos" "jaid"];
         in
-          util.host.mkWorkstation rec {
-            users = ["maelstroem" "nixos" "jaid"];
-            hmUsers = mkHMUsers users;
-            systemConfig = {
-              server.services.openssh.enable = true;
+          util.host.mkNixos (mkHMUsers users) {
+            inherit users;
+            hostName = "gamma";
+            hostModules =
+              [
+                {
+                  phil = {
+                    nebula.enable = true;
+                    server.services.openssh.enable = true;
 
-              core.hostName = "gamma";
-              core.enableBluetooth = true;
-
-              desktop.enable = true;
-              development.enable = true;
-              nvidia.enable = true;
-              video.managers = ["gnome"];
-            };
-
-            extraHostModules = with inputs.nixos-hardware.nixosModules; [
-              common-pc
-              common-pc-ssd
-              common-cpu-amd
-              #common-gpu-nvidia
-            ];
+                    core.enableBluetooth = true;
+                    desktop.enable = true;
+                    development.enable = true;
+                    nvidia.enable = true;
+                    video.managers = ["gnome"];
+                  };
+                }
+              ]
+              ++ (with inputs.nixos-hardware.nixosModules; [
+                common-pc
+                common-pc-ssd
+                common-cpu-amd
+                #common-gpu-nvidia
+              ]);
           };
 
         # future laptop config
-        epsilon = util.host.mkWorkstation rec {
+        epsilon = let
           users = ["nixos"];
-          hmUsers = mkHMUsers users;
-          systemConfig = {
-            server.services.openssh.enable = true;
-            core.hostName = "epsilon";
+        in
+          util.host.mkNixos (mkHMUsers users) {
+            inherit users;
+            hostName = "epsilon";
 
-            laptop.enable = true;
-            laptop.low_power = true;
+            hostModules = [
+              {
+                phil = {
+                  nebula.enable = true;
+                  server.services.openssh.enable = true;
+
+                  laptop.enable = true;
+                  laptop.low_power = true;
+                };
+              }
+
+              inputs.nixos-hardware.nixosModules.common-pc-laptop
+              inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+              inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+              inputs.nixos-hardware.nixosModules.common-cpu-intel-kaby-lake
+            ];
           };
 
-          extraHostModules = with inputs.nixos-hardware.nixosModules; [
-            common-pc-laptop
-            common-pc-laptop-ssd
-            common-cpu-intel-cpu-only
-            common-cpu-intel-kaby-lake
-          ];
-        };
-
-        zetta = util.host.mkWorkstation rec {
-          system = "aarch64-linux";
+        zetta = let
           users = ["alice"];
-          hmUsers = mkHMUsers users;
-          systemConfig = {
-            wireguard.enable = false;
-            nebula.enable = false;
-            server.services.openssh.enable = true;
-            core.hostName = "zetta";
-            video.enable = false;
-          };
+        in
+          util.host.mkNixos (mkHMUsers users) {
+            system = "aarch64-linux";
+            hostName = "zetta";
+            inherit users;
 
-          extraHostModules = [
-            ({
-              pkgs,
-              npins,
-              ...
-            }: {
-              stylix = {
-                image = ../../images/cat-sound.png;
-                base16Scheme = "${npins.base16}/base16/mocha.yaml";
+            hostModules = [
+              {
+                phil = {
+                  wireguard.enable = false;
+                  nebula.enable = false;
+                  server.services.openssh.enable = true;
+                  video.enable = false;
+                };
+              }
 
-                fonts = {
-                  serif = {
-                    package = pkgs.dejavu_fonts;
-                    name = "DejaVu Serif";
-                  };
+              ({
+                pkgs,
+                npins,
+                ...
+              }: {
+                stylix = {
+                  image = ../../images/cat-sound.png;
+                  base16Scheme = "${npins.base16}/base16/mocha.yaml";
 
-                  sansSerif = {
-                    package = pkgs.dejavu_fonts;
-                    name = "DejaVu Sans";
-                  };
+                  fonts = {
+                    serif = {
+                      package = pkgs.dejavu_fonts;
+                      name = "DejaVu Serif";
+                    };
 
-                  monospace = {
-                    package = pkgs.iosevka-comfy.comfy-duo;
-                    name = "Iosevka Comfy";
-                  };
+                    sansSerif = {
+                      package = pkgs.dejavu_fonts;
+                      name = "DejaVu Sans";
+                    };
 
-                  emoji = {
-                    package = pkgs.noto-fonts-emoji;
-                    name = "Noto Color Emoji";
+                    monospace = {
+                      package = pkgs.iosevka-comfy.comfy-duo;
+                      name = "Iosevka Comfy";
+                    };
+
+                    emoji = {
+                      package = pkgs.noto-fonts-emoji;
+                      name = "Noto Color Emoji";
+                    };
                   };
                 };
-              };
-            })
-          ];
-        };
+              })
+            ];
+          };
       }
       // builtins.mapAttrs
-      (servername: services:
-        util.server.mkServer {
-          inherit servername services;
-          system = net.systems.${servername} or "x86_64-linux";
-        })
+      (hostname: services: (util.server.mkServer services {
+        system = net.systems.${hostname} or "x86_64-linux";
+        hostName = hostname;
+      }))
       net.services;
 
     # shortcut for building with `nix build`

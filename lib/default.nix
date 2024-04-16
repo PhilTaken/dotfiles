@@ -2,22 +2,6 @@
   self,
   inputs,
 }: let
-  systemmodules = rec {
-    default = [
-      #inputs.arm-rs.nixosModules.default
-      inputs.sops-nix-src.nixosModules.sops
-      inputs.home-manager.nixosModules.home-manager
-      inputs.hyprland.nixosModules.default
-      inputs.disko.nixosModules.disko
-    ];
-    #"aarch64-linux" =
-    #default
-    #++ [
-    #"${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
-    #inputs.nixos-hardware.nixosModules.raspberry-pi-4
-    #];
-  };
-
   overlays = [
     inputs.nur-src.overlay
     #inputs.neovim-nightly-overlay.overlay
@@ -80,7 +64,7 @@ in rec {
   iso = import ./iso.nix {inherit inputs;};
   user = import ./user.nix {inherit inputs;};
   host = import ./host.nix {
-    inherit user inputs pkgsFor systemmodules;
+    inherit user inputs pkgsFor;
     flake = self;
   };
   server = import ./server.nix {inherit host inputs;};

@@ -1,25 +1,23 @@
 {
   user,
   inputs,
-  systemmodules,
   pkgsFor,
   flake,
 }: let
-  inherit (inputs) nixpkgs;
-  inherit (nixpkgs) lib;
   npins = import ../npins;
+  net = import ../network.nix {};
 in rec {
-  mkHost = {
-    users,
-    systemConfig,
-    hmUsers ? {},
-    extraimports ? [],
-    extraHostModules ? [],
+  mkBase = defaultModules: {
+    users ? ["nixos"],
+    hostName,
+    hostModules ? [],
+    hardware-config ? (import ../machines/${hostName}),
     system ? "x86_64-linux",
-    lib ? inputs.nixpkgs.lib,
     pkgs ? pkgsFor system,
-    hardware-config ? (import ../machines/${systemConfig.core.hostName}),
   }: let
+    inherit (inputs.nixpkgs) lib;
+
+    # TODO: pls pls pls improve this
     raw_users =
       lib.zipListsWith
       (name: uid:
@@ -28,62 +26,67 @@ in rec {
         else {inherit name uid;})
       users
       (lib.range 1000 (builtins.length users + 1000));
-
-    # TODO: pls pls pls improve this
     part = builtins.partition (raw_user: builtins.elem raw_user.name ["nixos" "maelstroem" "alice"]) raw_users;
     sys_users = (map user.mkSystemUser part.right) ++ (map user.mkGuestUser part.wrong);
-    net = import ../network.nix {};
+
+    modules =
+      defaultModules
+      ++ hostModules
+      ++ [
+        {
+          imports = [../modules/hosts hardware-config] ++ sys_users;
+          phil.core.hostName = lib.mkDefault hostName;
+
+          programs.fish.enable = true;
+
+          nix.registry.nixpkgs.flake = inputs.nixpkgs;
+          i18n.supportedLocales = ["en_US.UTF-8/UTF-8" "de_DE.UTF-8/UTF-8"];
+
+          nixpkgs.overlays = [
+            inputs.nixpkgs-wayland.overlay
+            inputs.neovim-nightly-overlay.overlay
+          ];
+
+          sops = {
+            defaultSopsFile = ../sops/sops.yaml;
+            age = {
+              keyFile = "/var/lib/sops-nix/key.txt";
+              generateKey = false;
+            };
+          };
+
+          system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
+        }
+
+        inputs.sops-nix-src.nixosModules.sops
+        inputs.disko.nixosModules.disko
+      ];
   in
     lib.nixosSystem {
-      inherit system pkgs;
+      inherit system pkgs modules;
       specialArgs = {inherit inputs net flake npins;};
-
-      modules =
-        [
-          {
-            imports =
-              [
-                hardware-config
-                ../modules/hosts
-                {i18n.supportedLocales = lib.mkForce ["en_US.UTF-8/UTF-8" "de_DE.UTF-8/UTF-8"];}
-              ]
-              ++ sys_users
-              ++ extraimports;
-
-            phil = systemConfig;
-
-            nix.registry.nixpkgs.flake = nixpkgs;
-
-            nixpkgs.overlays = [
-              inputs.nixpkgs-wayland.overlay
-              inputs.neovim-nightly-overlay.overlay
-            ];
-
-            sops = {
-              defaultSopsFile = ../sops/sops.yaml;
-              age = {
-                keyFile = "/var/lib/sops-nix/key.txt";
-                generateKey = false;
-              };
-            };
-
-            system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
-
-            programs.fish.enable = true;
-
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {inherit inputs net npins;};
-              users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
-            };
-          }
-        ]
-        ++ (systemmodules.${system} or systemmodules.default)
-        ++ extraHostModules;
     };
 
-  mkMac = {
+  mkNixos = hmUsers:
+    mkBase [
+      inputs.stylix.nixosModules.stylix
+      inputs.home-manager.nixosModules.home-manager
+      inputs.hyprland.nixosModules.default
+      ({
+        pkgs,
+        lib,
+        ...
+      }: {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {inherit inputs net npins;};
+          users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
+        };
+      })
+    ];
+
+  mkDarwin = {
     name,
     userConfig ? {},
     extraPackages ? _: {},
@@ -91,47 +94,16 @@ in rec {
     system ? "aarch64-darwin",
     lib ? inputs.nixpkgs.lib,
     pkgs ? pkgsFor system,
+    hardware-config ? (import ../machines/${name}),
   }:
     inputs.darwin.lib.darwinSystem {
       inherit system pkgs;
-      specialArgs = {inherit inputs flake;};
+      specialArgs = {inherit inputs flake npins;};
 
       modules = [
-        inputs.home-manager.darwinModule
-        inputs.stylix.darwinModules.stylix
-
-        (../machines + "/${name}")
-        (../machines + "/${name}/${username}.nix")
+        hardware-config
 
         {
-          stylix = {
-            image = ../images/vortex.png;
-            base16Scheme = "${npins.base16}/base16/mocha.yaml";
-
-            fonts = {
-              serif = {
-                package = pkgs.dejavu_fonts;
-                name = "DejaVu Serif";
-              };
-
-              sansSerif = {
-                package = pkgs.dejavu_fonts;
-                name = "DejaVu Sans";
-              };
-
-              monospace = {
-                #package = pkgs.dejavu_fonts;
-                #name = "DejaVu Sans Mono";
-                package = pkgs.iosevka-comfy.comfy-duo;
-                name = "Iosevka Comfy";
-              };
-
-              emoji = {
-                package = pkgs.noto-fonts-emoji;
-                name = "Noto Color Emoji";
-              };
-            };
-          };
           home-manager.users.${username} = {
             imports = [
               (user.mkConfig pkgs username {
@@ -143,8 +115,10 @@ in rec {
           };
 
           nix = {
-            registry.nixpkgs.flake = nixpkgs;
+            registry.nixpkgs.flake = inputs.nixpkgs;
             settings.trusted-users = [username];
+
+            # currently broken on mac?
             extraOptions = ''
               auto-optimise-store = false
             '';
@@ -156,69 +130,9 @@ in rec {
             extraSpecialArgs = {inherit inputs npins;};
           };
         }
+
+        inputs.home-manager.darwinModule
+        inputs.stylix.darwinModules.stylix
       ];
     };
-
-  mkIso = inpargs: let
-    args =
-      lib.recursiveUpdate {
-        systemConfig = {
-          wireguard.enable = false;
-          server.services.openssh.enable = true;
-          core.hostName = "iso";
-        };
-
-        hardware-config = {};
-        extraHostModules = [
-          inputs.stylix.nixosModules.stylix
-          "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
-          {
-            sops.age = lib.mkForce {
-              keyFile = null;
-              generateKey = false;
-            };
-
-            sops.gnupg = {
-              home = "/run/gpghome";
-              sshKeyPaths = [];
-            };
-          }
-        ];
-      }
-      inpargs;
-  in
-    mkHost args;
-
-  mkWorkstation = inpargs: let
-    args =
-      (lib.recursiveUpdate {
-          systemConfig = {
-            wireguard.enable = true;
-            nebula.enable = true;
-            #mullvad.enable = true;
-            workstation.enable = true;
-          };
-        }
-        inpargs)
-      // {
-        extraHostModules =
-          (inpargs.extraHostModules or [])
-          ++ [
-            inputs.stylix.nixosModules.stylix
-            ({...}: {
-              #sops.secrets.key.sopsFile = ../sops/nebula.yaml;
-              #sops.secrets.ca.sopsFile = ../sops/nebula.yaml;
-
-              environment.systemPackages = [
-                # WIP
-                #(pkgs.writeShellScriptBin "nebsign" ''
-                #${pkgs.nebula}/bin/nebula-cert sign -ca-crt ${config.sops.secrets.ca.path} -ca-key ${config.sops.secrets.key.path} "$@"
-                #cp ${config.sops.secrets.ca.path} ./ca.pem
-                #'')
-              ];
-            })
-          ];
-      };
-  in
-    mkHost args;
 }
