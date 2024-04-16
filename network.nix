@@ -54,11 +54,13 @@ _: rec {
   services = {
     # vm on a hetzner server, debian host
     alpha = [
-      "grafana"
+      #"grafana"
     ];
 
     # new hetzner vps
-    beta = [];
+    beta = [
+      "grafana"
+    ];
 
     # mini nas @ home
     delta = [
