@@ -35,6 +35,18 @@
       "url": "https://github.com/catppuccin/base16/archive/ca74b4070d6ead4213e92da1273fcc1853de7af8.tar.gz",
       "hash": "1h37bjmr2b96l239ckv5iq8cyvpm4bwnqgl21s4k65mikycfr43x"
     },
+    "base16rosepine": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "edunfelt",
+        "repo": "base16-rose-pine-scheme"
+      },
+      "branch": "main",
+      "revision": "4161952824f4ede6c3eb73ef6b5f3609a76cf69a",
+      "url": "https://github.com/edunfelt/base16-rose-pine-scheme/archive/4161952824f4ede6c3eb73ef6b5f3609a76cf69a.tar.gz",
+      "hash": "17n45xd8qza3n9gzlpffri6hbil9n0442yx8vfaf4pgpwgmlqvjm"
+    },
     "hurl-nvim": {
       "type": "GitRelease",
       "repository": {

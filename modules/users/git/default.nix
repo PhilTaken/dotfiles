@@ -141,6 +141,7 @@ in {
         status.submoduleSummary = true;
         rerere.enabled = true;
         help.autocorrect = 10;
+        advice.addEmptyPathspec = false;
         gpg.format = cfg.signFlavor;
         log.date = "iso";
 
