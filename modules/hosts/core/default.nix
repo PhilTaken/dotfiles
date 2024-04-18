@@ -75,21 +75,17 @@ in {
 
       settings = {
         trusted-users = ["root" "@wheel"];
-        substituters =
-          [
-            "https://cache.nixos.org"
+        substituters = [
+          "https://cache.nixos.org"
 
-            "https://nix-community.cachix.org"
-            "https://nixpkgs-wayland.cachix.org"
-            "https://hyprland.cachix.org"
+          "https://nix-community.cachix.org"
+          "https://nixpkgs-wayland.cachix.org"
+          "https://hyprland.cachix.org"
 
-            "https://philtaken.cachix.org"
-            #"https://arm-rs.cachix.org"
-            #"https://cache.iog.io"
-          ]
-          ++ lib.optionals config.phil.nebula.enable [
-            "https://nix-store.${net.tld}"
-          ];
+          "https://philtaken.cachix.org"
+          #"https://arm-rs.cachix.org"
+          #"https://cache.iog.io"
+        ];
         auto-optimise-store = true;
         trusted-public-keys = [
           "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="

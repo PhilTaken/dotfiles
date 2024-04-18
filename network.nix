@@ -3,7 +3,7 @@ _: rec {
 
   endpoints = {
     "alpha" = "148.251.102.93";
-    "beta" = "195.201.93.72";
+    #"beta" = "195.201.93.72";
   };
 
   networks = rec {
