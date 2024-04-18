@@ -34,13 +34,7 @@ in {
 
       services.resolved = {
         enable = true;
-
-        fallbackDns = ["1.1.1.1"];
-
-        extraConfig = ''
-          DNSOverTLS=yes
-        '';
-
+        dnsovertls = "opportunistic";
         dnssec = "false";
       };
     })
@@ -53,19 +47,13 @@ in {
         if same-server
         then ["localhost"]
         else [
+          # https://github.com/systemd/systemd/issues/5755
           "${iplot.${cfg.nameserver}}#dns.${net.tld}"
-          "2a0e:dc0:6:23::2#dot-ch.blahdns.com"
         ];
 
       services.resolved = {
         enable = ! same-server;
-
-        fallbackDns = ["2a0e:dc0:6:23::2#dot-ch.blahdns.com"];
-
-        extraConfig = ''
-          DNSOverTLS=yes
-        '';
-
+        dnsovertls = "opportunistic";
         dnssec = "false";
       };
     })
