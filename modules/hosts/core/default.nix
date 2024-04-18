@@ -42,7 +42,8 @@ in {
         tarball-ttl = ${toString (7 * 24 * 60 * 60)}
 
         # Almost always set
-        connect-timeout = 5
+        connect-timeout = 2
+        download-attempts = 2
         log-lines = 25
 
         # Set if understood
