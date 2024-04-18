@@ -3,8 +3,10 @@
     # -----------------------
     # package repositories
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # https://nixpk.gs/pr-tracker.html?pr=304277
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
     nur-src.url = "github:nix-community/NUR";
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
