@@ -64,10 +64,10 @@ in {
       jack2
 
       # tiny media manager
-      (nur.repos.shados.tmm.overrideAttrs (_old: {
-        version = "latest";
-        src = inputs.tmm-src;
-      }))
+      #(nur.repos.shados.tmm.overrideAttrs (_old: {
+      #version = "latest";
+      #src = inputs.tmm-src;
+      #}))
 
       # typey-typey
       plover.dev
