@@ -181,8 +181,7 @@ in {
               }: {
                 stylix = {
                   image = ../../images/cat-sound.png;
-                  #base16Scheme = "${npins.base16}/base16/mocha.yaml";
-                  base16Scheme = "${npins.base16rosepine}/rose-pine-moon.yaml";
+                  base16Scheme = "${npins.base16}/base16/mocha.yaml";
 
                   fonts = {
                     serif = {
