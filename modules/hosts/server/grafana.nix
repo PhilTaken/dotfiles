@@ -69,7 +69,7 @@ in {
         limits_config = {
           reject_old_samples = true;
           reject_old_samples_max_age = "168h";
-          retention_period = "360h";
+          retention_period = "1440h";
           max_query_series = 100000;
           max_query_parallelism = 1;
         };
@@ -91,9 +91,9 @@ in {
           configs = [
             {
               from = "2020-10-24";
-              store = "boltdb-shipper";
+              store = "tsdb";
               object_store = "filesystem";
-              schema = "v11";
+              schema = "v13";
               index = {
                 prefix = "index_";
                 period = "24h";

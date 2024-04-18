@@ -43,6 +43,7 @@ in {
       node = {
         enable = true;
         enabledCollectors = ["systemd"];
+        disabledCollectors = ["arp"];
         port = 9002;
       };
     };
