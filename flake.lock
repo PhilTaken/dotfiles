@@ -289,15 +289,16 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1711973905,
-        "narHash": "sha256-UFKME/N1pbUtn+2Aqnk+agUt8CekbpuqwzljivfIme8=",
-        "owner": "serokell",
+        "lastModified": 1713444210,
+        "narHash": "sha256-kMq2Pg2ALoHdX4vojY2CmTdOdH3uJTmMpfFkcwMi4e8=",
+        "owner": "philtaken",
         "repo": "deploy-rs",
-        "rev": "88b3059b020da69cbe16526b8d639bd5e0b51c8b",
+        "rev": "632f2631a84574ae714b8a826d6c2072188dc020",
         "type": "github"
       },
       "original": {
-        "owner": "serokell",
+        "owner": "philtaken",
+        "ref": "phil/async-build-and-push",
         "repo": "deploy-rs",
         "type": "github"
       }

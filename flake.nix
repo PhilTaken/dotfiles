@@ -63,7 +63,7 @@
 
     # deploy remote setups
     deploy-rs = {
-      url = "github:serokell/deploy-rs";
+      url = "github:philtaken/deploy-rs/phil/async-build-and-push";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
