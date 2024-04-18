@@ -109,6 +109,7 @@ in {
       enable = true;
       port = cfg.prometheus-port;
 
+      globalConfig.scrape_interval = "15s";
       scrapeConfigs = let
         nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default.hosts) flake.nixosConfigurations;
         mkScrapeJob = n: v: let
@@ -188,6 +189,7 @@ in {
               name = "Prometheus";
               type = "prometheus";
               url = "http://localhost:${builtins.toString cfg.prometheus-port}";
+              jsonData.timeInterval = config.services.prometheus.globalConfig.scrape_interval;
             }
             {
               name = "Loki";

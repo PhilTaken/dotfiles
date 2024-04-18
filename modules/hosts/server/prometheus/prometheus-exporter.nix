@@ -42,7 +42,7 @@ in {
     services.prometheus.exporters = {
       node = {
         enable = true;
-        enabledCollectors = ["systemd"];
+        enabledCollectors = ["systemd" "processes"];
         disabledCollectors = ["arp"];
         port = 9002;
       };
