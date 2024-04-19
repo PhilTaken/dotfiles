@@ -4,17 +4,16 @@
   net,
   flake,
   ...
-}:
-# TODO: dns over tls
-let
+}: let
+  # TODO move dns to shiver via service discovery
   inherit (lib) mkEnableOption mkIf mkOption types;
+  nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default.hosts) flake.nixosConfigurations;
 
   cfg = config.phil.server.services.unbound;
   iplot = net.networks.default.hosts;
   hostnames = builtins.attrNames iplot;
   mkDnsBindsFromServices = services:
     builtins.mapAttrs
-    # TODO: sensible handling of identical services on multiple hosts
     (_: builtins.head)
     (lib.zipAttrs
       (builtins.map
@@ -24,8 +23,6 @@ let
               name = config.phil.server.services.${service}.host or service;
               value = host;
             in {inherit name value;})
-            # TODO: filter unbound?
-            #(builtins.filter (elem: elem != "unbound") services.${host})))
             services.${host}))
         (builtins.attrNames services)));
 
@@ -39,6 +36,13 @@ let
     builtins.mapAttrs
     (network: _: builtins.mapAttrs (_app: host: ipForHost network host) cfg.apps)
     (lib.filterAttrs (n: _v: ! builtins.elem n ["default"]) net.networks);
+
+  default_apps = let
+    getProxiesFromHost = _: v: (builtins.attrNames v.config.phil.server.services.caddy.proxy);
+    validHosts = lib.filterAttrs (_: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v) nodes;
+    allProxies = lib.mapAttrs getProxiesFromHost validHosts;
+  in
+    mkDnsBindsFromServices allProxies;
 in {
   options.phil.server.services.unbound = {
     enable = mkEnableOption "enable the unbound server";
@@ -49,12 +53,7 @@ in {
       example = {
         "jellyfin" = "beta";
       };
-      default = let
-        getProxiesFromHost = _: v: (builtins.attrNames v.config.phil.server.services.caddy.proxy);
-        validHosts = lib.filterAttrs (_: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v) flake.nixosConfigurations;
-        allProxies = lib.mapAttrs getProxiesFromHost validHosts;
-      in
-        mkDnsBindsFromServices allProxies;
+      default = default_apps;
     };
 
     host = mkOption {
@@ -106,9 +105,7 @@ in {
           # tls downstream
           tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";
 
-          #udp-upstream-without-downstream = "yes";
           do-udp = "yes";
-
           do-tcp = "yes";
           do-ip4 = "yes";
           do-ip6 = "yes";
@@ -124,11 +121,6 @@ in {
           cache-max-ttl = 86400;
           incoming-num-tcp = 1000;
           prefetch = "yes";
-
-          # more speeed
-          #serve-expired = "no";
-          #serve-expired-ttl = 259200;
-          #serve-expired-client-timeout = 200;
 
           # performance
           rrset-cache-size = "256m";
@@ -199,7 +191,6 @@ in {
           {
             name = ".";
             forward-tls-upstream = "yes"; # use dns over tls forwarder
-            #forward-first = "no";          # don't send directly
             forward-addr = [
               "1.1.1.1@853#cloudflare-dns.com"
               "2a0e:dc0:6:23::2@853#dot-ch.blahdns.com"
