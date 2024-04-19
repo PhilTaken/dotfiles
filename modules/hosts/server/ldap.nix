@@ -36,7 +36,7 @@ in {
       ldap.tls = true;
     };
 
-    networking.firewall.interfaces.${net.networks.yggdrasil.interfaceName} = {
+    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
       allowedTCPPorts = [636];
       allowedUDPPorts = [636];
     };

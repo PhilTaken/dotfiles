@@ -53,7 +53,7 @@ in {
       };
     };
 
-    networking.firewall.interfaces.${net.networks.yggdrasil.interfaceName} = {
+    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
       allowedTCPPorts = [cfg.port];
       allowedUDPPorts = [cfg.port];
     };

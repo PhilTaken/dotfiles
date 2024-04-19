@@ -42,7 +42,7 @@ in {
       initialAdminPassword = "unsafe-password";
     };
 
-    networking.firewall.interfaces.${net.networks.yggdrasil.interfaceName} = {
+    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
       allowedTCPPorts = [cfg.http-port];
       allowedUDPPorts = [cfg.http-port];
     };

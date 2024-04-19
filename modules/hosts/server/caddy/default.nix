@@ -134,7 +134,7 @@ in {
         };
         updateConfigWithHost = host: _proxy: config:
           lib.recursiveUpdate config {
-            proxyPass = "http://${net.networks.yggdrasil.hosts.${host}}:${builtins.toString config.port}";
+            proxyPass = "http://${net.networks.default.hosts.${host}}:${builtins.toString config.port}";
           };
 
         updatedProxies = lib.mapAttrs (host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies) hiddenHostProxies;
