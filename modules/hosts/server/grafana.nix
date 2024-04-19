@@ -1,3 +1,4 @@
+# TODO: move storage to s3 compatible storage -> host-independent?
 {
   config,
   lib,
@@ -8,13 +9,49 @@
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.grafana;
 
+  nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default.hosts) flake.nixosConfigurations;
+
   kc-nodes = builtins.attrNames (lib.filterAttrs
     (_: v:
       lib.hasAttrByPath ["config" "phil" "server" "services" "keycloak" "enable"] v
       && v.config.phil.server.services.keycloak.enable)
-    flake.nixosConfigurations);
+    nodes);
   kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
   kc-enabled = builtins.length kc-nodes == 1;
+
+  # TODO improve this with shiver
+  scrapeConfigs = let
+    mkScrapeJob = n: v: let
+      mkTargets = nodename: node: let
+        ip = net.networks.default.hosts.${nodename};
+        mkTargetString = port: "${ip}:${builtins.toString port}";
+        exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) node.config.services.prometheus.exporters);
+        ports =
+          exporterPorts
+          ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [node.config.phil.server.services.promexp.prom-sensors-port];
+      in
+        builtins.map mkTargetString ports;
+    in {
+      job_name = n;
+      static_configs = [
+        {
+          targets = mkTargets n v;
+        }
+      ];
+    };
+  in
+    builtins.attrValues (lib.mapAttrs mkScrapeJob nodes);
+
+  grafana-domain = "https://${cfg.host}.${net.tld}";
+
+  oid-uri = let
+    realm_name = "services";
+    url = "${
+      if kc-enabled
+      then kc-host
+      else "keycloak"
+    }.${net.tld}";
+  in "https://${url}/realms/${realm_name}/protocol/openid-connect";
 in {
   options.phil.server.services.grafana = {
     enable = mkEnableOption "grafana";
@@ -38,6 +75,11 @@ in {
       type = types.port;
       default = 3102;
     };
+
+    tempo-port = mkOption {
+      type = types.port;
+      default = 3103;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -51,8 +93,8 @@ in {
       });
 
     networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port];
-      allowedTCPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port];
+      allowedUDPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port cfg.tempo-port];
+      allowedTCPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port cfg.tempo-port];
     };
 
     services.loki = {
@@ -108,39 +150,41 @@ in {
     services.prometheus = {
       enable = true;
       port = cfg.prometheus-port;
-
       globalConfig.scrape_interval = "15s";
-      scrapeConfigs = let
-        nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default.hosts) flake.nixosConfigurations;
-        mkScrapeJob = n: v: let
-          mkTargets = nodename: node: let
-            ip = net.networks.default.hosts.${nodename};
-            mkTargetString = port: "${ip}:${builtins.toString port}";
-            exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) node.config.services.prometheus.exporters);
-            ports =
-              exporterPorts
-              ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [node.config.phil.server.services.promexp.prom-sensors-port];
-          in
-            builtins.map mkTargetString ports;
-        in {
-          job_name = n;
-          static_configs = [
-            {
-              targets = mkTargets n v;
-            }
-          ];
-        };
-      in
-        builtins.attrValues (lib.mapAttrs mkScrapeJob nodes);
+      inherit scrapeConfigs;
     };
+
+    services.tempo = {
+      enable = true;
+      settings = {
+        server = {
+          http_listen_address = "0.0.0.0";
+          http_listen_port = cfg.tempo-port;
+          graceful_shutdown_timeout = "10s";
+        };
+        distributor.receivers = {
+          otlp.protocols = {
+            grpc = {};
+            http = {};
+          };
+        };
+        storage.trace = {
+          backend = "local";
+          wal.path = "/var/lib/tempo/wal";
+          local.path = "/var/lib/tempo/blocks";
+        };
+        usage_report.reporting_enabled = false;
+      };
+    };
+    services.opentelemetry-collector.enable = lib.mkForce false;
 
     services.grafana = {
       enable = true;
       settings = {
         server = {
           http_port = cfg.grafana-port;
-          domain = "https://${cfg.host}.${net.tld}";
-          root_url = "https://${cfg.host}.${net.tld}";
+          domain = grafana-domain;
+          root_url = grafana-domain;
           http_addr = "0.0.0.0";
           protocol = "http";
         };
@@ -157,15 +201,8 @@ in {
 
         "auth.generic_oauth" = let
           enabled = kc-enabled;
-          realm_name = "services";
-          client_id = "grafana-oauth";
           client_secret = "$__file{${config.sops.secrets.grafana-kc-client-secret.path}}";
-          url = "${
-            if kc-enabled
-            then kc-host
-            else "keycloak"
-          }.${net.tld}";
-          oid-uri = "https://${url}/realms/${realm_name}/protocol/openid-connect";
+          client_id = "grafana-oauth";
         in {
           inherit enabled client_id client_secret;
           name = "Keycloak-OAuth";
@@ -185,6 +222,12 @@ in {
       provision = {
         datasources.settings = {
           datasources = [
+            {
+              name = "Tempo";
+              type = "tempo";
+              # TODO use urls?
+              url = "http://localhost:${builtins.toString cfg.tempo-port}";
+            }
             {
               name = "Prometheus";
               type = "prometheus";
@@ -209,6 +252,7 @@ in {
         };
         loki.port = cfg.loki-port;
         prometheus.port = cfg.prometheus-port;
+        tempo.port = cfg.tempo-port;
       };
 
       homer.apps."${cfg.host}" = {
