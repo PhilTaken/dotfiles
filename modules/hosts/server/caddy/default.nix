@@ -79,7 +79,7 @@ in {
     };
   };
 
-  config = mkIf (cfg.proxy != {}) {
+  config = mkIf (cfg.proxy != {} || isEndpoint config.networking.hostName) {
     sops.secrets.acme_dns_cf = {
       #owner = config.systemd.services.caddy.serviceConfig.User;
       owner = config.systemd.services.nginx.serviceConfig.User;
