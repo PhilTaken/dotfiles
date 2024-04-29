@@ -35,7 +35,7 @@
       links = mkLinks {
         "dotfiles" = {
           icon = "fas fa-code-branch";
-          url = "https://gitea.pherzog.xyz/phil/dotfiles";
+          url = "https://gitea.${net.tld}/phil/dotfiles";
         };
       };
 

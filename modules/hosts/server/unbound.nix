@@ -99,8 +99,8 @@ in {
 
           # tls upstream
           tls-upstream = "yes";
-          tls-service-key = "${config.security.acme.certs."${cfg.host}.${net.tld}".directory}/key.pem"; # -> .key
-          tls-service-pem = "${config.security.acme.certs."${cfg.host}.${net.tld}".directory}/cert.pem"; # -> .crt
+          tls-service-key = "${config.security.acme.certs."${net.tld}".directory}/key.pem"; # -> .key
+          tls-service-pem = "${config.security.acme.certs."${net.tld}".directory}/cert.pem"; # -> .crt
 
           # tls downstream
           tls-cert-bundle = "/etc/ssl/certs/ca-certificates.crt";

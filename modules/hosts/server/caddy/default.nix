@@ -58,11 +58,6 @@
   endpoints = builtins.attrNames net.endpoints;
   isEndpoint = n: (builtins.elem n endpoints);
   hiddenHostProxies = lib.filterAttrs (n: _: !(isEndpoint n)) allHostProxies;
-
-  domains = let
-    rdomains = builtins.concatMap builtins.attrNames (builtins.attrValues allHostProxies);
-  in
-    (map (domain: "${domain}.${net.tld}") rdomains) ++ ["pherzog.xyz" "www.pherzog.xyz"];
 in {
   options.phil.server.services.caddy = {
     # TODO: autogenerate from host/port in services
@@ -91,11 +86,14 @@ in {
       defaults.group = config.services.nginx.group;
       defaults.dnsResolver = "1.1.1.1:53";
       defaults.webroot = null;
-      certs = lib.genAttrs domains (_domain: {
+      certs.${net.tld} = {
+        domain = net.tld;
+        extraDomainNames = ["*.${net.tld}"];
+
         dnsProvider = "cloudflare";
         credentialsFile = config.sops.secrets.acme_dns_cf.path;
         webroot = lib.mkForce null;
-      });
+      };
     };
 
     #systemd.services.caddy.serviceConfig.AmbientCapabilities = "CAP_NET_BIND_SERVICE";
@@ -112,10 +110,7 @@ in {
           name = fqdn;
           value = {
             forceSSL = true;
-            enableACME = true;
-            sslCertificate = "${certs.${fqdn}.directory}/fullchain.pem";
-            sslCertificateKey = "${certs.${fqdn}.directory}/key.pem";
-            sslTrustedCertificate = "${certs.${fqdn}.directory}/chain.pem";
+            useACMEHost = net.tld;
             locations."/" = {
               inherit (proxycfg) root proxyPass;
               extraConfig =
@@ -148,29 +143,21 @@ in {
       in
         (lib.mapAttrs' genconfig myProxies)
         // {
-          "www.${net.tld}" = let
-            fqdn = "www.${net.tld}";
-          in {
+          "www.${net.tld}" = {
             forceSSL = true;
-            enableACME = true;
-            sslCertificate = "${certs.${fqdn}.directory}/fullchain.pem";
-            sslCertificateKey = "${certs.${fqdn}.directory}/key.pem";
-            sslTrustedCertificate = "${certs.${fqdn}.directory}/chain.pem";
-            globalRedirect = "pherzog.xyz";
+            useACMEHost = net.tld;
+            globalRedirect = net.tld;
           };
 
           ${net.tld} = {
             forceSSL = true;
-            enableACME = true;
-            sslCertificate = "${certs.${net.tld}.directory}/fullchain.pem";
-            sslCertificateKey = "${certs.${net.tld}.directory}/key.pem";
-            sslTrustedCertificate = "${certs.${net.tld}.directory}/chain.pem";
-            globalRedirect = "gitea.pherzog.xyz";
+            useACMEHost = net.tld;
+            globalRedirect = "gitea.${net.tld}";
           };
 
           "external_ip" = lib.mkIf (builtins.hasAttr config.networking.hostName net.endpoints) {
             serverName = net.endpoints.${config.networking.hostName};
-            globalRedirect = "pherzog.xyz";
+            globalRedirect = net.tld;
           };
         };
 
