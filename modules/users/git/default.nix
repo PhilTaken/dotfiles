@@ -50,20 +50,21 @@ in {
     };
 
     home.shellAliases = {
-      gf = "${pkgs.git}/bin/git fetch -ap --all";
-      ga = "${pkgs.git}/bin/git add";
-      gc = "${pkgs.git}/bin/git commit";
-      gd = "${pkgs.git}/bin/git diff";
-      gds = "${pkgs.git}/bin/git diff --staged";
-      gr = "${pkgs.git}/bin/git reset";
-      grv = "${pkgs.git}/bin/git remote -v";
-      gl = "${pkgs.git}/bin/git pull";
-      gp = "${pkgs.git}/bin/git push";
-      glog = "${pkgs.git}/bin/git log";
-      gco = "${pkgs.git}/bin/git checkout";
-      gcm = "${pkgs.git}/bin/git checkout main";
+      gf = "git fetch -ap --all";
+      ga = "git add";
+      gc = "git commit";
+      gd = "git diff";
+      gds = "git diff --staged";
+      gr = "git reset";
+      grv = "git remote -v";
+      gl = "git pull";
+      gp = "git push";
+      glog = "git log";
+      gco = "git checkout";
+      gcf = "git checkout $(git branch --all | sed 's/*/ /' | awk '{ print $1; }' | sed 's|remotes/[^/]\\+/||' | sort | uniq | grep -v HEAD | sk)";
+      gcm = "git checkout main";
       flkup = "nix flake update --commit-lock-file";
-      gwf = "${pkgs.git}/bin/git workspace fetch";
+      gwf = "git workspace fetch";
     };
 
     programs.git = {
@@ -112,7 +113,6 @@ in {
       ];
 
       aliases = let
-        git = "${pkgs.git}/bin/git";
         sort = "${pkgs.coreutils}/bin/sort";
         uniq = "${pkgs.coreutils}/bin/uniq";
       in {
@@ -122,14 +122,12 @@ in {
           + " —%Cblue%d%Creset %s %Cgreen(%cr)%Creset'"
           + " --abbrev-commit --date=relative --show-notes=*";
         co = "checkout";
-        authors = "!${git} log --pretty=format:%aN | ${sort} | ${uniq} -c | ${sort} -rn";
+        authors = "!git log --pretty=format:%aN | ${sort} | ${uniq} -c | ${sort} -rn";
         b = "branch --color -v";
         ca = "commit --amend";
         changes = "diff --name-status -r";
         clone = "clone --recursive";
-        ctags = "!.git/hooks/ctags";
         root = "!pwd";
-        spull = "!${git} stash && ${git} pull && ${git} stash pop";
         su = "submodule update --init --recursive";
         undo = "reset --soft HEAD^";
         w = "status -sb";
