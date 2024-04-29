@@ -70,6 +70,12 @@ in {
         default = true;
       };
 
+      zig = mkOption {
+        description = "enable the zig integration";
+        type = types.bool;
+        default = true;
+      };
+
       rust = mkOption {
         description = "enable the rust integration";
         type = types.bool;
@@ -148,6 +154,7 @@ in {
         ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server])
         ++ (optionals cfg.langs.cpp [pkgs.ccls])
         ++ (optionals cfg.langs.rust [pkgs.rust-analyzer-unwrapped])
+        ++ (optionals cfg.langs.zig [pkgs.zls])
         ++ (optionals cfg.langs.haskell [pkgs.haskell-language-server])
         ++ (optionals cfg.langs.extra (with pkgs; [
           fortls

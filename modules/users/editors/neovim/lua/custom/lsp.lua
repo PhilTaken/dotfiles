@@ -163,6 +163,7 @@ local enabled_lsps = {
 	"rust_analyzer",
 	"pylsp",
 	"yamlls",
+	"zls",
 }
 
 -- signature help
