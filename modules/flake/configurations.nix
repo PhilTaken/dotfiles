@@ -174,6 +174,11 @@ in {
                 };
               }
 
+              {
+                # FIXME: connect zetta to nebula to access forgjo via ssh?
+                home-manager.users.alice.programs.git.extraConfig.credential.helper = "store";
+              }
+
               ({
                 pkgs,
                 npins,
