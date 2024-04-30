@@ -61,13 +61,13 @@ in {
       ts = mkOption {
         description = "enable the js/ts integration";
         type = types.bool;
-        default = true;
+        default = false;
       };
 
       cpp = mkOption {
         description = "enable the cpp integration";
         type = types.bool;
-        default = true;
+        default = false;
       };
 
       zig = mkOption {
@@ -85,13 +85,13 @@ in {
       haskell = mkOption {
         description = "enable the haskell integration";
         type = types.bool;
-        default = true;
+        default = false;
       };
 
       extra = mkOption {
         description = "enable extra integrations";
         type = types.bool;
-        default = true;
+        default = false;
       };
     };
   };

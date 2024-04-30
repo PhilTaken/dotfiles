@@ -17,7 +17,7 @@
     };
   in {
     alice.userConfig = {
-      leisure.enable = false;
+      headless = true;
 
       git = {
         enable = true;
@@ -174,10 +174,16 @@ in {
                 };
               }
 
-              {
+              ({lib, ...}: {
                 # FIXME: connect zetta to nebula to access forgjo via ssh?
                 home-manager.users.alice.programs.git.extraConfig.credential.helper = "store";
-              }
+
+                # this somehow breaks deployments
+                home-manager.users.alice.programs.carapace.enable = lib.mkForce false;
+
+                # disable to prevent inferring dns from vm host
+                services.resolved.enable = lib.mkForce false;
+              })
 
               ({
                 pkgs,

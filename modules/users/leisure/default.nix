@@ -19,41 +19,41 @@ in {
     home.packages = with pkgs;
       [
         magic-wormhole
-        gimp
-        keepassxc
-        signal-desktop
-
-        #liberation fonts broken
-        #libreoffice
         youtube-dl
-        tdesktop
-        anki
-        element-desktop
-        qt5.qtbase
 
         lshw
         psmisc
         usbutils
-
-        #devdocs-desktop
       ]
-      ++
-      # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
-      #discord
-      (
-        if true
-        then [
-          (pkgs.writeShellApplication {
-            name = "discord";
-            text = "${pkgs.discord}/bin/discord --use-gl=desktop --disable-gpu-sandbox";
-          })
-          (pkgs.makeDesktopItem {
-            name = "discord";
-            exec = "discord";
-            desktopName = "Discord";
-          })
-        ]
-        else [pkgs.discord]
-      );
+      ++ (lib.optionals (!config.phil.headless) [
+        keepassxc
+        signal-desktop
+        tdesktop
+        anki
+        element-desktop
+        gimp
+        #devdocs-desktop
+
+        #liberation fonts broken
+        #libreoffice
+
+        # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
+        #discord
+        (
+          if true
+          then [
+            (pkgs.writeShellApplication {
+              name = "discord";
+              text = "${pkgs.discord}/bin/discord --use-gl=desktop --disable-gpu-sandbox";
+            })
+            (pkgs.makeDesktopItem {
+              name = "discord";
+              exec = "discord";
+              desktopName = "Discord";
+            })
+          ]
+          else [pkgs.discord]
+        )
+      ]);
   };
 }

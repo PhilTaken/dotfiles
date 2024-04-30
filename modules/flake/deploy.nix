@@ -29,11 +29,12 @@ in {
         profiles.system.path = (activateFor "x86_64-linux") self.nixosConfigurations.delta;
       };
 
-      #epsilon = {
-      #hostname = "192.168.0.130";
-      #sshUser = "root";
-      #profiles.system.path = (activateFor "x86_64-linux")  self.nixosConfigurations.epsilon;
-      #};
+      zetta = {
+        hostname = "alice";
+        sshUser = "root";
+        remoteBuild = true;
+        profiles.system.path = (activateFor "aarch64-linux") self.nixosConfigurations.zetta;
+      };
     };
   };
 }
