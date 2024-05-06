@@ -75,25 +75,16 @@ in {
         trusted-users = ["root" "@wheel"];
         substituters = [
           "https://cache.nixos.org"
-
           "https://nix-community.cachix.org"
           "https://nixpkgs-wayland.cachix.org"
-          "https://hyprland.cachix.org"
-
-          "https://philtaken.cachix.org"
-          #"https://arm-rs.cachix.org"
-          #"https://cache.iog.io"
+          "https://cache.lix.systems"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
-          "philtaken.cachix.org-1:EJiUqY2C0igyW8Sxzcna4JjAhhR4n13ZLvycFcE7jvk="
-          #"arm-rs.cachix.org-1:bgjtu4We0K2fhd7n2E5Dv136XeLk2yXZcrTrCguWsls="
-          "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-          "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          "nix-store-01:fxqZS/VJggrfBpFFOT/iULWYRaz5NvpY0daV+knaCCA="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+          "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+          "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
         ];
       };
       # set up automatic garbage collection
