@@ -38,7 +38,7 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nixVersions.latest;
+  #nix.package = pkgs.nixVersions.latest;
   nix.extraOptions = ''
     build-users-group = nixbld
     bash-prompt-prefix = (nix:$name)\040

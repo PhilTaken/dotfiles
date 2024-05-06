@@ -16,6 +16,8 @@
 
     self.overlays.default
 
+    inputs.lix-module.overlays.default
+
     (
       _final: prev: {
         makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});

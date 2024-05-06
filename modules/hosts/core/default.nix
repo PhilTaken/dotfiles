@@ -32,7 +32,7 @@ in {
 
   config = mkIf cfg.enable {
     nix = {
-      package = pkgs.nixVersions.stable;
+      #package = pkgs.nixVersions.stable;
       # Free up to 1GiB whenever there is less than 100MiB left.
       extraOptions = ''
         experimental-features = nix-command flakes repl-flake
