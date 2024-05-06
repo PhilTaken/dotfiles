@@ -1,5 +1,4 @@
-# TODO:
-# - https://github.com/mrpbennett/catppucin-homer
+# TODO: https://github.com/mrpbennett/catppucin-homer
 {
   pkgs,
   config,

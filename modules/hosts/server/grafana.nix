@@ -9,17 +9,14 @@
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.grafana;
 
-  nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default.hosts) flake.nixosConfigurations;
-
-  kc-nodes = builtins.attrNames (lib.filterAttrs
-    (_: v:
-      lib.hasAttrByPath ["config" "phil" "server" "services" "keycloak" "enable"] v
-      && v.config.phil.server.services.keycloak.enable)
-    nodes);
+  nodes = net.services;
+  kc-nodes = builtins.attrNames (lib.filterAttrs (_: builtins.elem "keycloak") nodes);
   kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
+
+  # TODO what do when multiple keycloaks defined?
   kc-enabled = builtins.length kc-nodes == 1;
 
-  # TODO improve this with shiver
+  # TODO improve this with shiver?
   scrapeConfigs = let
     mkScrapeJob = n: v: let
       mkTargets = nodename: node: let

@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  net,
   inputs,
   ...
 }: let
@@ -57,7 +56,6 @@ in {
         #use-xdg-base-directories = true
       '';
 
-      # TODO add my own registry
       registry = {
         nixpkgs.flake = inputs.nixpkgs;
         flake-templates = {

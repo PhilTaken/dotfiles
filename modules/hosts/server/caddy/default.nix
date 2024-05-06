@@ -60,7 +60,6 @@
   hiddenHostProxies = lib.filterAttrs (n: _: !(isEndpoint n)) allHostProxies;
 in {
   options.phil.server.services.caddy = {
-    # TODO: autogenerate from host/port in services
     proxy = mkOption {
       description = "proxy definitions";
       type = types.attrsOf ipOptsType;
@@ -96,14 +95,11 @@ in {
       };
     };
 
-    #systemd.services.caddy.serviceConfig.AmbientCapabilities = "CAP_NET_BIND_SERVICE";
-
     services.nginx = {
       enable = true;
       recommendedProxySettings = true;
       clientMaxBodySize = "100M";
       virtualHosts = let
-        inherit (config.security.acme) certs;
         genconfig = subdomain: {public, ...} @ proxycfg: let
           fqdn = "${subdomain}.${net.tld}";
         in {
