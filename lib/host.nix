@@ -72,7 +72,6 @@ in rec {
       inputs.stylix.nixosModules.stylix
       inputs.home-manager.nixosModules.home-manager
       inputs.hyprland.nixosModules.default
-      inputs.lix-module.nixosModules.default
       ({
         pkgs,
         lib,
