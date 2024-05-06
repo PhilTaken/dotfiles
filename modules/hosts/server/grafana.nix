@@ -9,8 +9,8 @@
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.grafana;
 
-  nodes = net.services;
-  kc-nodes = builtins.attrNames (lib.filterAttrs (_: builtins.elem "keycloak") nodes);
+  nodes = lib.filterAttrs (n: _: builtins.elem n net.servers) flake.nixosConfigurations;
+  kc-nodes = builtins.attrNames (lib.filterAttrs (_: builtins.elem "keycloak") net.services);
   kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
 
   # TODO what do when multiple keycloaks defined?

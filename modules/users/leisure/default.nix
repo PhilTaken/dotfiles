@@ -18,7 +18,6 @@ in {
     # these just dont work on mac, TODO: move someplace else
     home.packages = with pkgs;
       [
-        magic-wormhole
         youtube-dl
 
         lshw

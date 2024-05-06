@@ -145,7 +145,6 @@ in {
       htop
       rclone
       duf
-      #magic-wormhole
     ];
   };
 }
