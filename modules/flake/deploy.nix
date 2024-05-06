@@ -9,7 +9,7 @@ in {
     # deploy config
     deploy.nodes = {
       alpha = {
-        hostname = "10.200.0.1";
+        hostname = "148.251.102.93";
         sshUser = "root";
         remoteBuild = true;
         profiles.system.path = (activateFor "x86_64-linux") self.nixosConfigurations.alpha;
