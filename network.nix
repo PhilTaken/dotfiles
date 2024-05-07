@@ -66,22 +66,27 @@ _: rec {
     # mini nas @ home
     delta = [
       # "syncthing"
-      # "keycloak"
       # "grocy"
       # "writefreely"
-      # "ldap"
       # "hound"
-      # "calibre"
+      # "navidrome" # remove this? I use jellyfin instead
+      # "nix-serve"
+      # "ldap"
 
+      # reenable when possible, maybe move to beta?
+      # "calibre"
+      # "keycloak"
+
+      "gitea" # move to beta?
+      "homer" # move to beta?
+
+      "unbound" # maybe move to beta?
+      "nextcloud" # maybe move to beta?
+
+      # keep these on delta to use at home
       "arrs"
-      "gitea"
-      "homeassistant"
-      "homer"
       "jellyfin"
-      "navidrome"
-      "nextcloud"
-      "nix-serve"
-      "unbound"
+      "homeassistant"
     ];
   };
 }
