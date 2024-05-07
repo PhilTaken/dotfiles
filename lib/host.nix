@@ -1,11 +1,16 @@
 {
   user,
   inputs,
-  pkgsFor,
   flake,
+  overlays,
 }: let
   npins = import ../npins;
   net = import ../network.nix {};
+
+  nixpkgs = {
+    inherit overlays;
+    config.allowUnfree = true;
+  };
 in rec {
   mkBase = defaultModules: {
     users ? ["nixos"],
@@ -13,11 +18,10 @@ in rec {
     hostModules ? [],
     hardware-config ? (import ../machines/${hostName}),
     system ? "x86_64-linux",
-    pkgs ? pkgsFor system,
   }: let
     inherit (inputs.nixpkgs) lib;
 
-    # TODO: pls pls pls improve this
+    # TODO: pls improve this
     raw_users =
       lib.zipListsWith
       (name: uid:
@@ -33,15 +37,10 @@ in rec {
       defaultModules
       ++ hostModules
       ++ [
-        {
+        ({lib, ...}: {
           imports = [../modules/hosts hardware-config] ++ sys_users;
-          phil.core.hostName = lib.mkDefault hostName;
-
-          programs.fish.enable = true;
 
           nix.registry.nixpkgs.flake = inputs.nixpkgs;
-          i18n.supportedLocales = ["en_US.UTF-8/UTF-8" "de_DE.UTF-8/UTF-8"];
-
           nixpkgs.overlays = [
             inputs.nixpkgs-wayland.overlay
             inputs.neovim-nightly-overlay.overlay
@@ -55,15 +54,19 @@ in rec {
             };
           };
 
+          programs.fish.enable = true;
+          i18n.supportedLocales = ["en_US.UTF-8/UTF-8" "de_DE.UTF-8/UTF-8"];
+
+          phil.core.hostName = lib.mkDefault hostName;
           system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
-        }
+        })
 
         inputs.sops-nix-src.nixosModules.sops
         inputs.disko.nixosModules.disko
       ];
   in
     lib.nixosSystem {
-      inherit system pkgs modules;
+      inherit system modules;
       specialArgs = {inherit inputs net flake npins;};
     };
 
@@ -77,6 +80,7 @@ in rec {
         lib,
         ...
       }: {
+        inherit nixpkgs;
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
@@ -93,28 +97,18 @@ in rec {
     username ? "philippherzog",
     system ? "aarch64-darwin",
     lib ? inputs.nixpkgs.lib,
-    pkgs ? pkgsFor system,
     hardware-config ? (import ../machines/${name}),
   }:
     inputs.darwin.lib.darwinSystem {
-      inherit system pkgs;
+      inherit system;
       specialArgs = {inherit inputs flake npins;};
 
       modules = [
         hardware-config
         inputs.lix-module.nixosModules.default
 
-        {
-          home-manager.users.${username} = {
-            imports = [
-              (user.mkConfig pkgs username {
-                inherit userConfig extraPackages;
-                stateVersion = "22.05";
-                homeDirectory = "/Users/${username}";
-              })
-            ];
-          };
-
+        ({pkgs, ...}: {
+          inherit nixpkgs;
           nix = {
             registry.nixpkgs.flake = inputs.nixpkgs;
             settings.trusted-users = [username];
@@ -125,12 +119,22 @@ in rec {
             '';
           };
 
+          home-manager.users.${username} = {
+            imports = [
+              (user.mkConfig pkgs username {
+                inherit userConfig extraPackages;
+                stateVersion = "22.05";
+                homeDirectory = "/Users/${username}";
+              })
+            ];
+          };
+
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
             extraSpecialArgs = {inherit inputs npins;};
           };
-        }
+        })
 
         inputs.home-manager.darwinModule
         inputs.stylix.darwinModules.stylix

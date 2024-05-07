@@ -16,8 +16,6 @@
 
     self.overlays.default
 
-    inputs.lix-module.overlays.default
-
     (
       _final: prev: {
         makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});
@@ -53,20 +51,9 @@
     )
   ];
 in rec {
-  pkgsFor = system:
-    import inputs.nixpkgs {
-      inherit overlays system;
-      config.allowUnfree = true;
-      # https://github.com/NixOS/nixpkgs/issues/269713
-      config.permittedInsecurePackages = [
-        "openssl-1.1.1w"
-      ];
-    };
-
-  iso = import ./iso.nix {inherit inputs;};
   user = import ./user.nix {inherit inputs;};
   host = import ./host.nix {
-    inherit user inputs pkgsFor;
+    inherit user inputs overlays;
     flake = self;
   };
   server = import ./server.nix {inherit host inputs;};
