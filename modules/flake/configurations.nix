@@ -18,6 +18,7 @@
   in {
     alice.userConfig = {
       headless = true;
+      music.enable = false;
 
       git = {
         enable = true;
@@ -167,10 +168,11 @@ in {
             hostModules = [
               {
                 phil = {
+                  server.services.openssh.enable = true;
                   wireguard.enable = false;
                   nebula.enable = false;
-                  server.services.openssh.enable = true;
                   video.enable = false;
+                  yubikey.enable = false;
                 };
               }
 

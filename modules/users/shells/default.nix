@@ -99,7 +99,7 @@ in {
       tealdeer
       tokei
       tree
-      ueberzugpp
+      #ueberzugpp
       unrar
       unzip
       wget

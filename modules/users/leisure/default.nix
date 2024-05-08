@@ -18,7 +18,7 @@ in {
     # these just dont work on mac, TODO: move someplace else
     home.packages = with pkgs;
       [
-        youtube-dl
+        #youtube-dl
 
         lshw
         psmisc

@@ -33,7 +33,7 @@ in {
     };
   };
 
-  config = {
+  config = lib.mkIf (!config.phil.headless) {
     programs = {
       alacritty = {
         enable = false;

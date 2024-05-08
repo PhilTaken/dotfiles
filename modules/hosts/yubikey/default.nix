@@ -52,9 +52,5 @@ in {
       mode = "challenge-response";
       challengeResponsePath = cfg.chalRespPath;
     };
-
-    environment.systemPackages = with pkgs; [
-      yubikey-manager-qt
-    ];
   };
 }
