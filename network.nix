@@ -61,6 +61,8 @@ _: rec {
     # new hetzner vps
     beta = [
       "grafana"
+      "freshrss"
+      "homer"
     ];
 
     # mini nas @ home
@@ -77,9 +79,8 @@ _: rec {
       # "calibre"
       # "keycloak"
 
+      # needs to move data to move the service
       "gitea" # move to beta?
-      "homer" # move to beta?
-
       "unbound" # maybe move to beta?
       "nextcloud" # maybe move to beta?
 

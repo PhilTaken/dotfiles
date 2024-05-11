@@ -23,6 +23,7 @@ forgejo-actions-token: ENC[AES256_GCM,data:zP56juyQ+Q9eJhBVhLK6SBhuWr++a3aKf1dYM
 writefreely-adminpass: ENC[AES256_GCM,data:BGGhdDI54N2FLvvFCik=,iv:61TDzOV87cPc63bjoZhTzU+4ea08rRtFphGcJ0kE0vE=,tag:Nc8zLrWT5b5KDJfQFxlYAw==,type:str]
 geoip-licensekey: ENC[AES256_GCM,data:8H+poTkfK6tUZuwtVwX8OwdfQuZiDEX4G1N3GY2gEKjRpIvzXja/BQ==,iv:GKtSxnqT/xdgQ9hpupKrGadG65ske00LQpyxfHkF0Jk=,tag:6NB+Jaf5VqWzJst66gEtnA==,type:str]
 mqtt-password: ENC[AES256_GCM,data:dM2rnubupsKDBzMb6+zpRgxtRg03jWE=,iv:a/dq344+xHfsDClok7AeaLjJUgwgaRnPlrsUMwtZp3U=,tag:zaSXp6Y3Roj3/tqC2rNg7A==,type:str]
+freshrss-password: ENC[AES256_GCM,data:9JT5b6IN5rmp5DYdAczEIhl7f1QwKbF8,iv:V+Yvmk/+sGFnXdw9ZoVKCiClc9qMfxmugQbO2iOGdgE=,tag:2LPK63PodLHJYaa5uy/9BQ==,type:str]
 sops:
     shamir_threshold: 1
     kms: []
@@ -93,8 +94,8 @@ sops:
             VlIydHRPdzhoZ1BOMjdQUEZXV1dnMzAKMqjYymYmp1y8EDiMkWFhjN1MoYBkGehP
             zcccRctkApMDwPxMUtIK2UcBpedvYemOK4C99WDLWjt+6iVH4RsSAQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-11-02T18:02:33Z"
-    mac: ENC[AES256_GCM,data:+NWAPUM8J9athvgpnM+zq1A7ZGB4Iac1kUQ/I6+jBu1uLQRrapdCzOBf35pLRVkomKr7IhvCghw9FdybCN9tdNpUZaKrou4mSKTSGJNobEWvF7o3nSaStZccstGXnJm937BGzKPB3mZXHFEREgNWiJe/y+AB7DdcoGPXINEfcmM=,iv:eG0iYYt7lI4xRIxhdBWAEME+AYTa+xE24Ba6IT3DtXA=,tag:0XCaE0Q0wM5fxYByKVl6CQ==,type:str]
+    lastmodified: "2024-05-11T10:31:35Z"
+    mac: ENC[AES256_GCM,data:MU8iOhZ6DIl+qQF9S29uWrcepWflpqfkSYjc/mHhDJyNDleUjerq7Ukbwwnnfv5j+789Cdiwu05z1+Jw8/zXB+8Osngv3/M/5bRvnNsUrdxgbusoGzKSNiVOzo0YVE/yoSX8SZmiUsnjRcw0zFl+hGDxVGaEFtN1H0Yj5TOVcUU=,iv:ATjtAAcByfIeqp//cNhiLJp4xSMJJctWp55aAXx/A2U=,tag:tFxPNuWeLdpN2i6xXi+dhA==,type:str]
     pgp:
         - created_at: "2024-04-12T16:05:45Z"
           enc: |-

@@ -13,6 +13,7 @@ in {
     ./caddy
     ./calibre-web.nix
     ./fail2ban.nix
+    ./freshrss.nix
     ./gitea.nix
     ./grafana.nix
     ./grafana.nix
