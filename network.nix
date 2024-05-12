@@ -50,7 +50,11 @@ _: rec {
   };
 
   servers = builtins.attrNames services;
-  systems.beta = "aarch64-linux";
+  systems = {
+    alpha = "x86_64-linux";
+    beta = "aarch64-linux";
+    delta = "x86_64-linux";
+  };
 
   services = {
     # vm on a hetzner server, debian host

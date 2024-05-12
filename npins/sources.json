@@ -47,6 +47,18 @@
       "url": "https://github.com/edunfelt/base16-rose-pine-scheme/archive/4161952824f4ede6c3eb73ef6b5f3609a76cf69a.tar.gz",
       "hash": "17n45xd8qza3n9gzlpffri6hbil9n0442yx8vfaf4pgpwgmlqvjm"
     },
+    "freshrss_extensions": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "freshrss",
+        "repo": "extensions"
+      },
+      "branch": "master",
+      "revision": "70c1d7526f26eb444deab5441a04ab3542c244eb",
+      "url": "https://github.com/freshrss/extensions/archive/70c1d7526f26eb444deab5441a04ab3542c244eb.tar.gz",
+      "hash": "0p3j0gk25ddh4k0yqqagpxkxcyi8pc7x7c8snbssvljh5q6v7xcy"
+    },
     "hurl-nvim": {
       "type": "GitRelease",
       "repository": {
