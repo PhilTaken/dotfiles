@@ -2,11 +2,17 @@
   config,
   lib,
   net,
-  npins,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.freshrss;
+
+  # TODO fixed release since ?
+  freshrss_extensions = builtins.fetchTarball {
+    name = "freshrss-extensions";
+    url = "https://github.com/FreshRSS/Extensions/archive/master.zip";
+    sha256 = "sha256:0p3j0gk25ddh4k0yqqagpxkxcyi8pc7x7c8snbssvljh5q6v7xcy";
+  };
 
   # todo better way to assign ips + ports to avoid collisions
   # maybe assign ports in network.nix?
@@ -33,7 +39,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.freshrss-password = {};
+    sops.secrets.freshrss-password.mode = "777";
 
     networking.nat = {
       enable = true;
@@ -66,6 +72,7 @@ in {
 
     containers.freshrss = let
       adminpassFile = config.sops.secrets.freshrss-password.path;
+      extensions_path = "/var/lib/freshrss/extensions";
     in {
       ephemeral = false;
       autoStart = true;
@@ -81,17 +88,26 @@ in {
         }
       ];
 
-      bindMounts = {
-        ${adminpassFile} = {
-          hostPath = adminpassFile;
-          isReadOnly = true;
-        };
-
-        "/var/lib/freshrss/extensions" = {
-          hostPath = "${npins.freshrss_extensions}";
-          isReadOnly = true;
-        };
-      };
+      bindMounts =
+        {
+          ${adminpassFile} = {
+            hostPath = adminpassFile;
+            isReadOnly = true;
+          };
+        }
+        // (builtins.listToAttrs (builtins.map (extension: {
+            name = "${extensions_path}/${extension}";
+            value = {
+              hostPath = "${freshrss_extensions}/${extension}";
+              isReadOnly = true;
+            };
+          }) [
+            "xExtension-ColorfulList"
+            "xExtension-CustomCSS"
+            "xExtension-ReadingTime"
+            "xExtension-showFeedID"
+            "xExtension-YouTube"
+          ]));
 
       config = {
         config,
@@ -103,6 +119,11 @@ in {
         # WORKAROUND
         environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
         networking.firewall.enable = false;
+
+        # https://github.com/NixOS/nixpkgs/pull/307459
+        systemd.services.freshrss-config.environment.THIRDPARTY_EXTENSIONS_PATH = extensions_path;
+        systemd.services.freshrss-updater.environment.THIRDPARTY_EXTENSIONS_PATH = extensions_path;
+        services.phpfpm.pools.freshrss.phpEnv.THIRDPARTY_EXTENSIONS_PATH = extensions_path;
 
         services.freshrss = {
           enable = true;
