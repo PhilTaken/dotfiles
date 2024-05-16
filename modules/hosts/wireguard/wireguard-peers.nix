@@ -1,3 +1,4 @@
+# TODO remove this module
 {
   net,
   lib,
@@ -31,7 +32,6 @@
     );
 
   pubkeys = {
-    alpha = "LDOII0S7OWakg4oDrC1wUCoM/YXq3wXTEjYoqBbI2Sk=";
     beta = "/DWBidRPbNdqBhXZJFGpD20K+Bs6ViEbq4DJOlw5f0U=";
     gamma = "1w8CC/pEfXFPvdzyspDkuw/s8k2bkqAqk4KKg35IvQc=";
     delta = "598UtHyLn0L5ReObBtsT+UAJHtt7FtuFZiF5nRJ+nEg=";

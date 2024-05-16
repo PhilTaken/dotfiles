@@ -2,8 +2,7 @@ _: rec {
   tld = "pherzog.xyz";
 
   endpoints = {
-    "alpha" = "148.251.102.93";
-    #"beta" = "195.201.93.72";
+    "beta" = "195.201.93.72";
   };
 
   networks = rec {
@@ -16,7 +15,6 @@ _: rec {
       netmask = "10.200.0.0/24";
 
       hosts = {
-        alpha = "10.200.0.1";
         beta = "10.200.0.2";
         gamma = "10.200.0.3";
         #nixos-laptop = "10.200.0.4";
@@ -30,7 +28,6 @@ _: rec {
       netmask = "10.100.0.0/24";
 
       hosts = {
-        alpha = "10.100.0.1";
         beta = "10.100.0.2";
         gamma = "10.100.0.3";
         #nixos-laptop = "10.100.0.4";
@@ -51,22 +48,16 @@ _: rec {
 
   servers = builtins.attrNames services;
   systems = {
-    alpha = "x86_64-linux";
     beta = "aarch64-linux";
     delta = "x86_64-linux";
   };
 
   services = {
-    # vm on a hetzner server, debian host
-    alpha = [
-      #"grafana"
-    ];
-
     # new hetzner vps
     beta = [
       "grafana"
       "freshrss"
-      "homer"
+      #"homer"
     ];
 
     # mini nas @ home

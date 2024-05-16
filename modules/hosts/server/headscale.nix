@@ -34,7 +34,7 @@ in {
     };
     services.headscale = {
       enable = true;
-      # limit to external ip on alpha?
+      # limit to external ip on beta?
       address = "0.0.0.0";
 
       serverUrl = "https://headscale.${net.tld}:443";

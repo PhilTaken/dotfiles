@@ -30,7 +30,7 @@
   ipForHost = network: host:
     if builtins.hasAttr host net.networks.${network}.hosts
     then net.networks.${network}.hosts.${host}
-    else net.endpoints.alpha;
+    else net.endpoints.beta;
 
   subdomains =
     builtins.mapAttrs

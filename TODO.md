@@ -1,5 +1,8 @@
 # current TODOs:
 
+- improve network.nix 
+    - module?
+
 ## delta
 
 - monitor drives
@@ -19,9 +22,6 @@
 - backup postgres database of nextcloud instance
 - backup (important) syncthing folders locally and to b2
     - rclone / borg => rustic
-
-- alpha: dont use nix store cache from delta
-- alpha: use delta as build server
 
 - grafana config
     - todo: provisions

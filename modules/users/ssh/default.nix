@@ -33,11 +33,6 @@ in {
           user = "nixos";
         };
 
-        # yggdrasil
-        "alpha" = {
-          hostname = "10.200.0.1";
-          user = "nixos";
-        };
         "beta" = {
           hostname = "10.200.0.2";
           user = "nixos";
@@ -56,14 +51,6 @@ in {
         "vps2" = {
           hostname = "185.212.44.199";
           user = "nixos";
-        };
-        "alphadirect" = {
-          hostname = "148.251.102.93";
-          user = "nixos";
-        };
-        "alpha-root" = {
-          hostname = "148.251.102.93";
-          user = "root";
         };
       };
     };
