@@ -3,6 +3,8 @@ local actions = require("telescope.actions")
 local ff_command = {
 	"fd",
 	"--hidden",
+	"-E",
+	".git",
 	"-t",
 	"f",
 }
