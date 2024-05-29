@@ -1,13 +1,13 @@
 # current TODOs:
 
-- set up audiobookshelf
-- atuin sync server (backed up)
-
 - fix twisted build failure, reenable extrasensors for delta
     - otherwise riir
 
 - improve network.nix
     - module?
+
+- set up audiobookshelf
+- atuin sync server (backed up)
 
 - backups of important data
 
