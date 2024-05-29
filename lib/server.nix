@@ -19,6 +19,16 @@ in {
       ({lib, ...}: {
         config = {
           documentation.enable = false;
+
+          zramSwap = {
+            enable = true;
+            algorithm = "zstd";
+          };
+          boot.kernel.sysctl = {
+            "vm.swappiness" = 180;
+            "vm.page-cluster" = 0;
+          };
+
           phil = {
             # enable networking by default
             wireguard.enable = lib.mkDefault true;

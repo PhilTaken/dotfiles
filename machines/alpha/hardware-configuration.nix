@@ -12,13 +12,9 @@
   boot.extraModulePackages = [];
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
+  # TODO move to disko
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/485e0a47-1e95-4d96-a732-2c65fcf7398a";
     fsType = "ext4";
-  };
-
-  swapDevices = [{device = "/dev/disk/by-uuid/a91429e3-6db4-4dcf-a948-5c6dd07764eb";}];
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 0;
   };
 }
