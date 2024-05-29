@@ -3,20 +3,20 @@
 - improve network.nix 
     - module?
 
-## delta
+- backups of important data
+- fix twisted build failure, reenable extrasensors for delta
+    - otherwise riir
 
 - monitor drives
     - zpool status
     - smart status
 
-- backups of important data
-- fix twisted build failure, reenable extrasensors for delta
-
 - setup paperless
     - +backup IMPORTANT
+
 - atuin sync server (backed up)
-- vaultwarden selfhosted (backed up, rendundancy?)
 - properly generate zellij config in nix (home manager)
+- set up audiobookshelf
 
 - one psql database (per host?) for services
 - backup postgres database of nextcloud instance
@@ -30,10 +30,6 @@
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
 
 ## other
-
-- hyprland config
-    - w/d for keybinds on laptop -> keycodes?
-        - implemented (state 2024-03-19)
 
 - set up modules:
     - radicale
@@ -50,8 +46,6 @@
     - implement proper tagging
     - signing script with sops secrets
     - mobile device integration?
-
-- http://consul.io for services?
 
 - nvim plugins
     - symbol outlines (lsp)
