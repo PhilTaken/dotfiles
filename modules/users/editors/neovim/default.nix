@@ -519,7 +519,9 @@ in {
           ])
         ++ (with pkgs.vimExtraPlugins; [
           (lplug cybu-nvim "require('cybu').setup({ display_time = 350 })")
-          (lplug nvim-ufo "require('ufo').setup()")
+          (plug nvim-ufo ''
+            require('ufo').setup()
+          '')
           (lplug vim-hy "vim.g.hy_enable_conceal = 1")
         ])
         ++ (map (p: mkLplug (buildPlugin p)) [
