@@ -29,15 +29,17 @@ in {
     };
 
     # configure the proxy
-    phil.server.services.caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
-    phil.homer.apps."${cfg.host}" = {
-      show = true;
-      settings = {
-        name = "Audiobookshelf";
-        subtitle = "Audiobooks";
-        tag = "app";
-        keywords = "selfhosted audiobooks";
-        logo = "https://gitea.io/images/gitea.png";
+    phil.server.services = {
+      caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
+      phil.homer.apps."${cfg.host}" = {
+        show = true;
+        settings = {
+          name = "Audiobookshelf";
+          subtitle = "Audiobooks";
+          tag = "app";
+          keywords = "selfhosted audiobooks";
+          logo = "https://gitea.io/images/gitea.png";
+        };
       };
     };
 
