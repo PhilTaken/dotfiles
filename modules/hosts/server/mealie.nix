@@ -33,8 +33,6 @@ in {
       allowedTCPPorts = [cfg.port];
     };
 
-    sops.secrets."headscale-kc-client-secret".owner = config.systemd.services.headscale.serviceConfig.User;
-
     services.mealie = {
       enable = true;
       listenAddress = "0.0.0.0";
