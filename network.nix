@@ -58,6 +58,7 @@ _: rec {
       "grafana"
       "freshrss"
       "headscale"
+      "keycloak"
       #"homer"
     ];
 
@@ -73,17 +74,16 @@ _: rec {
 
       # reenable when possible, maybe move to beta?
       # "calibre"
-      # "keycloak"
 
       # needs to move data to move the service
       "gitea" # move to beta?
-      "unbound" # maybe move to beta?
-      "nextcloud" # maybe move to beta?
 
       # keep these on delta to use at home
       "arrs"
       "jellyfin"
       "homeassistant"
+      "unbound"
+      "nextcloud"
     ];
   };
 }
