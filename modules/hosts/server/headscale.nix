@@ -38,7 +38,7 @@ in {
       address = "0.0.0.0";
 
       settings = {
-        server_url = cfg.url;
+        server_url = "https://${cfg.url}";
         reporting-disable = true;
         dns_config.base_domain = net.tld;
       };

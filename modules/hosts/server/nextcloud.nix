@@ -46,11 +46,13 @@ in {
       phil.backup.jobs."nextcloud" = {
         paths = [cfg.datadir];
         # TODO postgresql backup
+        # TODO turn maintenance mode on in container
+        # ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --on
         preHook = ''
-          ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --on
         '';
+        # TODO turn maintenance off again
+        # ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --off
         postHook = ''
-          ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --off
         '';
       };
 
@@ -152,7 +154,7 @@ in {
             };
           in {
             enable = true;
-            package = pkgs.nextcloud28;
+            package = pkgs.nextcloud29;
 
             inherit home datadir hostName;
             https = true;

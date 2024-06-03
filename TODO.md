@@ -9,17 +9,18 @@
 - set up audiobookshelf
 - atuin sync server (backed up)
 
-- backups of important data
+- backups
+    - fix nextcloud backups (turn maintenance on and off)
+    - backup nextcloud postgres db
+    - rclone / borg => rustic
+
 
 - setup paperless
-    - + backup IMPORTANT
+    - + backup
 
 - properly generate zellij config in nix (home manager)
 
 - one psql database (per host?) for services
-- backup postgres database of nextcloud instance
-- backup (important) syncthing folders locally and to b2
-    - rclone / borg => rustic
 
 - grafana config
     - todo: provisions
