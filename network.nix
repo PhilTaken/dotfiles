@@ -84,6 +84,7 @@ _: rec {
       "homeassistant"
       "unbound"
       "nextcloud"
+      "mealie"
     ];
   };
 }
