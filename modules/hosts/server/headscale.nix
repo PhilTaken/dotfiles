@@ -44,6 +44,9 @@ in {
         dns_config.base_domain = net.tld;
       };
     };
-    phil.server.services.caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
+    phil.server.services.caddy.proxy."${cfg.host}" = {
+      inherit (cfg) port;
+      public = true;
+    };
   };
 }
