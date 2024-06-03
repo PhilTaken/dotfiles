@@ -53,14 +53,12 @@ in {
         OIDC_CLIENT_ID = "mealie";
 
         OIDC_USER_CLAIM = "email";
-        OIDC_GROUPS_CLAIM = "roles";
+        OIDC_GROUPS_CLAIM = "groups";
 
         OIDC_USER_GROUP = "/users";
         OIDC_ADMIN_GROUP = "/admin";
 
         OIDC_PROVIDER_NAME = "Keycloak";
-        OIDC_AUTO_REDIRECT = "true";
-        OIDC_REMEMBER_ME = "true";
         OIDC_SIGNING_ALGORITHM = "RS256";
       };
     };
