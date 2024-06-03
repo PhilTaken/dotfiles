@@ -31,7 +31,7 @@ in {
     # configure the proxy
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
-      phil.homer.apps."${cfg.host}" = {
+      homer.apps."${cfg.host}" = {
         show = true;
         settings = {
           name = "Audiobookshelf";
