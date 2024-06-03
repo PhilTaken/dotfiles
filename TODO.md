@@ -1,7 +1,5 @@
 # current TODOs:
 
-- fix keycloak configs
-- mealie module
 - set up audiobookshelf
 - atuin sync server (backed up)
 

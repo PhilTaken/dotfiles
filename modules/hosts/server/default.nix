@@ -28,6 +28,7 @@ in {
     ./jellyfin.nix
     ./keycloak.nix
     ./ldap.nix
+    ./mealie.nix
     ./navidrome.nix
     ./nextcloud.nix
     ./nginx.nix
