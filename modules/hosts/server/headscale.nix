@@ -37,8 +37,8 @@ in {
       # limit to external ip on beta?
       address = "0.0.0.0";
 
-      serverUrl = cfg.url;
       settings = {
+        server_url = cfg.url;
         reporting-disable = true;
         dns_config.base_domain = net.tld;
       };
