@@ -43,11 +43,11 @@ in {
         BASE_URL = "${cfg.host}.${net.tld}";
         API_PORT = 9000;
         TZ = "CEST";
-        ALLOW_SIGNUP = false;
+        ALLOW_SIGNUP = "false";
         DB_ENGINE = "sqlite";
         # oidc
-        OIDC_AUTH_ENABLED = true;
-        OIDC_SIGNUP_ENABLED = true;
+        OIDC_AUTH_ENABLED = "true";
+        OIDC_SIGNUP_ENABLED = "true";
         OIDC_CONFIGURATION_URL = "https://keycloak.pherzog.xyz/realms/services/.well-known/openid-configuration";
         OIDC_CLIENT_ID = "mealie";
         OIDC_ADMIN_GROUP = "/admin";
