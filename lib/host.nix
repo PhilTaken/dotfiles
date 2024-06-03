@@ -43,7 +43,7 @@ in rec {
           nix.registry.nixpkgs.flake = inputs.nixpkgs;
           nixpkgs.overlays = [
             inputs.nixpkgs-wayland.overlay
-            inputs.neovim-nightly-overlay.overlay
+            inputs.neovim-nightly-overlay.overlays.default
           ];
 
           sops = {
