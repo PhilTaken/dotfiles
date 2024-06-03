@@ -19,6 +19,7 @@ in {
     ./grafana.nix
     ./grafana.nix
     ./grocy.nix
+    ./headscale.nix
     ./homeassistant
     ./homer.nix
     ./hound.nix
