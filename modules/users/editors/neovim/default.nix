@@ -154,7 +154,7 @@ in {
         ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server])
         ++ (optionals cfg.langs.cpp [pkgs.ccls])
         ++ (optionals cfg.langs.rust [pkgs.rust-analyzer-unwrapped])
-        ++ (optionals cfg.langs.zig [pkgs.zls])
+        # ++ (optionals cfg.langs.zig [pkgs.zls])
         ++ (optionals cfg.langs.haskell [pkgs.haskell-language-server])
         ++ (optionals cfg.langs.extra (with pkgs; [
           fortls
