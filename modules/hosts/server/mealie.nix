@@ -42,16 +42,26 @@ in {
         # general
         BASE_URL = "${cfg.host}.${net.tld}";
         API_PORT = 9000;
-        TZ = "CEST";
+        TZ = "Europe/Berlin";
         ALLOW_SIGNUP = "false";
         DB_ENGINE = "sqlite";
+
         # oidc
         OIDC_AUTH_ENABLED = "true";
         OIDC_SIGNUP_ENABLED = "true";
         OIDC_CONFIGURATION_URL = "https://keycloak.pherzog.xyz/realms/services/.well-known/openid-configuration";
         OIDC_CLIENT_ID = "mealie";
+
+        OIDC_USER_CLAIM = "email";
+        OIDC_GROUPS_CLAIM = "roles";
+
+        OIDC_USER_GROUP = "/users";
         OIDC_ADMIN_GROUP = "/admin";
+
         OIDC_PROVIDER_NAME = "Keycloak";
+        OIDC_AUTO_REDIRECT = "true";
+        OIDC_REMEMBER_ME = "true";
+        OIDC_SIGNING_ALGORITHM = "RS256";
       };
     };
 
