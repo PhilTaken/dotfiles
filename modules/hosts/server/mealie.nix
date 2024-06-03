@@ -51,15 +51,7 @@ in {
         OIDC_SIGNUP_ENABLED = "true";
         OIDC_CONFIGURATION_URL = "https://keycloak.pherzog.xyz/realms/services/.well-known/openid-configuration";
         OIDC_CLIENT_ID = "mealie";
-
-        OIDC_USER_CLAIM = "email";
-        OIDC_GROUPS_CLAIM = "groups";
-
-        OIDC_USER_GROUP = "/users";
-        OIDC_ADMIN_GROUP = "/admin";
-
         OIDC_PROVIDER_NAME = "Keycloak";
-        OIDC_SIGNING_ALGORITHM = "RS256";
       };
     };
 
