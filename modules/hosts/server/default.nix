@@ -10,6 +10,7 @@ in {
   imports = [
     ./adguardhome.nix
     ./arrs.nix
+    ./audiobookshelf.nix
     ./caddy
     ./calibre-web.nix
     ./fail2ban.nix
