@@ -12,7 +12,7 @@ in {
     url = mkOption {
       description = "headscale url (webinterface)";
       type = types.str;
-      default = "";
+      default = "${cfg.host}.${net.tld}";
     };
 
     port = mkOption {
@@ -37,11 +37,10 @@ in {
       # limit to external ip on beta?
       address = "0.0.0.0";
 
-      serverUrl = "https://headscale.${net.tld}:443";
+      serverUrl = cfg.url;
       settings = {
         reporting-disable = true;
-        http-bind-address = "${cfg.url}:${builtins.toString cfg.port}";
-        #vault-addr = "10.100.0.1:8200";
+        dns_config.base_domain = net.tld;
       };
     };
     phil.server.services.caddy.proxy."${cfg.host}" = {inherit (cfg) port;};

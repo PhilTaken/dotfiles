@@ -57,6 +57,7 @@ _: rec {
     beta = [
       "grafana"
       "freshrss"
+      "headscale"
       #"homer"
     ];
 
