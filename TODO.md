@@ -1,11 +1,7 @@
 # current TODOs:
 
-- fix twisted build failure, reenable extrasensors for delta
-    - otherwise riir
-
-- improve network.nix
-    - module?
-
+- fix keycloak configs
+- mealie module
 - set up audiobookshelf
 - atuin sync server (backed up)
 
@@ -14,6 +10,11 @@
     - backup nextcloud postgres db
     - rclone / borg => rustic
 
+- fix twisted build failure, reenable extrasensors for delta
+    - otherwise riir
+
+- improve network.nix
+    - module?
 
 - setup paperless
     - + backup
