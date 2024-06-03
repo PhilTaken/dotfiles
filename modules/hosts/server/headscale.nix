@@ -36,6 +36,7 @@ in {
       enable = true;
       # limit to external ip on beta?
       address = "0.0.0.0";
+      inherit (cfg) port;
 
       settings = {
         server_url = "https://${cfg.url}";
