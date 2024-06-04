@@ -1,28 +1,27 @@
-# current TODOs:
+# current TODOs
+
+- improve network.nix
+    - module?
+    - auto-generate unbound access-control-views from networks
 
 - set up audiobookshelf
-- atuin sync server (backed up)
-
-- backups
-    - fix nextcloud backups (turn maintenance on and off)
-    - backup nextcloud postgres db
-    - rclone / borg => rustic
 
 - fix twisted build failure, reenable extrasensors for delta
     - otherwise riir
 
-- improve network.nix
-    - module?
-
 - setup paperless
     - + backup
 
+- atuin sync server (backed up)
+
+- backups
+    - fix nextcloud (turn maintenance on and off)
+    - nextcloud postgres db
+    - rclone / borg => rustic
+
 - properly generate zellij config in nix (home manager)
-
 - one psql database (per host?) for services
-
-- grafana config
-    - todo: provisions
+- grafana config -> dashboard provisions
 
 - monitor drives
     - zpool status
