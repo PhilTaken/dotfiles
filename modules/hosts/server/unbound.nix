@@ -88,6 +88,7 @@ in {
             "10.100.0.1/24 allow" # yggdrasil
             "10.200.0.1/24 allow" # milkyway
             "192.168.0.1/16 allow" # local nets
+            "100.64.0.0/24 allow" # headscale
           ];
 
           interface = [
@@ -160,10 +161,18 @@ in {
             "10.200.0.0/24 nebula"
             "192.168.0.0/16 lan"
             "127.0.0.0/8 nebula"
+            "100.64.0.0/24 headscale"
           ];
         };
 
         view = [
+          {
+            name = "\"headscale\"";
+            view-first = "yes";
+            local-data = mkLocalData subdomains.headscale;
+            local-data-ptr = mkLocalDataPtr subdomains.headscale;
+          }
+
           {
             name = "\"lan\"";
             view-first = "yes";

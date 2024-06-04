@@ -10,6 +10,16 @@ _: rec {
     # the hosts ips, just name resolution for hosted services
     default = milkyway;
 
+    headscale = {
+      interfaceName = "tailscale0";
+      netmask = "100.64.0.0/24";
+
+      hosts = {
+        beta = "100.64.0.4";
+        delta = "100.64.0.3";
+      };
+    };
+
     milkyway = {
       interfaceName = "milkyway";
       netmask = "10.200.0.0/24";
