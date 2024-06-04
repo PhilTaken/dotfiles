@@ -8,11 +8,11 @@
   cfg = config.phil.server.services.freshrss;
 
   # TODO fixed release since ?
-  freshrss_extensions = builtins.fetchTarball {
-    name = "freshrss-extensions";
-    url = "https://github.com/FreshRSS/Extensions/archive/master.zip";
-    sha256 = "sha256:0p3j0gk25ddh4k0yqqagpxkxcyi8pc7x7c8snbssvljh5q6v7xcy";
-  };
+  # freshrss_extensions = builtins.fetchTarball {
+  #   name = "freshrss-extensions";
+  #   url = "https://github.com/FreshRSS/Extensions/archive/master.zip";
+  #   sha256 = "sha256:0p3j0gk25ddh4k0yqqagpxkxcyi8pc7x7c8snbssvljh5q6v7xcy";
+  # };
 
   # todo better way to assign ips + ports to avoid collisions
   # maybe assign ports in network.nix?
@@ -88,26 +88,25 @@ in {
         }
       ];
 
-      bindMounts =
-        {
-          ${adminpassFile} = {
-            hostPath = adminpassFile;
-            isReadOnly = true;
-          };
-        }
-        // (builtins.listToAttrs (builtins.map (extension: {
-            name = "${extensions_path}/${extension}";
-            value = {
-              hostPath = "${freshrss_extensions}/${extension}";
-              isReadOnly = true;
-            };
-          }) [
-            "xExtension-ColorfulList"
-            "xExtension-CustomCSS"
-            "xExtension-ReadingTime"
-            "xExtension-showFeedID"
-            "xExtension-YouTube"
-          ]));
+      bindMounts = {
+        ${adminpassFile} = {
+          hostPath = adminpassFile;
+          isReadOnly = true;
+        };
+      };
+      # // (builtins.listToAttrs (builtins.map (extension: {
+      #     name = "${extensions_path}/${extension}";
+      #     value = {
+      #       hostPath = "${freshrss_extensions}/${extension}";
+      #       isReadOnly = true;
+      #     };
+      #   }) [
+      #     "xExtension-ColorfulList"
+      #     "xExtension-CustomCSS"
+      #     "xExtension-ReadingTime"
+      #     "xExtension-showFeedID"
+      #     "xExtension-YouTube"
+      #   ]));
 
       config = {
         config,
