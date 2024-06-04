@@ -17,12 +17,10 @@ in {
     networkConfig.DHCP = "no";
     address = [ip4_eth0];
     routes = [
-      {routeConfig.Destination = gateway_ip;}
+      {Destination = gateway_ip;}
       {
-        routeConfig = {
-          Gateway = gateway_ip;
-          GatewayOnLink = true;
-        };
+        Gateway = gateway_ip;
+        GatewayOnLink = true;
       }
     ];
   };
