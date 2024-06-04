@@ -44,7 +44,13 @@ in {
       settings = {
         server_url = "https://${cfg.url}";
         reporting-disable = true;
-        dns_config.base_domain = net.tld;
+        dns_config = {
+          base_domain = net.tld;
+
+          # TODO change from fixed ip to derived from network.nix
+          nameservers = ["100.64.0.3"];
+          override_local_dns = true;
+        };
         oidc = {
           only_start_if_oidc_is_available = true;
           client_secret_path = config.sops.secrets."headscale-kc-client-secret".path;
