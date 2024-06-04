@@ -1,27 +1,27 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.phil.nebula;
-  networkName = "milkyway";
-
-  iplot = net.networks."${networkName}".hosts;
   hostname = config.networking.hostName;
+
+  net = config.phil.network;
+  networkName = "milkyway";
   port = 4242;
 
   hostMap =
     builtins.listToAttrs
     (map
       (endp: {
-        name = iplot.${endp};
-        value = [(net.endpoints.${endp} + ":${toString port}")];
+        name = net.nodes.${endp}.network_ip.${networkName};
+        value = [(net.nodes.${endp}.public_ip + ":${toString port}")];
       })
-      (builtins.attrNames net.endpoints));
+      (builtins.attrNames (lib.filterAttrs (_n: v: v.public_ip != null) net.nodes)));
 
-  isLighthouse = builtins.elem hostname (builtins.attrNames net.endpoints);
+  isLighthouse = net.nodes.${hostname} ? "public_ip";
+
   lighthouses =
     if isLighthouse
     then []
@@ -29,7 +29,7 @@
 
   sopsConfig = {
     owner = config.systemd.services."nebula@${networkName}".serviceConfig.User or "root";
-    sopsFile = ../../../sops/machines + "/${config.networking.hostName}.yaml";
+    sopsFile = ../../../sops/machines + "/${hostname}.yaml";
   };
 
   # TODO: rework this

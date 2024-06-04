@@ -2,11 +2,12 @@
   pkgs,
   config,
   lib,
-  net,
   flake,
   ...
 }: let
   cfg = config.phil.server.services.caddy;
+  net = config.phil.network;
+  proxy_network = "milkyway";
 
   inherit (lib) mkOption types mkIf;
 
@@ -55,7 +56,7 @@
       (_n: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v)
       flake.nixosConfigurations);
 
-  endpoints = builtins.attrNames net.endpoints;
+  endpoints = builtins.attrNames (lib.filterAttrs (_n: config: config.public_ip != null) net.nodes);
   isEndpoint = n: (builtins.elem n endpoints);
   hiddenHostProxies = lib.filterAttrs (n: _: !(isEndpoint n)) allHostProxies;
 in {
@@ -77,6 +78,11 @@ in {
     sops.secrets.acme_dns_cf = {
       #owner = config.systemd.services.caddy.serviceConfig.User;
       owner = config.systemd.services.nginx.serviceConfig.User;
+    };
+
+    networking.firewall.interfaces."${proxy_network}" = {
+      allowedUDPPorts = lib.mapAttrsToList (_n: v: v.port) cfg.proxy;
+      allowedTCPPorts = lib.mapAttrsToList (_n: v: v.port) cfg.proxy;
     };
 
     security.acme = {
@@ -125,7 +131,7 @@ in {
         };
         updateConfigWithHost = host: _proxy: config:
           lib.recursiveUpdate config {
-            proxyPass = "http://${net.networks.default.hosts.${host}}:${builtins.toString config.port}";
+            proxyPass = "http://${net.nodes.${host}.network_ip.${proxy_network}}:${builtins.toString config.port}";
           };
 
         updatedProxies = lib.mapAttrs (host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies) hiddenHostProxies;
@@ -149,11 +155,6 @@ in {
             forceSSL = true;
             useACMEHost = net.tld;
             globalRedirect = "gitea.${net.tld}";
-          };
-
-          "external_ip" = lib.mkIf (builtins.hasAttr config.networking.hostName net.endpoints) {
-            serverName = net.endpoints.${config.networking.hostName};
-            globalRedirect = net.tld;
           };
         };
 
@@ -244,11 +245,6 @@ in {
     networking.firewall = {
       allowedUDPPorts = [80 443];
       allowedTCPPorts = [80 443];
-    };
-
-    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
-      allowedTCPPorts = [2019];
-      allowedUDPPorts = [2019];
     };
   };
 }

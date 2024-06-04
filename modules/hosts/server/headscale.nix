@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.headscale;
+  net = config.phil.network;
 in {
   options.phil.server.services.headscale = {
     enable = mkEnableOption "headscale - time series database";
@@ -28,11 +28,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [cfg.port];
-      allowedTCPPorts = [cfg.port];
-    };
-
     sops.secrets."headscale-kc-client-secret".owner = config.systemd.services.headscale.serviceConfig.User;
 
     services.headscale = {
@@ -60,6 +55,7 @@ in {
         };
       };
     };
+
     phil.server.services.caddy.proxy."${cfg.host}" = {
       inherit (cfg) port;
       public = true;

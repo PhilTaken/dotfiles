@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.phil.server.services.grocy;
+  net = config.phil.network;
 
   datadir = "/var/lib/grocy";
 in {
@@ -77,7 +77,6 @@ in {
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
         public = true;
-        proxyPass = "http://${net.networks.default.hosts.${config.networking.hostName}}:${builtins.toString cfg.port}";
       };
 
       homer.apps."${cfg.host}" = {

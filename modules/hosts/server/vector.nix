@@ -1,14 +1,15 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.server.services.vector;
+  net = config.phil.network;
 
-  promtail_client = builtins.head (builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "grafana" v) net.services));
-  pm_client_ip = net.networks.default.hosts.${promtail_client};
+  promtail_client = builtins.head (builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "grafana" v.services) net.nodes));
+  pm_client_ip = net.nodes.${promtail_client}.network_ip."milkyway";
+
   # TODO: consul?
   pm_client_port = 3100;
 in {

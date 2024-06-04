@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -18,6 +17,7 @@
   # maybe assign ports in network.nix?
   hostAddress = "192.0.0.1";
   localAddress = "192.0.0.3";
+  net = config.phil.network;
 in {
   options.phil.server.services.freshrss = {
     enable = mkEnableOption "freshrss";
@@ -47,17 +47,12 @@ in {
       externalInterface = "enp1s0";
     };
 
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [cfg.port];
-      allowedTCPPorts = [cfg.port];
-    };
-
     phil.server.services = {
       caddy.proxy."rss" = {
         inherit (cfg) port;
         public = true;
-        proxyPass = "http://${net.networks.default.hosts.${config.networking.hostName}}:${builtins.toString cfg.port}";
       };
+
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {

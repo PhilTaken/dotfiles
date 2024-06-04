@@ -2,11 +2,11 @@
   pkgs,
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkIf types mkOption mkEnableOption;
   cfg = config.phil.server.services.promexp;
+  net = config.phil.network;
 in {
   options.phil.server.services.promexp = {
     enable = mkOption {
@@ -23,17 +23,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = let
-      ports = let
-        exportPort =
-          lib.mapAttrsToList
-          (_: c: c.port)
-          (lib.filterAttrs
-            (_: c: builtins.typeOf c != "list" && c.enable)
-            config.services.prometheus.exporters);
-        extraPorts = lib.optionals cfg.extrasensors [cfg.prom-sensors-port];
-      in
-        exportPort ++ extraPorts;
+    # TODO fix this
+    networking.firewall.interfaces."${net.networks.milkyway.ifname}" = let
+      ports = [9002] ++ lib.optional cfg.extrasensors cfg.prom-sensors-port;
     in {
       allowedUDPPorts = ports;
       allowedTCPPorts = ports;

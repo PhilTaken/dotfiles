@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption types concatStrings;
   cfg = config.phil.server.services.nginx;
+  net = config.phil.network;
 in {
   options.phil.server.services.nginx = {
     proxy = mkOption {

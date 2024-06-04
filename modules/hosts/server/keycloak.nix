@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
   cfg = config.phil.server.services.keycloak;
+  net = config.phil.network;
 in {
   options.phil.server.services.keycloak = {
     enable = mkEnableOption "keycloak";
@@ -40,11 +40,6 @@ in {
         inherit (cfg) http-port https-port;
       };
       initialAdminPassword = "unsafe-password";
-    };
-
-    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
-      allowedTCPPorts = [cfg.http-port];
-      allowedUDPPorts = [cfg.http-port];
     };
 
     phil.server.services = {

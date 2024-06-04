@@ -1,7 +1,7 @@
 # TODO remove this module
 {
-  net,
   lib,
+  net,
   ...
 }: let
   inherit (lib) mergeAttrs mapAttrs;
@@ -23,10 +23,10 @@
       allowedIPs = mkAllowedIPs host;
     }
     (
-      if builtins.hasAttr host net.endpoints
+      if ((net.nodes.${host} or {}) ? "public_ip")
       then {
         allowedIPs = [network.netmask];
-        endpoint = net.endpoints.${host};
+        endpoint = net.nodes.${host}.public_ip;
       }
       else {}
     );

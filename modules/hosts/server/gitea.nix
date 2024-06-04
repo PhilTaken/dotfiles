@@ -1,12 +1,11 @@
 {
   config,
   lib,
-  net,
-  pkgs,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.gitea;
+  net = config.phil.network;
 in {
   options.phil.server.services.gitea = {
     enable = mkEnableOption "gitea";
@@ -51,11 +50,6 @@ in {
 
         actions.ENABLED = true;
       };
-    };
-
-    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
-      allowedTCPPorts = [cfg.port];
-      allowedUDPPorts = [cfg.port];
     };
 
     phil.server.services = {

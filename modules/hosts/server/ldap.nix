@@ -1,12 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.phil.server.services.ldap;
-
+  net = config.phil.network;
   domain = "${cfg.host}.${net.tld}";
 in {
   options.phil.server.services.ldap = {
@@ -36,10 +35,11 @@ in {
       ldap.tls = true;
     };
 
-    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
-      allowedTCPPorts = [636];
-      allowedUDPPorts = [636];
-    };
+    # TODO open ldap port
+    # networking.firewall.interfaces.${net.networks.default.interfaceName} = {
+    #   allowedTCPPorts = [636];
+    #   allowedUDPPorts = [636];
+    # };
 
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {

@@ -9,15 +9,12 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.homeassistant;
+  net = config.phil.network;
 in {
-  imports = [
-  ];
-
   options.phil.server.services.homeassistant = {
     enable = mkEnableOption "homeassistant";
     datadir = mkOption {
@@ -198,8 +195,8 @@ in {
           use_x_forwarded_for = true;
           trusted_proxies =
             ["127.0.0.1"]
-            ++ (map (endpoint: net.networks.default.hosts.${endpoint}) (builtins.attrNames net.endpoints))
-            ++ lib.optional (builtins.hasAttr config.networking.hostName net.networks.lan) net.networks.lan.${config.networking.hostName};
+            ++ (builtins.catAttrs "public_ip" (builtins.attrValues net.nodes))
+            ++ lib.optional (net.nodes.${config.networking.hostName}.network_ip ? "lan") net.nodes.${config.networking.hostName}.network_ip."lan";
           server_port = cfg.port;
           server_host = ["0.0.0.0"];
         };
@@ -301,11 +298,6 @@ in {
 
         python_script = {};
       };
-    };
-
-    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
-      allowedTCPPorts = [cfg.port];
-      allowedUDPPorts = [cfg.port];
     };
 
     phil.server.services = {

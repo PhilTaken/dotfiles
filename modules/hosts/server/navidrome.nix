@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -35,12 +34,6 @@ in {
     };
 
     phil.backup.jobs."music".paths = [cfg.music_folder];
-
-    networking.firewall.interfaces.${net.networks.default.interfaceName} = {
-      allowedTCPPorts = [cfg.port];
-      allowedUDPPorts = [cfg.port];
-    };
-
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
       homer.apps."${cfg.host}" = {

@@ -6,7 +6,7 @@
   inherit (inputs.nixpkgs) lib;
 
   util = import ../../lib {inherit inputs self;};
-  net = import ../../network.nix {};
+  net = (lib.evalModules {modules = [../../network.nix];}).config.phil.network;
 
   mkHMUsers = users: lib.listToAttrs (map (user: lib.nameValuePair user hmUsers.${user}) users);
 
@@ -223,11 +223,11 @@ in {
           };
       }
       // builtins.mapAttrs
-      (hostname: services: (util.server.mkServer services {
-        system = net.systems.${hostname} or "x86_64-linux";
-        hostName = hostname;
+      (nodename: nodeconfig: (util.server.mkServer nodeconfig.services {
+        inherit (nodeconfig) system;
+        hostName = nodename;
       }))
-      net.services;
+      net.nodes;
 
     # shortcut for building with `nix build`
     systems = builtins.mapAttrs (system: _: self.nixosConfigurations.${system}.config.system.build.toplevel) self.nixosConfigurations;

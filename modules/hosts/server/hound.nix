@@ -1,11 +1,11 @@
 {
-  net,
   config,
   lib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.hound;
+  net = config.phil.network;
 in {
   options.phil.server.services.hound = {
     enable = mkEnableOption "hound";

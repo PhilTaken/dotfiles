@@ -1,7 +1,6 @@
 # current TODOs
 
 - improve network.nix
-    - module?
     - auto-generate unbound access-control-views from networks
 
 - set up audiobookshelf

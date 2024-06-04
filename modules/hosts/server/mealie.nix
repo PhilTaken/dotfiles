@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.mealie;
+  net = config.phil.network;
 in {
   options.phil.server.services.mealie = {
     enable = mkEnableOption "mealie - recipe manager";
@@ -28,11 +28,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [cfg.port];
-      allowedTCPPorts = [cfg.port];
-    };
-
     services.mealie = {
       enable = true;
       listenAddress = "0.0.0.0";
@@ -55,8 +50,6 @@ in {
       };
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = {
-      inherit (cfg) port;
-    };
+    phil.server.services.caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
   };
 }

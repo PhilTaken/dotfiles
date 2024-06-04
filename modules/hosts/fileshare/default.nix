@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.fileshare;
+  net = config.phil.network;
   inherit (config.phil) wireguard;
   inherit (config.phil) nebula;
 
@@ -24,7 +24,7 @@
             ip =
               if bind.host == null
               then bind.ip
-              else net.networks.default.hosts.${bind.host};
+              else net.nodes.${bind.host}.network_ip."milkyway";
           in {
             device = "${ip}:${bindcfg.remote}";
             fsType = "nfs4";

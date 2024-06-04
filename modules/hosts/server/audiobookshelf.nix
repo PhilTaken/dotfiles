@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -22,12 +21,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # open firewall
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [cfg.port];
-      allowedTCPPorts = [cfg.port];
-    };
-
     # configure the proxy
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {inherit (cfg) port;};

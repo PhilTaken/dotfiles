@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkDefault;
@@ -12,7 +11,8 @@
   cfg = config.phil.wireguard;
   hostname = config.networking.hostName;
 
-  peers = import ./wireguard-peers.nix {inherit pkgs lib net;};
+  #peers = import ./wireguard-peers.nix {inherit pkgs lib net;};
+  peers = {};
   mkPeer = {
     publicKey,
     ownIPs,
@@ -90,7 +90,7 @@ in {
       firewall.allowedUDPPorts = [listenPort];
 
       wireguard = {
-        enable = true;
+        enable = false;
         interfaces = {
           "${networkName}" = {
             inherit postSetup;

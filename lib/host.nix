@@ -5,8 +5,6 @@
   overlays,
 }: let
   npins = import ../npins;
-  net = import ../network.nix {};
-
   nixpkgs = {
     inherit overlays;
     config.allowUnfree = true;
@@ -38,7 +36,7 @@ in rec {
       ++ hostModules
       ++ [
         ({lib, ...}: {
-          imports = [../modules/hosts hardware-config] ++ sys_users;
+          imports = [../modules/hosts hardware-config ../network.nix] ++ sys_users;
 
           nix.registry.nixpkgs.flake = inputs.nixpkgs;
           nixpkgs.overlays = [
@@ -67,7 +65,7 @@ in rec {
   in
     lib.nixosSystem {
       inherit system modules;
-      specialArgs = {inherit inputs net flake npins;};
+      specialArgs = {inherit inputs flake npins;};
     };
 
   mkNixos = hmUsers:
@@ -84,7 +82,7 @@ in rec {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          extraSpecialArgs = {inherit inputs net npins;};
+          extraSpecialArgs = {inherit inputs npins;};
           users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
         };
       })

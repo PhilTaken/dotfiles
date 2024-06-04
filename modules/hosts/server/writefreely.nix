@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.writefreely;
+  net = config.phil.network;
 in {
   options.phil.server.services.writefreely = {
     enable = mkEnableOption "writefreely";

@@ -1,20 +1,21 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.dns;
+  net = config.phil.network;
+  hostnames = builtins.attrNames net.nodes;
 
-  iplot = net.networks.default.hosts;
-  hostnames = builtins.attrNames iplot;
+  # TODO ensure at least one node is running unbound
   default_nameserver =
     builtins.head
     (builtins.attrNames
       (lib.filterAttrs
-        (_name: value: lib.hasInfix "unbound" (lib.concatStrings value))
-        net.services));
+        (_name: nodeconfig: lib.elem "unbound" nodeconfig.services)
+        net.nodes));
+
   same-server = config.phil.server.services.unbound.enable;
 in {
   options.phil.dns = {
@@ -48,7 +49,7 @@ in {
         then ["localhost"]
         else [
           # https://github.com/systemd/systemd/issues/5755
-          "${iplot.${cfg.nameserver}}#dns.${net.tld}"
+          "${net.nodes.${cfg.nameserver}.network_ip."milkyway"}#dns.${net.tld}"
         ];
 
       services.resolved = {

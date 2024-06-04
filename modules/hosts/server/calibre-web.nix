@@ -58,9 +58,6 @@ in {
       };
     };
 
-    networking.firewall.allowedUDPPorts = [cfg.port];
-    networking.firewall.allowedTCPPorts = [cfg.port];
-
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
       homer.apps."${cfg.host}" = {

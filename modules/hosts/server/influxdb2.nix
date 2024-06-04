@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -28,10 +27,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-      allowedUDPPorts = [cfg.port];
-      allowedTCPPorts = [cfg.port];
-    };
     services.influxdb2 = {
       enable = true;
       settings = {

@@ -1,17 +1,13 @@
 {
   config,
   lib,
-  net,
-  flake,
   ...
 }: let
   # TODO move dns to shiver via service discovery
   inherit (lib) mkEnableOption mkIf mkOption types;
-  nodes = lib.filterAttrs (n: _v: builtins.hasAttr n net.networks.default.hosts) flake.nixosConfigurations;
-
   cfg = config.phil.server.services.unbound;
-  iplot = net.networks.default.hosts;
-  hostnames = builtins.attrNames iplot;
+  net = config.phil.network;
+
   mkDnsBindsFromServices = services:
     builtins.mapAttrs
     (_: builtins.head)
@@ -39,7 +35,7 @@
 
   default_apps = let
     getProxiesFromHost = _: v: (builtins.attrNames v.config.phil.server.services.caddy.proxy);
-    validHosts = lib.filterAttrs (_: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v) nodes;
+    validHosts = lib.filterAttrs (_: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v) net.nodes;
     allProxies = lib.mapAttrs getProxiesFromHost validHosts;
   in
     mkDnsBindsFromServices allProxies;
@@ -49,7 +45,7 @@ in {
 
     apps = mkOption {
       description = "";
-      type = types.attrsOf (types.enum hostnames);
+      type = types.attrsOf (types.enum (builtins.attrNames net.nodes));
       example = {
         "jellyfin" = "beta";
       };

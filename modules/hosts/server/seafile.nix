@@ -2,11 +2,11 @@
   pkgs,
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.seafile;
+  net = config.phil.network;
 in {
   options.phil.server.services.seafile = {
     enable = mkEnableOption "seafile";

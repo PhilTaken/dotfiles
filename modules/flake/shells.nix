@@ -21,8 +21,6 @@
       ${commands}
     fi
   '';
-
-  net = import ../../network.nix {};
 in {
   perSystem = {
     system,
@@ -167,22 +165,6 @@ in {
             fi
           '';
           category = "system";
-        }
-
-        {
-          # TODO: rotate keys with sops, this script just generates new certs
-          name = "signall";
-          help = "sign all configurations";
-          command = lib.concatStrings (lib.mapAttrsToList
-            (name: ip: let
-              cidr = builtins.elemAt (lib.splitString "/" net.networks.milkyway.netmask) 1;
-            in ''
-              ${pkgs.nebula}/bin/nebula-cert sign \
-                -ca-crt /run/secrets/ca \
-                -ca-key /run/secrets/key \
-                -name ${name} -ip ${ip}/${cidr}
-            '')
-            net.networks.milkyway.hosts);
         }
 
         {

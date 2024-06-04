@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  net,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.nextcloud;
+  net = config.phil.network;
 in {
   options.phil.server.services.nextcloud = {
     enable = mkEnableOption "nextcloud";
@@ -38,11 +38,6 @@ in {
         externalInterface = "enp1s0";
       };
 
-      networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
-        allowedUDPPorts = [cfg.port];
-        allowedTCPPorts = [cfg.port];
-      };
-
       phil.backup.jobs."nextcloud" = {
         paths = [cfg.datadir];
         # TODO postgresql backup
@@ -60,7 +55,6 @@ in {
         caddy.proxy."${cfg.host}" = {
           inherit (cfg) port;
           public = true;
-          proxyPass = "http://${net.networks.default.hosts.${config.networking.hostName}}:${builtins.toString cfg.port}";
         };
         homer.apps."${cfg.host}" = {
           show = true;

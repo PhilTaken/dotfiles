@@ -2,15 +2,17 @@
 {
   config,
   lib,
-  net,
   flake,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.grafana;
+  net = config.phil.network;
 
-  nodes = lib.filterAttrs (n: _: builtins.elem n net.servers) flake.nixosConfigurations;
-  kc-nodes = builtins.attrNames (lib.filterAttrs (_: builtins.elem "keycloak") net.services);
+  proxy_network = "milkyway";
+
+  nodes = lib.filterAttrs (n: _: net.nodes ? n) flake.nixosConfigurations;
+  kc-nodes = builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "keycloak" v.services) net.nodes);
   kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
 
   # TODO what do when multiple keycloaks defined?
@@ -20,7 +22,7 @@
   scrapeConfigs = let
     mkScrapeJob = n: v: let
       mkTargets = nodename: node: let
-        ip = net.networks.default.hosts.${nodename};
+        ip = net.nodes.${nodename}.network_ip.${proxy_network};
         mkTargetString = port: "${ip}:${builtins.toString port}";
         exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) node.config.services.prometheus.exporters);
         ports =
@@ -89,7 +91,7 @@ in {
         owner = config.systemd.services.grafana.serviceConfig.User;
       });
 
-    networking.firewall.interfaces."${net.networks.default.interfaceName}" = {
+    networking.firewall.interfaces.${net.networks.${proxy_network}.ifname} = {
       allowedUDPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port cfg.tempo-port];
       allowedTCPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port cfg.tempo-port];
     };

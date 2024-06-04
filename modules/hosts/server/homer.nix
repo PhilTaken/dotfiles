@@ -3,14 +3,13 @@
   pkgs,
   config,
   lib,
-  net,
   flake,
   ...
 }: let
   inherit (lib) mkOption types mkIf mkEnableOption mapAttrsToList;
 
   cfg = config.phil.server.services.homer;
-
+  net = config.phil.network;
   yaml = pkgs.formats.yaml {};
 
   homerConfig = let
@@ -42,7 +41,7 @@
         {
           name = "Selfhosted Services";
           icon = "fas fa-fire";
-          items = builtins.concatMap mkItems (map getAppsFor net.servers);
+          items = builtins.concatMap mkItems (map getAppsFor net.nodes);
         }
         {
           name = "Nix resources";

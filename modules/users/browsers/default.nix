@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  net,
   ...
 } @ inputs: let
   cfg = config.phil.browsers;
@@ -227,7 +226,7 @@ in {
           nix-package-versions = "https://lazamar.co.uk/nix-versions";
           hackernews = "https://news.ycombinator.com";
           noogle = "https://noogle.dev";
-          dotfiles = "https://gitea.${net.tld}/phil/dotfiles";
+          # dotfiles = "https://gitea.${net.tld}/phil/dotfiles";
         };
 
         searchEngines = {
