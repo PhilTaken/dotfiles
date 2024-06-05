@@ -10,6 +10,7 @@
       milkyway.ifname = "milkyway";
 
       yggdrasil.netmask = "10.100.0.0/24";
+
       lan.netmask = "192.168.178.0/16";
     };
 
@@ -36,18 +37,13 @@
         network_ip."lan" = "192.168.178.26";
         services = [
           # "syncthing"
-          # "grocy"
           # "writefreely"
           # "hound"
-          # "navidrome" # remove this? I use jellyfin instead
-          # "nix-serve"
-          # "ldap"
 
           # reenable when possible, maybe move to beta?
           # "calibre"
 
-          # needs to move data to move the service
-          "gitea" # move to beta?
+          "gitea"
 
           # keep these on delta to use at home
           "arrs"

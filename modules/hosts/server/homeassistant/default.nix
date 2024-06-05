@@ -305,7 +305,6 @@ in {
 
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
-        public = true;
       };
 
       homer.apps."${cfg.host}" = {

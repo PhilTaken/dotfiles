@@ -43,12 +43,7 @@
   listenPort = peers.${hostname}.port or 51821;
 in {
   options.phil.wireguard = {
-    enable = mkOption {
-      description = "enable wireguard module";
-      type = types.bool;
-      default = true;
-    };
-
+    enable = lib.mkEnableOption "wireguard module";
     domain = mkOption {
       description = "wireguard domain";
       type = types.str;
@@ -90,6 +85,7 @@ in {
       firewall.allowedUDPPorts = [listenPort];
 
       wireguard = {
+        # broken currently after the network module rewrite
         enable = false;
         interfaces = {
           "${networkName}" = {

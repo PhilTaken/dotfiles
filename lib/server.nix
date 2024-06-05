@@ -31,7 +31,7 @@ in {
 
           phil = {
             # enable networking by default
-            wireguard.enable = lib.mkDefault true;
+            # TODO replace with headscale
             nebula.enable = lib.mkDefault true;
 
             # no need for these on a server

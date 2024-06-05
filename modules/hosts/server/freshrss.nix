@@ -50,7 +50,6 @@ in {
     phil.server.services = {
       caddy.proxy."rss" = {
         inherit (cfg) port;
-        public = true;
       };
 
       homer.apps."${cfg.host}" = {
