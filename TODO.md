@@ -1,17 +1,14 @@
 # current TODOs
 
-- improve network.nix
-    - auto-generate unbound access-control-views from networks
-
-- set up audiobookshelf
-
 - fix twisted build failure, reenable extrasensors for delta
     - otherwise riir
 
+- set up atuin sync server (backed up)
+
+- set up audiobookshelf
+
 - setup paperless
     - + backup
-
-- atuin sync server (backed up)
 
 - backups
     - fix nextcloud (turn maintenance on and off)
