@@ -1,8 +1,5 @@
 # current TODOs
 
-- fix twisted build failure, reenable extrasensors for delta
-    - otherwise riir
-
 - set up atuin sync server (backed up)
 
 - set up audiobookshelf
