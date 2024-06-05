@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  flake,
   ...
 }: let
   # TODO move dns to shiver via service discovery
@@ -23,20 +24,16 @@
         (builtins.attrNames services)));
 
   # TODO better handling of the default value
-  ipForHost = network: host:
-    if builtins.hasAttr host net.networks.${network}.hosts
-    then net.networks.${network}.hosts.${host}
-    else net.endpoints.beta;
+  ipForHost = network: host: net.nodes.${host}.network_ip.${network} or net.nodes.beta.public_ip;
 
   subdomains =
     builtins.mapAttrs
     (network: _: builtins.mapAttrs (_app: host: ipForHost network host) cfg.apps)
-    (lib.filterAttrs (n: _v: ! builtins.elem n ["default"]) net.networks);
+    net.networks;
 
   default_apps = let
-    getProxiesFromHost = _: v: (builtins.attrNames v.config.phil.server.services.caddy.proxy);
-    validHosts = lib.filterAttrs (_: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v) net.nodes;
-    allProxies = lib.mapAttrs getProxiesFromHost validHosts;
+    getProxiesFromHost = n: _: (builtins.attrNames flake.nixosConfigurations.${n}.config.phil.server.services.caddy.proxy);
+    allProxies = builtins.mapAttrs getProxiesFromHost net.nodes;
   in
     mkDnsBindsFromServices allProxies;
 in {
