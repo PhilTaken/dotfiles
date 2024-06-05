@@ -10,7 +10,7 @@ in {
     disabledModules = ["targets/darwin/linkapps.nix"];
 
     launchd.agents.nebula = {
-      enable = true;
+      enable = false;
       config = {
         ProgramArguments = ["sudo" "${pkgs.nebula}/bin/nebula" "-config" "/etc/nebula/config.yaml"];
         RunAtLoad = true;
