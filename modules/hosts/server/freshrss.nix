@@ -50,6 +50,7 @@ in {
     phil.server.services = {
       caddy.proxy."rss" = {
         inherit (cfg) port;
+        ip = net.nodes.${config.networking.hostName}.network_ip.milkyway;
       };
 
       homer.apps."${cfg.host}" = {
@@ -107,6 +108,8 @@ in {
         pkgs,
         ...
       }: {
+        system.stateVersion = "24.11";
+
         # https://github.com/NixOS/nixpkgs/issues/162686
         networking.nameservers = ["1.1.1.1"];
         # WORKAROUND

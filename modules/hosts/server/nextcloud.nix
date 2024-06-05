@@ -54,6 +54,7 @@ in {
       phil.server.services = {
         caddy.proxy."${cfg.host}" = {
           inherit (cfg) port;
+          ip = net.nodes.${config.networking.hostName}.network_ip.milkyway;
           public = true;
         };
         homer.apps."${cfg.host}" = {
