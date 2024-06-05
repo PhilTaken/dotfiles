@@ -11,7 +11,6 @@
 
   proxy_network = "milkyway";
 
-  nodes = lib.filterAttrs (n: _: net.nodes ? n) flake.nixosConfigurations;
   kc-nodes = builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "keycloak" v.services) net.nodes);
   kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
 
@@ -23,11 +22,13 @@
     mkScrapeJob = n: v: let
       mkTargets = nodename: node: let
         ip = net.nodes.${nodename}.network_ip.${proxy_network};
+        exporters = flake.nixosConfigurations.${nodename}.config.services.prometheus.exporters;
+        has_extrasensors = flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.extrasensors;
         mkTargetString = port: "${ip}:${builtins.toString port}";
-        exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) node.config.services.prometheus.exporters);
+        exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) exporters);
         ports =
           exporterPorts
-          ++ lib.optionals node.config.phil.server.services.promexp.extrasensors [node.config.phil.server.services.promexp.prom-sensors-port];
+          ++ lib.optional has_extrasensors node.config.phil.server.services.promexp.prom-sensors-port;
       in
         builtins.map mkTargetString ports;
     in {
@@ -39,7 +40,7 @@
       ];
     };
   in
-    builtins.attrValues (lib.mapAttrs mkScrapeJob nodes);
+    builtins.attrValues (lib.mapAttrs mkScrapeJob net.nodes);
 
   grafana-domain = "https://${cfg.host}.${net.tld}";
 

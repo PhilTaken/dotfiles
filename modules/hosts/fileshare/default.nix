@@ -134,7 +134,7 @@ in {
         type = types.str;
         default =
           if wireguard.enable
-          then "10.100.0.0/24"
+          then "10.200.0.0/24"
           else "*";
       };
     };
