@@ -1,6 +1,7 @@
 # current TODOs
 
 - set up atuin sync server (backed up)
+    - postgres why
 
 - set up audiobookshelf
 
@@ -26,8 +27,12 @@
 ## other
 
 - set up modules:
-    - radicale
+    - bookstack
+    - paperless
+    - audiobookshelf
 
+    - radicale
+        - to replace nextcloud
     - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
 
     - hedgedoc
