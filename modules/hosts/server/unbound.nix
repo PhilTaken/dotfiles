@@ -76,20 +76,9 @@ in {
       settings = {
         include = "${./unbound-adblock.conf}";
         server = {
-          access-control = [
-            "127.0.0.0/8 allow" # localhost
-            "10.100.0.1/24 allow" # yggdrasil
-            "10.200.0.1/24 allow" # milkyway
-            "192.168.0.1/16 allow" # local nets
-            "100.64.0.0/24 allow" # headscale
-          ];
-
-          interface = [
-            "0.0.0.0@53"
-            "::0@53"
-            "0.0.0.0@853"
-            "::0@853"
-          ];
+          # allow access from all defined internal networks
+          access-control = lib.mapAttrsToList (_n: v: v.netmask + " allow") net.networks;
+          interface = ["0.0.0.0@53" "::0@53" "0.0.0.0@853" "::0@853"];
 
           # tls upstream
           tls-upstream = "yes";
@@ -147,46 +136,17 @@ in {
             ++ mkLocalData subdomains.lan;
 
           local-data-ptr = mkLocalDataPtr subdomains.lan;
-
-          # Specify custom local answers for each interface by using views:
-          access-control-view = [
-            "10.100.0.0/24 wg"
-            "10.200.0.0/24 nebula"
-            "192.168.0.0/16 lan"
-            "127.0.0.0/8 nebula"
-            "100.64.0.0/24 headscale"
-          ];
+          access-control-view = lib.mapAttrsToList (_n: v: v.netmask + " " + v.name) net.networks;
         };
 
-        view = [
-          {
-            name = "\"headscale\"";
+        view =
+          lib.mapAttrsToList (_n: v: {
+            name = "\"${v.name}\"";
             view-first = "yes";
-            local-data = mkLocalData subdomains.headscale;
-            local-data-ptr = mkLocalDataPtr subdomains.headscale;
-          }
-
-          {
-            name = "\"lan\"";
-            view-first = "yes";
-            local-data = mkLocalData subdomains.lan;
-            local-data-ptr = mkLocalDataPtr subdomains.lan;
-          }
-
-          {
-            name = "\"wg\"";
-            view-first = "yes";
-            local-data = mkLocalData subdomains.yggdrasil;
-            local-data-ptr = mkLocalDataPtr subdomains.yggdrasil;
-          }
-
-          {
-            name = "\"nebula\"";
-            view-first = "yes";
-            local-data = mkLocalData subdomains.milkyway;
-            local-data-ptr = mkLocalDataPtr subdomains.milkyway;
-          }
-        ];
+            local-data = mkLocalData subdomains.${v.name};
+            local-data-ptr = mkLocalDataPtr subdomains.${v.name};
+          })
+          net.networks;
 
         # downstream dns resolver
         forward-zone = [

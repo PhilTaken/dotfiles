@@ -10,14 +10,14 @@ in {
   flake = {
     # deploy config
     deploy.nodes =
-      (builtins.mapAttrs (nodename: nodeconfig:
-        lib.optionalAttrs (lib.assertMsg (nodeconfig.network_ip ? "headscale") "node ${nodename} has no headscale ip") {
-          hostname = nodeconfig.network_ip."headscale";
+      (builtins.mapAttrs (nodename: nodeconfig: {
           sshUser = "root";
           remoteBuild = true;
+          # all network nodes should have a headscale ip
+          hostname = lib.optionalString (lib.assertMsg (nodeconfig.network_ip ? "headscale") "node ${nodename} has no headscale ip, cannot deploy") nodeconfig.network_ip."headscale";
           profiles.system.path = (activateFor nodeconfig.system) self.nixosConfigurations.${nodename};
         })
-      net.nodes)
+        net.nodes)
       // {
         # small nixos vm on mac
         zetta = {
