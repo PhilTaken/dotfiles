@@ -92,11 +92,6 @@ in {
         owner = config.systemd.services.grafana.serviceConfig.User;
       });
 
-    networking.firewall.interfaces.${net.networks.${proxy_network}.ifname} = {
-      allowedUDPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port cfg.tempo-port];
-      allowedTCPPorts = [cfg.grafana-port cfg.loki-port cfg.prometheus-port cfg.tempo-port];
-    };
-
     services.loki = {
       enable = true;
       configuration = {
