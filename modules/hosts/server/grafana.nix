@@ -28,7 +28,7 @@
         exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) exporters);
         ports =
           exporterPorts
-          ++ lib.optional has_extrasensors node.config.phil.server.services.promexp.prom-sensors-port;
+          ++ lib.optional has_extrasensors flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.prom-sensors-port;
       in
         builtins.map mkTargetString ports;
     in {

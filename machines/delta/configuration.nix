@@ -9,7 +9,7 @@
 
   # TODO reenable when twisted is fixed
   # or rewrite it in a sane language ...
-  #phil.server.services.promexp.extrasensors = true;
+  phil.server.services.promexp.extrasensors = true;
 
   # https://nixos.wiki/wiki/ZFS
   boot.kernelParams = ["zfs.zfs_arc_max=12884901888"];

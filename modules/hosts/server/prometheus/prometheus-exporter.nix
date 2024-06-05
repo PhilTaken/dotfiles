@@ -49,14 +49,14 @@ in {
     users.groups."sensors-exporter" = mkIf cfg.extrasensors {};
 
     systemd.services.prometheus-sensor-exporter = let
-      mypy = pkgs.python39.withPackages (ps: [
+      mypy = pkgs.python3.withPackages (ps: [
         ps.pyramid
         ps.prometheus-client
         ps.twisted
         ps.pyserial
         ps.setuptools
       ]);
-      writeMyPy = name: pkgs.writers.makePythonWriter mypy pkgs.python39Packages pkgs.buildPackages.python39Packages name {};
+      writeMyPy = name: pkgs.writers.makePythonWriter mypy pkgs.python3Packages pkgs.buildPackages.python3Packages name {};
       pyfile = writeMyPy "prom-sensors.py" ./sensors.py;
     in
       mkIf cfg.extrasensors {
