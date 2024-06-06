@@ -195,7 +195,7 @@ in {
           use_x_forwarded_for = true;
           trusted_proxies =
             ["127.0.0.1"]
-            ++ (builtins.catAttrs "public_ip" (builtins.attrValues net.nodes))
+            ++ (builtins.filter (v: v != null) (builtins.catAttrs "public_ip" (builtins.attrValues net.nodes)))
             ++ lib.optional (net.nodes.${config.networking.hostName}.network_ip ? "lan") net.nodes.${config.networking.hostName}.network_ip."lan";
           server_port = cfg.port;
           server_host = ["0.0.0.0"];
