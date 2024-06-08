@@ -57,13 +57,14 @@ in {
         # TODO make color_scheme configurable
         extraConfig = ''
           local config = {
-            window_padding = { left = 5, right = 5, top = 5, bottom = 5 },
+            window_padding = { left = 5, right = 5, top = 12, bottom = 2 },
+            window_decorations = "RESIZE",
+            window_background_opacity = 0.90,
+            macos_window_background_blur = 20,
             hide_tab_bar_if_only_one_tab = true,
             font_size = 11.0,
             dpi = 192.0,
             adjust_window_size_when_changing_font_size = false,
-            window_background_opacity = 0.90,
-            macos_window_background_blur = 20,
             warn_about_missing_glyphs = false,
           }
 
