@@ -1,6 +1,15 @@
 {pkgs, ...}: let
   darwin-fixes = import ./darwin-fixes.nix;
 in {
+  services.sketchybar = {
+    enable = true;
+    extraPackages = [pkgs.jq];
+  };
+
+  fonts.fonts = [
+    pkgs.sketchybar-app-font
+  ];
+
   home-manager.users.philippherzog = {
     imports = [
       darwin-fixes.home-manager
@@ -9,15 +18,10 @@ in {
     fonts.fontconfig.enable = true;
     disabledModules = ["targets/darwin/linkapps.nix"];
 
-    launchd.agents.nebula = {
-      enable = false;
-      config = {
-        ProgramArguments = ["sudo" "${pkgs.nebula}/bin/nebula" "-config" "/etc/nebula/config.yaml"];
-        RunAtLoad = true;
-        KeepAlive.SuccessfulExit = false;
-        StandardErrorPath = "/tmp/nebula.job.err";
-        StandardOutPath = "/tmp/nebula.job.out";
-      };
+    xdg.configFile."sketchybar/sketchybarrc".source = ./sketchybarrc;
+    xdg.configFile."sketchybar/plugins/" = {
+      source = ./sketchybarplugins;
+      recursive = true;
     };
   };
 }

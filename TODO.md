@@ -1,5 +1,8 @@
 # current TODOs
 
+- improve sketchybar
+    - module? -> requires nix-darwin service ...
+
 - set up atuin sync server (backed up)
     - postgres why
 
@@ -38,10 +41,7 @@
     - hedgedoc
     - snapcast server/clients
 
-- nebula
-    - implement proper tagging
-    - signing script with sops secrets
-    - mobile device integration?
+- deprecate nebula
 
 - nvim plugins
     - marks
