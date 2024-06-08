@@ -56,6 +56,9 @@ in {
         enable = true;
         # TODO make color_scheme configurable
         extraConfig = ''
+          local wezterm = require 'wezterm'
+          local act = wezterm.action
+
           local config = {
             window_padding = { left = 8, right = 8, top = 12, bottom = 2 },
             window_decorations = "RESIZE",
@@ -66,6 +69,53 @@ in {
             dpi = 192.0,
             adjust_window_size_when_changing_font_size = false,
             warn_about_missing_glyphs = false,
+            disable_default_key_bindings = true
+          }
+
+          config.keys = {
+            { key = ')', mods = 'CTRL', action = act.ResetFontSize },
+            { key = ')', mods = 'SHIFT|CTRL', action = act.ResetFontSize },
+            { key = '+', mods = 'CTRL', action = act.IncreaseFontSize },
+            { key = '+', mods = 'SHIFT|CTRL', action = act.IncreaseFontSize },
+            { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
+            { key = '-', mods = 'SHIFT|CTRL', action = act.DecreaseFontSize },
+            { key = '-', mods = 'SUPER', action = act.DecreaseFontSize },
+            { key = '0', mods = 'CTRL', action = act.ResetFontSize },
+            { key = '0', mods = 'SHIFT|CTRL', action = act.ResetFontSize },
+            { key = '0', mods = 'SUPER', action = act.ResetFontSize },
+            { key = '=', mods = 'CTRL', action = act.IncreaseFontSize },
+            { key = '=', mods = 'SHIFT|CTRL', action = act.IncreaseFontSize },
+            { key = '=', mods = 'SUPER', action = act.IncreaseFontSize },
+            { key = 'C', mods = 'CTRL', action = act.CopyTo 'Clipboard' },
+            { key = 'C', mods = 'SHIFT|CTRL', action = act.CopyTo 'Clipboard' },
+            { key = 'N', mods = 'CTRL', action = act.SpawnWindow },
+            { key = 'N', mods = 'SHIFT|CTRL', action = act.SpawnWindow },
+            { key = 'P', mods = 'CTRL', action = act.ActivateCommandPalette },
+            { key = 'P', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
+            { key = 'Q', mods = 'CTRL', action = act.QuitApplication },
+            { key = 'Q', mods = 'SHIFT|CTRL', action = act.QuitApplication },
+            { key = 'U', mods = 'CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
+            { key = 'U', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
+            { key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
+            { key = 'V', mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
+            { key = '_', mods = 'CTRL', action = act.DecreaseFontSize },
+            { key = '_', mods = 'SHIFT|CTRL', action = act.DecreaseFontSize },
+            { key = 'c', mods = 'SHIFT|CTRL', action = act.CopyTo 'Clipboard' },
+            { key = 'c', mods = 'SUPER', action = act.CopyTo 'Clipboard' },
+            { key = 'l', mods = 'SHIFT|CTRL', action = act.ShowDebugOverlay },
+            { key = 'n', mods = 'SHIFT|CTRL', action = act.SpawnWindow },
+            { key = 'n', mods = 'SUPER', action = act.SpawnWindow },
+            { key = 'p', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
+            { key = 'q', mods = 'SHIFT|CTRL', action = act.QuitApplication },
+            { key = 'q', mods = 'SUPER', action = act.QuitApplication },
+            { key = 'r', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
+            { key = 'r', mods = 'SUPER', action = act.ReloadConfiguration },
+            { key = 'u', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
+            { key = 'v', mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
+            { key = 'v', mods = 'SUPER', action = act.PasteFrom 'Clipboard' },
+            { key = 'phys:Space', mods = 'SHIFT|CTRL', action = act.QuickSelect },
+            { key = 'Copy', mods = 'NONE', action = act.CopyTo 'Clipboard' },
+            { key = 'Paste', mods = 'NONE', action = act.PasteFrom 'Clipboard' },
           }
 
           config.hyperlink_rules = wezterm.default_hyperlink_rules()
