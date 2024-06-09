@@ -137,7 +137,7 @@ sketchybar --add item clock right                                      \
            --add item battery right                                    \
            --set battery                                               \
                 width=40                                               \
-                label.width=22                                         \
+                label.width=25                                         \
                 label.align=center                                     \
                 update_freq=120                                        \
                 script="$PLUGIN_DIR/battery.sh"                        \

@@ -60,7 +60,7 @@ in {
           local act = wezterm.action
 
           local config = {
-            window_padding = { left = 8, right = 8, top = 12, bottom = 2 },
+            window_padding = { left = 12, right = 12, top = 16, bottom = 7 },
             window_decorations = "RESIZE",
             window_background_opacity = 0.90,
             macos_window_background_blur = 20,
