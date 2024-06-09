@@ -112,6 +112,15 @@ in {
             bind -M insert \n 'enter_ls'
           end
         ''
+        + (lib.optionalString (config.phil.terminals.multiplexer == "tmux") ''
+          if status is-interactive
+          and not status --is-login
+          and not set -q TMUX
+          and not set -q NVIM
+          and set -q DISPLAY
+            tmux attach || tmux
+          end
+        '')
         + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
           if status is-interactive
           and not status --is-login

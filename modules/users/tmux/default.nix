@@ -46,7 +46,6 @@ in {
         set -g mouse on
         setw -q -g utf8 on
 
-
         # ----------------------
 
         set -g base-index 1
@@ -55,11 +54,8 @@ in {
         set -g set-titles on
         set -g status-interval 0
 
-
         # ------------------------------------------------------------------------------
         # BINDS
-
-        # tmux-thumbs trigger
 
         bind Escape copy-mode
         unbind p
@@ -75,12 +71,10 @@ in {
         unbind '%'
         unbind C-a
 
-        is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-
-        bind y if-shell "$is_vim" 'send-keys M-y' 'select-pane -L'
-        bind n if-shell "$is_vim" 'send-keys M-n' 'select-pane -D'
-        bind e if-shell "$is_vim" 'send-keys M-e' 'select-pane -U'
-        bind o if-shell "$is_vim" 'send-keys M-o' 'select-pane -R'
+        bind y 'select-pane -L'
+        bind n 'select-pane -D'
+        bind e 'select-pane -U'
+        bind o 'select-pane -R'
 
         bind -r C-y select-window -t :-
         bind -r C-o select-window -t :+
@@ -89,8 +83,8 @@ in {
         bind -r N resize-pane -D 5
         bind -r E resize-pane -U 5
         bind -r O resize-pane -R 5
+        source ${./tmux_airline.conf}
       '';
-      # source {airline_conf}
       # source {colorscheme_conf}
 
       plugins = with pkgs.tmuxPlugins; [
