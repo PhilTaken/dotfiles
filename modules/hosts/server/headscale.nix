@@ -45,6 +45,7 @@ in {
           # TODO change from fixed ip to derived from network.nix
           nameservers = ["100.64.0.3"];
           override_local_dns = true;
+          magic_dns = false;
         };
         oidc = {
           only_start_if_oidc_is_available = true;
