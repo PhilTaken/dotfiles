@@ -16,7 +16,6 @@
     - nextcloud postgres db
     - rclone / borg => rustic
 
-- properly generate zellij config in nix (home manager)
 - one psql database (per host?) for services
 - grafana config -> dashboard provisions
 

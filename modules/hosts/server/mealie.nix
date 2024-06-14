@@ -47,6 +47,7 @@ in {
         OIDC_CONFIGURATION_URL = "https://keycloak.pherzog.xyz/realms/services/.well-known/openid-configuration";
         OIDC_CLIENT_ID = "mealie";
         OIDC_PROVIDER_NAME = "Keycloak";
+        OIDC_AUTO_REDIRECT = "true";
       };
     };
 
