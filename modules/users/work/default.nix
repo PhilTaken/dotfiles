@@ -40,6 +40,8 @@ in {
 
       sad
 
+      siyuan
+
       git
       #copier
 
