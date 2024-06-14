@@ -11,6 +11,7 @@ in {
     ./adguardhome.nix
     ./arrs.nix
     ./audiobookshelf.nix
+    ./bookstack.nix
     ./caddy
     ./calibre-web.nix
     ./fail2ban.nix

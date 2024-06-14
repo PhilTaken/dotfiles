@@ -25,6 +25,8 @@ writefreely-adminpass: ENC[AES256_GCM,data:BGGhdDI54N2FLvvFCik=,iv:61TDzOV87cPc6
 geoip-licensekey: ENC[AES256_GCM,data:8H+poTkfK6tUZuwtVwX8OwdfQuZiDEX4G1N3GY2gEKjRpIvzXja/BQ==,iv:GKtSxnqT/xdgQ9hpupKrGadG65ske00LQpyxfHkF0Jk=,tag:6NB+Jaf5VqWzJst66gEtnA==,type:str]
 mqtt-password: ENC[AES256_GCM,data:dM2rnubupsKDBzMb6+zpRgxtRg03jWE=,iv:a/dq344+xHfsDClok7AeaLjJUgwgaRnPlrsUMwtZp3U=,tag:zaSXp6Y3Roj3/tqC2rNg7A==,type:str]
 freshrss-password: ENC[AES256_GCM,data:9JT5b6IN5rmp5DYdAczEIhl7f1QwKbF8,iv:V+Yvmk/+sGFnXdw9ZoVKCiClc9qMfxmugQbO2iOGdgE=,tag:2LPK63PodLHJYaa5uy/9BQ==,type:str]
+bookstack-appkeyfile: ENC[AES256_GCM,data:tbFNyQ++AD6yCP2r0OHes0ocsxJI4GosxR64kELXqrcJtVU4E3m2mjPngFc=,iv:8Ua1QRZfUukiVGSXpqVPPerSuY2R9EuxXUp2aoRbuWE=,tag:i/g9LGTnIRAKN3gn2Pv1Tg==,type:str]
+bookstack-oidc-secret: ENC[AES256_GCM,data:WL/0rHPeD/iTQgfiOFi/ji399GmsdLdy4B8oCaOMcQA=,iv:/U/RqO1lB3ftHbXWMXdmWbzyAHRm+9Gnlikt1/oNmUM=,tag:vN5WsSQReralmencmuazrA==,type:str]
 sops:
     shamir_threshold: 1
     kms: []
@@ -95,8 +97,8 @@ sops:
             VlIydHRPdzhoZ1BOMjdQUEZXV1dnMzAKMqjYymYmp1y8EDiMkWFhjN1MoYBkGehP
             zcccRctkApMDwPxMUtIK2UcBpedvYemOK4C99WDLWjt+6iVH4RsSAQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-06-03T09:57:20Z"
-    mac: ENC[AES256_GCM,data:p1o4xR1YHF/aXTFLS5ZMPlV4QbRc+GnmEGzEythbQ8fbI3tKWEYdiJ93/Iz0q2dm9uPRfkIvJXYgDkxa7F+PhCPKrRMA+hdycgaGEufBpEkpb8oLxBZyEB48rEF1ewDJuftIO03oOgN5jJO7Rrl67K0RwubEptgfxnphe83lq38=,iv:MgNUUyOuloddNAHYs/sfnQj0KkpRRazCE3wIF0Csmzs=,tag:zv1fTdet2xxj2LlHKVSUAA==,type:str]
+    lastmodified: "2024-06-14T08:49:49Z"
+    mac: ENC[AES256_GCM,data:sZnISV8KjnEhumUWcuRFKhjUslRV6K875Jmh7xpLIWvWG2+UmcZuZ7iw8W1A6uG4YSZYw88yver2EtuwYozi6AhGClz4kioQIttDPZrA3LYjwhAWrz5Bj5e1hRWDS8vcBCyNBZVIsOQnFO9jfBaZhmWcP0XX2TrO/GSW3xDrsmw=,iv:ylf+i1reZxtAPkhltEYv5u8JCIC5u9U2+ZjBlpWLe3k=,tag:eNh8Jq7sYzdxWlvWMrHZfA==,type:str]
     pgp:
         - created_at: "2024-04-12T16:05:45Z"
           enc: |-

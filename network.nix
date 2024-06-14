@@ -26,6 +26,7 @@
           "freshrss"
           "headscale"
           "keycloak"
+          "bookstack"
         ];
       };
 
@@ -51,6 +52,8 @@
           "homeassistant"
           "unbound"
           "nextcloud"
+
+          # maybe move to beta? need to migrate data
           "mealie"
         ];
       };

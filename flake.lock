@@ -256,11 +256,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1713475352,
-        "narHash": "sha256-kMq2Pg2ALoHdX4vojY2CmTdOdH3uJTmMpfFkcwMi4e8=",
+        "lastModified": 1718041615,
+        "narHash": "sha256-JDnLALGgLzQC9dUZi9kdgmiw5nJrmQsbuvHNSLcIgC4=",
         "owner": "philtaken",
         "repo": "deploy-rs",
-        "rev": "bb4a111750baf39dc7d60da8f8bb230e6f442c01",
+        "rev": "1cc6e351f1aa5384e2eeb94a64ae60a0d9984201",
         "type": "github"
       },
       "original": {

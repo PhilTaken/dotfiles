@@ -67,7 +67,6 @@ in {
 
     containers.freshrss = let
       adminpassFile = config.sops.secrets.freshrss-password.path;
-      extensions_path = "/var/lib/freshrss/extensions";
     in {
       ephemeral = false;
       autoStart = true;
@@ -89,19 +88,6 @@ in {
           isReadOnly = true;
         };
       };
-      # // (builtins.listToAttrs (builtins.map (extension: {
-      #     name = "${extensions_path}/${extension}";
-      #     value = {
-      #       hostPath = "${freshrss_extensions}/${extension}";
-      #       isReadOnly = true;
-      #     };
-      #   }) [
-      #     "xExtension-ColorfulList"
-      #     "xExtension-CustomCSS"
-      #     "xExtension-ReadingTime"
-      #     "xExtension-showFeedID"
-      #     "xExtension-YouTube"
-      #   ]));
 
       config = {
         config,
@@ -115,11 +101,6 @@ in {
         # WORKAROUND
         environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
         networking.firewall.enable = false;
-
-        # https://github.com/NixOS/nixpkgs/pull/307459
-        systemd.services.freshrss-config.environment.THIRDPARTY_EXTENSIONS_PATH = extensions_path;
-        systemd.services.freshrss-updater.environment.THIRDPARTY_EXTENSIONS_PATH = extensions_path;
-        services.phpfpm.pools.freshrss.phpEnv.THIRDPARTY_EXTENSIONS_PATH = extensions_path;
 
         services.freshrss = {
           enable = true;
