@@ -194,7 +194,6 @@ in {
           update_check = false;
           style = "compact";
         };
-        flags = ["--disable-up-arrow"];
       };
 
       direnv = {
