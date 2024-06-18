@@ -390,7 +390,11 @@ in {
             vim.g["conjure#filetypes"] = { "clojure", "fennel", "janet", "hy", "julia", "racket", "scheme", "lisp" }
           '')
 
-          (plug diffview-nvim "require('diffview').setup({})")
+          (plug diffview-nvim ''
+            vim.opt.fillchars:append { diff = "╱" }
+            require('diffview').setup({})
+          '')
+
           (lplug gitlinker-nvim ''
             require("gitlinker").setup({
                 mappings = false,
