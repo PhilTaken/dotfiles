@@ -256,16 +256,16 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1718041615,
-        "narHash": "sha256-JDnLALGgLzQC9dUZi9kdgmiw5nJrmQsbuvHNSLcIgC4=",
+        "lastModified": 1718723602,
+        "narHash": "sha256-wiIHswAPjFetRRXfhjcSxdGAo9bDMudJIbBUHPkzEtM=",
         "owner": "philtaken",
         "repo": "deploy-rs",
-        "rev": "1cc6e351f1aa5384e2eeb94a64ae60a0d9984201",
+        "rev": "1b0895c0d0a33ca121377115844ff7f3b6d3e166",
         "type": "github"
       },
       "original": {
         "owner": "philtaken",
-        "ref": "phil/async-build-and-push",
+        "ref": "phil/optimize-compile-times",
         "repo": "deploy-rs",
         "type": "github"
       }

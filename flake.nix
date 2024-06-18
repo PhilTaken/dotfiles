@@ -73,7 +73,7 @@
 
     # deploy remote setups
     deploy-rs = {
-      url = "github:philtaken/deploy-rs/phil/async-build-and-push";
+      url = "github:philtaken/deploy-rs/phil/optimize-compile-times";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
