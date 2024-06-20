@@ -21,7 +21,7 @@ in {
       // {
         # small nixos vm on mac
         zetta = {
-          hostname = "100.64.0.6";
+          hostname = "alice";
           sshUser = "root";
           remoteBuild = true;
           profiles.system.path = (activateFor "aarch64-linux") self.nixosConfigurations.zetta;
