@@ -207,12 +207,6 @@ in {
             platform = "dwd_weather_warnings";
             region_name = "!secret dwd_region_name";
           }
-          {
-            platform = "waqi";
-            token = "!secret waqi_token";
-            locations = "!secret waqi_locations";
-            stations = "!secret waqi_stations";
-          }
         ];
 
         mqtt =
