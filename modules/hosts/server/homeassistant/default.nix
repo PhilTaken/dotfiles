@@ -97,6 +97,7 @@ in {
         "air_quality"
         "python_script"
         "mqtt"
+        "uptime"
 
         # requires extra input on ui
         "fritzbox"
@@ -104,12 +105,6 @@ in {
         "met"
         "here_travel_time"
         "tasmota"
-
-        # TODO
-        #"command_line"
-        #"device_tracker"
-        #"feedreader"
-        #"gtfs" # https://gtfs.de/en/feeds/de_full/
       ];
 
       config = let
@@ -163,6 +158,14 @@ in {
                 entity_id = "sensor.washer_sensor_power";
                 below = 10;
                 for.minutes = 5;
+              }
+            ];
+
+            condition = [
+              {
+                condition = "numeric_state";
+                entity_id = "sensor.uptime";
+                above = 15;
               }
             ];
 
@@ -261,28 +264,7 @@ in {
               }
             ]);
 
-        calendar = [
-          {
-            platform = "caldav";
-            username = "!secret caldav_username";
-            password = "!secret caldav_password";
-            url = "!secret caldav_url";
-            custom_calendars = [
-              {
-                name = "work";
-                calendar = "work";
-                search = ".*";
-              }
-              {
-                name = "Personal";
-                calendar = "Personal";
-                search = ".*";
-              }
-            ];
-          }
-        ];
-
-        lovelace.mode = "yaml";
+        calendar = [];
 
         homeassistant = {
           name = "Home";
