@@ -102,7 +102,6 @@ in {
         "fritzbox"
         "hue"
         "met"
-        "openweathermap"
         "here_travel_time"
         "jellyfin"
         "tasmota"
