@@ -7,7 +7,7 @@
 }: let
   cfg = config.phil.server.services.caddy;
   net = config.phil.network;
-  proxy_network = "milkyway";
+  proxy_network = "headscale";
 
   inherit (lib) mkOption types mkIf;
 
