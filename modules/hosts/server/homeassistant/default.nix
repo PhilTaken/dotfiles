@@ -103,7 +103,6 @@ in {
         "hue"
         "met"
         "here_travel_time"
-        "jellyfin"
         "tasmota"
 
         # TODO
