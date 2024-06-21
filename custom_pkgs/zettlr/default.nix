@@ -37,6 +37,5 @@ in
       homepage = "https://www.zettlr.com";
       platforms = ["x86_64-linux"];
       license = lib.licenses.gpl3;
-      maintainers = with lib.maintainers; [tfmoraes];
     };
   }

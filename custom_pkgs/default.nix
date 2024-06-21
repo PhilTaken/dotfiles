@@ -1,11 +1,14 @@
-_final: _prev: {
-  #racket-langserver = prev.callPackage ./racket-langserver {};
-
-  # qt5 insceure currently
-  #goneovim = prev.callPackage ./goneovim {};
-
-  #fortls = prev.callPackage ./fortls {};
-  #fortran-package-manager = prev.callPackage ./fortran-package-manager {};
-  #zettlr = prev.callPackage ./zettlr {};
-  #zk = prev.callPackage ./zk {};
+final: prev: {
+  linkding = final.callPackage ./linkding {
+    python3 = prev.python3.override {
+      packageOverrides = self: super:
+        with self; {
+          confusable_homoglyphs = callPackage ./python/confusable_homoglyphs.nix {};
+          django-registration = callPackage ./python/django-registration.nix {};
+          django-sass-processor = callPackage ./python/django-sass-processor.nix {};
+          mozilla-django-oidc = callPackage ./python/mozilla-django-oidc.nix {};
+          waybackpy = callPackage ./python/waybackpy.nix {};
+        };
+    };
+  };
 }
