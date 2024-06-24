@@ -6,7 +6,7 @@ in {
     extraPackages = [pkgs.jq];
   };
 
-  fonts.fonts = [
+  fonts.packages = [
     pkgs.sketchybar-app-font
   ];
 
