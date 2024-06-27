@@ -17,6 +17,28 @@ in {
   };
 
   config = mkIf cfg.enable {
+    phil.twm = {
+      enable = true;
+      settings = {
+        search_paths = ["~"];
+
+        workspace_definitions = [
+          {
+            name = "default";
+            has_any_file = [".git" ".twm.yaml"];
+            default_layout = "default";
+          }
+        ];
+
+        layouts = [
+          {
+            name = "default";
+            commands = [];
+          }
+        ];
+      };
+    };
+
     programs.tmux = {
       enable = true;
       baseIndex = 1;
@@ -85,7 +107,6 @@ in {
         bind -r O resize-pane -R 5
         source ${./tmux_airline.conf}
       '';
-      # source {colorscheme_conf}
 
       plugins = with pkgs.tmuxPlugins; [
         sessionist

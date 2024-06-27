@@ -52,26 +52,7 @@ in {
     phil.twm = {
       enable = true;
       settings = {
-        search_paths = [
-          "${config.home.homeDirectory}/Documents/workspace"
-        ];
-
-        workspace_definitions = [
-          {
-            name = "workspace";
-            has_any_file = [".git" ".twm.yaml"];
-            default_layout = "workspace";
-          }
-        ];
-
-        layouts = [
-          {
-            name = "workspace";
-            commands = [
-              "echo 'Created $TWM_TYPE session"
-            ];
-          }
-        ];
+        search_paths = ["${config.home.homeDirectory}/Documents/workspace"];
       };
     };
 
