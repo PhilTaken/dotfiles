@@ -69,7 +69,8 @@ in {
             dpi = 192.0,
             adjust_window_size_when_changing_font_size = false,
             warn_about_missing_glyphs = false,
-            disable_default_key_bindings = true
+            disable_default_key_bindings = true,
+            color_scheme = 'Catppuccin Macchiato'
           }
 
           config.keys = {

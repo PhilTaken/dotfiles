@@ -242,6 +242,27 @@ in {
             require('illuminate').configure{}
           '')
 
+          (lplug neorg ''
+            require('neorg').setup{
+              load = {
+                ["core.defaults"] = {},
+                ["core.concealer"] = {},
+                ["core.dirman"] = {
+                  config = {
+                    workspaces = {
+                      notes = "~/Notes",
+                    },
+                    default_workspace = "notes",
+                  },
+                },
+              },
+            }
+          '')
+          # extra plugins for *neorg*
+          #lua-utils-nvim
+          nvim-nio
+          #pathlib-nvim
+
           (lplug conform-nvim ''
             require('conform').setup{
               format_on_save = function(bufnr)
