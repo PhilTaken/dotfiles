@@ -29,7 +29,7 @@ in {
       };
     };
 
-    hardware.opengl.enable = true;
+    hardware.graphics.enable = true;
     #virtualisation.waydroid.enable = true;
     virtualisation.docker.enable = true;
 
