@@ -89,6 +89,9 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
+    neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+    neorg-overlay.inputs.nixpkgs.follows = "nixpkgs";
+
     hyprland = {
       url = "github:vaxerski/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -255,13 +255,12 @@ in {
                     default_workspace = "notes",
                   },
                 },
+                ["core.integrations.telescope"] = {}
               },
             }
           '')
           # extra plugins for *neorg*
-          #lua-utils-nvim
-          nvim-nio
-          #pathlib-nvim
+          neorg-telescope
 
           (lplug conform-nvim ''
             require('conform').setup{

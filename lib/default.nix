@@ -4,15 +4,18 @@
 }: let
   overlays = [
     inputs.nur-src.overlay
-    #inputs.neovim-nightly-overlay.overlay
+
     #inputs.arm-rs.overlays.default
+
     inputs.hyprland.overlays.default
-    inputs.parinfer-rust.overlays.default
-    #inputs.zellij.overlays.default
+    inputs.xdg-desktop-hyprland.overlays.default
+
     #inputs.eww-git.overlays.default
+    inputs.parinfer-rust.overlays.default
     inputs.nil-ls.overlays.default
     inputs.nixneovimplugins.overlays.default
-    inputs.xdg-desktop-hyprland.overlays.default
+    inputs.neorg-overlay.overlays.default
+    inputs.neovim-nightly-overlay.overlays.default
 
     self.overlays.default
 
