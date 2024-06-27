@@ -49,6 +49,32 @@ in {
       GIT_WORKSPACE = "${config.home.homeDirectory}/Documents/workspace";
     };
 
+    phil.twm = {
+      enable = true;
+      settings = {
+        search_paths = [
+          "${config.home.homeDirectory}/Documents/workspace"
+        ];
+
+        workspace_definitions = [
+          {
+            name = "workspace";
+            has_any_file = [".git" ".twm.yaml"];
+            default_layout = "workspace";
+          }
+        ];
+
+        layouts = [
+          {
+            name = "workspace";
+            commands = [
+              "echo 'Created $TWM_TYPE session"
+            ];
+          }
+        ];
+      };
+    };
+
     home.shellAliases = {
       gf = "git fetch -ap --all";
       ga = "git add";

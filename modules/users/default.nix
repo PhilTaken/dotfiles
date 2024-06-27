@@ -11,6 +11,7 @@
     ./tmux
     ./zellij
     ./editors
+    ./twm
 
     ./git
     ./ssh
