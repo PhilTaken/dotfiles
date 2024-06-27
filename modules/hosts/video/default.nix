@@ -46,8 +46,9 @@ in {
         ];
     };
 
-    hardware.graphics = {
-      enable = true;
+    hardware.graphics.enable = true;
+
+    hardware.opengl = {
       driSupport = true;
       #driSupport32Bit = true;
     };
