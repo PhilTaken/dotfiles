@@ -19,6 +19,10 @@ in {
   config = mkIf cfg.enable {
     stylix.targets.fish.enable = false;
 
+    home.packages = [
+      pkgs.twm
+    ];
+
     programs.fish = {
       enable = true;
 
@@ -48,6 +52,13 @@ in {
             commandline -f suppress-autosuggestion
           end
           commandline -f execute
+        '';
+        sri = ''
+          set filter "$argv"
+          set chosen_project (git workspace list | sk -q "$filter")
+          if string length -q -- $chosen_project
+            ${pkgs.twm}/bin/twm -p $GIT_WORKSPACE/$chosen_project
+          end
         '';
         pri = ''
           set filter "$argv"
