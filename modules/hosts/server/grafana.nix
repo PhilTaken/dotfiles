@@ -9,7 +9,7 @@
   cfg = config.phil.server.services.grafana;
   net = config.phil.network;
 
-  proxy_network = "milkyway";
+  proxy_network = "headscale";
 
   kc-nodes = builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "keycloak" v.services) net.nodes);
   kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
