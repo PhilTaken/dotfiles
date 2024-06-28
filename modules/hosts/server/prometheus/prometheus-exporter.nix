@@ -24,7 +24,7 @@ in {
 
   config = mkIf cfg.enable {
     # TODO fix this
-    networking.firewall.interfaces."${net.networks.milkyway.ifname}" = let
+    networking.firewall.interfaces."${net.networks.headscale.ifname}" = let
       ports = [9002] ++ lib.optional cfg.extrasensors cfg.prom-sensors-port;
     in {
       allowedUDPPorts = ports;
