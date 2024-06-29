@@ -37,6 +37,7 @@ in {
         enabledCollectors = ["systemd" "processes"];
         disabledCollectors = ["arp"];
         port = 9002;
+        listenAddress = "0.0.0.0";
       };
     };
 

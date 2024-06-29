@@ -99,8 +99,8 @@ in {
         analytics.reporting_enabled = false;
 
         server = {
+          http_listen_address = "0.0.0.0";
           http_listen_port = cfg.loki-port;
-          grpc_listen_port = 9060;
         };
 
         limits_config = {
@@ -159,7 +159,6 @@ in {
         };
         distributor.receivers = {
           otlp.protocols = {
-            grpc = {};
             http = {};
           };
         };
