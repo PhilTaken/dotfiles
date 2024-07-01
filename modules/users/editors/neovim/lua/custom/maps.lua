@@ -143,6 +143,17 @@ local leadern = {
 	["<leader>"] = {
 		["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting" },
 		r = { "<cmd>Rooter<cr>", "Root vim" },
+		w = {
+			name = "wiki -> neorg",
+			o = {
+				"<cmd>Neorg<cr>",
+				"Open Neorg",
+			},
+			c = {
+				"<cmd>Neorg return<cr>",
+				"Close Neorg",
+			},
+		},
 		z = {
 			function()
 				require("custom.tele").extensions.zoxide.list()
