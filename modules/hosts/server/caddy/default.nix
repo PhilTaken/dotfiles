@@ -113,6 +113,12 @@ in {
           value = {
             forceSSL = true;
             useACMEHost = net.tld;
+            locations."/robots.txt" = {
+              return = "200 \"User-agent: *\nDisallow: /\n\"";
+              extraConfig = ''
+                add_header Content-Type text/plain;
+              '';
+            };
             locations."/" = {
               inherit (proxycfg) root proxyPass;
               extraConfig =
