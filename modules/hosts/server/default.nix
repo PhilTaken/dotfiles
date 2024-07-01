@@ -61,6 +61,7 @@ in {
       smartmontools
       fd
       fclones
+      lnav
     ];
 
     # not available on aarch64-linux
