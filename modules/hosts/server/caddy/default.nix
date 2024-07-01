@@ -117,6 +117,10 @@ in {
               inherit (proxycfg) root proxyPass;
               extraConfig =
                 ''
+                  if ($badagent) {
+                    return 403;
+                  }
+
                   proxy_redirect http:// https://;
                   proxy_set_header Upgrade $http_upgrade;
                   proxy_set_header Connection $connection_upgrade;
@@ -160,6 +164,12 @@ in {
 
       additionalModules = [pkgs.nginxModules.geoip2];
       appendHttpConfig = ''
+        map $http_user_agent $badagent {
+            default         0;
+            ~*netcrawler    1;
+            ~^facebookexternalhit 1;
+        }
+
         geo $remote_addr $allowed_traffic {
             default false;
             ${builtins.concatStringsSep "\n" (map (n: "${n} true;") (builtins.catAttrs "netmask" (builtins.attrValues net.networks)))}
