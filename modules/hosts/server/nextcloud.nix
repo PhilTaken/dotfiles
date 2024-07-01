@@ -119,26 +119,6 @@ in {
 
           networking.firewall.enable = false;
 
-          environment.systemPackages = [
-            (pkgs.writeShellScriptBin "fix-pics" ''
-              #!/bin/sh
-
-              albumdir=$1
-
-              echo "Changing modified date to shot date..."
-              ${pkgs.exiftool}/bin/exiftool "-filemodifydate<datetimeoriginal" -r "$albumdir"
-
-              echo "Renaming files to shot date..."
-              ${pkgs.exiftool}/bin/exiftool '-FileName<DateTimeOriginal' -r -d "%Y-%m-%d_%H.%M.%S%%-c.%%e" "$albumdir"
-
-              # uncomment the below command if running on the server
-              echo "Re-scanning your Nextcloud data directory..."
-              ${config.services.nextcloud.occ}/bin/nextcloud-occ files:scan --all
-
-              exit 0
-            '')
-          ];
-
           services.nextcloud = let
             news = pkgs.fetchNextcloudApp {
               appName = "news";
@@ -152,7 +132,7 @@ in {
             package = pkgs.nextcloud29;
 
             inherit home datadir hostName;
-            https = true;
+            https = false;
 
             extraApps = {
               inherit
@@ -166,16 +146,20 @@ in {
                 spreed
                 twofactor_webauthn
                 previewgenerator
+                notify_push
                 ;
               inherit news;
-              # "onlyoffice" "tasks"
             };
 
             caching.redis = true;
             caching.apcu = false;
 
             configureRedis = true;
-            notify_push.enable = true;
+
+            notify_push = {
+              enable = true;
+              bendDomainToLocalhost = true;
+            };
 
             config = {
               adminuser = "nc-admin";
@@ -192,6 +176,7 @@ in {
               trusted_proxies = [
                 "10.200.0.1"
                 "10.200.0.5"
+                hostAddress
               ];
               redis = {
                 host = "/run/redis-nextcloud/redis.sock";
