@@ -174,6 +174,7 @@ in {
             default         0;
             ~*netcrawler    1;
             ~*Amazonbot*    1;
+            ~*PetalBot*    1;
             ~^facebookexternalhit 1;
         }
 
