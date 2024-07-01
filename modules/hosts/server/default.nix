@@ -49,19 +49,19 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      nmap
+      bottom
+      duf
+      fclones
+      fd
       hdparm
       htop
-      bottom
-      usbutils
       iotop
-      tree
-      duf
       jq
-      smartmontools
-      fd
-      fclones
       lnav
+      nmap
+      smartmontools
+      tree
+      usbutils
     ];
 
     # not available on aarch64-linux
