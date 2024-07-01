@@ -46,6 +46,12 @@
         default = false;
         description = "allow public access to this proxy";
       };
+
+      includeRobotsTxt = mkOption {
+        type = types.bool;
+        default = true;
+        description = "include a non-permissive robots.txt";
+      };
     };
   });
 
@@ -106,14 +112,18 @@ in {
       recommendedProxySettings = true;
       clientMaxBodySize = "100M";
       virtualHosts = let
-        genconfig = subdomain: {public, ...} @ proxycfg: let
+        genconfig = subdomain: {
+          public,
+          includeRobotsTxt,
+          ...
+        } @ proxycfg: let
           fqdn = "${subdomain}.${net.tld}";
         in {
           name = fqdn;
           value = {
             forceSSL = true;
             useACMEHost = net.tld;
-            locations."/robots.txt" = {
+            locations."/robots.txt" = lib.optionalAttrs includeRobotsTxt {
               return = "200 \"User-agent: *\nDisallow: /\n\"";
               extraConfig = ''
                 add_header Content-Type text/plain;
@@ -172,9 +182,8 @@ in {
       appendHttpConfig = ''
         map $http_user_agent $badagent {
             default         0;
-            ~*netcrawler    1;
             ~*Amazonbot*    1;
-            ~*PetalBot*    1;
+            ~*PetalBot*     1;
             ~^facebookexternalhit 1;
         }
 
