@@ -147,6 +147,9 @@ in {
                   }
                 '';
             };
+            extraConfig = ''
+              access_log /var/log/nginx/analytics-${subdomain}.log json_analytics;
+            '';
           };
         };
         updateConfigWithHost = host: _proxy: config:
@@ -179,7 +182,7 @@ in {
         };
 
       additionalModules = [pkgs.nginxModules.geoip2];
-      appendHttpConfig = ''
+      commonHttpConfig = ''
         map $http_user_agent $badagent {
             default         0;
             ~*Amazonbot*    1;
