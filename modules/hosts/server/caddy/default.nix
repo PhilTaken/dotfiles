@@ -184,6 +184,7 @@ in {
             default         0;
             ~*Amazonbot*    1;
             ~*PetalBot*     1;
+            ~*SemrushBot*   1;
             ~^facebookexternalhit 1;
         }
 
