@@ -167,6 +167,7 @@ in {
         map $http_user_agent $badagent {
             default         0;
             ~*netcrawler    1;
+            ~*Amazonbot*    1;
             ~^facebookexternalhit 1;
         }
 
