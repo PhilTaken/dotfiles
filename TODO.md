@@ -1,22 +1,25 @@
 # current TODOs
 
-- improve sketchybar
-    - module? -> requires nix-darwin service ...
+- tmux config
+    - keybinds / popups for pri/sri/twm integration
+        - fuzzy finder
+            - with preview if there is an existing session
 
-- set up atuin sync server (backed up)
-    - postgres why
-
+- set up ente.io docker containers
 - set up audiobookshelf
-
 - setup paperless
     - + backup
+
+- improve sketchybar
+    - module? -> requires nix-darwin service ...
 
 - backups
     - fix nextcloud (turn maintenance on and off)
     - nextcloud postgres db
     - rclone / borg => rustic
 
-- one psql database (per host?) for services
+- one psql database (per host?) for services?
+
 - grafana config -> dashboard provisions
 
 - monitor drives
