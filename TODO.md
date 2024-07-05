@@ -1,5 +1,7 @@
 # current TODOs
 
+- auto nix-collect-garbage on beta, delta
+
 - tmux config
     - keybinds / popups for pri/sri/twm integration
         - fuzzy finder
