@@ -8,7 +8,7 @@
   net = config.phil.network;
 
   promtail_client = builtins.head (builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "grafana" v.services) net.nodes));
-  pm_client_ip = net.nodes.${promtail_client}.network_ip."milkyway";
+  pm_client_ip = net.nodes.${promtail_client}.network_ip."headscale";
 
   # TODO: consul?
   pm_client_port = 3100;
