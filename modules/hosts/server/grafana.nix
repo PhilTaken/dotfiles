@@ -24,7 +24,7 @@
         ip = net.nodes.${nodename}.network_ip.${proxy_network};
         has_extrasensors = flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.extrasensors;
         mkTargetString = port: "${ip}:${builtins.toString port}";
-        exporters = flake.nixosConfigurations.${nodename}.config.services.prometheus.exporters;
+        exporters = {node = flake.nixosConfigurations.${nodename}.config.services.prometheus.exporters.node;};
         exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) exporters);
         ports =
           exporterPorts
