@@ -1448,11 +1448,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1720500661,
-        "narHash": "sha256-Wu4OEEdSdkWQ8oxQ8Yf7c1X7Mn+tFbS497rAYPV/pTg=",
+        "lastModified": 1720550651,
+        "narHash": "sha256-4PxSHpQq5afOwnZOpOTUPu9CQJ/JcORUjmmCrW12oI0=",
         "ref": "refs/heads/main",
-        "rev": "575e11143b344eb224c6f8bbf822de0da83b7faa",
-        "revCount": 63,
+        "rev": "20762c631f4444e5352c1ecc298c975bf5153254",
+        "revCount": 78,
         "type": "git",
         "url": "https://gitea.pherzog.xyz/phil/gleamdication"
       },

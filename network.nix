@@ -53,7 +53,7 @@
           "unbound"
           "nextcloud"
 
-          # maybe move to beta? need to migrate data
+          "gleamdication"
           "mealie"
         ];
       };
