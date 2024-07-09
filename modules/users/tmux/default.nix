@@ -101,6 +101,8 @@ in {
         bind -r C-y select-window -t :-
         bind -r C-o select-window -t :+
 
+        bind C-P new-window -n "session-switcher" "sri"
+
         bind -r Y resize-pane -L 5
         bind -r N resize-pane -D 5
         bind -r E resize-pane -U 5
@@ -110,10 +112,11 @@ in {
 
       plugins = with pkgs.tmuxPlugins; [
         sessionist
+        tmux-fzf
         {
           plugin = tmux-thumbs;
           extraConfig = ''
-            set -g @thumbs-key F
+            set -g @thumbs-key T
             set -g @thumbs-contrast 1
             set -g @thumbs-unique enabled
           '';
