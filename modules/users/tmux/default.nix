@@ -101,7 +101,12 @@ in {
         bind -r C-y select-window -t :-
         bind -r C-o select-window -t :+
 
-        bind C-P new-window -n "session-switcher" "sri"
+        bind-key P run-shell -b "${pkgs.writeShellScript "switch-sessions" ''
+          chosen_project=$(git workspace list | ${pkgs.fzf}/bin/fzf-tmux -p)
+          if [ ! -z "$chosen_project" ]; then
+            ${pkgs.twm}/bin/twm -p $GIT_WORKSPACE/$chosen_project
+          fi
+        ''}"
 
         bind -r Y resize-pane -L 5
         bind -r N resize-pane -D 5
