@@ -111,6 +111,10 @@
     dimsum.url = "git+https://gitea.pherzog.xyz/mini-x/dimsum";
     fc-utils.url = "git+https://gitea.pherzog.xyz/phil/fc-utils";
 
+    gleamdication.url = "git+https://gitea.pherzog.xyz/phil/gleamdication";
+    gleamdication.inputs.nixpkgs.follows = "nixpkgs";
+    gleamdication.inputs.flake-parts.follows = "flake-parts";
+
     # -----------------------
     # non-flake sources
     # TODO: manage without flakes

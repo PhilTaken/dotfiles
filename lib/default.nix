@@ -25,6 +25,9 @@
 
         inherit (inputs.eww-git.packages.${prev.system}) eww eww-wayland;
 
+        # TODO improve the upstream overlay
+        inherit (inputs.gleamdication.packages.${prev.system}) gleamdication;
+
         webcord = inputs.webcord.packages.${prev.system}.default;
         hyprland = inputs.hyprland.packages.${prev.system}.default;
 

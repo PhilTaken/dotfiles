@@ -39,9 +39,11 @@ in rec {
           imports = [../modules/hosts hardware-config ../network.nix] ++ sys_users;
 
           nix.registry.nixpkgs.flake = inputs.nixpkgs;
-          nixpkgs.overlays = [
-            inputs.nixpkgs-wayland.overlay
-          ];
+          nixpkgs.overlays =
+            [
+              inputs.nixpkgs-wayland.overlay
+            ]
+            ++ overlays;
 
           sops = {
             defaultSopsFile = ../sops/sops.yaml;
@@ -60,6 +62,7 @@ in rec {
 
         inputs.sops-nix-src.nixosModules.sops
         inputs.disko.nixosModules.disko
+        inputs.gleamdication.nixosModules.default
       ];
   in
     lib.nixosSystem {
