@@ -7,9 +7,6 @@
 
     #inputs.arm-rs.overlays.default
 
-    inputs.hyprland.overlays.default
-    inputs.xdg-desktop-hyprland.overlays.default
-
     #inputs.eww-git.overlays.default
     inputs.parinfer-rust.overlays.default
     inputs.nil-ls.overlays.default

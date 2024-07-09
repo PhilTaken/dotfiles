@@ -8,9 +8,8 @@
     # -----------------------
     # package repositories
 
-    # https://nixpk.gs/pr-tracker.html?pr=304277
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/cd11caeb123796cbd017af8514e7c0657a767527";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nur-src.url = "github:nix-community/NUR";
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";

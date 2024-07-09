@@ -75,12 +75,22 @@ in rec {
       inputs.stylix.nixosModules.stylix
       inputs.home-manager.nixosModules.home-manager
       inputs.hyprland.nixosModules.default
+
       ({
         pkgs,
         lib,
         ...
       }: {
-        inherit nixpkgs;
+        nixpkgs =
+          nixpkgs
+          // {
+            overlays =
+              nixpkgs.overlays
+              ++ [
+                inputs.hyprland.overlays.default
+                inputs.xdg-desktop-hyprland.overlays.default
+              ];
+          };
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
