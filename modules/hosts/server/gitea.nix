@@ -48,7 +48,10 @@ in {
         server.ROOT_URL = "https://${cfg.host}.${net.tld}/";
         server.HTTP_PORT = cfg.port;
 
-        actions.ENABLED = true;
+        openid.ENABLE_OPENID_SIGNUP = true;
+        oauth2_client.ENABLE_AUTO_REGISTRATION = true;
+        oauth2_client.UPDATE_AVATAR = true;
+        oauth2_client.OPENID_CONNECT_SCOPES = ["roles"];
       };
     };
 
