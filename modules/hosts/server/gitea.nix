@@ -51,7 +51,7 @@ in {
         openid.ENABLE_OPENID_SIGNUP = true;
         oauth2_client.ENABLE_AUTO_REGISTRATION = true;
         oauth2_client.UPDATE_AVATAR = true;
-        oauth2_client.OPENID_CONNECT_SCOPES = ["roles"];
+        # oauth2_client.OPENID_CONNECT_SCOPES = ["roles"];
       };
     };
 
