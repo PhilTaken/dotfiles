@@ -123,12 +123,10 @@ in {
           value = {
             forceSSL = true;
             useACMEHost = net.tld;
-            locations."/robots.txt" = lib.optionalAttrs includeRobotsTxt {
-              return = "200 \"User-agent: *\nDisallow: /\n\"";
-              extraConfig = ''
-                add_header Content-Type text/plain;
-              '';
-            };
+            locations."= /robots.txt".alias = lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
+              User-agent: *
+              Disallow: /
+            '';
             locations."/" = {
               inherit (proxycfg) root proxyPass;
               extraConfig =
