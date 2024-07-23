@@ -47,7 +47,7 @@ in {
       secureSocket = true;
       shortcut = "a";
       shell = "${pkgs.${config.phil.terminals.defaultShell}}/bin/${config.phil.terminals.defaultShell}";
-      terminal = "xterm-256color";
+      terminal = "tmux-256color";
       extraConfig = ''
         set-option -ga terminal-overrides ",xterm-256color:Tc"
 

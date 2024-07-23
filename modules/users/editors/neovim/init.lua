@@ -42,9 +42,7 @@ require("custom.settings")
 --require("custom.utils")
 
 -- lsp settings
-vim.schedule(function()
-	require("custom.lsp")
-end)
+require("custom.lsp")
 
 -- mappings
 require("custom.maps")
