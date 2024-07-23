@@ -46,6 +46,8 @@ in {
       keyMode = "vi";
       secureSocket = true;
       shortcut = "a";
+      mouse = true;
+      sensibleOnTop = true;
       shell = "${pkgs.${config.phil.terminals.defaultShell}}/bin/${config.phil.terminals.defaultShell}";
       terminal = "tmux-256color";
       extraConfig = ''
@@ -65,7 +67,6 @@ in {
         set-window-option -g automatic-rename on
         set-option -g set-titles on
         set -g history-limit 50000
-        set -g mouse on
         setw -q -g utf8 on
 
         # ----------------------
@@ -112,12 +113,39 @@ in {
         bind -r N resize-pane -D 5
         bind -r E resize-pane -U 5
         bind -r O resize-pane -R 5
-        source ${./tmux_airline.conf}
       '';
 
       plugins = with pkgs.tmuxPlugins; [
         sessionist
         tmux-fzf
+        {
+          plugin = catppuccin;
+          extraConfig = ''
+            set -g @catppuccin_flavour 'mocha'
+
+            set -g @catppuccin_window_left_separator "█"
+            set -g @catppuccin_window_right_separator "█ "
+            set -g @catppuccin_window_number_position "right"
+            set -g @catppuccin_window_middle_separator "  █"
+
+            set -g @catppuccin_window_default_fill "number"
+            set -g @catppuccin_window_default_text "#W"
+
+            set -g @catppuccin_window_current_fill "number"
+            set -g @catppuccin_window_current_text "#W"
+
+            set -g @catppuccin_status_modules_left "session"
+            set -g @catppuccin_status_modules_right "date_time"
+            set -g @catppuccin_status_justify "centre"
+
+            set -g @catppuccin_status_left_separator "█"
+            set -g @catppuccin_status_right_separator "█"
+            set -g @catppuccin_status_background "default"
+
+            set -g @catppuccin_status_fill "icon"
+            set -g @catppuccin_status_connect_separator "yes"
+          '';
+        }
         {
           plugin = resurrect; # Used by tmux-continuum
           extraConfig = ''
