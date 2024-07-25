@@ -332,7 +332,7 @@ local leaderv = {
 
 -- terminal mode mappings
 local leadert = {
-	[";;"] = { require("custom.utils").t("<C-\\><C-n>"), "Escape from terminal mode" },
+	[";;"] = { vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, true, true), "Escape from terminal mode" },
 }
 
 -- register all settings

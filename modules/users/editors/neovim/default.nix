@@ -100,6 +100,7 @@ in {
     home.sessionVariables.EDITOR = "nvim";
     stylix.targets.vim.enable = false;
 
+    # TODO add https://github.com/brenoprata10/nvim-highlight-colors
     programs.neovim = {
       defaultEditor = true;
       enable = true;
@@ -197,6 +198,7 @@ in {
             require('nvim-treesitter.configs').setup {
               highlight = { enable = true },
               indent = { enable = true },
+              auto_install = false,
             }
           '')
           (plug alpha-nvim ''
@@ -318,8 +320,6 @@ in {
             require("neoscroll").setup({ hide_cursor = false })
           '')
 
-          (lplug nvim-colorizer-lua "require('colorizer').setup({})")
-
           (lplug stabilize-nvim "require('stabilize').setup()")
 
           (lplug1 echodoc-vim "" ''
@@ -360,12 +360,6 @@ in {
                 handler_opts = {
                     border = "single",
                 },
-            })
-          '')
-
-          (lplug glow-nvim ''
-            require('glow').setup({
-              glow_path = "${pkgs.glow}/bin/glow",
             })
           '')
 
@@ -440,24 +434,24 @@ in {
             require("trouble").setup({})
           '')
 
-          (lplug vim-pandoc ''
-            vim.g["pandoc#spell#enabled"] = 0
-          '')
-
           (lplug fidget-nvim ''
             require("fidget").setup{}
           '')
 
-          # TODO load extension asynchronously but before telescope-nvim
+          # TODO load extension before telescope-nvim
           (plug telescope-nvim ''
             require("telescope").load_extension("file_browser")
             require("telescope").load_extension("zoxide")
             require("telescope").load_extension("ui-select")
+            require("telescope").load_extension("egrepify")
+
+            require("custom.tele_init")
           '')
           telescope-file-browser-nvim
           telescope-symbols-nvim
           telescope-zoxide
           telescope-ui-select-nvim
+          (buildPlugin {pname = "telescope-egrepify.nvim";})
 
           # TODO load these asynchronously
           (plug lspkind-nvim "require('lspkind').init()")
@@ -479,36 +473,21 @@ in {
             require("which-key").setup({})
           '')
 
-          (plug (buildPlugin {pname = "telescope-egrepify.nvim";}) ''
-            require "telescope".load_extension "egrepify"
-          '')
-
-          (plug nui-nvim "")
-
-          (plug (buildPlugin {pname = "hurl-nvim";}) ''
-            require("hurl").setup({
-              mode = "split",
-              formatters = {
-                json = { 'jq' },
-                html = {
-                  'prettier',
-                  '--parser',
-                  'html',
-                },
-              },
-            })
-          '')
-
-          # completion
+          ## completion
           cmp-buffer
           cmp-nvim-lsp
           cmp-nvim-lua
           cmp-path
           cmp-under-comparator
-          cmp_luasnip
-          nvim-cmp
+          (plug nvim-cmp ''
+            require("custom.cmp_init")
+          '')
 
-          galaxyline-nvim
+          (plug galaxyline-nvim ''
+            -- statusline
+            require("custom.statusline")
+          '')
+
           vim-startuptime
           plenary-nvim
           nvim-lspconfig
@@ -523,7 +502,6 @@ in {
               },
             })
           '')
-          luasnip
           vim-sleuth
 
           parinfer-rust
@@ -540,9 +518,7 @@ in {
             targets-vim
             direnv-vim
             fennel-vim
-            firenvim
             friendly-snippets
-            leap-nvim
             nerdcommenter
             popup-nvim
             todo-comments-nvim

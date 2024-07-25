@@ -22,16 +22,6 @@ if not sourced then
 end
 sourced = true
 
-M.t = function(str)
-	return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
--- from tjdevries
-M.P = function(v)
-	print(vim.inspect(v))
-	return v
-end
-
 --------------------------------------------------------------------------------
 
 return M

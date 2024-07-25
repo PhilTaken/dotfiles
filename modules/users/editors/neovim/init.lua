@@ -38,25 +38,8 @@
 -- default settings
 require("custom.settings")
 
--- utils
---require("custom.utils")
-
 -- lsp settings
 require("custom.lsp")
 
 -- mappings
 require("custom.maps")
-
--- statusline
-require("custom.statusline")
-
--- luasnip snippets
-vim.schedule(function()
-	require("custom.snippets")
-end)
-
--- cmp completion engine
-require("custom.cmp_init")
-
--- telscope init
-require("custom.tele_init")
