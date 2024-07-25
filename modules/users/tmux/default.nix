@@ -136,7 +136,7 @@ in {
 
             set -g @catppuccin_status_modules_left "session"
             set -g @catppuccin_status_modules_right "date_time"
-            set -g @catppuccin_status_justify "centre"
+            set -g @catppuccin_status_justify "absolute-centre"
 
             set -g @catppuccin_status_left_separator "█"
             set -g @catppuccin_status_right_separator "█"
