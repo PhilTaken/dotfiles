@@ -570,6 +570,11 @@ in {
       recursive = true;
     };
 
+    xdg.configFile."nvim/ftdetect/" = {
+      source = ./ftdetect;
+      recursive = true;
+    };
+
     xdg.configFile."neovide/config.toml".text = ''
       wsl = false
       no-multigrid = false
