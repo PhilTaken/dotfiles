@@ -153,7 +153,7 @@ in {
               inputs.nixos-hardware.nixosModules.common-pc-laptop
               inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
               inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
-              inputs.nixos-hardware.nixosModules.common-cpu-intel-kaby-lake
+              inputs.nixos-hardware.nixosModules.common-gpu-intel-kaby-lake
             ];
           };
 
