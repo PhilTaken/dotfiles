@@ -140,13 +140,15 @@ in {
                 calendar
                 bookmarks
                 contacts
-                deck
+                # deck
+                
                 groupfolders
-                impersonate
+                # impersonate
+                
                 spreed
-                twofactor_webauthn
+                # twofactor_webauthn
+                
                 previewgenerator
-                notify_push
                 ;
               inherit news;
             };
@@ -157,7 +159,7 @@ in {
             configureRedis = true;
 
             notify_push = {
-              enable = true;
+              enable = false;
               bendDomainToLocalhost = true;
             };
 
