@@ -112,7 +112,6 @@ in {
         work_zone_name = "work";
       in {
         default_config = {};
-        uptime = {};
 
         logger.default = "info";
 

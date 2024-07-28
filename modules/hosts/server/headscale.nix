@@ -60,6 +60,10 @@ in {
     systemd.services."headscale" = lib.mkIf config.phil.server.services.keycloak.enable {
       after = ["keycloak.service"];
       requires = ["keycloak.service"];
+
+      # https://github.com/juanfont/headscale/issues/1574
+      # remove after update to 0.23.0
+      serviceConfig.TimeoutStopSec = 5;
     };
 
     phil.server.services.caddy.proxy."${cfg.host}" = {

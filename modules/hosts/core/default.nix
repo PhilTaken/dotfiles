@@ -115,7 +115,7 @@ in {
     services.tailscale = {
       enable = true;
       # TODO configure this better
-      extraUpFlags = ["--login-server https://headscale.pherzog.xyz"];
+      extraUpFlags = ["--login-server" "https://headscale.pherzog.xyz"];
       extraDaemonFlags = ["--no-logs-no-support"];
       authKeyFile = config.sops.secrets."headscale-apikey".path;
     };
