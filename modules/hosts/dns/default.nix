@@ -31,7 +31,7 @@ in {
 
   config = lib.mkMerge [
     # use public nameserver when not connected to nebula
-    (mkIf (!config.phil.nebula.enable) {
+    (mkIf (!config.phil.nebula.enable || cfg.nameserver == null) {
       networking.nameservers = ["9.9.9.9"];
 
       services.resolved = {
