@@ -31,8 +31,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.forgejo-actions-token = {};
-
     services.forgejo = {
       inherit (cfg) stateDir enable;
       lfs.enable = true;
