@@ -57,6 +57,11 @@ in {
       };
     };
 
+    systemd.services."headscale" = lib.mkIf config.phil.server.services.keycloak.enable {
+      after = ["keycloak.service"];
+      requires = ["keycloak.service"];
+    };
+
     phil.server.services.caddy.proxy."${cfg.host}" = {
       inherit (cfg) port;
       public = true;
