@@ -110,7 +110,15 @@ in {
     time.timeZone = cfg.timeZone;
 
     # tailscale - wireguard mesh vpn
-    services.tailscale.enable = true;
+    sops.secrets."headscale-apikey" = {};
+    services.tailscale = {
+      enable = true;
+      # TODO configure this better
+      extraUpFlags = ["--login-server https://headscale.pherzog.xyz"];
+      extraDaemonFlags = ["--no-logs-no-support"];
+      authKeyFile = config.sops.secrets."headscale-apikey".path;
+    };
+
     networking.firewall.checkReversePath = "loose";
 
     # bluetooth
