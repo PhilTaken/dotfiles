@@ -24,7 +24,8 @@ in {
       type = types.nullOr (types.enum hostnames);
       description = "dns host";
       example = "gamma";
-      default = default_nameserver;
+      #default = default_nameserver;
+      default = null;
     };
   };
 
