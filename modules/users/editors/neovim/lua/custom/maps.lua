@@ -14,10 +14,14 @@ vim.cmd([[au FileType c,cpp,python,rust,nix,lua,ruby,r autocmd BufWritePre <buff
 -- create non-exist files under cursor
 vim.cmd([[map gf :e <cfile><CR>]])
 
+-- TODO: attempt to autostart netrep when detecting janet
+-- TODO: package spork/netrepl using nix, provide it via overlay
+vim.cmd([[au BufEnter *.fnl,*.rkt,*.hy,*.scm,*.janet,*.py :lua which_key_conjure()]])
+
 -- terminals
---local toggleterm = require("toggleterm")
 local terms = require("custom.terminals")
 local diffview = require("diffview")
+local wk = require("which-key")
 
 local function visual_selection_range()
 	-- https://github.com/neovim/neovim/pull/13896#issuecomment-774680224
@@ -33,449 +37,419 @@ local function visual_selection_range()
 end
 
 if vim.g.neovide == true then
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-=>",
-		":lua vim.g.neovide_scale_factor = math.min(vim.g.neovide_scale_factor + 0.1,  2.0)<CR>",
-		{ silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-->",
-		":lua vim.g.neovide_scale_factor = math.max(vim.g.neovide_scale_factor - 0.1,  0.1)<CR>",
-		{ silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-+>",
-		":lua vim.g.neovide_transparency = math.min(vim.g.neovide_transparency + 0.05, 2.0)<CR>",
-		{ silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-_>",
-		":lua vim.g.neovide_transparency = math.max(vim.g.neovide_transparency - 0.05, 0.1)<CR>",
-		{ silent = true }
-	)
-	vim.api.nvim_set_keymap("n", "<C-0>", ":lua vim.g.neovide_scale_factor = 0.5<CR>", { silent = true })
-	vim.api.nvim_set_keymap("n", "<C-)>", ":lua vim.g.neovide_transparency = 0.9<CR>", { silent = true })
+	wk.add({
+		{
+			"<C-=>",
+			function()
+				vim.g.neovide_scale_factor = math.min(vim.g.neovide_scale_factor + 0.1, 2.0)
+			end,
+		},
+		{
+			"<C-->",
+			function()
+				vim.g.neovide_scale_factor = math.max(vim.g.neovide_scale_factor - 0.1, 0.1)
+			end,
+		},
+		{
+			"<C-+>",
+			function()
+				vim.g.neovide_transparency = math.min(vim.g.neovide_transparency + 0.05, 2.0)
+			end,
+		},
+		{
+			"<C-_>",
+			function()
+				vim.g.neovide_transparency = math.max(vim.g.neovide_transparency - 0.05, 0.1)
+			end,
+		},
+		{
+			"<C-0>",
+			function()
+				vim.g.neovide_scale_factor = 0.5
+			end,
+		},
+		{
+			"<C-)>",
+			function()
+				vim.g.neovide_transparency = 0.9
+			end,
+		},
+	})
 end
 
 --------------
 -- MAPPINGS --
 --------------
 
--- normal mode mappings (global)
-local leadern = {
-	["<F2>"] = { "<cmd>NvimTreeToggle<cr>", "Toggle nvimtree" },
-	["<A-a>"] = { "<C-a>", "Increment Number" },
-	["<A-x>"] = { "<C-x>", "Decrement Number" },
-
-	["<c-tab>"] = { "<Plug>(CybuLastusedNext)", "Next Buffer" },
-	["<c-s-tab>"] = { "<Plug>(CybuLastusedPrev)", "Previous Buffer" },
-	["<tab>"] = { "<Plug>(CybuNext)", "Next Buffer" },
-	["<s-tab>"] = { "<Plug>(CybuPrev)", "Previous Buffer" },
-
-	[";"] = {
+wk.add({
+	{
+		";",
 		function()
 			require("custom.tele").buffers()
 		end,
-		"Buffers",
+		desc = "Buffers",
+	},
+	{ "<A-a>", "<C-a>", desc = "Increment Number" },
+	{ "<A-x>", "<C-x>", desc = "Decrement Number" },
+	{ "<C-c>", "<cmd>cprev<cr>zz", desc = "go to previous entry in quickfix" },
+	{ "<C-l>", "<cmd>cnext<cr>zz", desc = "go to next entry in quickfix" },
+	{ "<F2>", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvimtree" },
+	{ "<c-s-tab>", "<Plug>(CybuLastusedPrev)", desc = "Previous Buffer" },
+	{ "<c-tab>", "<Plug>(CybuLastusedNext)", desc = "Next Buffer" },
+	{ "<leader><leader>", "<cmd>noh<CR>", desc = "Disable Highlighting" },
+
+	{ "<leader>d", group = "diffview" },
+	{
+		"<leader>dc",
+		function()
+			diffview.close()
+		end,
+		desc = "Close Diffview",
+	},
+	{
+		"<leader>df",
+		function()
+			diffview.file_history(nil, "%")
+		end,
+		desc = "Diffview File History",
+	},
+	{
+		"<leader>dh",
+		function()
+			diffview.file_history()
+		end,
+		desc = "Diffview History",
+	},
+	{
+		"<leader>do",
+		function()
+			diffview.open()
+		end,
+		desc = "Open Diffview",
 	},
 
-	g = {
-		r = {
-			function()
-				require("telescope.builtin").lsp_references()
-			end,
-			"go to references",
-		},
-		d = {
-			function()
-				require("telescope.builtin").lsp_definitions()
-			end,
-			"go to definition",
-		},
-		I = {
-			function()
-				require("telescope.builtin").lsp_implementations()
-			end,
-			"go to implementations",
-		},
-		D = {
-			function()
-				vim.lsp.buf.declaration()
-			end,
-			"go to declaration",
-		},
+	{ "<leader>f", group = "find" },
+	{
+		"<leader>fb",
+		function()
+			require("custom.tele").extensions.file_browser.file_browser()
+		end,
+		desc = "Telescope file browser",
+	},
+	{
+		"<leader>ff",
+		function()
+			require("custom.tele").find_files()
+		end,
+		desc = "Find Files in current dir",
+	},
+	{
+		"<leader>fg",
+		function()
+			require("custom.tele").live_grep()
+		end,
+		desc = "Live Grep in current dir",
+	},
+	{
+		"<leader>fp",
+		function()
+			require("custom.tele").git_workspace()
+		end,
+		desc = "Telescope git workspace browser into find_files",
+	},
+	{
+		"<leader>fs",
+		function()
+			require("custom.tele").treesitter()
+		end,
+		desc = "Treesitter Symbols",
+	},
+	{
+		"<leader>ft",
+		function()
+			require("custom.tele").tags()
+		end,
+		desc = "Browse workspace tags",
+	},
+	{
+		"<leader>fy",
+		function()
+			require("custom.tele").extensions.neoclip.default()
+		end,
+		desc = "Manage yank register",
 	},
 
-	z = {
-		R = {
-			function()
-				require("ufo").openAllFolds()
-			end,
-			"Open all folds",
-		},
-		M = {
-			function()
-				require("ufo").closeAllFolds()
-			end,
-			"Close all folds",
-		},
-		r = {
-			function()
-				require("ufo").openFoldsExceptKinds()
-			end,
-			"Fold less",
-		},
-		m = {
-			function()
-				require("ufo").closeFoldsWith()
-			end,
-			"Fold more",
-		},
+	{ "<leader>g", group = "git" },
+	{
+		"<leader>gY",
+		function()
+			require("gitlinker").get_repo_url()
+		end,
+		desc = "copy homepage url to clipboard",
+	},
+	{ "<leader>gb", "<cmd>Git blame<cr>", desc = "Open git blame" },
+	{
+		"<leader>gg",
+		function()
+			require("neogit").open()
+		end,
+		desc = "Open NeoGit",
 	},
 
-	["<C-l>"] = { "<cmd>cnext<cr>zz", "go to next entry in quickfix" },
-	["<C-c>"] = { "<cmd>cprev<cr>zz", "go to previous entry in quickfix" },
+	{
+		"<leader>go",
+		function()
+			require("gitlinker").get_buf_range_url(
+				"n",
+				{ action_callback = require("gitlinker.actions").open_in_browser }
+			)
+		end,
+		desc = "open current buffer's remote in browser",
+	},
+	{
+		"<leader>gy",
+		function()
+			require("gitlinker").get_buf_range_url("n")
+		end,
+		desc = "copy link to file in remote to clipboard",
+	},
+	{ "<leader>r", "<cmd>Rooter<cr>", desc = "Root vim" },
 
-	["<leader>"] = {
-		["<leader>"] = { "<cmd>noh<CR>", "Disable Highlighting" },
-		r = { "<cmd>Rooter<cr>", "Root vim" },
-		w = {
-			name = "wiki -> neorg",
-			o = {
-				"<cmd>Neorg<cr>",
-				"Open Neorg",
-			},
-			c = {
-				"<cmd>Neorg return<cr>",
-				"Close Neorg",
-			},
-		},
-		z = {
+	{ "<leader>s", group = "shells" },
+	{
+		"<leader>sf",
+		function()
+			terms["bgshell"]:toggle()
+		end,
+		desc = "Toggle random shell",
+	},
+	{
+		"<leader>sh",
+		function()
+			terms["vterm"]:toggle()
+		end,
+		desc = "Toggle side shell (vertical split)",
+	},
+	{
+		"<leader>st",
+		function()
+			terms["bottom"]:toggle()
+		end,
+		desc = "Toggle bottom resource monitor",
+	},
+	{
+		"<leader>sv",
+		function()
+			terms["vterm"]:toggle()
+		end,
+		desc = "Toggle side shell (horizontal split)",
+	},
+
+	{ "<leader>t", group = "trouble" },
+	{ "<leader>ta", "<cmd>TodoTelescope<cr>", desc = "Open TODOs in Telescope" },
+	{ "<leader>td", "<cmd>TroubleToggle lsp_document_diagnostics<cr>", desc = "Document Diagnostics" },
+	{ "<leader>tl", "<cmd>TroubleToggle loclist<cr>", desc = "Loclist" },
+	{ "<leader>tq", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List" },
+	{ "<leader>tr", "<cmd>TroubleToggle lsp_references<cr>", desc = "Lsp Refrences" },
+	{ "<leader>tt", "<cmd>TroubleToggle<cr>", desc = "Toggle trouble" },
+	{ "<leader>tw", "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
+
+	{ "<leader>w", group = "wiki -> neorg" },
+	{ "<leader>wc", "<cmd>Neorg return<cr>", desc = "Close Neorg" },
+	{ "<leader>wo", "<cmd>Neorg<cr>", desc = "Open Neorg" },
+	{
+		"<leader>z",
+		function()
+			require("custom.tele").extensions.zoxide.list()
+		end,
+		desc = "list zoxide dirs",
+	},
+	{ "<s-tab>", "<Plug>(CybuPrev)", desc = "Previous Buffer" },
+	{ "<tab>", "<Plug>(CybuNext)", desc = "Next Buffer" },
+
+	{
+		"gD",
+		function()
+			vim.lsp.buf.declaration()
+		end,
+		desc = "go to declaration",
+	},
+	{
+		"gI",
+		function()
+			require("telescope.builtin").lsp_implementations()
+		end,
+		desc = "go to implementations",
+	},
+	{
+		"gd",
+		function()
+			require("telescope.builtin").lsp_definitions()
+		end,
+		desc = "go to definition",
+	},
+	{
+		"gr",
+		function()
+			require("telescope.builtin").lsp_references()
+		end,
+		desc = "go to references",
+	},
+
+	{
+		"zM",
+		function()
+			require("ufo").closeAllFolds()
+		end,
+		desc = "Close all folds",
+	},
+	{
+		"zR",
+		function()
+			require("ufo").openAllFolds()
+		end,
+		desc = "Open all folds",
+	},
+	{
+		"zm",
+		function()
+			require("ufo").closeFoldsWith()
+		end,
+		desc = "Fold more",
+	},
+	{
+		"zr",
+		function()
+			require("ufo").openFoldsExceptKinds()
+		end,
+		desc = "Fold less",
+	},
+
+	{
+		mode = { "v" },
+		{ "/", 'y/<C-R>"<CR>', desc = "Search using visual mode" },
+		{ "<leader>d", group = "diffview" },
+		{
+			"<leader>dh",
 			function()
-				require("custom.tele").extensions.zoxide.list()
+				local range = visual_selection_range()
+				vim.pretty_print(vim.inspect(range))
+				diffview.file_history(range)
 			end,
-			"list zoxide dirs",
+			desc = "Diffview file history",
 		},
-		f = {
-			name = "+find",
-			s = {
-				function()
-					require("custom.tele").treesitter()
-				end,
-				"Treesitter Symbols",
-			},
-			g = {
-				function()
-					require("custom.tele").live_grep()
-				end,
-				"Live Grep in current dir",
-			},
-			f = {
-				function()
-					require("custom.tele").find_files()
-				end,
-				"Find Files in current dir",
-			},
-			t = {
-				function()
-					require("custom.tele").tags()
-				end,
-				"Browse workspace tags",
-			},
-			y = {
-				function()
-					require("custom.tele").extensions.neoclip.default()
-				end,
-				"Manage yank register",
-			},
-			b = {
-				function()
-					require("custom.tele").extensions.file_browser.file_browser()
-				end,
-				"Telescope file browser",
-			},
-			-- switch projects
-			p = {
-				function()
-					require("custom.tele").git_workspace()
-				end,
-				"Telescope git workspace browser into find_files",
-			},
-		},
-		t = {
-			name = "+trouble",
-			t = { "<cmd>TroubleToggle<cr>", "Toggle trouble" },
-			a = { "<cmd>TodoTelescope<cr>", "Open TODOs in Telescope" },
-			w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
-			d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document Diagnostics" },
-			q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix List" },
-			l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
-			r = { "<cmd>TroubleToggle lsp_references<cr>", "Lsp Refrences" },
-		},
-		g = {
-			name = "+git",
-			g = {
-				function()
-					require("neogit").open()
-				end,
-				"Open NeoGit",
-			},
-			y = {
-				function()
-					require("gitlinker").get_buf_range_url("n")
-				end,
-				"copy link to file in remote to clipboard",
-			},
-			o = {
-				function()
-					require("gitlinker").get_buf_range_url("n", {
-						action_callback = require("gitlinker.actions").open_in_browser,
-					})
-				end,
-				"open current buffer's remote in browser",
-			},
-			Y = {
-				function()
-					require("gitlinker").get_repo_url()
-				end,
-				"copy homepage url to clipboard",
-			},
-			b = {
-				"<cmd>Git blame<cr>",
-				"Open git blame",
-			},
-		},
-		d = {
-			name = "+diffview",
-			o = {
-				function()
-					diffview.open()
-				end,
-				"Open Diffview",
-			},
-			c = {
-				function()
-					diffview.close()
-				end,
-				"Close Diffview",
-			},
-			h = {
-				function()
-					diffview.file_history()
-				end,
-				"Diffview History",
-			},
-			f = {
-				function()
-					diffview.file_history(nil, "%")
-				end,
-				"Diffview File History",
-			},
-		},
-
-		s = {
-			name = "+shells",
-			t = {
-				function()
-					terms["bottom"]:toggle()
-				end,
-				"Toggle bottom resource monitor",
-			}, -- top
-			f = {
-				function()
-					terms["bgshell"]:toggle()
-				end,
-				"Toggle random shell",
-			}, -- float
-
-			v = {
-				function()
-					terms["vterm"]:toggle()
-				end,
-				"Toggle side shell (horizontal split)",
-			}, -- vertical
-			h = {
-				function()
-					terms["hterm"]:toggle()
-				end,
-				"Toggle side shell (vertical split)",
-			}, -- horizontal
-		},
+		{ "<leader>r", group = "R" },
+		{ "<leader>rs", "<Plug>RSendSelection", desc = "Send visual selection" },
 	},
-}
 
--- visual mode mappings
-local leaderv = {
-	["<leader>"] = {
-		d = {
-			name = "+diffview",
-			h = {
-				function()
-					local range = visual_selection_range()
-					vim.pretty_print(vim.inspect(range))
-					diffview.file_history(range)
-				end,
-				"Diffview file history",
-			},
-		},
-		r = {
-			name = "+R",
-			s = { "<Plug>RSendSelection", "Send visual selection" },
-		},
-	},
-	["/"] = { 'y/<C-R>"<CR>', "Search using visual mode" },
-}
-
--- terminal mode mappings
-local leadert = {
-	[";;"] = { vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, true, true), "Escape from terminal mode" },
-}
+	{ ";;", "\28\14", desc = "Escape from terminal mode", mode = "t" },
+})
 
 -- register all settings
-local wk = require("which-key")
-wk.register(leadern, { mode = "n" })
-wk.register(leaderv, { mode = "v" })
-wk.register(leadert, { mode = "t" })
 
 -- filetype-specific mappings
 _G.which_key_conjure = function()
-	local fenneln = {
-		["<localleader>"] = {
-			l = {
-				name = "+log",
-				s = "open in horizontal split",
-				v = "open in vertical split",
-				t = "open in new tab",
-				q = "close all logs",
-				r = "soft reset",
-				R = "hard reset",
-			},
-			e = {
-				name = "+evaluate",
-				e = "form",
-				ce = "form, comment",
-				r = "root",
-				cr = "root, comment",
-				w = "word",
-				cw = "word, comment",
-				["!"] = "form, replace",
-				f = "file from disk",
-				b = "buffer",
-			},
-		},
-	}
+	wk.add({
+		{ "<localleader>l", group = "log" },
+		{ "<localleader>ls", desc = "open in horizontal split" },
+		{ "<localleader>lv", desc = "open in vertical split" },
+		{ "<localleader>lt", desc = "open in new tab" },
+		{ "<localleader>lq", desc = "close all logs" },
+		{ "<localleader>lr", desc = "soft reset" },
+		{ "<localleader>lR", desc = "hard reset" },
 
-	local fennelv = {
-		["<localleader>"] = {
-			E = "evaluate current selection",
-		},
-	}
+		{ "<localleader>e", group = "evaluate" },
 
-	wk.register(fenneln, { mode = "n", buffer = 0 })
-	wk.register(fennelv, { mode = "v", buffer = 0 })
+		{ "<localleader>ee", desc = "form" },
+		{ "<localleader>ece", desc = "form, comment" },
+
+		{ "<localleader>er", desc = "root" },
+		{ "<localleader>ecr", desc = "root, comment" },
+
+		{ "<localleader>ew", desc = "word" },
+		{ "<localleader>ecw", desc = "word, comment" },
+
+		{ "<localleader>e!", desc = "form, replace" },
+
+		{ "<localleader>ef", desc = "file from disk" },
+		{ "<localleader>eb", desc = "buffer" },
+
+		{
+			mode = "v",
+			{ "<localleader>E", desc = "evaluate current selection" },
+		},
+	})
 end
 
 _G.which_key_lsp = function()
-	local rn = {
-		g = {
-			d = {
+	wk.add({
+		{
+			buffer = 0,
+
+			{
+				"<leader>gd",
 				function()
 					vim.lsp.buf.definition()
 				end,
-				"Go to definition",
+				desc = "Go to definition",
 			},
-		},
-		K = {
-			function()
-				vim.lsp.buf.hover()
-			end,
-			"Show tooltips/docs",
-		},
-		["["] = {
-			d = {
+			{
+				"<leader>K",
+				function()
+					vim.lsp.buf.hover()
+				end,
+				desc = "Show tooltips/docs",
+			},
+
+			{
+				"[d",
 				function()
 					vim.diagnostic.goto_next()
 				end,
-				"Go to next diagnostic",
+				desc = "Go to next diagnostic",
 			},
-		},
-		["]"] = {
-			d = {
+			{
+				"]d",
 				function()
 					vim.diagnostic.goto_prev()
 				end,
-				"Go to previous diagnostic",
+				desc = "Go to previous diagnostic",
+			},
+			{
+				"<leader>vws",
+				function()
+					vim.lsp.buf.workspace_symbol()
+				end,
+				desc = "View Workspace Symbols",
+			},
+			{
+				"<leader>vd",
+				function()
+					vim.diagnostic.open_float()
+				end,
+				desc = "Open float diagnostics",
+			},
+			{
+				"<leader>vca",
+				function()
+					vim.lsp.buf.code_action()
+				end,
+				desc = "Open code actions",
+			},
+			{
+				"<leader>vrr",
+				function()
+					vim.lsp.buf.references()
+				end,
+				desc = "Open references",
+			},
+			{
+				"<leader>vrn",
+				function()
+					vim.lsp.buf.rename()
+				end,
+				desc = "Rename",
 			},
 		},
-		["<leader>"] = {
-			v = {
-				w = {
-					s = {
-						function()
-							vim.lsp.buf.workspace_symbol()
-						end,
-						"View Workspace Symbols",
-					},
-				},
-				d = {
-					function()
-						vim.diagnostic.open_float()
-					end,
-					"Open float diagnostics",
-				},
-				c = {
-					a = {
-						function()
-							vim.lsp.buf.code_action()
-						end,
-						"Open code actions",
-					},
-				},
-				r = {
-					r = {
-						function()
-							vim.lsp.buf.references()
-						end,
-						"Open references",
-					},
-					n = {
-						function()
-							vim.lsp.buf.rename()
-						end,
-						"Rename",
-					},
-				},
-			},
-		},
-	}
-
-	wk.register(rn, { mode = "n", buffer = 0 })
+	})
 end
-
-_G.which_key_r = function()
-	local rn = {
-		["<leader>"] = {
-			r = {
-				name = "+R",
-				s = { "<Plug>RStart", "Start the R integration" },
-				l = { "<Plug>RDSendLine", "Send current line" },
-				p = { "<Plug>RPlot", "Plot data frame" },
-				v = { "<Plug>RViewDF", "View data frame" },
-				o = { "<Plug>RUpdateObjBrowser", "Update the Object Browser" },
-				h = { "<Plug>RHelp", "Help" },
-				f = { "<Plug>RSendFile", "Send the whole file" },
-			},
-		},
-	}
-
-	wk.register(rn, { mode = "n", buffer = 0 })
-end
-
--- TODO: attempt to autostart netrep when detecting janet
--- TODO: package spork/netrepl using nix, provide it via overlay
-vim.api.nvim_exec([[autocmd BufEnter *.fnl,*.rkt,*.hy,*.scm,*.janet,*.py :lua which_key_conjure()]], false)
-vim.api.nvim_exec([[autocmd BufEnter *.r,*.Rmd :lua which_key_r()]], false)

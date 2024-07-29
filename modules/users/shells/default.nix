@@ -103,7 +103,7 @@ in {
       unrar
       unzip
       wget
-      yt-dlp
+      #yt-dlp
     ];
 
     programs = {
