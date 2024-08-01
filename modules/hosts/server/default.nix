@@ -14,6 +14,7 @@ in {
     ./bookstack.nix
     ./caddy
     ./calibre-web.nix
+    ./email.nix
     ./fail2ban.nix
     ./freshrss.nix
     ./gitea.nix

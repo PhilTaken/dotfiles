@@ -50,7 +50,7 @@ in {
     home.shellAliases = rec {
       zj = "${pkgs.zellij}/bin/zellij";
       gre = "${pkgs.ripgrep}/bin/rg";
-      cat = "${pkgs.bat}/bin/bat";
+      cat = "bat";
       top = "${pkgs.bottom}/bin/btm";
       du = "${pkgs.du-dust}/bin/dust";
       free = "${pkgs.procps}/bin/free -h";
@@ -74,23 +74,18 @@ in {
       fasd
       fd
       file
-      fortune
-      glances
       gopass
       gping
       hexyl
       hyperfine
-      joshuto
       jq
       lnav
       lolcat
-      lsix
       lsof
       neofetch
       nix-output-monitor
       nmap
       procs
-      pup
       ranger
       ripgrep
       rsync
@@ -99,14 +94,16 @@ in {
       tealdeer
       tokei
       tree
-      #ueberzugpp
       unrar
       unzip
       wget
-      #yt-dlp
     ];
 
     programs = {
+      bat = {
+        enable = true;
+        config.theme = "base16";
+      };
       carapace.enable = true;
       htop.enable = true;
       btop = {
@@ -165,7 +162,6 @@ in {
         };
       };
 
-      bat.enable = true;
       noti.enable = true;
 
       nix-index = {

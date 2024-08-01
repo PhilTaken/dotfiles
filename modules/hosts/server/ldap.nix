@@ -6,7 +6,6 @@
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.phil.server.services.ldap;
   net = config.phil.network;
-  domain = "${cfg.host}.${net.tld}";
 in {
   options.phil.server.services.ldap = {
     enable = mkEnableOption "ldap";
@@ -15,35 +14,50 @@ in {
       default = "ldap";
     };
 
+    domain = mkOption {
+      type = types.str;
+      default = "${cfg.host}.${net.tld}";
+    };
+
     port = mkOption {
       type = types.port;
       default = 8888;
     };
   };
 
+  # TODO transition to openldap (can sync with keycloak)
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = builtins.hasAttr "public_ip" net.nodes.${config.networking.hostName};
+        message = "the ldap node needs a public ip to function properly";
+      }
+    ];
+
     sops.secrets."portunus-seed" = {
       owner = config.services.portunus.user;
       restartUnits = ["portunus.service"];
     };
 
     services.portunus = {
-      inherit (cfg) enable;
-      inherit domain;
+      inherit (cfg) enable port domain;
       seedPath = config.sops.secrets.portunus-seed.path;
-      ldap.suffix = builtins.concatStringsSep "," (builtins.map (part: "dc=${part}") (lib.splitString "." domain));
+      ldap.suffix = builtins.concatStringsSep "," (builtins.map (part: "dc=${part}") (lib.splitString "." cfg.domain));
       ldap.tls = true;
     };
 
-    # TODO open ldap port
-    # networking.firewall.interfaces.${net.networks.default.interfaceName} = {
-    #   allowedTCPPorts = [636];
-    #   allowedUDPPorts = [636];
-    # };
+    networking.firewall = {
+      allowedTCPPorts = [636];
+      allowedUDPPorts = [636];
+    };
 
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
+        public = false;
+
+        # the nixos portunus service requires a custom cert
+        extraCert = true;
       };
 
       homer.apps."${cfg.host}" = {

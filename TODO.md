@@ -2,6 +2,13 @@
 
 - auto nix-collect-garbage on beta, delta
 
+- utility to check port, ip, uid overlap
+
+- utility functions in network.nix
+    - get fqdn from host 
+    - assertions about something being defined for the network
+    - assertions about something being defined on the same host
+
 - tmux config
     - keybinds / popups for pri/sri/twm integration
         - fuzzy finder

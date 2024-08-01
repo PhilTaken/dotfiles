@@ -22,11 +22,14 @@
         network_ip."milkyway" = "10.200.0.2";
         network_ip."yggdrasil" = "10.100.0.2";
         services = [
+          "keycloak"
+          "ldap"
+
           "grafana"
           "freshrss"
           "headscale"
-          "keycloak"
           "bookstack"
+          "email"
         ];
       };
 

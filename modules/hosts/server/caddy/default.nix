@@ -9,7 +9,7 @@
   net = config.phil.network;
   proxy_network = "headscale";
 
-  inherit (lib) mkOption types mkIf;
+  inherit (lib) mkOption types mkIf mkEnableOption;
 
   ipOptsType = types.submodule ({config, ...}: {
     options = {
@@ -52,6 +52,8 @@
         default = true;
         description = "include a non-permissive robots.txt";
       };
+
+      extraCert = mkEnableOption "custom cert for this domain";
     };
   });
 
@@ -115,6 +117,7 @@ in {
         genconfig = subdomain: {
           public,
           includeRobotsTxt,
+          extraCert,
           ...
         } @ proxycfg: let
           fqdn = "${subdomain}.${net.tld}";
@@ -122,7 +125,12 @@ in {
           name = fqdn;
           value = {
             forceSSL = true;
-            useACMEHost = net.tld;
+            useACMEHost =
+              if extraCert
+              then null
+              else net.tld;
+            enableACME = extraCert;
+
             locations."= /robots.txt".alias = lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
               User-agent: *
               Disallow: /
