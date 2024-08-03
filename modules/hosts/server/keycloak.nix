@@ -1,23 +1,23 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
   cfg = config.phil.server.services.keycloak;
-  net = config.phil.network;
 in {
   options.phil.server.services.keycloak = {
     enable = mkEnableOption "keycloak";
 
     https-port = mkOption {
       type = types.port;
-      default = 8090;
+      default = netlib.portFor "keycloak";
     };
 
     http-port = mkOption {
       type = types.port;
-      default = 8091;
+      default = netlib.portFor "keycloak-https";
     };
 
     host = mkOption {
@@ -35,7 +35,7 @@ in {
         passwordFile = config.sops.secrets.keycloak-dbpass.path;
       };
       settings = {
-        hostname = "${cfg.host}.${net.tld}";
+        hostname = netlib.domainFor cfg.host;
         proxy = "edge";
         inherit (cfg) http-port https-port;
       };

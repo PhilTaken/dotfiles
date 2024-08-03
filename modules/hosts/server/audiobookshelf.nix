@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -16,7 +17,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 8088;
+      default = netlib.portFor "audiobookshelf";
     };
   };
 

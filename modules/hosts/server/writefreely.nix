@@ -1,11 +1,11 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.writefreely;
-  net = config.phil.network;
 in {
   options.phil.server.services.writefreely = {
     enable = mkEnableOption "writefreely";
@@ -21,7 +21,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 18080;
+      default = netlib.portFor "writefreely";
     };
   };
 
@@ -38,7 +38,7 @@ in {
       };
 
       nginx.enable = false;
-      host = "${cfg.host}.${net.tld}";
+      host = netlib.domainFor cfg.host;
 
       admin = {
         name = "pherzog";

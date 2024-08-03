@@ -9,6 +9,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -29,7 +30,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 8123;
+      default = netlib.portFor "homeassistant";
     };
   };
 

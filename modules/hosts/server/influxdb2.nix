@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -11,13 +12,13 @@ in {
     url = mkOption {
       description = "influxdb url (webinterface)";
       type = types.str;
-      default = "";
+      default = netlib.domainFor "influx";
     };
 
     port = mkOption {
       description = "influxdb port (webinterface)";
       type = types.port;
-      default = 8086;
+      default = netlib.portFor "influxdb";
     };
 
     host = mkOption {

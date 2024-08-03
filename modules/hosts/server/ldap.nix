@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
@@ -16,12 +17,12 @@ in {
 
     domain = mkOption {
       type = types.str;
-      default = "${cfg.host}.${net.tld}";
+      default = netlib.domainFor cfg.host;
     };
 
     port = mkOption {
       type = types.port;
-      default = 8888;
+      default = netlib.portFor "portunus";
     };
   };
 

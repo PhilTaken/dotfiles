@@ -1,11 +1,11 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.phil.server.services.grocy;
-  net = config.phil.network;
 
   datadir = "/var/lib/grocy";
 in {
@@ -18,7 +18,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 8889;
+      default = netlib.portFor "grocy";
     };
   };
 
@@ -63,7 +63,7 @@ in {
 
           services.grocy = {
             enable = true;
-            hostName = "${cfg.host}.${net.tld}";
+            hostName = netlib.domainFor cfg.host;
             nginx.enableSSL = false;
             settings = {
               currency = "EUR";

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -21,7 +22,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 3200;
+      default = netlib.portFor "nextcloud";
     };
   };
 
@@ -73,7 +74,7 @@ in {
         adminpassFile = config.sops.secrets.nextcloud-adminpass.path;
         home = "/media/nextcloud";
         datadir = "/var/lib/nextcloud";
-        hostName = "${cfg.host}.${net.tld}";
+        hostName = netlib.domainFor cfg.host;
       in {
         ephemeral = false;
         autoStart = true;

@@ -1,23 +1,23 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.gitea;
-  net = config.phil.network;
 in {
   options.phil.server.services.gitea = {
     enable = mkEnableOption "gitea";
     url = mkOption {
       description = "gitea url (webinterface)";
-      default = "https://gitea.${net.tld}";
+      default = "https://${netlib.domainFor "gitea"}";
       type = types.str;
     };
     port = mkOption {
       description = "port for the http interface";
       type = types.port;
-      default = 3000;
+      default = netlib.portFor "gitea";
     };
     stateDir = mkOption {
       description = "state dir for gitea";
@@ -42,8 +42,8 @@ in {
         session.COOKIE_SECURE = true;
         other.SHOW_FOOTER_VERSION = false;
 
-        server.DOMAIN = "${cfg.host}.${net.tld}";
-        server.ROOT_URL = "https://${cfg.host}.${net.tld}/";
+        server.DOMAIN = netlib.domainFor cfg.host;
+        server.ROOT_URL = cfg.url;
         server.HTTP_PORT = cfg.port;
 
         openid.ENABLE_OPENID_SIGNUP = true;

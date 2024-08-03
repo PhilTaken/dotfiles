@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -21,7 +22,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 5000;
+      default = netlib.portFor "nix-serve";
     };
   };
 

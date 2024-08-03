@@ -3,6 +3,7 @@
   config,
   lib,
   flake,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -42,15 +43,15 @@
   in
     builtins.attrValues (lib.mapAttrs mkScrapeJob net.nodes);
 
-  grafana-domain = "https://${cfg.host}.${net.tld}";
+  grafana-domain = "https://${netlib.domainFor cfg.host}";
 
   oid-uri = let
     realm_name = "services";
-    url = "${
+    url = netlib.domainFor (
       if kc-enabled
       then kc-host
       else "keycloak"
-    }.${net.tld}";
+    );
   in "https://${url}/realms/${realm_name}/protocol/openid-connect";
 in {
   options.phil.server.services.grafana = {
@@ -63,22 +64,22 @@ in {
 
     loki-port = mkOption {
       type = types.port;
-      default = 3100;
+      default = netlib.portFor "loki";
     };
 
     prometheus-port = mkOption {
       type = types.port;
-      default = 3101;
+      default = netlib.portFor "prometheus";
     };
 
     grafana-port = mkOption {
       type = types.port;
-      default = 3102;
+      default = netlib.portFor "grafana";
     };
 
     tempo-port = mkOption {
       type = types.port;
-      default = 3103;
+      default = netlib.portFor "tempo";
     };
   };
 

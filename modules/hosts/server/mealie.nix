@@ -2,24 +2,24 @@
   pkgs,
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.mealie;
-  net = config.phil.network;
 in {
   options.phil.server.services.mealie = {
     enable = mkEnableOption "mealie - recipe manager";
     url = mkOption {
       description = "mealie url (webinterface)";
       type = types.str;
-      default = "${cfg.host}.${net.tld}";
+      default = netlib.domainFor cfg.host;
     };
 
     port = mkOption {
       description = "webinterface port";
       type = types.port;
-      default = 8097;
+      default = netlib.portFor "mealie";
     };
 
     host = mkOption {
@@ -51,7 +51,7 @@ in {
 
       settings = {
         # general
-        BASE_URL = "${cfg.host}.${net.tld}";
+        BASE_URL = cfg.url;
         API_PORT = 9000;
         TZ = "Europe/Berlin";
         ALLOW_SIGNUP = "false";

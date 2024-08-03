@@ -2,11 +2,11 @@
   pkgs,
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.seafile;
-  net = config.phil.network;
 in {
   options.phil.server.services.seafile = {
     enable = mkEnableOption "seafile";
@@ -30,7 +30,7 @@ in {
       });
       adminEmail = "john@example.com";
       initialAdminPassword = "test123";
-      ccnetSettings.General.SERVICE_URL = "seafile.${net.tld}:8084";
+      ccnetSettings.General.SERVICE_URL = "${netlib.domainFor "seafile"}:8084";
     };
   };
 }

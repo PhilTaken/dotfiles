@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   cfg = config.phil.server.services.calibre;
@@ -18,7 +19,7 @@ in {
 
       port = mkOption {
         type = types.port;
-        default = 8083;
+        default = netlib.portFor "calibreweb";
         description = ''
           Listen port for Calibre-Web.
         '';

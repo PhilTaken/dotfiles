@@ -2,13 +2,13 @@
   pkgs,
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types;
   inherit (config.phil.server.services.influxdb2) port;
   cfg = config.phil.server.services.telegraf;
-  net = config.phil.network;
-  outputUrl = "http://influx.${net.tld}:${builtins.toString port}";
+  outputUrl = "http://${netlib.domainFor "influx"}:${builtins.toString port}";
 in {
   options.phil.server.services.telegraf = {
     enable = mkOption {

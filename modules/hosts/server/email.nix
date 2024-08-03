@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -13,7 +14,7 @@ in {
     url = mkOption {
       description = "simple oauth-integrated email server";
       type = types.str;
-      default = "${cfg.host}.${net.tld}";
+      default = netlib.domainFor cfg.host;
     };
 
     host = mkOption {
@@ -23,13 +24,13 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 9090;
+      default = netlib.portFor "rondcube";
       description = "internal port for the roundcube webinterface";
     };
 
     jmap-port = mkOption {
       type = types.port;
-      default = 9091;
+      default = netlib.portFor "stalwart-jmap";
       description = "port for the stalwart http jmap/admin interface";
     };
 
@@ -125,7 +126,7 @@ in {
         == "stalwart") {
         assertions = [
           {
-            assertion = builtins.hasAttr "public_ip" net.nodes.${config.networking.hostName};
+            assertion = netlib.nodeHasPublicIp;
             message = "the email node needs a public ip to function properly";
           }
         ];
@@ -351,7 +352,7 @@ in {
         == "postfix-dovecot") {
         assertions = [
           {
-            assertion = builtins.hasAttr "public_ip" net.nodes.${config.networking.hostName};
+            assertion = netlib.nodeHasPublicIp;
             message = "the email node needs a public ip to function properly";
           }
         ];

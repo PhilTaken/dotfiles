@@ -4,6 +4,7 @@
   lib,
   flake,
   options,
+  netlib,
   ...
 }: let
   cfg = config.phil.server.services.caddy;
@@ -117,10 +118,8 @@ in {
           includeRobotsTxt,
           extraCert,
           ...
-        } @ proxycfg: let
-          fqdn = "${subdomain}.${net.tld}";
-        in {
-          name = fqdn;
+        } @ proxycfg: {
+          name = netlib.domainFor subdomain;
           value = {
             forceSSL = lib.mkForce true;
             useACMEHost = lib.mkForce (
@@ -130,7 +129,7 @@ in {
             );
             enableACME = lib.mkForce extraCert;
 
-            locations."= /robots.txt".alias = lib.mkDefault lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
+            locations."= /robots.txt".alias = lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
               User-agent: *
               Disallow: /
             '';
@@ -164,13 +163,10 @@ in {
 
         updatedProxies = lib.mapAttrs (host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies) hiddenHostProxies;
 
-        genExtraConfig = subdomain: let
-          fqdn = "${subdomain}.${net.tld}";
-        in
-          {vhostConfig, ...}: {
-            name = fqdn;
-            value = vhostConfig;
-          };
+        genExtraConfig = subdomain: {vhostConfig, ...}: {
+          name = netlib.domainFor subdomain;
+          value = vhostConfig;
+        };
 
         myProxies = let
           host = config.networking.hostName;
@@ -192,7 +188,7 @@ in {
             ${net.tld} = {
               forceSSL = true;
               useACMEHost = net.tld;
-              globalRedirect = "gitea.${net.tld}";
+              globalRedirect = netlib.domainFor "gitea";
             };
           }
         ];

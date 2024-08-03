@@ -2,6 +2,7 @@
   config,
   lib,
   flake,
+  netlib,
   ...
 }: let
   # TODO move dns to shiver via service discovery
@@ -65,8 +66,8 @@ in {
     phil.server.services.caddy.proxy."${cfg.host}" = {port = 853;};
 
     services.unbound = let
-      mkLocalData = lib.mapAttrsToList (name: value: "\"${name}.${net.tld}. IN A ${value}\"");
-      mkLocalDataPtr = lib.mapAttrsToList (host: ip: "\"${ip} ${host}.${net.tld}\"");
+      mkLocalData = lib.mapAttrsToList (name: value: "\"${netlib.domainFor name}. IN A ${value}\"");
+      mkLocalDataPtr = lib.mapAttrsToList (host: ip: "\"${ip} ${netlib.domainFor host}\"");
     in {
       enable = true;
 

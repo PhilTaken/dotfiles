@@ -1,11 +1,11 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption types concatStrings;
   cfg = config.phil.server.services.nginx;
-  net = config.phil.network;
 in {
   options.phil.server.services.nginx = {
     proxy = mkOption {
@@ -24,7 +24,7 @@ in {
       genconfig = subdomain: port: ''
         server {
           listen 80;
-          server_name ${subdomain}.${net.tld};
+          server_name ${netlib.domainFor subdomain};
           location / {
             proxy_pass http://$server_addr:${toString port};
           }

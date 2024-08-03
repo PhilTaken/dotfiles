@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -15,7 +16,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 4533;
+      default = netlib.portFor "navidrome";
     };
 
     music_folder = mkOption {

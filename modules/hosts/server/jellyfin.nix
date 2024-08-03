@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -14,7 +15,7 @@ in {
     };
     port = mkOption {
       type = types.port;
-      default = 8096;
+      default = netlib.portFor "jellyfin";
     };
   };
 

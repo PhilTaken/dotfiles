@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -17,7 +18,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 3334;
+      default = netlib.portFor "bookstack";
     };
   };
 
@@ -94,11 +95,11 @@ in {
           environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
           networking.firewall.enable = false;
 
-          services.bookstack = {
+          services.bookstack = rec {
             enable = true;
-            hostname = "${cfg.host}.${net.tld}";
+            hostname = netlib.domainFor cfg.host;
             inherit appKeyFile;
-            appURL = "https://${cfg.host}.${net.tld}";
+            appURL = "https://${hostname}";
 
             config = {
               AUTH_METHOD = "oidc";

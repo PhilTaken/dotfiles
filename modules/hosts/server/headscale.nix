@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -12,13 +13,13 @@ in {
     url = mkOption {
       description = "headscale url (webinterface)";
       type = types.str;
-      default = "${cfg.host}.${net.tld}";
+      default = netlib.domainFor cfg.host;
     };
 
     port = mkOption {
       description = "headscale port (webinterface)";
       type = types.port;
-      default = 8086;
+      default = netlib.portFor "headscale";
     };
 
     host = mkOption {

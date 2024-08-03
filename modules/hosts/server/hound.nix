@@ -1,11 +1,11 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.hound;
-  net = config.phil.network;
 in {
   options.phil.server.services.hound = {
     enable = mkEnableOption "hound";
@@ -16,7 +16,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 6080;
+      default = netlib.portFor "hound";
     };
   };
 
@@ -29,7 +29,7 @@ in {
         repos = lib.mapAttrs (_n: v: v // {detect-ref = true;}) {
           nixpgks.url = "https://www.github.com/nixos/nixpkgs";
           dotfiles = {
-            url = "https://gitea.${net.tld}/phil/dotfiles";
+            url = "https://${netlib.domainFor "gitea"}/phil/dotfiles";
             ref = "main";
           };
         };

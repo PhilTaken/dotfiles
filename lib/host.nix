@@ -9,6 +9,12 @@
     inherit overlays;
     config.allowUnfree = true;
   };
+  netlib = import ../lib/network.nix;
+
+  # extra args for nixos/darwin system modules
+  specialArgs = {inherit inputs flake npins;};
+  # extra args for home-manager modules
+  extraSpecialArgs = {inherit inputs npins;};
 in rec {
   mkBase = defaultModules: {
     users ? ["nixos"],
@@ -35,7 +41,13 @@ in rec {
       defaultModules
       ++ hostModules
       ++ [
-        ({lib, ...}: {
+        ({
+          lib,
+          config,
+          ...
+        }: {
+          _module.args.netlib = netlib config lib;
+
           imports = [../modules/hosts hardware-config ../network.nix] ++ sys_users;
 
           nix.registry.nixpkgs.flake = inputs.nixpkgs;
@@ -66,8 +78,7 @@ in rec {
       ];
   in
     lib.nixosSystem {
-      inherit system modules;
-      specialArgs = {inherit inputs flake npins;};
+      inherit system modules specialArgs;
     };
 
   mkNixos = hmUsers:
@@ -92,9 +103,9 @@ in rec {
               ];
           };
         home-manager = {
+          inherit extraSpecialArgs;
           useGlobalPkgs = true;
           useUserPackages = true;
-          extraSpecialArgs = {inherit inputs npins;};
           users = lib.mapAttrs (user.mkConfig pkgs) hmUsers;
         };
       })
@@ -110,14 +121,20 @@ in rec {
     hardware-config ? (import ../machines/${name}),
   }:
     inputs.darwin.lib.darwinSystem {
-      inherit system;
-      specialArgs = {inherit inputs flake npins;};
+      inherit system specialArgs;
 
       modules = [
         hardware-config
         inputs.lix-module.nixosModules.default
 
-        ({pkgs, ...}: {
+        ({
+          pkgs,
+          config,
+          lib,
+          ...
+        }: {
+          _module.args.netlib = netlib config lib;
+
           inherit nixpkgs;
           nix = {
             registry.nixpkgs.flake = inputs.nixpkgs;
@@ -142,7 +159,7 @@ in rec {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = {inherit inputs npins;};
+            inherit extraSpecialArgs;
           };
         })
 

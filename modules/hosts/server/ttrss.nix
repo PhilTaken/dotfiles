@@ -2,20 +2,13 @@
   pkgs,
   config,
   lib,
+  netlib,
   ...
 }: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.phil.server.services.ttrss;
-  net = config.phil.network;
 in {
-  options.phil.server.services.ttrss = {
-    enable = mkEnableOption "tiny tiny rss";
-    url = mkOption {
-      description = "ttrss url (webinterface)";
-      default = "rss.${net.tld}";
-      type = types.str;
-    };
-  };
+  options.phil.server.services.ttrss.enable = mkEnableOption "tiny tiny rss";
 
   config = mkIf cfg.enable {
     services.tt-rss = {
@@ -25,7 +18,7 @@ in {
         autoLogin = true;
       };
       registration.enable = false;
-      selfUrlPath = "https://${cfg.url}";
+      selfUrlPath = "https://${netlib.domainFor "rss"}";
       themePackages = with pkgs; [tt-rss-theme-feedly];
     };
   };

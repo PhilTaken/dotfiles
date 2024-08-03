@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -23,7 +24,7 @@ in {
     enable = mkEnableOption "freshrss";
     url = mkOption {
       description = "freshrss url (webinterface)";
-      default = "https://rss.${net.tld}";
+      default = "https://${netlib.domainFor "rss"}";
       type = types.str;
     };
 
@@ -34,7 +35,7 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 3333;
+      default = netlib.portFor "freshrss";
     };
   };
 

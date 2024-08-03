@@ -226,7 +226,7 @@ in {
           nix-package-versions = "https://lazamar.co.uk/nix-versions";
           hackernews = "https://news.ycombinator.com";
           noogle = "https://noogle.dev";
-          # dotfiles = "https://gitea.${net.tld}/phil/dotfiles";
+          # dotfiles = "https://${netlib.domainFor "gitea"}/phil/dotfiles";
         };
 
         searchEngines = {

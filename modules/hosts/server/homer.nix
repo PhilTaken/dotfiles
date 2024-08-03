@@ -4,6 +4,7 @@
   config,
   lib,
   flake,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption types mkIf mkEnableOption mapAttrsToList;
@@ -33,7 +34,7 @@
       links = mkLinks {
         "dotfiles" = {
           icon = "fas fa-code-branch";
-          url = "https://gitea.${net.tld}/phil/dotfiles";
+          url = "https://${netlib.domainFor "gitea"}/phil/dotfiles";
         };
       };
 
@@ -145,7 +146,7 @@ in {
                 tag = mkStrOpt "";
                 tagstyle = mkStrOpt "";
                 keywords = mkStrOpt "";
-                url = mkStrOpt "https://${name}.${net.tld}";
+                url = mkStrOpt "https://${netlib.domainFor name}";
                 target = mkStrOpt "_blank";
               };
             });
