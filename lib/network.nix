@@ -27,7 +27,7 @@ in {
 
     raw_hash = builtins.hashString "sha256" service;
 
-    hash = lib.fromHexString (builtins.substring 0 16 raw_hash);
+    hash = lib.fromHexString (builtins.substring 0 15 raw_hash);
   in
     (rem hash portRange) + min_port;
 }
