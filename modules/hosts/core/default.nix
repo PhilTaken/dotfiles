@@ -100,9 +100,6 @@ in {
     environment.etc."nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
     nix.nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
 
-    # link to cachix token env file
-    sops.secrets.cachix-token = {};
-
     # links /libexec from derivations to /run/current-system/sw
     environment.pathsToLink = ["/libexec"];
 

@@ -13,24 +13,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.nix-remote-sshkey = {};
-
     programs.steam.enable = lib.mkDefault false;
     phil.core.enableBluetooth = lib.mkDefault true;
     hardware.acpilight.enable = true;
 
     nix.distributedBuilds = true;
-    nix.buildMachines = [
-      {
-        sshUser = "nixos";
-        hostName = "10.200.0.5";
-        systems = ["x86_64-linux" "i686-linux"];
-        speedFactor = 2;
-        supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
-        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUFPaHBOYm56ekt1em91SUoxMjNDa3VDNFJPRXp3cWhDbmJPVGVUeXF1N1Ygcm9vdEBkZWx0YQo=";
-        sshKey = config.sops.secrets.nix-remote-sshkey.path;
-      }
-    ];
+    nix.buildMachines = [];
 
     nix.extraOptions = lib.optionalString cfg.low_power ''
       max-jobs = 0

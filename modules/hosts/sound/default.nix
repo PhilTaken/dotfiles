@@ -20,12 +20,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.spotify-username = {};
-    sops.secrets.spotify-password = {
-      group = "audio";
-      mode = "0440";
-    };
-
     # Enable sound.
     sound.enable = true;
     sound.mediaKeys.enable = true;
