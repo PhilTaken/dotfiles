@@ -3,6 +3,7 @@
   config,
   lib,
   flake,
+  options,
   ...
 }: let
   cfg = config.phil.server.services.caddy;
@@ -36,10 +37,7 @@
         default = null;
       };
 
-      publicProxyConfig = mkOption {
-        type = types.lines;
-        default = "";
-      };
+      vhostConfig = options.services.nginx.virtualHosts.type.getSubOptions [];
 
       public = mkOption {
         type = types.bool;
@@ -124,14 +122,15 @@ in {
         in {
           name = fqdn;
           value = {
-            forceSSL = true;
-            useACMEHost =
+            forceSSL = lib.mkForce true;
+            useACMEHost = lib.mkForce (
               if extraCert
               then null
-              else net.tld;
-            enableACME = extraCert;
+              else net.tld
+            );
+            enableACME = lib.mkForce extraCert;
 
-            locations."= /robots.txt".alias = lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
+            locations."= /robots.txt".alias = lib.mkDefault lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
               User-agent: *
               Disallow: /
             '';
@@ -165,6 +164,14 @@ in {
 
         updatedProxies = lib.mapAttrs (host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies) hiddenHostProxies;
 
+        genExtraConfig = subdomain: let
+          fqdn = "${subdomain}.${net.tld}";
+        in
+          {vhostConfig, ...}: {
+            name = fqdn;
+            value = vhostConfig;
+          };
+
         myProxies = let
           host = config.networking.hostName;
         in
@@ -172,20 +179,23 @@ in {
           then lib.foldl' lib.recursiveUpdate allHostProxies.${host} (lib.attrValues updatedProxies)
           else allHostProxies.${host};
       in
-        (lib.mapAttrs' genconfig myProxies)
-        // {
-          "www.${net.tld}" = {
-            forceSSL = true;
-            useACMEHost = net.tld;
-            globalRedirect = net.tld;
-          };
+        lib.mkMerge [
+          (lib.mapAttrs' genExtraConfig myProxies)
+          (lib.mapAttrs' genconfig myProxies)
+          {
+            "www.${net.tld}" = {
+              forceSSL = true;
+              useACMEHost = net.tld;
+              globalRedirect = net.tld;
+            };
 
-          ${net.tld} = {
-            forceSSL = true;
-            useACMEHost = net.tld;
-            globalRedirect = "gitea.${net.tld}";
-          };
-        };
+            ${net.tld} = {
+              forceSSL = true;
+              useACMEHost = net.tld;
+              globalRedirect = "gitea.${net.tld}";
+            };
+          }
+        ];
 
       additionalModules = [pkgs.nginxModules.geoip2];
       commonHttpConfig = ''
