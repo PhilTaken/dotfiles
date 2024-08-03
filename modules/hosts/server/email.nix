@@ -27,6 +27,12 @@ in {
       description = "internal port for the roundcube webinterface";
     };
 
+    jmap-port = mkOption {
+      type = types.port;
+      default = 9091;
+      description = "port for the stalwart http jmap/admin interface";
+    };
+
     server_type = mkOption {
       type = types.enum ["postfix-dovecot" "stalwart"];
       default = "stalwart";
@@ -124,6 +130,27 @@ in {
           }
         ];
 
+        phil.server.services = {
+          caddy.proxy."mailadmin" = {
+            port = cfg.jmap-port;
+            public = false;
+          };
+          caddy.proxy."jmap" = {
+            port = cfg.jmap-port;
+            public = true;
+          };
+          homer.apps."${cfg.host}" = {
+            show = true;
+            settings = {
+              name = "Roundcube";
+              subtitle = "Email Frontend";
+              tag = "app";
+              keywords = "selfhosted cloud email";
+              logo = "https://roundcube.net/images/roundcube_logo_icon.svg";
+            };
+          };
+        };
+
         sops.secrets."stalwart-admin-secret" = {
           owner = "stalwart-mail";
           restartUnits = ["stalwart-mail.service"];
@@ -157,6 +184,11 @@ in {
                 bind = ["[::]:25"];
                 protocol = "smtp";
                 tls.implicit = false;
+              };
+
+              listener."management" = {
+                bind = ["127.0.0.1:${builtins.toString cfg.jmap-port}"];
+                protocol = "http";
               };
 
               listener."submissions" = {
