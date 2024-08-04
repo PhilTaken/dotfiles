@@ -123,10 +123,21 @@ in {
 
 
         bind-key P run-shell -b "${pkgs.writeShellScript "switch-sessions" ''
-          chosen_project=$(git workspace list | ${pkgs.fzf}/bin/fzf-tmux -p)
-          if [ ! -z "$chosen_project" ]; then
-            ${pkgs.twm}/bin/twm -p $GIT_WORKSPACE/$chosen_project
+          # select a project fuzzily
+          selected=$(git workspace list | ${pkgs.fzf}/bin/fzf-tmux -p)
+
+          if [[ -z $selected ]]; then
+              exit 0
           fi
+
+          selected="$GIT_WORKSPACE/$selected"
+          selected_name="projects/$(basename "$selected" | tr . _)"
+
+          if ! tmux has-session -t=$selected_name 2> /dev/null; then
+              tmux new-session -ds $selected_name -c $selected
+          fi
+
+          tmux switch-client -t $selected_name
         ''}"
 
         bind -r Y resize-pane -L 5
