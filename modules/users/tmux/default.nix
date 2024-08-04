@@ -5,7 +5,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkOption mkIf;
   cfg = config.phil.tmux;
 in {
   options.phil.tmux = {
