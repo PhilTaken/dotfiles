@@ -102,6 +102,26 @@ in {
         bind -r C-y select-window -t :-
         bind -r C-o select-window -t :+
 
+        bind-key S run-shell -b "${pkgs.writeShellScript "edit-scrollback" ''
+          # Save the tmux scrollback buffer to a temporary file
+          tmpfile=$(mktemp /tmp/tmux-buffer.XXXXXX)
+          tmux capture-pane -pS - > "$tmpfile"
+
+          # Create a temporary script to run nvim and then exit the tmux window
+          tmux_script=$(mktemp /tmp/tmux-script.XXXXXX.sh)
+          echo "#!/bin/bash" > "$tmux_script"
+          echo "nvim $tmpfile" >> "$tmux_script"
+          echo "tmux wait-for -S nvim-closed" >> "$tmux_script"
+          chmod +x "$tmux_script"
+
+          tmux new-window -n nvim "$tmux_script"
+          tmux wait-for nvim-closed
+
+          # Clean up temporary files
+          rm "$tmpfile" "$tmux_script"
+        ''}"
+
+
         bind-key P run-shell -b "${pkgs.writeShellScript "switch-sessions" ''
           chosen_project=$(git workspace list | ${pkgs.fzf}/bin/fzf-tmux -p)
           if [ ! -z "$chosen_project" ]; then
