@@ -3,11 +3,6 @@
 - auto nix-collect-garbage on beta, delta
 - fix nix-build dns on delta when building 
 
-- tmux config
-    - keybinds / popups for pri/sri/twm integration
-        - fuzzy finder
-            - with preview if there is an existing session
-
 - portunus -> openldap for user sync
 
 - set up ente.io docker containers
@@ -19,8 +14,6 @@
     - fix nextcloud (turn maintenance on and off)
     - nextcloud postgres db
     - rclone / borg => rustic
-
-- one psql database (per host?) for services?
 
 - grafana config -> dashboard provisions
 
