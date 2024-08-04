@@ -1,26 +1,19 @@
 # current TODOs
 
 - auto nix-collect-garbage on beta, delta
-
-- utility to check port, ip, uid overlap
-
-- utility functions in network.nix
-    - get fqdn from host 
-    - assertions about something being defined for the network
-    - assertions about something being defined on the same host
+- fix nix-build dns on delta when building 
 
 - tmux config
     - keybinds / popups for pri/sri/twm integration
         - fuzzy finder
             - with preview if there is an existing session
 
+- portunus -> openldap for user sync
+
 - set up ente.io docker containers
 - set up audiobookshelf
 - setup paperless
     - + backup
-
-- improve sketchybar
-    - module? -> requires nix-darwin service ...
 
 - backups
     - fix nextcloud (turn maintenance on and off)
@@ -41,18 +34,13 @@
 ## other
 
 - set up modules:
-    - bookstack
-    - paperless
-    - audiobookshelf
+    - paperless-ngx
+    - audiobookshelf for podcasts
 
-    - radicale
+    - radicale + ente / immich
         - to replace nextcloud
-    - modules for hardware config (keyboards / monitor setups etc.) to be used in wm/kanshi/etc.
 
-    - hedgedoc
     - snapcast server/clients
-
-- deprecate nebula
 
 - nvim plugins
     - marks
