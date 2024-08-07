@@ -15,6 +15,7 @@ in {
 
   # generate ports with minimal overlap for your services
   # solely for internal use (port 80/443 -> proxy (nginx) -> port for service -> service)
+  # TODO add check that the resulting port is not 8096 -> jellyfin
   portFor = service: let
     rem = a: b: let
       div = builtins.div a b;
