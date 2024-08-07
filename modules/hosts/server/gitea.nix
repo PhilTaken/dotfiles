@@ -2,6 +2,7 @@
   config,
   lib,
   netlib,
+  pkgs,
   ...
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
@@ -34,6 +35,8 @@ in {
     services.forgejo = {
       inherit (cfg) stateDir enable;
       lfs.enable = true;
+
+      package = pkgs.forgejo;
 
       settings = {
         DEFAULT.APP_NAME = "Oroboros";
