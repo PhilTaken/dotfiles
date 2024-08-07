@@ -21,17 +21,16 @@ in {
   options.phil.dns = {
     enable = mkEnableOption "dns over tls";
     nameserver = mkOption {
-      type = types.nullOr (types.enum hostnames);
+      type = types.enum hostnames;
       description = "dns host";
       example = "gamma";
-      #default = default_nameserver;
-      default = null;
+      default = default_nameserver;
     };
   };
 
   config = lib.mkMerge [
     # use public nameserver when not connected to nebula
-    (mkIf (!config.phil.nebula.enable || cfg.nameserver == null) {
+    (mkIf (!config.phil.nebula.enable && !config.phil.services.unbound.enable) {
       networking.nameservers = ["9.9.9.9"];
 
       services.resolved = {
@@ -41,8 +40,13 @@ in {
       };
     })
 
+    (mkIf (!config.phil.nebula.enable && config.phil.services.unbound.enable) {
+      networking.nameservers = ["localhost"];
+      services.resolved.enable = false;
+    })
+
     # otherwise just use the one on the nebula network
-    (mkIf (cfg.nameserver != null && config.phil.nebula.enable) {
+    (mkIf (config.phil.nebula.enable) {
       #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
       networking.nameservers =

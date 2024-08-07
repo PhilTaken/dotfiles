@@ -12,6 +12,8 @@
       yggdrasil.netmask = "10.100.0.0/24";
 
       lan.netmask = "192.168.178.0/16";
+
+      localhost.netmask = "127.0.0.0/8";
     };
 
     nodes = {

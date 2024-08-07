@@ -58,6 +58,13 @@ in {
 
   # TODO: enable condition
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = !config.services.resolved.enable;
+        message = "cannot run both systemd-resolved and unbound";
+      }
+    ];
+
     networking.firewall = {
       allowedUDPPorts = [53 853];
       allowedTCPPorts = [53 853];
@@ -65,14 +72,13 @@ in {
 
     phil.server.services.caddy.proxy."${cfg.host}" = {port = 853;};
 
+    users.users.unbound.extraGroups = ["nginx"];
+
     services.unbound = let
       mkLocalData = lib.mapAttrsToList (name: value: "\"${netlib.domainFor name}. IN A ${value}\"");
       mkLocalDataPtr = lib.mapAttrsToList (host: ip: "\"${ip} ${netlib.domainFor host}\"");
     in {
       enable = true;
-
-      # allow access to tls certs
-      user = "nginx";
 
       settings = {
         include = "${./unbound-adblock.conf}";
