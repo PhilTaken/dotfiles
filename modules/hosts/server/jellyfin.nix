@@ -15,7 +15,7 @@ in {
     };
     port = mkOption {
       type = types.port;
-      default = netlib.portFor "jellyfin";
+      default = 8096;
     };
   };
 
