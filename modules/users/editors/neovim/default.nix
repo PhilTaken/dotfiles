@@ -343,6 +343,8 @@ in {
             })
           '')
 
+          (lplug luasnip "")
+
           (lplug lsp_lines-nvim ''
             require("lsp_lines").setup()
             vim.diagnostic.config({
