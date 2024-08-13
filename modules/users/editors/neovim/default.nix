@@ -475,6 +475,11 @@ in {
             require("which-key").setup({})
           '')
 
+          vim-dadbod
+          (plug vim-dadbod-completion ''
+            autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
+          '')
+
           ## completion
           cmp-buffer
           cmp-nvim-lsp

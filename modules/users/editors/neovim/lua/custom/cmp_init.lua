@@ -6,6 +6,7 @@ cmp.setup({
 	completion = {
 		completeopt = "menu,menuone,noinsert",
 	},
+
 	mapping = cmp.mapping.preset.insert({
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -60,11 +61,6 @@ cmp.setup({
 				luasnip = "[snip]",
 			},
 		}),
-	},
-
-	experimental = {
-		native_menu = false,
-		ghost_text = true,
 	},
 })
 
