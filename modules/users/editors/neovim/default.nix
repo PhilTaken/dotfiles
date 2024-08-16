@@ -475,9 +475,23 @@ in {
             require("which-key").setup({})
           '')
 
-          vim-dadbod
+          (plug vim-dadbod ''
+            if vim.env.DATABASE_URL ~= nil then
+               vim.env.DATABASE_URL = "sqlite:///" .. vim.env.DATABASE_URL
+            end
+          '')
+
           (plug vim-dadbod-completion ''
-            autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
+            vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+                pattern = {"*.sql"},
+                callback = function()
+                  require('cmp').setup.buffer({
+                    sources = {
+                      { name = 'vim-dadbod-completion' }
+                    }
+                  })
+                end,
+            })
           '')
 
           ## completion
