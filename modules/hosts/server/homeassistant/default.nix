@@ -164,9 +164,13 @@ in {
 
             condition = [
               {
-                condition = "numeric_state";
-                entity_id = "sensor.uptime";
-                above = 15;
+                alias = "up for more than 15 minutes";
+                condition = "template";
+                value_template = ''
+                  {% set value = states('sensor.uptime') %}
+                  {% set up_minutes = (now().timestamp() - as_timestamp(value)) / 60 %}
+                  {{ up_minutes > 15 }}
+                '';
               }
             ];
 
