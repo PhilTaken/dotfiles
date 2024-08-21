@@ -36,7 +36,6 @@ in {
         self.overlays.default
       ];
     };
-    inherit (pkgs) lib;
 
     shellPackages = with pkgs; [
       fd
