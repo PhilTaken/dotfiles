@@ -23,7 +23,7 @@
     inherit plugin;
     config = ''
       require("lz.n").load {
-        ${plugin.pname}",
+        "${plugin.pname}",
         ${pconf}
       }
     '';
@@ -322,7 +322,7 @@ in {
           '')
 
           (lplug echodoc-vim ''
-            before = function
+            before = function()
               vim.g["echodoc#enable_at_startup"] = 1
               vim.g["echodoc#type"] = 'floating'
             end
@@ -424,11 +424,9 @@ in {
             end
           '')
 
-          (lplug diffview-nvim ''
-            after = function()
-              vim.opt.fillchars:append { diff = "╱" }
-              require('diffview').setup({})
-            end
+          (plug diffview-nvim ''
+            vim.opt.fillchars:append { diff = "╱" }
+            require('diffview').setup({})
           '')
 
           (lplug gitlinker-nvim ''
@@ -593,7 +591,9 @@ in {
             require('ufo').setup()
           '')
           (lplug vim-hy ''
-            before = vim.g.hy_enable_conceal = 1
+            before = function()
+              vim.g.hy_enable_conceal = 1
+            end
           '')
         ])
         ++ (map (p: mkLplug (buildPlugin p)) [
