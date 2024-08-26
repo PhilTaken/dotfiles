@@ -31,6 +31,7 @@
     type = "lua";
   };
   mkLplug = plugin: (lplug plugin "");
+  mkVlplug = plugin: (lplug plugin "event = 'DeferredUIEnter'");
 in {
   options.phil.editors.neovim = {
     enable = mkOption {
@@ -229,7 +230,7 @@ in {
 
           # -----------------------------------------------------
 
-          (lplug vim-illuminate "")
+          (lplug vim-illuminate "event = 'DeferredUIEnter'")
 
           (lplug neorg ''
             after = function()
@@ -616,7 +617,7 @@ in {
             ft = "hy",
           '')
         ])
-        ++ (map (p: mkLplug (buildPlugin p)) [
+        ++ (map (p: mkVlplug (buildPlugin p)) [
           # TODO: don't abuse nix flake inputs for these
           {pname = "janet.vim";}
           {pname = "vim-terraform";}
