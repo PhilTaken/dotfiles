@@ -249,7 +249,8 @@ in {
                   ["core.integrations.telescope"] = {}
                 },
               }
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
           # extra plugins for *neorg*
           neorg-telescope
@@ -298,7 +299,8 @@ in {
               end, {
                 desc = "Re-enable autoformat-on-save",
               })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug nvim-notify ''
@@ -312,26 +314,30 @@ in {
           (lplug neoscroll-nvim ''
             after = function()
               require("neoscroll").setup({ hide_cursor = false })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug stabilize-nvim ''
             after = function()
               require('stabilize').setup()
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug echodoc-vim ''
             before = function()
               vim.g["echodoc#enable_at_startup"] = 1
               vim.g["echodoc#type"] = 'floating'
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug float-preview-nvim ''
             before = function()
               vim.g["float_preview#docked"] = 1
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug indent-blankline-nvim ''
@@ -345,10 +351,11 @@ in {
                 },
                 scope = { show_start = false, show_end = false, }
               })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
-          (lplug luasnip "")
+          (lplug luasnip "event = 'DeferredUIEnter'")
 
           (lplug lsp_lines-nvim ''
             after = function()
@@ -359,7 +366,8 @@ in {
                       only_current_line = true,
                   },
               })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug lsp_signature-nvim ''
@@ -371,7 +379,8 @@ in {
                       border = "single",
                   },
               })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug neogit ''
@@ -404,7 +413,8 @@ in {
                       },
                   },
               })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug pear-tree ''
@@ -414,14 +424,16 @@ in {
               vim.g.pear_tree_smart_backspace = 1
               vim.g.pear_tree_map_special_keys = 0
               vim.g.pear_tree_ft_disabled = { "TelescopePrompt", "nofile", "terminal" }
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug conjure ''
             before = function()
               vim.g["conjure#filetype#fennel"] = "conjure.client.fennel.stdio"
               vim.g["conjure#filetypes"] = { "clojure", "fennel", "janet", "hy", "julia", "racket", "scheme", "lisp" }
-            end
+            end,
+            ft = { "clj", "fnl", "janet", "hy", "julia", "rkt", "scm", "cl" },
           '')
 
           (plug diffview-nvim ''
@@ -438,37 +450,43 @@ in {
                       ["gitlab%..*"] = require("gitlinker.hosts").get_gitlab_type_url,
                   },
               })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug gitsigns-nvim ''
             after = function()
               require('gitsigns').setup({})
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug nvim-neoclip-lua ''
             after = function()
               require("neoclip").setup({ enable_persistent_history = true })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug nvim-tree-lua ''
             after = function()
               require("nvim-tree").setup({})
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug trouble-nvim ''
             after = function()
               require("trouble").setup({})
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug fidget-nvim ''
             after = function()
               require("fidget").setup{}
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           # TODO load extension before telescope-nvim
@@ -585,7 +603,8 @@ in {
           (lplug cybu-nvim ''
             after = function()
               require('cybu').setup({ display_time = 350 })
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
           (plug nvim-ufo ''
             require('ufo').setup()
@@ -593,7 +612,8 @@ in {
           (lplug vim-hy ''
             before = function()
               vim.g.hy_enable_conceal = 1
-            end
+            end,
+            ft = "hy",
           '')
         ])
         ++ (map (p: mkLplug (buildPlugin p)) [
