@@ -30,7 +30,6 @@
     optional = true;
     type = "lua";
   };
-  mkLplug = plugin: (lplug plugin "");
   mkVlplug = plugin: (lplug plugin "event = 'DeferredUIEnter'");
 in {
   options.phil.editors.neovim = {
@@ -169,31 +168,53 @@ in {
         luafile ~/.config/nvim/init_.lua
       '';
 
-      extraLuaConfig = ''
-        -- Source plugin and its configuration immediately
-        -- @param plugin String with name of plugin as subdirectory in 'pack'
-        local packadd = function(plugin)
-          local command = 'packadd'
-          vim.cmd(string.format([[%s %s]], command, plugin))
-        end
-      '';
-
       # install treesitter with nix to prevent all kinds of libstdc++.so shenenigans
       plugins =
         (with pkgs.vimPlugins; [
-          lz-n
-          # ---------------------------------------
           # these *need* to be loaded synchronously
-          (plug nvim-treesitter.withAllGrammars ''
-            require('nvim-treesitter.configs').setup {
-              highlight = { enable = true },
-              indent = { enable = true },
-              auto_install = false,
+          # ---------------------------------------
+          lz-n
+          vim-startuptime
+          vim-sleuth
+          plenary-nvim
+
+          (plug nvim-navic ''
+            require('nvim-navic').setup {
+              icons = {
+                File          = "󰈙 ",
+                Module        = " ",
+                Namespace     = "󰌗 ",
+                Package       = ' ',
+                Class         = ' ',
+                Method        = ' ',
+                Property      = ' ',
+                Field         = ' ',
+                Constructor   = " ",
+                Enum          = ' ',
+                Interface     = ' ',
+                Function      = "󰊕 ",
+                Variable      = ' ',
+                Constant      = "󰏿 ",
+                String        = "󰀬 ",
+                Number        = "󰎠 ",
+                Boolean       = ' ',
+                Array         = ' ',
+                Object        = ' ',
+                Key           = "󰌋 ",
+                Null          = "󰟢 ",
+                EnumMember    = " ",
+                Struct        = ' ',
+                Event         = ' ',
+                Operator      = "󰆕 ",
+                TypeParameter = ' '
+              }
             }
           '')
-          (plug alpha-nvim ''
-            require('alpha').setup(require('alpha.themes.startify').opts)
+
+          (plug nvim-lspconfig ''
+            require('custom.lsp')
           '')
+
           (plug catppuccin-nvim ''
             local catppuccin = require("catppuccin")
             catppuccin.setup({
@@ -222,15 +243,98 @@ in {
             vim.cmd([[colorscheme catppuccin]])
           '')
 
-          (plug vim-rooter ''
-            vim.g.rooter_targets = "/,*"
-            vim.g.rooter_patterns = { ".git/" }
-            vim.g.rooter_resolve_links = 1
+          (plug alpha-nvim ''
+            require('alpha').setup(require('alpha.themes.startify').opts)
+          '')
+
+          (plug galaxyline-nvim ''
+            -- statusline
+            require("custom.statusline")
+          '')
+
+          (plug nvim-treesitter.withAllGrammars ''
+            require('nvim-treesitter.configs').setup {
+              highlight = { enable = true },
+              indent = { enable = true },
+              auto_install = false,
+            }
+          '')
+
+          (plug which-key-nvim ''
+            require("which-key").setup({})
+            require("custom.maps")
           '')
 
           # -----------------------------------------------------
+          # these *should* to be loaded asynchronously
+          # -----------------------------------------------------
+
+          # telescope
+          telescope-file-browser-nvim
+          telescope-symbols-nvim
+          telescope-zoxide
+          telescope-ui-select-nvim
+          (buildPlugin {pname = "telescope-egrepify.nvim";})
+          # TODO lazily load extension before telescope-nvim
+          (plug telescope-nvim ''
+            require("telescope").load_extension("file_browser")
+            require("telescope").load_extension("zoxide")
+            require("telescope").load_extension("ui-select")
+            require("telescope").load_extension("egrepify")
+            require("custom.tele_init")
+          '')
+          neorg-telescope
+
+          # completion
+          (lplug luasnip ''
+            after = function()
+              require('custom.snippets')
+            end
+          '')
+
+          (plug lspkind-nvim ''require('lspkind').init()'')
+
+          cmp-buffer
+          cmp-nvim-lsp
+          cmp-nvim-lua
+          cmp-path
+          cmp-under-comparator
+          (plug nvim-cmp ''require("custom.cmp_init")'')
+
+          # -----------------------------------------------------
+          # these *are* loaded asynchronously
+          # -----------------------------------------------------
+
+          (lplug diffview-nvim ''
+            after = function()
+              vim.opt.fillchars:append { diff = "╱" }
+              require('diffview').setup({})
+            end,
+            event = "DeferredUIEnter",
+          '')
+
+          (lplug neogit ''
+            after = function()
+              require("neogit").setup({
+                  integrations = {
+                      telescope = true,
+                      diffview = true,
+                  },
+                  graph_style = "unicode",
+              })
+            end,
+            command = "Neogit",
+          '')
 
           (lplug vim-illuminate "event = 'DeferredUIEnter'")
+          (lplug vim-rooter ''
+            after = function()
+              vim.g.rooter_targets = "/,*"
+              vim.g.rooter_patterns = { ".git/" }
+              vim.g.rooter_resolve_links = 1
+            end,
+            event = "DeferredUIEnter",
+          '')
 
           (lplug neorg ''
             after = function()
@@ -253,8 +357,6 @@ in {
             end,
             event = "DeferredUIEnter",
           '')
-          # extra plugins for *neorg*
-          neorg-telescope
 
           (lplug conform-nvim ''
             after = function()
@@ -309,7 +411,8 @@ in {
               local notify = require("notify")
               notify.setup({ background_colour = "#000000" })
               vim.notify = notify
-            end
+            end,
+            event = "DeferredUIEnter",
           '')
 
           (lplug neoscroll-nvim ''
@@ -356,8 +459,6 @@ in {
             event = "DeferredUIEnter",
           '')
 
-          (lplug luasnip "event = 'DeferredUIEnter'")
-
           (lplug lsp_lines-nvim ''
             after = function()
               require("lsp_lines").setup()
@@ -382,18 +483,6 @@ in {
               })
             end,
             event = "DeferredUIEnter",
-          '')
-
-          (lplug neogit ''
-            after = function()
-              require("neogit").setup({
-                  integrations = {
-                      telescope = true,
-                      diffview = true,
-                  },
-                  graph_style = "unicode",
-              })
-            end
           '')
 
           (lplug nvim-bqf ''
@@ -427,19 +516,6 @@ in {
               vim.g.pear_tree_ft_disabled = { "TelescopePrompt", "nofile", "terminal" }
             end,
             event = "DeferredUIEnter",
-          '')
-
-          (lplug conjure ''
-            before = function()
-              vim.g["conjure#filetype#fennel"] = "conjure.client.fennel.stdio"
-              vim.g["conjure#filetypes"] = { "clojure", "fennel", "janet", "hy", "julia", "racket", "scheme", "lisp" }
-            end,
-            ft = { "clj", "fnl", "janet", "hy", "julia", "rkt", "scm", "cl" },
-          '')
-
-          (plug diffview-nvim ''
-            vim.opt.fillchars:append { diff = "╱" }
-            require('diffview').setup({})
           '')
 
           (lplug gitlinker-nvim ''
@@ -490,79 +566,50 @@ in {
             event = "DeferredUIEnter",
           '')
 
-          # TODO load extension before telescope-nvim
-          (plug telescope-nvim ''
-            require("telescope").load_extension("file_browser")
-            require("telescope").load_extension("zoxide")
-            require("telescope").load_extension("ui-select")
-            require("telescope").load_extension("egrepify")
-
-            require("custom.tele_init")
-          '')
-          telescope-file-browser-nvim
-          telescope-symbols-nvim
-          telescope-zoxide
-          telescope-ui-select-nvim
-          (buildPlugin {pname = "telescope-egrepify.nvim";})
-
-          # TODO load these asynchronously
-          (plug lspkind-nvim "require('lspkind').init()")
-
-          (plug toggleterm-nvim ''
-            require("toggleterm").setup({
-                hide_numbers = true,
-                shell = vim.o.shell,
-                size = function(term)
-                    if term.direction == "horizontal" then
-                        return 15
-                    elseif term.direction == "vertical" then
-                        return vim.o.columns * 0.4
-                    end
-                end,
-            })
+          (lplug toggleterm-nvim ''
+            after = function()
+              require("toggleterm").setup({
+                  hide_numbers = true,
+                  shell = vim.o.shell,
+                  size = function(term)
+                      if term.direction == "horizontal" then
+                          return 15
+                      elseif term.direction == "vertical" then
+                          return vim.o.columns * 0.4
+                      end
+                  end,
+              })
+              require('custom.terminals')
+            end,
+            event = "DeferredUIEnter",
           '')
 
-          (plug which-key-nvim ''
-            require("which-key").setup({})
+          (lplug vim-dadbod ''
+            after = function()
+              if vim.env.DATABASE_URL ~= nil then
+                vim.env.DATABASE_URL = "sqlite:///" .. vim.env.DATABASE_URL
+              end
+            end,
+            event = "DeferredUIEnter",
           '')
 
-          (plug vim-dadbod ''
-            if vim.env.DATABASE_URL ~= nil then
-               vim.env.DATABASE_URL = "sqlite:///" .. vim.env.DATABASE_URL
-            end
+          (lplug vim-dadbod-completion ''
+            after = function()
+              vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+                  pattern = {"*.sql"},
+                  callback = function()
+                    require('cmp').setup.buffer({
+                      sources = {
+                        { name = 'vim-dadbod-completion' }
+                      }
+                    })
+                  end,
+              })
+            end,
+            event = "DeferredUIEnter",
           '')
 
-          (plug vim-dadbod-completion ''
-            vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-                pattern = {"*.sql"},
-                callback = function()
-                  require('cmp').setup.buffer({
-                    sources = {
-                      { name = 'vim-dadbod-completion' }
-                    }
-                  })
-                end,
-            })
-          '')
-
-          ## completion
-          cmp-buffer
-          cmp-nvim-lsp
-          cmp-nvim-lua
-          cmp-path
-          cmp-under-comparator
-          (plug nvim-cmp ''
-            require("custom.cmp_init")
-          '')
-
-          (plug galaxyline-nvim ''
-            -- statusline
-            require("custom.statusline")
-          '')
-
-          vim-startuptime
-          plenary-nvim
-          nvim-lspconfig
+          # TODO required for lsp
           (plug nvim-web-devicons ''
             require("nvim-web-devicons").setup({
               override = {
@@ -574,51 +621,62 @@ in {
               },
             })
           '')
-          vim-sleuth
 
+          # filetype-specific plugins
+          (lplug conjure ''
+            before = function()
+              vim.g["conjure#filetype#fennel"] = "conjure.client.fennel.stdio"
+              vim.g["conjure#filetypes"] = { "clojure", "fennel", "janet", "hy", "julia", "racket", "scheme", "lisp" }
+            end,
+            ft = { "clj", "fnl", "janet", "hy", "julia", "rkt", "scm", "cl" },
+          '')
+
+          # missing pname
           parinfer-rust
-          nvim-navic
 
-          # json/yaml schemas for lsp
+          # TODO required for lsp
           SchemaStore-nvim
+
+          (lplug fennel-vim ''ft = {"fennel"}'')
+          (lplug vim-nix ''ft = {"nix"}'')
+          (lplug vim-pandoc-syntax ''ft = {"md"}'')
         ])
         # plugins that aren't needed immediately for startup
         ++ (with pkgs.vimPlugins;
-          map mkLplug [
+          map mkVlplug [
             lsp-colors-nvim
             sqlite-lua
             targets-vim
             direnv-vim
-            fennel-vim
             friendly-snippets
             nerdcommenter
             popup-nvim
             todo-comments-nvim
             vim-fugitive
-            vim-nix
-            vim-pandoc-syntax
             vim-repeat
             vim-surround
           ])
         ++ (with pkgs.vimExtraPlugins; [
-          (lplug cybu-nvim ''
-            after = function()
-              require('cybu').setup({ display_time = 350 })
-            end,
-            event = "DeferredUIEnter",
-          '')
+          # this cannot be lazily loaded easily since neogit checks if it's available and adds some extra config if it is
           (plug nvim-ufo ''
             require('ufo').setup()
           '')
+
           (lplug vim-hy ''
             before = function()
               vim.g.hy_enable_conceal = 1
             end,
             ft = "hy",
           '')
+          (lplug cybu-nvim ''
+            after = function()
+              require('cybu').setup({ display_time = 350 })
+            end,
+            event = "DeferredUIEnter",
+          '')
         ])
         ++ (map (p: mkVlplug (buildPlugin p)) [
-          # TODO: don't abuse nix flake inputs for these
+          # TODO add filetype here to only load them on demand
           {pname = "janet.vim";}
           {pname = "vim-terraform";}
           {pname = "yuck.vim";}
@@ -628,8 +686,6 @@ in {
           {pname = "promise-async";}
         ]);
     };
-
-    home.shellAliases.g = "vim +Neogit";
 
     home.packages = with pkgs; [
       #visidata

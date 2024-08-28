@@ -5,7 +5,6 @@ local capabilities = vim.tbl_deep_extend(
 	vim.lsp.protocol.make_client_capabilities(),
 	require("cmp_nvim_lsp").default_capabilities()
 )
-local navic = require("nvim-navic")
 local configs = require("lspconfig/configs")
 
 capabilities.textDocument.foldingRange = {
@@ -171,7 +170,9 @@ local enabled_lsps = {
 local signature_setup = {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
-		navic.attach(client, bufnr)
+		if client.server_capabilities.documentSymbolProvider then
+			require("nvim-navic").attach(client, bufnr)
+		end
 		which_key_lsp()
 	end,
 }

@@ -1,4 +1,5 @@
 local Terminal = require("toggleterm.terminal").Terminal
+local wk = require("which-key")
 
 local on_open = function(term)
 	vim.cmd("startinsert!")
@@ -34,6 +35,38 @@ M.bottom = Terminal:new({
 		border = "double",
 	},
 	close_on_exit = true,
+})
+
+wk.add({
+	{ "<leader>s", group = "shells" },
+	{
+		"<leader>sf",
+		function()
+			M["bgshell"]:toggle()
+		end,
+		desc = "Toggle random shell",
+	},
+	{
+		"<leader>sh",
+		function()
+			M["vterm"]:toggle()
+		end,
+		desc = "Toggle side shell (vertical split)",
+	},
+	{
+		"<leader>st",
+		function()
+			M["bottom"]:toggle()
+		end,
+		desc = "Toggle bottom resource monitor",
+	},
+	{
+		"<leader>sv",
+		function()
+			M["vterm"]:toggle()
+		end,
+		desc = "Toggle side shell (horizontal split)",
+	},
 })
 
 return M

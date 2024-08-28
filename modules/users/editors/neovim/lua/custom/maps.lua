@@ -18,9 +18,7 @@ vim.cmd([[map gf :e <cfile><CR>]])
 -- TODO: package spork/netrepl using nix, provide it via overlay
 vim.cmd([[au BufEnter *.fnl,*.rkt,*.hy,*.scm,*.janet,*.py :lua which_key_conjure()]])
 
--- terminals
-local terms = require("custom.terminals")
-local diffview = require("diffview")
+-- mappings
 local wk = require("which-key")
 
 local function visual_selection_range()
@@ -102,28 +100,28 @@ wk.add({
 	{
 		"<leader>dc",
 		function()
-			diffview.close()
+			require("diffview").close()
 		end,
 		desc = "Close Diffview",
 	},
 	{
 		"<leader>df",
 		function()
-			diffview.file_history(nil, "%")
+			require("diffview").file_history(nil, "%")
 		end,
 		desc = "Diffview File History",
 	},
 	{
 		"<leader>dh",
 		function()
-			diffview.file_history()
+			require("diffview").file_history()
 		end,
 		desc = "Diffview History",
 	},
 	{
 		"<leader>do",
 		function()
-			diffview.open()
+			require("diffview").open()
 		end,
 		desc = "Open Diffview",
 	},
@@ -215,36 +213,6 @@ wk.add({
 	},
 	{ "<leader>r", "<cmd>Rooter<cr>", desc = "Root vim" },
 
-	{ "<leader>s", group = "shells" },
-	{
-		"<leader>sf",
-		function()
-			terms["bgshell"]:toggle()
-		end,
-		desc = "Toggle random shell",
-	},
-	{
-		"<leader>sh",
-		function()
-			terms["vterm"]:toggle()
-		end,
-		desc = "Toggle side shell (vertical split)",
-	},
-	{
-		"<leader>st",
-		function()
-			terms["bottom"]:toggle()
-		end,
-		desc = "Toggle bottom resource monitor",
-	},
-	{
-		"<leader>sv",
-		function()
-			terms["vterm"]:toggle()
-		end,
-		desc = "Toggle side shell (horizontal split)",
-	},
-
 	{ "<leader>t", group = "trouble" },
 	{ "<leader>ta", "<cmd>TodoTelescope<cr>", desc = "Open TODOs in Telescope" },
 	{ "<leader>td", "<cmd>TroubleToggle lsp_document_diagnostics<cr>", desc = "Document Diagnostics" },
@@ -334,7 +302,7 @@ wk.add({
 			function()
 				local range = visual_selection_range()
 				vim.pretty_print(vim.inspect(range))
-				diffview.file_history(range)
+				require("diffview").file_history(range)
 			end,
 			desc = "Diffview file history",
 		},

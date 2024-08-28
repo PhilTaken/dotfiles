@@ -37,9 +37,3 @@
 
 -- default settings
 require("custom.settings")
-
--- lsp settings
-require("custom.lsp")
-
--- mappings
-require("custom.maps")
