@@ -244,7 +244,7 @@ in {
           '')
 
           (plug alpha-nvim ''
-            require('alpha').setup(require('alpha.themes.startify').opts)
+            require("custom.alpha")
           '')
 
           (plug galaxyline-nvim ''
