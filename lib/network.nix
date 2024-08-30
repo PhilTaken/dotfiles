@@ -13,7 +13,7 @@ in {
 
   nodeHasPublicIp = !isNull node.public_ip;
 
-  # generate ports with minimal overlap for your services
+  # generate ports with minimal overlap for services
   # solely for internal use (port 80/443 -> proxy (nginx) -> port for service -> service)
   # TODO add check that the resulting port is not 8096 -> jellyfin
   portFor = service: let
