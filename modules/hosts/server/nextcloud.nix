@@ -120,15 +120,7 @@ in {
 
           networking.firewall.enable = false;
 
-          services.nextcloud = let
-            news = pkgs.fetchNextcloudApp {
-              appName = "news";
-              appVersion = "25.0.0-alpha5";
-              url = "https://github.com/nextcloud/news/releases/download/25.0.0-alpha5/news.tar.gz";
-              sha256 = "sha256-BbGzrOBDshZfiDhKUMiTXGnI7767hpCGsujMbPqmJyg=";
-              license = "agpl3Plus";
-            };
-          in {
+          services.nextcloud = {
             enable = true;
             package = pkgs.nextcloud29;
 
@@ -137,21 +129,15 @@ in {
 
             extraApps = {
               inherit
-                (pkgs.nextcloud28Packages.apps)
+                (pkgs.nextcloud29Packages.apps)
                 calendar
                 bookmarks
                 contacts
-                # deck
-                
                 groupfolders
-                # impersonate
-                
                 spreed
-                # twofactor_webauthn
-                
                 previewgenerator
+                memories
                 ;
-              inherit news;
             };
 
             caching.redis = true;
