@@ -109,7 +109,7 @@ in {
               OIDC_ISSUER_DISCOVER = true;
 
               # set up oidc details
-              OIDC_ISSUER = "https://keycloak.pherzog.xyz/realms/services";
+              OIDC_ISSUER = "https://${netlib.domainFor "keycloak"}/realms/services";
               OIDC_DISPLAY_NAME_CLAIMS = "name";
               OIDC_CLIENT_ID = "bookstack";
               OIDC_CLIENT_SECRET._secret = oidcClientSecret;

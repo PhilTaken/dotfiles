@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   netlib,
@@ -46,7 +45,7 @@ in {
         # oidc
         OIDC_AUTH_ENABLED = "true";
         OIDC_SIGNUP_ENABLED = "true";
-        OIDC_CONFIGURATION_URL = "https://keycloak.pherzog.xyz/realms/services/.well-known/openid-configuration";
+        OIDC_CONFIGURATION_URL = "https://${netlib.domainFor "keycloak"}/realms/services/.well-known/openid-configuration";
         OIDC_CLIENT_ID = "mealie";
         OIDC_PROVIDER_NAME = "Keycloak";
         OIDC_AUTO_REDIRECT = "true";

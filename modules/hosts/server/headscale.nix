@@ -52,7 +52,7 @@ in {
           only_start_if_oidc_is_available = true;
           client_secret_path = config.sops.secrets."headscale-kc-client-secret".path;
           # TODO network.nix?
-          issuer = "https://keycloak.pherzog.xyz/realms/services";
+          issuer = "https://${netlib.domainFor "keycloak"}/realms/services";
           client_id = "headscale";
         };
       };
