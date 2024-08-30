@@ -12,7 +12,7 @@
   pm_client_ip = net.nodes.${promtail_client}.network_ip."headscale";
 
   # TODO: consul?
-  pm_client_port = netlib.portFor "prometheus";
+  pm_client_port = netlib.portFor "loki";
 in {
   options.phil.server.services.vector = {
     enable = mkOption {
