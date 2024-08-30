@@ -7,6 +7,7 @@
 }: let
   inherit (lib) mkOption mkIf types mkEnableOption;
   cfg = config.phil.server.services.gitea;
+  exe = lib.getExe config.services.forgejo.package;
 in {
   options.phil.server.services.gitea = {
     enable = mkEnableOption "gitea";
@@ -73,5 +74,33 @@ in {
         };
       };
     };
+
+    sops.secrets.forgejo-oauthsecret.owner = "forgejo";
+
+    systemd.services.forgejo.preStart = let
+      providerName = "Keycloak";
+      args = lib.escapeShellArgs [
+        "--name"
+        providerName
+        "--provider"
+        "openidConnect"
+        "--key"
+        "forgejo"
+        "--auto-discover-url"
+        "https://${netlib.domainFor "keycloak"}/realms/services/.well-known/openid-configuration"
+        "--group-claim-name"
+        "roles"
+        "--admin-group"
+        "admin"
+      ];
+    in
+      lib.mkAfter ''
+        providerId="$(${exe} admin auth list | ${pkgs.gnugrep}/bin/grep -w '${providerName}' | cut -f1)"
+        if [[ -z "$providerId" ]]; then
+          FORGEJO_ADMIN_OAUTH2_SECRET="$(< ${config.sops.secrets.forgejo-oauthsecret.path})" ${exe} admin auth add-oauth ${args}
+        else
+          FORGEJO_ADMIN_OAUTH2_SECRET="$(< ${config.sops.secrets.forgejo-oauthsecret.path})" ${exe} admin auth update-oauth --id "$providerId" ${args}
+        fi
+      '';
   };
 }
