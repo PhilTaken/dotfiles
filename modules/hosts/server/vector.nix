@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkOption mkIf types;
@@ -11,7 +12,7 @@
   pm_client_ip = net.nodes.${promtail_client}.network_ip."headscale";
 
   # TODO: consul?
-  pm_client_port = 3100;
+  pm_client_port = netlib.portFor "prometheus";
 in {
   options.phil.server.services.vector = {
     enable = mkOption {
