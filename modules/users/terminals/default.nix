@@ -70,7 +70,8 @@ in {
             adjust_window_size_when_changing_font_size = false,
             warn_about_missing_glyphs = false,
             disable_default_key_bindings = true,
-            color_scheme = 'Catppuccin Macchiato'
+            color_scheme = 'Catppuccin Macchiato',
+            front_end = "WebGpu",
           }
 
           config.keys = {
