@@ -50,10 +50,29 @@ in {
         PAPERLESS_OCR_USER_ARGS = {
           optimize = 1;
           pdfa_image_compression = "lossless";
+          continue_on_soft_render_error = true;
         };
 
+        # virtiofsd doesn't send inotify events (not sure if generally, or because we
+        # mount the same host share on another vm (samba) and modify it there).
+        PAPERLESS_CONSUMER_POLLING = 1; # seconds
+        # Wait three seconds between file-modified checks. After 5 consecutive checks
+        # where the file wasn't modified it will be consumed.
+        PAPERLESS_CONSUMER_POLLING_DELAY = 3;
+
+        PAPERLESS_CONSUMER_ENABLE_BARCODES = true;
+        PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE = true;
+        PAPERLESS_CONSUMER_BARCODE_SCANNER = "ZXING";
+        PAPERLESS_CONSUMER_RECURSIVE = true;
+        PAPERLESS_FILENAME_FORMAT = "{owner_username}/{created_year}-{created_month}-{created_day}_{asn}_{title}";
+
+        # Nginx does that better.
+        PAPERLESS_ENABLE_COMPRESSION = false;
+        PAPERLESS_NUMBER_OF_SUGGESTED_DATES = 8;
+        PAPERLESS_TASK_WORKERS = 4;
+        PAPERLESS_WEBSERVER_WORKERS = 4;
+
         # oauth
-        # PAPERLESS_DISABLE_REGULAR_LOGIN = true;
         PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
         PAPERLESS_SOCIALACCOUNT_PROVIDERS = builtins.toJSON {
           openid_connect.APPS = [
