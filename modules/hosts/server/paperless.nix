@@ -53,7 +53,7 @@ in {
         };
 
         # oauth
-        PAPERLESS_DISABLE_REGULAR_LOGIN = true;
+        # PAPERLESS_DISABLE_REGULAR_LOGIN = true;
         PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
         PAPERLESS_SOCIALACCOUNT_PROVIDERS = builtins.toJSON {
           openid_connect.APPS = [
