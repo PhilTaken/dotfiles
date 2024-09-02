@@ -37,6 +37,7 @@ in {
     ./nginx.nix
     ./nix-serve.nix
     ./openssh.nix
+    ./paperless.nix
     ./prometheus/prometheus-exporter.nix
     ./seafile.nix
     ./syncthing.nix

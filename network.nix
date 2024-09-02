@@ -58,6 +58,8 @@
 
           "gleamdication"
           "mealie"
+
+          "paperless"
         ];
       };
     };
