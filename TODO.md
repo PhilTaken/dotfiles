@@ -1,16 +1,12 @@
 # current TODOs
 
+- fix headscale / keycloak restart timing failing deployments
+
 - auto nix-collect-garbage on beta, delta
-- fix nix-build dns on delta when building 
-
-- portunus -> openldap for user sync
-
-- set up ente.io docker containers
 - set up audiobookshelf
-- setup paperless
-    - + backup
 
 - backups
+    - paperless
     - fix nextcloud (turn maintenance on and off)
     - nextcloud postgres db
     - rclone / borg => rustic
@@ -27,11 +23,11 @@
 ## other
 
 - set up modules:
-    - paperless-ngx
     - audiobookshelf for podcasts
 
     - radicale + ente / immich
         - to replace nextcloud
+        - maybe nextcloud memories is fine for now
 
     - snapcast server/clients
 
@@ -50,5 +46,4 @@
 - centralize config more:
     - better ssh keys handling (public keys copied everywhere)
         - ldap?
-    - move gpg keys to some .nix file
-        - ldap?
+        - kanidm!
