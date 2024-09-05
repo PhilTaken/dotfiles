@@ -299,6 +299,7 @@ in {
           cmp-nvim-lua
           cmp-path
           cmp-under-comparator
+          (buildPlugin {pname = "nvim-cmp-lsp-rs";})
           (plug nvim-cmp ''require("custom.cmp_init")'')
 
           # -----------------------------------------------------

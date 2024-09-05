@@ -2,7 +2,10 @@
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
-cmp.setup({
+local cmp_lsp_rs = require("cmp_lsp_rs")
+local comparators = cmp_lsp_rs.comparators
+
+local opts = {
 	completion = {
 		completeopt = "menu,menuone,noinsert",
 	},
@@ -31,9 +34,12 @@ cmp.setup({
 
 	sorting = {
 		comparators = {
-			cmp.config.compare.offset,
 			cmp.config.compare.exact,
 			cmp.config.compare.score,
+
+			comparators.inscope_inherent_import,
+			comparators.sort_by_label_but_underscore_last,
+
 			require("cmp-under-comparator").under,
 			cmp.config.compare.kind,
 			cmp.config.compare.sort_text,
@@ -62,7 +68,13 @@ cmp.setup({
 			},
 		}),
 	},
-})
+}
+
+for _, source in ipairs(opts.sources) do
+	cmp_lsp_rs.filter_out.entry_filter(source)
+end
+
+cmp.setup(opts)
 
 cmp.setup.cmdline({
 	mapping = cmp.mapping.preset.cmdline({

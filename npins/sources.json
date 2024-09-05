@@ -91,6 +91,18 @@
       "url": "https://releases.nixos.org/nixpkgs/nixpkgs-24.11pre672159.a6292e34000d/nixexprs.tar.xz",
       "hash": "0d6kj90qf8cgqyr47b46yj9q9l8yyh34nw87sax1kkv7csxgm6kr"
     },
+    "nvim-cmp-lsp-rs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "zjp-CN",
+        "repo": "nvim-cmp-lsp-rs"
+      },
+      "branch": "main",
+      "revision": "d9ebeca9ea07ba2fd57f997b2d6a8bc7da51abed",
+      "url": "https://github.com/zjp-CN/nvim-cmp-lsp-rs/archive/d9ebeca9ea07ba2fd57f997b2d6a8bc7da51abed.tar.gz",
+      "hash": "0pbv69zwnxw4llhhw0w5h4rnp72rvrp1dxpirxd651nxpf7wv1im"
+    },
     "pisces": {
       "type": "Git",
       "repository": {
