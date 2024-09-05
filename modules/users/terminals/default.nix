@@ -48,10 +48,6 @@ in {
         };
       };
 
-      kitty = {
-        enable = true;
-      };
-
       wezterm = {
         enable = true;
         # TODO make color_scheme configurable
