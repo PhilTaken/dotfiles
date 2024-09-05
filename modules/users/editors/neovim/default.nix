@@ -109,7 +109,6 @@ in {
 
           bottom # custom floaterm
 
-          sqlite # for sqlite.lua
           inetutils # remote editing
 
           sumneko-lua-language-server
@@ -152,15 +151,7 @@ in {
           #elixir_ls # elixir
         ]));
 
-      extraConfig = let
-        sqlite_basename =
-          if (lib.hasInfix "darwin" pkgs.system)
-          then "libsqlite3.dylib"
-          else "libsqlite3.so";
-        sqlite_path = "${pkgs.sqlite.out}/lib/${sqlite_basename}";
-      in ''
-        let g:sqlite_clib_path = "${sqlite_path}"
-
+      extraConfig = ''
         " write to undofile in undodir
         set undodir=${config.xdg.dataHome}
         set undofile
@@ -539,13 +530,6 @@ in {
             event = "DeferredUIEnter",
           '')
 
-          (lplug nvim-neoclip-lua ''
-            after = function()
-              require("neoclip").setup({ enable_persistent_history = true })
-            end,
-            event = "DeferredUIEnter",
-          '')
-
           (lplug nvim-tree-lua ''
             after = function()
               require("nvim-tree").setup({})
@@ -646,7 +630,6 @@ in {
         ++ (with pkgs.vimPlugins;
           map mkVlplug [
             lsp-colors-nvim
-            sqlite-lua
             targets-vim
             direnv-vim
             friendly-snippets

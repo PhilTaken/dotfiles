@@ -169,14 +169,6 @@ wk.add({
 		end,
 		desc = "Browse workspace tags",
 	},
-	{
-		"<leader>fy",
-		function()
-			require("custom.tele").extensions.neoclip.default()
-		end,
-		desc = "Manage yank register",
-	},
-
 	{ "<leader>g", group = "git" },
 	{
 		"<leader>gY",
