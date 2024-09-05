@@ -23,13 +23,14 @@
         network_ip."yggdrasil" = "10.100.0.2";
         services = [
           "keycloak"
-          "ldap"
+          "kanidm"
+
+          "email"
 
           "grafana"
           "freshrss"
           "headscale"
           "bookstack"
-          "email"
         ];
       };
 

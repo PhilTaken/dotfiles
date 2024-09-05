@@ -29,6 +29,7 @@ in {
     ./influxdb2.nix
     ./iperf.nix
     ./jellyfin.nix
+    ./kanidm.nix
     ./keycloak.nix
     ./ldap.nix
     ./mealie.nix

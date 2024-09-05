@@ -8,9 +8,10 @@ config: lib: let
 in {
   domainFor = host: "${host}.${net.tld}";
 
+  thisNode = node;
+
   nodeHas = lib.flip elem node.services;
   networkHas = lib.flip elem allServices;
-
   nodeHasPublicIp = !isNull node.public_ip;
 
   # generate ports with minimal overlap for services
