@@ -56,14 +56,49 @@ lsp_extra_config["lua_ls"] = {
 }
 
 lsp_extra_config["rust_analyzer"] = {
+	on_new_config = function(config)
+		local maxdepth = 4
+		function find_direnvs(dir, depth)
+			if depth == nil then
+				depth = 0
+			end
+			local direnvs = {}
+			local dirIter, dirObj = vim.loop.fs_scandir(dir)
+			while true do
+				local name, type = vim.loop.fs_scandir_next(dirIter, dirObj)
+
+				if name == nil then
+					break
+				elseif name == ".direnv" then
+					table.insert(direnvs, dir .. "/.direnv")
+				elseif type == "directory" then
+					if depth < maxdepth then
+						local nested_direnvs = find_direnvs(dir .. "/" .. name, depth + 1)
+						for _, v in ipairs(nested_direnvs) do
+							table.insert(direnvs, v)
+						end
+					end
+				end
+			end
+
+			return direnvs
+		end
+
+		local direnvs = find_direnvs(".")
+
+		for _, v in ipairs(direnvs) do
+			table.insert(config.settings["rust-analyzer"].files.excludeDirs, v)
+			table.insert(config.settings["rust-analyzer"].files.watcherExclude, v)
+		end
+	end,
 	flags = {
 		exit_timeout = 0,
 	},
 	settings = {
 		["rust-analyzer"] = {
 			files = {
-				excludeDirs = { ".direnv" },
-				watcherExclude = { ".direnv" },
+				excludeDirs = {},
+				watcherExclude = {},
 			},
 			imports = {
 				granularity = {
@@ -90,15 +125,14 @@ lsp_extra_config["rust_analyzer"] = {
 	},
 }
 
-local function get_python_path(workspace)
+local function get_python_path()
 	return vim.fn.exepath("python")
 end
 
 lsp_extra_config["pylsp"] = {
 	on_new_config = function(config)
-		config.settings.pylsp.plugins.jedi.environment = get_python_path(configs.root_dir)
-		config.settings.pylsp.plugins.pylsp_mypy.overrides =
-			{ "--python-executable", get_python_path(configs.root_dir), true }
+		config.settings.pylsp.plugins.jedi.environment = get_python_path()
+		config.settings.pylsp.plugins.pylsp_mypy.overrides = { "--python-executable", get_python_path(), true }
 	end,
 	settings = {
 		pylsp = {
