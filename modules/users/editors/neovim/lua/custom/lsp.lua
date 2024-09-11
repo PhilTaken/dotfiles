@@ -56,7 +56,7 @@ lsp_extra_config["lua_ls"] = {
 }
 
 lsp_extra_config["rust_analyzer"] = {
-	on_new_config = function(config)
+	on_new_config = function(config, root_dir)
 		local maxdepth = 4
 		function find_direnvs(dir, depth)
 			if depth == nil then
@@ -84,7 +84,7 @@ lsp_extra_config["rust_analyzer"] = {
 			return direnvs
 		end
 
-		local direnvs = find_direnvs(".")
+		local direnvs = find_direnvs(root_dir)
 
 		for _, v in ipairs(direnvs) do
 			table.insert(config.settings["rust-analyzer"].files.excludeDirs, v)
