@@ -30,7 +30,7 @@ in {
 
   config = lib.mkMerge [
     # use public nameserver when not connected to nebula
-    (mkIf (!config.phil.nebula.enable && !config.phil.services.unbound.enable) {
+    (mkIf (!config.phil.nebula.enable && !config.phil.server.services.unbound.enable) {
       networking.nameservers = ["9.9.9.9"];
 
       services.resolved = {
@@ -40,7 +40,7 @@ in {
       };
     })
 
-    (mkIf (!config.phil.nebula.enable && config.phil.services.unbound.enable) {
+    (mkIf (!config.phil.nebula.enable && config.phil.server.services.unbound.enable) {
       networking.nameservers = ["localhost"];
       services.resolved.enable = false;
     })
