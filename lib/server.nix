@@ -32,7 +32,7 @@ in {
           phil = {
             # enable networking by default
             # TODO replace with headscale
-            nebula.enable = lib.mkDefault true;
+            # nebula.enable = lib.mkDefault true;
 
             # no need for these on a server
             sound.enable = false;

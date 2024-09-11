@@ -112,7 +112,6 @@ in {
               [
                 {
                   phil = {
-                    nebula.enable = true;
                     server.services.openssh.enable = true;
 
                     core.enableBluetooth = true;
@@ -142,7 +141,6 @@ in {
             hostModules = [
               {
                 phil = {
-                  nebula.enable = true;
                   server.services.openssh.enable = true;
 
                   laptop.enable = true;
@@ -170,7 +168,6 @@ in {
                 phil = {
                   server.services.openssh.enable = true;
                   wireguard.enable = false;
-                  nebula.enable = false;
                   video.enable = false;
                   yubikey.enable = false;
                 };
