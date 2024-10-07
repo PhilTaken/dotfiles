@@ -155,7 +155,7 @@ in {
       services.samba = {
         enable = enableSamba;
         securityType = "user";
-        extraConfig = ''
+        settings = ''
           workgroup = WORKGROUP
           server string = Samba Server
           server role = standalone server
