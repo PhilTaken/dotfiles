@@ -195,7 +195,7 @@ local enabled_lsps = {
 	"r_language_server",
 	"rust_analyzer",
 	"texlab",
-	"tsserver",
+	"ts_ls",
 	"yamlls",
 	"zls",
 }
