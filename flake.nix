@@ -21,6 +21,8 @@
 
     # -----------------------
     # macos inputs (work laptop)
+    # locked to specific version due to https://github.com/LnL7/nix-darwin/issues/1082
+    #darwin.url = "github:lnl7/nix-darwin/f4f18f3d7229845e1c9d517457b7a0b90a38b728";
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
