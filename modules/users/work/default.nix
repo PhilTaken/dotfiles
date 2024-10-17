@@ -26,8 +26,6 @@ in {
       iperf
       duf
 
-      pre-commit
-
       nebula
 
       rsync
@@ -38,9 +36,15 @@ in {
       httpie
       hurl
 
+      git
+      uv
+      python311
+      openssl
+      rclone
+      pre-commit
+
       sad
 
-      git
       #copier
 
       # TODO RIIR (the entire thing, using tantivy)

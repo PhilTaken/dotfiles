@@ -84,15 +84,7 @@ in {
             # fonts
             iosevka-comfy.comfy
             (nerdfonts.override {fonts = ["SourceCodePro" "Iosevka"];})
-
-            rclone
             osxfuse
-
-            openssl
-            openssl.dev
-
-            uv
-            python311
           ];
 
         inherit (hmUsers.philippherzog) userConfig;
