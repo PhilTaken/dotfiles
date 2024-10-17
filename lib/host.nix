@@ -125,7 +125,8 @@ in rec {
 
       modules = [
         hardware-config
-        inputs.lix-module.nixosModules.default
+        #inputs.lix-module.nixosModules.default
+        inputs.lix-module.nixosModules.lixFromNixpkgs
 
         ({
           pkgs,
