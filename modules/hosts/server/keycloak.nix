@@ -36,7 +36,8 @@ in {
       };
       settings = {
         hostname = netlib.domainFor cfg.host;
-        proxy = "edge";
+        proxy-headers = "xforwarded";
+        http-enabled = true;
         inherit (cfg) http-port https-port;
       };
       initialAdminPassword = "unsafe-password";

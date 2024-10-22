@@ -40,16 +40,15 @@ in {
       settings = {
         server_url = "https://${cfg.url}";
         reporting-disable = true;
-        dns_config = {
-          base_domain = net.tld;
-
+        dns = {
           # TODO change from fixed ip to derived from network.nix
-          nameservers = ["100.64.0.3"];
+          nameservers.global = ["100.64.0.3"];
           override_local_dns = true;
+
           magic_dns = false;
+          base_domain = "";
         };
         oidc = {
-          only_start_if_oidc_is_available = true;
           client_secret_path = config.sops.secrets."headscale-kc-client-secret".path;
           # TODO network.nix?
           issuer = "https://${netlib.domainFor "keycloak"}/realms/services";
