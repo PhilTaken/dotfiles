@@ -12,6 +12,7 @@ in {
     deploy.nodes =
       (builtins.mapAttrs (nodename: nodeconfig: {
           sshUser = "nixos";
+          user = "root";
           remoteBuild = true;
           # all network nodes should have a headscale ip
           hostname = lib.optionalString (lib.assertMsg (nodeconfig.network_ip ? "headscale") "node ${nodename} has no headscale ip, cannot deploy") nodeconfig.network_ip."headscale";
