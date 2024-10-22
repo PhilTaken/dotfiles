@@ -144,6 +144,9 @@ in {
         bind -r N resize-pane -D 5
         bind -r E resize-pane -U 5
         bind -r O resize-pane -R 5
+
+
+        set -g default-command '$SHELL'
       '';
 
       plugins = with pkgs.tmuxPlugins; [
