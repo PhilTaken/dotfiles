@@ -59,7 +59,7 @@
       editors.neovim.langs = {
         haskell = false;
         cpp = false;
-        ts = false;
+        ts = true;
         python = true;
       };
 
