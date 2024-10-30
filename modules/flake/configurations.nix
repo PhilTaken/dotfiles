@@ -84,7 +84,6 @@ in {
             # fonts
             iosevka-comfy.comfy
             (nerdfonts.override {fonts = ["SourceCodePro" "Iosevka"];})
-            osxfuse
           ];
 
         inherit (hmUsers.philippherzog) userConfig;
