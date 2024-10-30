@@ -194,6 +194,7 @@ local enabled_lsps = {
 	"pylsp",
 	"r_language_server",
 	"rust_analyzer",
+	"svelte",
 	"texlab",
 	"ts_ls",
 	"yamlls",

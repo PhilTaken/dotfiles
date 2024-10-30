@@ -139,7 +139,7 @@ in {
           pkgs.isort
           pkgs.black
         ])
-        ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server])
+        ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server pkgs.svelte-language-server])
         ++ (optionals cfg.langs.cpp [pkgs.ccls])
         ++ (optionals cfg.langs.rust [pkgs.rust-analyzer-unwrapped])
         # ++ (optionals cfg.langs.zig [pkgs.zls])
