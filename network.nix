@@ -23,7 +23,7 @@
         network_ip."yggdrasil" = "10.100.0.2";
         services = [
           "keycloak"
-          "kanidm"
+          # "kanidm"
 
           "email"
 
