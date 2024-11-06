@@ -63,7 +63,10 @@ in {
 
       # https://github.com/juanfont/headscale/issues/1574
       # remove after update to 0.23.0
-      serviceConfig.TimeoutStopSec = 5;
+      serviceConfig = {
+        TimeoutStopSec = 5;
+        RestartSec = 5;
+      };
     };
 
     phil.server.services.caddy.proxy."${cfg.host}" = {
