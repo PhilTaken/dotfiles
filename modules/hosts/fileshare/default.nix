@@ -45,23 +45,6 @@
         };
       })
       dirs);
-
-  mkSmbShares = dirs:
-    builtins.listToAttrs (builtins.map
-      (dir: {
-        name = builtins.baseNameOf dir;
-        value = {
-          path = dir;
-          browsable = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          "public" = "yes";
-          "force user" = "share";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-        };
-      })
-      dirs);
 in {
   options.phil.fileshare = {
     mount = {
@@ -121,51 +104,16 @@ in {
           );
       };
     };
-
-    samba = {
-      dirs = mkOption {
-        description = "directories to share";
-        type = types.listOf types.str;
-        default = [];
-      };
-
-      ips = mkOption {
-        description = "ips to share to";
-        type = types.str;
-        default =
-          if wireguard.enable
-          then "10.200.0.0/24"
-          else "*";
-      };
-    };
   };
 
   config = let
-    enableSamba = cfg.samba.dirs != [];
     enableMount = cfg.mount.binds != [];
     enableShare = cfg.shares.dirs != [];
   in
-    mkIf (enableSamba || enableMount || enableShare) {
+    mkIf (enableMount || enableShare) {
       services.nfs.server = {
         enable = enableShare;
         exports = mkSharesForIps cfg.shares.ips cfg.shares.dirs;
-      };
-
-      services.samba-wsdd.enable = enableSamba;
-      services.samba = {
-        enable = enableSamba;
-        securityType = "user";
-        settings = ''
-          workgroup = WORKGROUP
-          server string = Samba Server
-          server role = standalone server
-          log file = /var/log/samba/smbd.%m
-          max log size = 50
-          dns proxy = no
-          map to guest = Bad User
-          browseable = yes
-        '';
-        shares = mkSmbShares cfg.samba.dirs;
       };
 
       networking.firewall.allowedTCPPorts =
@@ -173,19 +121,6 @@ in {
         ++ (
           if enableShare
           then [2049]
-          else []
-        )
-        ++ (
-          if enableSamba
-          then [445 139]
-          else []
-        );
-
-      networking.firewall.allowedUDPPorts =
-        []
-        ++ (
-          if enableSamba
-          then [137 138]
           else []
         );
 
