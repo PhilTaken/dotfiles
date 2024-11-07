@@ -26,6 +26,7 @@ in {
     ./homeassistant
     ./homer.nix
     ./hound.nix
+    ./immich.nix
     ./influxdb2.nix
     ./iperf.nix
     ./jellyfin.nix

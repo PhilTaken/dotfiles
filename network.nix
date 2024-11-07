@@ -25,6 +25,8 @@
           "keycloak"
           # "kanidm"
 
+          "immich"
+
           "email"
 
           "grafana"
