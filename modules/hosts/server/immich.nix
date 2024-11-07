@@ -44,6 +44,9 @@ in {
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
         public = false;
+        vhostConfig.extraConfig = ''
+          client_max_body_size 2G;
+        '';
       };
       homer.apps."${cfg.host}" = {
         show = true;
