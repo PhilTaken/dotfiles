@@ -46,7 +46,7 @@ in {
   in
     mkIf cfg.enable (lib.mkMerge [
       {
-        containers.roundcube = {
+        containers.roundcube = lib.mkIf false {
           ephemeral = false;
           autoStart = true;
 
