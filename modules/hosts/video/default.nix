@@ -47,12 +47,6 @@ in {
     };
 
     hardware.graphics.enable = true;
-
-    hardware.opengl = {
-      driSupport = true;
-      #driSupport32Bit = true;
-    };
-
     console.useXkbConfig = true;
 
     fonts.packages = [pkgs.font-awesome];
