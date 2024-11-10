@@ -45,11 +45,6 @@
                 --prefix QT_QPA_PLATFORM : xcb
             '';
         });
-
-        downonspot = prev.downonspot.overrideAttrs (_oldAttrs: {
-          version = "latest";
-          src = (import ../npins).DownOnSpot;
-        });
       }
     )
   ];

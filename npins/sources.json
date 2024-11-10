@@ -1,16 +1,5 @@
 {
   "pins": {
-    "DownOnSpot": {
-      "type": "Git",
-      "repository": {
-        "type": "Git",
-        "url": "https://github.com/oSumAtrIX/DownOnSpot"
-      },
-      "branch": "main",
-      "revision": "4e2905f370072d92ae422ac8be19e42f7697e559",
-      "url": null,
-      "hash": "15yciyv5kmakf7152papkw7qa70b97qmbi4vdcd867v8sdckllgs"
-    },
     "alacritty": {
       "type": "Git",
       "repository": {

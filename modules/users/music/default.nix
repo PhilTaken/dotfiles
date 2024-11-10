@@ -102,7 +102,6 @@ in {
       pamixer
       pavucontrol
       mpv
-      downonspot
     ];
 
     programs.beets = {
