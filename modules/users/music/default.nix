@@ -73,7 +73,7 @@ in {
     };
 
     programs.spicetify = let
-      spicePkgs = inputs.spicetify.legacyPackages.${pkgs.system}.default;
+      spicePkgs = inputs.spicetify.legacyPackages.${pkgs.system};
     in {
       enable = true;
       theme = spicePkgs.themes.catppuccin;
