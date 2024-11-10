@@ -24,6 +24,11 @@
 
   networking.hostId = "f95453f6";
 
+  # from hardware-configuration.nix
+  networking.useDHCP = lib.mkDefault true;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
   disko.devices = import ./disko-config.nix {
     disks = ["/dev/nvme0n1"];
   };
@@ -38,8 +43,6 @@
       };
     })
   ];
-
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   phil.fileshare.mount.binds = [
     {
