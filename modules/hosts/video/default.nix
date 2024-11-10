@@ -59,9 +59,15 @@ in {
     #programs.hyprland.package = null;
 
     boot.plymouth.enable = true;
-    services.xserver = let
-      enable = cfg.managers != [];
-    in {
+
+    displayManager = {
+      #sddm.enable = enable;
+      gdm.enable = true;
+      defaultSession = mkIf (cfg.managers != []) session_map.${builtins.head cfg.managers};
+    };
+
+    libinput.enable = true;
+    services.xserver = {
       enable = true;
       xkb.layout = "us";
       xkb.variant = "intl,workman-intl";
@@ -72,19 +78,11 @@ in {
         then [cfg.driver]
         else [];
 
-      displayManager = {
-        #sddm.enable = enable;
-        gdm.enable = true;
-        defaultSession = mkIf (cfg.managers != []) session_map.${builtins.head cfg.managers};
-      };
-
       screenSection = mkIf (cfg.driver == "nvidia") ''
         Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
         Option         "AllowIndirectGLXProtocol" "off"
         Option         "TripleBuffer" "on"
       '';
-
-      libinput = {inherit enable;};
 
       desktopManager = {
         plasma5.enable = enabled "kde";
@@ -100,7 +98,7 @@ in {
     services.gnome.gnome-keyring.enable = mkForce false;
     services.udev.packages =
       if (enabled "gnome")
-      then [pkgs.gnome.gnome-settings-daemon]
+      then [pkgs.gnome-settings-daemon]
       else [];
     services.dbus.packages =
       if (enabled "gnome")
@@ -120,7 +118,7 @@ in {
     # https://github.com/NixOS/nixpkgs/issues/163107#issuecomment-1100569484
     environment.systemPackages = with pkgs; [
       slurp
-      pkgs.gnome.adwaita-icon-theme
+      pkgs.adwaita-icon-theme
       pkgs.shared-mime-info
     ];
 

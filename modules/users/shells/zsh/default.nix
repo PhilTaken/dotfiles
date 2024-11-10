@@ -19,7 +19,7 @@ in {
   config = mkIf cfg.enable {
     programs.zsh = {
       enable = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       enableCompletion = true;
       autocd = true;
       defaultKeymap = "viins";
