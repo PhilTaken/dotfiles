@@ -56,7 +56,7 @@
     }
   ];
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.05";
 
   home-manager.sharedModules = [
     {
