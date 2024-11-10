@@ -37,22 +37,7 @@ in {
         #libreoffice
 
         # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
-        #discord
-        (
-          if true
-          then [
-            (pkgs.writeShellApplication {
-              name = "discord";
-              text = "${pkgs.discord}/bin/discord --use-gl=desktop --disable-gpu-sandbox";
-            })
-            (pkgs.makeDesktopItem {
-              name = "discord";
-              exec = "discord";
-              desktopName = "Discord";
-            })
-          ]
-          else [pkgs.discord]
-        )
+        discord
       ]);
   };
 }
