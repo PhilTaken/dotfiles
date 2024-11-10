@@ -26,7 +26,8 @@ $ sudo ./result
 
 ```
 $ sudo mkdir -p /mnt/var/lib/sops-nix/
-$ nix shell nixpkgs#age --command "sudo age-keygen -o /mnt/var/lib/sops-nix/key.txt"
+$ nix --extra-experimental-features "nix-command flakes" shell nixpkgs#age 
+$ sudo age-keygen -o /mnt/var/lib/sops-nix/key.txt
 ```
 
 update sops secrets with new public key, make sure all secrets are generated, for example
@@ -36,7 +37,7 @@ update sops secrets with new public key, make sure all secrets are generated, fo
 
 maybe double-check your hardware config on the vm with a quick
 ```
-nixos-generate-config --root /mnt --no-disks --directory .
+nixos-generate-config --root /mnt --no-filesystems --dir .
 cat hardware-configuration.nix
 ```
 
