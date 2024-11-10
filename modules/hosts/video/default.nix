@@ -60,13 +60,9 @@ in {
 
     boot.plymouth.enable = true;
 
-    displayManager = {
-      #sddm.enable = enable;
-      gdm.enable = true;
-      defaultSession = mkIf (cfg.managers != []) session_map.${builtins.head cfg.managers};
-    };
+    services.displayManager.defaultSession = mkIf (cfg.managers != []) session_map.${builtins.head cfg.managers};
+    services.libinput.enable = true;
 
-    libinput.enable = true;
     services.xserver = {
       enable = true;
       xkb.layout = "us";
@@ -84,6 +80,7 @@ in {
         Option         "TripleBuffer" "on"
       '';
 
+      displayManager.gdm.enable = true;
       desktopManager = {
         plasma5.enable = enabled "kde";
         xfce.enable = enabled "xfce";
