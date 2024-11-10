@@ -9,7 +9,7 @@
   cfg = config.phil.music;
 in {
   imports = [
-    inputs.spicetify.homeManagerModule
+    inputs.spicetify.homeManagerModules.default
     #./autoeq-easyeffects.nix
   ];
 
@@ -73,11 +73,11 @@ in {
     };
 
     programs.spicetify = let
-      spicePkgs = inputs.spicetify.packages.${pkgs.system}.default;
+      spicePkgs = inputs.spicetify.legacyPackages.${pkgs.system}.default;
     in {
       enable = true;
-      theme = spicePkgs.themes.catppuccin-mocha;
-      colorScheme = "flamingo";
+      theme = spicePkgs.themes.catppuccin;
+      colorScheme = "mocha";
 
       enabledExtensions = with spicePkgs.extensions; [
         fullAppDisplay

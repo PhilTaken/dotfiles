@@ -73,7 +73,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify.url = "github:the-argus/spicetify-nix";
+    spicetify.url = "github:Gerg-L/spicetify-nix";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
 
     # TODO: once my prs are merged revert to main repo
