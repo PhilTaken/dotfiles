@@ -20,9 +20,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # Enable sound.
-    sound.enable = true;
-    sound.mediaKeys.enable = true;
     hardware.pulseaudio = {
       enable = false;
       extraModules = builtins.attrValues {
