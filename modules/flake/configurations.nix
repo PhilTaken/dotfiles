@@ -31,16 +31,12 @@
     };
 
     nixos.userConfig = mkConfig {
-      work.enable = true;
-
       # de/wm config
       wms.hyprland.enable = true;
       wms.bars.eww.enable = true;
     };
 
     maelstroem.userConfig = mkConfig {
-      work.enable = true;
-
       # de/wm config
       wms.hyprland.enable = true;
       wms.bars.eww.enable = true;
