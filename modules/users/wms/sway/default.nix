@@ -314,7 +314,7 @@ in {
       wl-clipboard
       feh
       wev
-      wf-recorder
+      #wf-recorder
       ydotool
 
       libnotify

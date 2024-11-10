@@ -240,7 +240,7 @@ in {
       wl-clipboard
       feh
       wev
-      wf-recorder
+      #wf-recorder
       xorg.xauth
       ydotool
       libnotify
