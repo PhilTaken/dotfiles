@@ -7,7 +7,6 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./disko-config.nix
   ];
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "cryptd" "sr_mod"];
