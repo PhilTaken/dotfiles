@@ -27,9 +27,8 @@ in {
 
     hardware = {
       nvidia = {
-        # package = config.boot.kernelPackages.nvidiaPackages.beta;
+        open = true;
         modesetting.enable = true;
-        # nvidiaPersistenced = false;
       };
       graphics = {
         extraPackages = with pkgs; [libvdpau-va-gl vaapiVdpau];
