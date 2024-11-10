@@ -27,7 +27,7 @@ in {
 
     hardware = {
       nvidia = {
-        open = true;
+        open = false;
         modesetting.enable = true;
       };
       graphics = {
