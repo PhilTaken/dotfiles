@@ -24,7 +24,7 @@ paperless-password: ENC[AES256_GCM,data:eEIWpqHjoMq7q1QO8H5rNnoDe7Q=,iv:TRG/vavN
 forgejo-oauthsecret: ENC[AES256_GCM,data:gNw3A59crjPp/r8HmYwPneL/dVcVu6tHzsDVrkzxZe4=,iv:q24mxjC6mWh8eaR4mvgXzh96OPwA3qBHTpT+GD3YWIQ=,tag:TRmTOnelgW98+I03n7g8Lg==,type:str]
 paperless-oauth-secret: ENC[AES256_GCM,data:+GLDqIuGEkHnAP0ljfDB3uDixCg7GA1TiceJBEHpXeg=,iv:PE5VnFtXabwjgTefTLJ0lyOHjN+qSaumh7I+u17MPtA=,tag:4ye9k2rAn8YBIAcGiqWvEA==,type:str]
 headscale-kc-client-secret: ENC[AES256_GCM,data:DHaVgWWKynub0wvTb8/recCGWsd9eMcJJkXQUScKlqg=,iv:89x3yk9vYDfmSB46yZRVznqvdYsddFXN1gnWes3qfcA=,tag:7JBrG1VC+vVVdBPF19NxeA==,type:str]
-grafana-kc-client-secret: ENC[AES256_GCM,data:jn0RjMIGnHhKHlS3rqwphU+EmeJZmLG6GYs4kF/GEFw=,iv:fcPQxVPo5nUHd69Gee8ArAmb4UaVIeJLEnHdTZ3iFP4=,tag:L5SrpG2pEhXRAd43pG/DuA==,type:str]
+grafana-kc-client-secret: ENC[AES256_GCM,data:9iXM78qP1hgqIlH2ajYHn/r9Bg7Y3DfpDVW6VFEkAMk=,iv:9ces2ryYhgWFm0Pt9D5JhyJKj/I7L/yCdrqGl6aPLkw=,tag:7Dv4cP6lnFd6MFe6hYLS0A==,type:str]
 bookstack-oidc-secret: ENC[AES256_GCM,data:K+tjgoEE0ay94wFR6ou504JMcRQS+5nX+T5emhEy5Kk=,iv:1pJccrvVQJ7TC2PSVvY0CGbifRqGonx2CVW1HvbL4a8=,tag:cZw/68RBfMvaGnoO37XcyQ==,type:str]
 sops:
     shamir_threshold: 1
@@ -96,8 +96,8 @@ sops:
             VlIydHRPdzhoZ1BOMjdQUEZXV1dnMzAKMqjYymYmp1y8EDiMkWFhjN1MoYBkGehP
             zcccRctkApMDwPxMUtIK2UcBpedvYemOK4C99WDLWjt+6iVH4RsSAQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-11-07T19:09:44Z"
-    mac: ENC[AES256_GCM,data:3WUBWjpggYJmzj0WMijW0F+5j10I9jqbsk5MYE+ps3Ed1e+kwkRNVJCBscPN7ELQ7bbfLRevLkseT41xMIlqZarnE8yqkq+YzmW/yOAN7LbcPpf/EMJlksWKh6C2NxC71Fq1qLj1DTHTepnNh1qpg78cy5vNUAhjbkCJbsjGKew=,iv:WaO6yXogdAmWVIdCWVZq6CcJEO7Rixqa+Y+TFuLfmLM=,tag:gVuHCXLiZR14OJNzCTwBKQ==,type:str]
+    lastmodified: "2024-11-07T19:54:35Z"
+    mac: ENC[AES256_GCM,data:0kbdhd9Y5SAAR2TlePN896b8ZraOPv5h0Ih/u0c7wEbCp+ITIZcOIBL4quKnwAiEnsSEtRc3Ck3CJ4F9CKCa4qrEk1VGXTiYp5dXTpIkju37yW8V7PSgRIecFOd1KexvcElqojBX3G9cT4JLlnt84JVEfiiVUa/zM+sLrJLu9Uo=,iv:ELmpQQVUw+37py618MQRYdvIQRC8cA0GY6i0xGryqks=,tag:PxcPir9YWX0/2KarQNe+hg==,type:str]
     pgp:
         - created_at: "2024-04-12T16:05:45Z"
           enc: |-
