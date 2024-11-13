@@ -13,6 +13,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    services.flameshot.enable = true;
+
     home.packages = with pkgs; [
       # chrome-gnome-shell
       # gnome3 apps
@@ -39,7 +41,7 @@ in {
 
       # Defines the new shortcut
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-        binding = "Print";
+        binding = "<Ctrl><Shift>P";
         command = "${flameshot-gui}/bin/flameshot-gui";
         name = "Flameshot";
       };
