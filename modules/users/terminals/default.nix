@@ -36,7 +36,7 @@ in {
   config = lib.mkIf (!config.phil.headless) {
     programs = {
       alacritty = {
-        enable = false;
+        enable = true;
         settings = {
           window = {
             padding = {
