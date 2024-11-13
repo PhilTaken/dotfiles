@@ -58,8 +58,8 @@ in {
 
     # https://github.com/nix-community/home-manager/issues/2017
     # https://github.com/NixOS/nixpkgs/issues/158025
-    programs.sway.enable = true;
-    programs.hyprland.enable = true;
+    programs.sway.enable = false;
+    programs.hyprland.enable = false;
     # https://wiki.hyprland.org/Nix/#modules-mixnmatch
     #programs.hyprland.package = null;
 

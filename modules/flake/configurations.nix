@@ -31,9 +31,8 @@
     };
 
     nixos.userConfig = mkConfig {
-      # de/wm config
-      wms.hyprland.enable = true;
-      wms.bars.eww.enable = true;
+      des.gnome.enable = true;
+
       gpg.enable = true;
 
       browsers = {

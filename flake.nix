@@ -95,12 +95,12 @@
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     neorg-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland = {
-      url = "github:vaxerski/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #hyprland = {
+    #url = "github:vaxerski/Hyprland";
+    #inputs.nixpkgs.follows = "nixpkgs";
+    #};
 
-    xdg-desktop-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
+    #xdg-desktop-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
 

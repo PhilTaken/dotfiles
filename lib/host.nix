@@ -85,7 +85,7 @@ in rec {
     mkBase [
       inputs.stylix.nixosModules.stylix
       inputs.home-manager.nixosModules.home-manager
-      inputs.hyprland.nixosModules.default
+      #inputs.hyprland.nixosModules.default
       #inputs.nixos-cosmic.nixosModules.default
 
       ({
@@ -99,8 +99,8 @@ in rec {
             overlays =
               nixpkgs.overlays
               ++ [
-                inputs.hyprland.overlays.default
-                inputs.xdg-desktop-hyprland.overlays.default
+                #inputs.hyprland.overlays.default
+                #inputs.xdg-desktop-hyprland.overlays.default
               ];
           };
         home-manager = {

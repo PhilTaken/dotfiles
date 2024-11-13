@@ -26,7 +26,7 @@
         inherit (inputs.gleamdication.packages.${prev.system}) gleamdication;
 
         webcord = inputs.webcord.packages.${prev.system}.default;
-        hyprland = inputs.hyprland.packages.${prev.system}.default;
+        #hyprland = inputs.hyprland.packages.${prev.system}.default;
 
         # devdocs.io
         devdocs-desktop = prev.writeShellApplication {
