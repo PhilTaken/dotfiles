@@ -37,9 +37,12 @@ in {
     services.udev.packages = with pkgs; [qmk-udev-rules];
 
     environment.systemPackages = with pkgs; [
+      # notes
+      obsidian
+
       # audio/video
       audacity
-      obs-studio
+      #obs-studio
       handbrake
       #makemkv
 
