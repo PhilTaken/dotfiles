@@ -120,10 +120,11 @@ in {
     };
 
     # https://github.com/NixOS/nixpkgs/issues/163107#issuecomment-1100569484
-    environment.systemPackages = with pkgs; [
-      slurp
+    environment.systemPackages = [
+      pkgs.slurp
       pkgs.adwaita-icon-theme
       pkgs.shared-mime-info
+      pkgs.wl-clipboard
     ];
 
     environment.pathsToLink = [
