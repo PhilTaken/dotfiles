@@ -60,6 +60,7 @@ in {
             config = wezterm.config_builder()
           end
 
+          config.window_decorations = "RESIZE"
           config.window_padding = { left = 12, right = 12, top = 16, bottom = 7 }
           config.window_background_opacity = 0.90
           config.macos_window_background_blur = 20
@@ -73,7 +74,7 @@ in {
           config.front_end = "WebGpu"
 
           -- https://github.com/wez/wezterm/issues/5360
-          config.enable_wayland = false
+          config.enable_wayland = true
 
           config.keys = {
             { key = ')', mods = 'CTRL', action = act.ResetFontSize },
