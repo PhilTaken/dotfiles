@@ -40,6 +40,7 @@ in {
       enable = true;
       enableSshSupport = true;
       inherit (cfg) sshKeys;
+      pinentryPackage = pkgs.pinentry-qt;
     };
   };
 }

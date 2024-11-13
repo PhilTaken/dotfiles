@@ -34,6 +34,13 @@
       # de/wm config
       wms.hyprland.enable = true;
       wms.bars.eww.enable = true;
+      gpg.enable = true;
+
+      browsers = {
+        enable = true;
+        firefox.enable = true;
+        firefox.wayland = true;
+      };
     };
 
     maelstroem.userConfig = mkConfig {
@@ -99,13 +106,16 @@ in {
               [
                 {
                   phil = {
-                    server.services.openssh.enable = true;
+                    # server.services.openssh.enable = true;
 
                     core.enableBluetooth = true;
                     desktop.enable = true;
                     development.enable = true;
                     nvidia.enable = true;
-                    video.managers = ["gnome"];
+                    video.managers = [
+                      "gnome"
+                      #"cosmic"
+                    ];
                   };
                 }
               ]

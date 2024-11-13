@@ -13,13 +13,13 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      chrome-gnome-shell
+      # chrome-gnome-shell
       # gnome3 apps
       eog # image viewer
       evince # pdf reader
 
       # desktop look & feel
-      gnome-tweaks
+      # gnome-tweaks
 
       # extensions
       gnomeExtensions.dash-to-dock

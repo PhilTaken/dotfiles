@@ -78,6 +78,7 @@ in {
           "https://nix-community.cachix.org"
           "https://nixpkgs-wayland.cachix.org"
           "https://cache.lix.systems"
+          #"https://cosmic.cachix.org/"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
@@ -85,6 +86,7 @@ in {
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
           "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
+          #"cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
         ];
       };
       # set up automatic garbage collection

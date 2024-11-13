@@ -25,6 +25,8 @@ in {
 
     environment.systemPackages = [nvidia-offload];
 
+    boot.kernelParams = ["nvidia_drm.fbdev=1"];
+
     hardware = {
       nvidia = {
         open = false;

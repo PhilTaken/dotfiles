@@ -5,6 +5,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    #nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+
     # -----------------------
     # package repositories
 

@@ -76,8 +76,8 @@ in {
       spicePkgs = inputs.spicetify.legacyPackages.${pkgs.system};
     in {
       enable = true;
-      theme = spicePkgs.themes.catppuccin;
-      colorScheme = "mocha";
+      # theme = spicePkgs.themes.catppuccin;
+      # colorScheme = "mocha";
 
       enabledExtensions = with spicePkgs.extensions; [
         fullAppDisplay

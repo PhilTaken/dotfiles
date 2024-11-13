@@ -1,7 +1,5 @@
 # current TODOs
 
-- fix headscale / keycloak restart timing failing deployments
-
 - auto nix-collect-garbage on beta, delta
 - set up audiobookshelf
 

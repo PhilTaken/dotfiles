@@ -36,14 +36,14 @@ in {
   config = lib.mkIf (!config.phil.headless) {
     programs = {
       alacritty = {
-        enable = false;
+        enable = true;
         settings = {
           window = {
             padding = {
               x = 5;
               y = 5;
             };
-            inherit (cfg.alacritty) decorations;
+            # inherit (cfg.alacritty) decorations;
           };
         };
       };
@@ -57,7 +57,6 @@ in {
 
           local config = {
             window_padding = { left = 12, right = 12, top = 16, bottom = 7 },
-            window_decorations = "RESIZE",
             window_background_opacity = 0.90,
             macos_window_background_blur = 20,
             hide_tab_bar_if_only_one_tab = true,
@@ -125,19 +124,6 @@ in {
 
           return config
         '';
-      };
-
-      foot = rec {
-        enable = ! lib.hasInfix "darwin" pkgs.system;
-        server = {inherit enable;};
-
-        settings = {
-          main.bold-text-in-bright = "yes";
-          url = {
-            launch = "firefox \${url}";
-            osc8-underline = "always";
-          };
-        };
       };
     };
   };

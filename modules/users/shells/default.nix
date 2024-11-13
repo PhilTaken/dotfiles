@@ -100,10 +100,7 @@ in {
     ];
 
     programs = {
-      bat = {
-        enable = true;
-        config.theme = "base16";
-      };
+      bat.enable = true;
       carapace.enable = true;
       htop.enable = true;
       btop = {

@@ -2,10 +2,10 @@ keys:
   - &yubi 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
   - &alpha age1skfvmh8ff3fghxucv5smeceavpsh354k0z3y42sau64v6h6x6d7sj8e3c9
   - &beta age1wselageuudgef2334l7tauyq06gyjpwlpge6ztmcxu6jcpkeu94sptum7g
-  - &gamma age16wkq74zjg520vfp4rlq50yffp9p4tht6jtdyz5smzlkpdvg609pqnjshkg
   - &epsilon age1akax507dh5prm66uw3kufqxwxy5twuwqjv829jpy26aw2nt4g39s3g65fu
   - &delta age1p98um9682a6tppcxn602f0cfmgc4rkjclyuuqlu7gf578g9fz97suqp7wj
-  - &gamma-new age17c3fvjye072zy06wy5azaqtupest47xu8gztdrvlg5erwwndp4ls4ss65v
+  - &gamma age1xw0t75c8yya0uk0j5klzgfssuvf5zjnh5jgw53l32fj2uv9z5p0s4gcmtd
+  - &gammahost age1mnhkn6hgq2q5pkz93dy2kltz3cnfajeqsf35ew7p0n0ec5qnmqgqe0xfv2
   - &zetta age1dnzlu2savx6fyw48wte42l3ard3jf32whqd3q3reukwk66mcvvkqecnar6
 creation_rules:
   - key_groups:
@@ -17,5 +17,5 @@ creation_rules:
       - *gamma
       - *epsilon
       - *delta
-      - *gamma-new
       - *zetta
+      - *gammahost

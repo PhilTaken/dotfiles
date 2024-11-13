@@ -12,6 +12,7 @@
     "xfce" = "xfce";
     "kde" = "plasma";
     "gnome" = "gnome";
+    #"cosmic" = "cosmic";
   };
 
   manager_enum = types.enum (builtins.attrNames session_map);
@@ -49,7 +50,11 @@ in {
     hardware.graphics.enable = true;
     console.useXkbConfig = true;
 
-    fonts.packages = [pkgs.font-awesome];
+    fonts.packages = [
+      pkgs.font-awesome
+      pkgs.iosevka-comfy.comfy
+      (pkgs.nerdfonts.override {fonts = ["SourceCodePro" "Iosevka"];})
+    ];
 
     # https://github.com/nix-community/home-manager/issues/2017
     # https://github.com/NixOS/nixpkgs/issues/158025
@@ -61,6 +66,14 @@ in {
     boot.plymouth.enable = true;
 
     services.displayManager.defaultSession = mkIf (cfg.managers != []) session_map.${builtins.head cfg.managers};
+
+    #services.displayManager.cosmic-greeter.enable = true;
+    services.xserver.displayManager.gdm = {
+      enable = true;
+      wayland = true;
+      autoLogin.delay = 10;
+    };
+
     services.libinput.enable = true;
 
     services.xserver = {
@@ -80,7 +93,6 @@ in {
         Option         "TripleBuffer" "on"
       '';
 
-      displayManager.gdm.enable = true;
       desktopManager = {
         plasma5.enable = enabled "kde";
         xfce.enable = enabled "xfce";
@@ -88,19 +100,14 @@ in {
         #xterm.enable = true;
       };
     };
+    #services.desktopManager.cosmic.enable = enabled "cosmic";
 
     # ----------------------
     # gnome
     services.gnome.gnome-browser-connector.enable = enabled "gnome";
     services.gnome.gnome-keyring.enable = mkForce false;
-    services.udev.packages =
-      if (enabled "gnome")
-      then [pkgs.gnome-settings-daemon]
-      else [];
-    services.dbus.packages =
-      if (enabled "gnome")
-      then [pkgs.dconf]
-      else [];
+    services.udev.packages = [] ++ (lib.optional (enabled "gnome") pkgs.gnome-settings-daemon);
+    services.dbus.packages = [] ++ (lib.optional (enabled "gnome") pkgs.dconf);
     programs.dconf.enable = true;
 
     # enable kdeconnect + open the required ports
