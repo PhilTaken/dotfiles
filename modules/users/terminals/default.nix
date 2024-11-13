@@ -55,19 +55,25 @@ in {
           local wezterm = require 'wezterm'
           local act = wezterm.action
 
-          local config = {
-            window_padding = { left = 12, right = 12, top = 16, bottom = 7 },
-            window_background_opacity = 0.90,
-            macos_window_background_blur = 20,
-            hide_tab_bar_if_only_one_tab = true,
-            font_size = 11.0,
-            dpi = 192.0,
-            adjust_window_size_when_changing_font_size = false,
-            warn_about_missing_glyphs = false,
-            disable_default_key_bindings = true,
-            color_scheme = 'Catppuccin Macchiato',
-            front_end = "WebGpu",
-          }
+          local config = {}
+          if wezterm.config_builder then
+            config = wezterm.config_builder()
+          end
+
+          config.window_padding = { left = 12, right = 12, top = 16, bottom = 7 }
+          config.window_background_opacity = 0.90
+          config.macos_window_background_blur = 20
+          config.hide_tab_bar_if_only_one_tab = true
+          config.font_size = 11.0
+          config.dpi = 192.0
+          config.adjust_window_size_when_changing_font_size = false
+          config.warn_about_missing_glyphs = false
+          config.disable_default_key_bindings = true
+          config.color_scheme = 'Catppuccin Macchiato'
+          config.front_end = "WebGpu"
+
+          -- https://github.com/wez/wezterm/issues/5360
+          config.enable_wayland = false
 
           config.keys = {
             { key = ')', mods = 'CTRL', action = act.ResetFontSize },
