@@ -23,13 +23,15 @@
     mkScrapeJob = n: v: let
       mkTargets = nodename: node: let
         ip = net.nodes.${nodename}.network_ip.${proxy_network};
-        has_extrasensors = flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.extrasensors;
         mkTargetString = port: "${ip}:${builtins.toString port}";
-        exporters = {node = flake.nixosConfigurations.${nodename}.config.services.prometheus.exporters.node;};
-        exporterPorts = lib.mapAttrsToList (_: c: c.port) (lib.filterAttrs (_: c: builtins.typeOf c != "list" && c.enable) exporters);
-        ports =
-          exporterPorts
-          ++ lib.optional has_extrasensors flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.prom-sensors-port;
+        has_extrasensors = flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.extrasensors;
+
+        # in sync with prometheus/prometheus-exporter.nix
+        exporters = builtins.removeAttrs flake.nixosConfigurations.${nodename}.config.services.prometheus.exporters ["assertions" "warnings" "minio" "tor"];
+        enabled_exporters = lib.filterAttrs (_: v: v.enable) exporters;
+        exporter_ports = lib.mapAttrsToList (_: v: v.port) enabled_exporters;
+
+        ports = exporter_ports ++ lib.optional has_extrasensors flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.prom-sensors-port;
       in
         builtins.map mkTargetString ports;
     in {
