@@ -5,8 +5,8 @@
   ...
 }: let
   cfg = config.phil.zellij;
-  settings = import ./config.nix {inherit pkgs cfg;};
-  inherit (lib) mkOption mkIf types;
+  #settings = import ./config.nix {inherit pkgs cfg;};
+  inherit (lib) mkOption mkIf;
   #barplugin = "zellij:compact-bar";
 in {
   options.phil.zellij = {
@@ -14,11 +14,6 @@ in {
       description = "zellij";
       type = lib.types.bool;
       default = config.phil.terminals.multiplexer == "zellij";
-    };
-
-    defaultShell = mkOption {
-      type = types.nullOr (types.enum ["fish" "zsh"]);
-      default = null;
     };
   };
 
@@ -29,9 +24,9 @@ in {
 
     # TODO generate all of the below with nix
     # TODO colors from stylix
-    xdg.configFile."zellij/config.kdl" = {
-      source = settings.configFile;
-    };
+    #xdg.configFile."zellij/config.kdl" = {
+    #source = settings.configFile;
+    #};
 
     # TODO add dimsum duration in bar
     xdg.configFile."zellij/layouts/default.kdl".text = ''

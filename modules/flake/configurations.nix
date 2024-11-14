@@ -68,6 +68,8 @@
       shells.fish.enable = true;
       gpg.enable = true;
 
+      zellij.enable = true;
+
       git = {
         enable = true;
         userName = "Philipp Herzog";
