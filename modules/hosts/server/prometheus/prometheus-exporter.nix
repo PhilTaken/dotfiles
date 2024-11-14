@@ -2,11 +2,16 @@
   pkgs,
   config,
   lib,
+  netlib,
   ...
 }: let
   inherit (lib) mkIf types mkOption mkEnableOption;
   cfg = config.phil.server.services.promexp;
   net = config.phil.network;
+
+  exporters = builtins.removeAttrs config.services.prometheus.exporters ["assertions" "warnings" "minio" "tor"];
+  enabled_exporters = lib.filterAttrs (_: v: v.enable) exporters;
+  exporter_ports = lib.mapAttrsToList (_: v: v.port) enabled_exporters;
 in {
   options.phil.server.services.promexp = {
     enable = mkOption {
@@ -25,7 +30,7 @@ in {
   config = mkIf cfg.enable {
     # TODO fix this
     networking.firewall.interfaces."${net.networks.headscale.ifname}" = let
-      ports = [9002] ++ lib.optional cfg.extrasensors cfg.prom-sensors-port;
+      ports = exporter_ports ++ lib.optional cfg.extrasensors cfg.prom-sensors-port;
     in {
       allowedUDPPorts = ports;
       allowedTCPPorts = ports;
@@ -36,8 +41,18 @@ in {
         enable = true;
         enabledCollectors = ["systemd" "processes"];
         disabledCollectors = ["arp"];
-        port = 9002;
-        listenAddress = "0.0.0.0";
+        port = netlib.portFor "node-exporter";
+      };
+
+      zfs = {
+        enable = builtins.elem "zfs" (builtins.catAttrs "fsType" (builtins.attrValues config.fileSystems));
+        port = netlib.portFor "zfs-exporter";
+      };
+
+      smartctl = {
+        enable = true;
+        maxInterval = "2m";
+        port = netlib.portFor "smartctl-exporter";
       };
     };
 
