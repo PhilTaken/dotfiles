@@ -8,9 +8,9 @@
         "repo": "alacritty"
       },
       "branch": "main",
-      "revision": "343cf8d65459ac8f6449cc98dd3648bcbd7e3766",
-      "url": "https://github.com/catppuccin/alacritty/archive/343cf8d65459ac8f6449cc98dd3648bcbd7e3766.tar.gz",
-      "hash": "1nh29kkviqp0mz0w7cjmxcp5lgmd4hg5r67fzrvgkg9wgcfidig4"
+      "revision": "f6cb5a5c2b404cdaceaff193b9c52317f62c62f7",
+      "url": "https://github.com/catppuccin/alacritty/archive/f6cb5a5c2b404cdaceaff193b9c52317f62c62f7.tar.gz",
+      "hash": "1r2z223hza63v5lmzlg3022mlar67j3a2gh41rsaiqwja2wyiihz"
     },
     "base16": {
       "type": "Git",
@@ -44,9 +44,9 @@
         "repo": "extensions"
       },
       "branch": "master",
-      "revision": "aea8482935589041b6b80ef67435f721c90f5ab0",
-      "url": "https://github.com/freshrss/extensions/archive/aea8482935589041b6b80ef67435f721c90f5ab0.tar.gz",
-      "hash": "033p9yr659w0q6wlrznj6cijcmv17q0x7wb709sbidp38z5h26v2"
+      "revision": "22bda8170256a7b5dfa7472ca50572f3ec32d04d",
+      "url": "https://github.com/freshrss/extensions/archive/22bda8170256a7b5dfa7472ca50572f3ec32d04d.tar.gz",
+      "hash": "004qj5rc46jpx4yv449wwaihp4b51v04r429mbwqgl4cppqd05m2"
     },
     "hurl-nvim": {
       "type": "GitRelease",
@@ -57,10 +57,10 @@
       "pre_releases": false,
       "version_upper_bound": null,
       "release_prefix": null,
-      "version": "v1.7.0",
-      "revision": "e498c32d60f5968570a07a9511290a9f17e75c27",
+      "version": "v2.0.0",
+      "revision": "98f5bc3cfb86fe239ad5d07ebf9da762c2375cd0",
       "url": null,
-      "hash": "19m53x8xd5czi5fb37p4jv3x577fpncsm3xd37nan70facdqdpnr"
+      "hash": "1y4g01l91gqzfb0chziqgw6gi1arj03qnz0jrhl34i9kxrcn8wxf"
     },
     "janet.vim": {
       "type": "Git",
@@ -77,8 +77,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-24.11pre672159.a6292e34000d/nixexprs.tar.xz",
-      "hash": "0d6kj90qf8cgqyr47b46yj9q9l8yyh34nw87sax1kkv7csxgm6kr"
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-24.11pre707445.24f0d4acd634/nixexprs.tar.xz",
+      "hash": "0rmm76lgb4ybsaj84j5ha47vzrbg3kn7la0p7sdlq27nszmc7zgc"
     },
     "nvim-cmp-lsp-rs": {
       "type": "Git",
@@ -88,9 +88,9 @@
         "repo": "nvim-cmp-lsp-rs"
       },
       "branch": "main",
-      "revision": "d9ebeca9ea07ba2fd57f997b2d6a8bc7da51abed",
-      "url": "https://github.com/zjp-CN/nvim-cmp-lsp-rs/archive/d9ebeca9ea07ba2fd57f997b2d6a8bc7da51abed.tar.gz",
-      "hash": "0pbv69zwnxw4llhhw0w5h4rnp72rvrp1dxpirxd651nxpf7wv1im"
+      "revision": "373b5e78b615003267216a0cba70b74f41681b69",
+      "url": "https://github.com/zjp-CN/nvim-cmp-lsp-rs/archive/373b5e78b615003267216a0cba70b74f41681b69.tar.gz",
+      "hash": "1znrjiz2vyvzkrl55rxsw7yyfyp1sgfkfxfbzradiq9fghb135qg"
     },
     "pisces": {
       "type": "Git",
@@ -123,9 +123,9 @@
         "repo": "telescope-egrepify.nvim"
       },
       "branch": "master",
-      "revision": "a30396791c3f67b8f34d42dfc26db2f868ae9154",
-      "url": "https://github.com/fdschmidt93/telescope-egrepify.nvim/archive/a30396791c3f67b8f34d42dfc26db2f868ae9154.tar.gz",
-      "hash": "0i5y81sph9s3v2syzf12rvkrb9xgs6bmvhrjh35899pjh9bz8gjj"
+      "revision": "a8070970a661330c4e00450d25f874f6c2b00af9",
+      "url": "https://github.com/fdschmidt93/telescope-egrepify.nvim/archive/a8070970a661330c4e00450d25f874f6c2b00af9.tar.gz",
+      "hash": "0lv61vz3md4cy472q00y2y2b458740chx7fp4z13wskqmmjmxlw1"
     },
     "tmux-nvr": {
       "type": "Git",
