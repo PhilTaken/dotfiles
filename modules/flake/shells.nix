@@ -51,8 +51,7 @@ in {
       jq
       cachix
 
-      nix-prefetch-git
-      npins
+      (npins.override {nix-prefetch-git = pkgs.nix-prefetch-git.override {nix = pkgs.lix;};})
     ];
   in {
     devShells.legacy = pkgs.mkShell {
