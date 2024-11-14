@@ -1,5 +1,15 @@
 # current TODOs
 
+- grafana
+    - uids for datasources
+    - provisioned dashboards
+    - grafana oncall -> alert/notify on 
+        - unplanned downtime
+        - failed backups
+        - smart errors
+        - zfs errors
+        - failed systemd jobs
+
 - auto nix-collect-garbage on beta, delta
 - set up audiobookshelf
 

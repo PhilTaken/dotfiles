@@ -221,7 +221,6 @@ in {
             {
               name = "Tempo";
               type = "tempo";
-              # TODO use urls?
               url = "http://localhost:${builtins.toString cfg.tempo-port}";
             }
             {
