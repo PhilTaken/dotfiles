@@ -59,7 +59,6 @@
           "unbound"
           "nextcloud"
 
-          "gleamdication"
           "mealie"
 
           "paperless"

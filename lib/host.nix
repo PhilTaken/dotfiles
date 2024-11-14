@@ -74,7 +74,6 @@ in rec {
 
         inputs.sops-nix-src.nixosModules.sops
         inputs.disko.nixosModules.disko
-        inputs.gleamdication.nixosModules.default
       ];
   in
     lib.nixosSystem {

@@ -18,7 +18,6 @@ in {
     ./fail2ban.nix
     ./freshrss.nix
     ./gitea.nix
-    ./gleamdication.nix
     ./grafana.nix
     ./grafana.nix
     ./grocy.nix
