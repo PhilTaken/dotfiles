@@ -8,7 +8,6 @@
     ./video
     ./nvidia
 
-    ./workstation
     ./laptop
     ./desktop
 

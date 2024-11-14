@@ -37,6 +37,12 @@ in {
     services.udev.packages = with pkgs; [qmk-udev-rules];
 
     environment.systemPackages = with pkgs; [
+      #calibre
+      vlc
+      foliate
+      pdfsam-basic
+      xournalpp
+
       # notes
       obsidian
 

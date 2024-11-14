@@ -17,10 +17,6 @@
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
 
-    #why is this building llvm-16.0.6?
-    #devenv.url = "github:cachix/devenv";
-    #devenv.inputs.nixpkgs.follows = "nixpkgs";
-
     # -----------------------
     # macos inputs (work laptop)
     # locked to specific version due to https://github.com/LnL7/nix-darwin/issues/1082
