@@ -23,11 +23,13 @@
         network_ip."yggdrasil" = "10.100.0.2";
         services = [
           "keycloak"
+
+          # email requires kanidm,
+          # currently non-functional due to database errors
           # "kanidm"
+          #"email"
 
           "immich"
-
-          "email"
 
           "grafana"
           "freshrss"
@@ -43,13 +45,6 @@
         network_ip."yggdrasil" = "10.100.0.5";
         network_ip."lan" = "192.168.178.26";
         services = [
-          # "syncthing"
-          # "writefreely"
-          # "hound"
-
-          # reenable when possible, maybe move to beta?
-          # "calibre"
-
           "gitea"
 
           # keep these on delta to use at home
