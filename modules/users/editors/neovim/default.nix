@@ -246,9 +246,9 @@ in {
 
           (plug nvim-treesitter.withAllGrammars ''
             require('nvim-treesitter.configs').setup {
-              highlight = { enable = true },
-              indent = { enable = true },
-              auto_install = false,
+            highlight = { enable = true },
+            indent = { enable = true },
+            auto_install = false,
             }
           '')
 
@@ -275,7 +275,6 @@ in {
             require("telescope").load_extension("egrepify")
             require("custom.tele_init")
           '')
-          neorg-telescope
 
           # completion
           (lplug luasnip ''
@@ -327,28 +326,6 @@ in {
               vim.g.rooter_resolve_links = 1
               vim.g.rooter_cd_cmd = 'lcd'
               vim.g.rooter_silent_chdir = 1
-            end,
-            event = "DeferredUIEnter",
-          '')
-
-          (lplug neorg ''
-            after = function()
-              require('neorg').setup{
-                load = {
-                  ["core.defaults"] = {},
-                  ["core.concealer"] = {},
-                  ["core.ui.calendar"] = {},
-                  ["core.dirman"] = {
-                    config = {
-                      workspaces = {
-                        notes = "~/Notes",
-                      },
-                      default_workspace = "notes",
-                    },
-                  },
-                  ["core.integrations.telescope"] = {}
-                },
-              }
             end,
             event = "DeferredUIEnter",
           '')

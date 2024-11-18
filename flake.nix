@@ -5,8 +5,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-
     # -----------------------
     # package repositories
 
@@ -88,14 +86,6 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
-    neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
-    neorg-overlay.inputs.nixpkgs.follows = "nixpkgs";
-
-    #hyprland = {
-    #url = "github:vaxerski/Hyprland";
-    #inputs.nixpkgs.follows = "nixpkgs";
-    #};
-
     #xdg-desktop-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     parinfer-rust.url = "github:PhilTaken/parinfer-rust";
@@ -109,15 +99,6 @@
     #ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
     dimsum.url = "git+https://gitea.pherzog.xyz/mini-x/dimsum";
     fc-utils.url = "git+https://gitea.pherzog.xyz/phil/fc-utils";
-
-    # -----------------------
-    # non-flake sources
-    # TODO: manage without flakes
-
-    #tmm-src = {
-    #url = "https://release.tinymediamanager.org/v5/dist/tinyMediaManager-5.0.4-linux-amd64.tar.xz";
-    #flake = false;
-    #};
   };
 
   outputs = {flake-parts, ...} @ inputs: let
