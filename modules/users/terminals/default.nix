@@ -62,7 +62,7 @@ in {
 
           config.window_decorations = "RESIZE"
           config.window_padding = { left = 12, right = 12, top = 16, bottom = 7 }
-          config.window_background_opacity = 0.90
+          config.window_background_opacity = 0.95
           config.macos_window_background_blur = 20
           config.hide_tab_bar_if_only_one_tab = true
           config.font_size = 11.0
