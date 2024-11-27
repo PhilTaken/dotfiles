@@ -79,7 +79,7 @@ in {
       hexyl
       hyperfine
       jq
-      lnav
+      #lnav
       lolcat
       lsof
       neofetch
