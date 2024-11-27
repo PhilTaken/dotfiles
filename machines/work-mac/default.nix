@@ -63,17 +63,17 @@
 
     casks = [
       "1password"
-      "bartender"
       "hammerspoon"
       "karabiner-elements"
       "raycast"
-      "soundsource"
       "jitsi"
       "spotify"
       "logseq"
       "zen-browser"
       "element"
     ];
+
+    onActivation.cleanup = "zap";
   };
 
   users.users.philippherzog = {
