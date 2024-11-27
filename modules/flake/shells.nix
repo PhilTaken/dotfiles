@@ -140,7 +140,7 @@ in {
             # RIIR when
 
             if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
-              sudo darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+              darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             else
               nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             fi
