@@ -58,6 +58,24 @@
 
   environment.systemPackages = [pkgs.nushell pkgs.openssh];
 
+  homebrew = {
+    enable = true;
+
+    casks = [
+      "1password"
+      "bartender"
+      "hammerspoon"
+      "karabiner-elements"
+      "raycast"
+      "soundsource"
+      "jitsi"
+      "spotify"
+      "logseq"
+      "zen-browser"
+      "element"
+    ];
+  };
+
   users.users.philippherzog = {
     name = "philippherzog";
     description = "Philipp Herzog";
