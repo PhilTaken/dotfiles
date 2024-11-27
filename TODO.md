@@ -1,7 +1,6 @@
 # current TODOs
 
 - grafana
-    - uids for datasources
     - provisioned dashboards
     - grafana oncall -> alert/notify on 
         - unplanned downtime
@@ -21,10 +20,6 @@
 
 - grafana config -> dashboard provisions
 
-- monitor drives
-    - zpool status
-    - smart status
-
 - udev script encrypted backup bitwarden to usb stick (bitwarden-cli)
 - set up root gnupg home to use sops with yubikey on iso (x86-iso2)
 
@@ -32,12 +27,8 @@
 
 - set up modules:
     - audiobookshelf for podcasts
-
-    - radicale + ente / immich
-        - to replace nextcloud
-        - maybe nextcloud memories is fine for now
-
-    - snapcast server/clients
+    - radicale for calendars
+    - snapcast server/clients ?
 
 - nvim plugins
     - marks
