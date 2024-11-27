@@ -52,11 +52,10 @@
   environment.shells = [
     "/run/current-system/sw/bin/nu"
     "/run/current-system/sw/bin/fish"
-    pkgs.nushell
     pkgs.zsh
   ];
 
-  environment.systemPackages = [pkgs.nushell pkgs.openssh];
+  environment.systemPackages = [pkgs.openssh];
 
   homebrew = {
     enable = true;
