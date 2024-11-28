@@ -15,6 +15,10 @@ in {
       darwin-fixes.home-manager
     ];
 
+    home.packages = [
+      pkgs.net-news-wire
+    ];
+
     fonts.fontconfig.enable = true;
     disabledModules = ["targets/darwin/linkapps.nix"];
 
