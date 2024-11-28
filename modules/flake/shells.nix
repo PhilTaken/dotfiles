@@ -43,6 +43,9 @@ in {
       sops
       age
 
+      # grafana dashboards
+      grizzly
+
       sops-import-keys-hook
       ssh-to-age
       nvd

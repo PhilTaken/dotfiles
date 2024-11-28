@@ -218,23 +218,41 @@ in {
       };
 
       provision = {
+        enable = true;
+        dashboards = {
+          settings = {
+            providers = [
+              {
+                name = "dashboards";
+                options.path = ./resources/dashboards/general;
+
+                # allow editing in the ui, just make sure to sync the update with this repo using grr
+                allowUiUpdates = true;
+              }
+            ];
+          };
+        };
+
         datasources.settings = {
           datasources = [
             {
               name = "Tempo";
               type = "tempo";
               url = "http://localhost:${builtins.toString cfg.tempo-port}";
+              uid = "P214B5B846CF3925F";
             }
             {
               name = "Prometheus";
               type = "prometheus";
               url = "http://localhost:${builtins.toString cfg.prometheus-port}";
               jsonData.timeInterval = config.services.prometheus.globalConfig.scrape_interval;
+              uid = "PBFA97CFB590B2093";
             }
             {
               name = "Loki";
               type = "loki";
               url = "http://localhost:${builtins.toString cfg.loki-port}";
+              uid = "P8E80F9AEF21F6940";
             }
           ];
         };

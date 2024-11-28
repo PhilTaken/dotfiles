@@ -25,9 +25,8 @@
           "keycloak"
 
           # email requires kanidm,
-          # currently non-functional due to database errors
-          # "kanidm"
-          #"email"
+          "kanidm"
+          "email"
 
           "immich"
 

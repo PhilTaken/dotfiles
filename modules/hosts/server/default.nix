@@ -18,8 +18,7 @@ in {
     ./fail2ban.nix
     ./freshrss.nix
     ./gitea.nix
-    ./grafana.nix
-    ./grafana.nix
+    ./grafana
     ./grocy.nix
     ./headscale.nix
     ./homeassistant

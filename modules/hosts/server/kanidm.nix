@@ -48,7 +48,7 @@ in {
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
-        public = true;
+        public = false;
         proxyPass = "https://127.0.0.1:${builtins.toString cfg.port}";
       };
       homer.apps."${cfg.host}" = {

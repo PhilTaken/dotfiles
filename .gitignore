@@ -4,3 +4,4 @@ tags
 .stfolder
 .pre-commit-config.yaml
 .nixd.json
+.envrc-secret
