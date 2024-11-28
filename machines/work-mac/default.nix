@@ -150,6 +150,9 @@
         screenEdgeGapTopNotch = 0;
         screenEdgeGapTop = 32;
       };
+      "org.hammerspoon.Hammerspoon" = {
+        MJConfigFile = "~/.config/hammerspoon/init.lua";
+      };
       "com.apple.finder" = {
         # Keep the desktop clean
         ShowHardDrivesOnDesktop = false;
@@ -186,10 +189,6 @@
   system.activationScripts.setting.text = ''
     # Allow opening apps from any source
     sudo spctl --master-disable
-  '';
-
-  system.activationScripts.postUserActivation.text = ''
-    defaults write org.hammerspoon.Hammerspoon MJConfigFile "${config.homePath}/.config/hammerspoon/init.lua"
   '';
 
   # Used for backwards compatibility, please read the changelog before changing.
