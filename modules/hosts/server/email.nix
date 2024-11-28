@@ -356,6 +356,11 @@ in {
           restartUnits = ["dovecot2.service"];
         };
 
+        systemd.services."dovecot2" = lib.mkIf config.phil.server.services.kanidm.enable {
+          after = ["kanidm.service"];
+          requires = ["kanidm.service"];
+        };
+
         services.dovecot2 = {
           enable = true;
           enableImap = true;
