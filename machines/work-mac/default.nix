@@ -1,6 +1,7 @@
 {
   pkgs,
   npins,
+  config,
   ...
 }: {
   imports = [
@@ -185,6 +186,10 @@
   system.activationScripts.setting.text = ''
     # Allow opening apps from any source
     sudo spctl --master-disable
+  '';
+
+  system.activationScripts.postUserActivation.text = ''
+    defaults write org.hammerspoon.Hammerspoon MJConfigFile "${config.homePath}/.config/hammerspoon/init.lua"
   '';
 
   # Used for backwards compatibility, please read the changelog before changing.
