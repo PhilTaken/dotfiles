@@ -99,6 +99,12 @@
     #ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
     dimsum.url = "git+https://gitea.pherzog.xyz/mini-x/dimsum";
     fc-utils.url = "git+https://gitea.pherzog.xyz/phil/fc-utils";
+
+    ghostty = {
+      url = "git+ssh://git@github.com/ghostty-org/ghostty";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs";
+    };
   };
 
   outputs = {flake-parts, ...} @ inputs: let

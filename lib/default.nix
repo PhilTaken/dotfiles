@@ -21,6 +21,7 @@
         inherit (inputs.eww-git.packages.${prev.system}) eww eww-wayland;
 
         webcord = inputs.webcord.packages.${prev.system}.default;
+        ghostty = inputs.ghostty.packages.${prev.system}.default;
 
         # devdocs.io
         devdocs-desktop = prev.writeShellApplication {
