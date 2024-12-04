@@ -87,7 +87,8 @@ in {
           with ps; [
             # fonts
             iosevka-comfy.comfy
-            (nerdfonts.override {fonts = ["SourceCodePro" "Iosevka"];})
+            nerd-fonts.sauce-code-pro
+            nerd-fonts.iosevka
           ];
 
         inherit (hmUsers.philippherzog) userConfig;

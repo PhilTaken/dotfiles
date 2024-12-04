@@ -53,7 +53,8 @@ in {
     fonts.packages = [
       pkgs.font-awesome
       pkgs.iosevka-comfy.comfy
-      (pkgs.nerdfonts.override {fonts = ["SourceCodePro" "Iosevka"];})
+      pkgs.nerd-fonts.sauce-code-pro
+      pkgs.nerd-fonts.iosevka
     ];
 
     # https://github.com/nix-community/home-manager/issues/2017
