@@ -6,6 +6,7 @@ keycloak-dbpass: ENC[AES256_GCM,data:jCKc51Kb9XaSwEkYlKY=,iv:2mJE6/TZNjpQDybBgSy
 grafana-adminpass: ENC[AES256_GCM,data:IyCBYOmH7/SPqJ0yihM=,iv:L50mtmqoTNwIZH0MrylSubr5IT1ETs1o+NS2uyWJSII=,tag:GGCcF3ssB4dzQOVGY/7V/g==,type:str]
 grafana-admindbpass: ENC[AES256_GCM,data:YIJhYomQIg==,iv:eHZwfq40oHQyqhqnBw/yg+ODFrpDZ6YUtwrFQHk4JLg=,tag:qmXlNoKFh4dnu7Vx0cuGSg==,type:str]
 acme_dns_cf: ENC[AES256_GCM,data:ylKD2xEDuFz1tMjQmDIH0a1BOLIGKYuWbkecMc4oASA6FKkBTYnWUCF4yNtYY9N2F9WDffBRHTfTTOXzzZu0o0wki0/QRzJ5VKh2NsdKhiUh6WhhKJyDjZ9hw/l7K9utBIPM6Tw=,iv:Cl4+4faHLKWBZbKqTxPTPTnlTWJT8ikIL0K10yUdZS8=,tag:dsUocBbtQdWG67RJgXPhvA==,type:str]
+mealie-secret-config: ENC[AES256_GCM,data:/N+H0PtC+kKMJoOi0xsVMrtYXwtHty4HwyGu7t7ulSElJNfyvW7ua2MKsnLkprzjyll1jqdQuuEptzJIEKPOfEOjcl4n3DnS6uo=,iv:IMwR3TuVyXeiYtcYW+QnkSSUxSRKHfsFUzdpPFmAYb0=,tag:8e5LcPVUasEYqcXoG8Dr+A==,type:str]
 nix-serve-secret-key: ENC[AES256_GCM,data:FyRN/lDRpQDRab6hnlHPS+YwNEzEGZe6u9Njqu92pNJcqNNPtO5z5Vv/wxW6rJti6U31bkErG0VQWeb2VP+ABAEGA4ActgZALzoscZMVfLvmT1zSukjE1VG7R1gmyp4pxdhSSr0=,iv:BrI4zeQPvp4egUZDJFghZSYUe7EsWhNJfN8BGkxPXCc=,tag:Hh3FVjak3jHGqoeMVY2uKQ==,type:str]
 home-assistant-secrets.yaml: ENC[AES256_GCM,data:J76atARip2kBDRu16yPL4qxYsB3fikpTZ1+0Zq10v31jLjVKo2GAx3x42L7SukeInSD2hvOm4VUycOMFqq+fYvr7ePBLUqOOkij9opEl1XsQWG/NI+Xv0QPDNYG+DhQeWQP2dQFTS68DBz5RJQQafka6IsuCbkflG0PmEL4+/Lny9nP2pX9vQBFscw6RoQoBf8NmT6zHQv59btrfJusGbihes2pI6W7I9gDoJvujU0tj5vZ29GMlUGDbjr8mtmffL018jnlapB8/wifXYI2BkCxVOgrW4upa4n1wiHUOERL7Vj46dSTjpI2S/KPXOTUmZNjxToclvQq+P/tAqSCBeMs8E6vaa13hjAa7yCwkiUszdYVwrxDPbxPxLi3FpOMWeyU08rhtQ9GauTqUajcNhYGga4zyjRg1zT6/TPewCDzNLsbdDBAncpdNNqVNK8z9FZVLhm8nXSCUMdIKh4723WcZoWc4Tq1pL32EB1zIAMo2AjJw/Fl4tEYru+n4Vg3DikvgODuEkdEUCUfriCyMlrlWTgCtUJPQKY4u9TPVSJIMaBySHkLH8uuF3vYcUIdtx2ICkewMANK+p8/gHgVYyBDIAQV6H6+kYrlIHBPAPcUZVB/lsPYAYRmYT5Ju0gai/1BAW1zw+TM9zA/nmyFR+3lTwF+IBRVJGHEM6dCr5NMMr/7zo+E2LhunMswyQ6JcCVfxPOs7z+SovrJUuuh9ECLv7llET18uZWyG636uMHGLqKbM23wm,iv:GkKuFjP6Ff1eTcB4dbriucufhhwWcjNzCpzpUzSSkHI=,tag:8yR5PhBJRQjh+mS0maLqag==,type:str]
 ldap-bindauth-pass: ENC[AES256_GCM,data:0RgwKppXp1p3MO4kbwuJxccjzHi1jRyYB+WCfR9yrOghs9cNbB6mpVFE0+fM1soCCK3JgGymro19xkq/w3jrIYGeZZwCdi5VizlEZj9FOJ/r73dYy56184NWgtqIsnAzpmaoMsE9Ogtv9YJsha44OImvq9mJiPtkadpUxuqr5efGj3Ved5w74KWWVYDTGUlboFkiM6rB6upJj71DqaiyHRKSZYavX6b33MutXjWbBleMiUU5JGdNLN6iKNRQ8ydwcHciSWj0bk+C5oa/g3yjYzv/Bsh/4O9zbyaglDAnE0omAp0n2bT4fcmcfBfXrsMJt672aAUqYCzEsb9b+r+nJSHnZWhOT9ykVaieOlUkl7Jh3Ky3qx0fgbwfp8KbFcUp2HT2zHND4QvD9J4LaOuE2p2u6BpcaiAV8kD/a+MhOzzfY22RsCFqcejs+ZAUAk0/b0kyOVw2xYAMWbL/BJLgG+2ZbVmKTILcokMLTbQGwosV5kTKNRifjL2Eut6cRSW5Y4+BCO1QisnIOFP2YiGHMu+sPoQKxw==,iv:cjYj0NWNcFzdWabP2J5SEd7MWN6Uz8dwFZ1BVafouJA=,tag:KjipkwWFqk3j2jB1Ek6QiA==,type:str]
@@ -96,8 +97,8 @@ sops:
             ejJTbDYwS0IxbWRkcXg3cC94blZmRncKgesfvvge3ci1zhDFw816Q2PLIvK8VMuz
             QMauausq67+W9F0hWW95e7PLgkKfGAJcIoMhCLSncakawGxCmeLTkQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-11-07T19:54:35Z"
-    mac: ENC[AES256_GCM,data:0kbdhd9Y5SAAR2TlePN896b8ZraOPv5h0Ih/u0c7wEbCp+ITIZcOIBL4quKnwAiEnsSEtRc3Ck3CJ4F9CKCa4qrEk1VGXTiYp5dXTpIkju37yW8V7PSgRIecFOd1KexvcElqojBX3G9cT4JLlnt84JVEfiiVUa/zM+sLrJLu9Uo=,iv:ELmpQQVUw+37py618MQRYdvIQRC8cA0GY6i0xGryqks=,tag:PxcPir9YWX0/2KarQNe+hg==,type:str]
+    lastmodified: "2024-12-04T09:35:20Z"
+    mac: ENC[AES256_GCM,data:bxACSDBtLdadHsCm6EUPu89iO9xYKP5xBd7pfjgCWhbYf1w2BuMptgMk9Q15YPIVl/UXeZVbxaKX8uRxcLwbsnBSqbpofYVDElH/NFeuAdR/ufzPQuGEdUTNAeOdrgbmsNZWGuK26OGcKdkhDNvEER+chKyBiFKxrRVIFMKiVpA=,iv:mY5s5tmS+/1M+Zfb6+mstdt/wBDjYSAyk3SK5KMq/Qk=,tag:/V2EODWKZkqpKMKB+nfeoA==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-

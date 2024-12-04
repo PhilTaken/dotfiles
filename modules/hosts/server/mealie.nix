@@ -28,6 +28,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    sops.secrets.mealie-secret-config.owner = "mealie";
+
     services.mealie = {
       enable = true;
 
@@ -46,10 +48,11 @@ in {
         OIDC_AUTH_ENABLED = "true";
         OIDC_SIGNUP_ENABLED = "true";
         OIDC_CONFIGURATION_URL = "https://${netlib.domainFor "keycloak"}/realms/services/.well-known/openid-configuration";
-        OIDC_CLIENT_ID = "mealie";
         OIDC_PROVIDER_NAME = "Keycloak";
         OIDC_AUTO_REDIRECT = "true";
       };
+
+      credentialsFile = config.sops.secrets.mealie-secret-config.path;
     };
 
     phil.server.services.caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
