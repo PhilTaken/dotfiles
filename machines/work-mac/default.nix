@@ -60,7 +60,11 @@
 
   homebrew = {
     enable = true;
-    onActivation.upgrade = true;
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      cleanup = "zap";
+    };
 
     casks = [
       "1password"
@@ -70,11 +74,12 @@
       "jitsi"
       "spotify"
       "logseq"
-      "zen-browser"
+      {
+        name = "zen-browser";
+        greedy = true;
+      }
       "element"
     ];
-
-    onActivation.cleanup = "zap";
   };
 
   users.users.philippherzog = {
