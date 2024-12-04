@@ -28,7 +28,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.mealie-secret-config.owner = "mealie";
+    sops.secrets.mealie-secret-config.mode = "777";
 
     services.mealie = {
       enable = true;
