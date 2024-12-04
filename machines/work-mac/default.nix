@@ -58,6 +58,9 @@
 
   environment.systemPackages = [pkgs.openssh];
 
+  services.karabiner-elements.enable = true;
+  services.tailscale.enable = true;
+
   homebrew = {
     enable = true;
     onActivation = {
@@ -69,7 +72,6 @@
     casks = [
       "1password"
       "hammerspoon"
-      "karabiner-elements"
       "raycast"
       "jitsi"
       "spotify"
