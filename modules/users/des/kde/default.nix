@@ -20,16 +20,6 @@ in {
   config = mkIf cfg.enable {
     services.kdeconnect.enable = true;
 
-    programs = {
-      alacritty = {
-        enable = true;
-        settings = {
-          font.normal.family = cfg.default_font;
-          font.size = 12.0;
-        };
-      };
-    };
-
     home.packages = with pkgs; [
       flameshot
       latte-dock
