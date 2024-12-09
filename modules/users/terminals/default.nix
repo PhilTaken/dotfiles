@@ -36,6 +36,8 @@ in {
   config = lib.mkIf (!config.phil.headless) {
     home.packages = lib.optionals (lib.hasSuffix "linux" pkgs.system) [pkgs.ghostty];
 
+    programs.foot.enable = true;
+
     programs = {
       alacritty = {
         enable = true;
