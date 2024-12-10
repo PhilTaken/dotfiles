@@ -3,7 +3,7 @@
   inputs,
 }: let
   overlays = [
-    inputs.nur-src.overlay
+    inputs.nur-src.overlays.default
 
     #inputs.arm-rs.overlays.default
 
