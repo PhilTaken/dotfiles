@@ -58,7 +58,7 @@
 
   environment.systemPackages = [pkgs.openssh];
 
-  services.karabiner-elements.enable = true;
+  # services.karabiner-elements.enable = true;
   services.tailscale.enable = true;
 
   homebrew = {
@@ -76,6 +76,7 @@
       "jitsi"
       "spotify"
       "logseq"
+      "karabiner-elements"
       {
         name = "zen-browser";
         greedy = true;
