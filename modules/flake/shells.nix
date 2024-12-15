@@ -123,10 +123,11 @@ in {
           name = "cbuild";
           help = "Build and compare a NixOS Configuration (local)";
           command = mkSystemScript ''
+            host=''${1:-$(hostname)}
             if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
-              sudo darwin-rebuild --flake ".#$1" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+              sudo darwin-rebuild --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             else
-              nixos-rebuild --use-remote-sudo --flake ".#$1" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+              nixos-rebuild --use-remote-sudo --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             fi
             ${pkgs.nvd}/bin/nvd diff /run/current-system result
           '';
