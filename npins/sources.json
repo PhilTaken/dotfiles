@@ -44,9 +44,9 @@
         "repo": "extensions"
       },
       "branch": "master",
-      "revision": "22bda8170256a7b5dfa7472ca50572f3ec32d04d",
-      "url": "https://github.com/freshrss/extensions/archive/22bda8170256a7b5dfa7472ca50572f3ec32d04d.tar.gz",
-      "hash": "004qj5rc46jpx4yv449wwaihp4b51v04r429mbwqgl4cppqd05m2"
+      "revision": "3d1906f7767c01fff57025ba7d1e96aa9cead124",
+      "url": "https://github.com/freshrss/extensions/archive/3d1906f7767c01fff57025ba7d1e96aa9cead124.tar.gz",
+      "hash": "0hrhhhqa41vxa7gs5rgjcrr4z655ljhh9mvj437yq2z78il3gr9q"
     },
     "hurl-nvim": {
       "type": "GitRelease",
@@ -57,10 +57,10 @@
       "pre_releases": false,
       "version_upper_bound": null,
       "release_prefix": null,
-      "version": "v2.0.0",
-      "revision": "98f5bc3cfb86fe239ad5d07ebf9da762c2375cd0",
+      "version": "v2.0.1",
+      "revision": "c068fbb3a890ebcc9d263e114da4473d4556dad7",
       "url": null,
-      "hash": "1y4g01l91gqzfb0chziqgw6gi1arj03qnz0jrhl34i9kxrcn8wxf"
+      "hash": "1gps2bjid6v0wgjv2pjab4jc6gzirg1a6lkjww7g7af9iaaaj9cy"
     },
     "janet.vim": {
       "type": "Git",
@@ -77,8 +77,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.05pre709559.5083ec887760/nixexprs.tar.xz",
-      "hash": "1z912j1lmrg8zp2hpmmi69dls9zlpvqfvdkvh5xc3x6iqkqwn0cd"
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.05pre730005.6d97d419e5a9/nixexprs.tar.xz",
+      "hash": "1mvsd66bks3jvkp207afzrx2cwxrz6fq4zhxcak2ck6ap75sb7a2"
     },
     "nvim-cmp-lsp-rs": {
       "type": "Git",

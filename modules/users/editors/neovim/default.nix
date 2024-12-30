@@ -8,10 +8,10 @@
   cfg = config.phil.editors.neovim;
   inherit (pkgs.vimUtils) buildVimPlugin;
   inherit (lib) mkOption mkIf types optionals;
-  buildPlugin = attrset:
+  buildPlugin = {pname, ...} @ attrset:
     buildVimPlugin ({
         version = "master";
-        src = npins.${attrset.pname};
+        src = npins.${pname};
       }
       // attrset);
 
@@ -290,7 +290,10 @@ in {
           cmp-nvim-lua
           cmp-path
           cmp-under-comparator
-          (buildPlugin {pname = "nvim-cmp-lsp-rs";})
+          (buildPlugin {
+            pname = "nvim-cmp-lsp-rs";
+            doCheck = false;
+          })
           (plug nvim-cmp ''require("custom.cmp_init")'')
 
           # -----------------------------------------------------
