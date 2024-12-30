@@ -90,18 +90,7 @@ in {
       ips = mkOption {
         description = "ips to share to";
         type = types.listOf types.str;
-        default =
-          ["192.168.0.0/24"]
-          ++ (
-            if wireguard.enable
-            then ["10.100.0.0/24"]
-            else []
-          )
-          ++ (
-            if nebula.enable
-            then ["10.200.0.0/24"]
-            else []
-          );
+        default = lib.mapAttrsToList (_n: v: v.netmask) net.networks;
       };
     };
   };
