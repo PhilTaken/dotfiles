@@ -144,7 +144,7 @@ in {
       git
       git-crypt
       cryptsetup
-      hwinfo
+      # hwinfo
       htop
       rclone
       duf
