@@ -15,6 +15,13 @@ in {
   config = mkIf cfg.enable {
     services.flameshot.enable = true;
 
+    systemd.user.targets.tray = {
+      Unit = {
+        Description = "Home Manager System Tray";
+        Requires = ["graphical-session-pre.target"];
+      };
+    };
+
     home.packages = with pkgs; [
       # chrome-gnome-shell
       # gnome3 apps
