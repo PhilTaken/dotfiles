@@ -46,8 +46,14 @@ in {
       # notes
       obsidian
 
+      # e-guitar stuff
+      guitarix
+      qjackctl
+      jack2
+
       # audio/video
       audacity
+      ardour
       #obs-studio
       handbrake
       #makemkv
@@ -55,7 +61,7 @@ in {
       # games
       prismlauncher
       #citra
-      #sergviceyuzu-ea
+      #yuzu-ea
       #osu-lazer
 
       # downloads
@@ -66,17 +72,6 @@ in {
 
       #skrooge
       #waydroid
-
-      # e-guitar stuff
-      guitarix
-      qjackctl
-      jack2
-
-      # tiny media manager
-      #(nur.repos.shados.tmm.overrideAttrs (_old: {
-      #version = "latest";
-      #src = inputs.tmm-src;
-      #}))
 
       # typey-typey
       plover.dev
