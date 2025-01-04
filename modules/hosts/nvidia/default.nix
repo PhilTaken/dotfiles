@@ -31,6 +31,7 @@ in {
       nvidia = {
         open = false;
         modesetting.enable = true;
+        package = config.boot.kernelPackages.nvidiaPackages.beta;
       };
       graphics = {
         extraPackages = with pkgs; [libvdpau-va-gl vaapiVdpau];

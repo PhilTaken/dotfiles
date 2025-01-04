@@ -36,11 +36,11 @@ in {
 
   config = (mkIf cfg.enable) {
     # TODO: sops-nix home-manager module
-    xdg.configFile."spotifyd/credentials".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/spotify-password";
+    #xdg.configFile."spotifyd/credentials".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/spotify-password";
 
     services.spotifyd = {
       # build breaks on arm currently
-      enable = lib.hasInfix pkgs.system "x86";
+      enable = false; # lib.hasInfix pkgs.system "x86";
       package = pkgs.spotifyd.override {
         withKeyring = true;
         withPulseAudio = true;
@@ -48,7 +48,7 @@ in {
       };
       settings = {
         global = {
-          username = "${cfg.spotifyd_username}";
+          username = cfg.spotifyd_username;
           password_cmd = "${pkgs.coreutils}/bin/cat ${config.xdg.configHome}/spotifyd/credentials";
           backend = "pulseaudio";
           bitrate = 160;
