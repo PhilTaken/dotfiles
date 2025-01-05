@@ -54,6 +54,7 @@ in {
       # audio/video
       audacity
       ardour
+      picard
       #obs-studio
       handbrake
       #makemkv
