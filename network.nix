@@ -10,8 +10,10 @@
       milkyway.ifname = "milkyway";
 
       yggdrasil.netmask = "10.100.0.0/24";
+      yggdrasil.ifname = "tun0";
 
       lan.netmask = "192.168.178.0/16";
+      lan.ifname = "eth0";
     };
 
     nodes = {
@@ -95,6 +97,11 @@
         system = lib.mkOption {
           type = types.enum ["aarch64-linux" "aarch64-darwin" "x86_64-linux"];
           description = "the nodes system architecture";
+        };
+
+        sshUser = lib.mkOption {
+          type = types.str;
+          default = "nixos";
         };
 
         services = lib.mkOption {

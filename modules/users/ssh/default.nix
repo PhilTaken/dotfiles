@@ -1,12 +1,13 @@
 {
   config,
+  osConfig,
   lib,
   pkgs,
-  netlib,
   ...
 }: let
   cfg = config.phil.ssh;
   inherit (lib) mkEnableOption mkIf;
+  inherit (osConfig.phil) network;
 in {
   options.phil.ssh = {
     enable = mkEnableOption "ssh";
@@ -21,13 +22,23 @@ in {
       enable = true;
       matchBlocks = let
         # every host has a headscale ip, right?
-        headscale_hosts = lib.mapAttrs (_: v: v.network_ip."headscale") (lib.filterAttrs (_: v: v.network_ip ? "headscale") netlib.nodes);
+        headscale_hosts =
+          lib.mapAttrs
+          (_: v: {
+            hostname = v.network_ip."headscale";
+            user = v.sshUser;
+          })
+          network.nodes;
 
         # add a suffix for the public ips
         public_hosts =
           lib.mapAttrs'
-          (n: v: lib.nameValuePair (n + "-public") v.network_ip."public_ip")
-          (lib.filterAttrs (_: v: v ? public_ip) netlib.nodes);
+          (n: v:
+            lib.nameValuePair (n + "-public") {
+              hostname = v.public_ip;
+              user = v.sshUser;
+            })
+          (lib.filterAttrs (_: v: !builtins.isNull v.public_ip) network.nodes);
       in
         headscale_hosts // public_hosts;
     };
