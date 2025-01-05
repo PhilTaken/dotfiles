@@ -33,7 +33,6 @@ in {
     services.immich = {
       enable = true;
       host = "0.0.0.0";
-      package = pkgs.immich.override {nodejs = pkgs.nodejs_20;};
       inherit (cfg) port;
 
       # oauth config is limited to the ui and setting settings
