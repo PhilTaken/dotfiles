@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  netlib,
   ...
 }: let
   cfg = config.phil.ssh;
@@ -18,41 +19,17 @@ in {
 
     programs.ssh = {
       enable = true;
-      matchBlocks = {
-        # home
-        "router" = {
-          hostname = "router.lan";
-          user = "root";
-        };
-        "betalocal" = {
-          hostname = "192.168.0.120";
-          user = "nixos";
-        };
-        "deltalocal" = {
-          hostname = "192.168.0.21";
-          user = "nixos";
-        };
+      matchBlocks = let
+        # every host has a headscale ip, right?
+        headscale_hosts = lib.mapAttrs (_: v: v.network_ip."headscale") (lib.filterAttrs (_: v: v.network_ip ? "headscale") netlib.nodes);
 
-        "beta" = {
-          hostname = "10.200.0.2";
-          user = "nixos";
-        };
-        "delta" = {
-          hostname = "10.200.0.5";
-          user = "nixos";
-        };
-
-        "epsilon" = {
-          hostname = "10.200.0.4";
-          user = "maelstroem";
-        };
-
-        # remote vps
-        "vps2" = {
-          hostname = "185.212.44.199";
-          user = "nixos";
-        };
-      };
+        # add a suffix for the public ips
+        public_hosts =
+          lib.mapAttrs'
+          (n: v: lib.nameValuePair (n + "-public") v.network_ip."public_ip")
+          (lib.filterAttrs (_: v: v ? public_ip) netlib.nodes);
+      in
+        headscale_hosts // public_hosts;
     };
   };
 }
