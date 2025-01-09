@@ -69,13 +69,7 @@
       gpg.enable = true;
 
       zellij.enable = true;
-
-      git = {
-        enable = true;
-        userName = "Philipp Herzog";
-        userEmail = "ph@flyingcircus.io";
-        signKey = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
-      };
+      git.enable = true;
     };
   };
 in {
