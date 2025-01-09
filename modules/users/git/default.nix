@@ -108,7 +108,7 @@ in {
 
       includes = [
         {
-          condition = "gitdir:${config.home.sessionVariables.GIT_WORKSPACE}";
+          condition = "gitdir:${config.home.sessionVariables.GIT_WORKSPACE}/";
           contents = {
             user = {
               email = "ph@flyingcircus.io";
