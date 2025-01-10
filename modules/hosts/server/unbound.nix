@@ -3,6 +3,7 @@
   lib,
   flake,
   netlib,
+  pkgs,
   ...
 }: let
   # TODO move dns to shiver via service discovery
@@ -79,15 +80,20 @@ in {
       mkLocalDataPtr = lib.mapAttrsToList (host: ip: "\"${ip} ${netlib.domainFor host}\"");
     in {
       enable = true;
+      package = pkgs.unbound-full;
 
       # enable metric collection through the prometheus exporter
-      localControlSocketPath = "/run/unbound.ctl";
+      localControlSocketPath = "/run/unbound/unbound.ctl";
 
       settings = {
+        remote-control.control-use-cert = false;
+
         include = "${./unbound-adblock.conf}";
         server = {
           # more stats for the prometheus exporter
           extended-statistics = "yes";
+          statistics-interval = 0;
+          statistics-cumulative = true;
 
           # allow access from all defined internal networks
           access-control = lib.mapAttrsToList (_n: v: v.netmask + " allow") net.networks;
@@ -106,7 +112,7 @@ in {
           do-ip4 = "yes";
           do-ip6 = "yes";
 
-          # privacy + performance
+          # privacy + hardening
           qname-minimisation = "yes"; # increase client privacy
           hide-identity = "yes";
           hide-version = "yes";
@@ -116,14 +122,38 @@ in {
           cache-min-ttl = 3600;
           cache-max-ttl = 86400;
           incoming-num-tcp = 1000;
-          prefetch = "yes";
+          prefetch = true;
+          aggressive-nsec = true;
+          harden-algo-downgrade = true;
+          harden-below-nxdomain = true;
+          harden-large-queries = true;
+          harden-short-bufsize = true;
+          ipsecmod-enabled = false;
+          prefetch-key = true;
+          qname-minimisation-strict = false;
+          rrset-roundrobin = true;
+          val-log-level = 2;
 
           # performance
           rrset-cache-size = "256m";
-          msg-cache-size = "128m";
+          msg-cache-size = "256m";
+          neg-cache-size = "256m";
+          key-cache-size = "256m";
           so-rcvbuf = "425984";
-          so-reuseport = "yes";
+          so-sndbuf = "4m";
+          so-reuseport = true;
           val-clean-additional = "yes";
+          serve-expired = true;
+
+          # libevent
+          outgoing-range = 8192;
+          num-queries-per-thread = 4096;
+
+          # Speed
+          infra-cache-slabs = 1;
+          key-cache-slabs = 1;
+          msg-cache-slabs = 1;
+          rrset-cache-slabs = 1;
 
           # block nasty ads
           local-zone = [
