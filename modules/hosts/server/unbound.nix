@@ -83,6 +83,9 @@ in {
       settings = {
         include = "${./unbound-adblock.conf}";
         server = {
+          # more stats for the prometheus exporter
+          extended-statistics = "yes";
+
           # allow access from all defined internal networks
           access-control = lib.mapAttrsToList (_n: v: v.netmask + " allow") net.networks;
           interface = ["0.0.0.0@53" "::0@53" "0.0.0.0@853" "::0@853"];
@@ -144,6 +147,12 @@ in {
 
           local-data-ptr = mkLocalDataPtr subdomains.lan;
           access-control-view = lib.mapAttrsToList (_n: v: v.netmask + " " + v.name) net.networks;
+        };
+
+        # enable metric collection through the prometheus exporter
+        remote-control = {
+          control-enable = true;
+          control-interface = "/run/unbound.ctl";
         };
 
         view =

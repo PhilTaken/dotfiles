@@ -54,6 +54,16 @@ in {
         maxInterval = "2m";
         port = netlib.portFor "smartctl-exporter";
       };
+
+      unbound = {
+        enable = config.phil.server.services.unbound.enable;
+        unbound = {
+          ca = null;
+          certificate = null;
+          key = null;
+          host = "unix:///run/unbound.ctl";
+        };
+      };
     };
 
     users.users."sensors-exporter" = mkIf cfg.extrasensors {
