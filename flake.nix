@@ -95,6 +95,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
     # time tracker
     #ttrack.url = "git+https://gitea.pherzog.xyz/phil/ttrack";
     dimsum.url = "git+https://gitea.pherzog.xyz/mini-x/dimsum";

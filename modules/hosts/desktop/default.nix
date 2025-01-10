@@ -46,6 +46,8 @@ in {
       # notes
       obsidian
 
+      zen-browser
+
       # e-guitar stuff
       guitarix
       qjackctl
