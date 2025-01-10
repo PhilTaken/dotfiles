@@ -1,0 +1,101 @@
+{
+  "folderUid": "de5x0qftp6c5cf",
+  "interval": 60,
+  "rules": [
+    {
+      "annotations": {
+        "__dashboardUid__": "rYdddlPWk",
+        "__panelId__": "3",
+        "summary": "Node uses too much RAM!"
+      },
+      "condition": "C",
+      "data": [
+        {
+          "datasourceUid": "PBFA97CFB590B2093",
+          "model": {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": true,
+            "intervalMs": 1000,
+            "legendFormat": "__auto",
+            "maxDataPoints": 43200,
+            "range": false,
+            "refId": "A",
+            "useBackend": false
+          },
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300
+          }
+        },
+        {
+          "datasourceUid": "__expr__",
+          "model": {
+            "conditions": [
+              {
+                "evaluator": {
+                  "params": [
+                    90,
+                    0
+                  ],
+                  "type": "gt"
+                },
+                "operator": {
+                  "type": "and"
+                },
+                "query": {
+                  "params": []
+                },
+                "reducer": {
+                  "params": [],
+                  "type": "avg"
+                },
+                "type": "query"
+              }
+            ],
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "A",
+            "intervalMs": 1000,
+            "maxDataPoints": 43200,
+            "refId": "C",
+            "type": "threshold"
+          },
+          "refId": "C",
+          "relativeTimeRange": {}
+        }
+      ],
+      "execErrState": "Error",
+      "folderUID": "de5x0qftp6c5cf",
+      "for": "2m0s",
+      "id": 1,
+      "labels": {
+        "resource": "ram",
+        "type": "resource"
+      },
+      "noDataState": "NoData",
+      "notification_settings": {
+        "group_by": null,
+        "mute_time_intervals": null,
+        "receiver": "pushover"
+      },
+      "orgID": 1,
+      "ruleGroup": "resources",
+      "title": "RAM watch",
+      "uid": "ee5x0s0xx3b40d",
+      "updated": "2024-12-04T16:58:13.000+01:00"
+    }
+  ],
+  "title": "resources"
+}
