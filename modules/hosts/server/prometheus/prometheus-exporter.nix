@@ -61,7 +61,7 @@ in {
           ca = null;
           certificate = null;
           key = null;
-          host = "unix:///run/unbound.ctl";
+          host = "unix://${config.services.unbound.localControlSocketPath}";
         };
       };
     };

@@ -80,6 +80,9 @@ in {
     in {
       enable = true;
 
+      # enable metric collection through the prometheus exporter
+      localControlSocketPath = "/run/unbound.ctl";
+
       settings = {
         include = "${./unbound-adblock.conf}";
         server = {
@@ -147,12 +150,6 @@ in {
 
           local-data-ptr = mkLocalDataPtr subdomains.lan;
           access-control-view = lib.mapAttrsToList (_n: v: v.netmask + " " + v.name) net.networks;
-        };
-
-        # enable metric collection through the prometheus exporter
-        remote-control = {
-          control-enable = true;
-          control-interface = "/run/unbound.ctl";
         };
 
         view =
