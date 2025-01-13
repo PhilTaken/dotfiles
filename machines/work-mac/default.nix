@@ -77,6 +77,7 @@
       "spotify"
       "logseq"
       "karabiner-elements"
+      "telegram"
       {
         name = "zen-browser";
         greedy = true;
