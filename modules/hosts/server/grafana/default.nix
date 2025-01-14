@@ -64,6 +64,11 @@ in {
       default = "grafana";
     };
 
+    loki-grpc-port = mkOption {
+      type = types.port;
+      default = netlib.portFor "loki-grpc";
+    };
+
     loki-port = mkOption {
       type = types.port;
       default = netlib.portFor "loki";
@@ -86,6 +91,13 @@ in {
   };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = builtins.hasAttr "public_ip" net.nodes.${config.networking.hostName};
+        message = "the grafana node needs a public ip for loki function properly (grpc)";
+      }
+    ];
+
     sops.secrets =
       lib.genAttrs [
         "grafana-adminpass"
@@ -104,6 +116,8 @@ in {
         server = {
           http_listen_address = "0.0.0.0";
           http_listen_port = cfg.loki-port;
+          grpc_listen_address = "0.0.0.0";
+          grpc_listen_port = cfg.loki-grpc-port;
         };
 
         limits_config = {
@@ -256,6 +270,11 @@ in {
           ];
         };
       };
+    };
+
+    networking.firewall = {
+      allowedUDPPorts = [cfg.loki-grpc-port];
+      allowedTCPPorts = [cfg.loki-grpc-port];
     };
 
     phil.server.services = {
