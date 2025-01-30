@@ -20,9 +20,6 @@ in {
 
   config = mkIf cfg.enable {
     services.xserver.videoDrivers = lib.mkDefault ["nvidia"];
-
-    phil.video.driver = lib.mkDefault "nvidia";
-
     environment.systemPackages = [nvidia-offload];
 
     nixpkgs.config = {

@@ -25,12 +25,6 @@ in {
       default = true;
     };
 
-    driver = mkOption {
-      description = "video driver";
-      type = types.nullOr (types.enum ["noveau" "nvidia" "amd" "qxl"]);
-      default = null;
-    };
-
     managers = mkOption {
       description = "which window/desktop manager to enable";
       type = types.listOf manager_enum;
@@ -74,11 +68,6 @@ in {
       xkb.layout = "us";
       xkb.variant = "intl,workman-intl";
       xkb.options = "caps:escape,grp:shifts_toggle";
-
-      videoDrivers =
-        if (cfg.driver != null)
-        then [cfg.driver]
-        else [];
 
       desktopManager = {
         plasma5.enable = enabled "kde";
