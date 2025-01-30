@@ -39,14 +39,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.config = mkIf (cfg.driver == "nvidia") {
-      allowUnfreePredicate = pkg:
-        builtins.elem (lib.getName pkg) [
-          "nvidia-x11"
-          "nvidia-settings"
-        ];
-    };
-
     hardware.graphics.enable = true;
     console.useXkbConfig = true;
 
@@ -88,12 +80,6 @@ in {
         then [cfg.driver]
         else [];
 
-      screenSection = mkIf (cfg.driver == "nvidia") ''
-        Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-        Option         "AllowIndirectGLXProtocol" "off"
-        Option         "TripleBuffer" "on"
-      '';
-
       desktopManager = {
         plasma5.enable = enabled "kde";
         xfce.enable = enabled "xfce";
@@ -132,24 +118,6 @@ in {
       "/share/icons"
       "/share/mime"
     ];
-
-    # https://wiki.hyprland.org/Nvidia/#how-to-get-hyprland-to-possibly-work-on-nvidia
-    environment.variables = mkIf (cfg.driver == "nvidia") {
-      GBM_BACKEND = "nvidia-drm";
-      LIBVA_DRIVER_NAME = "nvidia";
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-
-      WLR_NO_HARDWARE_CURSORS = "1";
-      #WLR_BACKEND = "vulkan";
-
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      MOZ_ENABLE_WAYLAND = "1";
-      #NIXOS_OZONE_WL = "1";
-      #CLUTTER_BACKEND = "wayland";
-      #XDG_SESSION_TYPE = "wayland";
-      QT_QPA_PLATFORM = "wayland";
-      #GDK_BACKEND = "wayland";
-    };
 
     xdg = {
       portal = {

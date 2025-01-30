@@ -65,9 +65,6 @@ in {
       WLR_BACKEND = "vulkan";
       QT_QPA_PLATFORM = "wayland";
       GDK_BACKEND = "wayland";
-      #LIBVA_DRIVER_NAME = "nvidia";
-      #GBM_BACKEND = "nvidia-drm";
-      #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
     };
 
     wayland.windowManager.hyprland = let

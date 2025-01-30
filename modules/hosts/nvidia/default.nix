@@ -25,7 +25,37 @@ in {
 
     environment.systemPackages = [nvidia-offload];
 
-    boot.kernelParams = ["nvidia_drm.fbdev=1"];
+    nixpkgs.config = {
+      allowUnfreePredicate = pkg:
+        builtins.elem (lib.getName pkg) [
+          "nvidia-x11"
+          "nvidia-settings"
+        ];
+    };
+
+    # https://wiki.hyprland.org/Nvidia/#how-to-get-hyprland-to-possibly-work-on-nvidia
+    environment.variables = {
+      GBM_BACKEND = "nvidia-drm";
+      LIBVA_DRIVER_NAME = "nvidia";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+
+      WLR_NO_HARDWARE_CURSORS = "1";
+      #WLR_BACKEND = "vulkan";
+
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+      #NIXOS_OZONE_WL = "1";
+      #CLUTTER_BACKEND = "wayland";
+      #XDG_SESSION_TYPE = "wayland";
+      QT_QPA_PLATFORM = "wayland";
+      #GDK_BACKEND = "wayland";
+    };
+
+    services.xserver.screenSection = ''
+      Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+      Option         "AllowIndirectGLXProtocol" "off"
+      Option         "TripleBuffer" "on"
+    '';
 
     hardware = {
       nvidia = {
@@ -34,9 +64,26 @@ in {
         package = config.boot.kernelPackages.nvidiaPackages.beta;
       };
       graphics = {
-        extraPackages = with pkgs; [libvdpau-va-gl vaapiVdpau];
-        #extraPackages32 = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+        extraPackages = with pkgs; [libvdpau-va-gl vaapiVdpau nvidia-vaapi-driver];
+        enable32Bit = true;
       };
+    };
+
+    environment.sessionVariables = {
+      "__EGL_VENDOR_LIBRARY_FILENAMES" = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+    };
+
+    boot = {
+      kernelParams = lib.mkMerge [
+        [
+          "nvidia_drm.fbdev=1"
+          "nvidia.NVreg_UsePageAttributeTable=1" # why this isn't default is beyond me.
+        ]
+        (lib.mkIf config.hardware.nvidia.powerManagement.enable [
+          "nvidia.NVreg_TemporaryFilePath=/var/tmp" # store on disk, not /tmp which is on RAM
+        ])
+      ];
+      blacklistedKernelModules = ["nouveau"];
     };
 
     # environment.etc."egl/egl_external_platform.d/10_nvidia_wayland.json".text = ''
