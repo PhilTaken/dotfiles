@@ -30,12 +30,14 @@ in {
 
       # desktop look & feel
       # gnome-tweaks
+    ];
 
-      # extensions
+    programs.gnome-shell.extensions = with pkgs; (map (package: {inherit package;}) [
       gnomeExtensions.dash-to-dock
       gnomeExtensions.appindicator
       gnomeExtensions.gsconnect
-    ];
+      gnomeExtensions.pip-on-top
+    ]);
 
     dconf.settings = {
       # Disables the default screenshot interface
