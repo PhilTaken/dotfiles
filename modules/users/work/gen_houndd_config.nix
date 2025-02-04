@@ -17,6 +17,8 @@ in {
       name = baseNameOf repo_path;
       value = {
         inherit url;
+        enable-poll-updates = false;
+        enable-push-updates = false;
         url-pattern = {
           base-url = "https://${url_base}/-/blob/{rev}/{path}{anchor}";
           anchor = "#L{line}";
