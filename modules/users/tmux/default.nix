@@ -181,20 +181,6 @@ in {
           '';
         }
         {
-          plugin = resurrect; # Used by tmux-continuum
-          extraConfig = ''
-            set -g @resurrect-capture-pane-contents 'on'
-            set -g @resurrect-pane-contents-area 'visible'
-          '';
-        }
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '5' # minutes
-          '';
-        }
-        {
           plugin = tmux-thumbs;
           extraConfig = ''
             set -g @thumbs-key T
