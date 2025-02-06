@@ -43,6 +43,7 @@ in {
     home.packages = [
       pkgs.git-workspace
       pkgs.git-absorb
+      pkgs.jujutsu
     ];
 
     home.sessionVariables = {
