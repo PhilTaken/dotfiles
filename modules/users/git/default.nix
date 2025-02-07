@@ -43,7 +43,6 @@ in {
     home.packages = [
       pkgs.git-workspace
       pkgs.git-absorb
-      pkgs.jujutsu
     ];
 
     home.sessionVariables = {
@@ -54,6 +53,40 @@ in {
       enable = true;
       settings = {
         search_paths = ["${config.home.homeDirectory}/Documents/workspace"];
+      };
+    };
+
+    programs.jujutsu = {
+      enable = true;
+      settings = {
+        user.email = cfg.userEmail;
+        user.name = cfg.userName;
+        ui.diff.tool = ["${pkgs.delta}/bin/delta" "--color-only" "-s" "--true-color" "always" "$left" "$right"];
+        ui.show-cryptographic-signatures = true;
+        ui.pager = "${pkgs.delta}/bin/delta";
+        ui.diff.format = "git";
+
+        signing = mkIf (cfg.signKey != null) {
+          sign-all = true;
+          backend = "gpg";
+          key = cfg.signKey;
+        };
+
+        git.sign-on-push = true;
+        git.auto-local-bookmark = true;
+
+        "--scope" = [
+          {
+            "--when".repositories = ["${config.home.sessionVariables.GIT_WORKSPACE}/"];
+            "--scope" = {
+              user = {
+                email = "ph@flyingcircus.io";
+                name = "Philipp Herzog";
+                signing.key = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
+              };
+            };
+          }
+        ];
       };
     };
 
