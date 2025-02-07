@@ -61,11 +61,11 @@ in {
       settings = {
         user.email = cfg.userEmail;
         user.name = cfg.userName;
-        ui.default-command = "log";
-        ui.diff.tool = ["${pkgs.delta}/bin/delta" "--color-only" "-s" "--true-color" "always" "$left" "$right"];
+        ui.diff-editor = ["nvim" "-c" "DiffEditor $left $right $output"];
         ui.show-cryptographic-signatures = true;
         ui.pager = "${pkgs.delta}/bin/delta";
         ui.diff.format = "git";
+        ui.default-command = "log";
 
         signing = mkIf (cfg.signKey != null) {
           sign-all = true;
@@ -79,12 +79,10 @@ in {
         "--scope" = [
           {
             "--when".repositories = ["${config.home.sessionVariables.GIT_WORKSPACE}/"];
-            "--scope" = {
-              user = {
-                email = "ph@flyingcircus.io";
-                name = "Philipp Herzog";
-                signing.key = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
-              };
+            user = {
+              email = "ph@flyingcircus.io";
+              name = "Philipp Herzog";
+              signing.key = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
             };
           }
         ];

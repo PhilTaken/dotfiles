@@ -336,6 +336,13 @@ in {
             event = "DeferredUIEnter",
           '')
 
+          (lplug hunk-nvim ''
+            after = function()
+              require("hunk").setup()
+            end,
+            event = "DeferredUIEnter",
+          '')
+
           (lplug conform-nvim ''
             after = function()
               require('conform').setup{
