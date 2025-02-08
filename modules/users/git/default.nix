@@ -61,6 +61,7 @@ in {
       settings = {
         user.email = cfg.userEmail;
         user.name = cfg.userName;
+        ui.default-command = "log";
         ui.diff.tool = ["${pkgs.delta}/bin/delta" "--color-only" "-s" "--true-color" "always" "$left" "$right"];
         ui.show-cryptographic-signatures = true;
         ui.pager = "${pkgs.delta}/bin/delta";
