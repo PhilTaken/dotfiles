@@ -24,7 +24,7 @@
         zen-browser = inputs.zen-browser.packages.${prev.system}.default; # beta
 
         nixVersions = prev.nixVersions // {nix_2_18 = prev.lix;};
-        nix-prefetch-git = prev.nix-prefetch-git.override {nix = prev.lix;};
+        #nix-prefetch-git = prev.nix-prefetch-git.override {nix = prev.lix;};
 
         # devdocs.io
         devdocs-desktop = prev.writeShellApplication {
