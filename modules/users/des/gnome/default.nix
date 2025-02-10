@@ -32,6 +32,7 @@ in {
       # gnome-tweaks
     ];
 
+    programs.gnome-shell.enable = true;
     programs.gnome-shell.extensions = with pkgs; (map (package: {inherit package;}) [
       gnomeExtensions.dash-to-dock
       gnomeExtensions.appindicator
