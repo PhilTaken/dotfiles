@@ -20,7 +20,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    hardware.pulseaudio = {
+    services.pulseaudio = {
       enable = false;
       extraModules = builtins.attrValues {
         inherit (pkgs) pulseaudio-dlna;
