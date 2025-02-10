@@ -260,6 +260,11 @@ in {
             require("custom.maps")
           '')
 
+          # required for jj split editing
+          (plug hunk-nvim ''
+            require("hunk").setup()
+          '')
+
           # -----------------------------------------------------
           # these *should* to be loaded asynchronously
           # -----------------------------------------------------
@@ -332,13 +337,6 @@ in {
               vim.g.rooter_resolve_links = 1
               vim.g.rooter_cd_cmd = 'lcd'
               vim.g.rooter_silent_chdir = 1
-            end,
-            event = "DeferredUIEnter",
-          '')
-
-          (lplug hunk-nvim ''
-            after = function()
-              require("hunk").setup()
             end,
             event = "DeferredUIEnter",
           '')
