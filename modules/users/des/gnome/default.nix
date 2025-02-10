@@ -38,10 +38,8 @@ in {
       gnomeExtensions.appindicator
       gnomeExtensions.gsconnect
       gnomeExtensions.pip-on-top
-      gnomeExtensions.firefox-pip-always-on-top
       gnomeExtensions.auto-move-windows
       gnomeExtensions.status-icons
-      gnomeExtensions.quick-settings-tweaker
       gnomeExtensions.blur-my-shell
     ]);
 
