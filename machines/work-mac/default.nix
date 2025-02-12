@@ -83,8 +83,20 @@
         greedy = true;
       }
       "element"
+      "dehesselle-meld"
+      "ghostty"
     ];
   };
+
+  environment.shellAliases = {
+    "meld" = "/Applications/Meld.app/Contents/MacOS/Meld";
+  };
+
+  fonts.packages = [
+    pkgs.iosevka-comfy.comfy
+    pkgs.nerd-fonts.sauce-code-pro
+    pkgs.nerd-fonts.iosevka
+  ];
 
   users.users.philippherzog = {
     name = "philippherzog";

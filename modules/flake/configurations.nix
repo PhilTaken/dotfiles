@@ -77,14 +77,6 @@ in {
     darwinConfigurations = {
       work-mac = util.host.mkDarwin {
         name = "work-mac";
-        extraPackages = ps:
-          with ps; [
-            # fonts
-            iosevka-comfy.comfy
-            nerd-fonts.sauce-code-pro
-            nerd-fonts.iosevka
-          ];
-
         inherit (hmUsers.philippherzog) userConfig;
       };
     };
