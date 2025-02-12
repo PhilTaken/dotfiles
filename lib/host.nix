@@ -114,7 +114,7 @@ in rec {
   mkDarwin = {
     name,
     userConfig ? {},
-    extraPackages ? _: {},
+    extraPackages ? _: [],
     username ? "philippherzog",
     system ? "aarch64-darwin",
     lib ? inputs.nixpkgs.lib,
