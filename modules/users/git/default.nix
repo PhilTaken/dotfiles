@@ -78,7 +78,7 @@ in {
 
         "--scope" = [
           {
-            "--when".repositories = ["${config.home.sessionVariables.GIT_WORKSPACE}/"];
+            "--when".repositories = [config.home.sessionVariables.GIT_WORKSPACE];
             user = {
               email = "ph@flyingcircus.io";
               name = "Philipp Herzog";

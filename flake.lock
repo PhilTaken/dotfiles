@@ -522,8 +522,8 @@
       },
       "original": {
         "owner": "ralismark",
-        "ref": "68471c9b23e55ad3c8b31a99473552e16594a44f",
         "repo": "eww",
+        "rev": "68471c9b23e55ad3c8b31a99473552e16594a44f",
         "type": "github"
       }
     },
