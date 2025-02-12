@@ -5,6 +5,8 @@
     config,
     ...
   }: {
+    disabledModules = ["targets/darwin/linkapps.nix"];
+
     # from https://github.com/Atemu/home-manager/blob/darwin-copy-apps-fully-wip/modules/targets/darwin.nix
     # for some reason this requires to re-log the user every single time
     home.activation = let

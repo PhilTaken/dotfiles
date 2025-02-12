@@ -20,7 +20,6 @@ in {
     ];
 
     fonts.fontconfig.enable = true;
-    disabledModules = ["targets/darwin/linkapps.nix"];
 
     xdg.configFile."sketchybar/sketchybarrc".source = ./sketchybarrc;
     xdg.configFile."sketchybar/plugins/" = {
