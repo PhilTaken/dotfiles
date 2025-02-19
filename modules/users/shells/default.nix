@@ -58,7 +58,7 @@ in {
       df = "${pkgs.duf}/bin/duf";
       ezal = "${pkgs.eza}/bin/eza -liaahmF --git --group-directories-first";
       ll = ezal;
-      eza = "${pkgs.eza}/bin/eza -Fx --group-directories-first";
+      eza = "${pkgs.eza}/bin/eza -F -x --group-directories-first";
       ntop = "sudo ntop -u nobody";
       dmesg = "dmesg -H";
     };

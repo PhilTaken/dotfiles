@@ -39,9 +39,13 @@ in {
         magic_enter_cmd = ''
           set -l cmd
           if command git rev-parse --is-inside-work-tree &>/dev/null
-            set cmd " ${pkgs.eza}/bin/eza && git status -sb"
+            if test -d .jj
+              set cmd " eza && jj st"
+            else
+              set cmd " eza && git status -sb"
+            end
           else
-            set cmd " ${pkgs.eza}/bin/eza"
+            set cmd " eza"
           end
           echo $cmd
         '';
