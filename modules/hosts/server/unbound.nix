@@ -110,7 +110,8 @@ in {
           do-udp = "yes";
           do-tcp = "yes";
           do-ip4 = "yes";
-          do-ip6 = "yes";
+          # attempt to fix unbound being unresponsive sometimes
+          do-ip6 = "no";
 
           # privacy + hardening
           qname-minimisation = "yes"; # increase client privacy
