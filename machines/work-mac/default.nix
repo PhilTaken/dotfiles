@@ -93,6 +93,9 @@
   };
 
   fonts.packages = [
+    pkgs.jetbrains-mono
+    pkgs.aporetic
+    pkgs.ibm-plex
     pkgs.iosevka-comfy.comfy
     pkgs.nerd-fonts.sauce-code-pro
     pkgs.nerd-fonts.iosevka
