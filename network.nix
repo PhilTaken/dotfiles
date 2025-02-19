@@ -55,9 +55,11 @@
           "unbound"
           "nextcloud"
 
-          "mealie"
+          #"mealie"
 
           "paperless"
+
+          "audiobookshelf"
         ];
       };
     };
