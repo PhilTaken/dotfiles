@@ -121,8 +121,8 @@ in {
 
       # time tracker
       #inputs.ttrack.packages.${pkgs.system}.ttrack
-      inputs.dimsum.packages.${pkgs.system}.dimsum-release
-      inputs.fc-utils.packages.${pkgs.system}.default
+      #inputs.dimsum.packages.${pkgs.system}.dimsum-release
+      #inputs.fc-utils.packages.${pkgs.system}.default
       #inputs.devenv.packages.${pkgs.system}.default
 
       age
@@ -136,9 +136,37 @@ in {
     # ensure ssh is available
     # phil.ssh.enable = true;
     home.shellAliases = {
-      b = "${inputs.fc-utils.packages.${pkgs.system}.default}/bin/fc-utils";
+      # b = "${inputs.fc-utils.packages.${pkgs.system}.default}/bin/fc-utils";
       s = "ssh $(cat ~/.ssh/known_hosts | cut -d ' ' -f 1 | sort | uniq | ${pkgs.skim}/bin/sk)";
     };
+
+    programs.jujutsu.settings = {
+      "--scope" = [
+        {
+          "--when".repositories = ["${config.home.sessionVariables.GIT_WORKSPACE}/"];
+          user = {
+            email = "ph@flyingcircus.io";
+            name = "Philipp Herzog";
+            signing.backend = "ssh";
+            signing.key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM59Wr25vmNWuyzgBXsQJvhd4EObMFRiJGbnbC0Jt/9I";
+          };
+          signing.backends.ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+        }
+      ];
+    };
+
+    programs.git.includes = [
+      {
+        condition = "gitdir:${config.home.sessionVariables.GIT_WORKSPACE}/";
+        contents = {
+          user = {
+            email = "ph@flyingcircus.io";
+            name = "Philipp Herzog";
+            signingKey = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
+          };
+        };
+      }
+    ];
 
     programs = {
       sioyek.enable = false;

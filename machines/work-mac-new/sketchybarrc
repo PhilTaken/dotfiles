@@ -1,0 +1,158 @@
+# vim: ft=sh
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+SPOTIFY_EVENT="com.spotify.client.PlaybackStateChanged"
+POPUP_SCRIPT="sketchybar -m --set \$NAME popup.drawing=toggle"
+
+sketchybar --bar         \
+  position=top           \
+  height=27              \
+  y_offset=6             \
+  blur_radius=10         \
+  padding_top=5          \
+  padding_bottom=4       \
+  padding_left=4         \
+  padding_right=4        \
+  margin=10              \
+  corner_radius=10       \
+  border_width=1         \
+  color=0x40000000       \
+  border_color=0x44CAD3F5
+
+default=(
+  padding_left=5
+  padding_right=5
+  padding_top=5
+  padding_top=5
+  icon.font="Iosevka Nerd Font Mono:Bold:14.0"
+  label.font="Iosevka Comfy:Bold:13.0"
+  icon.color=0xffffffff
+  label.color=0xffffffff
+  icon.padding_left=2
+  icon.padding_right=2
+  icon.padding_top=2
+  icon.padding_bottom=2
+  label.padding_left=5
+  label.padding_right=5
+  label.padding_bottom=10
+  background.corner_radius=5
+  background.height=40
+)
+sketchybar --default "${default[@]}"
+
+SPACE_ICONS=("一" "二" "三" "四" "五" "六" "七" "八" "九" "十")
+for i in "${!SPACE_ICONS[@]}"
+do
+  sid="$(($i+1))"
+  space=(
+    space="$sid"
+    icon="${SPACE_ICONS[i]}"
+    icon.font="Iosevka Nerd Font Mono:Bold:11.0"
+    icon.padding_left=6
+    icon.padding_right=6
+    icon.padding_top=7
+    icon.padding_bottom=10
+    background.color=0x40ffffff
+    background.corner_radius=5
+    background.height=18
+    label.drawing=off
+    script="$PLUGIN_DIR/space.sh"
+  )
+  sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
+done
+
+sketchybar --add       event           spotify_change $SPOTIFY_EVENT      \
+           --add       item            spotify.name left                  \
+           --set       spotify.name    click_script="$POPUP_SCRIPT"       \
+                                       popup.horizontal=on                \
+                                       popup.align=center                 \
+                                       popup.background.color=0x70000000  \
+                                       popup.background.corner_radius=10  \
+                                       popup.y_offset=5                   \
+                                       background.drawing=on              \
+                                       background.color=0x10000000        \
+                                       background.corner_radius=5         \
+                                       icon="󰓇"                           \
+                                       icon.padding_left=10               \
+                                       label.width=250                    \
+                                       label.align=center                 \
+                                       label.scroll_texts=true            \
+                                                                          \
+           --add       item            spotify.back popup.spotify.name    \
+           --set       spotify.back    icon=󰒮                             \
+                                       icon.padding_left=5                \
+                                       icon.padding_right=5               \
+                                       script="$PLUGIN_DIR/spotify.sh"    \
+                                       label.drawing=off                  \
+                                                                          \
+           --subscribe spotify.back    mouse.clicked                      \
+                                                                          \
+           --add       item            spotify.play popup.spotify.name    \
+           --set       spotify.play    icon=                             \
+                                       icon.padding_left=5                \
+                                       icon.padding_right=5               \
+                                       updates=on                         \
+                                       label.drawing=off                  \
+                                       script="$PLUGIN_DIR/spotify.sh"    \
+           --subscribe spotify.play    mouse.clicked spotify_change       \
+                                                                          \
+           --add       item            spotify.next popup.spotify.name    \
+           --set       spotify.next    icon=󰒭                             \
+                                       icon.padding_left=5                \
+                                       icon.padding_right=10              \
+                                       label.drawing=off                  \
+                                       script="$PLUGIN_DIR/spotify.sh"    \
+           --subscribe spotify.next    mouse.clicked                      \
+                                                                          \
+           --add       item            spotify.shuffle popup.spotify.name \
+           --set       spotify.shuffle icon=                             \
+                                       icon.highlight_color=0xff1DB954    \
+                                       icon.padding_left=5                \
+                                       icon.padding_right=5               \
+                                       label.drawing=off                  \
+                                       script="$PLUGIN_DIR/spotify.sh"    \
+           --subscribe spotify.shuffle mouse.clicked                      \
+                                                                          \
+           --add       item            spotify.repeat popup.spotify.name  \
+           --set       spotify.repeat  icon=󰕇                             \
+                                       icon.highlight_color=0xff1DB954    \
+                                       icon.padding_left=5                \
+                                       icon.padding_right=5               \
+                                       label.drawing=off                  \
+                                       script="$PLUGIN_DIR/spotify.sh"    \
+           --subscribe spotify.repeat  mouse.clicked
+
+
+sketchybar --add item clock right                                      \
+           --set clock                                                 \
+                width=110                                              \
+                label.align=center                                     \
+                update_freq=10                                         \
+                icon=                                                 \
+                script="$PLUGIN_DIR/clock.sh"                          \
+           --add item volume right                                     \
+           --set volume                                                \
+                width=60                                               \
+                script="$PLUGIN_DIR/volume.sh"                         \
+           --subscribe volume volume_change                            \
+           --add item battery right                                    \
+           --set battery                                               \
+                width=40                                               \
+                label.width=25                                         \
+                label.align=center                                     \
+                update_freq=120                                        \
+                script="$PLUGIN_DIR/battery.sh"                        \
+           --subscribe battery system_woke power_source_change         \
+           --add item focus right                                      \
+           --set focus                                                 \
+                width=35                                               \
+                label=" "                                              \
+                icon.align=center                                      \
+                icon=                                                 \
+                script="$PLUGIN_DIR/focus.sh"                          \
+                click_script="shortcuts run \"toggle focus\""          \
+           --add event focus_on "_NSDoNotDisturbEnabledNotification"   \
+           --add event focus_off "_NSDoNotDisturbDisabledNotification" \
+           --subscribe focus focus_on focus_off
+
+##### Force all scripts to run the first time (never do this in a script) #####
+sketchybar --update

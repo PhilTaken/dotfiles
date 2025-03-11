@@ -79,6 +79,12 @@ in {
         name = "work-mac";
         inherit (hmUsers.philippherzog) userConfig;
       };
+
+      work-mac-new = util.host.mkDarwin {
+        name = "work-mac-new";
+        inherit (hmUsers.philippherzog) userConfig;
+        system = "x86_64-darwin";
+      };
     };
 
     nixosConfigurations =

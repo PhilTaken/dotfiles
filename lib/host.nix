@@ -164,7 +164,7 @@ in rec {
           };
         })
 
-        inputs.home-manager.darwinModule
+        inputs.home-manager.darwinModules.default
         inputs.stylix.darwinModules.stylix
       ];
     };

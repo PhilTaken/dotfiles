@@ -75,17 +75,6 @@ in {
 
         git.sign-on-push = true;
         git.auto-local-bookmark = true;
-
-        "--scope" = [
-          {
-            "--when".repositories = [config.home.sessionVariables.GIT_WORKSPACE];
-            user = {
-              email = "ph@flyingcircus.io";
-              name = "Philipp Herzog";
-              signing.key = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
-            };
-          }
-        ];
       };
     };
 
@@ -138,19 +127,6 @@ in {
         key = cfg.signKey;
         signByDefault = true;
       };
-
-      includes = [
-        {
-          condition = "gitdir:${config.home.sessionVariables.GIT_WORKSPACE}/";
-          contents = {
-            user = {
-              email = "ph@flyingcircus.io";
-              name = "Philipp Herzog";
-              signingKey = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
-            };
-          };
-        }
-      ];
 
       aliases = let
         sort = "${pkgs.coreutils}/bin/sort";
