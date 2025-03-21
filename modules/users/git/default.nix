@@ -75,6 +75,21 @@ in {
 
         git.sign-on-push = true;
         git.auto-local-bookmark = true;
+
+        template-aliases = {
+          commit_description_verbose = ''
+            concat(
+              description,
+              "\n",
+              "JJ: This commit contains the following changes:\n",
+              indent("JJ:    ", diff.stat(72)),
+              "JJ: ignore-rest\n",
+              diff.git(),
+            )
+          '';
+        };
+
+        aliases.dv = ["--config=templates.draft_commit_description=commit_description_verbose" "describe"];
       };
     };
 
