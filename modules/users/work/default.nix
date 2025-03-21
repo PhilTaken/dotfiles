@@ -7,6 +7,9 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.work;
+
+  op_gpg_sign_program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+  ssh_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM59Wr25vmNWuyzgBXsQJvhd4EObMFRiJGbnbC0Jt/9I";
 in {
   options.phil.work = {
     enable = mkEnableOption "work";
@@ -136,7 +139,7 @@ in {
     # ensure ssh is available
     # phil.ssh.enable = true;
     home.shellAliases = {
-      # b = "${inputs.fc-utils.packages.${pkgs.system}.default}/bin/fc-utils";
+      b = "${inputs.fc-utils.packages.${pkgs.system}.default}/bin/fc-utils";
       s = "ssh $(cat ~/.ssh/known_hosts | cut -d ' ' -f 1 | sort | uniq | ${pkgs.skim}/bin/sk)";
     };
 
@@ -147,10 +150,12 @@ in {
           user = {
             email = "ph@flyingcircus.io";
             name = "Philipp Herzog";
-            signing.backend = "ssh";
-            signing.key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM59Wr25vmNWuyzgBXsQJvhd4EObMFRiJGbnbC0Jt/9I";
           };
-          signing.backends.ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+          signing = {
+            backend = "ssh";
+            key = ssh_key;
+            backends.ssh.program = op_gpg_sign_program;
+          };
         }
       ];
     };
@@ -159,10 +164,12 @@ in {
       {
         condition = "gitdir:${config.home.sessionVariables.GIT_WORKSPACE}/";
         contents = {
+          gpg.format = "ssh";
+          gpg.ssh.program = op_gpg_sign_program;
           user = {
             email = "ph@flyingcircus.io";
             name = "Philipp Herzog";
-            signingKey = "CCA0A0D7BD329C162CB381E9C9B5406DBAF07973";
+            signingKey = ssh_key;
           };
         };
       }
