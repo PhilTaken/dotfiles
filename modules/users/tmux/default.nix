@@ -121,6 +121,7 @@ in {
           rm "$tmpfile" "$tmux_script"
         ''}"
 
+        bind-key a popup -E "zk daily"
 
         bind-key P run-shell -b "${pkgs.writeShellScript "switch-sessions" ''
           # select a project fuzzily
@@ -188,11 +189,6 @@ in {
             set -g @thumbs-unique enabled
           '';
         }
-        (mkTmuxPlugin {
-          pluginName = "nvr";
-          version = "latest";
-          src = npins.tmux-nvr;
-        })
       ];
     };
   };
