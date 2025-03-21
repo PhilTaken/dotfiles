@@ -46,6 +46,9 @@
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
 
+  # fix for previous nix install
+  ids.gids.nixbld = 350;
+
   programs.fish.enable = true;
   programs.zsh.enable = true;
 
@@ -58,7 +61,8 @@
   environment.systemPackages = [pkgs.openssh];
 
   # services.karabiner-elements.enable = true;
-  services.tailscale.enable = true;
+  # services.tailscale.enable = true;
+  # services.tailscale.overrideLocalDns = true;
 
   homebrew = {
     enable = true;
@@ -70,11 +74,11 @@
 
     casks = [
       "1password"
+      "1password-cli"
       "hammerspoon"
       "raycast"
-      "jitsi"
+      "jitsi-meet"
       "spotify"
-      "logseq"
       "karabiner-elements"
       "telegram"
       {
@@ -84,6 +88,8 @@
       "element"
       "dehesselle-meld"
       "ghostty"
+      "rectangle"
+      "nextcloud"
     ];
   };
 
@@ -107,7 +113,8 @@
     shell = pkgs.fish;
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
+  security.pam.services.sudo_local.reattach = true;
 
   system.defaults = {
     LaunchServices = {
@@ -151,8 +158,8 @@
       # Enable full keyboard access for all controls
       AppleKeyboardUIMode = 3;
 
-      # Disable "Natural" scrolling
-      "com.apple.swipescrolldirection" = false;
+      # "Natural" scrolling
+      "com.apple.swipescrolldirection" = true;
 
       # Disable smart dash/period/quote substitutions
       NSAutomaticDashSubstitutionEnabled = false;
@@ -169,10 +176,10 @@
       # Save to disk (not to iCloud) by default
       NSDocumentSaveNewDocumentsToCloud = true;
     };
-    CustomSystemPreferences = {
+    CustomUserPreferences = {
       "com.knollsoft.Rectangle" = {
-        screenEdgeGapTopNotch = 0;
         screenEdgeGapTop = 32;
+        screenEdgeGapsOnMainScreenOnly = true;
       };
       "org.hammerspoon.Hammerspoon" = {
         MJConfigFile = "~/.config/hammerspoon/init.lua";
@@ -207,6 +214,9 @@
     };
 
     dock.mru-spaces = false;
+    dock.orientation = "left";
+    dock.autohide = true;
+
     screencapture.location = "~/Pictures/screenshots";
   };
 
