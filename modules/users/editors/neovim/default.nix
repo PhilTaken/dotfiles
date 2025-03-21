@@ -137,9 +137,7 @@ in {
             ]))
           pkgs.mypy
 
-          # https://github.com/NixOS/nixpkgs/pull/374697#issuecomment-2600373030
-          (pkgs.ruff.overrideAttrs {checkFlags = [];})
-
+          pkgs.ruff
           pkgs.isort
           pkgs.black
         ])
