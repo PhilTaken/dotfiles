@@ -68,7 +68,6 @@ in {
         ui.default-command = "log";
 
         signing = mkIf (cfg.signKey != null) {
-          # sign-all = true;
           backend = "gpg";
           key = cfg.signKey;
         };
