@@ -125,7 +125,7 @@ in {
           command = mkSystemScript ''
             host=''${1:-$(hostname)}
             if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
-              sudo darwin-rebuild --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+              sudo ${inputs.darwin.packages.${system}.darwin-rebuild}/bin/darwin-rebuild --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             else
               nixos-rebuild --use-remote-sudo --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             fi
@@ -138,13 +138,14 @@ in {
           name = "cswitch";
           help = "Switch to a NixOS Configuration (local)";
           command = mkSystemScript ''
-            cbuild $@
-
+            if [ -f /run/current-system ]; then
+              cbuild $@
+            fi
             # TODO ask for confirmation?
             # RIIR when
 
             if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
-              darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
+              ${inputs.darwin.packages.${system}.darwin-rebuild}/bin/darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             else
               nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
             fi
