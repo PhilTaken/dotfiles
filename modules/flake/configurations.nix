@@ -68,7 +68,7 @@
       shells.fish.enable = true;
       gpg.enable = true;
 
-      zellij.enable = true;
+      zellij.enable = false;
       git.enable = true;
     };
   };

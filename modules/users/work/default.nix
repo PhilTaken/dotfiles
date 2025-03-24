@@ -81,9 +81,6 @@ in {
         test -d "deployment/" && cd "deployment/"
 
         tld=$(rg "host_domain" environments/ -IN | cut -d " " -f 3 | uniq)
-        if [ "$tld" != "fcio.net" ]; then
-          echo "warning: tld != fcio.net: $tld"
-        fi
 
         host=$(${pkgs.ripgrep}/bin/rg "\[host:" environments/ -IN |\
           cut -d ":" -f 2 |\
@@ -91,7 +88,7 @@ in {
           sk --height 10% --no-clear-start)
 
         if [ ! -z "$host" ]; then
-          echo "connecting to $host.$tld ..."
+          echo "connecting to $host.$tld ..." >&2
           ssh $host.$tld $@
         fi
       '')
@@ -120,6 +117,13 @@ in {
 
       (pkgs.writeShellScriptBin "fix-ssh-keys" ''
         envssh exit
+      '')
+
+      (pkgs.writeShellScriptBin "fc-du" ''
+        tmpfile=$(mktemp --suffix .svg)
+
+        essh "nix-shell -p nix-du --run \"nix-du -s 100M\"" | ${pkgs.graphviz}/bin/dot -Tsvg > $tmpfile
+        open $tmpfile
       '')
 
       # time tracker
