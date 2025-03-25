@@ -458,7 +458,7 @@ in {
             mail_prefetch_count = 20
           '';
 
-          modules = [pkgs.dovecot_pigeonhole];
+          # modules = [pkgs.dovecot_pigeonhole];
           protocols = ["sieve"];
         };
 
