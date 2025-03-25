@@ -132,6 +132,8 @@ in {
     };
     services.blueman.enable = cfg.enableBluetooth;
 
+    services.bpftune.enable = true;
+
     # core packages + shell setup
     programs = {
       mtr.enable = true;
