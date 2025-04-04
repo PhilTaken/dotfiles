@@ -39,6 +39,10 @@ in {
       # both here and in the ui doesnt work so they have to be set manually
       settings = null;
       #settings.server.externalDomain = "https://${cfg.url}";
+
+      # TODO reenable when binary cache populated
+      # tests runs forever for some reason
+      machine-learning.enable = false;
     };
 
     phil.server.services = {

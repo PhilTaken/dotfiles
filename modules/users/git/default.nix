@@ -143,8 +143,8 @@ in {
       };
 
       aliases = let
-        sort = "${pkgs.coreutils}/bin/sort";
-        uniq = "${pkgs.coreutils}/bin/uniq";
+        sort = "${pkgs.uutils-coreutils}/bin/sort";
+        uniq = "${pkgs.uutils-coreutils}/bin/uniq";
       in {
         mergetool = "!nvim -c DiffviewOpen";
         tree =

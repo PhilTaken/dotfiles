@@ -141,7 +141,7 @@ in {
               gnugrep
               gawk
               gnused
-              coreutils
+              uutils-coreutils
               bash
               playerctl
               bluez

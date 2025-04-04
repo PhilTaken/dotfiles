@@ -371,6 +371,10 @@ in {
           mailUser = "vmail";
           mailGroup = "vmail";
 
+          mailPlugins = {
+            globally.enable = ["virtual" "fts" "fts_lucene"];
+          };
+
           extraConfig = ''
             ssl = yes
             ssl_cert = <${config.security.acme.certs."${net.tld}".directory}/fullchain.pem
@@ -380,8 +384,6 @@ in {
             ssl_cipher_list = EECDH+AESGCM:EDH+AESGCM
             ssl_prefer_server_ciphers = yes
             ssl_dh=<${config.security.dhparams.params.dovecot2.path}
-
-            mail_plugins = virtual fts fts_lucene
 
             auth_default_realm = ${net.tld}
             service auth {
@@ -432,34 +434,16 @@ in {
               }
             }
 
-            service managesieve-login {
-              inet_listener sieve {
-                port = 4190
-              }
-            }
-
-            protocol sieve {
-              managesieve_logout_format = bytes ( in=%i : out=%o )
-            }
-
-            plugin {
-              sieve_dir = /var/vmail/%d/%n/sieve/scripts/
-              sieve = /var/vmail/%d/%n/sieve/active-script.sieve
-              sieve_extensions = +vacation-seconds
-              sieve_vacation_min_period = 1min
-
-              fts = lucene
-              fts_lucene = whitespace_chars=@.
-            }
-
             # If you have Dovecot v2.2.8+ you may get a significant performance improvement with fetch-headers:
             imapc_features = $imapc_features fetch-headers
             # Read multiple mails in parallel, improves performance
             mail_prefetch_count = 20
           '';
 
-          # modules = [pkgs.dovecot_pigeonhole];
-          protocols = ["sieve"];
+          pluginSettings = {
+            fts = "lucene";
+            fts_lucene = "whitespace_chars=@.";
+          };
         };
 
         users.users.vmail = {

@@ -45,7 +45,7 @@ in {
                 "fail2ban"
                 #"telegraf"
                 #"vector"
-                "iperf"
+                #"iperf"
               ];
             in {
               enable = true;

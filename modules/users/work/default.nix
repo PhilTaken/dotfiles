@@ -120,9 +120,9 @@ in {
       '')
 
       (pkgs.writeShellScriptBin "fc-du" ''
-        tmpfile=$(mktemp --suffix .svg)
+        tmpfile=$(${pkgs.uutils-coreutils}/bin/mktemp --suffix .svg)
 
-        essh "nix-shell -p nix-du --run \"nix-du -s 100M\"" | ${pkgs.graphviz}/bin/dot -Tsvg > $tmpfile
+        s "nix-shell -p nix-du --run \"nix-du -s 100M\"" | ${pkgs.graphviz}/bin/dot -Tsvg > $tmpfile
         open $tmpfile
       '')
 

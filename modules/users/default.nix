@@ -94,7 +94,7 @@
     home.packages = with pkgs;
       [
         cacert
-        coreutils
+        uutils-coreutils
 
         cachix
         gping

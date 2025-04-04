@@ -171,6 +171,56 @@ in {
           vim-sleuth
           plenary-nvim
 
+          # completion
+          (plug blink-cmp ''
+            require('blink.cmp').setup({
+              cmdline = { enabled = true },
+              completion = {
+                -- 'prefix' will fuzzy match on the text before the cursor
+                -- 'full' will fuzzy match on the text before _and_ after the cursor
+                -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
+                keyword = { range = 'full' },
+
+                -- Disable auto brackets
+                -- NOTE: some LSPs may add auto brackets themselves anyway
+                accept = { auto_brackets = { enabled = false }, },
+
+                -- Don't select by default, auto insert on selection
+                list = { selection = { preselect = false, auto_insert = true } },
+
+                menu = {
+                  -- automatically show the completion menu
+                  auto_show = true,
+
+                  -- nvim-cmp style menu
+                  draw = {
+                    columns = {
+                      { "label", "label_description", gap = 1 },
+                      { "kind_icon", "kind" }
+                    },
+                  }
+                },
+
+                -- Show documentation when selecting a completion item
+                documentation = { auto_show = true, auto_show_delay_ms = 500 },
+
+                -- Display a preview of the selected item on the current line
+                ghost_text = { enabled = true },
+              },
+
+              sources = {
+                -- Remove 'buffer' if you don't want text completions, by default it's only enabled when LSP returns no items
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+              },
+
+              -- Use a preset for snippets, check the snippets documentation for more information
+              snippets = { preset = 'luasnip' },
+
+              -- Experimental signature help support
+              signature = { enabled = true }
+            })
+          '')
+
           (plug nvim-navic ''
             require('nvim-navic').setup {
               icons = {
@@ -222,7 +272,6 @@ in {
                     telescope = true,
                     which_key = true,
                     nvimtree = true,
-                    cmp = true,
                     treesitter = true,
                     indent_blankline = {
                         enabled = true,
@@ -247,9 +296,9 @@ in {
 
           (plug nvim-treesitter.withAllGrammars ''
             require('nvim-treesitter.configs').setup {
-            highlight = { enable = true },
-            indent = { enable = true },
-            auto_install = false,
+              highlight = { enable = true },
+              indent = { enable = true },
+              auto_install = false,
             }
           '')
 
@@ -290,17 +339,6 @@ in {
           '')
 
           (plug lspkind-nvim ''require('lspkind').init()'')
-
-          cmp-buffer
-          cmp-nvim-lsp
-          cmp-nvim-lua
-          cmp-path
-          cmp-under-comparator
-          (buildPlugin {
-            pname = "nvim-cmp-lsp-rs";
-            doCheck = false;
-          })
-          (plug nvim-cmp ''require("custom.cmp_init")'')
 
           # -----------------------------------------------------
           # these *are* loaded asynchronously
@@ -554,31 +592,6 @@ in {
                   end,
               })
               require('custom.terminals')
-            end,
-            event = "DeferredUIEnter",
-          '')
-
-          (lplug vim-dadbod ''
-            after = function()
-              if vim.env.DATABASE_URL ~= nil then
-                vim.env.DATABASE_URL = "sqlite:///" .. vim.env.DATABASE_URL
-              end
-            end,
-            event = "DeferredUIEnter",
-          '')
-
-          (lplug vim-dadbod-completion ''
-            after = function()
-              vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-                  pattern = {"*.sql"},
-                  callback = function()
-                    require('cmp').setup.buffer({
-                      sources = {
-                        { name = 'vim-dadbod-completion' }
-                      }
-                    })
-                  end,
-              })
             end,
             event = "DeferredUIEnter",
           '')

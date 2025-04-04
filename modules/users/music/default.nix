@@ -49,7 +49,7 @@ in {
       settings = {
         global = {
           username = cfg.spotifyd_username;
-          password_cmd = "${pkgs.coreutils}/bin/cat ${config.xdg.configHome}/spotifyd/credentials";
+          password_cmd = "${pkgs.uutils-coreutils}/bin/cat ${config.xdg.configHome}/spotifyd/credentials";
           backend = "pulseaudio";
           bitrate = 160;
           volume_normalization = false;

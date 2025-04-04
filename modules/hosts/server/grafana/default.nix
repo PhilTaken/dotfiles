@@ -129,10 +129,10 @@ in {
         };
 
         common = {
-          path_prefix = "/tmp/loki";
+          path_prefix = "/var/lib/loki";
           storage.filesystem = {
-            chunks_directory = "/tmp/loki/chunks";
-            rules_directory = "/tmp/loki/rules";
+            chunks_directory = "/var/lib/loki/chunks";
+            rules_directory = "/varr/lib/loki/rules";
           };
           replication_factor = 1;
           ring = {

@@ -56,12 +56,37 @@ in {
       };
 
       unbound = {
-        enable = config.phil.server.services.unbound.enable;
+        inherit (config.phil.server.services.unbound) enable;
         unbound = {
           ca = null;
           certificate = null;
           key = null;
           host = "unix://${config.services.unbound.localControlSocketPath}";
+        };
+      };
+
+      ping = {
+        enable = true;
+        settings = {
+          targets = [
+            "8.8.8.8"
+            "8.8.4.4"
+            {"google.com".asn = 15169;}
+          ];
+
+          dns = {
+            refresh = "2m";
+            nameserver = "1.1.1.1";
+          };
+
+          ping = {
+            interval = "2s";
+            timeout = "3s";
+            history-size = 50;
+            payload-size = 120;
+          };
+
+          options.disableIPv6 = false;
         };
       };
     };
