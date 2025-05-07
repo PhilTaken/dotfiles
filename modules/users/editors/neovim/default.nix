@@ -670,6 +670,7 @@ in {
         ])
         ++ (map buildPlugin [
           {pname = "promise-async";}
+          {pname = "vim-alloy";}
         ]);
     };
 
