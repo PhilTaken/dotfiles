@@ -8,6 +8,7 @@
         "repo": "alacritty"
       },
       "branch": "main",
+      "submodules": false,
       "revision": "f6cb5a5c2b404cdaceaff193b9c52317f62c62f7",
       "url": "https://github.com/catppuccin/alacritty/archive/f6cb5a5c2b404cdaceaff193b9c52317f62c62f7.tar.gz",
       "hash": "1r2z223hza63v5lmzlg3022mlar67j3a2gh41rsaiqwja2wyiihz"
@@ -20,6 +21,7 @@
         "repo": "base16"
       },
       "branch": "main",
+      "submodules": false,
       "revision": "99aa911b29c9c7972f7e1d868b6242507efd508c",
       "url": "https://github.com/catppuccin/base16/archive/99aa911b29c9c7972f7e1d868b6242507efd508c.tar.gz",
       "hash": "0bg48rvad507dr293z6q9kgjgxajp943gk2d31b1aw75386isyhw"
@@ -32,6 +34,7 @@
         "repo": "base16-rose-pine-scheme"
       },
       "branch": "main",
+      "submodules": false,
       "revision": "4161952824f4ede6c3eb73ef6b5f3609a76cf69a",
       "url": "https://github.com/edunfelt/base16-rose-pine-scheme/archive/4161952824f4ede6c3eb73ef6b5f3609a76cf69a.tar.gz",
       "hash": "17n45xd8qza3n9gzlpffri6hbil9n0442yx8vfaf4pgpwgmlqvjm"
@@ -44,6 +47,7 @@
         "repo": "extensions"
       },
       "branch": "master",
+      "submodules": false,
       "revision": "3d1906f7767c01fff57025ba7d1e96aa9cead124",
       "url": "https://github.com/freshrss/extensions/archive/3d1906f7767c01fff57025ba7d1e96aa9cead124.tar.gz",
       "hash": "0hrhhhqa41vxa7gs5rgjcrr4z655ljhh9mvj437yq2z78il3gr9q"
@@ -57,6 +61,7 @@
       "pre_releases": false,
       "version_upper_bound": null,
       "release_prefix": null,
+      "submodules": false,
       "version": "v2.0.1",
       "revision": "c068fbb3a890ebcc9d263e114da4473d4556dad7",
       "url": null,
@@ -70,6 +75,7 @@
         "repo": "janet.vim"
       },
       "branch": "master",
+      "submodules": false,
       "revision": "67075b190a44310df356137e35cc1949782b20e0",
       "url": "https://github.com/bakpakin/janet.vim/archive/67075b190a44310df356137e35cc1949782b20e0.tar.gz",
       "hash": "0w64cb43inq9fj4rkn674wypp9w5scngdygh5f954jn1iagchrjf"
@@ -88,6 +94,7 @@
         "repo": "nvim-cmp-lsp-rs"
       },
       "branch": "main",
+      "submodules": false,
       "revision": "57f29333e6d2b655d5b0edb999b0006d49fde0ca",
       "url": "https://github.com/zjp-CN/nvim-cmp-lsp-rs/archive/57f29333e6d2b655d5b0edb999b0006d49fde0ca.tar.gz",
       "hash": "1jkxkgqdk3350hs8gs49sz687ldv1hh2mwxbmwp0hiv9qllnnsli"
@@ -100,6 +107,7 @@
         "repo": "pisces"
       },
       "branch": "master",
+      "submodules": false,
       "revision": "e45e0869855d089ba1e628b6248434b2dfa709c4",
       "url": "https://github.com/laughedelic/pisces/archive/e45e0869855d089ba1e628b6248434b2dfa709c4.tar.gz",
       "hash": "073wb83qcn0hfkywjcly64k6pf0d7z5nxxwls5sa80jdwchvd2rs"
@@ -111,6 +119,7 @@
         "url": "https://github.com/kevinhwang91/promise-async"
       },
       "branch": "main",
+      "submodules": false,
       "revision": "119e8961014c9bfaf1487bf3c2a393d254f337e2",
       "url": null,
       "hash": "0q4a0rmy09hka6zvydzjj2gcm2j5mlbrhbxfcdjj33ngpblkmqzm"
@@ -123,6 +132,7 @@
         "repo": "telescope-egrepify.nvim"
       },
       "branch": "master",
+      "submodules": false,
       "revision": "a8070970a661330c4e00450d25f874f6c2b00af9",
       "url": "https://github.com/fdschmidt93/telescope-egrepify.nvim/archive/a8070970a661330c4e00450d25f874f6c2b00af9.tar.gz",
       "hash": "0lv61vz3md4cy472q00y2y2b458740chx7fp4z13wskqmmjmxlw1"
@@ -134,9 +144,23 @@
         "url": "https://github.com/carlocab/tmux-nvr"
       },
       "branch": "main",
+      "submodules": false,
       "revision": "a283fc21e73df5bff01f997525b9d0dbf3eecac9",
       "url": null,
       "hash": "0cflgfk165fw8i7fv7pf1b5d693p9shxp6hl7rh4mhczx0j7s562"
+    },
+    "vim-alloy": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "grafana",
+        "repo": "vim-alloy"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "0273f88f7199189f9a0f32213a34ab778e226f86",
+      "url": "https://github.com/grafana/vim-alloy/archive/0273f88f7199189f9a0f32213a34ab778e226f86.tar.gz",
+      "hash": "1kv0i6amrg3bisljx743drxd47gdn92iclrc4fp1n436nxyrahwm"
     },
     "vim-terraform": {
       "type": "Git",
@@ -146,6 +170,7 @@
         "repo": "vim-terraform"
       },
       "branch": "master",
+      "submodules": false,
       "revision": "24de93afb05078bac6a2e966402cc1f672277708",
       "url": "https://github.com/hashivim/vim-terraform/archive/24de93afb05078bac6a2e966402cc1f672277708.tar.gz",
       "hash": "1d8r0qd3ncnh3rbax9vjd3rckjwikxydgy9zjklmgnhn51ynggzi"
@@ -160,6 +185,7 @@
       "pre_releases": false,
       "version_upper_bound": null,
       "release_prefix": null,
+      "submodules": false,
       "version": "v0.1.7",
       "revision": "01458458f20831d43045423344bcb70a40d04b0f",
       "url": "https://api.github.com/repos/varnishcache-friends/vim-varnish/tarball/v0.1.7",
@@ -173,10 +199,11 @@
         "repo": "yuck.vim"
       },
       "branch": "master",
+      "submodules": false,
       "revision": "9b5e0370f70cc30383e1dabd6c215475915fe5c3",
       "url": "https://github.com/elkowar/yuck.vim/archive/9b5e0370f70cc30383e1dabd6c215475915fe5c3.tar.gz",
       "hash": "1mkf0vd8vvw1njlczlgai80djw1n1a7dl1k940l089d3vvqr5dhp"
     }
   },
-  "version": 3
+  "version": 5
 }
