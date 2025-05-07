@@ -132,7 +132,7 @@ in {
           path_prefix = "/var/lib/loki";
           storage.filesystem = {
             chunks_directory = "/var/lib/loki/chunks";
-            rules_directory = "/varr/lib/loki/rules";
+            rules_directory = "/var/lib/loki/rules";
           };
           replication_factor = 1;
           ring = {
