@@ -60,7 +60,7 @@ in {
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
-        public = true;
+        public = false;
       };
 
       homer.apps."${cfg.host}" = {
