@@ -61,8 +61,8 @@
   environment.systemPackages = [pkgs.openssh];
 
   # services.karabiner-elements.enable = true;
-  # services.tailscale.enable = true;
-  # services.tailscale.overrideLocalDns = true;
+  services.tailscale.enable = true;
+  services.tailscale.overrideLocalDns = true;
 
   homebrew = {
     enable = true;
@@ -179,7 +179,8 @@
     CustomUserPreferences = {
       "com.knollsoft.Rectangle" = {
         screenEdgeGapTop = 32;
-        screenEdgeGapsOnMainScreenOnly = true;
+        screenEdgeGapTopNotch = 0;
+        # screenEdgeGapsOnMainScreenOnly = true;
       };
       "org.hammerspoon.Hammerspoon" = {
         MJConfigFile = "~/.config/hammerspoon/init.lua";
