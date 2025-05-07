@@ -46,6 +46,9 @@ in {
       rclone
       pre-commit
 
+      magic-wormhole
+      lnav
+
       sad
 
       #copier
@@ -120,9 +123,9 @@ in {
       '')
 
       (pkgs.writeShellScriptBin "fc-du" ''
-        tmpfile=$(${pkgs.uutils-coreutils}/bin/mktemp --suffix .svg)
+        tmpfile=$(${pkgs.uutils-coreutils}/bin/uutils-mktemp --suffix .svg)
 
-        s "nix-shell -p nix-du --run \"nix-du -s 100M\"" | ${pkgs.graphviz}/bin/dot -Tsvg > $tmpfile
+        ssh $1 "nix-shell -p nix-du --run \"nix-du -s 100M\"" | ${pkgs.graphviz}/bin/dot -Tsvg > $tmpfile
         open $tmpfile
       '')
 
@@ -164,20 +167,35 @@ in {
       ];
     };
 
-    programs.git.includes = [
-      {
-        condition = "gitdir:${config.home.sessionVariables.GIT_WORKSPACE}/";
-        contents = {
-          gpg.format = "ssh";
-          gpg.ssh.program = op_gpg_sign_program;
-          user = {
-            email = "ph@flyingcircus.io";
-            name = "Philipp Herzog";
-            signingKey = ssh_key;
+    programs.git = {
+      includes = [
+        {
+          condition = "gitdir:${config.home.sessionVariables.GIT_WORKSPACE}/";
+          contents = {
+            gpg.format = "ssh";
+            gpg.ssh.program = op_gpg_sign_program;
+            user = {
+              email = "ph@flyingcircus.io";
+              name = "Philipp Herzog";
+              signingKey = ssh_key;
+            };
           };
+        }
+      ];
+
+      extraConfig.diff = {
+        gpg = {
+          textconv = "gpg -q --no-tty --decrypt";
+          binary = true;
         };
-      }
-    ];
+
+        age = {
+          textconv = "batou secrets decrypttostdout";
+        };
+      };
+
+      attributes = ["environments/*/*.age diff=age"];
+    };
 
     programs = {
       sioyek.enable = false;

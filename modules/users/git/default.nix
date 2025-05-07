@@ -187,10 +187,6 @@ in {
           colorMovedWS = "allow-indentation-change";
           colorMoved = "default";
           algorithm = "histogram";
-          gpg = {
-            textconv = "gpg -q --no-tty --decrypt";
-            binary = true;
-          };
         };
 
         merge = {
