@@ -52,7 +52,7 @@ in {
       statix
 
       jq
-      cachix
+      # cachix
 
       npins
     ];

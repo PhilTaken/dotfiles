@@ -96,7 +96,7 @@
         cacert
         uutils-coreutils
 
-        cachix
+        # cachix
         gping
         hyperfine
         tokei
