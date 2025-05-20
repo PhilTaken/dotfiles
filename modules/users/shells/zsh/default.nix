@@ -32,30 +32,27 @@ in {
         path = "${inputs.config.xdg.dataHome}/zsh/histfile";
       };
 
-      initExtraBeforeCompInit = ''
-        setopt prompt_subst
-        setopt prompt_sp
-        setopt always_to_end
-        setopt complete_in_word
-        setopt hist_verify
+      initContent = lib.mkOrder 550 (''
+          setopt prompt_subst
+          setopt prompt_sp
+          setopt always_to_end
+          setopt complete_in_word
+          setopt hist_verify
 
-        setopt extended_glob
-        setopt nomatch
+          setopt extended_glob
+          setopt nomatch
 
-        setopt complete_aliases
-        setopt mark_dirs
-        setopt bang_hist
-        setopt extended_history
+          setopt complete_aliases
+          setopt mark_dirs
+          setopt bang_hist
+          setopt extended_history
 
-        setopt interactive_comments
-        setopt auto_continue
-        setopt pipefail
+          setopt interactive_comments
+          setopt auto_continue
+          setopt pipefail
 
-        unsetopt beep notify clobber
-      '';
+          unsetopt beep notify clobber
 
-      initExtra =
-        ''
           autoload -Uz zmv
           autoload -Uz zed
 
@@ -124,8 +121,6 @@ in {
               ${pkgs.zellij}/bin/zellij attach --create main
             fi
           fi
-
-          export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
         '')
         + (lib.optionalString (config.phil.terminals.multiplexer == "tmux") ''
           # dont run tmux in nvim shells, in zellij splits or when display isn't set
@@ -141,13 +136,7 @@ in {
               fi
             fi
           fi
-
-          if [ -n "$TMUX" ]; then
-            eval "$(tmux show-environment -s NVIM_LISTEN_ADDRESS)"
-          else
-            export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-          fi
-        '');
+        ''));
 
       shellGlobalAliases = {
         "%notif" = "&& notify-send 'done' || notify-send 'error'";

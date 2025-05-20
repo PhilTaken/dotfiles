@@ -119,39 +119,39 @@ in {
           command = "nebsign";
         }
 
-        {
+        (let
+          build =
+            if pkgs.lib.hasInfix "darwin" pkgs.system
+            then ''sudo ${inputs.darwin.packages.${system}.darwin-rebuild}/bin/darwin-rebuild --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom''
+            else ''nixos-rebuild --use-remote-sudo --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom'';
+        in {
           name = "cbuild";
           help = "Build and compare a NixOS Configuration (local)";
           command = mkSystemScript ''
             host=''${1:-$(hostname)}
-            if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
-              sudo ${inputs.darwin.packages.${system}.darwin-rebuild}/bin/darwin-rebuild --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
-            else
-              nixos-rebuild --use-remote-sudo --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
-            fi
+            ${build}
             ${pkgs.nvd}/bin/nvd diff /run/current-system result
           '';
           category = "system";
-        }
+        })
 
-        {
+        (let
+          build =
+            if pkgs.lib.hasInfix "darwin" pkgs.system
+            then ''${inputs.darwin.packages.${system}.darwin-rebuild}/bin/darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom''
+            else ''nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom'';
+        in {
           name = "cswitch";
           help = "Switch to a NixOS Configuration (local)";
           command = mkSystemScript ''
             if [ -f /run/current-system ]; then
               cbuild $@
             fi
-            # TODO ask for confirmation?
-            # RIIR when
 
-            if [ $(uname -a | cut -d " " -f 1) == "Darwin" ]; then
-              ${inputs.darwin.packages.${system}.darwin-rebuild}/bin/darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
-            else
-              nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom
-            fi
+            ${build}
           '';
           category = "system";
-        }
+        })
 
         {
           name = "uswitch";

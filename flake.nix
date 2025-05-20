@@ -17,8 +17,6 @@
 
     # -----------------------
     # macos inputs (work laptop)
-    # locked to specific version due to https://github.com/LnL7/nix-darwin/issues/1082
-    #darwin.url = "github:lnl7/nix-darwin/f4f18f3d7229845e1c9d517457b7a0b90a38b728";
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -72,19 +70,8 @@
     spicetify.url = "github:Gerg-L/spicetify-nix";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
 
-    # TODO: once my prs are merged revert to main repo
-    #eww-git.url = "github:elkowar/eww?ref=7623e7e692042f4da8525bb1e4ef140831fcdb6a";
-    #eww-git.url = "github:PhilTaken/eww?ref=7837576ee0d2b5ba93b7c9bace0a66338897f5ef";
-    eww-git.url = "github:ralismark/eww?ref=68471c9b23e55ad3c8b31a99473552e16594a44f";
-
-    # better discord clone/fork
-    webcord.url = "github:fufexan/webcord-flake";
-
     # best nix language server
     nil-ls.url = "github:oxalica/nil";
-
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     #xdg-desktop-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";

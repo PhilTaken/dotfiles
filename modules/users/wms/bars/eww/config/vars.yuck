@@ -20,9 +20,9 @@
 
 (defpoll hour   :interval "5s"  "date '+%H'")
 (defpoll min    :interval "5s"  "date '+%M'")
-(defpoll calendar_day :interval "10h" "date '+%d'")
-(defpoll calendar_month :interval "10h" "scripts/calendar")
-(defpoll calendar_year :interval "10h" "date '+%Y'")
+(defpoll calendar_day :interval "5s" "date '+%d'")
+(defpoll calendar_month :interval "5s" "date '+%m'")
+(defpoll calendar_year :interval "5s" "date '+%Y'")
 
 (deflisten pctl_sub "playerctl-py")
 (deflisten workspace "scripts/workspace")

@@ -48,6 +48,8 @@ in {
 
       zen-browser
 
+      lutris
+
       # e-guitar stuff
       guitarix
       qjackctl

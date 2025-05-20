@@ -6,20 +6,6 @@
 }: let
   inherit (lib) mkEnableOption mkOption mkIf types;
   cfg = config.phil.wms.bars.eww;
-  package =
-    (
-      if cfg.enableWayland
-      then pkgs.eww-wayland
-      else pkgs.eww
-    )
-    .overrideAttrs (old: {
-      patches =
-        (old.patches or [])
-        ++ [
-          ./systemd.patch
-        ];
-    });
-
   pylayerctl = pkgs.stdenv.mkDerivation rec {
     name = "playerctl-py";
 
@@ -123,10 +109,10 @@ in {
 
   config = mkIf cfg.enable {
     phil.wms = {
-      bars.barcommand = mkIf cfg.autostart "${package}/bin/eww --no-daemonize open bar";
+      bars.barcommand = mkIf cfg.autostart "${pkgs.eww}/bin/eww --no-daemonize open bar";
       serviceCommands = {
         eww-daemon = {
-          Service.ExecStart = "${package}/bin/eww daemon --no-daemonize --debug";
+          Service.ExecStart = "${pkgs.eww}/bin/eww daemon --no-daemonize --debug";
           Service.Environment = "PATH=/run/wrappers/bin:${lib.makeBinPath (builtins.attrValues {
             inherit
               (pkgs)
@@ -141,13 +127,14 @@ in {
               gnugrep
               gawk
               gnused
-              uutils-coreutils
+              coreutils-full
               bash
               playerctl
               bluez
               networkmanager
               ;
-            inherit package pylayerctl;
+            inherit pylayerctl;
+            package = pkgs.eww;
           })}";
         };
 
@@ -158,13 +145,8 @@ in {
       };
     };
 
-    home.packages = builtins.attrValues {
-      inherit (pkgs) kde-gtk-config;
-    };
-
     programs.eww = {
       enable = true;
-      inherit package;
       configDir = pkgs.stdenv.mkDerivation {
         pname = "eww-configfolder";
         version = "0.1";

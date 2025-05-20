@@ -44,23 +44,11 @@
     })
   ];
 
-  phil.fileshare.mount.binds = [
-    {
-      host = "delta";
-      dirs = [
-        {
-          remote = "/media";
-          local = "/media/delta";
-        }
-      ];
-    }
-  ];
-
   system.stateVersion = "24.05";
 
   home-manager.sharedModules = [
     {
-      phil.wms.bars.eww.main_monitor = 1;
+      #phil.wms.bars.eww.main_monitor = 1;
       services.kanshi = {
         profiles = {
           dual-monitor = {

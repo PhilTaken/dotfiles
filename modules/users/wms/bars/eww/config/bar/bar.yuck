@@ -55,7 +55,7 @@
     (box
       :halign "center"
       :style "margin-bottom: 10px;"
-      (system-tray
+      (systray
         :active-only false
         :pack-direction "up"))
     (bat)

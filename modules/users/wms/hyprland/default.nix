@@ -87,12 +87,13 @@ in {
         monitor=,preferred,auto,auto
 
         input {
+            # for mouse cursor
+            # sensitivity = 0.5
+
             kb_options = caps:escape,grp:shifts_toggle,
         }
 
         general {
-            # for mouse cursor
-            sensitivity = 1.0
 
             gaps_in = 5
             gaps_out = 5
@@ -105,10 +106,12 @@ in {
         decoration {
             rounding = 10
 
-            drop_shadow = yes
-            shadow_range = 4
-            shadow_render_power = 5
-            col.shadow = rgba(1a1a1aee)
+            shadow {
+              enabled = true
+              range = 4
+              render_power = 5
+              color = rgba(1a1a1aee)
+            }
         }
 
         animations {
@@ -130,23 +133,17 @@ in {
             preserve_split = true
         }
 
-        master {
-            # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-            new_is_master = true
-            no_gaps_when_only = true
-        }
-
         # make pinentry fancy
-        windowrule = float,Pinentry
-        windowrule = noborder,Pinentry
-        windowrule = dimaround,Pinentry
+        windowrule = float,class:Pinentry
+        windowrule = noborder,class:Pinentry
+        windowrule = dimaround,class:Pinentry
 
-        windowrule = float,Media viewer
-        windowrule = float,pavucontrol
+        windowrule = float,class:Media viewer
+        windowrule = float,class:pavucontrol
         windowrule = float,title:Bluetooth Devices
         windowrule = float,title:Picture-in-Picture
         windowrule = float,title:Firefox — Sharing Indicator
-        windowrule = float,float
+        windowrule = float,class:float
 
         # mouse binds
         bindm = SUPER,mouse:272,movewindow
@@ -217,10 +214,12 @@ in {
     services = {
       mako = {
         enable = true;
-        maxVisible = 5;
-        defaultTimeout = 5000;
-        borderSize = 2;
-        borderRadius = 4;
+        settings = {
+          max-visible = 5;
+          default-timeout = 5000;
+          border-size = 2;
+          border-radius = 4;
+        };
       };
     };
 

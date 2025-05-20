@@ -46,7 +46,7 @@ in {
     # https://github.com/nix-community/home-manager/issues/2017
     # https://github.com/NixOS/nixpkgs/issues/158025
     programs.sway.enable = false;
-    programs.hyprland.enable = false;
+    programs.hyprland.enable = true;
     # https://wiki.hyprland.org/Nix/#modules-mixnmatch
     #programs.hyprland.package = null;
 
@@ -124,7 +124,7 @@ in {
         };
         #gtkUsePortal = true;
         extraPortals = with pkgs; [
-          #xdg-desktop-portal-hyprland
+          xdg-desktop-portal-hyprland
           xdg-desktop-portal-wlr
           #xdg-desktop-portal-gtk
         ];

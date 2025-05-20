@@ -242,10 +242,12 @@ in {
     services = {
       mako = {
         enable = true;
-        maxVisible = 5;
-        defaultTimeout = 5000;
-        borderSize = 2;
-        borderRadius = 4;
+        settings = {
+          max-visible = 5;
+          default-timeout = 5000;
+          border-size = 2;
+          border-radius = 4;
+        };
       };
     };
 

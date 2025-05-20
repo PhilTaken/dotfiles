@@ -10,7 +10,6 @@
     inputs.parinfer-rust.overlays.default
     inputs.nil-ls.overlays.default
     inputs.nixneovimplugins.overlays.default
-    inputs.neovim-nightly-overlay.overlays.default
 
     self.overlays.default
 
@@ -18,13 +17,8 @@
       _final: prev: {
         makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});
 
-        inherit (inputs.eww-git.packages.${prev.system}) eww eww-wayland;
-
-        webcord = inputs.webcord.packages.${prev.system}.default;
         zen-browser = inputs.zen-browser.packages.${prev.system}.default; # beta
-
         nixVersions = prev.nixVersions // {nix_2_18 = prev.lix;};
-        #nix-prefetch-git = prev.nix-prefetch-git.override {nix = prev.lix;};
 
         # devdocs.io
         devdocs-desktop = prev.writeShellApplication {
