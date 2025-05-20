@@ -27,7 +27,8 @@
           "keycloak"
 
           # email requires kanidm,
-          "kanidm"
+          # TODO fix
+          # "kanidm"
           "email"
 
           "immich"
