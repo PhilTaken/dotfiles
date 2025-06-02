@@ -8,7 +8,7 @@ config: lib: let
 in {
   domainFor = host: "${host}.${net.tld}";
 
-  nodesWith = service: builtins.filter (node: builtins.elem service node.services) net.nodes;
+  nodesWith = service: lib.filterAttrs (_: node: builtins.elem service node.services) net.nodes;
 
   thisNode = node;
 
