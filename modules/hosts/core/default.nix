@@ -109,14 +109,14 @@ in {
     time.timeZone = cfg.timeZone;
 
     # tailscale - wireguard mesh vpn
-    sops.secrets."headscale-apikey" = {};
+    sops.secrets."headscale-authkey".sopsFile = ../../../sops/machines + "/${config.networking.hostName}.yaml";
     networking.hosts.${config.phil.network.nodes.beta.public_ip} = ["headscale.pherzog.xyz"];
     services.tailscale = {
       enable = true;
       # TODO configure this better
       extraUpFlags = ["--login-server" "https://headscale.pherzog.xyz"];
       extraDaemonFlags = ["--no-logs-no-support"];
-      authKeyFile = config.sops.secrets."headscale-apikey".path;
+      authKeyFile = config.sops.secrets."headscale-authkey".path;
     };
     systemd.services."tailscaled" = lib.mkIf config.phil.server.services.headscale.enable {
       after = ["headscale.service"];

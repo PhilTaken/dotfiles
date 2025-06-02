@@ -1,11 +1,8 @@
 wireguard-key: ENC[AES256_GCM,data:qIqiwXaZxA9qNhSJyb29ErRV/qJF2h6gDnocq/aB5ZN7v00Nmo+fYmgVYoU=,iv:D4I731heYqSu0ehzsJUizgqqlG6hNn5xlTjUQ151O0w=,tag:qAyidOTof8hcQEMGpDmoUw==,type:str]
 nebula-key: ENC[AES256_GCM,data:Ds4LWm11qwXRZ9oRshrW/0rei1XfQfC0cwVXlSl2Y+cBzYBA8OZcWAs6oWGDnhhuRXBrpcrETYaO8WoJ791iyfH6joN+tHuq/9m1/Z6zYCdA5NFjSRGxuYLmLuQtlTxrf42+E1FOHtnFRLz4H7jW+V/524R5shX9NetVAKq5Zw==,iv:O1M0NC4o2UhMx8BjpMtkAdy4Filo22mNlifwFVxJSWQ=,tag:8O0MFZr2J9Y8jkKkz5qXbQ==,type:str]
 nebula-crt: ENC[AES256_GCM,data:WF3YHm1KSyQbr8CMHxGdq3vfL2bR9kR1mq7HMdEUQsct6LsZTrINL+uGeYs1gAyaYP3FEdt37E15u8mkWOABQhlfPeWtRA255hhQZbBGGnDI5rHZwOa9Cs1iUpWinWTuZZcOymOgcbPWjjZ4ZI5HfXL4uZJO7enumhNaEKhfNsF+3CutYHRnpiJz1aTwSqhtpwoSyByGab2irJ1FV/xRymVbZMVWCsORGOiTejVxcVjoPkQhhjLLQicYRHv9/BIR7r/TqZ+7pwFJvf93U3mJbWg5ZKof6nuhqOvG1izPRd3puK3mpTzP5lVLTWbJilw0d7jmwhII2g32+tGVFYgcoe+fF2Hcw8qHbXtINOfpjt/OyLx62+ZtCLypGe01x6vyF3cP3g==,iv:CE0nlNZyjCEQHB6yx7xjP1/3UwZw2zUKyIUjbOjEr/4=,tag:tvrSA7arzbg+qKZlBJ3rxw==,type:str]
+headscale-authkey: ENC[AES256_GCM,data:AGvuSjf0ZSVPn87mcnmThzPQZzBZet//EdM94jONp4g6Im0F9wI5BrJcNaIis3Ea,iv:RVvknaiBFlihqeFPnoAP/PS7VOsJkwiMMH1eOEQXeOQ=,tag:oO6OtjysUy1Fuv6t0rrFgw==,type:str]
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
     age:
         - recipient: age1skfvmh8ff3fghxucv5smeceavpsh354k0z3y42sau64v6h6x6d7sj8e3c9
           enc: |
@@ -70,8 +67,8 @@ sops:
             RXd0NENxbmlkMDJVRWdUWXRuM0w3NUkKNoo7XeB8z+21I2aSQgB/qJM7oBbVL0kD
             XNgMiaMGjGYds4rasCp6diqAWic5088mHrk3X65SGgGp/9zluEWVXg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-04-12T15:29:16Z"
-    mac: ENC[AES256_GCM,data:wq3PxKZTYWRBw78pT8LiaBtL77ZMQZjKeEf7ZAJoGShUNKwXuL0CCiSO5SfR3GDoijBr+DGkM8AhGCVG2LkCChRSbc2wmdSofHLEeWBQ5LDAgvxOyX5gFiR8fLYI2AIK5ENat7ZSbXdkT4GBxMlWU5K4TvWIjgfGPe3r2SU/9JU=,iv:ruF/k+iEf+SMC0TVyVd67Hdq2O7OCqIUFBMmxu+RicA=,tag:SKldqNWQdFPSj84gx10b4w==,type:str]
+    lastmodified: "2025-06-02T20:22:48Z"
+    mac: ENC[AES256_GCM,data:v5dUVWmNACF+bpLbPoneIFY7VpPH4j957CrXLSa6Oc7sTJ7cZt23kKpeURpX6757oCkWvkRk2iXTr0hfMnnWMLaGQ14/Cpx2Y1E76T2i321krlEldg9YnFPdde0SWKZSLFXXrqJoZ9l7SbGgftYLLmGvLI2BkioGI3tGRSdIEHY=,iv:AnH0ityHA7efv1E58Zj9gkcXq1+lF8D0TRiX7M5bj60=,tag:v1Std6axUU6ATHwTe4ZVmA==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-
@@ -94,4 +91,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
     unencrypted_suffix: _unencrypted
-    version: 3.8.1
+    version: 3.10.2

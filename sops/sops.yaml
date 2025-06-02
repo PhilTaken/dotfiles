@@ -15,7 +15,6 @@ geoip-licensekey: ENC[AES256_GCM,data:8H+poTkfK6tUZuwtVwX8OwdfQuZiDEX4G1N3GY2gEK
 mqtt-password: ENC[AES256_GCM,data:dM2rnubupsKDBzMb6+zpRgxtRg03jWE=,iv:a/dq344+xHfsDClok7AeaLjJUgwgaRnPlrsUMwtZp3U=,tag:zaSXp6Y3Roj3/tqC2rNg7A==,type:str]
 freshrss-password: ENC[AES256_GCM,data:9JT5b6IN5rmp5DYdAczEIhl7f1QwKbF8,iv:V+Yvmk/+sGFnXdw9ZoVKCiClc9qMfxmugQbO2iOGdgE=,tag:2LPK63PodLHJYaa5uy/9BQ==,type:str]
 bookstack-appkeyfile: ENC[AES256_GCM,data:tbFNyQ++AD6yCP2r0OHes0ocsxJI4GosxR64kELXqrcJtVU4E3m2mjPngFc=,iv:8Ua1QRZfUukiVGSXpqVPPerSuY2R9EuxXUp2aoRbuWE=,tag:i/g9LGTnIRAKN3gn2Pv1Tg==,type:str]
-headscale-apikey: ENC[AES256_GCM,data:usJn++Okh4aDJ8GW5xYiRhxVqWcKRDGMISb0cKa3KicmsuiTyAAYMzlR89sPmBerR6go++2f,iv:Xsxx86zEo/7sUFRkC/TDCASVWd1iZe0EZfJ6tdL5EZM=,tag:XHSnnrLx7GhAJDRXJXuXTw==,type:str]
 dovecot-ldap-config: ENC[AES256_GCM,data:/vwCcBmYoRK0/3JsGtGVLBGl/MxMl5T7KiJB05CX+GJqh+3D7EaN3CgGv7SRNOQoRduJfrWB2CsT9TEoH5xW0v2zAwFAjd8r3hZqnc8NdnSf+5inqoPr2pcyooTfNIppeltAjnLZ+hfLLnMwxSjvmYyoHKLJ6FN+/wF2V7p4jFzR3iQBAnG7TaECfC33/9bhTtPZoQuX9iE62vOcJMu6N2Mt95HpRSF2fOazM6hXvK4YWoKs4R8GqQJibudNSSPkOp1DqlACnmkFnezgdAW8jf6N7lmmYjlFmFTSGopolm3hTeX/c3Ba0rjiiNSUOkrZa0g8wk4UoTrT3CSE7jOynCkP3fXzYjAjJZ3sH4TXT51lt32QY02qAQXQhKCg5HbScNq7HOaa61q61VmL8mzwwfaHjnYjl4brjuLs9W7nClqY+Bx/MR5p/txctJpsMqOa348hbscXHIYRG8BQiE+Lh8J6jggoeiVGO4QH+y26JhfhrXNFGLs8HFhPw7zxDvjOEUS2c0ACwwRFpUfnAB1bIM4vx8e5kJkC2BywP76BrlBJQyOFUoXRxKhEy+eyntX9BC8VI1jcjsuAc3OUCmXCZSVxarkWMqYlp3NKl/BCPeTjcV1DD58eTAgr1pFq/VDZl4KZUwPZdqJ0LGYGvcHB9kcDauljbIy7zp6DIed/j6RemggW7rVodII2g8hExLbsuja6rjiCop9jkEaHIwjn6nTPTDxl3zypJF4S4T4TdY+Zs4LPRNwK04C7UBmaPbBbubkqLnjv4htW8/csYPo0xSc3QgUgXjRWVucLdFuIvxdU1npDayEnbbHu2X0M1i9H20Fqw6zfoWWA/BA5A0nyLmwVRUgMCLxRfUxuQFwrRtxmaAkRWp5D0rvbnLREZDqz2n5BQESsaRPXM79kGJA0M13GHFOBXIZnXPwrxfO269elVnkoajck3ZlnGb6dCDCDx4QwXs8yunzYoLzb442Yj+5lAAHU58BsekioPBR02W2bU68SgxX+fwtXkdy+SwufyDfETWUcXIBVbTTBGvhwucKcQs1BuVHcVKEkJFeEaALsYST/MGQH0jKcvzzRrBmVsw3RoATTdZRjES0go2dAsBc=,iv:3SisNlYofHjtkUPZ7EbCi4pHCuiU/uTGoQwejaKI9zE=,tag:gRkziQzX164HWVLhBnzuUw==,type:str]
 dkim-privatekey: ENC[AES256_GCM,data:xAZqnHtVQTKZCJQvchRG/K+mfOsSwE/bSuG+A/H8o8hVp03a1ZhYjcZYD6NBA/sJ4kuGAEGJR0nZp/ngOGAlUKuYGyUED7hP2Z6i8Adr2/eiwS/nuidMR1NON/2F+jkNdVbdjTyMPJkI1RLcezQjDNVM51oTxyc=,iv:MKldKFP+c/yKLzYpUH1m/dFbzLm6qDSB7U10KxNMv88=,tag:wNRvoY8avPmbMYvmq1i1Wg==,type:str]
 dkim-pubkey: ENC[AES256_GCM,data:D8dfgI+OnKnNeBNJv6K5zijP/AZM4w+gyqGfBo1hYWkXtbq+LlQcI7mWZEizejI8duKri8TE54lf3yaJa4La2TS4XdxXfxTJaN8W5/fbt0ARUlUBsyJBYW2kvaGt64OxZbDZSLvir8gSwK8FXOYF7xk=,iv:hZNUuZbCWdkZLykG2dB8bW34Yf2j0lcZCLxuJ8RwAQ4=,tag:o1BLp+Ia+FzMUaLD0AKTjw==,type:str]
@@ -29,10 +28,6 @@ grafana-kc-client-secret: ENC[AES256_GCM,data:9iXM78qP1hgqIlH2ajYHn/r9Bg7Y3DfpDV
 bookstack-oidc-secret: ENC[AES256_GCM,data:K+tjgoEE0ay94wFR6ou504JMcRQS+5nX+T5emhEy5Kk=,iv:1pJccrvVQJ7TC2PSVvY0CGbifRqGonx2CVW1HvbL4a8=,tag:cZw/68RBfMvaGnoO37XcyQ==,type:str]
 sops:
     shamir_threshold: 1
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
     age:
         - recipient: age1skfvmh8ff3fghxucv5smeceavpsh354k0z3y42sau64v6h6x6d7sj8e3c9
           enc: |
@@ -97,8 +92,8 @@ sops:
             ejJTbDYwS0IxbWRkcXg3cC94blZmRncKgesfvvge3ci1zhDFw816Q2PLIvK8VMuz
             QMauausq67+W9F0hWW95e7PLgkKfGAJcIoMhCLSncakawGxCmeLTkQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-12-04T09:35:20Z"
-    mac: ENC[AES256_GCM,data:bxACSDBtLdadHsCm6EUPu89iO9xYKP5xBd7pfjgCWhbYf1w2BuMptgMk9Q15YPIVl/UXeZVbxaKX8uRxcLwbsnBSqbpofYVDElH/NFeuAdR/ufzPQuGEdUTNAeOdrgbmsNZWGuK26OGcKdkhDNvEER+chKyBiFKxrRVIFMKiVpA=,iv:mY5s5tmS+/1M+Zfb6+mstdt/wBDjYSAyk3SK5KMq/Qk=,tag:/V2EODWKZkqpKMKB+nfeoA==,type:str]
+    lastmodified: "2025-06-02T20:12:49Z"
+    mac: ENC[AES256_GCM,data:aRleMmn8FRNXcuji83V1sTEA1bYT2EnS8Qqhh9TV3H6hgmLbKEBswAX+bq3QyvROjetloW9baxXpJwxvcIrqxmfS/eNmM4NBnvV0gAnXYvPKD7jEnjBi36waXFGen09r2gWAZEnNvqAJaMybjQQsTAt3S+BVADe3hHkeYCStSuc=,iv:C4fV95LbePEX8pFSHUhczNm0ZvRPapMsD7GYieU2858=,tag:JGkGxyQwlSRr2h074j4kbQ==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-
@@ -121,4 +116,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
     unencrypted_suffix: _unencrypted
-    version: 3.9.1
+    version: 3.10.2

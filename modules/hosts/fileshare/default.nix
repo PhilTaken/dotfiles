@@ -24,7 +24,7 @@
             ip =
               if bind.host == null
               then bind.ip
-              else net.nodes.${bind.host}.network_ip."milkyway";
+              else net.nodes.${bind.host}.network_ip."headscale";
           in {
             device = "${ip}:${bindcfg.remote}";
             fsType = "nfs4";

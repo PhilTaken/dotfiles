@@ -40,9 +40,10 @@ in {
       settings = {
         server_url = "https://${cfg.url}";
         reporting-disable = true;
+        logtail.enable = false;
+
         dns = {
-          # TODO change from fixed ip to derived from network.nix
-          nameservers.global = ["100.64.0.3"];
+          nameservers.global = lib.mapAttrsToList (_: v: v.network_ip."headscale") (netlib.nodesWith "unbound");
           override_local_dns = true;
 
           magic_dns = false;
@@ -72,6 +73,7 @@ in {
     phil.server.services.caddy.proxy."${cfg.host}" = {
       inherit (cfg) port;
       public = true;
+      vhostConfig.proxyWebsockets = true;
     };
   };
 }

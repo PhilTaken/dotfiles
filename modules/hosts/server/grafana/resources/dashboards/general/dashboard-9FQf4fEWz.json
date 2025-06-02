@@ -2829,10 +2829,7 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "text": "100.64.0.3:9167",
-          "value": "100.64.0.3:9167"
-        },
+        "current": { },
         "datasource": "PBFA97CFB590B2093",
         "definition": "label_values(unbound_up, instance)",
         "includeAll": false,

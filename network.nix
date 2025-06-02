@@ -20,7 +20,7 @@
       beta = {
         system = "aarch64-linux";
         public_ip = "195.201.93.72";
-        network_ip."headscale" = "100.64.0.4";
+        network_ip."headscale" = "100.64.0.25";
         network_ip."milkyway" = "10.200.0.2";
         network_ip."yggdrasil" = "10.100.0.2";
         services = [
@@ -42,7 +42,7 @@
 
       delta = {
         system = "x86_64-linux";
-        network_ip."headscale" = "100.64.0.3";
+        network_ip."headscale" = "100.64.0.26";
         network_ip."milkyway" = "10.200.0.5";
         network_ip."yggdrasil" = "10.100.0.5";
         network_ip."lan" = "192.168.178.26";

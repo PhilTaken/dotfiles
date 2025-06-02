@@ -24,6 +24,7 @@ in {
           config.phil.network.networks.headscale.netmask
           config.phil.network.networks.milkyway.netmask
           config.phil.network.networks.yggdrasil.netmask
+          config.phil.network.networks.lan.netmask
         ];
     };
   };
