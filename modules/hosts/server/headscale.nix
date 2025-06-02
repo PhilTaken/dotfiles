@@ -73,7 +73,6 @@ in {
     phil.server.services.caddy.proxy."${cfg.host}" = {
       inherit (cfg) port;
       public = true;
-      vhostConfig.proxyWebsockets = true;
     };
   };
 }
