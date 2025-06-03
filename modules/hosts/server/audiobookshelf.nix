@@ -24,7 +24,12 @@ in {
   config = mkIf cfg.enable {
     # configure the proxy
     phil.server.services = {
-      caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
+      caddy.proxy."${cfg.host}" = {
+        inherit (cfg) port;
+        vhostConfig.extraConfig = ''
+          client_max_body_size 1G;
+        '';
+      };
       homer.apps."${cfg.host}" = {
         show = true;
         settings = {
