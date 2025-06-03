@@ -3,7 +3,6 @@
 - remove modules
     - nebula
     - legacy wireguard
-- set up audiobookshelf permissions (via keycloak?)
 
 - grafana
     - provisioned dashboards
