@@ -138,7 +138,9 @@ in {
       age
       lsyncd
 
+      # git(hub|lab) cli tools
       glab
+      gh
 
       # _1password
     ];

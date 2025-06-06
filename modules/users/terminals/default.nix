@@ -127,7 +127,7 @@ in {
           config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
           table.insert(config.hyperlink_rules, {
-            regex = [[\b(FC-\d+)\b]],
+            regex = [[\b((FC|PL)-\d+)\b]],
             format = 'https://yt.flyingcircus.io/issue/$1',
           })
 

@@ -119,7 +119,8 @@ in {
 
           # nix
           nil
-          alejandra
+          nixfmt-rfc-style
+          # alejandra
 
           # formatting for hurl-nvim
           jq
@@ -391,7 +392,7 @@ in {
                   lua = { "stylua" },
                   rust = { "rustfmt" },
                   python = { "isort", "black" },
-                  nix = { "alejandra" },
+                  nix = { "nixfmt" },
                 },
                 formatters = {
                   rustfmt = {

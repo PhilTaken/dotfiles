@@ -69,7 +69,7 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "zap";
+      cleanup = "uninstall";
     };
 
     casks = [
@@ -81,10 +81,7 @@
       "spotify"
       "karabiner-elements"
       "telegram"
-      {
-        name = "zen-browser";
-        greedy = true;
-      }
+      "zen-browser"
       "element"
       "dehesselle-meld"
       "ghostty"
@@ -115,6 +112,8 @@
 
   security.pam.services.sudo_local.touchIdAuth = true;
   security.pam.services.sudo_local.reattach = true;
+
+  system.primaryUser = "philippherzog";
 
   system.defaults = {
     LaunchServices = {

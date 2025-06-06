@@ -138,7 +138,7 @@ in {
         (let
           build =
             if pkgs.lib.hasInfix "darwin" pkgs.system
-            then ''${inputs.darwin.packages.${system}.darwin-rebuild}/bin/darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom''
+            then ''sudo ${inputs.darwin.packages.${system}.darwin-rebuild}/bin/darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom''
             else ''nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom'';
         in {
           name = "cswitch";
