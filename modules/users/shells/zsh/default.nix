@@ -23,7 +23,7 @@ in {
       enableCompletion = true;
       autocd = true;
       defaultKeymap = "viins";
-      dotDir = ".config/zsh";
+      dotDir = "${config.xdg.configHome}/zsh";
 
       history = {
         ignoreDups = true;
