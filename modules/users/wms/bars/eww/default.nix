@@ -133,7 +133,7 @@ in {
               bluez
               networkmanager
               ;
-            inherit pylayerctl;
+            #inherit pylayerctl;
             package = pkgs.eww;
           })}";
         };
