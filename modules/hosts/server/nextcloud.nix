@@ -4,7 +4,13 @@
   netlib,
   ...
 }: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit
+    (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.nextcloud;
   net = config.phil.network;
 in {
@@ -44,12 +50,10 @@ in {
         # TODO postgresql backup
         # TODO turn maintenance mode on in container
         # ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --on
-        preHook = ''
-        '';
+        preHook = '''';
         # TODO turn maintenance off again
         # ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --off
-        postHook = ''
-        '';
+        postHook = '''';
       };
 
       phil.server.services = {
@@ -122,7 +126,7 @@ in {
 
           services.nextcloud = {
             enable = true;
-            package = pkgs.nextcloud30;
+            package = pkgs.nextcloud31;
 
             inherit home datadir hostName;
             https = false;
