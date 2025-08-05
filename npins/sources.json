@@ -35,9 +35,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "4161952824f4ede6c3eb73ef6b5f3609a76cf69a",
-      "url": "https://github.com/edunfelt/base16-rose-pine-scheme/archive/4161952824f4ede6c3eb73ef6b5f3609a76cf69a.tar.gz",
-      "hash": "17n45xd8qza3n9gzlpffri6hbil9n0442yx8vfaf4pgpwgmlqvjm"
+      "revision": "9fc04dce8b5c264f6fdc95dd65a2dc738f0c0547",
+      "url": "https://github.com/edunfelt/base16-rose-pine-scheme/archive/9fc04dce8b5c264f6fdc95dd65a2dc738f0c0547.tar.gz",
+      "hash": "1x319m7vz79zgmin0gv0855f13aysm2ibw8avdnqlq5bkli0c6yn"
     },
     "freshrss_extensions": {
       "type": "Git",
@@ -48,9 +48,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "3d1906f7767c01fff57025ba7d1e96aa9cead124",
-      "url": "https://github.com/freshrss/extensions/archive/3d1906f7767c01fff57025ba7d1e96aa9cead124.tar.gz",
-      "hash": "0hrhhhqa41vxa7gs5rgjcrr4z655ljhh9mvj437yq2z78il3gr9q"
+      "revision": "b8703f69f7a559678bc9bce370931bdb0fab2b1c",
+      "url": "https://github.com/freshrss/extensions/archive/b8703f69f7a559678bc9bce370931bdb0fab2b1c.tar.gz",
+      "hash": "1pjvf7qgyghqbvfiblkdgd7xw23z6ypb0hy9c3sxg23lnskppyz2"
     },
     "hurl-nvim": {
       "type": "GitRelease",
@@ -62,10 +62,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v2.0.1",
-      "revision": "c068fbb3a890ebcc9d263e114da4473d4556dad7",
+      "version": "v2.2.0",
+      "revision": "26cda7a0d81ad47f9a77ebe94ca11e1239c98c37",
       "url": null,
-      "hash": "1gps2bjid6v0wgjv2pjab4jc6gzirg1a6lkjww7g7af9iaaaj9cy"
+      "hash": "0kamymq2wbxscwvcqnsbxq83iy2cl0w201904z22g5i7nar8sz9b"
     },
     "janet.vim": {
       "type": "Git",
@@ -83,8 +83,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.05pre730005.6d97d419e5a9/nixexprs.tar.xz",
-      "hash": "1mvsd66bks3jvkp207afzrx2cwxrz6fq4zhxcak2ck6ap75sb7a2"
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.11pre820016.3078b9a9e75f/nixexprs.tar.xz",
+      "hash": "0kwcr8qmiqpihrnccq22qxsmgmh33wfdx64l29p2sqavh8gh205y"
     },
     "nvim-cmp-lsp-rs": {
       "type": "Git",
@@ -171,9 +171,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "24de93afb05078bac6a2e966402cc1f672277708",
-      "url": "https://github.com/hashivim/vim-terraform/archive/24de93afb05078bac6a2e966402cc1f672277708.tar.gz",
-      "hash": "1d8r0qd3ncnh3rbax9vjd3rckjwikxydgy9zjklmgnhn51ynggzi"
+      "revision": "520498fab16a3a11f2ae1b8cb65e0a1684bc317a",
+      "url": "https://github.com/hashivim/vim-terraform/archive/520498fab16a3a11f2ae1b8cb65e0a1684bc317a.tar.gz",
+      "hash": "0fglb72vqki1nkg0n85lpnpaa7dwvs1grjb93h4h7cjzr53h0nri"
     },
     "vim-varnish": {
       "type": "GitRelease",

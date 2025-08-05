@@ -7,13 +7,21 @@
 }: let
   cfg = config.phil.editors.neovim;
   inherit (pkgs.vimUtils) buildVimPlugin;
-  inherit (lib) mkOption mkIf types optionals;
+  inherit
+    (lib)
+    mkOption
+    mkIf
+    types
+    optionals
+    ;
   buildPlugin = {pname, ...} @ attrset:
-    buildVimPlugin ({
+    buildVimPlugin (
+      {
         version = "master";
         src = npins.${pname};
       }
-      // attrset);
+      // attrset
+    );
 
   plug = plugin: config: {
     inherit plugin config;
@@ -86,8 +94,8 @@ in {
 
   config = mkIf cfg.enable {
     home.sessionVariables.EDITOR = "nvim";
-    stylix.targets.vim.enable = false;
-    stylix.targets.neovim.enable = false;
+    # stylix.targets.vim.enable = false;
+    # stylix.targets.neovim.enable = false;
 
     # TODO add https://github.com/brenoprata10/nvim-highlight-colors
     programs.neovim = {
@@ -129,30 +137,37 @@ in {
           # formatters for conform-nvim
         ]
         ++ (optionals cfg.langs.python [
-          (pkgs.python3.withPackages (ps:
-            with ps; [
-              python-lsp-server
-              pylsp-mypy
-              python-lsp-ruff
-              mypy
-            ]))
+          (pkgs.python3.withPackages (
+            ps:
+              with ps; [
+                python-lsp-server
+                pylsp-mypy
+                python-lsp-ruff
+                mypy
+              ]
+          ))
           pkgs.mypy
 
           pkgs.ruff
           pkgs.isort
           pkgs.black
         ])
-        ++ (optionals cfg.langs.ts [pkgs.nodePackages.typescript-language-server pkgs.svelte-language-server])
+        ++ (optionals cfg.langs.ts [
+          pkgs.nodePackages.typescript-language-server
+          pkgs.svelte-language-server
+        ])
         ++ (optionals cfg.langs.cpp [pkgs.ccls])
         ++ (optionals cfg.langs.rust [pkgs.rust-analyzer-unwrapped])
         # ++ (optionals cfg.langs.zig [pkgs.zls])
         ++ (optionals cfg.langs.haskell [pkgs.haskell-language-server])
-        ++ (optionals cfg.langs.extra (with pkgs; [
-          fortls
-          texlab
-          #erlang-ls # erlang
-          #elixir_ls # elixir
-        ]));
+        ++ (optionals cfg.langs.extra (
+          with pkgs; [
+            fortls
+            texlab
+            #erlang-ls # erlang
+            #elixir_ls # elixir
+          ]
+        ));
 
       extraConfig = ''
         " write to undofile in undodir
@@ -630,19 +645,21 @@ in {
           (lplug vim-pandoc-syntax ''ft = {"md"}'')
         ])
         # plugins that aren't needed immediately for startup
-        ++ (with pkgs.vimPlugins;
-          map mkVlplug [
-            lsp-colors-nvim
-            targets-vim
-            direnv-vim
-            friendly-snippets
-            nerdcommenter
-            popup-nvim
-            todo-comments-nvim
-            vim-fugitive
-            vim-repeat
-            vim-surround
-          ])
+        ++ (
+          with pkgs.vimPlugins;
+            map mkVlplug [
+              lsp-colors-nvim
+              targets-vim
+              direnv-vim
+              friendly-snippets
+              nerdcommenter
+              popup-nvim
+              todo-comments-nvim
+              vim-fugitive
+              vim-repeat
+              vim-surround
+            ]
+        )
         ++ (with pkgs.vimExtraPlugins; [
           # this cannot be lazily loaded easily since neogit checks if it's available and adds some extra config if it is
           (plug nvim-ufo ''

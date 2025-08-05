@@ -34,7 +34,10 @@ in {
 
     signFlavor = mkOption {
       description = "Sign key flavor";
-      type = types.enum ["ssh" "openpgp"];
+      type = types.enum [
+        "ssh"
+        "openpgp"
+      ];
       default = "openpgp";
     };
   };
@@ -61,10 +64,14 @@ in {
       settings = {
         user.email = cfg.userEmail;
         user.name = cfg.userName;
-        ui.diff-editor = ["nvim" "-c" "DiffEditor $left $right $output"];
+        ui.diff-editor = [
+          "nvim"
+          "-c"
+          "DiffEditor $left $right $output"
+        ];
         ui.show-cryptographic-signatures = true;
         ui.pager = "${pkgs.delta}/bin/delta";
-        ui.diff.format = "git";
+        ui.diff-formatter = ":git";
         ui.default-command = "log";
 
         signing = mkIf (cfg.signKey != null) {
@@ -88,7 +95,10 @@ in {
           '';
         };
 
-        aliases.dv = ["--config=templates.draft_commit_description=commit_description_verbose" "describe"];
+        aliases.dv = [
+          "--config=templates.draft_commit_description=commit_description_verbose"
+          "describe"
+        ];
       };
     };
 

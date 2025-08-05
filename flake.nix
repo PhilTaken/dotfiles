@@ -1,7 +1,7 @@
 {
   inputs = {
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-3.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -9,7 +9,7 @@
     # package repositories
 
     # nixpkgs.url = "github:nixos/nixpkgs/cd11caeb123796cbd017af8514e7c0657a767527";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nur-src.url = "github:nix-community/NUR";
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
@@ -142,12 +142,12 @@
           inherit (pkgs) lib system;
           l = builtins // lib;
         in
-          pkgs.lib.filterAttrs
-          (_: package:
-            if l.hasAttrByPath ["meta" "platforms"] package
-            then l.elem system package.meta.platforms
-            else (lib.hasInfix "linux" pkgs.system))
-          (custom_pkgs_overlay pkgs pkgs);
+          pkgs.lib.filterAttrs (
+            _: package:
+              if l.hasAttrByPath ["meta" "platforms"] package
+              then l.elem system package.meta.platforms
+              else (lib.hasInfix "linux" pkgs.system)
+          ) (custom_pkgs_overlay pkgs pkgs);
       };
     };
 }
