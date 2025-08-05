@@ -126,7 +126,7 @@ in {
               then ''sudo ${
                   inputs.darwin.packages.${system}.darwin-rebuild
                 }/bin/darwin-rebuild --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom''
-              else ''nixos-rebuild --use-remote-sudo --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom'';
+              else ''nixos-rebuild --sudo --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom'';
           in {
             name = "cbuild";
             help = "Build and compare a NixOS Configuration (local)";
@@ -146,7 +146,7 @@ in {
               then ''sudo ${
                   inputs.darwin.packages.${system}.darwin-rebuild
                 }/bin/darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom''
-              else ''nixos-rebuild --use-remote-sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom'';
+              else ''nixos-rebuild --sudo --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom'';
           in {
             name = "cswitch";
             help = "Switch to a NixOS Configuration (local)";
