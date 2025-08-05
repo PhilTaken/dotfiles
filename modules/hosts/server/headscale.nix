@@ -4,7 +4,13 @@
   netlib,
   ...
 }: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit
+    (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.headscale;
   net = config.phil.network;
 in {
@@ -29,7 +35,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    sops.secrets."headscale-kc-client-secret".owner = config.systemd.services.headscale.serviceConfig.User;
+    sops.secrets."headscale-kc-client-secret".owner =
+      config.systemd.services.headscale.serviceConfig.User;
 
     services.headscale = {
       enable = true;
@@ -43,7 +50,9 @@ in {
         logtail.enable = false;
 
         dns = {
-          nameservers.global = lib.mapAttrsToList (_: v: v.network_ip."headscale") (netlib.nodesWith "unbound");
+          nameservers.global = lib.mapAttrsToList (_: v: v.network_ip."headscale") (
+            netlib.nodesWith "unbound"
+          );
           override_local_dns = true;
 
           magic_dns = false;
@@ -64,10 +73,7 @@ in {
 
       # https://github.com/juanfont/headscale/issues/1574
       # remove after update to 0.23.0
-      serviceConfig = {
-        TimeoutStopSec = 5;
-        RestartSec = 5;
-      };
+      serviceConfig.TimeoutStopSec = 5;
     };
 
     phil.server.services.caddy.proxy."${cfg.host}" = {

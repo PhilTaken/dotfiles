@@ -37,7 +37,7 @@
           "grafana"
           "freshrss"
           "headscale"
-          "bookstack"
+          # "bookstack"
         ];
       };
 
