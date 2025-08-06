@@ -50,6 +50,8 @@
         services = [
           "gitea"
 
+          "navidrome"
+
           # keep these on delta to use at home
           "arrs"
           "jellyfin"
