@@ -33,8 +33,8 @@
     nixos.userConfig = mkConfig {
       des.gnome.enable = true;
 
-      wms.hyprland.enable = true;
-      wms.bars.eww.enable = true;
+      wms.hyprland.enable = false;
+      wms.bars.eww.enable = false;
 
       gpg.enable = true;
 
@@ -47,8 +47,8 @@
 
     maelstroem.userConfig = mkConfig {
       # de/wm config
-      wms.hyprland.enable = true;
-      wms.bars.eww.enable = true;
+      wms.hyprland.enable = false;
+      wms.bars.eww.enable = false;
 
       des.gnome.enable = true;
     };
@@ -94,7 +94,11 @@ in {
       {
         # desktop @ home
         gamma = let
-          users = ["maelstroem" "nixos" "jaid"];
+          users = [
+            "maelstroem"
+            "nixos"
+            "jaid"
+          ];
         in
           util.host.mkNixos (mkHMUsers users) {
             inherit users;
@@ -167,66 +171,42 @@ in {
                 };
               }
 
-              ({lib, ...}: {
-                # FIXME: connect zetta to nebula to access forgjo via ssh?
-                home-manager.users.alice.programs.git.extraConfig.credential.helper = "store";
+              (
+                {lib, ...}: {
+                  # FIXME: connect zetta to nebula to access forgjo via ssh?
+                  home-manager.users.alice.programs.git.extraConfig.credential.helper = "store";
 
-                # this somehow breaks deployments
-                home-manager.users.alice.programs.carapace.enable = lib.mkForce false;
+                  # this somehow breaks deployments
+                  home-manager.users.alice.programs.carapace.enable = lib.mkForce false;
 
-                # disable to prevent inferring dns from vm host
-                services.resolved.enable = lib.mkForce false;
-              })
-
-              ({
-                pkgs,
-                npins,
-                ...
-              }: {
-                stylix = {
-                  image = ../../images/cat-sound.png;
-                  base16Scheme = "${npins.base16}/base16/mocha.yaml";
-
-                  fonts = {
-                    serif = {
-                      package = pkgs.dejavu_fonts;
-                      name = "DejaVu Serif";
-                    };
-
-                    sansSerif = {
-                      package = pkgs.dejavu_fonts;
-                      name = "DejaVu Sans";
-                    };
-
-                    monospace = {
-                      package = pkgs.iosevka-comfy.comfy-duo;
-                      name = "Iosevka Comfy";
-                    };
-
-                    emoji = {
-                      package = pkgs.noto-fonts-emoji;
-                      name = "Noto Color Emoji";
-                    };
-                  };
-                };
-              })
+                  # disable to prevent inferring dns from vm host
+                  services.resolved.enable = lib.mkForce false;
+                }
+              )
             ];
           };
       }
-      // builtins.mapAttrs
-      (nodename: nodeconfig: (util.server.mkServer nodeconfig.services {
-        inherit (nodeconfig) system;
-        hostName = nodename;
-      }))
+      // builtins.mapAttrs (
+        nodename: nodeconfig: (util.server.mkServer nodeconfig.services {
+          inherit (nodeconfig) system;
+          hostName = nodename;
+        })
+      )
       net.nodes;
 
     # shortcut for building with `nix build`
-    systems = builtins.mapAttrs (system: _: self.nixosConfigurations.${system}.config.system.build.toplevel) self.nixosConfigurations;
+    systems =
+      builtins.mapAttrs (
+        system: _: self.nixosConfigurations.${system}.config.system.build.toplevel
+      )
+      self.nixosConfigurations;
   };
 
   perSystem = {system, ...}: {
     #homeConfigurations = lib.mapAttrs (util.user.mkHMUser (util.pkgsFor system)) hmUsers;
-    checks = (builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib).${system};
+    checks =
+      (builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib)
+        .${system};
   };
 
   flake = {

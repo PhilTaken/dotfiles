@@ -5,7 +5,13 @@
   ...
 } @ inputs: let
   cfg = config.phil.wms.sway;
-  inherit (lib) mkEnableOption mkOption mkIf types;
+  inherit
+    (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
 in {
   options.phil.wms.sway = {
     enable = mkEnableOption "sway";
@@ -110,7 +116,15 @@ in {
 
         keybindings = let
           inherit menu;
-          inherit (wayland.windowManager.sway.config) terminal modifier up down left right;
+          inherit
+            (wayland.windowManager.sway.config)
+            terminal
+            modifier
+            up
+            down
+            left
+            right
+            ;
         in {
           "${modifier}+Shift+c" = "reload";
           "${modifier}+Shift+u" = "exit";
@@ -193,49 +207,66 @@ in {
             #  '';
             #}
           ]
-          ++ (
-            lib.optional (inputs.config.phil.wms.bars.barcommand != "")
-            {
-              command = inputs.config.phil.wms.bars.barcommand;
-              always = false;
-            }
-          );
+          ++ (lib.optional (inputs.config.phil.wms.bars.barcommand != "") {
+            command = inputs.config.phil.wms.bars.barcommand;
+            always = false;
+          });
 
         window.commands = [
           {
             command = "inhibit_idle fullscreen";
-            criteria = {app_id = "firefox";};
+            criteria = {
+              app_id = "firefox";
+            };
           }
           {
             command = "opacity ${std_opacity}";
-            criteria = {app_id = ".*";};
+            criteria = {
+              app_id = ".*";
+            };
           }
           {
             command = "floating enable";
-            criteria = {title = "R Graphics.*";};
+            criteria = {
+              title = "R Graphics.*";
+            };
           }
           {
             command = "opacity 1";
-            criteria = {app_id = "librewolf|firefox";};
+            criteria = {
+              app_id = "librewolf|firefox";
+            };
           }
           {
             command = "opacity 1";
-            criteria = {app_id = "org.pwmt.zathura";};
+            criteria = {
+              app_id = "org.pwmt.zathura";
+            };
           }
           {
             command = "floating enable";
-            criteria = {title = "vis";};
+            criteria = {
+              title = "vis";
+            };
           }
           {
             command = "floating enable, move to scratchpad";
-            criteria = {title = ".+[Ss]haring (Indicator|your screen)";};
+            criteria = {
+              title = ".+[Ss]haring (Indicator|your screen)";
+            };
           }
           {
             command = "floating enable";
-            criteria = {app_id = "avizo-service";};
+            criteria = {
+              app_id = "avizo-service";
+            };
           }
         ];
-        output = {"*" = {bg = "${cfg.background_image} fill";};};
+        output = {
+          "*" = {
+            bg = "${cfg.background_image} fill";
+          };
+        };
       };
     };
 

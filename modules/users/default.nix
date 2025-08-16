@@ -33,10 +33,10 @@
   };
 
   config = {
-    # stylix.enable = true;
-    # stylix.polarity = "dark";
+    stylix.enable = true;
+    stylix.polarity = "dark";
 
-    # stylix.targets.qt.platform = "qtct";
+    stylix.targets.qt.platform = "qtct";
 
     xdg.configFile."nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
     home.sessionVariables.NIX_PATH = "nixpkgs=${config.xdg.configHome}/nix/inputs/nixpkgs$\{NIX_PATH:+:$NIX_PATH}";

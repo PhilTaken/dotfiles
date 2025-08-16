@@ -5,7 +5,13 @@
   lib,
   ...
 }: let
-  inherit (lib) mkOption mkIf types mkForce;
+  inherit
+    (lib)
+    mkOption
+    mkIf
+    types
+    mkForce
+    ;
   cfg = config.phil.video;
 
   session_map = {
@@ -52,10 +58,14 @@ in {
 
     boot.plymouth.enable = true;
 
-    services.displayManager.defaultSession = mkIf (cfg.managers != []) session_map.${builtins.head cfg.managers};
+    services.displayManager.defaultSession =
+      mkIf (
+        cfg.managers != []
+      )
+      session_map.${builtins.head cfg.managers};
 
     #services.displayManager.cosmic-greeter.enable = true;
-    services.xserver.displayManager.gdm = {
+    services.displayManager.gdm = {
       enable = true;
       wayland = true;
       autoLogin.delay = 10;
@@ -72,16 +82,19 @@ in {
       desktopManager = {
         plasma5.enable = enabled "kde";
         xfce.enable = enabled "xfce";
-        gnome.enable = enabled "gnome";
         #xterm.enable = true;
       };
     };
     #services.desktopManager.cosmic.enable = enabled "cosmic";
+    services.desktopManager.gnome.enable = enabled "gnome";
 
     # ----------------------
     # gnome
     services.gnome.gnome-browser-connector.enable = enabled "gnome";
+    services.gnome.core-apps.enable = enabled "gnome";
+    services.gnome.core-os-services.enable = enabled "gnome";
     services.gnome.gnome-keyring.enable = mkForce false;
+
     services.udev.packages = [] ++ (lib.optional (enabled "gnome") pkgs.gnome-settings-daemon);
     services.dbus.packages = [] ++ (lib.optional (enabled "gnome") pkgs.dconf);
     programs.dconf.enable = true;
@@ -110,9 +123,50 @@ in {
 
     xdg = {
       portal = {
+        xdgOpenUsePortal = true;
         enable = true;
+        config.common = {
+          default = [
+            "gtk"
+            "gnome"
+          ];
+
+          # gnome-keyring interfaces
+          #"org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+
+          # GTK interfaces
+          "org.freedesktop.impl.portal.FileChooser" = "gtk";
+          "org.freedesktop.impl.portal.AppChooser" = "gtk";
+          "org.freedesktop.impl.portal.Print" = "gtk";
+          "org.freedesktop.impl.portal.Notification" = "gtk";
+          # "org.freedesktop.impl.portal.Inhibit" = "gtk";
+          "org.freedesktop.impl.portal.Access" = "gtk";
+          "org.freedesktop.impl.portal.Account" = "gtk";
+          "org.freedesktop.impl.portal.Email" = "gtk";
+          "org.freedesktop.impl.portal.DynamicLauncher" = "gtk";
+          "org.freedesktop.impl.portal.Lockdown" = "gtk";
+          "org.freedesktop.impl.portal.Wallpaper" = "gtk";
+
+          # Gnome interfaces
+          # "org.freedesktop.impl.portal.Access" = "gnome";
+          # "org.freedesktop.impl.portal.Account" = "gnome";
+          # "org.freedesktop.impl.portal.AppChooser" = "gnome";
+          "org.freedesktop.impl.portal.Background" = "gnome";
+          "org.freedesktop.impl.portal.Clipboard" = "gnome";
+          # "org.freedesktop.impl.portal.DynamicLauncher" = "gnome";
+          # "org.freedesktop.impl.portal.FileChooser" = "gnome";
+          "org.freedesktop.impl.portal.InputCapture" = "gnome";
+          # "org.freedesktop.impl.portal.Lockdown" = "gnome";
+          # "org.freedesktop.impl.portal.Notification" = "gnome";
+          # "org.freedesktop.impl.portal.Print" = "gnome";
+          "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
+          # "org.freedesktop.impl.portal.ScreenCast" = "gnome";
+          # "org.freedesktop.impl.portal.Screenshot" = "gnome";
+          "org.freedesktop.impl.portal.Settings" = "gnome";
+          # "org.freedesktop.impl.portal.Wallpaper" = "gnome";
+        };
         wlr = {
-          enable = true;
+          enable = false;
           settings = {
             screencast = {
               #max_fps = 30;
@@ -122,18 +176,20 @@ in {
             };
           };
         };
-        #gtkUsePortal = true;
         extraPortals = with pkgs; [
-          xdg-desktop-portal-hyprland
-          xdg-desktop-portal-wlr
-          #xdg-desktop-portal-gtk
+          #xdg-desktop-portal-hyprland
+          #xdg-desktop-portal-wlr
+          xdg-desktop-portal-gnome
+          xdg-desktop-portal-gtk
         ];
       };
     };
 
     stylix = {
-      image = ../../../images/vortex.png;
-      base16Scheme = "${npins.base16}/base16/mocha.yaml";
+      enable = true;
+      image = lib.mkDefault ../../../images/vortex.png;
+      polarity = "dark";
+      base16Scheme = lib.mkDefault "${npins.base16}/base16/mocha.yaml";
 
       fonts = {
         serif = {

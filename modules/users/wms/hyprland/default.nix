@@ -6,7 +6,13 @@
   ...
 }: let
   cfg = config.phil.wms.hyprland;
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit
+    (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
 in {
   imports = [
     #inputs.hyprland.homeManagerModules.default
@@ -35,7 +41,11 @@ in {
 
     terminal = mkOption {
       description = "terminal to use";
-      type = types.enum ["wezterm" "alacritty" "foot"];
+      type = types.enum [
+        "wezterm"
+        "alacritty"
+        "foot"
+      ];
       default = "alacritty";
     };
   };

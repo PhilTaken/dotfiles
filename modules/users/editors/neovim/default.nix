@@ -94,8 +94,8 @@ in {
 
   config = mkIf cfg.enable {
     home.sessionVariables.EDITOR = "nvim";
-    # stylix.targets.vim.enable = false;
-    # stylix.targets.neovim.enable = false;
+    stylix.targets.vim.enable = false;
+    stylix.targets.neovim.enable = false;
 
     # TODO add https://github.com/brenoprata10/nvim-highlight-colors
     programs.neovim = {

@@ -5,7 +5,13 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit
+    (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.music;
 in {
   imports = [
@@ -67,7 +73,10 @@ in {
 
     systemd.user.services.mpris-proxy = mkIf cfg.enableMpris {
       Unit.Description = "Mpris proxy";
-      Unit.After = ["network.target" "sound.target"];
+      Unit.After = [
+        "network.target"
+        "sound.target"
+      ];
       Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
       Install.WantedBy = ["default.target"];
     };
@@ -86,14 +95,8 @@ in {
       ];
     };
 
-    services.easyeffects = {
-      enable = true;
-      #presets = [
-      #"TFZ Queen"
-      #];
-    };
-
     home.packages = with pkgs; [
+      easyeffects
       #spotify-unwrapped
       #spotify
 

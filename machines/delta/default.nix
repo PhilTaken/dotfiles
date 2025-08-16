@@ -32,24 +32,33 @@
     openFirewall = true;
     settings = {
       global = {
+        # see https://calomel.org/samba.html
         "workgroup" = "WORKGROUP";
+        #"deadtime" = "15";
         "server string" = "smbnix";
         "netbios name" = "smbnix";
+        "default case" = "lower";
+        "preserve case" = "no";
         "security" = "user";
-        #"use sendfile" = "yes";
-        #"max protocol" = "smb2";
-        # note: localhost is the ipv6 localhost ::1
-        # "hosts allow" = "192.168.0. 192.168.178.0. 10.64.0.0. 127.0.0.1 localhost";
-        # "hosts deny" = "0.0.0.0/0";
+        "use sendfile" = "yes";
+        # localhost is the ipv6 localhost ::1
         "guest account" = "nobody";
         "map to guest" = "bad user";
+        "strict syn" = "no";
+        "sync always" = "no";
+        "syslog" = "1";
+        "syslog only" = "yes";
+        "socket options" = "TCP_NODELAY IPTOS_LOWDELAY SO_RCVBUF=65536 SO_SNDBUF=65536";
+        "write cache size" = "524288";
+        "getwd cache" = "yes";
+        "min receivefile size" = "16384";
       };
       "public" = {
         "path" = "/media/mount/samba";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "yes";
-        "create mask" = "0644";
+        "create mask" = "0755";
         "directory mask" = "0755";
         "force user" = "nobody";
         "force group" = "nogroup";

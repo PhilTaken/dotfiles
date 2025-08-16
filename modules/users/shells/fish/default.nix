@@ -17,7 +17,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # stylix.targets.fish.enable = false;
+    stylix.targets.fish.enable = false;
 
     home.packages = [
       pkgs.twm

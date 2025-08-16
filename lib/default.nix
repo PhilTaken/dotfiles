@@ -13,32 +13,34 @@
 
     self.overlays.default
 
-    (
-      _final: prev: {
-        makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});
+    (_final: prev: {
+      makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});
 
-        zen-browser = inputs.zen-browser.packages.${prev.system}.default; # beta
-        nixVersions = prev.nixVersions // {nix_2_18 = prev.lix;};
-
-        # devdocs.io
-        devdocs-desktop = prev.writeShellApplication {
-          name = "devdocs";
-          text = "${prev.devdocs-desktop}/bin/devdocs-desktop --no-sandbox";
+      zen-browser = inputs.zen-browser.packages.${prev.system}.default; # beta
+      nixVersions =
+        prev.nixVersions
+        // {
+          nix_2_18 = prev.lix;
         };
 
-        zjstatus = inputs.zjstatus.packages.${prev.system}.default;
+      # devdocs.io
+      devdocs-desktop = prev.writeShellApplication {
+        name = "devdocs";
+        text = "${prev.devdocs-desktop}/bin/devdocs-desktop --no-sandbox";
+      };
 
-        # fix it on wayland
-        prismlauncher = prev.prismlauncher.overrideAttrs (old: {
-          postInstall =
-            (old.postInstall or "")
-            + ''
-              wrapProgram $out/bin/prismlauncher \
-                --prefix QT_QPA_PLATFORM : xcb
-            '';
-        });
-      }
-    )
+      zjstatus = inputs.zjstatus.packages.${prev.system}.default;
+
+      # fix it on wayland
+      prismlauncher = prev.prismlauncher.overrideAttrs (old: {
+        postInstall =
+          (old.postInstall or "")
+          + ''
+            wrapProgram $out/bin/prismlauncher \
+              --prefix QT_QPA_PLATFORM : xcb
+          '';
+      });
+    })
   ];
 in rec {
   user = import ./user.nix {inherit inputs;};

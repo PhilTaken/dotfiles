@@ -57,6 +57,8 @@
           "unbound"
           "nextcloud"
 
+          "navidrome"
+
           "mealie"
 
           "paperless"

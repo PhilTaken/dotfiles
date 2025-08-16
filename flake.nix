@@ -37,7 +37,7 @@
     # -----------------------
     # nixos modules
 
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:nix-community/stylix";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # local user package managment
