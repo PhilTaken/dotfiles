@@ -83,6 +83,7 @@
       "karabiner-elements"
       "telegram"
       "zen-browser"
+      "chromium"
       "element"
       "dehesselle-meld"
       "ghostty"
