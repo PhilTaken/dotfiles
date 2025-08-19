@@ -9,6 +9,7 @@
   ];
 
   stylix = {
+    enable = true;
     image = ../../images/vortex.png;
     base16Scheme = "${npins.base16}/base16/mocha.yaml";
 
