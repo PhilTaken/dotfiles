@@ -171,7 +171,7 @@ in {
 
       extraConfig = ''
         " write to undofile in undodir
-        set undodir=${config.xdg.dataHome}
+        set undodir=${config.xdg.dataHome}/undodir
         set undofile
 
         luafile ~/.config/nvim/init_.lua

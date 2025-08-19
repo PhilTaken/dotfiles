@@ -196,7 +196,10 @@ in {
         };
       };
 
-      attributes = ["environments/*/*.age diff=age"];
+      attributes = [
+        "environments/*/*.age diff=age"
+        "environments/*/*.age-diffable diff=age"
+      ];
     };
 
     programs = {

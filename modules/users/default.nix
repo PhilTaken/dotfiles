@@ -47,12 +47,15 @@
       enable = true;
       settings = {
         notebook.dir = "$HOME/Documents/zk";
-        group.journal = {
-          paths = [
-            "journal/weekly"
-            "journal/daily"
-          ];
-          note.filename = "{{format-date now}}";
+        group = {
+          journal-w = {
+            paths = ["journal/weekly"];
+            note.filename = "{{format-date now \"%Y-%W\" }}";
+          };
+          journal-d = {
+            paths = ["journal/daily"];
+            note.filename = "{{format-date now}}";
+          };
         };
 
         format.markdown = {
@@ -76,6 +79,7 @@
           recent = "zk edit --sort created- --created-after 'last two weeks' --interactive";
           lucky = "zk list --quiet --format full --sort random --limit 1";
           daily = "zk new --no-input journal/daily";
+          weekly = "zk new --no-input journal/weekly";
         };
 
         note = {
