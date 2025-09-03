@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.phil.server;
-in {
+in
+{
   imports = [
     ./adguardhome.nix
     ./arrs.nix
@@ -46,6 +48,7 @@ in {
     ./unbound.nix
     ./vector.nix
     ./writefreely.nix
+    ./vikunja.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";

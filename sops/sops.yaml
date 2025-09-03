@@ -26,6 +26,7 @@ paperless-oauth-secret: ENC[AES256_GCM,data:+GLDqIuGEkHnAP0ljfDB3uDixCg7GA1TiceJ
 headscale-kc-client-secret: ENC[AES256_GCM,data:DHaVgWWKynub0wvTb8/recCGWsd9eMcJJkXQUScKlqg=,iv:89x3yk9vYDfmSB46yZRVznqvdYsddFXN1gnWes3qfcA=,tag:7JBrG1VC+vVVdBPF19NxeA==,type:str]
 grafana-kc-client-secret: ENC[AES256_GCM,data:9iXM78qP1hgqIlH2ajYHn/r9Bg7Y3DfpDVW6VFEkAMk=,iv:9ces2ryYhgWFm0Pt9D5JhyJKj/I7L/yCdrqGl6aPLkw=,tag:7Dv4cP6lnFd6MFe6hYLS0A==,type:str]
 bookstack-oidc-secret: ENC[AES256_GCM,data:K+tjgoEE0ay94wFR6ou504JMcRQS+5nX+T5emhEy5Kk=,iv:1pJccrvVQJ7TC2PSVvY0CGbifRqGonx2CVW1HvbL4a8=,tag:cZw/68RBfMvaGnoO37XcyQ==,type:str]
+vikunja-environmentfile: ENC[AES256_GCM,data:kut//RNtIJRi/zIt1ReOZmphqKOy5ZQGU0GlWunYVnPFw0WqlJpaYX0CAvjRpopsD+Vl0wC6M6eUzWV89AbdqguK1ye9ImcubV0oR4Rphb0q2B0/kMMjNOi2mOHx52c1vig8ID/rywcF7VYXHxFK8oRJLCZQKjRHGe8B3Vt9Iz5PfkZ2aqf3udony1LU0+EmshMFE1COyZcOPqQCdn3+3CQNzHD4aFeca7Eiclm/bTh/7aoF+f9FhCZww2TpDfU=,iv:1fazfFE78gO6xlwVDXErx/AKJ07rqrHTyIeTnj8VVpQ=,tag:mr5oTG1NuY1lmFraqpv1IQ==,type:str]
 sops:
     shamir_threshold: 1
     age:
@@ -92,8 +93,8 @@ sops:
             ejJTbDYwS0IxbWRkcXg3cC94blZmRncKgesfvvge3ci1zhDFw816Q2PLIvK8VMuz
             QMauausq67+W9F0hWW95e7PLgkKfGAJcIoMhCLSncakawGxCmeLTkQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-06-02T20:12:49Z"
-    mac: ENC[AES256_GCM,data:aRleMmn8FRNXcuji83V1sTEA1bYT2EnS8Qqhh9TV3H6hgmLbKEBswAX+bq3QyvROjetloW9baxXpJwxvcIrqxmfS/eNmM4NBnvV0gAnXYvPKD7jEnjBi36waXFGen09r2gWAZEnNvqAJaMybjQQsTAt3S+BVADe3hHkeYCStSuc=,iv:C4fV95LbePEX8pFSHUhczNm0ZvRPapMsD7GYieU2858=,tag:JGkGxyQwlSRr2h074j4kbQ==,type:str]
+    lastmodified: "2025-09-03T12:02:59Z"
+    mac: ENC[AES256_GCM,data:ZtRoYtaJwxkkSB1fw3BBT7XhpmcKVVPF5JbFCmlGTfXJpcgWDXskw/fioAFBRnhMa+Mti6q0r/ak+JQA6Ppg49HCYukg8mWoQ6aHldu0Ty/4riUTGvFLNASITd6KPQQB7EbtBQiHiJRSEG+tGAFSNBTJg9gblUClrWc1fcF7cps=,iv:Q5KLb0XMjsDD5wtosVrKrz8Ns8TXe8DsJiiMSJKVC8s=,tag:u9oD3C0cxhqrp+E05tbIhQ==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-
