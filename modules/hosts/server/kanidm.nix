@@ -2,12 +2,20 @@
   config,
   lib,
   netlib,
+  pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption mkIf types;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.phil.server.services.kanidm;
   net = config.phil.network;
-in {
+in
+{
   options.phil.server.services.kanidm = {
     enable = mkEnableOption "kanidm";
 
@@ -27,6 +35,8 @@ in {
       enableServer = cfg.enable;
       enableClient = cfg.enable;
 
+      package = pkgs.kanidm_1_7;
+
       clientSettings = {
         uri = config.services.kanidm.serverSettings.origin;
       };
@@ -43,7 +53,7 @@ in {
       };
     };
 
-    users.users.kanidm.extraGroups = ["nginx"];
+    users.users.kanidm.extraGroups = [ "nginx" ];
 
     phil.server.services = {
       caddy.proxy."${cfg.host}" = {

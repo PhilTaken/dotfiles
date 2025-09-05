@@ -1,9 +1,11 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   darwin-fixes = import ./darwin-fixes.nix;
-in {
+in
+{
   services.sketchybar = {
     enable = true;
-    extraPackages = [pkgs.jq];
+    extraPackages = [ pkgs.jq ];
   };
 
   fonts.packages = [
@@ -17,6 +19,8 @@ in {
 
     home.packages = [
       pkgs.net-news-wire
+
+      pkgs.feishin
     ];
 
     fonts.fontconfig.enable = true;

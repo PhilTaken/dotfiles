@@ -29,11 +29,11 @@
 
           # email requires kanidm,
           # TODO fix
-          # "kanidm"
-          "email"
+          "kanidm"
+          # "email"
 
           # npm error [esbuild] Failed to find package "@esbuild/linux-arm64" on the file system
-          #"immich"
+          # "immich"
 
           "vikunja"
 
