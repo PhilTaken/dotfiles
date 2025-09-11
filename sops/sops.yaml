@@ -27,6 +27,7 @@ headscale-kc-client-secret: ENC[AES256_GCM,data:DHaVgWWKynub0wvTb8/recCGWsd9eMcJ
 grafana-kc-client-secret: ENC[AES256_GCM,data:9iXM78qP1hgqIlH2ajYHn/r9Bg7Y3DfpDVW6VFEkAMk=,iv:9ces2ryYhgWFm0Pt9D5JhyJKj/I7L/yCdrqGl6aPLkw=,tag:7Dv4cP6lnFd6MFe6hYLS0A==,type:str]
 bookstack-oidc-secret: ENC[AES256_GCM,data:K+tjgoEE0ay94wFR6ou504JMcRQS+5nX+T5emhEy5Kk=,iv:1pJccrvVQJ7TC2PSVvY0CGbifRqGonx2CVW1HvbL4a8=,tag:cZw/68RBfMvaGnoO37XcyQ==,type:str]
 vikunja-environmentfile: ENC[AES256_GCM,data:kut//RNtIJRi/zIt1ReOZmphqKOy5ZQGU0GlWunYVnPFw0WqlJpaYX0CAvjRpopsD+Vl0wC6M6eUzWV89AbdqguK1ye9ImcubV0oR4Rphb0q2B0/kMMjNOi2mOHx52c1vig8ID/rywcF7VYXHxFK8oRJLCZQKjRHGe8B3Vt9Iz5PfkZ2aqf3udony1LU0+EmshMFE1COyZcOPqQCdn3+3CQNzHD4aFeca7Eiclm/bTh/7aoF+f9FhCZww2TpDfU=,iv:1fazfFE78gO6xlwVDXErx/AKJ07rqrHTyIeTnj8VVpQ=,tag:mr5oTG1NuY1lmFraqpv1IQ==,type:str]
+karakeep-environmentfile: ENC[AES256_GCM,data:3xMgCqkSDrx+0oTEVb3yu0OS7c4IYQ590S6BnmHigzLiUS+V3qORmjYr75VpmgfIBb6bL5p2mp/ajt2WEYzNbyd8XuhZriBCkKao4PYCoXWXH/fOTRKmadUIbQHheWeCRdX6iaMUrs9Vg5s7a2sgIqY0xwyN38I/oL08REJgNrhw7g8JQOclvRvOhxr0DIWa/SsU9DM2OOTBVX3PeRlLbj4XqvwfVEJKI4IAzgHy7sDKL1x9mpRbwkd/K+9Fzx+xxcZHOlA1Kbwho0JV9RMoi399Gb5DnK6ufV7BV35R2GVp,iv:82K2nuQE34Pc7GkWdyUjTrZHQCBKE+rQolfNTIuXUWA=,tag:E7jJoH19KElr3IzenFIyQQ==,type:str]
 sops:
     shamir_threshold: 1
     age:
@@ -93,8 +94,8 @@ sops:
             ejJTbDYwS0IxbWRkcXg3cC94blZmRncKgesfvvge3ci1zhDFw816Q2PLIvK8VMuz
             QMauausq67+W9F0hWW95e7PLgkKfGAJcIoMhCLSncakawGxCmeLTkQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-03T12:02:59Z"
-    mac: ENC[AES256_GCM,data:ZtRoYtaJwxkkSB1fw3BBT7XhpmcKVVPF5JbFCmlGTfXJpcgWDXskw/fioAFBRnhMa+Mti6q0r/ak+JQA6Ppg49HCYukg8mWoQ6aHldu0Ty/4riUTGvFLNASITd6KPQQB7EbtBQiHiJRSEG+tGAFSNBTJg9gblUClrWc1fcF7cps=,iv:Q5KLb0XMjsDD5wtosVrKrz8Ns8TXe8DsJiiMSJKVC8s=,tag:u9oD3C0cxhqrp+E05tbIhQ==,type:str]
+    lastmodified: "2025-09-11T11:46:02Z"
+    mac: ENC[AES256_GCM,data:llz7dxjJGs88PQdmITaCVm4krQUd0Nc2O6/qO65RK8baFC2NXDJIQ9zwUCsrGjFjr0Q6aE/d7IFcctyRhSDVSBcT6MUwRy5CgzQAdq30LM35eJ3tYA1h6d6G0aRWl5ufFbwH7VC3mLMJXCywW+dnzKQ35NYKJaTMiBkt3lkFqnc=,iv:BTFb38qAuQkVQYSeXLOc6Mrxk9LIdCVd/iRdhljIb4s=,tag:eQ4pp2n8QgcwWrOLHcGa1g==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-

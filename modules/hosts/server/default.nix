@@ -31,6 +31,7 @@ in
     ./iperf.nix
     ./jellyfin.nix
     ./kanidm.nix
+    ./karakeep.nix
     ./keycloak.nix
     ./ldap.nix
     ./mealie.nix
@@ -47,8 +48,8 @@ in
     ./ttrss.nix
     ./unbound.nix
     ./vector.nix
-    ./writefreely.nix
     ./vikunja.nix
+    ./writefreely.nix
   ];
 
   options.phil.server.enable = mkEnableOption "server module";

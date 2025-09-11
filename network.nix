@@ -36,6 +36,7 @@
           # "immich"
 
           "vikunja"
+          "karakeep"
 
           "grafana"
           "freshrss"
