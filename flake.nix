@@ -63,7 +63,8 @@
 
     # deploy remote setups
     deploy-rs = {
-      url = "github:philtaken/deploy-rs/phil/optimize-compile-times";
+      url = "github:serokell/deploy-rs";
+      #url = "github:philtaken/deploy-rs/phil/optimize-compile-times";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -90,10 +91,12 @@
     fc-utils.url = "git+https://gitea.pherzog.xyz/phil/fc-utils";
   };
 
-  outputs = {flake-parts, ...} @ inputs: let
-    custom_pkgs_overlay = import ./custom_pkgs;
-  in
-    flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs =
+    { flake-parts, ... }@inputs:
+    let
+      custom_pkgs_overlay = import ./custom_pkgs;
+    in
+    flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
         "x86_64-darwin"
@@ -112,42 +115,46 @@
         ./modules/flake/deploy.nix
         ./modules/flake/shells.nix
         inputs.treefmt-nix.flakeModule
-        inputs.pre-commit-hooks-nix.flakeModule
+        # inputs.pre-commit-hooks-nix.flakeModule
         #      inputs.disko.nixosModules.disko
       ];
 
-      perSystem = {
-        config,
-        pkgs,
-        ...
-      }: {
-        pre-commit = {
-          settings.hooks = {
-            alejandra.enable = true;
-            #treefmt.enable = true;
+      perSystem =
+        {
+          config,
+          pkgs,
+          ...
+        }:
+        {
+          # pre-commit = {
+          #   settings.hooks = {
+          #     alejandra.enable = true;
+          #     #treefmt.enable = true;
+          #   };
+          # };
+
+          treefmt = {
+            projectRootFile = "flake.nix";
+            programs.nixfmt.enable = true;
+            programs.stylua.enable = true;
+            programs.deadnix.enable = true;
           };
+
+          formatter = config.treefmt.build.wrapper;
+
+          # filter packages by compatibility
+          packages =
+            let
+              inherit (pkgs) lib system;
+              l = builtins // lib;
+            in
+            pkgs.lib.filterAttrs (
+              _: package:
+              if l.hasAttrByPath [ "meta" "platforms" ] package then
+                l.elem system package.meta.platforms
+              else
+                (lib.hasInfix "linux" pkgs.system)
+            ) (custom_pkgs_overlay pkgs pkgs);
         };
-
-        treefmt = {
-          projectRootFile = "flake.nix";
-          programs.nixfmt.enable = true;
-          programs.stylua.enable = true;
-          programs.deadnix.enable = true;
-        };
-
-        formatter = config.treefmt.build.wrapper;
-
-        # filter packages by compatibility
-        packages = let
-          inherit (pkgs) lib system;
-          l = builtins // lib;
-        in
-          pkgs.lib.filterAttrs (
-            _: package:
-              if l.hasAttrByPath ["meta" "platforms"] package
-              then l.elem system package.meta.platforms
-              else (lib.hasInfix "linux" pkgs.system)
-          ) (custom_pkgs_overlay pkgs pkgs);
-      };
     };
 }

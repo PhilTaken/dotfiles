@@ -41,6 +41,8 @@ in
     services.karakeep = {
       inherit (cfg) enable;
 
+      browser.enable = false;
+
       extraEnvironment = {
         PORT = builtins.toString cfg.port;
         DISABLE_SIGNUPS = "false";

@@ -3,9 +3,9 @@
   lib,
   netlib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkOption
     mkIf
     types
@@ -13,7 +13,8 @@
     ;
   cfg = config.phil.server.services.nextcloud;
   net = config.phil.network;
-in {
+in
+{
   options.phil.server.services.nextcloud = {
     enable = mkEnableOption "nextcloud";
     datadir = mkOption {
@@ -32,21 +33,22 @@ in {
     };
   };
 
-  config = let
-    hostAddress = "192.0.0.1";
-    localAddress = "192.0.0.2";
-  in
+  config =
+    let
+      hostAddress = "192.0.0.1";
+      localAddress = "192.0.0.2";
+    in
     mkIf cfg.enable {
       sops.secrets.nextcloud-adminpass.mode = "777";
 
       networking.nat = {
         enable = true;
-        internalInterfaces = ["ve-+"];
+        internalInterfaces = [ "ve-+" ];
         externalInterface = "enp1s0";
       };
 
       phil.backup.jobs."nextcloud" = {
-        paths = [cfg.datadir];
+        paths = [ cfg.datadir ];
         # TODO postgresql backup
         # TODO turn maintenance mode on in container
         # ${config.containers.nextcloud.config.services.nextcloud.occ}/bin/nextcloud-occ maintenance:mode --on
@@ -74,163 +76,166 @@ in {
         };
       };
 
-      containers.nextcloud = let
-        adminpassFile = config.sops.secrets.nextcloud-adminpass.path;
-        home = "/media/nextcloud";
-        datadir = "/var/lib/nextcloud";
-        hostName = netlib.domainFor cfg.host;
-      in {
-        ephemeral = false;
-        autoStart = true;
+      containers.nextcloud =
+        let
+          adminpassFile = config.sops.secrets.nextcloud-adminpass.path;
+          home = "/media/nextcloud";
+          datadir = "/var/lib/nextcloud";
+          hostName = netlib.domainFor cfg.host;
+        in
+        {
+          ephemeral = false;
+          autoStart = true;
 
-        #privateNetwork = false;
-        privateNetwork = true;
-        inherit localAddress hostAddress;
+          #privateNetwork = false;
+          privateNetwork = true;
+          inherit localAddress hostAddress;
 
-        forwardPorts = [
-          {
-            containerPort = 80;
-            hostPort = cfg.port;
-            protocol = "tcp";
-          }
-        ];
+          forwardPorts = [
+            {
+              containerPort = 80;
+              hostPort = cfg.port;
+              protocol = "tcp";
+            }
+          ];
 
-        bindMounts = {
-          ${adminpassFile} = {
-            hostPath = adminpassFile;
-            isReadOnly = true;
-          };
-
-          ${datadir} = {
-            hostPath = cfg.datadir;
-            isReadOnly = false;
-          };
-
-          ${home} = {
-            hostPath = home;
-            isReadOnly = false;
-          };
-        };
-
-        config = {
-          config,
-          pkgs,
-          ...
-        }: {
-          # https://github.com/NixOS/nixpkgs/issues/162686
-          networking.nameservers = ["1.1.1.1"];
-          # WORKAROUND
-          environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
-
-          networking.firewall.enable = false;
-
-          services.nextcloud = {
-            enable = true;
-            package = pkgs.nextcloud31;
-
-            inherit home datadir hostName;
-            https = false;
-
-            extraApps = {
-              inherit
-                (pkgs.nextcloud30Packages.apps)
-                calendar
-                bookmarks
-                contacts
-                groupfolders
-                spreed
-                previewgenerator
-                memories
-                ;
+          bindMounts = {
+            ${adminpassFile} = {
+              hostPath = adminpassFile;
+              isReadOnly = true;
             };
 
-            caching.redis = true;
-            caching.apcu = false;
-
-            configureRedis = true;
-
-            notify_push = {
-              enable = false;
-              bendDomainToLocalhost = true;
+            ${datadir} = {
+              hostPath = cfg.datadir;
+              isReadOnly = false;
             };
 
-            config = {
-              adminuser = "nc-admin";
-              inherit adminpassFile;
-              dbtype = "pgsql";
-              dbhost = "/run/postgresql";
-              dbname = "nextcloud";
-              dbuser = "nextcloud";
+            ${home} = {
+              hostPath = home;
+              isReadOnly = false;
             };
+          };
 
-            settings = {
-              default_phone_region = "DE";
-              overwriteprotocol = "https";
-              trusted_proxies = [
-                "10.200.0.1"
-                "10.200.0.5"
-                hostAddress
-              ];
-              redis = {
-                host = "/run/redis-nextcloud/redis.sock";
+          config =
+            {
+              config,
+              pkgs,
+              ...
+            }:
+            {
+              # https://github.com/NixOS/nixpkgs/issues/162686
+              networking.nameservers = [ "1.1.1.1" ];
+              # WORKAROUND
+              environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
+
+              networking.firewall.enable = false;
+
+              services.nextcloud = {
+                enable = true;
+                package = pkgs.nextcloud31;
+
+                inherit home datadir hostName;
+                https = false;
+
+                extraApps = {
+                  inherit (pkgs.nextcloud31Packages.apps)
+                    calendar
+                    bookmarks
+                    contacts
+                    groupfolders
+                    spreed
+                    previewgenerator
+                    memories
+                    ;
+                };
+
+                caching.redis = true;
+                caching.apcu = false;
+
+                configureRedis = true;
+
+                notify_push = {
+                  enable = false;
+                  bendDomainToLocalhost = true;
+                };
+
+                config = {
+                  adminuser = "nc-admin";
+                  inherit adminpassFile;
+                  dbtype = "pgsql";
+                  dbhost = "/run/postgresql";
+                  dbname = "nextcloud";
+                  dbuser = "nextcloud";
+                };
+
+                settings = {
+                  default_phone_region = "DE";
+                  overwriteprotocol = "https";
+                  trusted_proxies = [
+                    "10.200.0.1"
+                    "10.200.0.5"
+                    hostAddress
+                  ];
+                  redis = {
+                    host = "/run/redis-nextcloud/redis.sock";
+                    port = 0;
+                  };
+                  "memcache.local" = "\\OC\\Memcache\\Redis";
+                  "memcache.distributed" = "\\OC\\Memcache\\Redis";
+                  "memcache.locking" = "\\OC\\Memcache\\Redis";
+
+                  preview_max_x = 2048;
+                  preview_max_y = 2048;
+                  jpeg_quality = 60;
+                };
+              };
+
+              services.redis.servers.nextcloud = {
+                enable = true;
+                user = "nextcloud";
                 port = 0;
               };
-              "memcache.local" = "\\OC\\Memcache\\Redis";
-              "memcache.distributed" = "\\OC\\Memcache\\Redis";
-              "memcache.locking" = "\\OC\\Memcache\\Redis";
 
-              preview_max_x = 2048;
-              preview_max_y = 2048;
-              jpeg_quality = 60;
+              services.postgresql = {
+                enable = true;
+                package = pkgs.postgresql_15;
+                ensureUsers = [
+                  {
+                    name = "nextcloud";
+                    ensureDBOwnership = true;
+                  }
+                ];
+                ensureDatabases = [ "nextcloud" ];
+              };
+
+              systemd.services."nextcloud-setup" = {
+                requires = [ "postgresql.service" ];
+                after = [ "postgresql.service" ];
+              };
+
+              systemd.timers."nextcloud-preview-gen" = {
+                wantedBy = [ "timers.target" ];
+                after = [ "nextcloud-setup.service" ];
+                timerConfig = {
+                  OnBootSec = "10m";
+                  OnUnitActiveSec = "10m";
+                  Unit = "nextcloud-preview-gen.service";
+                };
+              };
+
+              systemd.services."nextcloud-preview-gen" = {
+                script = ''
+                  ${config.services.nextcloud.occ}/bin/nextcloud-occ preview:pre-generate
+                '';
+
+                serviceConfig = {
+                  Type = "oneshot";
+                  User = "root";
+                };
+              };
+
+              system.stateVersion = "22.11";
             };
-          };
-
-          services.redis.servers.nextcloud = {
-            enable = true;
-            user = "nextcloud";
-            port = 0;
-          };
-
-          services.postgresql = {
-            enable = true;
-            package = pkgs.postgresql_15;
-            ensureUsers = [
-              {
-                name = "nextcloud";
-                ensureDBOwnership = true;
-              }
-            ];
-            ensureDatabases = ["nextcloud"];
-          };
-
-          systemd.services."nextcloud-setup" = {
-            requires = ["postgresql.service"];
-            after = ["postgresql.service"];
-          };
-
-          systemd.timers."nextcloud-preview-gen" = {
-            wantedBy = ["timers.target"];
-            after = ["nextcloud-setup.service"];
-            timerConfig = {
-              OnBootSec = "10m";
-              OnUnitActiveSec = "10m";
-              Unit = "nextcloud-preview-gen.service";
-            };
-          };
-
-          systemd.services."nextcloud-preview-gen" = {
-            script = ''
-              ${config.services.nextcloud.occ}/bin/nextcloud-occ preview:pre-generate
-            '';
-
-            serviceConfig = {
-              Type = "oneshot";
-              User = "root";
-            };
-          };
-
-          system.stateVersion = "22.11";
         };
-      };
     };
 }

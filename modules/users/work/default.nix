@@ -4,13 +4,15 @@
   lib,
   inputs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.work;
 
   op_gpg_sign_program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
   ssh_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM59Wr25vmNWuyzgBXsQJvhd4EObMFRiJGbnbC0Jt/9I";
-in {
+in
+{
   options.phil.work = {
     enable = mkEnableOption "work";
   };
@@ -44,7 +46,7 @@ in {
       python311
       openssl
       rclone
-      pre-commit
+      #pre-commit
 
       magic-wormhole
       lnav
@@ -155,7 +157,7 @@ in {
     programs.jujutsu.settings = {
       "--scope" = [
         {
-          "--when".repositories = ["${config.home.sessionVariables.GIT_WORKSPACE}/"];
+          "--when".repositories = [ "${config.home.sessionVariables.GIT_WORKSPACE}/" ];
           user = {
             email = "ph@flyingcircus.io";
             name = "Philipp Herzog";
