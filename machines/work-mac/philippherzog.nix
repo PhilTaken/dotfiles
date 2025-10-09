@@ -18,8 +18,6 @@ in
     ];
 
     home.packages = [
-      pkgs.net-news-wire
-
       pkgs.feishin
     ];
 

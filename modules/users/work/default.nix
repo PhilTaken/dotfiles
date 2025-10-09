@@ -23,6 +23,7 @@ in
       mutagen
       #termscp
 
+      awscli2
       bottom
       fd
       file
@@ -46,7 +47,7 @@ in
       python311
       openssl
       rclone
-      #pre-commit
+      pre-commit
 
       magic-wormhole
       lnav

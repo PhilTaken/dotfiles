@@ -3,7 +3,8 @@
   npins,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ./philippherzog.nix
   ];
@@ -59,7 +60,7 @@
     pkgs.zsh
   ];
 
-  environment.systemPackages = [pkgs.openssh];
+  environment.systemPackages = [ pkgs.openssh ];
 
   # services.karabiner-elements.enable = true;
   services.tailscale.enable = true;
@@ -82,10 +83,9 @@
       "spotify"
       "karabiner-elements"
       "telegram"
-      "zen-browser"
+      "zen"
       "chromium"
       "element"
-      "dehesselle-meld"
       "ghostty"
       "rectangle"
       "nextcloud"
