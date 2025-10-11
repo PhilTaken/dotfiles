@@ -31,7 +31,7 @@
     };
 
     nixos.userConfig = mkConfig {
-      des.gnome.enable = true;
+      #des.gnome.enable = true;
 
       wms.hyprland.enable = false;
       wms.bars.eww.enable = false;
@@ -50,12 +50,12 @@
       wms.hyprland.enable = false;
       wms.bars.eww.enable = false;
 
-      des.gnome.enable = true;
+      #des.gnome.enable = true;
     };
 
     jaid.userConfig = mkConfig {
       terminals.defaultShell = "zsh";
-      des.gnome.enable = true;
+      #des.gnome.enable = true;
     };
 
     philippherzog.userConfig = {
@@ -114,8 +114,8 @@ in {
                     development.enable = true;
                     nvidia.enable = true;
                     video.managers = [
-                      "gnome"
-                      #"cosmic"
+                      #"gnome"
+                      "cosmic"
                     ];
                   };
                 }

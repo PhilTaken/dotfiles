@@ -58,16 +58,25 @@ in {
       nvidia = {
         open = false;
         modesetting.enable = true;
-        package = config.boot.kernelPackages.nvidiaPackages.beta;
+        package = config.boot.kernelPackages.nvidiaPackages.production;
       };
       graphics = {
-        extraPackages = with pkgs; [libvdpau-va-gl vaapiVdpau nvidia-vaapi-driver];
+        extraPackages = with pkgs; [
+          #libvdpau-va-gl
+          vaapiVdpau
+          nvidia-vaapi-driver
+        ];
         enable32Bit = true;
       };
     };
 
     environment.sessionVariables = {
       "__EGL_VENDOR_LIBRARY_FILENAMES" = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      GBM_BACKEND = "nvidia-drm";
+      __GL_GSYNC_ALLOWED = "0";
+      __GL_VRR_ALLOWED = "0";
+      NVD_BACKEND = "direct";
     };
 
     boot = {

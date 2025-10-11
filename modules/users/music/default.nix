@@ -105,9 +105,9 @@ in
 
       ffmpeg
       playerctl
-      pamixer
       pavucontrol
       mpv
+      tauon
     ];
 
     programs.beets = {

@@ -18,7 +18,7 @@ let
     "xfce" = "xfce";
     "kde" = "plasma";
     "gnome" = "gnome";
-    #"cosmic" = "cosmic";
+    "cosmic" = "cosmic";
   };
 
   manager_enum = types.enum (builtins.attrNames session_map);
@@ -63,9 +63,9 @@ in
       cfg.managers != [ ]
     ) session_map.${builtins.head cfg.managers};
 
-    #services.displayManager.cosmic-greeter.enable = true;
+    services.displayManager.cosmic-greeter.enable = true;
     services.displayManager.gdm = {
-      enable = true;
+      enable = false;
       wayland = true;
       autoLogin.delay = 10;
     };
@@ -79,12 +79,12 @@ in
       xkb.options = "caps:escape,grp:shifts_toggle";
 
       desktopManager = {
-        plasma5.enable = enabled "kde";
+        plasma6.enable = enabled "kde";
         xfce.enable = enabled "xfce";
         #xterm.enable = true;
       };
     };
-    #services.desktopManager.cosmic.enable = enabled "cosmic";
+    services.desktopManager.cosmic.enable = enabled "cosmic";
     services.desktopManager.gnome.enable = enabled "gnome";
 
     # ----------------------

@@ -5,7 +5,13 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit
+    (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.core;
 in {
   options.phil.core = {
@@ -72,13 +78,15 @@ in {
       };
 
       settings = {
-        trusted-users = ["root" "@wheel"];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
         substituters = [
           "https://cache.nixos.org"
           "https://nix-community.cachix.org"
           "https://nixpkgs-wayland.cachix.org"
           "https://cache.lix.systems"
-          #"https://cosmic.cachix.org/"
         ];
         auto-optimise-store = true;
         trusted-public-keys = [
@@ -86,7 +94,6 @@ in {
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
           "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
-          #"cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
         ];
       };
       # set up automatic garbage collection
@@ -109,12 +116,17 @@ in {
     time.timeZone = cfg.timeZone;
 
     # tailscale - wireguard mesh vpn
-    sops.secrets."headscale-authkey".sopsFile = ../../../sops/machines + "/${config.networking.hostName}.yaml";
+    sops.secrets."headscale-authkey".sopsFile =
+      ../../../sops/machines
+      + "/${config.networking.hostName}.yaml";
     networking.hosts.${config.phil.network.nodes.beta.public_ip} = ["headscale.pherzog.xyz"];
     services.tailscale = {
       enable = true;
       # TODO configure this better
-      extraUpFlags = ["--login-server" "https://headscale.pherzog.xyz"];
+      extraUpFlags = [
+        "--login-server"
+        "https://headscale.pherzog.xyz"
+      ];
       extraDaemonFlags = ["--no-logs-no-support"];
       authKeyFile = config.sops.secrets."headscale-authkey".path;
     };
