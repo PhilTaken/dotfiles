@@ -37,3 +37,4 @@
 
 -- default settings
 require("custom.settings")
+require("custom.lsp")

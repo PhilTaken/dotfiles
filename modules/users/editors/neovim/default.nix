@@ -4,17 +4,18 @@
   lib,
   npins,
   ...
-}: let
+}:
+let
   cfg = config.phil.editors.neovim;
   inherit (pkgs.vimUtils) buildVimPlugin;
-  inherit
-    (lib)
+  inherit (lib)
     mkOption
     mkIf
     types
     optionals
     ;
-  buildPlugin = {pname, ...} @ attrset:
+  buildPlugin =
+    { pname, ... }@attrset:
     buildVimPlugin (
       {
         version = "master";
@@ -39,7 +40,8 @@
     type = "lua";
   };
   mkVlplug = plugin: (lplug plugin "event = 'DeferredUIEnter'");
-in {
+in
+{
   options.phil.editors.neovim = {
     enable = mkOption {
       description = "Enable the neovim module";
@@ -106,8 +108,9 @@ in {
       vimAlias = true;
       withPython3 = true;
       withNodeJs = true;
-      extraPython3Packages = ps: [ps.pynvim];
-      extraPackages = with pkgs;
+      extraPython3Packages = ps: [ ps.pynvim ];
+      extraPackages =
+        with pkgs;
         [
           tree-sitter
 
@@ -138,13 +141,12 @@ in {
         ]
         ++ (optionals cfg.langs.python [
           (pkgs.python3.withPackages (
-            ps:
-              with ps; [
-                python-lsp-server
-                pylsp-mypy
-                python-lsp-ruff
-                mypy
-              ]
+            ps: with ps; [
+              python-lsp-server
+              pylsp-mypy
+              python-lsp-ruff
+              mypy
+            ]
           ))
           pkgs.mypy
 
@@ -156,12 +158,13 @@ in {
           pkgs.nodePackages.typescript-language-server
           pkgs.svelte-language-server
         ])
-        ++ (optionals cfg.langs.cpp [pkgs.ccls])
-        ++ (optionals cfg.langs.rust [pkgs.rust-analyzer-unwrapped])
+        ++ (optionals cfg.langs.cpp [ pkgs.ccls ])
+        ++ (optionals cfg.langs.rust [ pkgs.rust-analyzer-unwrapped ])
         # ++ (optionals cfg.langs.zig [pkgs.zls])
-        ++ (optionals cfg.langs.haskell [pkgs.haskell-language-server])
+        ++ (optionals cfg.langs.haskell [ pkgs.haskell-language-server ])
         ++ (optionals cfg.langs.extra (
-          with pkgs; [
+          with pkgs;
+          [
             fortls
             texlab
             #erlang-ls # erlang
@@ -270,10 +273,6 @@ in {
             }
           '')
 
-          (plug nvim-lspconfig ''
-            require('custom.lsp')
-          '')
-
           (plug catppuccin-nvim ''
             local catppuccin = require("catppuccin")
             catppuccin.setup({
@@ -337,7 +336,7 @@ in {
           telescope-symbols-nvim
           telescope-zoxide
           telescope-ui-select-nvim
-          (buildPlugin {pname = "telescope-egrepify.nvim";})
+          (buildPlugin { pname = "telescope-egrepify.nvim"; })
           # TODO lazily load extension before telescope-nvim
           (plug telescope-nvim ''
             require("telescope").load_extension("file_browser")
@@ -647,18 +646,18 @@ in {
         # plugins that aren't needed immediately for startup
         ++ (
           with pkgs.vimPlugins;
-            map mkVlplug [
-              lsp-colors-nvim
-              targets-vim
-              direnv-vim
-              friendly-snippets
-              nerdcommenter
-              popup-nvim
-              todo-comments-nvim
-              vim-fugitive
-              vim-repeat
-              vim-surround
-            ]
+          map mkVlplug [
+            lsp-colors-nvim
+            targets-vim
+            direnv-vim
+            friendly-snippets
+            nerdcommenter
+            popup-nvim
+            todo-comments-nvim
+            vim-fugitive
+            vim-repeat
+            vim-surround
+          ]
         )
         ++ (with pkgs.vimExtraPlugins; [
           # this cannot be lazily loaded easily since neogit checks if it's available and adds some extra config if it is
@@ -681,14 +680,14 @@ in {
         ])
         ++ (map (p: mkVlplug (buildPlugin p)) [
           # TODO add filetype here to only load them on demand
-          {pname = "janet.vim";}
-          {pname = "vim-terraform";}
-          {pname = "yuck.vim";}
-          {pname = "vim-varnish";}
+          { pname = "janet.vim"; }
+          { pname = "vim-terraform"; }
+          { pname = "yuck.vim"; }
+          { pname = "vim-varnish"; }
         ])
         ++ (map buildPlugin [
-          {pname = "promise-async";}
-          {pname = "vim-alloy";}
+          { pname = "promise-async"; }
+          { pname = "vim-alloy"; }
         ]);
     };
 

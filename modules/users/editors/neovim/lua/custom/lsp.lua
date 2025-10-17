@@ -1,6 +1,4 @@
 -- nvim_lsp object
-local lsp = require("lspconfig")
-
 local capabilities = vim.tbl_deep_extend(
 	"force",
 	vim.lsp.protocol.make_client_capabilities(),
@@ -18,18 +16,9 @@ lsp_extra_config["elixirls"] = {
 	cmd = { "elixir-ls" },
 }
 
-lsp_extra_config["hls"] = {
-	on_new_config = function(config, new_root)
-		local cabalfiles = require("plenary.scandir").scan_dir(new_root, { depth = 1, search_pattern = ".*.cabal" })
-		if #cabalfiles > 0 then
-			config.cmd = { "haskell-language-server", "--lsp" }
-		end
-	end,
-}
-
 lsp_extra_config["fortls"] = {
 	cmd = { "fortls", "--hover_signature", "--enable_code_actions" },
-	root_dir = lsp.util.root_pattern(".git"),
+	root_markers = { ".git" },
 }
 
 lsp_extra_config["lua_ls"] = {
@@ -56,40 +45,55 @@ lsp_extra_config["lua_ls"] = {
 }
 
 lsp_extra_config["rust_analyzer"] = {
-	on_new_config = function(config, root_dir)
-		local maxdepth = 4
-		function find_direnvs(dir, depth)
-			if depth == nil then
-				depth = 0
-			end
-			local direnvs = {}
-			local dirIter, dirObj = vim.loop.fs_scandir(dir)
-			while true do
-				local name, type = vim.loop.fs_scandir_next(dirIter, dirObj)
+	on_attach = function(client, bufnr)
+		local function update_direnv_ignores()
+			local maxdepth = 4
+			local function find_direnvs(dir, depth)
+				if depth == nil then
+					depth = 0
+				end
+				local direnvs = {}
+				local dirIter, dirObj = vim.uv.fs_scandir(dir)
+				while true do
+					local name, type = vim.uv.fs_scandir_next(dirIter, dirObj)
 
-				if name == nil then
-					break
-				elseif name == ".direnv" then
-					table.insert(direnvs, dir .. "/.direnv")
-				elseif type == "directory" then
-					if depth < maxdepth then
-						local nested_direnvs = find_direnvs(dir .. "/" .. name, depth + 1)
-						for _, v in ipairs(nested_direnvs) do
-							table.insert(direnvs, v)
+					if name == nil then
+						break
+					elseif name == ".direnv" then
+						table.insert(direnvs, dir .. "/.direnv")
+					elseif type == "directory" then
+						if depth < maxdepth then
+							local nested_direnvs = find_direnvs(dir .. "/" .. name, depth + 1)
+							for _, v in ipairs(nested_direnvs) do
+								table.insert(direnvs, v)
+							end
 						end
 					end
 				end
+
+				return direnvs
 			end
 
-			return direnvs
+			local dir = vim.fn.expand("%:p:h")
+			local root = vim.fs.find(
+				{ ".venv", ".envrc", "requirements.txt", "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+				{ path = dir, upward = true, stop = vim.fn.expand("~"), limit = 1 }
+			)[1]
+
+			local direnvs = find_direnvs(root)
+
+			for _, v in ipairs(direnvs) do
+				table.insert(client.config.settings["rust-analyzer"].files.excludeDirs, v)
+				table.insert(client.config.settings["rust-analyzer"].files.watcherExclude, v)
+			end
+			client.notify(
+				"workspace/didChangeConfiguration",
+				{ settings = { rust_analyzer = client.config.settings.rust_analyzer } }
+			)
 		end
 
-		local direnvs = find_direnvs(root_dir)
-
-		for _, v in ipairs(direnvs) do
-			table.insert(config.settings["rust-analyzer"].files.excludeDirs, v)
-			table.insert(config.settings["rust-analyzer"].files.watcherExclude, v)
-		end
+		vim.api.nvim_create_autocmd("BufEnter", { buffer = bufnr, callback = update_direnv_ignores })
+		update_direnv_ignores()
 	end,
 	flags = {
 		exit_timeout = 0,
@@ -130,10 +134,18 @@ local function get_python_path()
 end
 
 lsp_extra_config["pylsp"] = {
-	on_new_config = function(config)
-		config.settings.pylsp.plugins.jedi.environment = get_python_path()
-		config.settings.pylsp.plugins.pylsp_mypy.overrides = { "--python-executable", get_python_path(), true }
+	on_attach = function(client, bufnr)
+		local function update_python_path()
+			client.config.settings.pylsp.plugins.jedi.environment = get_python_path()
+			client.config.settings.pylsp.plugins.pylsp_mypy.overrides =
+				{ "--python-executable", get_python_path(), true }
+			client.notify("workspace/didChangeConfiguration", { settings = { pylsp = client.config.settings.pylsp } })
+		end
+
+		vim.api.nvim_create_autocmd("BufEnter", { buffer = bufnr, callback = update_python_path })
+		update_python_path()
 	end,
+
 	settings = {
 		pylsp = {
 			plugins = {
@@ -188,11 +200,9 @@ local enabled_lsps = {
 	"erlangls",
 	"fortls",
 	"gleam",
-	"hls",
 	"lua_ls",
 	"nil_ls",
 	"pylsp",
-	"r_language_server",
 	"rust_analyzer",
 	"svelte",
 	"texlab",
@@ -219,5 +229,6 @@ for _, ls in ipairs(enabled_lsps) do
 	else
 		config = signature_setup
 	end
-	require("lspconfig")[ls].setup(config)
+	vim.lsp.config(ls, config)
+	vim.lsp.enable(ls)
 end
