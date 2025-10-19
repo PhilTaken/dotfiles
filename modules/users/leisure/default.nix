@@ -28,18 +28,18 @@ in
         usbutils
       ]
       ++ (lib.optionals (!config.phil.headless) [
+        #signal-desktop
+        #element-desktop
+
         keepassxc
-        signal-desktop
         tdesktop
         anki
-        element-desktop
         gimp
         #devdocs-desktop
 
         #liberation fonts broken
         #libreoffice
 
-        # TODO: resolve with https://github.com/NixOS/nixpkgs/issues/159267
         discord
       ]);
   };

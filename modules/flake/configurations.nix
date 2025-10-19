@@ -114,8 +114,9 @@ in {
                     development.enable = true;
                     nvidia.enable = true;
                     video.managers = [
-                      #"gnome"
+                      "gnome"
                       "cosmic"
+                      #"kde"
                     ];
                   };
                 }

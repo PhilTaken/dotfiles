@@ -23,22 +23,20 @@ in {
       matchBlocks = let
         # every host has a headscale ip, right?
         headscale_hosts =
-          lib.mapAttrs
-          (_: v: {
+          lib.mapAttrs (_: v: {
             hostname = v.network_ip."headscale";
             user = v.sshUser;
           })
           network.nodes;
 
         # add a suffix for the public ips
-        public_hosts =
-          lib.mapAttrs'
-          (n: v:
+        public_hosts = lib.mapAttrs' (
+          n: v:
             lib.nameValuePair (n + "-public") {
               hostname = v.public_ip;
               user = v.sshUser;
-            })
-          (lib.filterAttrs (_: v: !builtins.isNull v.public_ip) network.nodes);
+            }
+        ) (lib.filterAttrs (_: v: !builtins.isNull v.public_ip) network.nodes);
       in
         headscale_hosts // public_hosts;
     };

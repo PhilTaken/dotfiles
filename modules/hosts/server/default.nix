@@ -3,18 +3,15 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.phil.server;
-in
-{
+in {
   imports = [
     ./adguardhome.nix
     ./arrs.nix
     ./audiobookshelf.nix
     ./bookstack.nix
-    ./caddy
     ./calibre-web.nix
     ./email.nix
     ./fail2ban.nix

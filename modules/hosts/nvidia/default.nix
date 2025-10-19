@@ -59,10 +59,12 @@ in {
         open = false;
         modesetting.enable = true;
         package = config.boot.kernelPackages.nvidiaPackages.production;
+        nvidiaSettings = true;
+        powerManagement.enable = false;
       };
       graphics = {
         extraPackages = with pkgs; [
-          #libvdpau-va-gl
+          libvdpau-va-gl
           vaapiVdpau
           nvidia-vaapi-driver
         ];

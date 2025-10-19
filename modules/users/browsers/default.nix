@@ -21,6 +21,7 @@ in
       enable = mkOption {
         description = "enable chromium";
         type = types.bool;
+        #default = !lib.hasInfix "darwin" pkgs.system;
         default = !lib.hasInfix "darwin" pkgs.stdenv.hostPlatform.system;
       };
     };
