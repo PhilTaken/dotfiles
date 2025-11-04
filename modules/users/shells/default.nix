@@ -52,7 +52,7 @@ in {
       gre = "${pkgs.ripgrep}/bin/rg";
       cat = "bat";
       top = "${pkgs.bottom}/bin/btm";
-      du = "${pkgs.du-dust}/bin/dust";
+      du = "${pkgs.dust}/bin/dust";
       free = "${pkgs.procps}/bin/free -h";
       sudo = "sudo ";
       df = "${pkgs.duf}/bin/duf";
@@ -167,7 +167,10 @@ in {
           # Don't provide 'bin/nix-index', since the index is updated automatically
           # and it is easy to forget that. It can always be run manually with
           # 'nix run nixpkgs#nix-index' if necessary.
-          paths = [nix-locate command-not-found];
+          paths = [
+            nix-locate
+            command-not-found
+          ];
         };
       };
 

@@ -26,7 +26,7 @@ in {
         nil # nix
         python3Packages.python-lsp-server # python
         #rust-analyzer-unwrapped # rust
-        sumneko-lua-language-server # lua
+        lua-language-server # lua
       ];
 
       languages = {

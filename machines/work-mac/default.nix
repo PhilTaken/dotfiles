@@ -3,8 +3,7 @@
   npins,
   config,
   ...
-}:
-{
+}: {
   imports = [
     ./philippherzog.nix
   ];
@@ -33,7 +32,7 @@
       };
 
       emoji = {
-        package = pkgs.noto-fonts-emoji;
+        package = pkgs.noto-fonts-color-emoji;
         name = "Noto Color Emoji";
       };
     };
@@ -60,7 +59,7 @@
     pkgs.zsh
   ];
 
-  environment.systemPackages = [ pkgs.openssh ];
+  environment.systemPackages = [pkgs.openssh];
 
   # services.karabiner-elements.enable = true;
   services.tailscale.enable = true;
