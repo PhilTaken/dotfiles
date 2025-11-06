@@ -4,16 +4,17 @@
   lib,
   inputs,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkOption
     mkIf
     types
     mkEnableOption
     ;
   cfg = config.phil.music;
-in {
+in
+{
   imports = [
     inputs.spicetify.homeManagerModules.default
     #./autoeq-easyeffects.nix
@@ -46,7 +47,7 @@ in {
 
     services.spotifyd = {
       # build breaks on arm currently
-      enable = false; # lib.hasInfix pkgs.system "x86";
+      enable = false; # lib.hasInfix pkgs.stdenv.hostPlatform.system "x86";
       package = pkgs.spotifyd.override {
         withKeyring = true;
         withPulseAudio = true;
@@ -78,22 +79,24 @@ in {
         "sound.target"
       ];
       Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
-      Install.WantedBy = ["default.target"];
+      Install.WantedBy = [ "default.target" ];
     };
 
-    programs.spicetify = let
-      spicePkgs = inputs.spicetify.legacyPackages.${pkgs.system};
-    in {
-      enable = true;
-      # theme = spicePkgs.themes.catppuccin;
-      # colorScheme = "mocha";
+    programs.spicetify =
+      let
+        spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      in
+      {
+        enable = true;
+        # theme = spicePkgs.themes.catppuccin;
+        # colorScheme = "mocha";
 
-      enabledExtensions = with spicePkgs.extensions; [
-        fullAppDisplay
-        shuffle
-        hidePodcasts
-      ];
-    };
+        enabledExtensions = with spicePkgs.extensions; [
+          fullAppDisplay
+          shuffle
+          hidePodcasts
+        ];
+      };
 
     home.packages = with pkgs; [
       easyeffects
@@ -147,9 +150,9 @@ in {
           cover_names = "front back";
           sources = [
             "filesystem"
-            {coverart = "release";}
+            { coverart = "release"; }
             "itunes"
-            {coverart = "releasegroup";}
+            { coverart = "releasegroup"; }
             "lastfm"
             "*"
           ];

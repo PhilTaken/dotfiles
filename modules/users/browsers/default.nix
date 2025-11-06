@@ -3,10 +3,17 @@
   config,
   lib,
   ...
-} @ inputs: let
+}@inputs:
+let
   cfg = config.phil.browsers;
-  inherit (lib) mkEnableOption mkOption types mkIf;
-in {
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    types
+    mkIf
+    ;
+in
+{
   options.phil.browsers = {
     enable = mkEnableOption "browsers";
 
@@ -14,7 +21,7 @@ in {
       enable = mkOption {
         description = "enable chromium";
         type = types.bool;
-        default = !lib.hasInfix "darwin" pkgs.system;
+        default = !lib.hasInfix "darwin" pkgs.stdenv.hostPlatform.system;
       };
     };
 
@@ -30,7 +37,7 @@ in {
       enable = mkOption {
         description = "enable firefox";
         type = types.bool;
-        default = !lib.hasInfix "darwin" pkgs.system;
+        default = !lib.hasInfix "darwin" pkgs.stdenv.hostPlatform.system;
       };
 
       wayland = mkOption {
@@ -47,16 +54,11 @@ in {
     };
   };
 
-  config = let
-    pkg =
-      if cfg.firefox.librewolf
-      then pkgs.librewolf
-      else pkgs.firefox;
-    waylandpkg =
-      if cfg.firefox.librewolf
-      then pkgs.librewolf-wayland
-      else pkgs.firefox-wayland;
-  in
+  config =
+    let
+      pkg = if cfg.firefox.librewolf then pkgs.librewolf else pkgs.firefox;
+      waylandpkg = if cfg.firefox.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
+    in
     mkIf cfg.enable {
       programs.chromium = {
         inherit (cfg.chromium) enable;
@@ -66,25 +68,25 @@ in {
           #"--no-first-run"
         ];
         extensions = [
-          {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin
-          {id = "fnaicdffflnofjppbagibeoednhnbjhg";} # floccus
-          {id = "nngceckbapebfimnlniiiahkandclblb";} # bitwarden
-          {id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";} # dark reader
-          {id = "lckanjgmijmafbedllaakclkaicjfmnk";} # clear urls
-          {id = "fihnjjcciajhdojfnbdddfaoknhalnja";} # i don't care about cookies
+          { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
+          { id = "fnaicdffflnofjppbagibeoednhnbjhg"; } # floccus
+          { id = "nngceckbapebfimnlniiiahkandclblb"; } # bitwarden
+          { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # dark reader
+          { id = "lckanjgmijmafbedllaakclkaicjfmnk"; } # clear urls
+          { id = "fihnjjcciajhdojfnbdddfaoknhalnja"; } # i don't care about cookies
 
-          {id = "igeehkedfibbnhbfponhjjplpkeomghi";} # tabli tab manager (using bookmarks)
-          {id = "iaiomicjabeggjcfkbimgmglanimpnae";} # tab session manager
+          { id = "igeehkedfibbnhbfponhjjplpkeomghi"; } # tabli tab manager (using bookmarks)
+          { id = "iaiomicjabeggjcfkbimgmglanimpnae"; } # tab session manager
 
-          {id = "bkkmolkhemgaeaeggcmfbghljjjoofoh";} # catppuccin mocha theme
-          {id = "mmjbdbjnoablegbkcklggeknkfcjkjia";} # new tab page
-          {id = "fhcgjolkccmbidfldomjliifgaodjagh";} # cookie auto delete
-          {id = "ikhahkidgnljlniknmendeflkdlfhonj";} # no pdf download
+          { id = "bkkmolkhemgaeaeggcmfbghljjjoofoh"; } # catppuccin mocha theme
+          { id = "mmjbdbjnoablegbkcklggeknkfcjkjia"; } # new tab page
+          { id = "fhcgjolkccmbidfldomjliifgaodjagh"; } # cookie auto delete
+          { id = "ikhahkidgnljlniknmendeflkdlfhonj"; } # no pdf download
 
-          {id = "egpjdkipkomnmjhjmdamaniclmdlobbo";} # firenvim
-          {id = "ajopnjidmegmdimjlfnijceegpefgped";} # better ttv
-          {id = "kbmfpngjjgdllneeigpgjifpgocmfgmb";} # reddit reddit enhancement suite
-          {id = "oocalimimngaihdkbihfgmpkcpnmlaoa";} # teleparty
+          { id = "egpjdkipkomnmjhjmdamaniclmdlobbo"; } # firenvim
+          { id = "ajopnjidmegmdimjlfnijceegpefgped"; } # better ttv
+          { id = "kbmfpngjjgdllneeigpgjifpgocmfgmb"; } # reddit reddit enhancement suite
+          { id = "oocalimimngaihdkbihfgmpkcpnmlaoa"; } # teleparty
           {
             id = "dcpihecpambacapedldabdbpakmachpb";
             updateUrl = "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/updates.xml";
@@ -95,10 +97,7 @@ in {
       programs.firefox = {
         inherit (cfg.firefox) enable;
 
-        package =
-          if cfg.firefox.wayland
-          then waylandpkg
-          else pkg;
+        package = if cfg.firefox.wayland then waylandpkg else pkg;
         profiles = {
           home = {
             id = 0;
@@ -140,14 +139,14 @@ in {
                   ];
 
                   icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                  definedAliases = ["@np"];
+                  definedAliases = [ "@np" ];
                 };
 
                 "NixOS Wiki" = {
-                  urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
+                  urls = [ { template = "https://nixos.wiki/index.php?search={searchTerms}"; } ];
                   icon = "https://nixos.wiki/favicon.png";
                   updateInterval = 24 * 60 * 60 * 1000; # every day
-                  definedAliases = ["@nw"];
+                  definedAliases = [ "@nw" ];
                 };
 
                 "bing".metaData.hidden = true;
@@ -194,9 +193,24 @@ in {
           content.fullscreen.window = true;
           content.pdfjs = true;
           downloads.location.suggestion = "both";
-          fileselect.folder.command = ["alacritty" "-e" "ranger" "--choosedir={}"];
-          fileselect.single_file.command = ["alacritty" "-e" "ranger" "--choosefile={}"];
-          fileselect.multiple_files.command = ["alacritty" "-e" "ranger" "--choosefiles={}"];
+          fileselect.folder.command = [
+            "alacritty"
+            "-e"
+            "ranger"
+            "--choosedir={}"
+          ];
+          fileselect.single_file.command = [
+            "alacritty"
+            "-e"
+            "ranger"
+            "--choosefile={}"
+          ];
+          fileselect.multiple_files.command = [
+            "alacritty"
+            "-e"
+            "ranger"
+            "--choosefiles={}"
+          ];
           scrolling.smooth = true;
           tabs.last_close = "close";
           #tabs.padding = {

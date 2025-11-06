@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption types;
   cfg = config.phil.terminals;
-in {
+in
+{
   options.phil.terminals = {
     default_font = mkOption {
       description = "default font";
@@ -16,27 +18,39 @@ in {
     };
 
     multiplexer = mkOption {
-      type = types.enum ["tmux" "zellij"];
+      type = types.enum [
+        "tmux"
+        "zellij"
+      ];
       default = "tmux";
     };
 
     defaultShell = mkOption {
-      type = types.enum ["fish" "zsh" "nushell"];
+      type = types.enum [
+        "fish"
+        "zsh"
+        "nushell"
+      ];
       default = "fish";
     };
 
     alacritty = {
       decorations = mkOption {
-        type = types.enum ["none" "full"];
+        type = types.enum [
+          "none"
+          "full"
+        ];
         default = "none";
       };
     };
   };
 
   config = lib.mkIf (!config.phil.headless) {
-    home.packages = lib.optionals (lib.hasSuffix "linux" pkgs.system) [pkgs.ghostty];
+    home.packages = lib.optionals (lib.hasSuffix "linux" pkgs.stdenv.hostPlatform.system) [
+      pkgs.ghostty
+    ];
 
-    programs.foot.enable = false; # lib.hasSuffix "linux" pkgs.system;
+    programs.foot.enable = false; # lib.hasSuffix "linux" pkgs.stdenv.hostPlatform.system;
 
     programs = {
       alacritty = {

@@ -70,10 +70,6 @@ in
         name = "dotfiles";
         packages = shellPackages;
 
-        devshell.startup = {
-          # pre-commit.text = config.pre-commit.devShell.shellHook;
-        };
-
         commands = [
           {
             name = "fmt";
@@ -127,7 +123,7 @@ in
           (
             let
               build =
-                if pkgs.lib.hasInfix "darwin" pkgs.system then
+                if pkgs.lib.hasInfix "darwin" pkgs.stdenv.hostPlatform.system then
                   ''sudo ${
                     inputs.darwin.packages.${system}.darwin-rebuild
                   }/bin/darwin-rebuild --flake ".#$host" build ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom''
@@ -149,7 +145,7 @@ in
           (
             let
               build =
-                if pkgs.lib.hasInfix "darwin" pkgs.system then
+                if pkgs.lib.hasInfix "darwin" pkgs.stdenv.hostPlatform.system then
                   ''sudo ${
                     inputs.darwin.packages.${system}.darwin-rebuild
                   }/bin/darwin-rebuild --flake ".#$1" switch ''${@:2} |& ${pkgs.nix-output-monitor}/bin/nom''

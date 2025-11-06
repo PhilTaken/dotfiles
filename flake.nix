@@ -31,8 +31,6 @@
     };
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    pre-commit-hooks-nix.url = "github:cachix/pre-commit-hooks.nix";
-    pre-commit-hooks-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # -----------------------
     # nixos modules
@@ -115,8 +113,7 @@
         ./modules/flake/deploy.nix
         ./modules/flake/shells.nix
         inputs.treefmt-nix.flakeModule
-        # inputs.pre-commit-hooks-nix.flakeModule
-        #      inputs.disko.nixosModules.disko
+        #  inputs.disko.nixosModules.disko
       ];
 
       perSystem =
@@ -126,13 +123,6 @@
           ...
         }:
         {
-          # pre-commit = {
-          #   settings.hooks = {
-          #     alejandra.enable = true;
-          #     #treefmt.enable = true;
-          #   };
-          # };
-
           treefmt = {
             projectRootFile = "flake.nix";
             programs.nixfmt.enable = true;
@@ -153,7 +143,7 @@
               if l.hasAttrByPath [ "meta" "platforms" ] package then
                 l.elem system package.meta.platforms
               else
-                (lib.hasInfix "linux" pkgs.system)
+                (lib.hasInfix "linux" pkgs.stdenv.hostPlatform.system)
             ) (custom_pkgs_overlay pkgs pkgs);
         };
     };

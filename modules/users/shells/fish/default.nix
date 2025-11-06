@@ -4,10 +4,12 @@
   lib,
   npins,
   ...
-}: let
+}:
+let
   cfg = config.phil.shells.fish;
   inherit (lib) mkIf mkOption;
-in {
+in
+{
   options.phil.shells.fish = {
     enable = mkOption {
       description = "fish";
@@ -106,52 +108,54 @@ in {
         }
       ];
 
-      interactiveShellInit =
-        ''
-          if test (uname) = Darwin
-            fish_add_path --prepend --global /run/current-system/sw/bin "/etc/profiles/per-user/$USER/bin"
-            fish_add_path --append --global /nix/var/nix/profiles/default/bin
-          end
+      interactiveShellInit = ''
+        if test (uname) = Darwin
+          fish_add_path --prepend --global /run/current-system/sw/bin "/etc/profiles/per-user/$USER/bin"
+          fish_add_path --append --global /nix/var/nix/profiles/default/bin
+        end
 
-          set -U fish_greeting
-          bind \t 'commandline -f complete'
-          bind \e 'commandline -f cancel'
-          bind \r 'enter_ls'
-          bind \n 'enter_ls'
-          bind \cs 'prepend_command sudo'
+        set -U fish_greeting
+        bind \t 'commandline -f complete'
+        bind \e 'commandline -f cancel'
+        bind \r 'enter_ls'
+        bind \n 'enter_ls'
+        bind \cs 'prepend_command sudo'
 
-          if bind -M insert >/dev/null 2>&1
-            bind -M insert \t 'commandline -f complete'
-            bind -M insert \e 'commandline -f cancel'
-            bind -M insert \r 'enter_ls'
-            bind -M insert \n 'enter_ls'
-          end
+        if bind -M insert >/dev/null 2>&1
+          bind -M insert \t 'commandline -f complete'
+          bind -M insert \e 'commandline -f cancel'
+          bind -M insert \r 'enter_ls'
+          bind -M insert \n 'enter_ls'
+        end
+      ''
+      + (lib.optionalString (config.phil.terminals.multiplexer == "tmux") ''
+        if status is-interactive
+        and not status --is-login
+        and not set -q TMUX
+        and not set -q NVIM
+        and set -q DISPLAY
+          tmux attach || tmux
+        end
+      '')
+      + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
+        if status is-interactive
+        and not status --is-login
+        and not set -q TMUX
+        and not set -q NVIM
+        and set -q DISPLAY
+        and not set -q ZELLIJ
+          zellij attach --create main
+        end
+      '')
+      + (lib.optionalString
+        (config.phil.gpg.enable && lib.hasInfix "darwin" pkgs.stdenv.hostPlatform.system)
         ''
-        + (lib.optionalString (config.phil.terminals.multiplexer == "tmux") ''
-          if status is-interactive
-          and not status --is-login
-          and not set -q TMUX
-          and not set -q NVIM
-          and set -q DISPLAY
-            tmux attach || tmux
-          end
-        '')
-        + (lib.optionalString (config.phil.terminals.multiplexer == "zellij") ''
-          if status is-interactive
-          and not status --is-login
-          and not set -q TMUX
-          and not set -q NVIM
-          and set -q DISPLAY
-          and not set -q ZELLIJ
-            zellij attach --create main
-          end
-        '')
-        + (lib.optionalString (config.phil.gpg.enable && lib.hasInfix "darwin" pkgs.system) ''
           set -Ux GPG_TTY (tty)
           set -e SSH_AUTH_SOCK
           set -Ux SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
           gpgconf --launch gpg-agent
-        '');
+        ''
+      );
     };
   };
 }

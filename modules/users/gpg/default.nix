@@ -3,10 +3,17 @@
   config,
   lib,
   ...
-}: let
-  inherit (lib) mkEnableOption mkOption types mkIf;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    types
+    mkIf
+    ;
   cfg = config.phil.gpg;
-in {
+in
+{
   options.phil.gpg = {
     enable = mkEnableOption "gpg";
 
@@ -19,7 +26,7 @@ in {
     sshKeys = mkOption {
       description = "User's ssh keys for gpg-agent";
       type = types.listOf types.str;
-      default = ["F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B"];
+      default = [ "F40506C8F342CC9DF1CC8E9C50DD4037D2F6594B" ];
     };
   };
 
@@ -36,11 +43,13 @@ in {
       ];
     };
 
-    services.gpg-agent = mkIf (cfg.sshKeys != [] && lib.hasInfix "linux" pkgs.system) {
-      enable = true;
-      enableSshSupport = true;
-      inherit (cfg) sshKeys;
-      pinentry.package = pkgs.pinentry-qt;
-    };
+    services.gpg-agent =
+      mkIf (cfg.sshKeys != [ ] && lib.hasInfix "linux" pkgs.stdenv.hostPlatform.system)
+        {
+          enable = true;
+          enableSshSupport = true;
+          inherit (cfg) sshKeys;
+          pinentry.package = pkgs.pinentry-qt;
+        };
   };
 }

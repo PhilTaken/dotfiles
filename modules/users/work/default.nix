@@ -133,10 +133,10 @@ in
       '')
 
       # time tracker
-      #inputs.ttrack.packages.${pkgs.system}.ttrack
-      #inputs.dimsum.packages.${pkgs.system}.dimsum-release
-      #inputs.fc-utils.packages.${pkgs.system}.default
-      #inputs.devenv.packages.${pkgs.system}.default
+      #inputs.ttrack.packages.${pkgs.stdenv.hostPlatform.system}.ttrack
+      #inputs.dimsum.packages.${pkgs.stdenv.hostPlatform.system}.dimsum-release
+      #inputs.fc-utils.packages.${pkgs.stdenv.hostPlatform.system}.default
+      #inputs.devenv.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       age
       lsyncd
@@ -151,7 +151,7 @@ in
     # ensure ssh is available
     # phil.ssh.enable = true;
     home.shellAliases = {
-      b = "${inputs.fc-utils.packages.${pkgs.system}.default}/bin/fc-utils";
+      b = "${inputs.fc-utils.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/fc-utils";
       s = "ssh $(cat ~/.ssh/known_hosts | cut -d ' ' -f 1 | sort | uniq | ${pkgs.skim}/bin/sk)";
     };
 
