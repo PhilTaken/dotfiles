@@ -3,7 +3,8 @@
   npins,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ./philippherzog.nix
   ];
@@ -59,11 +60,11 @@
     pkgs.zsh
   ];
 
-  environment.systemPackages = [pkgs.openssh];
+  environment.systemPackages = [ pkgs.openssh ];
 
   # services.karabiner-elements.enable = true;
-  services.tailscale.enable = true;
-  services.tailscale.overrideLocalDns = true;
+  # services.tailscale.enable = true;
+  # services.tailscale.overrideLocalDns = true;
 
   homebrew = {
     enable = true;
@@ -88,6 +89,7 @@
       "ghostty"
       "rectangle"
       "nextcloud"
+      "tailscale"
     ];
   };
 

@@ -3,9 +3,9 @@
   lib,
   netlib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkOption
     mkIf
     types
@@ -13,7 +13,8 @@
     ;
   cfg = config.phil.server.services.headscale;
   net = config.phil.network;
-in {
+in
+{
   options.phil.server.services.headscale = {
     enable = mkEnableOption "headscale - time series database";
     url = mkOption {
@@ -68,8 +69,8 @@ in {
     };
 
     systemd.services."headscale" = lib.mkIf config.phil.server.services.keycloak.enable {
-      after = ["keycloak.service"];
-      requires = ["keycloak.service"];
+      after = [ "keycloak.service" ];
+      requires = [ "keycloak.service" ];
 
       # https://github.com/juanfont/headscale/issues/1574
       # remove after update to 0.23.0

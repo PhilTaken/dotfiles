@@ -188,7 +188,7 @@ in
         }
       ];
 
-      extraConfig.diff = {
+      settings.diff = {
         gpg = {
           textconv = "gpg -q --no-tty --decrypt";
           binary = true;
