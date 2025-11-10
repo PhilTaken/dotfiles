@@ -18,7 +18,7 @@ in
     ];
 
     home.packages = [
-      pkgs.feishin
+      (pkgs.tuir.overrideAttrs { doCheck = false; })
     ];
 
     fonts.fontconfig.enable = true;

@@ -55,6 +55,9 @@ lsp_extra_config["rust_analyzer"] = {
 				local direnvs = {}
 				local dirIter, dirObj = vim.uv.fs_scandir(dir)
 				while true do
+					if dirIter == nil then
+						break
+					end
 					local name, type = vim.uv.fs_scandir_next(dirIter, dirObj)
 
 					if name == nil then

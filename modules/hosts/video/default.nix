@@ -4,9 +4,9 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkOption
     mkIf
     types
@@ -23,7 +23,8 @@
 
   manager_enum = types.enum (builtins.attrNames session_map);
   enabled = lib.flip builtins.elem cfg.managers;
-in {
+in
+{
   options.phil.video = {
     enable = mkOption {
       description = "enable video module";
@@ -34,7 +35,7 @@ in {
     managers = mkOption {
       description = "which window/desktop manager to enable";
       type = types.listOf manager_enum;
-      default = [];
+      default = [ ];
     };
   };
 
@@ -58,11 +59,9 @@ in {
 
     boot.plymouth.enable = true;
 
-    services.displayManager.defaultSession =
-      mkIf (
-        cfg.managers != []
-      )
-      session_map.${builtins.head cfg.managers};
+    services.displayManager.defaultSession = mkIf (
+      cfg.managers != [ ]
+    ) session_map.${builtins.head cfg.managers};
 
     #services.displayManager.cosmic-greeter.enable = true;
     services.displayManager.gdm = {
@@ -95,18 +94,20 @@ in {
     services.gnome.core-os-services.enable = enabled "gnome";
     services.gnome.gnome-keyring.enable = mkForce false;
 
-    services.udev.packages = [] ++ (lib.optional (enabled "gnome") pkgs.gnome-settings-daemon);
-    services.dbus.packages = [] ++ (lib.optional (enabled "gnome") pkgs.dconf);
+    services.udev.packages = [ ] ++ (lib.optional (enabled "gnome") pkgs.gnome-settings-daemon);
+    services.dbus.packages = [ ] ++ (lib.optional (enabled "gnome") pkgs.dconf);
     programs.dconf.enable = true;
 
     # enable kdeconnect + open the required ports
     programs.kdeconnect.enable = true;
-    networking.firewall = let
-      kde_ports = lib.range 1714 1764;
-    in {
-      allowedTCPPorts = kde_ports ++ [8888];
-      allowedUDPPorts = kde_ports ++ [8888];
-    };
+    networking.firewall =
+      let
+        kde_ports = lib.range 1714 1764;
+      in
+      {
+        allowedTCPPorts = kde_ports ++ [ 8888 ];
+        allowedUDPPorts = kde_ports ++ [ 8888 ];
+      };
 
     # https://github.com/NixOS/nixpkgs/issues/163107#issuecomment-1100569484
     environment.systemPackages = [
@@ -187,6 +188,8 @@ in {
 
     stylix = {
       enable = true;
+      enableReleaseChecks = false;
+
       image = lib.mkDefault ../../../images/vortex.png;
       polarity = "dark";
       base16Scheme = lib.mkDefault "${npins.base16}/base16/mocha.yaml";

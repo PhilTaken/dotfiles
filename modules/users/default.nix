@@ -4,7 +4,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ./terminals
     ./shells
@@ -49,11 +50,11 @@
         notebook.dir = "$HOME/Documents/zk";
         group = {
           journal-w = {
-            paths = ["journal/weekly"];
+            paths = [ "journal/weekly" ];
             note.filename = "{{format-date now \"%Y-%W\" }}";
           };
           journal-d = {
-            paths = ["journal/daily"];
+            paths = [ "journal/daily" ];
             note.filename = "{{format-date now}}";
           };
         };
@@ -98,7 +99,8 @@
       };
     };
 
-    home.packages = with pkgs;
+    home.packages =
+      with pkgs;
       [
         cacert
         uutils-coreutils

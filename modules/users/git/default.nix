@@ -84,7 +84,7 @@ in
         };
 
         git.sign-on-push = true;
-        git.auto-local-bookmark = true;
+        remotes.origin.auto-track-bookmarks = "glob:*";
 
         template-aliases = {
           commit_description_verbose = ''

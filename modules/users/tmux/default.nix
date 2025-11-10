@@ -4,10 +4,12 @@
   npins,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption mkIf;
   cfg = config.phil.tmux;
-in {
+in
+{
   options.phil.tmux = {
     enable = mkOption {
       description = "tmux";
@@ -20,12 +22,15 @@ in {
     phil.twm = {
       enable = true;
       settings = {
-        search_paths = ["~"];
+        search_paths = [ "~" ];
 
         workspace_definitions = [
           {
             name = "default";
-            has_any_file = [".git" ".twm.yaml"];
+            has_any_file = [
+              ".git"
+              ".twm.yaml"
+            ];
             default_layout = "default";
           }
         ];
@@ -33,7 +38,7 @@ in {
         layouts = [
           {
             name = "default";
-            commands = [];
+            commands = [ ];
           }
         ];
       };
@@ -121,7 +126,7 @@ in {
           rm "$tmpfile" "$tmux_script"
         ''}"
 
-        bind-key a popup -E "zk daily"
+        bind-key a popup -E "zk weekly"
 
         bind-key P run-shell -b "${pkgs.writeShellScript "switch-sessions" ''
           # select a project fuzzily
@@ -145,7 +150,6 @@ in {
         bind -r N resize-pane -D 5
         bind -r E resize-pane -U 5
         bind -r O resize-pane -R 5
-
 
         set -g default-command '$SHELL'
       '';

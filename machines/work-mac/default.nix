@@ -11,6 +11,8 @@
 
   stylix = {
     enable = true;
+    enableReleaseChecks = false;
+
     image = ../../images/vortex.png;
     base16Scheme = "${npins.base16}/base16/mocha.yaml";
 
@@ -89,7 +91,7 @@
       "ghostty"
       "rectangle"
       "nextcloud"
-      "tailscale"
+      "tailscale-app"
     ];
   };
 
