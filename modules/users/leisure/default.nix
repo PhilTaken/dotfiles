@@ -32,7 +32,7 @@ in
         #element-desktop
 
         keepassxc
-        tdesktop
+        telegram-desktop
         anki
         gimp
         #devdocs-desktop

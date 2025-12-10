@@ -139,7 +139,8 @@
           # filter packages by compatibility
           packages =
             let
-              inherit (pkgs) lib system;
+              inherit (pkgs) lib;
+              inherit (pkgs.stdenv.hostPlatform) system;
               l = builtins // lib;
             in
             pkgs.lib.filterAttrs (

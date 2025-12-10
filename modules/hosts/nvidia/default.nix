@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.nvidia;
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
@@ -13,17 +14,19 @@
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
   '';
-in {
+in
+{
   options.phil.nvidia = {
     enable = mkEnableOption "nvidia";
   };
 
   config = mkIf cfg.enable {
-    services.xserver.videoDrivers = lib.mkDefault ["nvidia"];
-    environment.systemPackages = [nvidia-offload];
+    services.xserver.videoDrivers = lib.mkDefault [ "nvidia" ];
+    environment.systemPackages = [ nvidia-offload ];
 
     nixpkgs.config = {
-      allowUnfreePredicate = pkg:
+      allowUnfreePredicate =
+        pkg:
         builtins.elem (lib.getName pkg) [
           "nvidia-x11"
           "nvidia-settings"
@@ -65,7 +68,7 @@ in {
       graphics = {
         extraPackages = with pkgs; [
           libvdpau-va-gl
-          vaapiVdpau
+          libva-vdpau-driver
           nvidia-vaapi-driver
         ];
         enable32Bit = true;
@@ -73,7 +76,8 @@ in {
     };
 
     environment.sessionVariables = {
-      "__EGL_VENDOR_LIBRARY_FILENAMES" = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+      "__EGL_VENDOR_LIBRARY_FILENAMES" =
+        "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
       GBM_BACKEND = "nvidia-drm";
       __GL_GSYNC_ALLOWED = "0";
@@ -91,7 +95,7 @@ in {
           "nvidia.NVreg_TemporaryFilePath=/var/tmp" # store on disk, not /tmp which is on RAM
         ])
       ];
-      blacklistedKernelModules = ["nouveau"];
+      blacklistedKernelModules = [ "nouveau" ];
     };
 
     # environment.etc."egl/egl_external_platform.d/10_nvidia_wayland.json".text = ''

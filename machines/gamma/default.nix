@@ -4,15 +4,32 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "cryptd" "sr_mod"];
-  boot.initrd.kernelModules = ["dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid"];
-  boot.kernelModules = ["kvm-amd"];
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "ehci_pci"
+    "ahci"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+    "cryptd"
+    "sr_mod"
+  ];
+  boot.initrd.kernelModules = [
+    "dm-snapshot"
+    "vfat"
+    "nls_cp437"
+    "nls_iso8859-1"
+    "usbhid"
+  ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
@@ -30,7 +47,7 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   disko.devices = import ./disko-config.nix {
-    disks = ["/dev/nvme0n1"];
+    disks = [ "/dev/nvme0n1" ];
   };
 
   nixpkgs.overlays = [
@@ -45,6 +62,18 @@
   ];
 
   system.stateVersion = "24.05";
+
+  phil.fileshare.mount.binds = [
+    {
+      host = "delta";
+      dirs = [
+        {
+          local = "/media/delta";
+          remote = "/media";
+        }
+      ];
+    }
+  ];
 
   home-manager.sharedModules = [
     {

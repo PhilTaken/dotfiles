@@ -1,9 +1,10 @@
-{pkgs, ...}: {
-  imports = [./configuration.nix];
+{ pkgs, ... }:
+{
+  imports = [ ./configuration.nix ];
 
   virtualisation.docker.enable = true;
 
-  phil.fileshare.shares.dirs = ["/media"];
+  phil.fileshare.shares.dirs = [ "/media" ];
   phil.backup.enable = true;
 
   phil.backup.repo = "/media_int/backups";
@@ -54,7 +55,7 @@
         "min receivefile size" = "16384";
       };
       "public" = {
-        "path" = "/media/mount/samba";
+        "path" = "/media/mount/tl/sims";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "yes";

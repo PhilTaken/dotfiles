@@ -58,7 +58,7 @@ in
   config =
     let
       pkg = if cfg.firefox.librewolf then pkgs.librewolf else pkgs.firefox;
-      waylandpkg = if cfg.firefox.librewolf then pkgs.librewolf-wayland else pkgs.firefox-wayland;
+      waylandpkg = if cfg.firefox.librewolf then pkgs.librewolf-wayland else pkgs.firefox;
     in
     mkIf cfg.enable {
       programs.chromium = {
