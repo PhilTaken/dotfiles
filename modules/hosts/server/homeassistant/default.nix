@@ -11,11 +11,18 @@
   lib,
   netlib,
   ...
-}: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.homeassistant;
   net = config.phil.network;
-in {
+in
+{
   options.phil.server.services.homeassistant = {
     enable = mkEnableOption "homeassistant";
     datadir = mkOption {
@@ -38,14 +45,16 @@ in {
     sops.secrets."home-assistant-secrets.yaml" = {
       owner = "hass";
       path = "/var/lib/hass/secrets.yaml";
-      restartUnits = ["home-assistant.service"];
+      restartUnits = [ "home-assistant.service" ];
     };
     sops.secrets.mqtt-password = {
       owner = "mosquitto";
-      restartUnits = ["mosquitto.service"];
+      restartUnits = [ "mosquitto.service" ];
     };
 
-    systemd.tmpfiles.rules = ["L+ ${config.services.home-assistant.configDir}/python_scripts - - - - ${./python-scripts}"];
+    systemd.tmpfiles.rules = [
+      "L+ ${config.services.home-assistant.configDir}/python_scripts - - - - ${./python-scripts}"
+    ];
 
     # ----------------
     # mqtt
@@ -54,23 +63,23 @@ in {
       listeners = [
         {
           users.root = {
-            acl = ["readwrite #"];
+            acl = [ "readwrite #" ];
             passwordFile = config.sops.secrets.mqtt-password.path;
           };
         }
       ];
     };
-    networking.firewall.allowedTCPPorts = [1883];
+    networking.firewall.allowedTCPPorts = [ 1883 ];
 
     # ----------------
 
     services.home-assistant = {
       inherit (cfg) enable;
 
-      extraPackages = ps:
-        with ps; [
+      extraPackages =
+        ps: with ps; [
           gtts
-          pyownet
+          aio-ownet
           pyairnow
           getmac
           fritzconnection
@@ -108,114 +117,118 @@ in {
         "tasmota"
       ];
 
-      config = let
-        home_zone_name = "home";
-        work_zone_name = "work";
-      in {
-        default_config = {};
+      config =
+        let
+          home_zone_name = "home";
+          work_zone_name = "work";
+        in
+        {
+          default_config = { };
 
-        logger.default = "info";
+          logger.default = "info";
 
-        input_select = {
-          here_destination_preset.options = [
-            "zone.${home_zone_name}"
-            "zone.${work_zone_name}"
+          input_select = {
+            here_destination_preset.options = [
+              "zone.${home_zone_name}"
+              "zone.${work_zone_name}"
+            ];
+            here_origin_preset.options = [
+              "zone.${home_zone_name}"
+              "zone.${work_zone_name}"
+            ];
+          };
+
+          automation = [
+            {
+              id = "speaker_on_off_with_desktop";
+              alias = "Speakers - turn on and off with the desktop";
+              initial_state = "on";
+              trigger = [
+                {
+                  platform = "state";
+                  entity_id = "device_tracker.desktop_l9ck0qi";
+                  from = null;
+                }
+              ];
+              action = [
+                {
+                  service = "python_script.desktop_speakers_sync";
+                  data = {
+                    desktop_entity = "device_tracker.desktop_l9ck0qi";
+                    speaker_entity = "switch.sound";
+                    inherit home_zone_name;
+                  };
+                }
+              ];
+            }
+
+            {
+              alias = "washing_machine_done_notification";
+              trigger = [
+                {
+                  platform = "numeric_state";
+                  entity_id = "sensor.washer_sensor_power";
+                  below = 10;
+                  for.minutes = 5;
+                }
+              ];
+
+              condition = [
+                {
+                  alias = "up for more than 15 minutes";
+                  condition = "template";
+                  value_template = ''
+                    {% set value = states('sensor.uptime') %}
+                    {% set up_minutes = (now().timestamp() - as_timestamp(value)) / 60 %}
+                    {{ up_minutes > 15 }}
+                  '';
+                }
+              ];
+
+              action = [
+                {
+                  service = "notify.mobile_app_phil_op7";
+                  data.message = "Washing machine is done!";
+                }
+                {
+                  service = "notify.mobile_app_jaid_s_phone";
+                  data.message = "Washing machine is done!";
+                }
+              ];
+            }
           ];
-          here_origin_preset.options = [
-            "zone.${home_zone_name}"
-            "zone.${work_zone_name}"
+
+          zone = [
+            {
+              name = work_zone_name;
+              icon = "mdi:briefcase";
+              latitude = "!secret work_latitude";
+              longitude = "!secret work_longitude";
+              radius = "200";
+            }
           ];
-        };
 
-        automation = [
-          {
-            id = "speaker_on_off_with_desktop";
-            alias = "Speakers - turn on and off with the desktop";
-            initial_state = "on";
-            trigger = [
-              {
-                platform = "state";
-                entity_id = "device_tracker.desktop_l9ck0qi";
-                from = null;
-              }
-            ];
-            action = [
-              {
-                service = "python_script.desktop_speakers_sync";
-                data = {
-                  desktop_entity = "device_tracker.desktop_l9ck0qi";
-                  speaker_entity = "switch.sound";
-                  inherit home_zone_name;
-                };
-              }
-            ];
-          }
-
-          {
-            alias = "washing_machine_done_notification";
-            trigger = [
-              {
-                platform = "numeric_state";
-                entity_id = "sensor.washer_sensor_power";
-                below = 10;
-                for.minutes = 5;
-              }
-            ];
-
-            condition = [
-              {
-                alias = "up for more than 15 minutes";
-                condition = "template";
-                value_template = ''
-                  {% set value = states('sensor.uptime') %}
-                  {% set up_minutes = (now().timestamp() - as_timestamp(value)) / 60 %}
-                  {{ up_minutes > 15 }}
-                '';
-              }
-            ];
-
-            action = [
-              {
-                service = "notify.mobile_app_phil_op7";
-                data.message = "Washing machine is done!";
-              }
-              {
-                service = "notify.mobile_app_jaid_s_phone";
-                data.message = "Washing machine is done!";
-              }
-            ];
-          }
-        ];
-
-        zone = [
-          {
-            name = work_zone_name;
-            icon = "mdi:briefcase";
-            latitude = "!secret work_latitude";
-            longitude = "!secret work_longitude";
-            radius = "200";
-          }
-        ];
-
-        http = {
-          use_x_forwarded_for = true;
-          trusted_proxies =
-            ["127.0.0.1"]
+          http = {
+            use_x_forwarded_for = true;
+            trusted_proxies = [
+              "127.0.0.1"
+            ]
             ++ (builtins.filter (v: v != null) (builtins.catAttrs "public_ip" (builtins.attrValues net.nodes)))
-            ++ lib.optional (net.nodes.${config.networking.hostName}.network_ip ? "lan") net.nodes.${config.networking.hostName}.network_ip."lan";
-          server_port = cfg.port;
-          server_host = ["0.0.0.0"];
-        };
+            ++ lib.optional (
+              net.nodes.${config.networking.hostName}.network_ip ? "lan"
+            ) net.nodes.${config.networking.hostName}.network_ip."lan";
+            server_port = cfg.port;
+            server_host = [ "0.0.0.0" ];
+          };
 
-        sensor = [
-          {
-            platform = "dwd_weather_warnings";
-            region_name = "!secret dwd_region_name";
-          }
-        ];
+          sensor = [
+            {
+              platform = "dwd_weather_warnings";
+              region_name = "!secret dwd_region_name";
+            }
+          ];
 
-        mqtt =
-          [
+          mqtt = [
             {
               sensor = {
                 name = "washer_sensors_status";
@@ -237,14 +250,16 @@ in {
               };
             }
           ]
-          ++ (map (d: {
+          ++ (map
+            (d: {
               sensor = {
                 name = "washer_sensor_${d.name}";
                 state_topic = "tele/pantrysocket/SENSOR";
                 value_template = "{{ value_json.ENERGY.${d.name} }}";
                 unit_of_measurement = d.unit;
               };
-            }) [
+            })
+            [
               {
                 name = "Total";
                 unit = "kWh";
@@ -261,22 +276,23 @@ in {
                 name = "Current";
                 unit = "A";
               }
-            ]);
+            ]
+          );
 
-        calendar = [];
+          calendar = [ ];
 
-        homeassistant = {
-          name = "Home";
-          latitude = "!secret latitude";
-          longitude = "!secret longitude";
-          elevation = "!secret elevation";
-          unit_system = "metric";
-          temperature_unit = "C";
-          time_zone = "Europe/Amsterdam";
+          homeassistant = {
+            name = "Home";
+            latitude = "!secret latitude";
+            longitude = "!secret longitude";
+            elevation = "!secret elevation";
+            unit_system = "metric";
+            temperature_unit = "C";
+            time_zone = "Europe/Amsterdam";
+          };
+
+          python_script = { };
         };
-
-        python_script = {};
-      };
     };
 
     phil.server.services = {
