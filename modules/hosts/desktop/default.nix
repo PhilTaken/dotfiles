@@ -4,10 +4,12 @@
   lib,
   inputs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.desktop;
-in {
+in
+{
   options.phil.desktop = {
     enable = mkEnableOption "desktop";
     # more options
@@ -29,12 +31,14 @@ in {
       };
     };
 
+    services.flatpak.enable = true;
+
     hardware.graphics.enable = true;
     #virtualisation.waydroid.enable = true;
     virtualisation.docker.enable = false;
 
     # qmk rules for flashing keebs
-    services.udev.packages = with pkgs; [qmk-udev-rules];
+    services.udev.packages = with pkgs; [ qmk-udev-rules ];
 
     nixpkgs.config.permittedInsecurePackages = [
       # permit old mbedtls for lutris
@@ -47,6 +51,9 @@ in {
       foliate
       pdfsam-basic
       xournalpp
+
+      freecad
+      openscad-unstable
 
       # notes
       obsidian
