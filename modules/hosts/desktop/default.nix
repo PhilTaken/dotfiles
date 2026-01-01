@@ -54,6 +54,7 @@ in
 
       freecad
       openscad-unstable
+      appimage-run
 
       # notes
       obsidian
