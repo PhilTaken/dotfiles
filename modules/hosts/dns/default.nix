@@ -2,22 +2,28 @@
   config,
   lib,
   ...
-}: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.dns;
   net = config.phil.network;
   hostnames = builtins.attrNames net.nodes;
 
   # TODO ensure at least one node is running unbound
-  default_nameserver =
-    builtins.head
-    (builtins.attrNames
-      (lib.filterAttrs
-        (_name: nodeconfig: lib.elem "unbound" nodeconfig.services)
-        net.nodes));
+  default_nameserver = builtins.head (
+    builtins.attrNames (
+      lib.filterAttrs (_name: nodeconfig: lib.elem "unbound" nodeconfig.services) net.nodes
+    )
+  );
 
   same-server = config.phil.server.services.unbound.enable;
-in {
+in
+{
   options.phil.dns = {
     enable = mkEnableOption "dns over tls";
     nameserver = mkOption {
@@ -31,7 +37,7 @@ in {
   config = lib.mkMerge [
     # use public nameserver when not connected to nebula
     (mkIf (!config.phil.nebula.enable && !config.phil.server.services.unbound.enable) {
-      networking.nameservers = ["9.9.9.9"];
+      networking.nameservers = [ "9.9.9.9" ];
 
       services.resolved = {
         enable = true;
@@ -41,7 +47,7 @@ in {
     })
 
     (mkIf (!config.phil.nebula.enable && config.phil.server.services.unbound.enable) {
-      networking.nameservers = ["localhost"];
+      networking.nameservers = [ "localhost" ];
       services.resolved.enable = false;
     })
 
@@ -50,15 +56,16 @@ in {
       #networking.networkmanager.dns = mkIf (config.networking.networkmanager.enable == true) "none";
 
       networking.nameservers =
-        if same-server
-        then ["localhost"]
-        else [
-          # https://github.com/systemd/systemd/issues/5755
-          "${net.nodes.${cfg.nameserver}.network_ip."milkyway"}#dns.${net.tld}"
-        ];
+        if same-server then
+          [ "localhost" ]
+        else
+          [
+            # https://github.com/systemd/systemd/issues/5755
+            "${net.nodes.${cfg.nameserver}.network_ip."headscale"}#dns.${net.tld}"
+          ];
 
       services.resolved = {
-        enable = ! same-server;
+        enable = !same-server;
         dnsovertls = "opportunistic";
         dnssec = "false";
       };

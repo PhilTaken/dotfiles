@@ -7,12 +7,6 @@
       headscale.netmask = "100.64.0.0/24";
       headscale.ifname = "tailscale0";
 
-      milkyway.netmask = "10.200.0.0/24";
-      milkyway.ifname = "milkyway";
-
-      yggdrasil.netmask = "10.100.0.0/24";
-      yggdrasil.ifname = "tun0";
-
       lan.netmask = "192.168.178.0/16";
       lan.ifname = "eth0";
     };
@@ -22,8 +16,6 @@
         system = "aarch64-linux";
         public_ip = "195.201.93.72";
         network_ip."headscale" = "100.64.0.25";
-        network_ip."milkyway" = "10.200.0.2";
-        network_ip."yggdrasil" = "10.100.0.2";
         services = [
           "keycloak"
 
@@ -47,8 +39,6 @@
       delta = {
         system = "x86_64-linux";
         network_ip."headscale" = "100.64.0.26";
-        network_ip."milkyway" = "10.200.0.5";
-        network_ip."yggdrasil" = "10.100.0.5";
         network_ip."lan" = "192.168.178.26";
         services = [
           "gitea"
@@ -69,6 +59,15 @@
           "paperless"
 
           "audiobookshelf"
+        ];
+      };
+
+      eta = {
+        system = "aarch64-linux";
+        network_ip."headscale" = "100.64.0.5";
+        network_ip."lan" = "192.168.178.32";
+        services = [
+          # "zigbee2mqtt"
         ];
       };
     };

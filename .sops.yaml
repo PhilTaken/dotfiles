@@ -7,15 +7,17 @@ keys:
   - &gamma age1xw0t75c8yya0uk0j5klzgfssuvf5zjnh5jgw53l32fj2uv9z5p0s4gcmtd
   - &gammahost age1mnhkn6hgq2q5pkz93dy2kltz3cnfajeqsf35ew7p0n0ec5qnmqgqe0xfv2
   - &zetta age1dnzlu2savx6fyw48wte42l3ard3jf32whqd3q3reukwk66mcvvkqecnar6
+  - &eta age1wsyazpnv8wj83qr5qpfq0hu62q2ljjdag4nzsekd43rremy0vdxsy326hh
 creation_rules:
   - key_groups:
-    - pgp:
-      - *yubi
-      age:
-      - *alpha
-      - *beta
-      - *gamma
-      - *epsilon
-      - *delta
-      - *zetta
-      - *gammahost
+      - pgp:
+          - *yubi
+        age:
+          - *alpha
+          - *beta
+          - *gamma
+          - *epsilon
+          - *delta
+          - *zetta
+          - *eta
+          - *gammahost

@@ -2,80 +2,84 @@
   self,
   inputs,
   ...
-}: let
+}:
+let
   inherit (inputs.nixpkgs) lib;
 
-  util = import ../../lib {inherit inputs self;};
-  net = (lib.evalModules {modules = [../../network.nix];}).config.phil.network;
+  util = import ../../lib { inherit inputs self; };
+  net = (lib.evalModules { modules = [ ../../network.nix ]; }).config.phil.network;
 
   mkHMUsers = users: lib.listToAttrs (map (user: lib.nameValuePair user hmUsers.${user}) users);
 
-  hmUsers = let
-    mkConfig = lib.recursiveUpdate {
-      ssh.enable = true;
-      music.enable = true;
-    };
-  in {
-    alice.userConfig = {
-      headless = true;
-      music.enable = false;
-
-      git = {
-        enable = true;
-        userName = "Philipp Herzog";
-        userEmail = "philipp.herzog@protonmail.com";
-        # TODO maybe include pubkey here?
-        signKey = "~/.ssh/git.pub";
-        signFlavor = "ssh";
+  hmUsers =
+    let
+      mkConfig = lib.recursiveUpdate {
+        ssh.enable = true;
+        music.enable = true;
       };
-    };
+    in
+    {
+      alice.userConfig = {
+        headless = true;
+        music.enable = false;
 
-    nixos.userConfig = mkConfig {
-      #des.gnome.enable = true;
-
-      wms.hyprland.enable = false;
-      wms.bars.eww.enable = false;
-
-      gpg.enable = true;
-
-      browsers = {
-        enable = true;
-        firefox.enable = true;
-        firefox.wayland = true;
-      };
-    };
-
-    maelstroem.userConfig = mkConfig {
-      # de/wm config
-      wms.hyprland.enable = false;
-      wms.bars.eww.enable = false;
-
-      #des.gnome.enable = true;
-    };
-
-    jaid.userConfig = mkConfig {
-      terminals.defaultShell = "zsh";
-      #des.gnome.enable = true;
-    };
-
-    philippherzog.userConfig = {
-      work.enable = true;
-
-      editors.neovim.langs = {
-        haskell = false;
-        cpp = false;
-        ts = true;
-        python = true;
+        git = {
+          enable = true;
+          userName = "Philipp Herzog";
+          userEmail = "philipp.herzog@protonmail.com";
+          # TODO maybe include pubkey here?
+          signKey = "~/.ssh/git.pub";
+          signFlavor = "ssh";
+        };
       };
 
-      shells.fish.enable = true;
-      gpg.enable = true;
+      nixos.userConfig = mkConfig {
+        #des.gnome.enable = true;
 
-      zellij.enable = false;
-      git.enable = true;
+        wms.hyprland.enable = false;
+        wms.bars.eww.enable = false;
+
+        gpg.enable = true;
+
+        browsers = {
+          enable = true;
+          firefox.enable = true;
+          firefox.wayland = true;
+        };
+      };
+
+      maelstroem.userConfig = mkConfig {
+        # de/wm config
+        wms.hyprland.enable = false;
+        wms.bars.eww.enable = false;
+
+        #des.gnome.enable = true;
+      };
+
+      jaid.userConfig = mkConfig {
+        terminals.defaultShell = "zsh";
+        #des.gnome.enable = true;
+      };
+
+      philippherzog.userConfig = {
+        work.enable = true;
+
+        editors.neovim.langs = {
+          haskell = false;
+          cpp = false;
+          ts = true;
+          python = true;
+        };
+
+        shells.fish.enable = true;
+        gpg.enable = true;
+
+        zellij.enable = false;
+        git.enable = true;
+      };
     };
-  };
-in {
+in
+{
   flake = {
     darwinConfigurations = {
       work-mac = util.host.mkDarwin {
@@ -90,125 +94,143 @@ in {
       };
     };
 
-    nixosConfigurations =
-      {
-        # desktop @ home
-        gamma = let
+    nixosConfigurations = {
+      # desktop @ home
+      gamma =
+        let
           users = [
             "maelstroem"
             "nixos"
             "jaid"
           ];
         in
-          util.host.mkNixos (mkHMUsers users) {
-            inherit users;
-            hostName = "gamma";
-            hostModules =
-              [
-                {
-                  phil = {
-                    # server.services.openssh.enable = true;
+        util.host.mkNixos (mkHMUsers users) {
+          inherit users;
+          hostName = "gamma";
+          hostModules = [
+            {
+              phil = {
+                # server.services.openssh.enable = true;
 
-                    core.enableBluetooth = true;
-                    desktop.enable = true;
-                    development.enable = true;
-                    nvidia.enable = true;
-                    video.managers = [
-                      "gnome"
-                      "cosmic"
-                      #"kde"
-                    ];
-                  };
-                }
-              ]
-              ++ (with inputs.nixos-hardware.nixosModules; [
-                common-pc
-                common-pc-ssd
-                common-cpu-amd
-                #common-gpu-nvidia
-              ]);
-          };
+                core.enableBluetooth = true;
+                desktop.enable = true;
+                development.enable = true;
+                nvidia.enable = true;
+                video.managers = [
+                  "gnome"
+                  "cosmic"
+                  #"kde"
+                ];
+              };
+            }
+          ]
+          ++ (with inputs.nixos-hardware.nixosModules; [
+            common-pc
+            common-pc-ssd
+            common-cpu-amd
+            #common-gpu-nvidia
+          ]);
+        };
 
-        # future laptop config
-        epsilon = let
-          users = ["nixos"];
+      # future laptop config
+      epsilon =
+        let
+          users = [ "nixos" ];
         in
-          util.host.mkNixos (mkHMUsers users) {
-            inherit users;
-            hostName = "epsilon";
+        util.host.mkNixos (mkHMUsers users) {
+          inherit users;
+          hostName = "epsilon";
 
-            hostModules = [
-              {
-                phil = {
-                  server.services.openssh.enable = true;
+          hostModules = [
+            {
+              phil = {
+                server.services.openssh.enable = true;
 
-                  laptop.enable = true;
-                  laptop.low_power = true;
-                };
-              }
+                laptop.enable = true;
+                laptop.low_power = true;
+              };
+            }
 
-              inputs.nixos-hardware.nixosModules.common-pc-laptop
-              inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-              inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
-              inputs.nixos-hardware.nixosModules.common-gpu-intel-kaby-lake
-            ];
-          };
+            inputs.nixos-hardware.nixosModules.common-pc-laptop
+            inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+            inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+            inputs.nixos-hardware.nixosModules.common-gpu-intel-kaby-lake
+          ];
+        };
 
-        zetta = let
-          users = ["alice"];
+      zetta =
+        let
+          users = [ "alice" ];
         in
-          util.host.mkNixos (mkHMUsers users) {
-            system = "aarch64-linux";
-            hostName = "zetta";
-            inherit users;
+        util.host.mkNixos (mkHMUsers users) {
+          system = "aarch64-linux";
+          hostName = "zetta";
+          inherit users;
 
-            hostModules = [
+          hostModules = [
+            {
+              phil = {
+                server.services.openssh.enable = true;
+                wireguard.enable = false;
+                video.enable = false;
+                yubikey.enable = false;
+              };
+            }
+
+            (
+              { lib, ... }:
               {
-                phil = {
-                  server.services.openssh.enable = true;
-                  wireguard.enable = false;
-                  video.enable = false;
-                  yubikey.enable = false;
-                };
+                # FIXME: connect zetta to nebula to access forgjo via ssh?
+                home-manager.users.alice.programs.git.extraConfig.credential.helper = "store";
+
+                # this somehow breaks deployments
+                home-manager.users.alice.programs.carapace.enable = lib.mkForce false;
+
+                # disable to prevent inferring dns from vm host
+                services.resolved.enable = lib.mkForce false;
               }
+            )
+          ];
+        };
 
-              (
-                {lib, ...}: {
-                  # FIXME: connect zetta to nebula to access forgjo via ssh?
-                  home-manager.users.alice.programs.git.extraConfig.credential.helper = "store";
+      eta = util.host.mkBase [ ] {
+        system = "aarch64-linux";
+        hostName = "eta";
 
-                  # this somehow breaks deployments
-                  home-manager.users.alice.programs.carapace.enable = lib.mkForce false;
-
-                  # disable to prevent inferring dns from vm host
-                  services.resolved.enable = lib.mkForce false;
-                }
-              )
-            ];
-          };
-      }
-      // builtins.mapAttrs (
-        nodename: nodeconfig: (util.server.mkServer nodeconfig.services {
-          inherit (nodeconfig) system;
-          hostName = nodename;
-        })
-      )
-      net.nodes;
+        hostModules = [
+          {
+            phil = {
+              server.services.openssh.enable = true;
+              wireguard.enable = false;
+              video.enable = false;
+              yubikey.enable = false;
+            };
+          }
+        ];
+      };
+    }
+    // builtins.mapAttrs (
+      nodename: nodeconfig:
+      (util.server.mkServer nodeconfig.services {
+        inherit (nodeconfig) system;
+        hostName = nodename;
+      })
+    ) net.nodes;
 
     # shortcut for building with `nix build`
-    systems =
-      builtins.mapAttrs (
-        system: _: self.nixosConfigurations.${system}.config.system.build.toplevel
-      )
-      self.nixosConfigurations;
+    systems = builtins.mapAttrs (
+      system: _: self.nixosConfigurations.${system}.config.system.build.toplevel
+    ) self.nixosConfigurations;
   };
 
-  perSystem = {system, ...}: {
-    #homeConfigurations = lib.mapAttrs (util.user.mkHMUser (util.pkgsFor system)) hmUsers;
-    checks =
-      (builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib)
+  perSystem =
+    { system, ... }:
+    {
+      #homeConfigurations = lib.mapAttrs (util.user.mkHMUser (util.pkgsFor system)) hmUsers;
+      checks =
+        (builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib)
         .${system};
-  };
+    };
 
   flake = {
     # requires ifd :/
