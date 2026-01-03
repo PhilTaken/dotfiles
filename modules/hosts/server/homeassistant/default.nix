@@ -111,7 +111,6 @@ in
 
         # requires extra input on ui
         "fritzbox"
-        "hue"
         "met"
         "here_travel_time"
         "tasmota"

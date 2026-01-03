@@ -13,6 +13,8 @@ ldap-bindauth-pass: ENC[AES256_GCM,data:IVKfe2eFn8Noj+6S6Z3LV7GvKZsPrRJrXskQ8i+h
 writefreely-adminpass: ENC[AES256_GCM,data:WsY7M2duRfPteiJxEnk=,iv:61TDzOV87cPc63bjoZhTzU+4ea08rRtFphGcJ0kE0vE=,tag:+a8z3g89zx3aJ+D8TslZJw==,type:str]
 geoip-licensekey: ENC[AES256_GCM,data:JOqJTw5XMQ4EB5OeiJlV/ElXf0HVqzucWFVB0KKpT/H05TdcEgC+MA==,iv:GKtSxnqT/xdgQ9hpupKrGadG65ske00LQpyxfHkF0Jk=,tag:V+kK9Z56wD4SdMAuqL3RuQ==,type:str]
 mqtt-password: ENC[AES256_GCM,data:j+UJzI704+U0+MDy4TCf4ujZLS7hvyU=,iv:a/dq344+xHfsDClok7AeaLjJUgwgaRnPlrsUMwtZp3U=,tag:38qLWsUtzI1Xvm8BqnYmdw==,type:str]
+#ENC[AES256_GCM,data:Y8Hh3pAgPUKWzo3003mrCz8/dEP4wQ==,iv:qavH6KSREBJIxtJ3OOGyS9YrG4tsVQ00B0w0pYyvqMU=,tag:QqNBXSQQNpmtT0wfzjsr7Q==,type:comment]
+zigbee2mqtt: ENC[AES256_GCM,data:vzz9rRQbfDMElquSn6u9QT2tHehU/3pkV77QdqpltzvQPolNDvoW0JoXWwOaXrhHtrhaN6IrNW8pHYbV+G4DlaN5uwU2LZbYgM2MWuq+Znbymg==,iv:zfWoGpxb59V4KyKSUOiAWOhVagaNjEZS9yKkNVc3tEI=,tag:7Ns4g9saE6/Y/EVIAZOdlw==,type:str]
 freshrss-password: ENC[AES256_GCM,data:0F2SkrOPIe788Wz2Xn0/M9okX3Kf+Shk,iv:V+Yvmk/+sGFnXdw9ZoVKCiClc9qMfxmugQbO2iOGdgE=,tag:ksdpX7JQXfYKMrGe2/ZWKg==,type:str]
 bookstack-appkeyfile: ENC[AES256_GCM,data:ifXdJ/yrz8LHFbMGqpz4vb1CdqKIJeMghOKh6ZIXFNRZxiWQFACzS27ZhHA=,iv:8Ua1QRZfUukiVGSXpqVPPerSuY2R9EuxXUp2aoRbuWE=,tag:DLvMYpM4+R9zg2nOcWkXVw==,type:str]
 dovecot-ldap-config: ENC[AES256_GCM,data:nxQsKlNB9jzixu3E7hSEYGr/C3Kwo/ptQ/v3usiM8xQfY4m7PAVf2ez/wL/1YGkvLWB96M7IZIqi3trGZzGw894Dw/uNnW/Sti2dp2qaUsgcCokJGzZjKAsfPj+o5IU+uQ3M8Uhwqb7lltSC6S02jc8Or4VPA2aUza1Lakptyi5HrWYaODb8JD7Z2oy7IjuTx2jQqiznbDt/D8lGSLp+UFbR4OFprhjxULNRNoPG3RLwRYHmuNmNi4q/fObXhzyyIaIq6Vysc2hIQ3ADq5ETBELPsU6OJXv5WOwBLHpLZoB7nkDb6PefFp841BUfc7laDXRq5xp1aIXmWeODKKzesED44g5bA17dsweUsSHSuoGNwxWJV8BlrLjSUfeCA0XiBWlgzxq4dFI1gM7JJv9MLP79zT4Qi+OMHGqSInLFw2cUy0+8KVC+TlAVlCAGJa72VSNy3ogYbxqVObTumz1TS6wn8p9hX8OqcOFQJ7f/IDCH9Iw8Rdkv4PomQ1rTjhx4p6K1c+lVfqn3Xrx7yIp7nZveeolKJplsT8bVS7oR618cpzqXQtvuCGe2OsAConBSjBSEgyR8+HW0WFMbyt+Rd8nq08fYb5mNYIWobuqrceq0hv6+Vbja9f6NajCHut7rRayw+R1QPzfLsKe4yP9XMbbsSeBbuXGNQ8h802bI9yy1BKKgHxQUf02rGwbzGry4jyXlmBJAFRulr3Lf+IFo4z59by5cB34E6wFJC7F0yBNm9TSt7TvetWzFfgTI7WaN5VASpFOpB/nMHQAUToY5/M1xSGNZnKYUofLOPBpoXX2la+RUOHnqD8//EMMngxgwtREN6WES+rIvf4bZg+UBNWD0oaxOrxFQwXHRD2P/lXgd/CWu3t7CaazGiTAHGO62VRlrAkf4YYi9pHMzhCGjyNEEZEaiGPuP4x1k/79vwerqkQ+UuZuCpxVVbozlRwP/SxxOg3uOyBaUqnrTHzpmAV3pOhGHRNt/hKMyE4jE75Y+QysOD3qvIeB5g0GIc7Mktdvv5LJgSgN8/UvicMg5uaCuHPvCr/02NZmTkifwzQrzvOUZlfID0wRbpvQsHktC0/DJBTGjMpApLHFAxs1GagM=,iv:3SisNlYofHjtkUPZ7EbCi4pHCuiU/uTGoQwejaKI9zE=,tag:ifxLkJ5mhUBGEE/7DbuxHg==,type:str]
@@ -103,8 +105,8 @@ sops:
             Q0oyUTljRXN4eHcvRE5KZ1lucTNIcjgKiT1cDq9JF/3cD3xPCaR5Y0gbL98oghB0
             plaF1ykwSpGQJARpSe0rMB/QDW7rdWAVtIDJaPzu+iiQbRnjNDFJ5w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-01-03T17:34:14Z"
-    mac: ENC[AES256_GCM,data:HRPDmapDpbzyjmIbJGxEElXjT+nZifxr1e8s/hN/rllPPO1CvpqGgB4C3xYXtoLG83m2NCMo0EpSVlJtaoTgWS7uHzRVThw/X1wwFwB4qG/G0PJtb7VJPod10Kasl+Xpi2UkpzZ/ouEk9SFArS4kHwib67fElTOL+POU0Q/dMS4=,iv:F7Fc6jAo1UeotrNbyrsTle6Mh9Qu3LC0atH5Olk9AbM=,tag:9wYg0s3/ocpUpDrSna5TnA==,type:str]
+    lastmodified: "2026-01-03T18:40:28Z"
+    mac: ENC[AES256_GCM,data:vww+Ik1poWnvGKpzQs9vBW82kAn/N5IOag7uMVq6BE+5Vwfi2PUazYoPC4W5cQq3sPixaAbycpwYfqCXh4lZsTPDWSLF/FxNe00ticbeY1TRGJkVrmGDS+FvWgoS5SEsChU5ShYr1JUwieZR3fW0aPH/CAyZ46i/fVMK7jmCRAA=,iv:vLsWMVz5l60zbcR2Qb/1dCIksVEottTYWesXf/z6dbc=,tag:0YBIKhoIyGz8ZFzsAE3IHw==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-
@@ -127,4 +129,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
     unencrypted_suffix: _unencrypted
-    version: 3.10.2
+    version: 3.11.0

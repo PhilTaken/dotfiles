@@ -191,21 +191,6 @@ in
             )
           ];
         };
-
-      eta = util.host.mkBase [ ] {
-        system = "aarch64-linux";
-        hostName = "eta";
-
-        hostModules = [
-          {
-            phil = {
-              server.services.openssh.enable = true;
-              video.enable = false;
-              yubikey.enable = false;
-            };
-          }
-        ];
-      };
     }
     // builtins.mapAttrs (
       nodename: nodeconfig:

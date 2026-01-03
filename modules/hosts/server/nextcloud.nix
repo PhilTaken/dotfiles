@@ -132,13 +132,13 @@ in
 
               services.nextcloud = {
                 enable = true;
-                package = pkgs.nextcloud31;
+                package = pkgs.nextcloud32;
 
                 inherit home datadir hostName;
                 https = false;
 
                 extraApps = {
-                  inherit (pkgs.nextcloud31Packages.apps)
+                  inherit (pkgs.nextcloud32Packages.apps)
                     calendar
                     bookmarks
                     contacts
