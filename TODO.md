@@ -2,7 +2,6 @@
 
 - remove modules
     - nebula
-    - legacy wireguard
 
 - grafana
     - provisioned dashboards

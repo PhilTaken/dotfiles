@@ -33,7 +33,6 @@ $ sudo age-keygen -o /mnt/var/lib/sops-nix/key.txt
 update sops secrets with new public key, make sure all secrets are generated, for example
 
 - nebula key
-- wireguard key
 
 maybe double-check your hardware config on the vm with a quick
 ```
@@ -69,11 +68,11 @@ Every setup consists of either two or three parts:
 These three parts are combined using helper methods defined under [./lib/server.nix](./lib/server.nix), [./lib/host.nix](./lib/host.nix) and [./lib/user.nix](./lib/user.nix).
 
 [./network.nix](./network.nix) defines what services are running where for servers specifically.
-This file also serves as means to generate DNS entries for [Unbound](./modules/hosts/server/unbound.nix), reverse proxy entries for [Caddy](./modules/hosts/server/caddy/default.nix), a basic ip lookup table for [nfs mounts](./modules/hosts/fileshare/default.nix), [dns nameserver entries](./modules/hosts/dns/default.nix) as well as the [wireguard](./modules/hosts/wireguard/default.nix) and [nebula](./modules/hosts/nebula/default.nix) config modules.
+This file also serves as means to generate DNS entries for [Unbound](./modules/hosts/server/unbound.nix), reverse proxy entries for [Caddy](./modules/hosts/server/caddy/default.nix), a basic ip lookup table for [nfs mounts](./modules/hosts/fileshare/default.nix) and [dns nameserver entries](./modules/hosts/dns/default.nix) .
 
 ### Networking
 
-Every setup is part of a [wireguard](https://www.wireguard.com/) and a [nebula](https://github.com/slackhq/nebula) vpn / network overlay to facilitate communication between setups.
+Every setup is part of a ~~tail~~*head*scale vpn to facilitate communication between setups.
 
 DNS is set up with [Unbound](https://www.nlnetlabs.nl/projects/unbound/about/) and routes requests to serves which then reverse proxy them to the respective services using [Caddy](https://caddyserver.com/).
 

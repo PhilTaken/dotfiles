@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
     ./core
 
@@ -18,7 +19,6 @@
     ./backup
 
     ./dns
-    ./wireguard
     ./nebula
     ./mullvad
   ];

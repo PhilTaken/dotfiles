@@ -171,7 +171,6 @@ in
             {
               phil = {
                 server.services.openssh.enable = true;
-                wireguard.enable = false;
                 video.enable = false;
                 yubikey.enable = false;
               };
@@ -201,7 +200,6 @@ in
           {
             phil = {
               server.services.openssh.enable = true;
-              wireguard.enable = false;
               video.enable = false;
               yubikey.enable = false;
             };
