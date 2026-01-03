@@ -48,7 +48,14 @@ in
   config = lib.mkIf (!config.phil.headless) {
     home.packages = lib.optionals (lib.hasSuffix "linux" pkgs.stdenv.hostPlatform.system) [
       pkgs.ghostty
+      pkgs.fcitx5
     ];
+
+    home.sessionVariables = {
+      GTK_IM_MODULE = "ibus";
+      QT_IM_MODULE = "ibus";
+      XMODIFIERS = "@im=ibus";
+    };
 
     programs.foot.enable = false; # lib.hasSuffix "linux" pkgs.stdenv.hostPlatform.system;
 
@@ -78,20 +85,25 @@ in
             config = wezterm.config_builder()
           end
 
+          config.color_scheme = 'Catppuccin Macchiato'
           config.window_padding = { left = 12, right = 12, top = 16, bottom = 7 }
-          config.macos_window_background_blur = 20
-          config.hide_tab_bar_if_only_one_tab = true
           config.font_size = 11.0
           config.dpi = 192.0
+          config.hide_tab_bar_if_only_one_tab = true
           config.adjust_window_size_when_changing_font_size = false
           config.warn_about_missing_glyphs = false
+
+          if wezterm.target_triple ~= 'aarch64-apple-darwin' then
+            config.window_decorations = "TITLE | RESIZE"
+
+            -- https://github.com/wezterm/wezterm/issues/6673
+            config.enable_wayland = false
+          else
+            config.front_end = "WebGpu"
+            config.macos_window_background_blur = 20
+          end
+
           config.disable_default_key_bindings = true
-          config.color_scheme = 'Catppuccin Macchiato'
-          config.front_end = "WebGpu"
-
-          -- https://github.com/wez/wezterm/issues/5360
-          config.enable_wayland = true
-
           config.keys = {
             { key = ')', mods = 'CTRL', action = act.ResetFontSize },
             { key = ')', mods = 'SHIFT|CTRL', action = act.ResetFontSize },
