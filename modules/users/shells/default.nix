@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-} @ inputs: let
+}@inputs:
+let
   # Automatically download the latest index from Mic92's nix-index-database.
   nix-locate = pkgs.writeShellScriptBin "nix-locate" ''
     set -euo pipefail
@@ -22,14 +23,15 @@
 
   # Modified version of command-not-found.sh that uses our wrapped version of
   # nix-locate, makes the output a bit less noisy, and adds color!
-  command-not-found = pkgs.runCommandLocal "command-not-found.sh" {} ''
+  command-not-found = pkgs.runCommandLocal "command-not-found.sh" { } ''
     mkdir -p $out/etc/profile.d
     substitute ${./command-not-found.sh}                  \
       $out/etc/profile.d/command-not-found.sh             \
       --replace @nix-locate@ ${nix-locate}/bin/nix-locate \
       --replace @tput@ ${pkgs.ncurses}/bin/tput
   '';
-in {
+in
+{
   imports = [
     ./zsh
     ./fish
@@ -68,7 +70,7 @@ in {
       cmake
       comma
       dig
-      dogdns
+      doggo
       dufs
       eza
       fasd
@@ -253,33 +255,35 @@ in {
         };
       };
 
-      xplr = let
-        zoxide = pkgs.fetchFromGitHub {
-          owner = "sayanarijit";
-          repo = "zoxide.xplr";
-          rev = "e50fd35db5c05e750a74c8f54761922464c1ad5f";
-          sha256 = "sha256-ZiOupn9Vq/czXI3JHvXUlAvAFdXrwoO3NqjjiCZXRnY=";
+      xplr =
+        let
+          zoxide = pkgs.fetchFromGitHub {
+            owner = "sayanarijit";
+            repo = "zoxide.xplr";
+            rev = "e50fd35db5c05e750a74c8f54761922464c1ad5f";
+            sha256 = "sha256-ZiOupn9Vq/czXI3JHvXUlAvAFdXrwoO3NqjjiCZXRnY=";
+          };
+          devicons = pkgs.fetchFromGitLab {
+            owner = "hartan";
+            repo = "web-devicons.xplr";
+            rev = "000be1dcc532d90b03cbe549083617376117d9fe";
+            sha256 = "sha256-SZo46ayww5Fs5Pf0j4LDjon+5dy+UyzKT1+vdMqrjzo=";
+          };
+        in
+        {
+          enable = true;
+          extraConfig = ''
+            require('web-devicons.xplr').setup()
+            require("zoxide.xplr").setup({
+              bin = "zoxide",
+              mode = "default",
+              key = "Z",
+            })
+          '';
+          plugins = {
+            inherit zoxide devicons;
+          };
         };
-        devicons = pkgs.fetchFromGitLab {
-          owner = "hartan";
-          repo = "web-devicons.xplr";
-          rev = "000be1dcc532d90b03cbe549083617376117d9fe";
-          sha256 = "sha256-SZo46ayww5Fs5Pf0j4LDjon+5dy+UyzKT1+vdMqrjzo=";
-        };
-      in {
-        enable = true;
-        extraConfig = ''
-          require('web-devicons.xplr').setup()
-          require("zoxide.xplr").setup({
-            bin = "zoxide",
-            mode = "default",
-            key = "Z",
-          })
-        '';
-        plugins = {
-          inherit zoxide devicons;
-        };
-      };
     };
   };
 }
