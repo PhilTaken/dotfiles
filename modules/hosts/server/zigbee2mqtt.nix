@@ -68,6 +68,10 @@ in
           port = "/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0";
           adapter = "zstack";
         };
+        availability = {
+          enabled = true;
+          active.timeout = 2;
+        };
         advanced = {
           channel = 11;
           network_key = "!secrets.yaml network_key";
