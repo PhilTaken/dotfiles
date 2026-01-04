@@ -70,9 +70,18 @@ in
         };
         advanced = {
           channel = 11;
-          network_key = "GENERATE";
-          pan_id = "GENERATE";
-          ext_pan_id = "GENERATE";
+          network_key = "!secrets.yaml network_key";
+          ext_pan_id = [
+            11
+            243
+            38
+            57
+            97
+            143
+            239
+            253
+          ];
+          pan_id = 6930;
         };
         frontend = {
           enabled = true;

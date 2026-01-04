@@ -189,6 +189,7 @@ in
           vim-startuptime
           vim-sleuth
           plenary-nvim
+          nvim-treesitter.withAllGrammars
 
           # completion
           (plug blink-cmp ''
@@ -307,14 +308,6 @@ in
           (plug galaxyline-nvim ''
             -- statusline
             require("custom.statusline")
-          '')
-
-          (plug nvim-treesitter.withAllGrammars ''
-            require('nvim-treesitter.configs').setup {
-              highlight = { enable = true },
-              indent = { enable = true },
-              auto_install = false,
-            }
           '')
 
           (plug which-key-nvim ''
