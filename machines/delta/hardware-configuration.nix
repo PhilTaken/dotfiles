@@ -6,15 +6,22 @@
   lib,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["ahci" "xhci_pci" "usb_storage" "sd_mod" "sr_mod"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.initrd.availableKernelModules = [
+    "ahci"
+    "xhci_pci"
+    "usb_storage"
+    "sd_mod"
+    "sr_mod"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/24e4b8a8-fbbd-4d95-849f-b8eea354c40b";
@@ -29,7 +36,12 @@
   fileSystems."/media" = {
     device = "/dev/disk/by-label/seagate";
     fsType = "ext4";
-    options = ["defaults" "user" "rw" "exec"];
+    options = [
+      "defaults"
+      "user"
+      "rw"
+      "exec"
+    ];
   };
 
   fileSystems."/media_int" = {
@@ -37,7 +49,18 @@
     fsType = "zfs";
   };
 
-  swapDevices = [];
+  fileSystems."/mnt/new" = {
+    device = "/dev/disk/by-uuid/f61c50c9-256e-401f-8838-ce56b223d8e5";
+    fsType = "btrfs";
+    options = [
+      "defaults"
+      "noatime"
+      "compress=zstd"
+      "autodefrag"
+    ];
+  };
+
+  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

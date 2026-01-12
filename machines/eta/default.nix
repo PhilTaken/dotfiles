@@ -42,8 +42,6 @@
   };
 
   sdImage.compressImage = false;
-  services.openssh.enable = true;
-  security.sudo.wheelNeedsPassword = false;
 
   networking.hostId = "eb87404c";
   system.stateVersion = "25.05";

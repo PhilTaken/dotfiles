@@ -52,8 +52,11 @@ in
       pdfsam-basic
       xournalpp
 
+      # 3d printing
       freecad
       openscad-unstable
+      orca-slicer
+
       appimage-run
 
       # notes

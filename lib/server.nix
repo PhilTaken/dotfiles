@@ -27,6 +27,7 @@ in
         {
           config = {
             documentation.enable = false;
+            security.sudo.wheelNeedsPassword = false;
 
             zramSwap = {
               enable = true;
