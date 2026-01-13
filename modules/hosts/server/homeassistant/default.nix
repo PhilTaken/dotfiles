@@ -10,6 +10,7 @@
   config,
   lib,
   netlib,
+  pkgs,
   ...
 }:
 let
@@ -114,6 +115,10 @@ in
         "met"
         "here_travel_time"
         "tasmota"
+      ];
+
+      customComponents = [
+        (pkgs.home-assistant.python.pkgs.callPackage ./ha-bambulab.nix { })
       ];
 
       config =
