@@ -55,7 +55,7 @@ in
       # 3d printing
       freecad
       openscad-unstable
-      orca-slicer
+      # orca-slicer
 
       appimage-run
 

@@ -121,6 +121,21 @@ in
         (pkgs.home-assistant.python.pkgs.callPackage ./ha-bambulab.nix { })
       ];
 
+      customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+        (pkgs.callPackage ./hui-element.nix { })
+        apexcharts-card
+        bubble-card
+        button-card
+        card-mod
+        clock-weather-card
+        hourly-weather
+        mini-graph-card
+        multiple-entity-row
+        mushroom
+        weather-card
+        weather-chart-card
+      ];
+
       config =
         let
           home_zone_name = "home";
@@ -167,6 +182,41 @@ in
             }
 
             {
+              mode = "single";
+              triggers = [
+                {
+                  device_id = "e4286e54c4270366223cf92787b32ad1";
+                  domain = "bambu_lab";
+                  type = "event_print_finished";
+                  trigger = "device";
+                }
+              ];
+              actions = [
+                {
+                  action = "notify.mobile_app_phil_op7";
+                  data.message = "Print finished!";
+                }
+              ];
+            }
+            {
+              mode = "single";
+              triggers = [
+                {
+                  device_id = "e4286e54c4270366223cf92787b32ad1";
+                  domain = "bambu_lab";
+                  type = "event_print_error";
+                  trigger = "device";
+                }
+              ];
+              actions = [
+                {
+                  action = "notify.mobile_app_phil_op7";
+                  data.message = "Print error!";
+                }
+              ];
+            }
+
+            {
               alias = "washing_machine_done_notification";
               trigger = [
                 {
@@ -195,7 +245,7 @@ in
                   data.message = "Washing machine is done!";
                 }
                 {
-                  service = "notify.mobile_app_jaid_s_phone";
+                  service = "notify.mobile_app_whinn";
                   data.message = "Washing machine is done!";
                 }
               ];
