@@ -123,6 +123,7 @@ in
 
       customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
         (pkgs.callPackage ./hui-element.nix { })
+        (pkgs.callPackage ./config-template-card.nix { })
         apexcharts-card
         bubble-card
         button-card
@@ -143,6 +144,8 @@ in
         in
         {
           default_config = { };
+
+          # lovelace.mode = "yaml";
 
           logger.default = "info";
 
