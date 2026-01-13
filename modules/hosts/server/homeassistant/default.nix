@@ -74,47 +74,57 @@ in
 
     # ----------------
 
+    systemd.services.home-assistant = {
+      preStart = lib.mkBefore ''
+        touch -a ${config.services.home-assistant.configDir}/{automations,scenes,scripts,manual}.yaml
+      '';
+    };
+
     services.home-assistant = {
       inherit (cfg) enable;
 
       extraPackages =
         ps: with ps; [
-          gtts
-          aio-ownet
-          pyairnow
-          getmac
-          fritzconnection
           accuweather
+          adguardhome
+          aio-ownet
+          aioelectricitymaps
+          dwdwfsapi
+          fritzconnection
+          getmac
+          gtts
+          psycopg2
           py-cpuinfo
+          pyairnow
+          pyipp
+          pymodbus
           python-kasa
-          hatasmota
+          zlib-ng
         ];
 
       extraComponents = [
-        # TODO with extra hardware
-        # "bluetooth"
-        # "bluetooth_le_tracker"
-        # "esphome"
-
-        # simple setup, plug and play
+        "air_quality"
         "calendar"
         "cover"
         "derivative"
-        "geo_location"
-        "light"
-        "moon"
-        "radio_browser"
-        "shopping_list"
-        "air_quality"
-        "python_script"
-        "mqtt"
-        "uptime"
-
-        # requires extra input on ui
+        "esphome"
+        "forecast_solar"
         "fritzbox"
-        "met"
+        "geo_location"
         "here_travel_time"
+        "light"
+        "met"
+        "moon"
+        "mqtt"
+        "python_script"
+        "radio_browser"
+        "shelly"
+        "shopping_list"
+        "spotify"
         "tasmota"
+        "uptime"
+        "wyoming"
+        "zha"
       ];
 
       customComponents = [
@@ -145,7 +155,12 @@ in
         {
           default_config = { };
 
-          # lovelace.mode = "yaml";
+          # TODO fix scenes
+          lovelace.mode = "yaml";
+
+          # frontend.themes = "!include_dir_merge_named themes";
+          "automation ui" = "!include automations.yaml";
+          "scene" = "!include scenes.yaml";
 
           logger.default = "info";
 
@@ -345,6 +360,7 @@ in
             unit_system = "metric";
             temperature_unit = "C";
             time_zone = "Europe/Amsterdam";
+            packages.manual = "!include manual.yaml";
           };
 
           python_script = { };
