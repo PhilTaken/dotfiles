@@ -222,7 +222,6 @@ in
               net.nodes.${config.networking.hostName}.network_ip ? "lan"
             ) net.nodes.${config.networking.hostName}.network_ip."lan";
             server_port = cfg.port;
-            server_host = [ "0.0.0.0" ];
           };
 
           sensor = [
