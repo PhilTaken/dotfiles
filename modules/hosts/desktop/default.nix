@@ -4,12 +4,10 @@
   lib,
   inputs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.desktop;
-in
-{
+in {
   options.phil.desktop = {
     enable = mkEnableOption "desktop";
     # more options
@@ -38,12 +36,20 @@ in
     virtualisation.docker.enable = false;
 
     # qmk rules for flashing keebs
-    services.udev.packages = with pkgs; [ qmk-udev-rules ];
+    services.udev.packages = with pkgs; [qmk-udev-rules];
 
     nixpkgs.config.permittedInsecurePackages = [
       # permit old mbedtls for lutris
       "mbedtls-2.28.10"
     ];
+
+    programs.appimage = {
+      enable = true;
+      binfmt = true;
+      package = pkgs.appimage-run.override {
+        extraPkgs = pkgs: [pkgs.webkitgtk_4_1];
+      };
+    };
 
     environment.systemPackages = with pkgs; [
       #calibre
@@ -55,9 +61,8 @@ in
       # 3d printing
       freecad
       openscad-unstable
-      # orca-slicer
 
-      appimage-run
+      (pkgs.callPackage ./orca-slicer.nix {})
 
       # notes
       obsidian

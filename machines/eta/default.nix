@@ -27,6 +27,11 @@
       "btrfs"
       "tmpfs"
     ];
+    kernelParams = [
+      "cgroup_enable=cpuset"
+      "cgroup_memory=1"
+      "cgroup_enable=memory"
+    ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -45,6 +50,23 @@
 
   networking.hostId = "eb87404c";
   system.stateVersion = "25.05";
+
+  # test single-node k4s
+  # networking.firewall.allowedTCPPorts = [
+  #   6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
+  #   # 2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
+  #   # 2380 # k3s, etcd peers: required if using a "High Availability Embedded etcd" configuration
+  # ];
+  # networking.firewall.allowedUDPPorts = [
+  #   # 8472 # k3s, flannel: required if using multi-node for inter-node networking
+  # ];
+  # services.k3s = {
+  #   enable = true;
+  #   role = "server";
+  #   extraFlags = toString [
+  #     # "--debug" # Optionally add additional args to k3s
+  #   ];
+  # };
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
