@@ -33,7 +33,7 @@
     fsType = "vfat";
   };
 
-  fileSystems."/media" = {
+  fileSystems."/media_old" = {
     device = "/dev/disk/by-label/seagate";
     fsType = "ext4";
     options = [
@@ -49,7 +49,7 @@
     fsType = "zfs";
   };
 
-  fileSystems."/mnt/new" = {
+  fileSystems."/media" = {
     device = "/dev/disk/by-uuid/f61c50c9-256e-401f-8838-ce56b223d8e5";
     fsType = "btrfs";
     options = [

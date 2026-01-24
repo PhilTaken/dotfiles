@@ -672,7 +672,7 @@ in
             vim-surround
           ]
         )
-        ++ (with pkgs.vimExtraPlugins; [
+        ++ (with pkgs.vimPlugins; [
           # this cannot be lazily loaded easily since neogit checks if it's available and adds some extra config if it is
           (plug nvim-ufo ''
             require('ufo').setup()

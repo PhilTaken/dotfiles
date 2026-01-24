@@ -50,16 +50,16 @@
     disks = [ "/dev/nvme0n1" ];
   };
 
-  nixpkgs.overlays = [
-    (_self: super: {
-      vlc = super.vlc.override {
-        libbluray = super.libbluray.override {
-          withAACS = true;
-          withBDplus = true;
-        };
-      };
-    })
-  ];
+  #nixpkgs.overlays = [
+  #(_self: super: {
+  #vlc = super.vlc.override {
+  #libbluray = super.libbluray.override {
+  #withAACS = true;
+  #withBDplus = true;
+  #};
+  #};
+  #})
+  #];
 
   system.stateVersion = "24.05";
 

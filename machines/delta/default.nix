@@ -7,7 +7,7 @@
   phil.fileshare.shares.dirs = [ "/media" ];
   phil.backup.enable = true;
 
-  phil.backup.repo = "/media_int/backups";
+  phil.backup.repo = "/media/backups";
 
   environment.systemPackages = [
     pkgs.beets
