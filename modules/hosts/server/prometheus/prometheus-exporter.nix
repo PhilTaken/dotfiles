@@ -4,15 +4,27 @@
   lib,
   netlib,
   ...
-}: let
-  inherit (lib) mkIf types mkOption mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkIf
+    types
+    mkOption
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.promexp;
   net = config.phil.network;
 
-  exporters = builtins.removeAttrs config.services.prometheus.exporters ["assertions" "warnings" "minio" "tor"];
+  exporters = builtins.removeAttrs config.services.prometheus.exporters [
+    "assertions"
+    "warnings"
+    "minio"
+    "tor"
+  ];
   enabled_exporters = lib.filterAttrs (_: v: v.enable) exporters;
   exporter_ports = lib.mapAttrsToList (_: v: v.port) enabled_exporters;
-in {
+in
+{
   options.phil.server.services.promexp = {
     enable = mkOption {
       default = true;
@@ -29,18 +41,23 @@ in {
 
   config = mkIf cfg.enable {
     # TODO fix this
-    networking.firewall.interfaces."${net.networks.headscale.ifname}" = let
-      ports = exporter_ports ++ lib.optional cfg.extrasensors cfg.prom-sensors-port;
-    in {
-      allowedUDPPorts = ports;
-      allowedTCPPorts = ports;
-    };
+    networking.firewall.interfaces."${net.networks.headscale.ifname}" =
+      let
+        ports = exporter_ports ++ lib.optional cfg.extrasensors cfg.prom-sensors-port;
+      in
+      {
+        allowedUDPPorts = ports;
+        allowedTCPPorts = ports;
+      };
 
     services.prometheus.exporters = {
       node = {
         enable = true;
-        enabledCollectors = ["systemd" "processes"];
-        disabledCollectors = ["arp"];
+        enabledCollectors = [
+          "systemd"
+          "processes"
+        ];
+        disabledCollectors = [ "arp" ];
         port = netlib.portFor "node-exporter";
       };
 
@@ -71,7 +88,7 @@ in {
           targets = [
             "8.8.8.8"
             "8.8.4.4"
-            {"google.com".asn = 15169;}
+            { "google.com".asn = 15169; }
           ];
 
           dns = {
@@ -95,24 +112,27 @@ in {
       description = "Prometheus sensors exporter service user";
       group = "sensors-exporter";
       isSystemUser = true;
-      extraGroups = ["dialout"];
+      extraGroups = [ "dialout" ];
     };
-    users.groups."sensors-exporter" = mkIf cfg.extrasensors {};
+    users.groups."sensors-exporter" = mkIf cfg.extrasensors { };
 
-    systemd.services.prometheus-sensor-exporter = let
-      mypy = pkgs.python3.withPackages (ps: [
-        ps.pyramid
-        ps.prometheus-client
-        ps.twisted
-        ps.pyserial
-        ps.setuptools
-      ]);
-      writeMyPy = name: pkgs.writers.makePythonWriter mypy pkgs.python3Packages pkgs.buildPackages.python3Packages name {};
-      pyfile = writeMyPy "prom-sensors.py" ./sensors.py;
-    in
+    systemd.services.prometheus-sensor-exporter =
+      let
+        mypy = pkgs.python3.withPackages (ps: [
+          ps.pyramid
+          ps.prometheus-client
+          ps.twisted
+          ps.pyserial
+          ps.setuptools
+        ]);
+        writeMyPy =
+          name:
+          pkgs.writers.makePythonWriter mypy pkgs.python3Packages pkgs.buildPackages.python3Packages name { };
+        pyfile = writeMyPy "prom-sensors.py" ./sensors.py;
+      in
       mkIf cfg.extrasensors {
-        wantedBy = ["multi-user.target"];
-        after = ["network.target"];
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
 
         serviceConfig = {
           ExecStart = pkgs.writeShellScript "wsgi" ''
@@ -120,7 +140,12 @@ in {
             ${mypy}/bin/python \
               -m twisted web \
               --listen=tcp:${builtins.toString cfg.prom-sensors-port} \
-              --wsgi ${let file = builtins.baseNameOf pyfile; in builtins.substring 0 (builtins.stringLength file - 3) file}.app
+              --wsgi ${
+                let
+                  file = builtins.baseNameOf pyfile;
+                in
+                builtins.substring 0 (builtins.stringLength file - 3) file
+              }.app
           '';
 
           Restart = "always";

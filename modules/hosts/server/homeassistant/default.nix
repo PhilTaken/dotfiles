@@ -104,6 +104,7 @@ in
 
       extraComponents = [
         "air_quality"
+        "apple_tv"
         "calendar"
         "cover"
         "derivative"
@@ -112,12 +113,14 @@ in
         "fritzbox"
         "geo_location"
         "here_travel_time"
+        "homekit"
         "light"
         "met"
         "moon"
         "mqtt"
         "python_script"
         "radio_browser"
+        "shelly"
         "shelly"
         "shopping_list"
         "spotify"
