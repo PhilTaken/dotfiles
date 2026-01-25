@@ -287,7 +287,9 @@ in
             use_x_forwarded_for = true;
             trusted_proxies = [
               "127.0.0.1"
+              "100.64.0.25"
             ]
+            ++ (builtins.filter (v: v != null) (builtins.catAttrs "public_ip" (builtins.attrValues net.nodes)))
             ++ (builtins.filter (v: v != null) (builtins.catAttrs "public_ip" (builtins.attrValues net.nodes)))
             ++ lib.optional (
               net.nodes.${config.networking.hostName}.network_ip ? "lan"
@@ -375,6 +377,7 @@ in
 
       caddy.proxy."${cfg.host}" = {
         inherit (cfg) port;
+        public = true;
       };
 
       homer.apps."${cfg.host}" = {

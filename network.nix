@@ -21,10 +21,10 @@
 
           # email requires kanidm,
           # TODO fix
-          "kanidm"
+          # "kanidm"
           # "email"
 
-          "immich"
+          # "immich"
 
           "vikunja"
           "karakeep"

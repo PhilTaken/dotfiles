@@ -6,13 +6,13 @@
   options,
   netlib,
   ...
-}: let
+}:
+let
   cfg = config.phil.server.services.caddy;
   net = config.phil.network;
   proxy_network = "headscale";
 
-  inherit
-    (lib)
+  inherit (lib)
     mkOption
     types
     mkIf
@@ -20,7 +20,8 @@
     ;
 
   ipOptsType = types.submodule (
-    {config, ...}: {
+    { config, ... }:
+    {
       options = {
         ip = mkOption {
           type = types.str;
@@ -34,10 +35,7 @@
 
         proxyPass = mkOption {
           type = types.nullOr types.str;
-          default =
-            if config.root == null
-            then "http://${config.ip}:${toString config.port}"
-            else null;
+          default = if config.root == null then "http://${config.ip}:${toString config.port}" else null;
         };
 
         root = mkOption {
@@ -45,7 +43,7 @@
           default = null;
         };
 
-        vhostConfig = options.services.nginx.virtualHosts.type.getSubOptions [];
+        vhostConfig = options.services.nginx.virtualHosts.type.getSubOptions [ ];
 
         public = mkOption {
           type = types.bool;
@@ -66,20 +64,20 @@
 
   allHostProxies = lib.mapAttrs (_n: v: v.config.phil.server.services.caddy.proxy) (
     lib.filterAttrs (
-      _n: v: lib.hasAttrByPath ["config" "phil" "server" "services" "caddy" "proxy"] v
-    )
-    flake.nixosConfigurations
+      _n: v: lib.hasAttrByPath [ "config" "phil" "server" "services" "caddy" "proxy" ] v
+    ) flake.nixosConfigurations
   );
 
   endpoints = builtins.attrNames (lib.filterAttrs (_n: config: config.public_ip != null) net.nodes);
   isEndpoint = n: (builtins.elem n endpoints);
   hiddenHostProxies = lib.filterAttrs (n: _: !(isEndpoint n)) allHostProxies;
-in {
+in
+{
   options.phil.server.services.caddy = {
     proxy = mkOption {
       description = "proxy definitions";
       type = types.attrsOf ipOptsType;
-      default = {};
+      default = { };
     };
 
     adminport = mkOption {
@@ -89,7 +87,7 @@ in {
     };
   };
 
-  config = mkIf (cfg.proxy != {} || isEndpoint config.networking.hostName) {
+  config = mkIf (cfg.proxy != { } || isEndpoint config.networking.hostName) {
     sops.secrets.acme_dns_cf = {
       #owner = config.systemd.services.caddy.serviceConfig.User;
       owner = config.systemd.services.nginx.serviceConfig.User;
@@ -108,7 +106,7 @@ in {
       defaults.webroot = null;
       certs.${net.tld} = {
         domain = net.tld;
-        extraDomainNames = ["*.${net.tld}"];
+        extraDomainNames = [ "*.${net.tld}" ];
 
         dnsProvider = "cloudflare";
         credentialsFile = config.sops.secrets.acme_dns_cf.path;
@@ -120,75 +118,78 @@ in {
       enable = true;
       recommendedProxySettings = true;
       clientMaxBodySize = "100M";
-      virtualHosts = let
-        genconfig = subdomain: {
-          public,
-          includeRobotsTxt,
-          extraCert,
-          ...
-        } @ proxycfg: {
-          name = netlib.domainFor subdomain;
-          value = {
-            forceSSL = lib.mkForce true;
-            useACMEHost = lib.mkForce (
-              if extraCert
-              then null
-              else net.tld
-            );
-            enableACME = lib.mkForce extraCert;
+      virtualHosts =
+        let
+          genconfig =
+            subdomain:
+            {
+              public,
+              includeRobotsTxt,
+              extraCert,
+              ...
+            }@proxycfg:
+            {
+              name = netlib.domainFor subdomain;
+              value = {
+                forceSSL = lib.mkForce true;
+                useACMEHost = lib.mkForce (if extraCert then null else net.tld);
+                enableACME = lib.mkForce extraCert;
 
-            locations."= /robots.txt".alias = lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
-              User-agent: *
-              Disallow: /
-            '';
-            locations."/" = {
-              inherit (proxycfg) root proxyPass;
-              extraConfig =
-                ''
-                  if ($badagent) {
-                    return 403;
-                  }
-
-                  proxy_redirect http:// https://;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection $connection_upgrade;
-                ''
-                + lib.optionalString (!public) ''
-                  if ($allowed_traffic = 'false') {
-                    return 418;
-                  }
+                locations."= /robots.txt".alias = lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
+                  User-agent: *
+                  Disallow: /
                 '';
+                locations."/" = {
+                  inherit (proxycfg) root proxyPass;
+                  extraConfig = ''
+                    if ($badagent) {
+                      return 403;
+                    }
+
+                    proxy_redirect http:// https://;
+                    proxy_set_header Upgrade $http_upgrade;
+                    proxy_set_header Connection $connection_upgrade;
+                  ''
+                  + lib.optionalString (!public) ''
+                    if ($allowed_traffic = 'false') {
+                      return 418;
+                    }
+                  '';
+                };
+                extraConfig = ''
+                  access_log /var/log/nginx/analytics-${subdomain}.log json_analytics;
+                '';
+              };
             };
-            extraConfig = ''
-              access_log /var/log/nginx/analytics-${subdomain}.log json_analytics;
-            '';
-          };
-        };
-        updateConfigWithHost = host: _proxy: config:
-          lib.recursiveUpdate config {
-            proxyPass = "http://${
-              net.nodes.${host}.network_ip.${proxy_network}
-            }:${builtins.toString config.port}";
-          };
+          updateConfigWithHost =
+            host: _proxy: config:
+            lib.recursiveUpdate config {
+              proxyPass = "http://${
+                net.nodes.${host}.network_ip.${proxy_network}
+              }:${builtins.toString config.port}";
+            };
 
-        updatedProxies =
-          lib.mapAttrs (
+          updatedProxies = lib.mapAttrs (
             host: proxies: lib.mapAttrs (updateConfigWithHost host) proxies
-          )
-          hiddenHostProxies;
+          ) hiddenHostProxies;
 
-        genExtraConfig = subdomain: {vhostConfig, ...}: {
-          name = netlib.domainFor subdomain;
-          value = vhostConfig;
-        };
+          genExtraConfig =
+            subdomain:
+            { vhostConfig, ... }:
+            {
+              name = netlib.domainFor subdomain;
+              value = vhostConfig;
+            };
 
-        myProxies = let
-          host = config.networking.hostName;
+          myProxies =
+            let
+              host = config.networking.hostName;
+            in
+            if isEndpoint host then
+              lib.foldl' lib.recursiveUpdate allHostProxies.${host} (lib.attrValues updatedProxies)
+            else
+              allHostProxies.${host};
         in
-          if isEndpoint host
-          then lib.foldl' lib.recursiveUpdate allHostProxies.${host} (lib.attrValues updatedProxies)
-          else allHostProxies.${host};
-      in
         lib.mkMerge [
           (lib.mapAttrs' genExtraConfig myProxies)
           (lib.mapAttrs' genconfig myProxies)
@@ -207,7 +208,7 @@ in {
           }
         ];
 
-      additionalModules = [pkgs.nginxModules.geoip2];
+      additionalModules = [ pkgs.nginxModules.geoip2 ];
       commonHttpConfig = ''
         map $http_user_agent $badagent {
             default         0;
@@ -220,8 +221,8 @@ in {
         geo $remote_addr $allowed_traffic {
             default false;
             ${builtins.concatStringsSep "\n" (
-          map (n: "${n} true;") (builtins.catAttrs "netmask" (builtins.attrValues net.networks))
-        )}
+              map (n: "${n} true;") (builtins.catAttrs "netmask" (builtins.attrValues net.networks))
+            )}
         }
 
         map $http_referer $httpReferer {
@@ -289,7 +290,7 @@ in {
       '';
     };
 
-    sops.secrets.geoip-licensekey = {};
+    sops.secrets.geoip-licensekey = { };
 
     services.geoipupdate = {
       enable = true;
@@ -297,7 +298,7 @@ in {
         AccountID = 924802;
         DatabaseDirectory = "/var/lib/GeoIP";
         LicenseKey = config.sops.secrets.geoip-licensekey.path;
-        EditionIDs = ["GeoLite2-Country"];
+        EditionIDs = [ "GeoLite2-Country" ];
       };
     };
 
