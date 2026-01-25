@@ -8,6 +8,18 @@
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.phil.desktop;
+
+  orca-slicer-wrapped = pkgs.symlinkJoin {
+    name = "orca-slicer-wrapped";
+    paths = [ pkgs.orca-slicer ];
+    buildInputs = [ pkgs.makeWrapper ];
+
+    postBuild = ''
+      wrapProgram $out/bin/orca-slicer \
+        --prefix __EGL_VENDOR_LIBRARY_FILENAMES : ${pkgs.mesa}/share/glvnd/egl_vendor.d/50_mesa.json
+    '';
+
+  };
 in
 {
   options.phil.desktop = {
@@ -63,6 +75,8 @@ in
       # 3d printing
       freecad
       openscad-unstable
+
+      orca-slicer-wrapped
 
       # (pkgs.callPackage ./orca-slicer.nix {})
 
