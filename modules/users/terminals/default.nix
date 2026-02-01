@@ -48,7 +48,7 @@ in
   config = lib.mkIf (!config.phil.headless) {
     home.packages = lib.optionals (lib.hasSuffix "linux" pkgs.stdenv.hostPlatform.system) [
       pkgs.ghostty
-      pkgs.fcitx5
+      # pkgs.fcitx6
     ];
 
     home.sessionVariables = {

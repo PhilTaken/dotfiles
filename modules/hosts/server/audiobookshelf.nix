@@ -3,10 +3,17 @@
   lib,
   netlib,
   ...
-}: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.audiobookshelf;
-in {
+in
+{
   options.phil.server.services.audiobookshelf = {
     enable = mkEnableOption "audiobookshelf";
     host = mkOption {
@@ -48,5 +55,10 @@ in {
       host = "0.0.0.0";
       inherit (cfg) port;
     };
+
+    systemd.services.audiobookshelf.serviceConfig.WorkingDirectory =
+      lib.mkForce "/media/audiobookshelf";
+
+    users.users.audiobookshelf.home = lib.mkForce "/media/audiobookshelf";
   };
 }
