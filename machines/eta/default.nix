@@ -58,6 +58,9 @@
     ];
   };
 
+  virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.oci-containers.backend = "docker";
+
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
   networking.networkmanager.wifi.powersave = false;

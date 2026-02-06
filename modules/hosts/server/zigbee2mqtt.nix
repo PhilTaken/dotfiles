@@ -56,7 +56,7 @@ in
     services.zigbee2mqtt = {
       enable = true;
       settings = {
-        version = 4;
+        version = 5;
         mqtt = {
           base_topic = "zigbee2mqtt";
           # TODO improve this by fetching the domain + port from config / not hardcoded
@@ -65,7 +65,7 @@ in
           password = "!secrets.yaml password";
         };
         serial = {
-          port = "/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0";
+          port = "/dev/ttyUSB0";
           adapter = "zstack";
         };
         availability = {
@@ -73,19 +73,19 @@ in
           active.timeout = 2;
         };
         advanced = {
-          channel = 11;
+          channel = 20;
           network_key = "!secrets.yaml network_key";
           ext_pan_id = [
-            11
-            243
-            38
-            57
-            97
-            143
-            239
-            253
+            204
+            106
+            198
+            183
+            122
+            189
+            129
+            232
           ];
-          pan_id = 6930;
+          pan_id = 34335;
         };
         frontend = {
           enabled = true;
