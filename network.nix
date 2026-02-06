@@ -64,7 +64,7 @@
 
       eta = {
         system = "aarch64-linux";
-        network_ip."headscale" = "100.64.0.5";
+        network_ip."headscale" = "100.64.0.8";
         network_ip."lan" = "192.168.178.32";
         services = [
           "zigbee2mqtt"

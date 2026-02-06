@@ -8,7 +8,7 @@
 {
   imports = [
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
-    (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
+    #(modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
   ];
 
   boot = {
@@ -38,20 +38,36 @@
     libraspberrypi
   ];
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/BOOT";
+    fsType = "vfat";
   };
 
-  sdImage.compressImage = false;
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/NIXOS";
+    fsType = "btrfs";
+    options = [ "compress=zstd" ];
+  };
+
+  fileSystems."/swap" = {
+    device = "/dev/disk/by-label/NIXOS";
+    fsType = "btrfs";
+    options = [
+      "noatime"
+      "subvol=swap"
+    ];
+  };
+
+  swapDevices = [ { device = "/swap/swapfile"; } ];
+
+  networking.networkmanager.wifi.powersave = false;
+
+  # sdImage.compressImage = false;
 
   networking.hostId = "eb87404c";
   system.stateVersion = "25.05";
 
-  # test single-node k4s
+  # test single-node k3s
   # networking.firewall.allowedTCPPorts = [
   #   6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
   #   # 2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
