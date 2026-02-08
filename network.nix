@@ -42,14 +42,12 @@
         network_ip."lan" = "192.168.178.26";
         services = [
           "gitea"
-          "navidrome"
 
           # keep these on delta to use at home
           "arrs"
           "jellyfin"
           "unbound"
           "nextcloud"
-
           "navidrome"
 
           "mealie"

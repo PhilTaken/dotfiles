@@ -63,7 +63,7 @@
 
   system.stateVersion = "24.05";
 
-  phil.fileshare.mount.binds = [
+  phil.fileshare.nfs.mount.binds = [
     {
       host = "delta";
       dirs = [

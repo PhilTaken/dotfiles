@@ -4,7 +4,7 @@
 
   virtualisation.docker.enable = true;
 
-  phil.fileshare.shares.dirs = [ "/media" ];
+  phil.fileshare.nfs.shares.dirs = [ "/media" ];
   phil.backup.enable = true;
 
   phil.backup.repo = "/media/backups";
@@ -13,9 +13,6 @@
     pkgs.beets
   ];
 
-  #nixpkgs.config.packageOverrides = pkgs: {
-  #vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  #};
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
