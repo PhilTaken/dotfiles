@@ -71,6 +71,19 @@ let
   endpoints = builtins.attrNames (lib.filterAttrs (_n: config: config.public_ip != null) net.nodes);
   isEndpoint = n: (builtins.elem n endpoints);
   hiddenHostProxies = lib.filterAttrs (n: _: !(isEndpoint n)) allHostProxies;
+
+  extra_wildcards =
+    let
+      getWildcardsFromHost =
+        n:
+        let
+          proxies = flake.nixosConfigurations.${n}.config.phil.server.services.caddy.proxy;
+        in
+        (builtins.map (lib.removePrefix "*.") (
+          builtins.filter (lib.hasPrefix "*.") (builtins.attrNames proxies)
+        ));
+    in
+    builtins.concatMap getWildcardsFromHost (builtins.attrNames net.nodes);
 in
 {
   options.phil.server.services.caddy = {
@@ -104,9 +117,10 @@ in
       defaults.group = config.services.nginx.group;
       defaults.dnsResolver = "1.1.1.1:53";
       defaults.webroot = null;
+      defaults.reloadServices = [ "nginx.service" ];
       certs.${net.tld} = {
         domain = net.tld;
-        extraDomainNames = [ "*.${net.tld}" ];
+        extraDomainNames = [ "*.${net.tld}" ] ++ (map (w: "*.${w}.${net.tld}") extra_wildcards);
 
         dnsProvider = "cloudflare";
         credentialsFile = config.sops.secrets.acme_dns_cf.path;
