@@ -4,11 +4,18 @@
   netlib,
   pkgs,
   ...
-}: let
+}:
+let
   service_name = "immich";
-  inherit (lib) mkOption mkIf types mkEnableOption;
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.${service_name};
-in {
+in
+{
   options.phil.server.services.${service_name} = {
     enable = mkEnableOption "immich - fancy photo storage";
     url = mkOption {
