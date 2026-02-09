@@ -2,15 +2,22 @@
   config,
   lib,
   ...
-}: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.syncthing;
 
   sopsConfig = {
     sopsFile = ../../../sops/machines + "/${config.networking.hostName}.yaml";
     owner = config.systemd.services."syncthing".serviceConfig.User or "syncthing";
   };
-in {
+in
+{
   options.phil.server.services.syncthing = {
     enable = mkEnableOption "syncthing service";
     baseDir = mkOption {
@@ -39,12 +46,13 @@ in {
     sops.secrets.syncthing-cert = sopsConfig;
     sops.secrets.syncthing-key = sopsConfig;
 
-    phil.backup.jobs."syncthing" = {
-      paths = [cfg.baseDir];
-    };
-
     services.syncthing = {
-      inherit (cfg) openDefaultPorts enable configDir dataDir;
+      inherit (cfg)
+        openDefaultPorts
+        enable
+        configDir
+        dataDir
+        ;
 
       guiAddress = "0.0.0.0:8384";
 

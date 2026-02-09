@@ -2,8 +2,14 @@
   config,
   lib,
   ...
-}: let
-  inherit (lib) mkOption mkEnableOption mkIf types;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkEnableOption
+    mkIf
+    types
+    ;
   cfg = config.phil.backup;
 
   mkRepo = name: "${cfg.repo}/${name}";
@@ -29,29 +35,35 @@
     compression = "auto,zstd";
     startAt = "daily";
   };
-in {
+in
+{
   options.phil.backup = {
     enable = mkEnableOption "backup";
     jobs = mkOption {
       description = "paths to back up or ";
-      type = types.attrsOf (types.submodule ({...}: {
-        options = {
-          paths = mkOption {
-            type = types.listOf types.str;
-          };
+      type = types.attrsOf (
+        types.submodule (
+          { ... }:
+          {
+            options = {
+              paths = mkOption {
+                type = types.listOf types.str;
+              };
 
-          preHook = mkOption {
-            type = types.lines;
-            default = "";
-          };
+              preHook = mkOption {
+                type = types.lines;
+                default = "";
+              };
 
-          postHook = mkOption {
-            type = types.lines;
-            default = "";
-          };
-        };
-      }));
-      default = {};
+              postHook = mkOption {
+                type = types.lines;
+                default = "";
+              };
+            };
+          }
+        )
+      );
+      default = { };
     };
 
     repo = mkOption {

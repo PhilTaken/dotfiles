@@ -24,8 +24,6 @@
           # "kanidm"
           # "email"
 
-          # "immich"
-
           "vikunja"
           "karakeep"
 
@@ -42,18 +40,14 @@
         network_ip."lan" = "192.168.178.26";
         services = [
           "gitea"
-
-          # keep these on delta to use at home
+          # "immich"
           "arrs"
           "jellyfin"
           "unbound"
           "nextcloud"
           "navidrome"
-
           "mealie"
-
           "paperless"
-
           "audiobookshelf"
         ];
       };

@@ -13,13 +13,8 @@
     virtualisation.docker.enable = true;
 
     phil.fileshare.nfs.shares.dirs = [ "/media" ];
-    phil.backup.enable = true;
 
-    phil.backup.repo = "/media/backups";
-
-    environment.systemPackages = [
-      pkgs.beets
-    ];
+    environment.systemPackages = [ pkgs.beets ];
 
     hardware.graphics = {
       enable = true;
