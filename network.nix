@@ -40,7 +40,7 @@
         network_ip."lan" = "192.168.178.26";
         services = [
           "gitea"
-          # "immich"
+          "immich"
           "arrs"
           "jellyfin"
           "unbound"

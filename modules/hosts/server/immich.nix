@@ -42,10 +42,12 @@ in
       host = "0.0.0.0";
       inherit (cfg) port;
 
+      # TODO juiceFS mount
+      mediaLocation = "/media/Pictures";
+
       # oauth config is limited to the ui and setting settings
       # both here and in the ui doesnt work so they have to be set manually
       settings = null;
-      #settings.server.externalDomain = "https://${cfg.url}";
 
       # TODO reenable when binary cache populated
       # tests runs forever for some reason
