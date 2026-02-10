@@ -2,6 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
+  pkgs,
   config,
   lib,
   modulesPath,
@@ -12,16 +13,36 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [
-    "ahci"
-    "xhci_pci"
-    "usb_storage"
-    "sd_mod"
-    "sr_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      #vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      libva-vdpau-driver
+      libvdpau-va-gl
+    ];
+  };
+
+  services.btrfs.autoScrub.enable = true;
+
+  boot = {
+    initrd.supportedFilesystems = [ "btrfs" ];
+    initrd.availableKernelModules = [
+      "ahci"
+      "xhci_pci"
+      "usb_storage"
+      "sd_mod"
+      "sr_mod"
+    ];
+    initrd.kernelModules = [ ];
+    supportedFilesystems = [ "btrfs" ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/24e4b8a8-fbbd-4d95-849f-b8eea354c40b";
@@ -32,22 +53,6 @@
     device = "/dev/disk/by-uuid/CF15-22F9";
     fsType = "vfat";
   };
-
-  # fileSystems."/media_old" = {
-  #   device = "/dev/disk/by-label/seagate";
-  #   fsType = "ext4";
-  #   options = [
-  #     "defaults"
-  #     "user"
-  #     "rw"
-  #     "exec"
-  #   ];
-  # };
-
-  # fileSystems."/media_int" = {
-  #   device = "media";
-  #   fsType = "zfs";
-  # };
 
   fileSystems."/media" = {
     device = "/dev/disk/by-uuid/f61c50c9-256e-401f-8838-ce56b223d8e5";
@@ -61,14 +66,6 @@
   };
 
   swapDevices = [ ];
-
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.tailscale0.useDHCP = lib.mkDefault true;
-
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

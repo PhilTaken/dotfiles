@@ -33,6 +33,8 @@ karakeep-environmentfile: ENC[AES256_GCM,data:cGIlEt2u5zpurxxE4iENM8MR86F/Ook1Gd
 garage-environmentfile: ENC[AES256_GCM,data:3iXFQE110uLFJ4r9QJGABUyMlJ7xe2SCP5bEibBSXg2zJ102vk7LHLnb9VXgih22qWL0QdlM8z3Y1pFcrumXIQUV2WIueAUu3et9LGw1mgaSgcCG+Vv3jn7kfrBmwegdXDlbLM76HTQkM7vUnvkaJ/zln2/LUwpGl1nYeAgO5rHh/3Y6WxdsDNiDKSn/+X+Osxxq/ZCc6YHMSbnT2kQlct5hv79V09iqstdHIu5fkfTDS3bUeXsFia5IEFvJ+SqubXQQJUHIjFGqtel2H5BwW1ThImEV,iv:gQZG9dYu7JFXoJQoFlXJ0HWMM9EtJh97SaRNOvz7Qqg=,tag:AeTU7tE8Sm7f3JH+pXPMiA==,type:str]
 nextcloud-bucket-access-key: ENC[AES256_GCM,data:Hcn+fHJZ72HWOqYoGCdCFQI5nG4KLickwTk=,iv:v68TQHapRLonrwiPf0/6vjOHpvvDt8F6A7ASxoTv1cE=,tag:mUd8ErqHRcj45r7IWPImzw==,type:str]
 nextcloud-bucket-secret-key: ENC[AES256_GCM,data:fztLvQCDhaySln+pAbLClYBwsjHsSZKZWGnF+sQvBZHFFWjiEEn/35cWIebF9/oGSIaLpWM5jkNSKvdLePAv3Q==,iv:+y2KxZwu0tX2yWycqIGyCDClRj42XstaRTKl1GstIaY=,tag:5em0mICHmpebCrHBemvQpg==,type:str]
+juicefs-access-key: ENC[AES256_GCM,data:48LKHqZkEspV5Pfr8sngS6Yo763XRxi6Jp0=,iv:8yl3Kpj6XyQaQcW7Der/ZVqpgpnjSmIYJEsyS9Xi2uU=,tag:UnpfFTdlkuRC/3FwwoRYsA==,type:str]
+juicefs-secret-key: ENC[AES256_GCM,data:z7YK7vSgrj7JcquYnUkAowonC1vZbIXzphNM0V4VC/x1hmzfzlTcqOmxk+/2OPdmxK01hWA0c/AdsAR4WHHdog==,iv:de4DyQC7lSnI4jNOYPqt31mkFcoBZ/aRUIlAr8qj2rc=,tag:RRxxYho/xXCjfBduv1rBsA==,type:str]
 sops:
     shamir_threshold: 1
     age:
@@ -108,8 +110,8 @@ sops:
             Q0oyUTljRXN4eHcvRE5KZ1lucTNIcjgKiT1cDq9JF/3cD3xPCaR5Y0gbL98oghB0
             plaF1ykwSpGQJARpSe0rMB/QDW7rdWAVtIDJaPzu+iiQbRnjNDFJ5w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-02-09T22:32:09Z"
-    mac: ENC[AES256_GCM,data:o/t7Im72SifFtqKEqZi7OQEOA6jA0xt6qUDa9WitpOgQz5oR/WYEEuAv/EiVDoaMsj6Pu0GCIVzwWpiIDH1LBcrmGCBsjoXnmP99z/6c7a+vWpe7HPif6gqFeXYU2cUHe2gYMRP0Fli56wbwfUTV5rp8gVTzgA0J4RitG1UqXyI=,iv:00a+VhlhrFxtoS4BGj2taSGo1mVmRR/6ouUNhH8uKiI=,tag:2qbUDIR+6QbvIfngctoMQg==,type:str]
+    lastmodified: "2026-02-10T22:01:22Z"
+    mac: ENC[AES256_GCM,data:ACjxpYGz/WQllcrhh4AoFQ89RYd6ByGKp9IvIP4LG1HSWJ7Se6EUf+owu1vYmb/OkSyakdh4M7ChyebyQf4Ro7wWPOrhK6fF7qT06IdH3JG0jwlYDspdxMaLkfhqXpCVe3qdBzI8OdCYbc4MGRmEIbUHJgIv23uv9q7RtkYm8Uk=,iv:PzBok4+r6HRx+w7rTE1pNztLa0B3dQP9yYkawfDWsvI=,tag:dcf6RhX/tpduU28AiVgh2g==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-

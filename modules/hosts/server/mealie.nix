@@ -3,10 +3,17 @@
   lib,
   netlib,
   ...
-}: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.mealie;
-in {
+in
+{
   options.phil.server.services.mealie = {
     enable = mkEnableOption "mealie - recipe manager";
     url = mkOption {
@@ -55,6 +62,6 @@ in {
       credentialsFile = config.sops.secrets.mealie-secret-config.path;
     };
 
-    phil.server.services.caddy.proxy."${cfg.host}" = {inherit (cfg) port;};
+    phil.server.services.caddy.proxy."${cfg.host}" = { inherit (cfg) port; };
   };
 }
