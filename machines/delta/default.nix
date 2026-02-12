@@ -24,7 +24,7 @@
       data_dir = "/media/garage";
     };
 
-    juicefs = {
+    juicefs.server = {
       enable = true;
       bucket = "juicefs-data";
     };

@@ -8,6 +8,8 @@ let
   allServices = concatLists (lib.catAttrs "services" (builtins.attrValues net.nodes));
 in
 {
+  inherit (net) nodes networks;
+
   domainFor = host: "${host}.${net.tld}";
 
   nodesWith = service: lib.filterAttrs (_: node: builtins.elem service node.services) net.nodes;
