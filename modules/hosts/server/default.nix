@@ -76,6 +76,6 @@ in
 
     # every server runs the nats service
     # TODO configure clustering + maybe jetstream
-    services.nats.enable = true;
+    # services.nats.enable = true;
   };
 }
