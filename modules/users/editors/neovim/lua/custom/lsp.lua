@@ -200,7 +200,7 @@ local enabled_lsps = {
 	"ccls",
 	"clojure_lsp",
 	"elixirls",
-	"erlangls",
+	-- "erlangls",
 	"fortls",
 	"gleam",
 	"lua_ls",

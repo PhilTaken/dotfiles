@@ -45,6 +45,7 @@ in
         port = redis_port;
         appendOnly = true;
         settings.dir = "/var/lib/redis-juicefs";
+        save = [ ];
 
         # allow connections from headscale interface
         settings.protected-mode = "no";
