@@ -10,7 +10,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "type": "dashboard"
       }
     ]
@@ -19,6 +19,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 90,
   "links": [],
   "panels": [
     {
@@ -40,7 +41,7 @@
             "steps": [
               {
                 "color": "purple",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -74,7 +75,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -111,7 +112,7 @@
             "steps": [
               {
                 "color": "purple",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -145,7 +146,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -182,7 +183,7 @@
             "steps": [
               {
                 "color": "purple",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -216,7 +217,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -253,7 +254,7 @@
             "steps": [
               {
                 "color": "purple",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -287,7 +288,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -323,11 +324,11 @@
           },
           "mappings": [],
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "#96D98D",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#73BF69",
@@ -336,6 +337,34 @@
               {
                 "color": "#19730E",
                 "value": 10
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 30
+              },
+              {
+                "color": "#EF843C",
+                "value": 40
+              },
+              {
+                "color": "#E24D42",
+                "value": 50
+              },
+              {
+                "color": "#1F78C1",
+                "value": 60
+              },
+              {
+                "color": "#BA43A9",
+                "value": 70
+              },
+              {
+                "color": "#705DA0",
+                "value": 80
               }
             ]
           }
@@ -353,10 +382,11 @@
       "options": {
         "basemap": {
           "name": "Basemap",
+          "noRepeat": false,
           "type": "default"
         },
         "controls": {
-          "mouseWheelZoom": false,
+          "mouseWheelZoom": true,
           "showAttribution": true,
           "showDebug": false,
           "showMeasure": false,
@@ -366,12 +396,13 @@
         "layers": [
           {
             "config": {
-              "showLegend": true,
+              "showLegend": false,
               "style": {
                 "color": {
+                  "field": "Total",
                   "fixed": "dark-green"
                 },
-                "opacity": 0.4,
+                "opacity": 0.7,
                 "rotation": {
                   "fixed": 0,
                   "max": 360,
@@ -402,6 +433,7 @@
             },
             "location": {
               "gazetteer": "public/gazetteer/countries.json",
+              "lookup": "Field",
               "mode": "lookup"
             },
             "name": "Layer 0",
@@ -417,16 +449,18 @@
           "id": "zero",
           "lat": 0,
           "lon": 0,
+          "noRepeat": false,
           "zoom": 1
         }
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
             "type": "loki",
             "uid": "P8E80F9AEF21F6940"
           },
+          "direction": "backward",
           "editorMode": "code",
           "expr": "sum by (geoip_country_code) (count_over_time({filename=\"$filename\", host=\"$host\"} | json | http_user_agent !~ \".*bot.*\" | http_user_agent !~ \".*crawler.*\" | http_user_agent != \"worldping-api\" | request_uri !~ \"/wp-.*\" | request_uri !~ \"//wp-.*\" | request_uri !~ \"/*.wordfence.*\" | request_uri !~ \"/robots.txt\" | request_uri !~ \"/xmlrpc.php\" | __error__=\"\" [$__interval]))",
           "legendFormat": "{{geoip_country_code}}",
@@ -495,6 +529,7 @@
               "type": "linear"
             },
             "showPoints": "always",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -532,12 +567,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "maxHeight": 600,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -590,6 +626,7 @@
               "type": "linear"
             },
             "showPoints": "always",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -629,12 +666,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "maxHeight": 600,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -662,7 +700,7 @@
       },
       "id": 28,
       "panels": [],
-      "title": "Sources \u0026 Behaviours",
+      "title": "Sources & Behaviours",
       "type": "row"
     },
     {
@@ -682,6 +720,9 @@
               "type": "auto"
             },
             "filterable": false,
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -690,7 +731,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -737,14 +778,6 @@
       "interval": "30m",
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": [
           {
@@ -753,7 +786,7 @@
           }
         ]
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -810,6 +843,9 @@
               "type": "auto"
             },
             "filterable": false,
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -818,7 +854,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -865,14 +901,6 @@
       "interval": "1h",
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": [
           {
@@ -881,7 +909,7 @@
           }
         ]
       },
-      "pluginVersion": "11.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -936,6 +964,9 @@
               "type": "auto"
             },
             "filterable": false,
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -943,7 +974,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -990,14 +1022,6 @@
       "interval": "5m",
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1006,7 +1030,7 @@
           }
         ]
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1059,6 +1083,9 @@
               "type": "auto"
             },
             "filterable": false,
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -1066,7 +1093,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1113,14 +1141,6 @@
       "interval": "1h",
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1129,7 +1149,7 @@
           }
         ]
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1182,6 +1202,9 @@
               "type": "auto"
             },
             "filterable": false,
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -1189,7 +1212,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1236,14 +1260,6 @@
       "interval": "1h",
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1252,7 +1268,7 @@
           }
         ]
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1300,7 +1316,7 @@
       },
       "id": 24,
       "panels": [],
-      "title": "Requests \u0026 HTTP Status",
+      "title": "Requests & HTTP Status",
       "type": "row"
     },
     {
@@ -1319,7 +1335,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "light-blue"
+                "color": "light-blue",
+                "value": 0
               }
             ]
           },
@@ -1353,7 +1370,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1384,7 +1401,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "purple"
+                "color": "purple",
+                "value": 0
               }
             ]
           },
@@ -1418,7 +1436,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1452,7 +1470,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "purple"
+                "color": "purple",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1490,7 +1509,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1526,7 +1545,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "purple"
+                "color": "purple",
+                "value": 0
               }
             ]
           },
@@ -1561,7 +1581,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1594,7 +1614,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "purple"
+                "color": "purple",
+                "value": 0
               }
             ]
           },
@@ -1628,7 +1649,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1682,14 +1703,17 @@
       "id": 11,
       "options": {
         "dedupStrategy": "none",
+        "enableInfiniteScrolling": false,
         "enableLogDetails": true,
         "prettifyLogMessage": false,
         "showCommonLabels": false,
+        "showControls": false,
         "showLabels": false,
         "showTime": false,
         "sortOrder": "Descending",
         "wrapLogMessage": false
       },
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -2167,7 +2191,7 @@
   ],
   "preload": false,
   "refresh": "",
-  "schemaVersion": 40,
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": [
@@ -2251,5 +2275,5 @@
   "timezone": "",
   "title": "Nginx analytics",
   "uid": "fgc-nginx01-web-analytics",
-  "weekStart": ""
+  "version": 1
 }
