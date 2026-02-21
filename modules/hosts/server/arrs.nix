@@ -2,8 +2,14 @@
   config,
   lib,
   ...
-}: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.arrs;
 
   sonarr_port = 8989;
@@ -12,7 +18,8 @@
   lidarr_port = 8686;
   bazarr_port = 6767;
   jackett_port = 9117;
-in {
+in
+{
   options.phil.server.services.arrs = {
     enable = mkEnableOption "arrs";
     media_folder = mkOption {
@@ -23,7 +30,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    users.groups.media = {};
+    users.groups.media = { };
 
     programs.fuse.userAllowOther = true;
 
@@ -97,9 +104,15 @@ in {
       caddy.proxy = {
         "sonarr" = {
           port = sonarr_port;
+          vhostConfig.extraConfig = ''
+            proxy_read_timeout 300s;
+          '';
         };
         "radarr" = {
           port = radarr_port;
+          vhostConfig.extraConfig = ''
+            proxy_read_timeout 300s;
+          '';
         };
         #"prowlarr" = {
         #port = prowlarr_port;
