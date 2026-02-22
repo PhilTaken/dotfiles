@@ -42,16 +42,14 @@ let
     '';
   };
 
-  wordlist = pkgs.stdenvNoCC.mkDerivation {
-    pname = "wordlist";
-    version = "latest";
-    src = pkgs.fetchurl {
-      url = "https://cgit.git.savannah.gnu.org/cgit/miscfiles.git/tree/web2?id=fc51530ea66019efba9e961578df986a950cbb65";
-      hash = "sha256-+Cc6xLUuXbsiqU1pbTeIvUPFtVG4omFece8om3vLkJo=";
-    };
-    installPhase = "cp $src $out";
-    dontUnpack = true;
-  };
+  wordlist = "${
+    pkgs.fetchgit {
+      url = "git://git.git.savannah.gnu.org/miscfiles.git";
+      rev = "fc51530ea66019efba9e961578df986a950cbb65";
+      sparseCheckout = [ "web2" ];
+      hash = "sha256-iU0MkLDQam/ILMnEUxU0g7n6SYT+I1SYZ8r/fUhoS4s=";
+    }
+  }/web2";
 
   iocaine_bind = "127.0.0.1:${builtins.toString (netlib.portFor "iocaine-default")}";
 
@@ -188,7 +186,7 @@ in
         persist-interval = "1h";
       };
 
-      config.handler.default = {
+      config.handler.default.config = {
         "ai-robots-txt-path" = "${ai_robots_txt}/robots.json";
 
         "sources" = {
