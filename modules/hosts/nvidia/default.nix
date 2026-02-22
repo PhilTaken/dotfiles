@@ -76,8 +76,8 @@ in
     };
 
     environment.sessionVariables = {
-      "__EGL_VENDOR_LIBRARY_FILENAMES" =
-        "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+      #"__EGL_VENDOR_LIBRARY_FILENAMES" =
+      #"${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
       GBM_BACKEND = "nvidia-drm";
       __GL_GSYNC_ALLOWED = "0";

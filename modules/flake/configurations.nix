@@ -34,10 +34,7 @@ let
       };
 
       nixos.userConfig = mkConfig {
-        #des.gnome.enable = true;
-
-        wms.hyprland.enable = false;
-        wms.bars.eww.enable = false;
+        wms.niri.enable = true;
 
         gpg.enable = true;
 
@@ -49,11 +46,7 @@ let
       };
 
       maelstroem.userConfig = mkConfig {
-        # de/wm config
-        wms.hyprland.enable = false;
-        wms.bars.eww.enable = false;
-
-        #des.gnome.enable = true;
+        wms.niri.enable = true;
       };
 
       jaid.userConfig = mkConfig {
@@ -110,16 +103,14 @@ in
           hostModules = [
             {
               phil = {
-                # server.services.openssh.enable = true;
-
                 core.enableBluetooth = true;
                 desktop.enable = true;
                 development.enable = true;
                 nvidia.enable = true;
                 video.managers = [
-                  "gnome"
-                  "cosmic"
-                  #"kde"
+                  #"gnome"
+                  #"cosmic"
+                  "niri"
                 ];
               };
             }

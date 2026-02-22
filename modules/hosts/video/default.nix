@@ -19,6 +19,7 @@ let
     "kde" = "plasma";
     "gnome" = "gnome";
     "cosmic" = "cosmic";
+    "niri" = "niri";
   };
 
   manager_enum = types.enum (builtins.attrNames session_map);
@@ -52,25 +53,28 @@ in
 
     # https://github.com/nix-community/home-manager/issues/2017
     # https://github.com/NixOS/nixpkgs/issues/158025
-    programs.sway.enable = false;
-    programs.hyprland.enable = true;
+    #programs.sway.enable = false;
+    #programs.hyprland.enable = true;
     # https://wiki.hyprland.org/Nix/#modules-mixnmatch
     #programs.hyprland.package = null;
 
     boot.plymouth.enable = true;
 
-    services.displayManager.defaultSession = mkIf (
-      cfg.managers != [ ]
-    ) session_map.${builtins.head cfg.managers};
+    # services.displayManager.defaultSession = mkIf (
+    #   cfg.managers != [ ]
+    # ) session_map.${builtins.head cfg.managers};
 
     # services.displayManager.cosmic-greeter.enable = true;
-    services.displayManager.gdm = {
-      enable = true;
-      wayland = true;
-      autoLogin.delay = 10;
-    };
+    # services.displayManager.gdm = {
+    #   enable = true;
+    #   wayland = true;
+    #   autoLogin.delay = 10;
+    # };
 
     services.libinput.enable = true;
+
+    # explicitly disable lightdm since it is enabled if virtually no other greeter is enabled
+    services.xserver.displayManager.lightdm.enable = false;
 
     services.xserver = {
       enable = true;
@@ -83,6 +87,9 @@ in
     services.desktopManager.plasma6.enable = enabled "kde";
     services.desktopManager.cosmic.enable = enabled "cosmic";
     services.desktopManager.gnome.enable = enabled "gnome";
+
+    # niri
+    programs.niri.enable = enabled "niri";
 
     # ----------------------
     # gnome
@@ -112,6 +119,8 @@ in
       pkgs.adwaita-icon-theme
       pkgs.shared-mime-info
       pkgs.wl-clipboard
+      pkgs.nautilus
+      pkgs.xwayland-satellite
     ];
 
     environment.pathsToLink = [
