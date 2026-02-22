@@ -61,9 +61,7 @@
     };
 
     # deal with bots
-    nixocaine = {
-      url = "https://git.madhouse-project.org/iocaine/nixocaine/archive/stable.tar.gz";
-    };
+    nixocaine.url = "git+https://gitea.pherzog.xyz/phil/nixocaine";
 
     # -----------------------
     # single applications/services
