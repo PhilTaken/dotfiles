@@ -60,6 +60,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # deal with bots
+    nixocaine = {
+      url = "https://git.madhouse-project.org/iocaine/nixocaine/archive/stable.tar.gz";
+    };
+
     # -----------------------
     # single applications/services
 
