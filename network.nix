@@ -27,6 +27,8 @@
           "vikunja"
           "karakeep"
 
+          "slskd"
+
           "grafana"
           "freshrss"
           "headscale"

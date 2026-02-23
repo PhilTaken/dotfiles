@@ -63,6 +63,8 @@ in
       # This enables the FUSE kernel module and installs the necessary binaries
       #boot.supportedFilesystems = [ "fuse" ];
 
+      environment.systemPackages = [ pkgs.juicefs ];
+
       programs.fuse.userAllowOther = true;
 
       systemd.tmpfiles.rules = [
@@ -72,7 +74,7 @@ in
       systemd.mounts = builtins.map (key: {
         where = "/shared/${key}";
         what = redis_url;
-        options = "_netdev,allow_other,writeback_cache,subdir=/${key}";
+        options = "_netdev,allow_other,writeback_cache,subdir=/${key},cache-dir=/var/cache/juicefs-${key}";
         type = "juicefs";
         mountConfig.Environment = "AWS_REGION=garage";
       }) cfg.mounts;

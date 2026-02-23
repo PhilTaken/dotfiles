@@ -35,6 +35,7 @@ nextcloud-bucket-access-key: ENC[AES256_GCM,data:Hcn+fHJZ72HWOqYoGCdCFQI5nG4KLic
 nextcloud-bucket-secret-key: ENC[AES256_GCM,data:fztLvQCDhaySln+pAbLClYBwsjHsSZKZWGnF+sQvBZHFFWjiEEn/35cWIebF9/oGSIaLpWM5jkNSKvdLePAv3Q==,iv:+y2KxZwu0tX2yWycqIGyCDClRj42XstaRTKl1GstIaY=,tag:5em0mICHmpebCrHBemvQpg==,type:str]
 juicefs-access-key: ENC[AES256_GCM,data:48LKHqZkEspV5Pfr8sngS6Yo763XRxi6Jp0=,iv:8yl3Kpj6XyQaQcW7Der/ZVqpgpnjSmIYJEsyS9Xi2uU=,tag:UnpfFTdlkuRC/3FwwoRYsA==,type:str]
 juicefs-secret-key: ENC[AES256_GCM,data:z7YK7vSgrj7JcquYnUkAowonC1vZbIXzphNM0V4VC/x1hmzfzlTcqOmxk+/2OPdmxK01hWA0c/AdsAR4WHHdog==,iv:de4DyQC7lSnI4jNOYPqt31mkFcoBZ/aRUIlAr8qj2rc=,tag:RRxxYho/xXCjfBduv1rBsA==,type:str]
+slskd-environmentfile: ENC[AES256_GCM,data:uUYeSCS0cm9Ktp5+GrNjIv0XV8e7lWG6yc3OmDN23v/Y5/ZQdFysZg+4NI7mKkhH/EH2ox5R3NocKN8VHupi66k1T6J54mSA8PDtA+h1dQKvVCQg/yZqVRvrVn80RdbeiL1Xa/kHXgyYJijBesiLZuTcjImgzL9oJJ2DnEoeO+H6+/sSiNTspKv8rtE=,iv:TfX4RHmN8L7VbPP5UWsyUbsMwD/wRxz5cFhJ2QEuTsI=,tag:DqV06DjPFC+3MFGWtKgLuQ==,type:str]
 sops:
     shamir_threshold: 1
     age:
@@ -110,8 +111,8 @@ sops:
             Q0oyUTljRXN4eHcvRE5KZ1lucTNIcjgKiT1cDq9JF/3cD3xPCaR5Y0gbL98oghB0
             plaF1ykwSpGQJARpSe0rMB/QDW7rdWAVtIDJaPzu+iiQbRnjNDFJ5w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-02-10T22:01:22Z"
-    mac: ENC[AES256_GCM,data:ACjxpYGz/WQllcrhh4AoFQ89RYd6ByGKp9IvIP4LG1HSWJ7Se6EUf+owu1vYmb/OkSyakdh4M7ChyebyQf4Ro7wWPOrhK6fF7qT06IdH3JG0jwlYDspdxMaLkfhqXpCVe3qdBzI8OdCYbc4MGRmEIbUHJgIv23uv9q7RtkYm8Uk=,iv:PzBok4+r6HRx+w7rTE1pNztLa0B3dQP9yYkawfDWsvI=,tag:dcf6RhX/tpduU28AiVgh2g==,type:str]
+    lastmodified: "2026-02-23T17:23:32Z"
+    mac: ENC[AES256_GCM,data:t5cw0nhzlOZL6k3C3aaeeF8z4lThRUKP41dUaMF50ZLfIqTUDnjAWcGGD5wMQyCPaACsh99oKNIKXnIU5CPY4nSwki1cc7Hw2IctjqRqNezz811fDCSgtFQQEbGX6P8OuCXLePvo4h7idJTHF6v9725jTOFDwK20+N56mtyyBEQ=,iv:RlF4Wcuyc3X19coChpcZ4tMt5D/Up8253dU9qKshIwg=,tag:90viuhW28yQRGgWycHbwZQ==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-

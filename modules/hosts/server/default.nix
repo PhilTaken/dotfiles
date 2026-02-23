@@ -42,6 +42,7 @@ in
     ./paperless.nix
     ./prometheus/prometheus-exporter.nix
     ./seafile.nix
+    ./slskd.nix
     ./syncthing.nix
     ./telegraf.nix
     ./ttrss.nix
