@@ -145,6 +145,8 @@ in
       glab
       gh
 
+      nixfmt
+
       # _1password
     ];
 
