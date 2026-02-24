@@ -108,10 +108,12 @@ in
       pavucontrol
       mpv
       tauon
+
+      picard
     ];
 
     programs.beets = {
-      enable = true;
+      enable = false;
       settings = {
         plugins = [
           "fetchart"
