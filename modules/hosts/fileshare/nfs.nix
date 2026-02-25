@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }:
 let
@@ -36,7 +37,9 @@ let
             name = bindcfg.local;
             value =
               let
-                ip = if bind.host == null then bind.ip else net.nodes.${bind.host}.network_ip."headscale";
+                interface = "lan";
+                #interface = "headscale";
+                ip = if bind.host == null then bind.ip else net.nodes.${bind.host}.network_ip.${interface};
               in
               {
                 device = "${ip}:${bindcfg.remote}";
@@ -46,6 +49,10 @@ let
                   "x-systemd.automount"
                   "noauto"
                   "x-systemd.idle-timeout=600"
+
+                  "nconnect=8"
+                  "rsize=1048576"
+                  "wsize=1048576"
                 ];
               };
           }) bind.dirs

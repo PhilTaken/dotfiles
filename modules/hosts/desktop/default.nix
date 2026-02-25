@@ -28,6 +28,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    phil.fileshare.juicefs.mount_root = true;
+
     programs.steam.enable = true;
     programs.gamemode = {
       enable = true;
@@ -64,6 +66,10 @@ in
         extraPkgs = pkgs: [ pkgs.webkitgtk_4_1 ];
       };
     };
+
+    # niri / noctalia
+    services.tuned.enable = true;
+    services.upower.enable = true;
 
     environment.systemPackages = with pkgs; [
       #calibre
@@ -111,7 +117,6 @@ in
       #uget
       #uget-integrator
       #qbittorrent
-      nicotine-plus
 
       #skrooge
       #waydroid

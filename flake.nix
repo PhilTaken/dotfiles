@@ -63,6 +63,12 @@
     # deal with bots
     nixocaine.url = "git+https://gitea.pherzog.xyz/phil/nixocaine";
 
+    # wayland shell
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # -----------------------
     # single applications/services
 

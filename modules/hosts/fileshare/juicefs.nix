@@ -30,6 +30,11 @@ in
       default = "juicefs-data";
     };
 
+    mount_root = lib.mkOption {
+      type = types.bool;
+      default = false;
+    };
+
     mounts = lib.mkOption {
       type = types.listOf types.str;
       default = [ ];
@@ -37,6 +42,61 @@ in
   };
 
   config = lib.mkMerge [
+    # clients
+    (lib.mkIf (cfg.mounts != [ ] || cfg.mount_root) {
+      assertions = [
+        {
+          assertion = builtins.length cfg.mounts == 0 || cfg.mount_root;
+          message = "cannot mount both individual juicefs mounts and the juicefs root at the same time";
+        }
+      ];
+
+      systemd.tmpfiles.rules = [
+        "d '/shared' 0777 - - - -"
+      ];
+
+      #boot.supportedFilesystems = [ "fuse" ];
+      environment.systemPackages = [ pkgs.juicefs ];
+      programs.fuse.userAllowOther = true;
+    })
+
+    # use regular systemd services instead?
+    (lib.mkIf (cfg.mounts != [ ]) {
+      systemd.mounts = builtins.map (key: {
+        where = "/shared/${key}";
+        what = redis_url;
+        options = "_netdev,allow_other,writeback_cache,subdir=/${key},cache-dir=/var/cache/juicefs-${key}";
+        type = "juicefs";
+        mountConfig.Environment = "AWS_REGION=garage";
+      }) cfg.mounts;
+
+      systemd.automounts = builtins.map (key: {
+        description = "Automount for /shared/${key} on NAS";
+        where = "/shared/${key}";
+        wantedBy = [ "multi-user.target" ];
+      }) cfg.mounts;
+    })
+
+    (lib.mkIf cfg.mount_root {
+      systemd.mounts = [
+        {
+          where = "/shared";
+          what = redis_url;
+          options = "_netdev,allow_other,writeback_cache,cache-dir=/var/cache/juicefs";
+          type = "juicefs";
+          mountConfig.Environment = "AWS_REGION=garage";
+        }
+      ];
+
+      systemd.automounts = [
+        {
+          description = "Automount for /shared on NAS";
+          where = "/shared";
+          wantedBy = [ "multi-user.target" ];
+        }
+      ];
+    })
+
     # server
     (lib.mkIf cfg.server.enable {
       environment.systemPackages = [ pkgs.juicefs ];
@@ -57,33 +117,5 @@ in
         allowedUDPPorts = [ redis_port ];
       };
     })
-
-    # clients
-    {
-      # This enables the FUSE kernel module and installs the necessary binaries
-      #boot.supportedFilesystems = [ "fuse" ];
-
-      environment.systemPackages = [ pkgs.juicefs ];
-
-      programs.fuse.userAllowOther = true;
-
-      systemd.tmpfiles.rules = [
-        "d '/shared' 0777 - - - -"
-      ];
-
-      systemd.mounts = builtins.map (key: {
-        where = "/shared/${key}";
-        what = redis_url;
-        options = "_netdev,allow_other,writeback_cache,subdir=/${key},cache-dir=/var/cache/juicefs-${key}";
-        type = "juicefs";
-        mountConfig.Environment = "AWS_REGION=garage";
-      }) cfg.mounts;
-
-      systemd.automounts = builtins.map (key: {
-        description = "Automount for /shared/${key} on NAS";
-        where = "/shared/${key}";
-        wantedBy = [ "multi-user.target" ];
-      }) cfg.mounts;
-    }
   ];
 }
