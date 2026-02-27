@@ -3,17 +3,19 @@
   config,
   lib,
   inputs,
+  netlib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkOption
     mkIf
     types
     mkEnableOption
     ;
   cfg = config.phil.core;
-in {
+in
+{
   options.phil.core = {
     enable = mkOption {
       description = "Enable core module";
@@ -107,32 +109,36 @@ in {
     hardware.enableRedistributableFirmware = true;
 
     environment.etc."nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
-    nix.nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
+    nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
 
     # links /libexec from derivations to /run/current-system/sw
-    environment.pathsToLink = ["/libexec"];
+    environment.pathsToLink = [ "/libexec" ];
 
     networking.hostName = cfg.hostName;
     time.timeZone = cfg.timeZone;
 
     # tailscale - wireguard mesh vpn
     sops.secrets."headscale-authkey".sopsFile =
-      ../../../sops/machines
-      + "/${config.networking.hostName}.yaml";
-    networking.hosts.${config.phil.network.nodes.beta.public_ip} = ["headscale.pherzog.xyz"];
+      ../../../sops/machines + "/${config.networking.hostName}.yaml";
+    networking.hosts.${config.phil.network.nodes.beta.public_ip} = [ "headscale.pherzog.xyz" ];
     services.tailscale = {
       enable = true;
       # TODO configure this better
       extraUpFlags = [
         "--login-server"
         "https://headscale.pherzog.xyz"
-      ];
-      extraDaemonFlags = ["--no-logs-no-support"];
+        "--operator"
+        "nixos"
+      ]
+      ++ (lib.optional netlib.nodeHasPublicIp "--advertise-exit-node");
+      useRoutingFeatures = if netlib.nodeHasPublicIp then "server" else "client";
+
+      extraDaemonFlags = [ "--no-logs-no-support" ];
       authKeyFile = config.sops.secrets."headscale-authkey".path;
     };
     systemd.services."tailscaled" = lib.mkIf config.phil.server.services.headscale.enable {
-      after = ["headscale.service"];
-      requires = ["headscale.service"];
+      after = [ "headscale.service" ];
+      requires = [ "headscale.service" ];
     };
 
     networking.firewall.checkReversePath = "loose";

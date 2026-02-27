@@ -38,7 +38,10 @@ in
           flags.force_share_scan = false;
           flags.no_version_check = true;
 
-          web.port = web_port;
+          web = {
+            port = web_port;
+            ip_address = "127.0.0.1";
+          };
 
           shares.directories = [ "/shared/slskd/share" ];
 
@@ -46,7 +49,7 @@ in
           directories.downloads = "/shared/slskd/downloads";
 
           soulseek = {
-            listen_ip_address = netlib.thisNode.network_ip.headscale;
+            listen_ip_address = netlib.thisNode.public_ip;
             listen_port = slsk_port;
           };
         };
@@ -67,7 +70,6 @@ in
           };
         };
       };
-
     })
   ];
 }

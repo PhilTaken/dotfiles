@@ -46,7 +46,7 @@ in
     (lib.mkIf (cfg.mounts != [ ] || cfg.mount_root) {
       assertions = [
         {
-          assertion = builtins.length cfg.mounts == 0 || cfg.mount_root;
+          assertion = builtins.length cfg.mounts == 0 || !cfg.mount_root;
           message = "cannot mount both individual juicefs mounts and the juicefs root at the same time";
         }
       ];

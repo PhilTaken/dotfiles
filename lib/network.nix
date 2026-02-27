@@ -18,7 +18,7 @@ in
 
   nodeHas = lib.flip elem node.services;
   networkHas = lib.flip elem allServices;
-  nodeHasPublicIp = !isNull node.public_ip;
+  nodeHasPublicIp = if net.nodes ? ${hostName} then !isNull node.public_ip else false;
 
   # generate ports with minimal overlap for services
   # solely for internal use (port 80/443 -> proxy (nginx) -> port for service -> service)

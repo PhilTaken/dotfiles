@@ -70,6 +70,7 @@ in
       smartmontools
       tree
       usbutils
+      net-tools
     ];
 
     # not available on aarch64-linux

@@ -110,6 +110,8 @@ in
       tauon
 
       picard
+      feishin
+      strawberry
     ];
 
     programs.beets = {

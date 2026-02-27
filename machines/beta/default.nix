@@ -2,10 +2,12 @@
   modulesPath,
   lib,
   ...
-}: let
+}:
+let
   ip4_eth0 = "195.201.93.72/32";
   gateway_ip = "172.31.1.1";
-in {
+in
+{
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko-config.nix
@@ -15,9 +17,9 @@ in {
   systemd.network.networks."10-wan" = {
     matchConfig.Name = "enp1s0";
     networkConfig.DHCP = "no";
-    address = [ip4_eth0];
+    address = [ ip4_eth0 ];
     routes = [
-      {Destination = gateway_ip;}
+      { Destination = gateway_ip; }
       {
         Gateway = gateway_ip;
         GatewayOnLink = true;
@@ -27,14 +29,21 @@ in {
 
   networking.useNetworkd = true;
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "sr_mod"];
-  boot.initrd.kernelModules = ["virtio_gpu"];
-  boot.kernelParams = ["console=tty"];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "virtio_pci"
+    "virtio_scsi"
+    "sr_mod"
+  ];
+  boot.initrd.kernelModules = [ "virtio_gpu" ];
+  boot.kernelParams = [ "console=tty" ];
 
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
+
+  networking.firewall.allowedTCPPorts = [ 2234 ];
 
   system.stateVersion = "23.11";
 

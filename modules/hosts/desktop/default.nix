@@ -71,12 +71,14 @@ in
     services.tuned.enable = true;
     services.upower.enable = true;
 
+    services.udisks2.enable = true;
+
     environment.systemPackages = with pkgs; [
       #calibre
       vlc
-      foliate
-      pdfsam-basic
-      xournalpp
+      #foliate
+      #pdfsam-basic
+      #xournalpp
 
       # 3d printing
       freecad
@@ -87,7 +89,7 @@ in
       # (pkgs.callPackage ./orca-slicer.nix {})
 
       # notes
-      obsidian
+      #obsidian
 
       zen-browser
 
@@ -106,9 +108,10 @@ in
       handbrake
       #makemkv
       tauon
+      nicotine-plus
 
       # games
-      prismlauncher
+      # prismlauncher
       #citra
       #yuzu-ea
       #osu-lazer
@@ -116,13 +119,12 @@ in
       # downloads
       #uget
       #uget-integrator
-      #qbittorrent
 
       #skrooge
       #waydroid
 
       # typey-typey
-      plover.dev
+      # plover.dev
     ];
   };
 }

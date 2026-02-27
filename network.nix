@@ -27,7 +27,7 @@
           "vikunja"
           "karakeep"
 
-          "slskd"
+          # "slskd"
 
           "grafana"
           "freshrss"
