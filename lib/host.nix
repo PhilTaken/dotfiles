@@ -99,6 +99,7 @@ rec {
           inputs.nixocaine.nixosModules.default
           inputs.sops-nix-src.nixosModules.sops
           inputs.disko.nixosModules.disko
+          inputs.lix-module.nixosModules.default
         ];
     in
     lib.nixosSystem {
@@ -110,7 +111,6 @@ rec {
     mkBase [
       inputs.stylix.nixosModules.stylix
       inputs.home-manager.nixosModules.home-manager
-      #inputs.hyprland.nixosModules.default
 
       (
         {
@@ -150,8 +150,7 @@ rec {
 
       modules = [
         hardware-config
-        #inputs.lix-module.nixosModules.default
-        inputs.lix-module.nixosModules.lixFromNixpkgs
+        inputs.lix-module.darwinModules.default
 
         (
           {

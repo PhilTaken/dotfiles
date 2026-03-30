@@ -246,12 +246,12 @@ in
 
       yazi = {
         enable = true;
+        shellWrapperName = "y";
       };
 
       bacon = {
         enable = true;
-        settings = {
-        };
+        settings = { };
       };
 
       xplr =

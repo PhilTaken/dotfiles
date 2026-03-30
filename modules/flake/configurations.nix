@@ -60,7 +60,6 @@ let
         editors.neovim.langs = {
           haskell = false;
           cpp = false;
-          ts = true;
           python = true;
         };
 

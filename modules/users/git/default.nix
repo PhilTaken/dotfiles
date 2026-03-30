@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.phil.git;
   inherit (lib) mkOption mkIf types;
-in {
+in
+{
   options.phil.git = {
     enable = mkOption {
       description = "Enable git";
@@ -55,11 +57,15 @@ in {
     phil.twm = {
       enable = true;
       settings = {
-        search_paths = ["${config.home.homeDirectory}/Documents/workspace"];
+        search_paths = [ "${config.home.homeDirectory}/Documents/workspace" ];
       };
     };
 
-    programs.mergiraf.enable = true;
+    programs.mergiraf = {
+      enable = true;
+      enableJujutsuIntegration = true;
+      enableGitIntegration = true;
+    };
 
     programs.jujutsu = {
       enable = true;
@@ -143,38 +149,33 @@ in {
         key = cfg.signKey;
         signByDefault = true;
       };
-      difftastic = {
-        #enable = true;
-        options = {
-          background = "dark";
-          display = "inline";
-        };
-      };
 
       settings = {
         user.email = cfg.userEmail;
         user.name = cfg.userName;
-        alias = let
-          sort = "${pkgs.coreutils}/bin/sort";
-          uniq = "${pkgs.coreutils}/bin/uniq";
-        in {
-          mergetool = "!nvim -c DiffviewOpen";
-          tree =
-            "log --graph --pretty=format:'%Cred%h%Creset"
-            + " —%Cblue%d%Creset %s %Cgreen(%cr)%Creset'"
-            + " --abbrev-commit --date=relative --show-notes=*";
-          co = "checkout";
-          authors = "!git log --pretty=format:%aN | ${sort} | ${uniq} -c | ${sort} -rn";
-          b = "branch --color -v";
-          ca = "commit --amend";
-          changes = "diff --name-status -r";
-          clone = "clone --recursive";
-          root = "!pwd";
-          su = "submodule update --init --recursive";
-          undo = "reset --soft HEAD^";
-          w = "status -sb";
-          wdiff = "diff --color-words";
-        };
+        alias =
+          let
+            sort = "${pkgs.coreutils}/bin/sort";
+            uniq = "${pkgs.coreutils}/bin/uniq";
+          in
+          {
+            mergetool = "!nvim -c DiffviewOpen";
+            tree =
+              "log --graph --pretty=format:'%Cred%h%Creset"
+              + " —%Cblue%d%Creset %s %Cgreen(%cr)%Creset'"
+              + " --abbrev-commit --date=relative --show-notes=*";
+            co = "checkout";
+            authors = "!git log --pretty=format:%aN | ${sort} | ${uniq} -c | ${sort} -rn";
+            b = "branch --color -v";
+            ca = "commit --amend";
+            changes = "diff --name-status -r";
+            clone = "clone --recursive";
+            root = "!pwd";
+            su = "submodule update --init --recursive";
+            undo = "reset --soft HEAD^";
+            w = "status -sb";
+            wdiff = "diff --color-words";
+          };
         init.defaultBranch = "main";
         status.submoduleSummary = true;
         rerere.enabled = true;

@@ -137,13 +137,13 @@ in
           fi
 
           selected="$GIT_WORKSPACE/$selected"
-          selected_name="projects/$(basename "$selected" | tr . _)"
+          selected_name="$(basename "$selected" | tr . _)"
 
-          if ! tmux has-session -t=$selected_name 2> /dev/null; then
-              tmux new-session -ds $selected_name -c $selected
+          if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+              tmux new-session -ds "$selected_name" -c $selected
           fi
 
-          tmux switch-client -t $selected_name
+          tmux switch-client -t "$selected_name"
         ''}"
 
         bind -r Y resize-pane -L 5
@@ -152,6 +152,7 @@ in
         bind -r O resize-pane -R 5
 
         set -g default-command '$SHELL'
+        set -g status-left-length 100
       '';
 
       plugins = with pkgs.tmuxPlugins; [

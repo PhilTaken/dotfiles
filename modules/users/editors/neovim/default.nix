@@ -124,7 +124,7 @@ in
 
           # nix
           nil
-          nixfmt-rfc-style
+          nixfmt
           # alejandra
 
           # formatting for hurl-nvim

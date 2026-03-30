@@ -90,7 +90,6 @@ in
               hy
             ]
           ))
-          ++ (optionals cfg.langs.ts [ pkgs.nodePackages.typescript-language-server ])
           ++ (optionals cfg.langs.cpp [ pkgs.ccls ])
           ++ (optionals cfg.langs.rust [ pkgs.rust-analyzer ])
           ++ (optionals cfg.langs.haskell [ pkgs.haskell-language-server ])

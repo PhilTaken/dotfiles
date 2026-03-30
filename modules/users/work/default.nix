@@ -117,7 +117,7 @@ in
           ${pkgs.ripgrep}/bin/rg "\[host:" environments/$env/ -IN |\
             cut -d ":" -f 2 |\
             cut -d "]" -f 1 |\
-            xargs -I % sh -c "echo \"connecting to %.$tld:\"; ssh %.$tld $@ | sed 's/^/%> /'"
+            xargs -I % sh -c "echo \"connecting to %.$tld:\"; ssh %.$tld $@ | sed 's/^/%> /' || exit 255"
         fi
       '')
 
@@ -149,6 +149,12 @@ in
 
       # _1password
     ];
+
+    # fix aws s3 upload to ceph
+    home.sessionVariables = {
+      "AWS_REQUEST_CHECKSUM_CALCULATION" = "when_required";
+      "AWS_RESPONSE_CHECKSUM_VALIDATION" = "when_required";
+    };
 
     # ensure ssh is available
     # phil.ssh.enable = true;
