@@ -5,57 +5,84 @@
   flake,
   netlib,
   ...
-}: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.grafana;
   net = config.phil.network;
 
   proxy_network = "headscale";
 
-  kc-nodes = builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "keycloak" v.services) net.nodes);
-  kc-host = flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
+  kc-nodes = builtins.attrNames (
+    lib.filterAttrs (_: v: builtins.elem "keycloak" v.services) net.nodes
+  );
+  kc-host =
+    flake.nixosConfigurations.${builtins.head kc-nodes}.config.phil.server.services.keycloak.host;
 
   # TODO what do when multiple keycloaks defined?
   kc-enabled = builtins.length kc-nodes == 1;
 
   # TODO improve this with shiver?
-  scrapeConfigs = let
-    mkScrapeJob = n: v: let
-      mkTargets = nodename: node: let
-        ip = net.nodes.${nodename}.network_ip.${proxy_network};
-        mkTargetString = port: "${ip}:${builtins.toString port}";
-        has_extrasensors = flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.extrasensors;
+  scrapeConfigs =
+    let
+      mkScrapeJob =
+        n: v:
+        let
+          mkTargets =
+            nodename: node:
+            let
+              ip = net.nodes.${nodename}.network_ip.${proxy_network};
+              mkTargetString = port: "${ip}:${builtins.toString port}";
+              has_extrasensors =
+                flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.extrasensors;
 
-        # in sync with prometheus/prometheus-exporter.nix
-        exporters = builtins.removeAttrs flake.nixosConfigurations.${nodename}.config.services.prometheus.exporters ["assertions" "warnings" "minio" "tor"];
-        enabled_exporters = lib.filterAttrs (_: v: v.enable) exporters;
-        exporter_ports = lib.mapAttrsToList (_: v: v.port) enabled_exporters;
+              # in sync with prometheus/prometheus-exporter.nix
+              exporters =
+                builtins.removeAttrs flake.nixosConfigurations.${nodename}.config.services.prometheus.exporters
+                  [
+                    "assertions"
+                    "warnings"
+                    "minio"
+                    "tor"
+                    "rspamd"
+                  ];
+              enabled_exporters = lib.filterAttrs (_: v: v.enable) exporters;
+              exporter_ports = lib.mapAttrsToList (_: v: v.port) enabled_exporters;
 
-        ports = exporter_ports ++ lib.optional has_extrasensors flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.prom-sensors-port;
-      in
-        builtins.map mkTargetString ports;
-    in {
-      job_name = n;
-      static_configs = [
+              ports =
+                exporter_ports
+                ++
+                  lib.optional has_extrasensors
+                    flake.nixosConfigurations.${nodename}.config.phil.server.services.promexp.prom-sensors-port;
+            in
+            builtins.map mkTargetString ports;
+        in
         {
-          targets = mkTargets n v;
-        }
-      ];
-    };
-  in
+          job_name = n;
+          static_configs = [
+            {
+              targets = mkTargets n v;
+            }
+          ];
+        };
+    in
     builtins.attrValues (lib.mapAttrs mkScrapeJob net.nodes);
 
   grafana-domain = "https://${netlib.domainFor cfg.host}";
 
-  oid-uri = let
-    realm_name = "services";
-    url = netlib.domainFor (
-      if kc-enabled
-      then kc-host
-      else "keycloak"
-    );
-  in "https://${url}/realms/${realm_name}/protocol/openid-connect";
-in {
+  oid-uri =
+    let
+      realm_name = "services";
+      url = netlib.domainFor (if kc-enabled then kc-host else "keycloak");
+    in
+    "https://${url}/realms/${realm_name}/protocol/openid-connect";
+in
+{
   options.phil.server.services.grafana = {
     enable = mkEnableOption "grafana";
 
@@ -99,13 +126,16 @@ in {
     ];
 
     sops.secrets =
-      lib.genAttrs [
-        "grafana-adminpass"
-        "grafana-admindbpass"
-        "grafana-kc-client-secret"
-      ] (_: {
-        owner = config.systemd.services.grafana.serviceConfig.User;
-      });
+      lib.genAttrs
+        [
+          "grafana-adminpass"
+          "grafana-secretkey"
+          "grafana-admindbpass"
+          "grafana-kc-client-secret"
+        ]
+        (_: {
+          owner = config.systemd.services.grafana.serviceConfig.User;
+        });
 
     services.loki = {
       enable = true;
@@ -176,7 +206,7 @@ in {
         };
         distributor.receivers = {
           otlp.protocols = {
-            http = {};
+            http = { };
           };
         };
         storage.trace = {
@@ -203,6 +233,7 @@ in {
         security = {
           admin_user = "admin";
           admin_password = "$__file{${config.sops.secrets.grafana-adminpass.path}}";
+          secret_key = "$__file{${config.sops.secrets.grafana-secretkey.path}}";
         };
 
         database = {
@@ -210,24 +241,32 @@ in {
           password = "$__file{${config.sops.secrets.grafana-admindbpass.path}}";
         };
 
-        "auth.generic_oauth" = let
-          enabled = kc-enabled;
-          client_secret = "$__file{${config.sops.secrets.grafana-kc-client-secret.path}}";
-          client_id = "grafana-oauth";
-        in {
-          inherit enabled client_id client_secret;
-          name = "Keycloak-OAuth";
-          allow_sign_up = true;
-          scopes = lib.concatStringsSep " " ["openid" "email" "profile" "offline_access" "roles"];
-          email_attribute_path = "email";
-          login_attribute_path = "username";
-          name_attribute_path = "full_name";
-          auth_url = "${oid-uri}/auth";
-          token_url = "${oid-uri}/token";
-          api_url = "${oid-uri}/userinfo";
-          role_attribute_path = "contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
-          allow_assign_grafana_admin = true;
-        };
+        "auth.generic_oauth" =
+          let
+            enabled = kc-enabled;
+            client_secret = "$__file{${config.sops.secrets.grafana-kc-client-secret.path}}";
+            client_id = "grafana-oauth";
+          in
+          {
+            inherit enabled client_id client_secret;
+            name = "Keycloak-OAuth";
+            allow_sign_up = true;
+            scopes = lib.concatStringsSep " " [
+              "openid"
+              "email"
+              "profile"
+              "offline_access"
+              "roles"
+            ];
+            email_attribute_path = "email";
+            login_attribute_path = "username";
+            name_attribute_path = "full_name";
+            auth_url = "${oid-uri}/auth";
+            token_url = "${oid-uri}/token";
+            api_url = "${oid-uri}/userinfo";
+            role_attribute_path = "contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'";
+            allow_assign_grafana_admin = true;
+          };
       };
 
       provision = {
@@ -273,8 +312,8 @@ in {
     };
 
     networking.firewall = {
-      allowedUDPPorts = [cfg.loki-grpc-port];
-      allowedTCPPorts = [cfg.loki-grpc-port];
+      allowedUDPPorts = [ cfg.loki-grpc-port ];
+      allowedTCPPorts = [ cfg.loki-grpc-port ];
     };
 
     phil.server.services = {

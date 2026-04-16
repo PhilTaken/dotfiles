@@ -4,6 +4,7 @@ maelstroem-ykchal: ENC[AES256_GCM,data:x4VVQ0+MuGvCdt59BrnZmKYyxrUCR++uC+KBI+oX/
 nextcloud-adminpass: ENC[AES256_GCM,data:nZHXRNlQugY=,iv:2njQnYwzku0csQltafQ2D8Itk7f9Hs+zT+4bkPAHeHg=,tag:xnO9PO95JMcVxsZU2/LYhw==,type:str]
 keycloak-dbpass: ENC[AES256_GCM,data:mScPYAuz3VpB8UhZ6gM=,iv:2mJE6/TZNjpQDybBgSyc6wvHt5BedZd5xEUbEKI7uU0=,tag:4vqc8k44eVl0rlyW+FQrVw==,type:str]
 grafana-adminpass: ENC[AES256_GCM,data:3h2zWYfVkpefojetacw=,iv:L50mtmqoTNwIZH0MrylSubr5IT1ETs1o+NS2uyWJSII=,tag:9GkhUchEn7qu00EL10ECsQ==,type:str]
+grafana-secretkey: ENC[AES256_GCM,data:rs04BU25Mf/Q/MvqsUtzlwtL37s=,iv:XfIDobssfl8W0Nc/xY9FZCtc8oNnngZpMGN9nngViao=,tag:5U3lZv82Wfw7Clf4Ssy1yw==,type:str]
 grafana-admindbpass: ENC[AES256_GCM,data:2FkGVxMHqQ==,iv:eHZwfq40oHQyqhqnBw/yg+ODFrpDZ6YUtwrFQHk4JLg=,tag:ec3MFrnCe1mwUrlCI2X7iQ==,type:str]
 acme_dns_cf: ENC[AES256_GCM,data:XwOPTa4oLkaEbS/EK0IOrkkGWKB1NwIpl/ZwO02A63Zetx7ZCVPY9W2V+blGTtlWnngVI1tNP9We763WmNukNKlH97yoFd9lh734MgJKD6AaZW5aiCpJKGevq84A95i7u/1/GsY=,iv:Cl4+4faHLKWBZbKqTxPTPTnlTWJT8ikIL0K10yUdZS8=,tag:MtDrXO8Qr0RynTqF69qzQw==,type:str]
 mealie-secret-config: ENC[AES256_GCM,data:fyggn0WsZZQXyVWO3r+K/GoMipJM+G1A2WRTXVRyjXBu28as806tbWUvAHqzVfCXPYFCPAjXTBpP5ZCzSAV5EijSihDLUBbe/a8=,iv:IMwR3TuVyXeiYtcYW+QnkSSUxSRKHfsFUzdpPFmAYb0=,tag:g7Pw0Ds+jKn9MEPrpFg8TA==,type:str]
@@ -111,8 +112,8 @@ sops:
             Q0oyUTljRXN4eHcvRE5KZ1lucTNIcjgKiT1cDq9JF/3cD3xPCaR5Y0gbL98oghB0
             plaF1ykwSpGQJARpSe0rMB/QDW7rdWAVtIDJaPzu+iiQbRnjNDFJ5w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-02-23T17:23:32Z"
-    mac: ENC[AES256_GCM,data:t5cw0nhzlOZL6k3C3aaeeF8z4lThRUKP41dUaMF50ZLfIqTUDnjAWcGGD5wMQyCPaACsh99oKNIKXnIU5CPY4nSwki1cc7Hw2IctjqRqNezz811fDCSgtFQQEbGX6P8OuCXLePvo4h7idJTHF6v9725jTOFDwK20+N56mtyyBEQ=,iv:RlF4Wcuyc3X19coChpcZ4tMt5D/Up8253dU9qKshIwg=,tag:90viuhW28yQRGgWycHbwZQ==,type:str]
+    lastmodified: "2026-04-16T21:56:26Z"
+    mac: ENC[AES256_GCM,data:OneUY/QjQbH2T2jIYTC+GOycUDfE3aKnYkP0u8GI8/cq3lJUabyzpnFapxAqNzOyqr7MYLYoi7tEMm7tBYd1yf07srHHfEQdmFsaJW9zKtAf+cbi9UZ+XBt3uj/kqf3ZSIYA9CJeA49sBDlDb1TGQzuzzkvFlTBCUHu4Xohd2EM=,iv:1VIPRtvXqrwN1kPlbqunWM+GzhJdLkjH1HYUnmIk5gU=,tag:k1x6MjHB84qcQuPjM5kREw==,type:str]
     pgp:
         - created_at: "2024-11-13T18:40:49Z"
           enc: |-
@@ -135,4 +136,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 90F5B605DB46D2317AFDEEC4BDCD0C4E9F252898
     unencrypted_suffix: _unencrypted
-    version: 3.11.0
+    version: 3.12.2
