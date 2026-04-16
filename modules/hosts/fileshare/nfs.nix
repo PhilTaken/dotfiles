@@ -67,6 +67,7 @@ let
         name = "/export${dir}";
         value = {
           device = dir;
+          fsType = "none";
           options = [ "bind" ];
         };
       }) dirs
