@@ -1009,15 +1009,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1766482669,
-        "narHash": "sha256-4aSH+StMUiWbscwvZcqaWOsnAMaxueNEx+FK85Mro/w=",
-        "rev": "c146a0ee88ad77a473290ee7bdd52280c8ca104b",
+        "lastModified": 1775891927,
+        "narHash": "sha256-Fl9aWzox39KkuP+P3h2KFIvx7F3BabZReSUK417hybA=",
+        "rev": "bbea06f348c1608b7d492ef800f501338b2b9f04",
         "type": "tarball",
-        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/iocaine/archive/c146a0ee88ad77a473290ee7bdd52280c8ca104b.tar.gz?rev=c146a0ee88ad77a473290ee7bdd52280c8ca104b"
+        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/iocaine/archive/bbea06f348c1608b7d492ef800f501338b2b9f04.tar.gz?rev=bbea06f348c1608b7d492ef800f501338b2b9f04"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.madhouse-project.org/iocaine/iocaine/archive/main.tar.gz"
+        "url": "https://git.madhouse-project.org/iocaine/iocaine/archive/iocaine-3.x.tar.gz"
       }
     },
     "lib-aggregate": {
@@ -1127,11 +1127,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769186963,
-        "narHash": "sha256-Tej8n9KYxfvrxBWbPeGvvEdtKh6OflmDBBBna4aGyb4=",
-        "rev": "89284e4ff58ee7afbe44662bb7947bd5915ab311",
+        "lastModified": 1775893741,
+        "narHash": "sha256-I0uBsP2ozlBr2tT6spz/K/XsRZrgoCMEtdKAqyunjT0=",
+        "rev": "7e81078fb380bb90a0d0c2969caa6cdc717a5e4e",
         "type": "tarball",
-        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/nam-shub-of-enki/archive/89284e4ff58ee7afbe44662bb7947bd5915ab311.tar.gz?rev=89284e4ff58ee7afbe44662bb7947bd5915ab311"
+        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/nam-shub-of-enki/archive/7e81078fb380bb90a0d0c2969caa6cdc717a5e4e.tar.gz?rev=7e81078fb380bb90a0d0c2969caa6cdc717a5e4e"
       },
       "original": {
         "type": "tarball",
@@ -1320,11 +1320,11 @@
         "treefmt-nix": "treefmt-nix_3"
       },
       "locked": {
-        "lastModified": 1771796864,
-        "narHash": "sha256-CGak/+xRwHOxcBVyr5y81i8GTCDe9jwoshjEshiiXIY=",
+        "lastModified": 1776375856,
+        "narHash": "sha256-h9ix7xhHD+vss0X3zpgmDP+Bh9yAGTXA51QAqH4iPkY=",
         "ref": "refs/heads/main",
-        "rev": "18810f062c6f65f81f09b0f0000d675d841d5197",
-        "revCount": 132,
+        "rev": "4bee733b41c2c0f4a3852f1032e71c3fe9bceebf",
+        "revCount": 151,
         "type": "git",
         "url": "https://gitea.pherzog.xyz/phil/nixocaine"
       },
