@@ -83,7 +83,6 @@ in
       jq
       lolcat
       lsof
-      neofetch
       nix-output-monitor
       nmap
       procs

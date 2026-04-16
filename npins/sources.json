@@ -11,7 +11,7 @@
       "submodules": false,
       "revision": "f6cb5a5c2b404cdaceaff193b9c52317f62c62f7",
       "url": "https://github.com/catppuccin/alacritty/archive/f6cb5a5c2b404cdaceaff193b9c52317f62c62f7.tar.gz",
-      "hash": "1r2z223hza63v5lmzlg3022mlar67j3a2gh41rsaiqwja2wyiihz"
+      "hash": "sha256-H8bouVCS46h0DgQ+oYY8JitahQDj0V9p2cOoD4cQX+Q="
     },
     "base16": {
       "type": "Git",
@@ -24,7 +24,7 @@
       "submodules": false,
       "revision": "99aa911b29c9c7972f7e1d868b6242507efd508c",
       "url": "https://github.com/catppuccin/base16/archive/99aa911b29c9c7972f7e1d868b6242507efd508c.tar.gz",
-      "hash": "0bg48rvad507dr293z6q9kgjgxajp943gk2d31b1aw75386isyhw"
+      "hash": "sha256-HHodDRrlcBVWGE3MN0i6UvUn30zY/JFEbgeUpnZG5C0="
     },
     "base16rosepine": {
       "type": "Git",
@@ -37,7 +37,7 @@
       "submodules": false,
       "revision": "9fc04dce8b5c264f6fdc95dd65a2dc738f0c0547",
       "url": "https://github.com/edunfelt/base16-rose-pine-scheme/archive/9fc04dce8b5c264f6fdc95dd65a2dc738f0c0547.tar.gz",
-      "hash": "1x319m7vz79zgmin0gv0855f13aysm2ibw8avdnqlq5bkli0c6yn"
+      "hash": "sha256-1hsGIp2rYIpt2wrxFUXVXo3gSkFgP2BjfT+dv09NYfQ="
     },
     "freshrss_extensions": {
       "type": "Git",
@@ -50,7 +50,7 @@
       "submodules": false,
       "revision": "b8703f69f7a559678bc9bce370931bdb0fab2b1c",
       "url": "https://github.com/freshrss/extensions/archive/b8703f69f7a559678bc9bce370931bdb0fab2b1c.tar.gz",
-      "hash": "1pjvf7qgyghqbvfiblkdgd7xw23z6ypb0hy9c3sxg23lnskppyz2"
+      "hash": "sha256-4vt7p7Z0iNf1YMlDsK43fwjeT3tt0hXdXhg+//BxW94="
     },
     "hurl-nvim": {
       "type": "GitRelease",
@@ -65,7 +65,7 @@
       "version": "v2.2.0",
       "revision": "26cda7a0d81ad47f9a77ebe94ca11e1239c98c37",
       "url": null,
-      "hash": "0kamymq2wbxscwvcqnsbxq83iy2cl0w201904z22g5i7nar8sz9b"
+      "hash": "sha256-K32NsrInlifEJyAFIDigTPg4EO5LW8w2Z7ovLnD1VU0="
     },
     "janet.vim": {
       "type": "Git",
@@ -78,13 +78,13 @@
       "submodules": false,
       "revision": "67075b190a44310df356137e35cc1949782b20e0",
       "url": "https://github.com/bakpakin/janet.vim/archive/67075b190a44310df356137e35cc1949782b20e0.tar.gz",
-      "hash": "0w64cb43inq9fj4rkn674wypp9w5scngdygh5f954jn1iagchrjf"
+      "hash": "sha256-TmbInorBSlKSK/D59izThad7PSfH2JmJdAnbOMhixHA="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
       "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.11pre820016.3078b9a9e75f/nixexprs.tar.xz",
-      "hash": "0kwcr8qmiqpihrnccq22qxsmgmh33wfdx64l29p2sqavh8gh205y"
+      "hash": "sha256-vgABH4JbYS1uEpSY3hwfA9ZXdcdCYMZshvHiWDHKjE8="
     },
     "nvim-cmp-lsp-rs": {
       "type": "Git",
@@ -97,7 +97,7 @@
       "submodules": false,
       "revision": "57f29333e6d2b655d5b0edb999b0006d49fde0ca",
       "url": "https://github.com/zjp-CN/nvim-cmp-lsp-rs/archive/57f29333e6d2b655d5b0edb999b0006d49fde0ca.tar.gz",
-      "hash": "1jkxkgqdk3350hs8gs49sz687ldv1hh2mwxbmwp0hiv9qllnnsli"
+      "hash": "sha256-kWprKcVpRwgur6vzKiAMu9GDzNeJ6Ic0BGWM2fCbfco="
     },
     "pisces": {
       "type": "Git",
@@ -110,7 +110,7 @@
       "submodules": false,
       "revision": "e45e0869855d089ba1e628b6248434b2dfa709c4",
       "url": "https://github.com/laughedelic/pisces/archive/e45e0869855d089ba1e628b6248434b2dfa709c4.tar.gz",
-      "hash": "073wb83qcn0hfkywjcly64k6pf0d7z5nxxwls5sa80jdwchvd2rs"
+      "hash": "sha256-Oou2IeNNAqR00ZT3bss/DbhrJjGeMsn9dBBYhgdafBw="
     },
     "promise-async": {
       "type": "Git",
@@ -122,7 +122,7 @@
       "submodules": false,
       "revision": "119e8961014c9bfaf1487bf3c2a393d254f337e2",
       "url": null,
-      "hash": "0q4a0rmy09hka6zvydzjj2gcm2j5mlbrhbxfcdjj33ngpblkmqzm"
+      "hash": "sha256-9eM66brPjiFlY64vmBetRYrKnpDyN7+/URMm4GsGimA="
     },
     "telescope-egrepify.nvim": {
       "type": "Git",
@@ -133,9 +133,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "a8070970a661330c4e00450d25f874f6c2b00af9",
-      "url": "https://github.com/fdschmidt93/telescope-egrepify.nvim/archive/a8070970a661330c4e00450d25f874f6c2b00af9.tar.gz",
-      "hash": "0lv61vz3md4cy472q00y2y2b458740chx7fp4z13wskqmmjmxlw1"
+      "revision": "cd9342b95c1a8cff2e41ba5041ae3912f47595cc",
+      "url": "https://github.com/fdschmidt93/telescope-egrepify.nvim/archive/cd9342b95c1a8cff2e41ba5041ae3912f47595cc.tar.gz",
+      "hash": "sha256-jBKeAOKWlTaN11n8lfaxCdz5dXooy+bj//u6fPiTnKM="
     },
     "tmux-nvr": {
       "type": "Git",
@@ -147,7 +147,7 @@
       "submodules": false,
       "revision": "a283fc21e73df5bff01f997525b9d0dbf3eecac9",
       "url": null,
-      "hash": "0cflgfk165fw8i7fv7pf1b5d693p9shxp6hl7rh4mhczx0j7s562"
+      "hash": "sha256-whR9JOifwUpgPhSa26FOdyTTygrunu1ORNwVE6Z71DE="
     },
     "vim-alloy": {
       "type": "Git",
@@ -160,7 +160,7 @@
       "submodules": false,
       "revision": "0273f88f7199189f9a0f32213a34ab778e226f86",
       "url": "https://github.com/grafana/vim-alloy/archive/0273f88f7199189f9a0f32213a34ab778e226f86.tar.gz",
-      "hash": "1kv0i6amrg3bisljx743drxd47gdn92iclrc4fp1n436nxyrahwm"
+      "hash": "sha256-lUOVfbdmEBuuIyxTFkWy7R3Sem6DnC6pjmu8XJWJYM8="
     },
     "vim-terraform": {
       "type": "Git",
@@ -173,7 +173,7 @@
       "submodules": false,
       "revision": "520498fab16a3a11f2ae1b8cb65e0a1684bc317a",
       "url": "https://github.com/hashivim/vim-terraform/archive/520498fab16a3a11f2ae1b8cb65e0a1684bc317a.tar.gz",
-      "hash": "0fglb72vqki1nkg0n85lpnpaa7dwvs1grjb93h4h7cjzr53h0nri"
+      "hash": "sha256-MVsAR8lfsgMJHGnJ/ILevB2lrr20IAvetCFOvMVZ9Dk="
     },
     "vim-varnish": {
       "type": "GitRelease",
@@ -189,7 +189,7 @@
       "version": "v0.1.7",
       "revision": "01458458f20831d43045423344bcb70a40d04b0f",
       "url": "https://api.github.com/repos/varnishcache-friends/vim-varnish/tarball/v0.1.7",
-      "hash": "1qv8ilq3wgvdnqixdhnpxf29ikvzvpl1wvp1ynpqh7iar23j9l5d"
+      "hash": "sha256-rdAkh8gqHoiv9eFuHujdf8+YhOvXwtYjtm0/PjCNaOM="
     },
     "yuck.vim": {
       "type": "Git",
@@ -202,8 +202,8 @@
       "submodules": false,
       "revision": "9b5e0370f70cc30383e1dabd6c215475915fe5c3",
       "url": "https://github.com/elkowar/yuck.vim/archive/9b5e0370f70cc30383e1dabd6c215475915fe5c3.tar.gz",
-      "hash": "1mkf0vd8vvw1njlczlgai80djw1n1a7dl1k940l089d3vvqr5dhp"
+      "hash": "sha256-F7aS8d6jJQQoIGkG2o4KNnDZAIrq0c+otIHvjdoGbtY="
     }
   },
-  "version": 5
+  "version": 7
 }

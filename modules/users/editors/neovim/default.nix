@@ -56,12 +56,6 @@ in
         default = false;
       };
 
-      ts = mkOption {
-        description = "enable the js/ts integration";
-        type = types.bool;
-        default = false;
-      };
-
       cpp = mkOption {
         description = "enable the cpp integration";
         type = types.bool;
@@ -135,7 +129,6 @@ in
 
           # formatting for hurl-nvim
           jq
-          nodePackages.prettier
 
           # formatters for conform-nvim
         ]
@@ -153,10 +146,6 @@ in
           pkgs.ruff
           pkgs.isort
           pkgs.black
-        ])
-        ++ (optionals cfg.langs.ts [
-          pkgs.nodePackages.typescript-language-server
-          pkgs.svelte-language-server
         ])
         ++ (optionals cfg.langs.cpp [ pkgs.ccls ])
         ++ (optionals cfg.langs.rust [ pkgs.rust-analyzer-unwrapped ])

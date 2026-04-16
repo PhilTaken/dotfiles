@@ -3,29 +3,34 @@
   lib,
   netlib,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.server.services.vector;
   net = config.phil.network;
 
-  promtail_client = builtins.head (builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "grafana" v.services) net.nodes));
+  promtail_client = builtins.head (
+    builtins.attrNames (lib.filterAttrs (_: v: builtins.elem "grafana" v.services) net.nodes)
+  );
   pm_client_ip = net.nodes.${promtail_client}.network_ip."headscale";
 
   # TODO: consul?
   pm_client_port = netlib.portFor "loki";
-in {
+in
+{
   options.phil.server.services.vector = {
     enable = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
     };
   };
 
   config = mkIf cfg.enable {
-    users.users.promtail.extraGroups = ["nginx"];
+    # users.users.promtail.extraGroups = [ "nginx" ];
 
     services.promtail = {
-      enable = true;
+      # TODO migrate to grafana alloy
+      enable = false;
       configuration = {
         server = {
           http_listen_port = 28183;
@@ -34,7 +39,9 @@ in {
 
         positions.filename = "/tmp/positions.yaml";
 
-        clients = [{url = "http://${pm_client_ip}:${builtins.toString pm_client_port}/loki/api/v1/push";}];
+        clients = [
+          { url = "http://${pm_client_ip}:${builtins.toString pm_client_port}/loki/api/v1/push"; }
+        ];
 
         scrape_configs = [
           {
@@ -48,7 +55,7 @@ in {
             };
             relabel_configs = [
               {
-                source_labels = ["__journal__systemd_unit"];
+                source_labels = [ "__journal__systemd_unit" ];
                 target_label = "unit";
               }
             ];
@@ -58,7 +65,7 @@ in {
             job_name = "nginx_analytics";
             static_configs = [
               {
-                targets = ["localhost"];
+                targets = [ "localhost" ];
                 labels = {
                   job = "nginx_analytics";
                   host = config.networking.hostName;

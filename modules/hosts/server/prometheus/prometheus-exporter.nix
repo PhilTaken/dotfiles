@@ -21,7 +21,7 @@ let
     "minio"
     "tor"
   ];
-  enabled_exporters = lib.filterAttrs (_: v: v.enable) exporters;
+  enabled_exporters = lib.filterAttrs (_: v: v.enable) (builtins.removeAttrs exporters [ "rspamd" ]);
   exporter_ports = lib.mapAttrsToList (_: v: v.port) enabled_exporters;
 in
 {

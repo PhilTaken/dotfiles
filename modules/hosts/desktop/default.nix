@@ -30,7 +30,10 @@ in
   config = mkIf cfg.enable {
     phil.fileshare.juicefs.mount_root = true;
 
-    programs.steam.enable = true;
+    programs.steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+    };
     programs.gamemode = {
       enable = true;
       enableRenice = true;
