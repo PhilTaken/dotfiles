@@ -19,7 +19,7 @@ in
     enable = mkEnableOption "vikunja";
     url = mkOption {
       description = "vikunja url (webinterface)";
-      default = "https://${cfg.hostname}";
+      default = "https://${cfg.hostname}/";
       type = types.str;
     };
     port = mkOption {
