@@ -87,7 +87,8 @@ in
       freecad
       openscad-unstable
 
-      orca-slicer-wrapped
+      #orca-slicer-wrapped
+      orca-slicer
 
       # (pkgs.callPackage ./orca-slicer.nix {})
 
