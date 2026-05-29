@@ -17,9 +17,7 @@ in
       darwin-fixes.home-manager
     ];
 
-    home.packages = [
-      (pkgs.tuir.overrideAttrs { doCheck = false; })
-    ];
+    home.packages = [ ];
 
     fonts.fontconfig.enable = true;
 
