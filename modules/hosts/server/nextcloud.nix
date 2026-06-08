@@ -115,6 +115,7 @@ in
               # https://github.com/NixOS/nixpkgs/issues/162686
               networking.nameservers = [ "1.1.1.1" ];
               # WORKAROUND
+              networking.resolvconf.enable = false;
               environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
 
               networking.firewall.enable = false;

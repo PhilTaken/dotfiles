@@ -3,12 +3,19 @@
   lib,
   netlib,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+}:
+let
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.phil.server.services.grocy;
 
   datadir = "/var/lib/grocy";
-in {
+in
+{
   options.phil.server.services.grocy = {
     enable = mkEnableOption "grocy";
     host = mkOption {
@@ -24,12 +31,13 @@ in {
 
   config = mkIf cfg.enable {
     # TODO back up grocy database
-    systemd.tmpfiles.rules = ["d '${datadir}' - - - - -"];
+    systemd.tmpfiles.rules = [ "d '${datadir}' - - - - -" ];
 
-    containers.grocy = let
-      hostAddress = "192.0.2.1";
-      localAddress = "192.0.2.2";
-    in
+    containers.grocy =
+      let
+        hostAddress = "192.0.2.1";
+        localAddress = "192.0.2.2";
+      in
       mkIf cfg.enable {
         ephemeral = true;
         autoStart = true;
@@ -53,10 +61,11 @@ in {
           };
         };
 
-        config = {...}: {
+        config = { ... }: {
           # https://github.com/NixOS/nixpkgs/issues/162686
-          networking.nameservers = ["1.1.1.1"];
+          networking.nameservers = [ "1.1.1.1" ];
           # WORKAROUND
+          networking.resolvconf.enable = false;
           environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
           networking.firewall.enable = false;
           system.stateVersion = "22.11";

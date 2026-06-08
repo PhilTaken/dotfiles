@@ -4,9 +4,9 @@
   pkgs,
   netlib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkOption
     mkIf
     types
@@ -14,7 +14,8 @@
     ;
   cfg = config.phil.server.services.email;
   net = config.phil.network;
-in {
+in
+{
   options.phil.server.services.email = {
     enable = mkEnableOption "email server";
     url = mkOption {
@@ -49,10 +50,11 @@ in {
     };
   };
 
-  config = let
-    hostAddress = "192.0.0.1";
-    localAddress = "192.0.0.4";
-  in
+  config =
+    let
+      hostAddress = "192.0.0.1";
+      localAddress = "192.0.0.4";
+    in
     mkIf cfg.enable (
       lib.mkMerge [
         {
@@ -72,42 +74,45 @@ in {
               }
             ];
 
-            config = {
-              config,
-              pkgs,
-              ...
-            }: {
-              # https://github.com/NixOS/nixpkgs/issues/162686
-              networking.nameservers = ["1.1.1.1"];
-              # WORKAROUND
-              environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
+            config =
+              {
+                config,
+                pkgs,
+                ...
+              }:
+              {
+                # https://github.com/NixOS/nixpkgs/issues/162686
+                networking.nameservers = [ "1.1.1.1" ];
+                # WORKAROUND
+                networking.resolvconf.enable = false;
+                environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
 
-              networking.firewall.enable = false;
+                networking.firewall.enable = false;
 
-              services.nginx.virtualHosts.${net.tld} = {
-                forceSSL = false;
-                enableACME = false;
+                services.nginx.virtualHosts.${net.tld} = {
+                  forceSSL = false;
+                  enableACME = false;
+                };
+
+                services.roundcube = {
+                  enable = true;
+                  hostName = net.tld;
+                  extraConfig = ''
+                    $config['use_https'] = true;
+                    $config['auto_create_user'] = true;
+                    $config['imap_host'] = "ssl://mail.pherzog.xyz:993";
+
+                    $config['mail_domain'] = '%t';
+                    $config['smtp_host'] = "ssl://mail.pherzog.xyz:465";
+                    $config['smtp_user'] = "%u";
+                    $config['smtp_pass'] = "%p";
+                  '';
+                };
               };
-
-              services.roundcube = {
-                enable = true;
-                hostName = net.tld;
-                extraConfig = ''
-                  $config['use_https'] = true;
-                  $config['auto_create_user'] = true;
-                  $config['imap_host'] = "ssl://mail.pherzog.xyz:993";
-
-                  $config['mail_domain'] = '%t';
-                  $config['smtp_host'] = "ssl://mail.pherzog.xyz:465";
-                  $config['smtp_user'] = "%u";
-                  $config['smtp_pass'] = "%p";
-                '';
-              };
-            };
           };
           networking.nat = {
             enable = true;
-            internalInterfaces = ["ve-+"];
+            internalInterfaces = [ "ve-+" ];
             externalInterface = "enp1s0";
           };
 
@@ -153,25 +158,25 @@ in {
 
           sops.secrets."stalwart-admin-secret" = {
             owner = "stalwart-mail";
-            restartUnits = ["stalwart-mail.service"];
+            restartUnits = [ "stalwart-mail.service" ];
           };
 
           sops.secrets."ldap-bindauth-pass" = {
             owner = "stalwart-mail";
-            restartUnits = ["stalwart-mail.service"];
+            restartUnits = [ "stalwart-mail.service" ];
           };
 
           sops.secrets."dkim-privatekey" = {
             owner = "stalwart-mail";
-            restartUnits = ["stalwart-mail.service"];
+            restartUnits = [ "stalwart-mail.service" ];
           };
 
           sops.secrets."dkim-privatekey-rsa" = {
             owner = "stalwart-mail";
-            restartUnits = ["stalwart-mail.service"];
+            restartUnits = [ "stalwart-mail.service" ];
           };
 
-          users.users."stalwart-mail".extraGroups = ["nginx"];
+          users.users."stalwart-mail".extraGroups = [ "nginx" ];
 
           services.stalwart-mail = {
             enable = true;
@@ -181,24 +186,24 @@ in {
               lookup.default.hostname = cfg.url;
               server = {
                 listener."smtp" = {
-                  bind = ["[::]:25"];
+                  bind = [ "[::]:25" ];
                   protocol = "smtp";
                   tls.implicit = false;
                 };
 
                 listener."management" = {
-                  bind = ["127.0.0.1:${builtins.toString cfg.jmap-port}"];
+                  bind = [ "127.0.0.1:${builtins.toString cfg.jmap-port}" ];
                   protocol = "http";
                 };
 
                 listener."submissions" = {
-                  bind = ["[::]:465"];
+                  bind = [ "[::]:465" ];
                   protocol = "smtp";
                   tls.implicit = true;
                 };
 
                 listener."imaptls" = {
-                  bind = ["[::]:993"];
+                  bind = [ "[::]:993" ];
                   protocol = "imap";
                   tls.implicit = true;
                 };
@@ -207,7 +212,7 @@ in {
                   enable = true;
                   implicit = true;
                   timeout = "1m";
-                  disable-protocols = ["TLSv1.2"];
+                  disable-protocols = [ "TLSv1.2" ];
                   disable-ciphers = [
                     "TLS13_AES_256_GCM_SHA384"
                     "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"
@@ -222,7 +227,7 @@ in {
                     "if" = "listener != 'smtp'";
                     "then" = "['ed25519', 'rsa']";
                   }
-                  {"else" = false;}
+                  { "else" = false; }
                 ];
               };
 
@@ -382,12 +387,12 @@ in {
 
           sops.secrets."dovecot-ldap-config" = {
             owner = config.systemd.services.dovecot2.serviceConfig.User or "root";
-            restartUnits = ["dovecot2.service"];
+            restartUnits = [ "dovecot2.service" ];
           };
 
           systemd.services."dovecot2" = lib.mkIf config.phil.server.services.kanidm.enable {
-            after = ["kanidm.service"];
-            requires = ["kanidm.service"];
+            after = [ "kanidm.service" ];
+            requires = [ "kanidm.service" ];
           };
 
           services.dovecot2 = {
@@ -489,7 +494,7 @@ in {
 
           security.dhparams = {
             enable = true;
-            params.dovecot2 = {};
+            params.dovecot2 = { };
             params.postfix512.bits = 512;
             params.postfix2048.bits = 1024;
           };
@@ -554,7 +559,7 @@ in {
               smtpd_tls_dh512_param_file = config.security.dhparams.params.postfix512.path;
               smtpd_tls_dh1024_param_file = config.security.dhparams.params.postfix2048.path;
 
-              smtpd_tls_session_cache_database = ''btree:''${data_directory}/smtpd_scache'';
+              smtpd_tls_session_cache_database = "btree:\${data_directory}/smtpd_scache";
               smtpd_tls_mandatory_protocols = "!SSLv2,!SSLv3,!TLSv1,!TLSv1.1";
               smtpd_tls_protocols = "!SSLv2,!SSLv3,!TLSv1,!TLSv1.1";
               smtpd_tls_mandatory_ciphers = "medium";
@@ -605,7 +610,7 @@ in {
           # opendkim
           sops.secrets."dkim-privatekey" = {
             owner = config.services.postfix.user;
-            restartUnits = ["opendkim.service"];
+            restartUnits = [ "opendkim.service" ];
             path = "/run/lib/opendkim-keys/${config.services.opendkim.selector}.private";
           };
 

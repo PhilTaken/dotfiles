@@ -3,8 +3,14 @@
   lib,
   netlib,
   ...
-}: let
-  inherit (lib) mkOption mkIf types mkEnableOption;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    mkEnableOption
+    ;
   cfg = config.phil.server.services.freshrss;
 
   # TODO fixed release since ?
@@ -19,7 +25,8 @@
   hostAddress = "192.0.0.1";
   localAddress = "192.0.0.3";
   net = config.phil.network;
-in {
+in
+{
   options.phil.server.services.freshrss = {
     enable = mkEnableOption "freshrss";
     url = mkOption {
@@ -44,7 +51,7 @@ in {
 
     networking.nat = {
       enable = true;
-      internalInterfaces = ["ve-+"];
+      internalInterfaces = [ "ve-+" ];
       externalInterface = "enp1s0";
     };
 
@@ -66,51 +73,56 @@ in {
       };
     };
 
-    containers.freshrss = let
-      adminpassFile = config.sops.secrets.freshrss-password.path;
-    in {
-      ephemeral = false;
-      autoStart = true;
+    containers.freshrss =
+      let
+        adminpassFile = config.sops.secrets.freshrss-password.path;
+      in
+      {
+        ephemeral = false;
+        autoStart = true;
 
-      privateNetwork = true;
-      inherit localAddress hostAddress;
+        privateNetwork = true;
+        inherit localAddress hostAddress;
 
-      forwardPorts = [
-        {
-          containerPort = 80;
-          hostPort = cfg.port;
-          protocol = "tcp";
-        }
-      ];
+        forwardPorts = [
+          {
+            containerPort = 80;
+            hostPort = cfg.port;
+            protocol = "tcp";
+          }
+        ];
 
-      bindMounts = {
-        ${adminpassFile} = {
-          hostPath = adminpassFile;
-          isReadOnly = true;
+        bindMounts = {
+          ${adminpassFile} = {
+            hostPath = adminpassFile;
+            isReadOnly = true;
+          };
         };
+
+        config =
+          {
+            config,
+            pkgs,
+            ...
+          }:
+          {
+            system.stateVersion = "24.11";
+
+            # https://github.com/NixOS/nixpkgs/issues/162686
+            networking.nameservers = [ "1.1.1.1" ];
+            # WORKAROUND
+            networking.resolvconf.enable = false;
+            environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
+            networking.firewall.enable = false;
+
+            services.freshrss = {
+              enable = true;
+              baseUrl = cfg.url;
+              defaultUser = "phil";
+              passwordFile = adminpassFile;
+              virtualHost = "freshrss";
+            };
+          };
       };
-
-      config = {
-        config,
-        pkgs,
-        ...
-      }: {
-        system.stateVersion = "24.11";
-
-        # https://github.com/NixOS/nixpkgs/issues/162686
-        networking.nameservers = ["1.1.1.1"];
-        # WORKAROUND
-        environment.etc."resolv.conf".text = "nameserver 1.1.1.1";
-        networking.firewall.enable = false;
-
-        services.freshrss = {
-          enable = true;
-          baseUrl = cfg.url;
-          defaultUser = "phil";
-          passwordFile = adminpassFile;
-          virtualHost = "freshrss";
-        };
-      };
-    };
   };
 }
