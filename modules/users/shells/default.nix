@@ -177,6 +177,7 @@ in
 
       password-store = {
         enable = true;
+        settings = { };
         #package = pkgs.pass;
       };
 

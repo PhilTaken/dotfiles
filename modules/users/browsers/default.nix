@@ -95,9 +95,11 @@ in
         ];
       };
 
+      stylix.targets.firefox.profileNames = [ "home" ];
+
       programs.firefox = {
         inherit (cfg.firefox) enable;
-
+        configPath = "${config.xdg.configHome}/mozilla/firefox";
         package = if cfg.firefox.wayland then waylandpkg else pkg;
         profiles = {
           home = {

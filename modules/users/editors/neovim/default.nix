@@ -102,6 +102,7 @@ in
       vimAlias = true;
       withPython3 = true;
       withNodeJs = true;
+      withRuby = true;
       extraPython3Packages = ps: [ ps.pynvim ];
       extraPackages =
         with pkgs;

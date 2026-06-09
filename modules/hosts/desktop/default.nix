@@ -66,7 +66,10 @@ in
       enable = true;
       binfmt = true;
       package = pkgs.appimage-run.override {
-        extraPkgs = pkgs: [ pkgs.webkitgtk_4_1 ];
+        extraPkgs = pkgs: [
+          pkgs.webkitgtk_4_1
+          pkgs.libsoup_3
+        ];
       };
     };
 

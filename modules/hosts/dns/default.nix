@@ -41,8 +41,8 @@ in
 
       services.resolved = {
         enable = true;
-        dnsovertls = "opportunistic";
-        dnssec = "false";
+        settings.Resolve.DNSOverTLS = "opportunistic";
+        settings.Resolve.DNSSEC = "false";
       };
     })
 
@@ -66,8 +66,8 @@ in
 
       services.resolved = {
         enable = !same-server;
-        dnsovertls = "opportunistic";
-        dnssec = "false";
+        settings.Resolve.DNSOverTLS = "opportunistic";
+        settings.Resolve.DNSSEC = "false";
       };
     })
   ];
