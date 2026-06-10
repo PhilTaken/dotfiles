@@ -139,6 +139,10 @@ in
       #inputs.devenv.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       age
+      age-plugin-yubikey
+      age-plugin-1p
+      _1password-cli
+
       lsyncd
 
       # git(hub|lab) cli tools
@@ -196,20 +200,27 @@ in
         }
       ];
 
-      settings.diff = {
-        gpg = {
-          textconv = "gpg -q --no-tty --decrypt";
-          binary = true;
+      settings = {
+        diff = {
+          gpg = {
+            textconv = "gpg -q --no-tty --decrypt";
+            binary = true;
+          };
+
+          age.textconv = "batou secrets decrypttostdout";
         };
 
-        age = {
-          textconv = "batou secrets decrypttostdout";
+        merge = {
+          batou-secret = {
+            driver = "${./batou-merge.py} %O %A %B %P";
+            recursive = "binary";
+          };
         };
       };
 
-      attributes = [
-        "environments/*/*.age diff=age"
-        "environments/*/*.age-diffable diff=age"
+      attributes = lib.mkAfter [
+        "environments/*/*.age diff=age merge=batou-secret"
+        "environments/*/*.age-diffable diff=age merge=batou-secret"
       ];
     };
 
