@@ -49,6 +49,7 @@ in
     ./unbound.nix
     ./vector.nix
     ./vikunja.nix
+    ./workout-tracker.nix
     ./writefreely.nix
     ./zigbee2mqtt.nix
   ];

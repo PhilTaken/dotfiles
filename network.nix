@@ -51,6 +51,8 @@
           "mealie"
           "paperless"
           "audiobookshelf"
+          "workout-tracker"
+          "syncthing"
         ];
       };
 

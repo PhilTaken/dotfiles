@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  netlib,
   ...
 }:
 let
@@ -39,7 +40,11 @@ in
 
     override = mkEnableOption "override folders and devices";
 
-    openDefaultPorts = mkEnableOption "open default ports";
+    port = mkOption {
+      description = "syncthing port (webinterface)";
+      type = types.port;
+      default = netlib.portFor "syncthing";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -48,30 +53,31 @@ in
 
     services.syncthing = {
       inherit (cfg)
-        openDefaultPorts
         enable
         configDir
         dataDir
         ;
 
-      guiAddress = "0.0.0.0:8384";
+      guiAddress = "0.0.0.0:${builtins.toString cfg.port}";
 
       key = config.sops.secrets.syncthing-key.path;
       cert = config.sops.secrets.syncthing-cert.path;
-
-      #devices = {
-      #};
-
-      #folders = {
-      #"" = {
-      #};
-      #};
 
       overrideFolders = cfg.override;
       overrideDevices = cfg.override;
 
       settings = {
         gui.theme = "black";
+      };
+    };
+
+    phil.server.services = {
+      caddy.proxy."syncthing" = {
+        inherit (cfg) port;
+        public = false;
+        vhostConfig.extraConfig = ''
+          client_max_body_size 2G;
+        '';
       };
     };
   };
