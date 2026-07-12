@@ -56,7 +56,7 @@ in
         OIDC_SIGNUP_ENABLED = "true";
         OIDC_CONFIGURATION_URL = "https://${netlib.domainFor "keycloak"}/realms/services/.well-known/openid-configuration";
         OIDC_PROVIDER_NAME = "Keycloak";
-        OIDC_AUTO_REDIRECT = "true";
+        # OIDC_AUTO_REDIRECT = "true";
       };
 
       credentialsFile = config.sops.secrets.mealie-secret-config.path;
