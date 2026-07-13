@@ -45,7 +45,7 @@ in
 
       settings = {
         # general
-        BASE_URL = cfg.url;
+        BASE_URL = "https://${cfg.url}";
         API_PORT = 9000;
         TZ = "Europe/Berlin";
         ALLOW_SIGNUP = "false";
