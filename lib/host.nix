@@ -167,10 +167,10 @@ rec {
               registry.nixpkgs.flake = inputs.nixpkgs;
               settings.trusted-users = [ username ];
 
-              # currently broken on mac?
-              extraOptions = ''
-                auto-optimise-store = false
-              '';
+              # # currently broken on mac?
+              # extraOptions = ''
+              #   auto-optimise-store = false
+              # '';
             };
 
             home-manager.users.${username} = {

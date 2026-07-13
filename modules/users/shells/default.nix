@@ -159,7 +159,7 @@ in
         };
       };
 
-      noti.enable = true;
+      # noti.enable = true;
 
       nix-index = {
         enable = true;

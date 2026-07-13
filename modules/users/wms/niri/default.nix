@@ -25,7 +25,7 @@ in
     # TODO re-enable + merge with json?
     stylix.targets.noctalia-shell.enable = false;
 
-    programs.noctalia-shell = {
+    programs.noctalia = {
       enable = true;
       systemd.enable = true;
       # update these with `noctalia-shell ipc call state all | jq -S .settings | wl-copy`

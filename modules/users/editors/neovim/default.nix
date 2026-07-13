@@ -137,12 +137,12 @@ in
           (pkgs.python3.withPackages (
             ps: with ps; [
               python-lsp-server
-              pylsp-mypy
+              # pylsp-mypy
               python-lsp-ruff
-              mypy
+              # mypy
             ]
           ))
-          pkgs.mypy
+          # pkgs.mypy
 
           pkgs.ruff
           pkgs.isort
@@ -643,7 +643,7 @@ in
           '')
 
           # missing pname
-          parinfer-rust
+          # parinfer-rust
 
           # TODO required for lsp
           SchemaStore-nvim

@@ -43,7 +43,6 @@
 
   # Auto upgrade nix package and the daemon service.
   nix.extraOptions = ''
-    build-users-group = nixbld
     bash-prompt-prefix = (nix:$name)\040
     extra-nix-path = nixpkgs=flake:nixpkgs
     experimental-features = flakes nix-command

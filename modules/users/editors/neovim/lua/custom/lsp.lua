@@ -163,12 +163,12 @@ lsp_extra_config["pylsp"] = {
 					include_params = true,
 					fuzzy = true,
 				},
-				pylsp_mypy = {
-					enabled = true,
-					overrides = {},
-					report_progress = true,
-					live_mode = false,
-				},
+				-- pylsp_mypy = {
+				-- 	enabled = true,
+				-- 	overrides = {},
+				-- 	report_progress = true,
+				-- 	live_mode = false,
+				-- },
 				ruff = {
 					enabled = true,
 					format = { "I" },
