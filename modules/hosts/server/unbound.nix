@@ -168,7 +168,7 @@ in
             harden-glue = "yes";
             harden-dnssec-stripped = "yes";
             use-caps-for-id = "no";
-            cache-min-ttl = 3600;
+            cache-min-ttl = 60;
             cache-max-ttl = 86400;
             incoming-num-tcp = 1000;
             prefetch = true;
