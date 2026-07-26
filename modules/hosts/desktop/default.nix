@@ -88,7 +88,7 @@ in
 
       # 3d printing
       freecad
-      openscad-unstable
+      #openscad-unstable
 
       #orca-slicer-wrapped
       orca-slicer

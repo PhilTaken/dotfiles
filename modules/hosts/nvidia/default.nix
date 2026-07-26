@@ -22,7 +22,10 @@ in
 
   config = mkIf cfg.enable {
     services.xserver.videoDrivers = lib.mkDefault [ "nvidia" ];
-    environment.systemPackages = [ nvidia-offload ];
+    environment.systemPackages = [
+      nvidia-offload
+      pkgs.mangohud
+    ];
 
     nixpkgs.config = {
       allowUnfreePredicate =

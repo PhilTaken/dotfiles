@@ -50,6 +50,10 @@ in
       "${config.services.syncthing.dataDir}/OpenTracks".Z.mode = "0777";
     };
 
+    systemd.services.workout-tracker.serviceConfig.ReadWritePaths = [
+      "${config.services.syncthing.dataDir}/OpenTracks"
+    ];
+
     # systemd.services.workout-tracker.serviceConfig.SupplementaryGroups =
     #   lib.mkIf (config.services.syncthing.enable)
     #     [ "syncthing" ];

@@ -23,13 +23,13 @@ in
 
   config = mkIf cfg.enable {
     # TODO re-enable + merge with json?
-    stylix.targets.noctalia-shell.enable = false;
+    stylix.targets.noctalia.enable = false;
 
     programs.noctalia = {
       enable = true;
       systemd.enable = true;
       # update these with `noctalia-shell ipc call state all | jq -S .settings | wl-copy`
-      settings = ./noctalia-settings.json;
+      settings = ./noctalia_settings.toml;
     };
 
     programs.alacritty.enable = true; # Super+T in the default setting (terminal)
