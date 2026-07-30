@@ -44,7 +44,7 @@ in
 
       git
       uv
-      python311
+      python313
       openssl
       rclone
       pre-commit
