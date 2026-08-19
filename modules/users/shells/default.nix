@@ -73,7 +73,7 @@ in
       doggo
       #dufs
       eza
-      fasd
+      #fasd
       fd
       file
       gopass

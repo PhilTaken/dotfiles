@@ -4,11 +4,13 @@
   config,
   lib,
   ...
-} @ inputs: let
+}@inputs:
+let
   inherit (lib) mkOption mkIf types;
   cfg = config.phil.shells.zsh;
   magic_enter_prompt = ./magic_enter.zsh;
-in {
+in
+{
   options.phil.shells.zsh = {
     enable = mkOption {
       type = types.bool;
@@ -32,7 +34,8 @@ in {
         path = "${inputs.config.xdg.dataHome}/zsh/histfile";
       };
 
-      initContent = lib.mkOrder 550 (''
+      initContent = lib.mkOrder 550 (
+        ''
           setopt prompt_subst
           setopt prompt_sp
           setopt always_to_end
@@ -67,7 +70,7 @@ in {
 
           WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
-          eval "$(${pkgs.fasd}/bin/fasd --init auto)"
+          #eval "$($\{pkgs.fasd}/bin/fasd --init auto)"
           #unalias z
 
           source ${magic_enter_prompt}
@@ -136,7 +139,8 @@ in {
               fi
             fi
           fi
-        ''));
+        '')
+      );
 
       shellGlobalAliases = {
         "%notif" = "&& notify-send 'done' || notify-send 'error'";
