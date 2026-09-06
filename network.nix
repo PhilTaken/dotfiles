@@ -49,7 +49,7 @@
           "nextcloud"
           "navidrome"
           "mealie"
-          "paperless"
+          # "paperless"
           "audiobookshelf"
           "workout-tracker"
           "syncthing"

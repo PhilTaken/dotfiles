@@ -166,7 +166,8 @@ in
           extraDomainNames = [ "*.${net.tld}" ] ++ (map (w: "*.${w}.${net.tld}") extra_wildcards);
 
           dnsProvider = "cloudflare";
-          credentialFiles."CLOUDFLARE_API_KEY_FILE" = config.sops.secrets.acme_dns_cf.path;
+          environmentFile = config.sops.secrets.acme_dns_cf.path;
+          #credentialFiles."CLOUDFLARE_API_KEY_FILE" = ;
           webroot = lib.mkForce null;
         };
       };

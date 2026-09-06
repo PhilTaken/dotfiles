@@ -83,7 +83,7 @@ in
       };
 
       ping = {
-        enable = true;
+        enable = false;
         settings = {
           targets = [
             "8.8.8.8"
