@@ -53,6 +53,7 @@ rec {
             {
               lib,
               config,
+              pkgs,
               ...
             }:
             {
@@ -66,10 +67,8 @@ rec {
               ++ sys_users;
 
               nix.registry.nixpkgs.flake = inputs.nixpkgs;
-              nixpkgs.overlays = [
-                inputs.nixpkgs-wayland.overlay
-              ]
-              ++ overlays;
+              nix.package = pkgs.lixPackageSets.stable.lix;
+              nixpkgs.overlays = [ inputs.nixpkgs-wayland.overlay ] ++ overlays;
 
               sops = {
                 defaultSopsFile = ../sops/sops.yaml;
@@ -93,13 +92,13 @@ rec {
 
               phil.core.hostName = lib.mkDefault hostName;
               system.nixos.label = "g${inputs.self.shortRev or "shortRev-not-set"}";
+
             }
           )
 
           inputs.nixocaine.nixosModules.default
           inputs.sops-nix-src.nixosModules.sops
           inputs.disko.nixosModules.disko
-          inputs.lix-module.nixosModules.default
         ];
     in
     lib.nixosSystem {
@@ -150,7 +149,6 @@ rec {
 
       modules = [
         hardware-config
-        inputs.lix-module.darwinModules.default
 
         (
           {
@@ -166,6 +164,7 @@ rec {
             nix = {
               registry.nixpkgs.flake = inputs.nixpkgs;
               settings.trusted-users = [ username ];
+              package = pkgs.lixPackageSets.stable.lix;
 
               # # currently broken on mac?
               # extraOptions = ''

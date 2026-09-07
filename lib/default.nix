@@ -1,7 +1,8 @@
 {
   self,
   inputs,
-}: let
+}:
+let
   overlays = [
     inputs.nur-src.overlays.default
 
@@ -13,15 +14,22 @@
 
     self.overlays.default
 
+    (final: prev: {
+      inherit (prev.lixPackageSets.stable)
+        nixpkgs-review
+        nix-eval-jobs
+        nix-fast-build
+        colmena
+        ;
+    })
+
     (_final: prev: {
-      makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});
+      makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
 
       zen-browser = inputs.zen-browser.packages.${prev.system}.default; # beta
-      nixVersions =
-        prev.nixVersions
-        // {
-          nix_2_18 = prev.lix;
-        };
+      nixVersions = prev.nixVersions // {
+        nix_2_18 = prev.lix;
+      };
 
       # devdocs.io
       devdocs-desktop = prev.writeShellApplication {
@@ -33,20 +41,19 @@
 
       # fix it on wayland
       prismlauncher = prev.prismlauncher.overrideAttrs (old: {
-        postInstall =
-          (old.postInstall or "")
-          + ''
-            wrapProgram $out/bin/prismlauncher \
-              --prefix QT_QPA_PLATFORM : xcb
-          '';
+        postInstall = (old.postInstall or "") + ''
+          wrapProgram $out/bin/prismlauncher \
+            --prefix QT_QPA_PLATFORM : xcb
+        '';
       });
     })
   ];
-in rec {
-  user = import ./user.nix {inherit inputs;};
+in
+rec {
+  user = import ./user.nix { inherit inputs; };
   host = import ./host.nix {
     inherit user inputs overlays;
     flake = self;
   };
-  server = import ./server.nix {inherit host inputs;};
+  server = import ./server.nix { inherit host inputs; };
 }
