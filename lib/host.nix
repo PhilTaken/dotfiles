@@ -96,7 +96,7 @@ rec {
             }
           )
 
-          inputs.nixocaine.nixosModules.default
+          # inputs.nixocaine.nixosModules.default
           inputs.sops-nix-src.nixosModules.sops
           inputs.disko.nixosModules.disko
         ];

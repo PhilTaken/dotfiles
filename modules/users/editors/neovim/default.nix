@@ -123,6 +123,8 @@ in
 
           yaml-language-server
 
+          elixir-ls # elixir
+
           # nix
           nil
           nixfmt
@@ -158,7 +160,6 @@ in
             fortls
             texlab
             #erlang-ls # erlang
-            #elixir_ls # elixir
           ]
         ));
 

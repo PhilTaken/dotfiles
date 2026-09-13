@@ -127,7 +127,7 @@ in
         ''}"
 
         bind-key a popup -E "zk weekly"
-        bind-key n popup -E "zk edit --interactive --sort created-"
+        # bind-key l popup -E "zk edit --interactive --sort created-"
 
         bind-key P run-shell -b "${pkgs.writeShellScript "switch-sessions" ''
           # select a project fuzzily

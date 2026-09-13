@@ -80,6 +80,9 @@ in
     services.udisks2.enable = true;
 
     environment.systemPackages = with pkgs; [
+      # workouts
+      golden-cheetah
+
       #calibre
       vlc
       #foliate

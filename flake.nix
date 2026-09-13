@@ -56,7 +56,7 @@
     };
 
     # deal with bots
-    nixocaine.url = "git+https://gitea.pherzog.xyz/phil/nixocaine";
+    #nixocaine.url = "git+https://gitea.pherzog.xyz/phil/nixocaine";
 
     # wayland shell
     noctalia = {

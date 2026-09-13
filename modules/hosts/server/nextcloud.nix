@@ -150,8 +150,8 @@ in
                 };
 
                 config = {
-                  adminuser = "nc-admin";
-                  inherit adminpassFile;
+                  # adminuser = "nc-admin";
+                  # inherit adminpassFile;
                   dbtype = "pgsql";
                   dbhost = "/run/postgresql";
                   dbname = "nextcloud";

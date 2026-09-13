@@ -174,28 +174,30 @@ in
 
     services.iocaine = {
       enable = true;
-      config.server.default = {
-        bind = iocaine_bind;
-        mode = "http";
-        use.handler-from = "default";
-        use.metrics = "metrics";
-      };
-      config.server.metrics = {
-        bind = "127.0.0.1:${builtins.toString (netlib.portFor "iocaine-metrics")}";
-        mode = "prometheus";
-        persist-path = "qmk-metrics.json";
-        persist-interval = "1h";
-      };
+      settings = {
+        server.default = {
+          bind = iocaine_bind;
+          mode = "http";
+          use.handler-from = "default";
+          use.metrics = "metrics";
+        };
+        server.metrics = {
+          bind = "127.0.0.1:${builtins.toString (netlib.portFor "iocaine-metrics")}";
+          mode = "prometheus";
+          persist-path = "qmk-metrics.json";
+          persist-interval = "1h";
+        };
 
-      config.handler.default.config = {
-        "ai-robots-txt-path" = "${ai_robots_txt}/robots.json";
+        handler.default.config = {
+          "ai-robots-txt-path" = "${ai_robots_txt}/robots.json";
 
-        "sources" = {
-          "training_corpus" = [
-            "${corpus_1984}"
-          ];
+          "sources" = {
+            "training_corpus" = [
+              "${corpus_1984}"
+            ];
 
-          "wordlists" = [ "${wordlist}" ];
+            "wordlists" = [ "${wordlist}" ];
+          };
         };
       };
     };

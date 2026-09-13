@@ -12,10 +12,6 @@ capabilities.textDocument.foldingRange = {
 
 local lsp_extra_config = {}
 
-lsp_extra_config["elixirls"] = {
-	cmd = { "elixir-ls" },
-}
-
 lsp_extra_config["fortls"] = {
 	cmd = { "fortls", "--hover_signature", "--enable_code_actions" },
 	root_markers = { ".git" },
