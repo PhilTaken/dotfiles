@@ -117,7 +117,7 @@ in
               no-pdf-download
               privacy-badger
               reddit-enhancement-suite
-              terms-of-service-didnt-read
+              # terms-of-service-didnt-read
               ublock-origin
             ];
 

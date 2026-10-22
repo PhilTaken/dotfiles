@@ -78,19 +78,18 @@
   home-manager.sharedModules = [
     {
       #phil.wms.bars.eww.main_monitor = 1;
-      services.kanshi = {
-        profiles = {
-          dual-monitor = {
-            outputs = [
-              {
-                criteria = "Philips Consumer Electronics Company PHL 245E1 0x000072DC";
-                mode = "2560x1440@74.968002";
-                position = "0,0";
-              }
-            ];
-          };
-        };
-      };
+      services.kanshi.settings = [
+        {
+          profile.name = "dual-monitor";
+          profile.outputs = [
+            {
+              criteria = "Philips Consumer Electronics Company PHL 245E1 0x000072DC";
+              mode = "2560x1440@74.968002";
+              position = "0,0";
+            }
+          ];
+        }
+      ];
     }
   ];
 }
