@@ -44,7 +44,6 @@ in
   };
 
   config = mkIf cfg.enable rec {
-    phil.wms.tools.udiskie.enable = true;
     phil.wms.tools.rofi = {
       enable = true;
       package = pkgs.rofi-wayland;

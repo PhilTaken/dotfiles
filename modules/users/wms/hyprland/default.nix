@@ -54,7 +54,6 @@ in
   config = mkIf cfg.enable {
     phil.wms = {
       tools = {
-        udiskie.enable = true;
         rofi = {
           enable = true;
           package = pkgs.rofi-wayland;

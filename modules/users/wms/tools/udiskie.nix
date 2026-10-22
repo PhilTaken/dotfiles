@@ -27,7 +27,7 @@ in
 {
   options.phil.wms.tools.udiskie = {
     enable = mkEnableOption "udiskie" // {
-      default = true;
+      #default = true;
     };
     automount = mkEnableOption "auto mount devices" // {
       default = true;

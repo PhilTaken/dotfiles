@@ -111,11 +111,11 @@ in
       jack2
 
       # audio/video
-      audacity
+      #audacity
       ardour
       picard
       #obs-studio
-      handbrake
+      # handbrake
       #makemkv
       tauon
       nicotine-plus
