@@ -277,6 +277,9 @@ in
                   useACMEHost = lib.mkForce (if extraCert then null else net.tld);
                   enableACME = lib.mkForce extraCert;
 
+                  # https://nginx2root.com/
+                  http2 = lib.mkForce false;
+
                   locations."= /robots.txt".alias = lib.optionalAttrs includeRobotsTxt pkgs.writeText "robots.txt" ''
                     User-agent: *
                     Disallow: /
